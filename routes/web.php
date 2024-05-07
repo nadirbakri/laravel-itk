@@ -708,6 +708,7 @@ Route::post('payroll/journal_report/print', 'PayrollController@printJournalRepor
 Route::post('payroll/journal_report/print/excel', 'PayrollController@printJournalReportPayrollExcel');
 Route::get('payroll/payment_slip/get', 'PayrollController@getPaymentSlipPayroll');
 Route::post('payroll/payment_slip/print', 'PayrollController@printPaymentSlipPayroll');
+Route::post('payroll/payment_slip/proses', 'PayrollController@prosesPaymentSlipPayroll');
 Route::post('payroll/salary_historical_report/print', 'PayrollController@printSalaryHistoricalReportPayroll');
 Route::post('payroll/salary_historical_report/print/excel', 'PayrollController@printSalaryHistoricalReportPayrollExcel');
 Route::post('payroll/csv_espt_report_form/print/excel', 'PayrollController@printCSVESPTReportFormPayrollExcel');

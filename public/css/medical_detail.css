@@ -239,6 +239,10 @@ tr.shown td.details-control {
     padding: 0.5% 1% !important;
     width: 10% !important;
 }
+.list-functionbar-lgx {
+    padding: 0.5% 1% !important;
+    width: 20% !important;
+}
 .list-functionbar-xl {
     padding: 0.5% 1% !important;
     width: 25% !important;

@@ -7440,6 +7440,75 @@ public function dataDetailReportFormatPY(Request $request)
         }
     }
 
+    public function prosesPaymentSlipPayroll(Request $request){
+        try{
+            $dataLevel = [];
+
+            for($i = 0; $i < $request->level_format; $i++){
+                $dataLevel[] = $request->{'level' . ($i+1)};
+            }
+
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $param = [
+                'companyCode' => (empty(Session::get('companyCode')) ? $request->companyCode : Session::get('companyCode')),
+                'range' => true,
+                'languageCode' => (!empty($request->languageCode) ? $request->languageCode : App::getLocale()),
+                'sessionID' => 0,
+                'sessionUserID' => (empty(Session::get('userID')) ? $request->sessionUserID : Session::get('userID'))
+            ];
+
+            if(!empty($request->slip_type)){
+                $param['slipCode'] = $request->slip_type;
+            }
+
+            if(!empty($request->period)){
+                $param['period'] = $request->period;
+            }
+
+            if(!empty($request->print_date)){
+                $param['printDate'] = $request->print_date;
+            }
+
+            if(!empty($request->employee_no_from) || isset($data->employee_no_to)){
+                $param['employeeNoFrom'] = $request->employee_no_from;
+                $param['employeeNoTo'] = $request->employee_no_to;
+            }
+
+            if(!empty($request->group_authorized_from) || isset($data->group_authorized_to)){
+                $param['groupAuthorizedFrom'] = intval($request->group_authorized_from);
+                $param['groupAuthorizedTo'] = intval($request->group_authorized_to);
+            }
+
+            // dd(json_encode($param));
+            // exit;
+
+            $response = $client->post(env('API_URL').'/payroll/PrSlipFixed', [
+                'body' => json_encode($param)
+            ]);
+
+            // var_dump($request->format_type);
+        }catch(Exception $e){
+            $response = $e->getResponse();
+            // var_dump($response);
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
     public function printSPTPPHReportPayroll(Request $request){
         try{
             

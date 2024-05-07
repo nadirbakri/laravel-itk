@@ -13,13 +13,13 @@
     <link rel="stylesheet" href="{{ asset('css/flatpickr.monthselect.css') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
     <!-- <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet"> -->
-    <link rel="stylesheet" href="{{ asset('css/payroll_detail_data.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/payroll_detail.css') }}">
     <link rel="stylesheet" href="{{ asset('css/jquery.inputpicker.css') }}">
     <style type="text/css">
         .div-payroll {
-            max-width: 100%;
+            max-width: 97%;
             margin: auto;
-            /*margin-top: 1%;*/
+            /* margin-top: 3%; */
         }
 
         .div-profile {
@@ -111,216 +111,270 @@
     </style>
 </head>
 <body>
-    <div class="div-form">
-        <form id="payment_slip_form" method="post">
-            @csrf
-            <div class="div-payroll">
-                <div class="div-title">
-                    <a href="{{ route('payroll', ['moduleID' => 'PY']) }}" target="iframe_dashboard">
-                        <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
-                        <span class="title-text">{{ __('payroll_payment_slip.list') }}</span>
-                    </a>
-                </div>
+    <div class="div-payroll">
+        <div class="div-navbar sticky-navbar">
+            <a href="javascript:void(0)" style="display: none;" id="toolbar-back">
+                <img src="{{ url('/icons/functionbar/functionbar-back-blue.svg') }}" alt="Back">
+                <img src="{{ url('/icons/functionbar/functionbar-back-white.svg') }}" class="functionbar-hover" alt="Back">
+                <span>Back</span>
+            </a>
+            <a href="javascript:void(0)" style="display: none;" id="toolbar-next">
+                <img src="{{ url('/icons/functionbar/functionbar-next-blue.svg') }}" alt="Next">
+                <img src="{{ url('/icons/functionbar/functionbar-next-white.svg') }}" class="functionbar-hover" alt="Next">
+                <span>Next</span>
+            </a>
+            <a class="list-functionbar-lgx" href="javascript:void(0)" id="toolbar-process">
+                <img src="{{ url('/icons/functionbar/process.svg') }}" alt="Process">
+                <img src="{{ url('/icons/functionbar/process.svg') }}" class="functionbar-hover" alt="Process">
+                <span>Process Payment Slip Data</span>
+            </a>
+            <a href="javascript:void(0)" style="display: none;" id="toolbar-new" target="iframe_dashboard">
+                <img src="{{ url('/icons/functionbar/functionbar-new-blue.svg') }}" alt="New">
+                <img src="{{ url('/icons/functionbar/functionbar-new-white.svg') }}" class="functionbar-hover" alt="New">
+                <span>New</span>
+            </a>
+            <a href="javascript:void(0)" style="display: none;" id="toolbar-edit">
+                <img src="{{ url('/icons/functionbar/functionbar-edit-blue.svg') }}" alt="Edit">
+                <img src="{{ url('/icons/functionbar/functionbar-edit-white.svg') }}" class="functionbar-hover" alt="Edit">
+                <span>Edit</span>
+            </a>
+            <a href="javascript:void(0)" style="display: none;" id="toolbar-save">
+                <img src="{{ url('/icons/functionbar/functionbar-save-blue.svg') }}" alt="Save">
+                <img src="{{ url('/icons/functionbar/functionbar-save-white.svg') }}" class="functionbar-hover" alt="Save">
+                <span>Save</span>
+            </a>
+            <a class="list-functionbar-md" style="display: none;" href="javascript:void(0)" id="toolbar-active">
+                <img src="{{ url('/icons/functionbar/functionbar-checklist-blue.svg') }}" alt="Activate">
+                <img src="{{ url('/icons/functionbar/functionbar-checklist-white.svg') }}" class="functionbar-hover" alt="Activate">
+                <span>Activate</span>
+            </a>
+            <a class="list-functionbar-lg" style="display: none;" href="javascript:void(0)" id="toolbar-deactive">
+                <img src="{{ url('/icons/functionbar/functionbar-deactivate-blue.svg') }}" alt="Deactivate">
+                <img src="{{ url('/icons/functionbar/functionbar-deactivate-white.svg') }}" class="functionbar-hover" alt="Deactivate">
+                <span>Deactivate</span>
+            </a>
+            <a href="javascript:void(0)" style="display: none;" id="toolbar-list">
+                <img src="{{ url('/icons/functionbar/functionbar-list-blue.svg') }}" alt="List">
+                <img src="{{ url('/icons/functionbar/functionbar-list-white.svg') }}" class="functionbar-hover" alt="List">
+                <span>List</span>
+            </a>
+            <a class="list-functionbar-sm" style="display: none;" href="javascript:void(0)" id="toolbar-delete">
+                <img src="{{ url('/icons/functionbar/remove.svg') }}" alt="Delete">
+                <img src="{{ url('/icons/functionbar/remove.svg') }}" class="functionbar-hover" alt="Delete">
+                <span>Delete</span>
+            </a>
+        </div>
+        <div class="div-form">
+            <form id="payment_slip_form" method="post">
+                @csrf
+                <div class="div-payroll">
+                    <div class="div-title">
+                        <a href="{{ route('payroll', ['moduleID' => 'PY']) }}" target="iframe_dashboard">
+                            <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
+                            <span class="title-text">{{ __('payroll_payment_slip.list') }}</span>
+                        </a>
+                    </div>
 
-                <div class="row">
-                    <div class="col-2">
-                        <div class="form-group">
-                            <label for="slip_type form-check-label">{{ __('payroll_payment_slip.label_slip_type') }}</label>
-                        </div>
-                    </div>
-                    <div class="col-2">
-                        <select name="slip_type" id="slip_type" class="form-control select2">
-                            <option value="Salary">{{ __('payroll_payment_slip.label_slip') }}</option>
-                            <option value="THR">{{ __('payroll_payment_slip.label_thr') }}</option>
-                            <option value="Bonus">{{ __('payroll_payment_slip.label_bonus') }}</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-2">
-                        <div class="form-group">
-                            <label for="period form-check-label">{{ __('payroll_payment_slip.label_period') }}</label>
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="period" name="period"
-                                placeholder="{{ __('payroll_payment_slip.label_period') }}">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="period_calendar"><span class="fa fa-calendar"></span></span>
+                    <div class="row">
+                        <div class="col-2">
+                            <div class="form-group">
+                                <label for="slip_type form-check-label">{{ __('payroll_payment_slip.label_slip_type') }}</label>
                             </div>
                         </div>
-                        <input type="text" class="form-control" id="period_hidden" name="period_hidden" hidden>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-2">
-                        <div class="form-group">
-                            <label for="format_type form-check-label">{{ __('payroll_payment_slip.label_format') }}</label>
-                        </div>
-                    </div>
-                    <div class="col-2">
-                        <div class="form-check">
-                            <input type="radio" id="landscape" name="format_type" value="landscape" checked>
-                            <label for="landscape">{{ __('payroll_payment_slip.label_landscape') }}</label>
-                        </div>
-                    </div>
-                    <div class="col-2">
-                        <div class="form-check">
-                            <input type="radio" id="portrait" name="format_type" value="portrait">
-                            <label for="portrait">{{ __('payroll_payment_slip.label_portrait') }}</label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-2">
-                        <div class="form-group">
-                            <label for="print_date form-check-label">{{ __('payroll_payment_slip.label_print_date') }}</label>
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="print_date" name="print_date"
-                                placeholder="{{ __('payroll_payment_slip.label_print_date') }}">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="print_date_calendar"><span class="fa fa-calendar"></span></span>
-                            </div>
-                        </div>
-                        <input type="text" class="form-control" id="print_date_hidden" name="print_date_hidden" hidden>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-2">
-                        <div class="form-group">
-                            <label for="employee_no_from form-check-label">{{ __('payroll_payment_slip.label_employee_no') }}</label>
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <select class="form-control select2" id="employee_no_from" name="employee_no_from"></select>
-                    </div>
-                    <div class="col-0.5">
-                        <div class="form-group">
-                            <label for="employee_no_to form-check-label">{{ __('payroll_payment_slip.label_to') }}</label>
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <select class="form-control select2" id="employee_no_to" name="employee_no_to"></select>
-                    </div>
-                </div>
-
-                <!-- <div class="row">
-                    <div class="col-3">
-                        <div class="form-group">
-                            <label for="sort_by form-check-label">{{ __('payroll_payment_slip.label_sort_by') }}</label>
-                        </div>
-                    </div>
-                    <div class="col-2">
-                        <div class="form-check">
-                            <input type="radio" id="by_employee_no" name="sort_by" value="by_employee_no" checked>
-                            <label for="by_employee_no">{{ __('payroll_payment_slip.label_employee_no') }}</label>
-                        </div>
-                    </div>
-                    <div class="col-2">
-                        <div class="form-check">
-                            <input type="radio" id="by_level" name="sort_by" value="by_level">
-                            <label for="by_level">{{ __('payroll_payment_slip.label_level') }}</label>
-                        </div>
-                    </div>
-                    <div class="col-2 desc" id="choose_level_by_level" style="display:none;">
-                        <select class="form-control select2" id="level" name="level"></select>
-                    </div>
-                </div> -->
-
-                <div class="row">
-                    <div class="col-2">
-                        <div class="form-group">
-                            <label for="group_authorized_from form-check-label">{{ __('payroll_payment_slip.label_group_authorize_code') }}</label>
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <select class="form-control select2" id="group_authorized_from" name="group_authorized_from"></select>
-                    </div>
-                    <div class="col-0.5">
-                        <div class="form-group">
-                            <label for="group_authorized_to form-check-label">{{ __('payroll_payment_slip.label_to') }}</label>
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <select class="form-control select2" id="group_authorized_to" name="group_authorized_to"></select>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-2">
-                        <div class="form-group">
-                            <label for="display_logo">{{ __('payroll_payment_slip.label_display_company_logo') }}</label>
-                        </div>
-                    </div>
-                    <div class="col-2">
-                        <input class="form-control" type="hidden" name="display_logo" value="0">
-                        <input class="cb_size form-control" type="checkbox" id="display_logo" name="display_logo" value="1">
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-2">
-                        <div class="form-group">
-                            <label for="position form-check-label">{{ __('payroll_payment_slip.label_position') }}</label>
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <div class="form-group">
-                            <select class="form-control select2" id="position"
-                                name="position[]" multiple="multiple">
+                        <div class="col-2">
+                            <select name="slip_type" id="slip_type" class="form-control select2">
+                                <option value="Salary">{{ __('payroll_payment_slip.label_slip') }}</option>
+                                <option value="THR">{{ __('payroll_payment_slip.label_thr') }}</option>
+                                <option value="Bonus">{{ __('payroll_payment_slip.label_bonus') }}</option>
                             </select>
                         </div>
                     </div>
-                    <div class="col-2">
-                        <div class="form-group">
-                            <label for="ranking form-check-label">{{ __('payroll_payment_slip.label_ranking') }}</label>
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <div class="form-group">
-                            <select class="form-control select2" id="ranking" name="ranking[]"
-                                multiple="multiple"></select>
-                        </div>
-                    </div>
-                </div>
-                <div class="row" id="div-level">
-                    <div class="col-2">
-                        <div class="form-group">
-                            <label for="location form-check-label">{{ __('payroll_payment_slip.label_location') }}</label>
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <div class="form-group">
-                            <select class="form-control select2" id="location" name="location[]"
-                                multiple="multiple"></select>
-                        </div>
-                        <input type="hidden" class="form-control" id="level_format" name="level_format">
-                    </div>
-                </div>
 
-                <!-- BUTTON -->
-                <div class="row">
-                    <div class="col-3">
-                        <button class="btn btn-primary" id="btn-preview"style="width: 100%;">
-                            <i class="fa fa-eye"></i> {{ __('payroll_payment_slip.btn_preview') }}
-                        </button>
+                    <div class="row">
+                        <div class="col-2">
+                            <div class="form-group">
+                                <label for="period form-check-label">{{ __('payroll_payment_slip.label_period') }}</label>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="period" name="period"
+                                    placeholder="{{ __('payroll_payment_slip.label_period') }}">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="period_calendar"><span class="fa fa-calendar"></span></span>
+                                </div>
+                            </div>
+                            <input type="text" class="form-control" id="period_hidden" name="period_hidden" hidden>
+                        </div>
                     </div>
-                    <div class="col-3">
-                        <button class="btn btn-primary" id="btn-send-to" style="width: 100%;">
-                            <i class="fa fa-print"></i> {{ __('payroll_payment_slip.btn_send_to') }}
-                        </button>
+
+                    <div class="row">
+                        <div class="col-2">
+                            <div class="form-group">
+                                <label for="format_type form-check-label">{{ __('payroll_payment_slip.label_format') }}</label>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="form-check">
+                                <input type="radio" id="landscape" name="format_type" value="landscape" checked>
+                                <label for="landscape">{{ __('payroll_payment_slip.label_landscape') }}</label>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="form-check">
+                                <input type="radio" id="portrait" name="format_type" value="portrait">
+                                <label for="portrait">{{ __('payroll_payment_slip.label_portrait') }}</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-2">
+                            <div class="form-group">
+                                <label for="print_date form-check-label">{{ __('payroll_payment_slip.label_print_date') }}</label>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="print_date" name="print_date"
+                                    placeholder="{{ __('payroll_payment_slip.label_print_date') }}">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="print_date_calendar"><span class="fa fa-calendar"></span></span>
+                                </div>
+                            </div>
+                            <input type="text" class="form-control" id="print_date_hidden" name="print_date_hidden" hidden>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-2">
+                            <div class="form-group">
+                                <label for="employee_no_from form-check-label">{{ __('payroll_payment_slip.label_employee_no') }}</label>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <select class="form-control select2" id="employee_no_from" name="employee_no_from"></select>
+                        </div>
+                        <div class="col-0.5">
+                            <div class="form-group">
+                                <label for="employee_no_to form-check-label">{{ __('payroll_payment_slip.label_to') }}</label>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <select class="form-control select2" id="employee_no_to" name="employee_no_to"></select>
+                        </div>
+                    </div>
+
+                    <!-- <div class="row">
+                        <div class="col-3">
+                            <div class="form-group">
+                                <label for="sort_by form-check-label">{{ __('payroll_payment_slip.label_sort_by') }}</label>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="form-check">
+                                <input type="radio" id="by_employee_no" name="sort_by" value="by_employee_no" checked>
+                                <label for="by_employee_no">{{ __('payroll_payment_slip.label_employee_no') }}</label>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="form-check">
+                                <input type="radio" id="by_level" name="sort_by" value="by_level">
+                                <label for="by_level">{{ __('payroll_payment_slip.label_level') }}</label>
+                            </div>
+                        </div>
+                        <div class="col-2 desc" id="choose_level_by_level" style="display:none;">
+                            <select class="form-control select2" id="level" name="level"></select>
+                        </div>
+                    </div> -->
+
+                    <div class="row">
+                        <div class="col-2">
+                            <div class="form-group">
+                                <label for="group_authorized_from form-check-label">{{ __('payroll_payment_slip.label_group_authorize_code') }}</label>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <select class="form-control select2" id="group_authorized_from" name="group_authorized_from"></select>
+                        </div>
+                        <div class="col-0.5">
+                            <div class="form-group">
+                                <label for="group_authorized_to form-check-label">{{ __('payroll_payment_slip.label_to') }}</label>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <select class="form-control select2" id="group_authorized_to" name="group_authorized_to"></select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-2">
+                            <div class="form-group">
+                                <label for="display_logo">{{ __('payroll_payment_slip.label_display_company_logo') }}</label>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <input class="form-control" type="hidden" name="display_logo" value="0">
+                            <input class="cb_size form-control" type="checkbox" id="display_logo" name="display_logo" value="1">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-2">
+                            <div class="form-group">
+                                <label for="position form-check-label">{{ __('payroll_payment_slip.label_position') }}</label>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <select class="form-control select2" id="position"
+                                    name="position[]" multiple="multiple">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="form-group">
+                                <label for="ranking form-check-label">{{ __('payroll_payment_slip.label_ranking') }}</label>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <select class="form-control select2" id="ranking" name="ranking[]"
+                                    multiple="multiple"></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" id="div-level">
+                        <div class="col-2">
+                            <div class="form-group">
+                                <label for="location form-check-label">{{ __('payroll_payment_slip.label_location') }}</label>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <select class="form-control select2" id="location" name="location[]"
+                                    multiple="multiple"></select>
+                            </div>
+                            <input type="hidden" class="form-control" id="level_format" name="level_format">
+                        </div>
+                    </div>
+
+                    <!-- BUTTON -->
+                    <div class="row">
+                        <div class="col-3">
+                            <button class="btn btn-primary" id="btn-preview"style="width: 100%;">
+                                <i class="fa fa-eye"></i> {{ __('payroll_payment_slip.btn_preview') }}
+                            </button>
+                        </div>
+                        <div class="col-3">
+                            <button class="btn btn-primary" id="btn-send-to" style="width: 100%;">
+                                <i class="fa fa-print"></i> {{ __('payroll_payment_slip.btn_send_to') }}
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -1119,6 +1173,77 @@
                             $('#btn-preview').html(
                                 '<i class="fa fa-eye"></i> {{ __("payroll_payment_slip.btn_preview") }}'
                             );
+                            $('#notification_error').modal('show');
+                            $('#message-notification-error').html(response);
+                        }
+                    });
+                }
+            })
+        }
+
+        $("#toolbar-process").click(function () {
+            $(this).prop("disabled", true);
+            $(this).html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" style="margin: 0;"></span>'+
+                '<span>Loading...</span>'
+            );
+            $("#payment_slip_form").submit();
+        });
+
+        if ($("#payment_slip_form").length > 0) {
+            $("#payment_slip_form").validate({
+                submitHandler: function (form) {
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    $.ajax({
+                        url: "{{ url('payroll/payment_slip/proses') }}",
+                        type: "POST",
+                        data: $('#payment_slip_form').serialize(),
+                        success: function (response) {
+                            if (response.status == "true") {
+                                $("#toolbar-process").prop("disabled", false);
+                                $("#toolbar-process").html(
+                                    '<img src="{{ url('/icons/functionbar/process.svg') }}" alt="Process">' +
+                                    '<img src="{{ url('/icons/functionbar/process.svg') }}" class="functionbar-hover" alt="Process">' +
+                                    '<span>Process Payment Slip Data</span>'
+                                );
+
+                                $('#notification_success').modal('show');
+                                $('#message-notification-success').html(response
+                                    .message);
+                                setTimeout(function () {
+                                    $('#notification_success').modal('hide');
+                                }, 3000);
+                            } else {
+                                $("#toolbar-process").prop("disabled", false);
+                                $("#toolbar-process").html(
+                                    '<img src="{{ url('/icons/functionbar/process.svg') }}" alt="Process">' +
+                                    '<img src="{{ url('/icons/functionbar/process.svg') }}" class="functionbar-hover" alt="Process">' +
+                                    '<span>Process Payment Slip Data</span>'
+                                );
+
+                                $('#notification_error').modal('show');
+                                if (response.message == null || response.message ==
+                                    '') {
+                                    $('#message-notification-error').html(
+                                        "{{ __('login.error') }}");
+                                } else {
+                                    $('#message-notification-error').html(response
+                                        .message);
+                                }
+                            }
+                        },
+                        error: function (response) {
+                            $("#toolbar-process").prop("disabled", false);
+                            $("#toolbar-process").html(
+                                '<img src="{{ url('/icons/functionbar/process.svg') }}" alt="Process">' +
+                                '<img src="{{ url('/icons/functionbar/process.svg') }}" class="functionbar-hover" alt="Process">' +
+                                '<span>Process Payment Slip Data</span>'
+                            );
+
                             $('#notification_error').modal('show');
                             $('#message-notification-error').html(response);
                         }
