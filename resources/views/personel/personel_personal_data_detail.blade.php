@@ -5356,7 +5356,7 @@
                             results: $.map(data, function (item) {
                                 return {
                                     text: item.value,
-                                    id: item.value,
+                                    id: item.comGenCode,
                                     data: item
                                 }
                             })
@@ -7205,8 +7205,6 @@
             else {
                 $('#include_tax_family_dependent_data').val('false');
             }
-
-            console.log();
             
             arrayFamilyDependent.push({
                 "seqNoFamilyDependent": $("#seq_no_family_dependent_data").val(),
