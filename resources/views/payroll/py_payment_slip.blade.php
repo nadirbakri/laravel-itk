@@ -1039,12 +1039,14 @@
         }
 
         var clicked = "";
+        var url = "";
         $('#btn-send-to').click(function (){
             $("#btn-send-to").prop("disabled", true);
             $("#btn-send-to").html(
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
             clicked = "DOWNLOAD_PDF";
+            url = "{{ url('payroll/payment_slip/print') }}";
             $('#payment_slip_form').submit();
         });
 
@@ -1054,7 +1056,18 @@
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
             clicked = "PREVIEW";
+            url = "{{ url('payroll/payment_slip/print') }}";
             $('#payment_slip_form').submit();
+        });
+
+        $("#toolbar-process").click(function () {
+            $(this).prop("disabled", true);
+            $(this).html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" style="margin: 0;"></span>'+
+                '<span>Loading...</span>'
+            );
+            url = "{{ url('payroll/payment_slip/proses') }}";
+            $("#payment_slip_form").submit();
         });
 
         if($('#payment_slip_form').length > 0){
@@ -1103,6 +1116,12 @@
                     $('#btn-preview').html(
                         '<i class="fa fa-eye"></i> {{ __("payroll_payment_slip.btn_preview") }}'
                     );
+                    $("#toolbar-process").prop("disabled", false);
+                    $("#toolbar-process").html(
+                        '<img src="{{ url('/icons/functionbar/process.svg') }}" alt="Process">' +
+                        '<img src="{{ url('/icons/functionbar/process.svg') }}" class="functionbar-hover" alt="Process">' +
+                        '<span>Process Payment Slip Data</span>'
+                    );
 
                     error.addClass('invalid-feedback');
                     element.closest('.form-group').append(error);
@@ -1118,7 +1137,7 @@
                         xhrFields: {
                             responseType: 'blob',
                         },
-                        url: "{{ url('payroll/payment_slip/print') }}",
+                        url: url,
                         type: "POST",
                         data: $('#payment_slip_form').serialize(),
                         success: function(result, status, xhr){
@@ -1129,6 +1148,12 @@
                             $('#btn-preview').prop("disabled", false);
                             $("#btn-preview").html(
                                 '<i class="fa fa-eye"></i> {{ __("payroll_payment_slip.btn_preview") }}'
+                            );
+                            $("#toolbar-process").prop("disabled", false);
+                            $("#toolbar-process").html(
+                                '<img src="{{ url('/icons/functionbar/process.svg') }}" alt="Process">' +
+                                '<img src="{{ url('/icons/functionbar/process.svg') }}" class="functionbar-hover" alt="Process">' +
+                                '<span>Process Payment Slip Data</span>'
                             );
 
                             var disposition = xhr.getResponseHeader(
@@ -1173,77 +1198,12 @@
                             $('#btn-preview').html(
                                 '<i class="fa fa-eye"></i> {{ __("payroll_payment_slip.btn_preview") }}'
                             );
-                            $('#notification_error').modal('show');
-                            $('#message-notification-error').html(response);
-                        }
-                    });
-                }
-            })
-        }
-
-        $("#toolbar-process").click(function () {
-            $(this).prop("disabled", true);
-            $(this).html(
-                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" style="margin: 0;"></span>'+
-                '<span>Loading...</span>'
-            );
-            $("#payment_slip_form").submit();
-        });
-
-        if ($("#payment_slip_form").length > 0) {
-            $("#payment_slip_form").validate({
-                submitHandler: function (form) {
-                    $.ajaxSetup({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        }
-                    });
-                    $.ajax({
-                        url: "{{ url('payroll/payment_slip/proses') }}",
-                        type: "POST",
-                        data: $('#payment_slip_form').serialize(),
-                        success: function (response) {
-                            if (response.status == "true") {
-                                $("#toolbar-process").prop("disabled", false);
-                                $("#toolbar-process").html(
-                                    '<img src="{{ url('/icons/functionbar/process.svg') }}" alt="Process">' +
-                                    '<img src="{{ url('/icons/functionbar/process.svg') }}" class="functionbar-hover" alt="Process">' +
-                                    '<span>Process Payment Slip Data</span>'
-                                );
-
-                                $('#notification_success').modal('show');
-                                $('#message-notification-success').html(response
-                                    .message);
-                                setTimeout(function () {
-                                    $('#notification_success').modal('hide');
-                                }, 3000);
-                            } else {
-                                $("#toolbar-process").prop("disabled", false);
-                                $("#toolbar-process").html(
-                                    '<img src="{{ url('/icons/functionbar/process.svg') }}" alt="Process">' +
-                                    '<img src="{{ url('/icons/functionbar/process.svg') }}" class="functionbar-hover" alt="Process">' +
-                                    '<span>Process Payment Slip Data</span>'
-                                );
-
-                                $('#notification_error').modal('show');
-                                if (response.message == null || response.message ==
-                                    '') {
-                                    $('#message-notification-error').html(
-                                        "{{ __('login.error') }}");
-                                } else {
-                                    $('#message-notification-error').html(response
-                                        .message);
-                                }
-                            }
-                        },
-                        error: function (response) {
                             $("#toolbar-process").prop("disabled", false);
                             $("#toolbar-process").html(
                                 '<img src="{{ url('/icons/functionbar/process.svg') }}" alt="Process">' +
                                 '<img src="{{ url('/icons/functionbar/process.svg') }}" class="functionbar-hover" alt="Process">' +
                                 '<span>Process Payment Slip Data</span>'
                             );
-
                             $('#notification_error').modal('show');
                             $('#message-notification-error').html(response);
                         }
