@@ -2,18 +2,22 @@
 
 namespace App\Exports;
 
+use PhpOffice\PhpSpreadsheet\Cell\Cell;
 use Maatwebsite\Excel\Concerns\FromView;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\WithTitle;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use PhpOffice\PhpSpreadsheet\Cell\DataType;
 use Maatwebsite\Excel\Concerns\WithEvents;
+use Maatwebsite\Excel\Concerns\WithCustomValueBinder;
+use PhpOffice\PhpSpreadsheet\Cell\DefaultValueBinder;
 use Validator;
 use Session;
 use App;
 
-class DuaSatuEBupotPeriodicalSheet implements FromView, WithTitle, WithEvents, ShouldAutoSize
+class DuaSatuEBupotPeriodicalSheet extends DefaultValueBinder implements WithCustomValueBinder, FromView, WithTitle, WithEvents, ShouldAutoSize
 {
     public function __construct($format, $period, $rectification, $npwpGroup, $printDate, $groupAuthorizedCodeFrom, $groupAuthorizedCodeTo)
     {
@@ -24,6 +28,18 @@ class DuaSatuEBupotPeriodicalSheet implements FromView, WithTitle, WithEvents, S
         $this->printDate = $printDate;
         $this->groupAuthorizedCodeFrom = $groupAuthorizedCodeFrom;
         $this->groupAuthorizedCodeTo = $groupAuthorizedCodeTo;
+    }
+
+    public function bindValue(Cell $cell, $value)
+    {
+        if (is_numeric($value)) {
+            $cell->setValueExplicit($value, DataType::TYPE_STRING);
+
+            return true;
+        }
+
+        // else return default behavior
+        return parent::bindValue($cell, $value);
     }
 
     public function view(): View
@@ -41,6 +57,7 @@ class DuaSatuEBupotPeriodicalSheet implements FromView, WithTitle, WithEvents, S
                 'periodYear' => (int) date('Y', strtotime($this->period)),
                 'groupNPWPCode' => $this->npwpGroup,
                 'statusPeriod' => "1",
+                'printDate' => $this->printDate,
                 "languageCode" => App::getLocale(),
                 "sessionID" => 0,
                 "sessionUserID" => Session::get('userID')
@@ -78,24 +95,15 @@ class DuaSatuEBupotPeriodicalSheet implements FromView, WithTitle, WithEvents, S
     public function registerEvents(): array
     {
         return [
-            \Maatwebsite\Excel\Events\AfterSheet::class => function(\Maatwebsite\Excel\Events\AfterSheet $event) {
+            \Maatwebsite\Excel\Events\BeforeExport::class => function(\Maatwebsite\Excel\Events\BeforeExport $event) {
                 $sheet = $event->sheet;
                 $sheet->getDelegate()->getStyle('A1:BN2')
                     ->getAlignment()
                     ->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-   
-            },
-            AfterSheet::class => function(AfterSheet $event) {
-                $sheet = $event->sheet;
-                $cells = $sheet->getDelegate()->getElementsByTagName('td');
-                foreach ($cells as $cell) {
-                    $dataFormat = $cell->getAttribute('data-format');
 
-                    // Set format sel jika atribut data-format ditemukan
-                    if (!empty($dataFormat)) {
-                        $sheet->getStyle($cell->getCoordinate())->getNumberFormat()->setFormatCode($dataFormat);
-                    }
-                }
+                $sheet->getDelegate()->getStyle('B3:BN500')
+                    ->getNumberFormat()
+                    ->setFormatCode('@');
    
             },
         ];

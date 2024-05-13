@@ -57,7 +57,7 @@
             <tr>
                 <td>{{ ($key+1) }}</td>
                 @foreach ($value as $key2 => $value2)
-                    <td>{{ $value2 }}</td>
+                    <td data-format="@">{{ $value2 }}</td>
                 @endforeach
             </tr>
             @endforeach

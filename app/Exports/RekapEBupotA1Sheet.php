@@ -40,6 +40,7 @@ class RekapEBupotA1Sheet implements FromView, WithTitle, WithEvents, ShouldAutoS
                 'periodMonth' => (int) date('n', strtotime($this->period)),
                 'periodYear' => (int) date('Y', strtotime($this->period)),
                 'groupNPWPCode' => $this->npwpGroup,
+                'printDate' => $this->printDate,
                 'statusPeriod' => "1",
                 "languageCode" => App::getLocale(),
                 "sessionID" => 0,
@@ -51,7 +52,7 @@ class RekapEBupotA1Sheet implements FromView, WithTitle, WithEvents, ShouldAutoS
             //     $param['groupAuthorizeCodeTo'] = (int) $this->groupAuthorizedCodeTo;
             // }
 
-            // var_dump(json_encode($param));
+            // dd(json_encode($param));
 
             $response = $client->post(env('API_URL') . "/payroll/getEBupotA1", [
                 'body' => json_encode($param)
@@ -70,9 +71,11 @@ class RekapEBupotA1Sheet implements FromView, WithTitle, WithEvents, ShouldAutoS
             }
         }
 
+        // dd($arrResult->dataListSet);
+
         return view('payroll.py_export_csv_espt_report_rekap_a1_excel', [
-            'periodYear' => (int) date('Y', strtotime($this->period)),
-            'jumlaha1' => (isset($arrResult->dataListSet[0]->list_A1)) ? count($arrResult->dataListSet[0]->list_A1[0]->value) : 0,
+            'periodYear' => (isset($arrResult->dataListSet[0]->periodYear)) ? $arrResult->dataListSet[0]->periodYear : (int) date('Y', strtotime($this->period)),
+            'jumlaha1' => (isset($arrResult->dataListSet[0]->totalA1)) ? $arrResult->dataListSet[0]->totalA1 : 0,
         ]);
     }
 

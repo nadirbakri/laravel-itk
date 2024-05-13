@@ -40,6 +40,7 @@ class RekapEBupotPeriodicalSheet implements FromView, WithTitle, WithEvents, Sho
                 'periodMonth' => (int) date('n', strtotime($this->period)),
                 'periodYear' => (int) date('Y', strtotime($this->period)),
                 'groupNPWPCode' => $this->npwpGroup,
+                'printDate' => $this->printDate,
                 'statusPeriod' => "1",
                 "languageCode" => App::getLocale(),
                 "sessionID" => 0,
@@ -71,10 +72,10 @@ class RekapEBupotPeriodicalSheet implements FromView, WithTitle, WithEvents, Sho
         }
 
         return view('payroll.py_export_csv_espt_report_rekap_periodical_excel', [
-            'periodMonth' => (int) date('n', strtotime($this->period)),
-            'periodYear' => (int) date('Y', strtotime($this->period)),
-            'jumlah21' => (isset($arrResult->dataListSet[0]->list_21)) ? count($arrResult->dataListSet[0]->list_21[0]->value) : 0,
-            'jumlah26' => (isset($arrResult->dataListSet[0]->list_26)) ? count($arrResult->dataListSet[0]->list_26[0]->value) : 0,
+            'periodMonth' => (isset($arrResult->dataListSet[0]->periodMonth)) ? $arrResult->dataListSet[0]->periodMonth : (int) date('n', strtotime($this->period)),
+            'periodYear' => (isset($arrResult->dataListSet[0]->periodYear)) ? $arrResult->dataListSet[0]->periodYear : (int) date('Y', strtotime($this->period)),
+            'jumlah21' => (isset($arrResult->dataListSet[0]->total21)) ? $arrResult->dataListSet[0]->total21 : 0,
+            'jumlah26' => (isset($arrResult->dataListSet[0]->total26)) ? $arrResult->dataListSet[0]->total26 : 0,
         ]);
     }
 
