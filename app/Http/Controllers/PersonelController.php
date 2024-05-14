@@ -5744,7 +5744,7 @@ class PersonelController extends Controller
                 "positionCode" => $request->position_code_employment,
                 "rankingCode" => $request->ranking_code_employment,
                 "workNatureCode" => null,
-                "groupCode" => null,
+                "groupCode" => $request->group_code_employment,
                 "groupAuthorizeCode" => (int) $request->group_authorize_payroll,
                 "specialResign" => isset($request->special_reason_resign_employment) ? (bool) $request->special_reason_resign_employment : false,
                 "npwpMutationCode" => null,

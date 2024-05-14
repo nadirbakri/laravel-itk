@@ -97,6 +97,7 @@ return [
     'label_grade' => 'Grade',
     'label_location' => 'Location',
     'label_cost_center' => 'Cost Center',
+    'label_group_code' => 'Group Code',
     'label_home_address' => 'Home Address',
     'label_other_address' => 'Other Address',
     'label_work_address' => 'Work Address',

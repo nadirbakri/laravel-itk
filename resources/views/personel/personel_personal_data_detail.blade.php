@@ -1192,6 +1192,17 @@
                         </div>
                         <div class="row">
                             <div class="col-6">
+                                <div class="form-group">
+                                    <label
+                                        for="group_code_employment">{{ __('personel_personal_data.label_group_code') }}</label>
+                                    <select class="form-control" id="group_code_employment"
+                                        name="group_code_employment">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
                                 <span
                                     class="div-title-text">{{ __('personel_personal_data.label_level') }}</span>
                             </div>
@@ -2813,6 +2824,7 @@
         loadDataGrade();
         // loadDataLocation();
         loadDataCostCenter();
+        loadDataGroupCode();
         loadDataBenefits();
         loadDataAbsenteeismType();
         loadDataWorkPatternCode();
@@ -2933,6 +2945,7 @@
             $('#grade_code_employment').val(null).trigger('change');
             // $('#location_code_employment').val(null).trigger('change');
             $('#cost_center_code_employment').val(null).trigger('change');
+            $('#group_code_employment').val(null).trigger('change');
             $('#fringe_benefit_data_table').DataTable().destroy();
             load_table_fringe_benefit();
 
@@ -3632,6 +3645,27 @@
                         params: {
                             id: data[0].costCenterCode,
                             text: data[0].costCenterDescription,
+                            data: data[0]
+                        }
+                    });
+                });
+
+                $.ajax({
+                    type: 'GET',
+                    url: "{{ url('/group/detail/api') }}",
+                    data: {
+                        'groupCode': ((typeof arrData2[0].groupCode !== 'undefined') ? arrData2[0].groupCode : ''),
+                    }
+                }).then(function (data) {
+                    var option = new Option(data[0].groupName, data[0].groupCode, true, true);
+
+                    $('#group_code_employment').append(option).trigger('change');
+
+                    $('#group_code_employment').trigger({
+                        type: 'select2:select',
+                        params: {
+                            id: data[0].groupCode,
+                            text: data[0].groupName,
                             data: data[0]
                         }
                     });
@@ -5909,6 +5943,66 @@
                                 return {
                                     text: item.costCenterDescription,
                                     id: item.costCenterCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataGroupCode(){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' + 
+                        '<div class="col-12">' + data.data.groupName + '<div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $('#group_code_employment').select2({
+                width: '100%',
+                placeholder: 'Choose Group Code',
+                allowClear: true,
+                // multiple: true,
+                // tags: true,
+                closeOnSelect: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: "{{ url('/group/api') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.groupName,
+                                    id: item.groupCode,
                                     data: item
                                 }
                             })
