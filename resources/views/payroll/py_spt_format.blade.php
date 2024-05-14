@@ -1195,25 +1195,12 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' +
-                        '<div class="col-6">' + data.data.fieldName + '</div>' +
-                        '<div class="col-6">' + data.data.description + '</div>' +
+                        '<div class="col-12">' + data.data + '</div>' +
                         '</div>');
 
                     return $result2;
                 }
             }
-
-            var headerIsAppend = false;
-            $('#operator').on('select2:open', function (e) {
-                if (!headerIsAppend) {
-                    html = '<div class="row">' +
-                        '<div class="col-6"><b>Field Name</b></div>' +
-                        '<div class="col-6"><b>Description</b></div>' +
-                        '</div>';
-                    $('.select2-search--dropdown').append(html);
-                    headerIsAppend = true;
-                }
-            });
 
             var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
 
@@ -1230,23 +1217,23 @@
                     }
                 },
                 ajax: {
-                    url: "{{ url('/field_name_salary_component/api') }}",
+                    url: "{{ url('/field/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
                     data: function (params) {
                         return {
                             _token: CSRF_TOKEN,
-                            search: params.term
+                            search: params.term,
+                            tableName: 'PrYearly'
                         };
                     },
                     processResults: function (data) {
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.fieldName,
-                                    id: item.fieldName,
-                                    title: item.description,
+                                    text: item,
+                                    id: item,
                                     data: item
                                 }
                             })
