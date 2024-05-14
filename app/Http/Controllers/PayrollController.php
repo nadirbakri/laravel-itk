@@ -2414,7 +2414,7 @@ class PayrollController extends Controller
                 ['body' => json_encode(
                     [
                         // 'companyCode' => Session::get('companyCode'),
-                        'variable' => 'religion_',
+                        'variable' => 'Religion_',
                         'comGenCode' => $request->religionCode,
                         'languageCode' => strtoupper(App::getLocale()),
                         'userID' => Session::get('userID'),
@@ -2450,11 +2450,15 @@ class PayrollController extends Controller
         $arrResult = json_decode($response->getBody()->getContents());
         $arrResult2 = json_decode($response_table->getBody()->getContents());
         
-        if($arrResult->dataListSet == null || $arrResult2->dataListSet == null){
+        if($arrResult->dataListSet == null){
             $data = [];
-            $data_table = [];
         }else{
             $data = $arrResult->dataListSet;
+        }
+
+        if($arrResult2->dataListSet == null){
+            $data_table = [];
+        }else{
             $data_table = $arrResult->dataListSet;
         }
 
