@@ -1500,7 +1500,7 @@ class PayrollController extends Controller
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
-                        "variable" => "religion_",
+                        "variable" => "Religion_",
                         "languageCode" => App::getLocale(),
                         'userID' => Session::get('userID'),
                         'logActionUserID' => Session::get('userID'),
