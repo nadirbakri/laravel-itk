@@ -438,7 +438,7 @@
                                         <label for="pension_contribution_employee">{{ __('payroll_reference_payroll.label_pension_contribution_employee') }}</label>
                                         <small class="text-muted">(0 - 100)</small>
                                         <div class="input-group">
-                                            <input type="number" min=0 max=100 class="form-control" id="pension_contribution_employee" name="pension_contribution_employee"
+                                            <input type="number" min="0" max="100" class="form-control" id="pension_contribution_employee" name="pension_contribution_employee"
                                                 placeholder="{{ __('payroll_reference_payroll.label_pension_contribution_employee') }}" readonly>
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><span>%</span></span>
@@ -451,7 +451,7 @@
                                         <label for="pension_contribution_employer">{{ __('payroll_reference_payroll.label_pension_contribution_employer') }}</label>
                                         <small class="text-muted">(0 - 100)</small>
                                         <div class="input-group">
-                                            <input type="number" min=0 max=100 class="form-control" id="pension_contribution_employer" name="pension_contribution_employer"
+                                            <input type="number" min="0" max="100" class="form-control" id="pension_contribution_employer" name="pension_contribution_employer"
                                                 placeholder="{{ __('payroll_reference_payroll.label_pension_contribution_employer') }}" readonly>
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><span>%</span></span>
@@ -466,7 +466,7 @@
                                         <label for="work_related_accident_insurance_one">{{ __('payroll_reference_payroll.label_work_related_accident_insurance_one') }}</label>
                                         <small class="text-muted">(0 - 100)</small>
                                         <div class="input-group">
-                                            <input type="number" min=0 max=100 class="form-control" id="work_related_accident_insurance_one" name="work_related_accident_insurance_one"
+                                            <input type="number" min="0" max="100" class="form-control" id="work_related_accident_insurance_one" name="work_related_accident_insurance_one"
                                                 placeholder="{{ __('payroll_reference_payroll.label_work_related_accident_insurance_one') }}" readonly>
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><span>%</span></span>
@@ -479,7 +479,7 @@
                                         <label for="work_related_accident_insurance_two">{{ __('payroll_reference_payroll.label_work_related_accident_insurance_two') }}</label>
                                         <small class="text-muted">(0 - 100)</small>
                                         <div class="input-group">
-                                            <input type="number" min=0 max=100 class="form-control" id="work_related_accident_insurance_two" name="work_related_accident_insurance_two"
+                                            <input type="number" min="0" max="100" class="form-control" id="work_related_accident_insurance_two" name="work_related_accident_insurance_two"
                                                 placeholder="{{ __('payroll_reference_payroll.label_work_related_accident_insurance_two') }}"readonly>
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><span>%</span></span>
@@ -494,7 +494,7 @@
                                         <label for="work_related_accident_insurance_three">{{ __('payroll_reference_payroll.label_work_related_accident_insurance_three') }}</label>
                                         <small class="text-muted">(0 - 100)</small>
                                         <div class="input-group">
-                                            <input type="number" min=0 max=100 class="form-control" id="work_related_accident_insurance_three" name="work_related_accident_insurance_three"
+                                            <input type="number" min="0" max="100" class="form-control" id="work_related_accident_insurance_three" name="work_related_accident_insurance_three"
                                                 placeholder="{{ __('payroll_reference_payroll.label_work_related_accident_insurance_three') }}" readonly>
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><span>%</span></span>
@@ -507,7 +507,7 @@
                                         <label for="non_accidental_death_insurance">{{ __('payroll_reference_payroll.label_non_accidental_death_insurance') }}</label>
                                         <small class="text-muted">(0 - 100)</small>
                                         <div class="input-group">
-                                            <input type="number" min=0 max=100 class="form-control" id="non_accidental_death_insurance" name="non_accidental_death_insurance"
+                                            <input type="number" min="0" max="100" class="form-control" id="non_accidental_death_insurance" name="non_accidental_death_insurance"
                                                 placeholder="{{ __('payroll_reference_payroll.label_non_accidental_death_insurance') }}" readonly>
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><span>%</span></span>
@@ -522,7 +522,7 @@
                                         <label for="health_insurance_company">{{ __('payroll_reference_payroll.label_health_insurance_company') }}</label>
                                         <small class="text-muted">(0 - 100)</small>
                                         <div class="input-group">
-                                            <input type="number" min=0 max=100 class="form-control" id="health_insurance_company" name="health_insurance_company"
+                                            <input type="number" min="0" max="100" class="form-control" id="health_insurance_company" name="health_insurance_company"
                                                 placeholder="{{ __('payroll_reference_payroll.label_health_insurance_company') }}" readonly>
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><span>%</span></span>
@@ -535,7 +535,7 @@
                                         <label for="health_insurance_employee">{{ __('payroll_reference_payroll.label_health_insurance_employee') }}</label>
                                         <small class="text-muted">(0 - 100)</small>
                                         <div class="input-group">
-                                            <input type="number" min=0 max=100 class="form-control" id="health_insurance_employee" name="health_insurance_employee"
+                                            <input type="number" min="0" max="100" class="form-control" id="health_insurance_employee" name="health_insurance_employee"
                                                 placeholder="{{ __('payroll_reference_payroll.label_health_insurance_employee') }}" readonly>
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><span>%</span></span>
@@ -567,7 +567,7 @@
                                         <label for="pension_insurance_company">{{ __('payroll_reference_payroll.label_pension_insurance_company') }}</label>
                                         <small class="text-muted">(0 - 100)</small>
                                         <div class="input-group">
-                                            <input type="number" min=0 max=100 class="form-control" id="pension_insurance_company" name="pension_insurance_company"
+                                            <input type="number" min="0" max="100" class="form-control" id="pension_insurance_company" name="pension_insurance_company"
                                                 placeholder="{{ __('payroll_reference_payroll.label_pension_insurance_company') }}" readonly>
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><span>%</span></span>
@@ -580,7 +580,7 @@
                                         <label for="pension_insurance_employee">{{ __('payroll_reference_payroll.label_pension_insurance_employee') }}</label>
                                         <small class="text-muted">(0 - 100)</small>
                                         <div class="input-group">
-                                            <input type="number" min=0 max=100 class="form-control" id="pension_insurance_employee" name="pension_insurance_employee"
+                                            <input type="number" min="0" max="100" class="form-control" id="pension_insurance_employee" name="pension_insurance_employee"
                                                 placeholder="{{ __('payroll_reference_payroll.label_pension_insurance_employee') }}" readonly>
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><span>%</span></span>
@@ -659,7 +659,7 @@
                                                 for="check_on_period_jamsostek">{{ __('payroll_reference_payroll.label_deduction_on_period_period') }}</label>
                                             <small class="text-muted">(1 - 12)</small>
                                         </div>
-                                        <input class="form-control" type="number" min=1 max=12 id="on_period_jamsostek" name="deduction_on_period_jamsostek" readonly>
+                                        <input class="form-control" type="number" min="1" max="12" id="on_period_jamsostek" name="deduction_on_period_jamsostek" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -669,7 +669,7 @@
                                         <label for="work_insurance_remision_payment_percentage">{{ __('payroll_reference_payroll.label_work_insurance_remision_payment_percentage') }}</label>
                                         <small class="text-muted">(0 - 100)</small>
                                         <div class="input-group">
-                                            <input type="number" min=0 max=100 class="form-control" id="work_insurance_remision_payment_percentage" name="work_insurance_remision_payment_percentage"
+                                            <input type="number" min="0" max="100" class="form-control" id="work_insurance_remision_payment_percentage" name="work_insurance_remision_payment_percentage"
                                                 placeholder="{{ __('payroll_reference_payroll.label_work_insurance_remision_payment_percentage') }}" readonly>
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><span>%</span></span>
@@ -762,21 +762,21 @@
                                 <div class="col-4">
                                     <div class="form-group">
                                         <label for="occupational_percentage">{{ __('payroll_reference_payroll.label_occupational_percentage') }}</label>
-                                        <input type="number" class="form-control" id="occupational_percentage" name="occupational_percentage"
-                                            placeholder="{{ __('payroll_reference_payroll.label_occupational_percentage') }}" readonly>
+                                        <small class="text-muted">(0 - 100)</small>
+                                        <div class="input-group">
+                                            <input type="number" min="0" max="100" class="form-control" id="occupational_percentage" name="occupational_percentage"
+                                                placeholder="{{ __('payroll_reference_payroll.label_occupational_percentage') }}" readonly>
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><span>%</span></span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-4">
                                     <div class="form-group">
                                         <label for="occupational_maximum">{{ __('payroll_reference_payroll.label_occupational_maximum') }}</label>
-                                        <small class="text-muted">(0 - 100)</small>
-                                        <div class="input-group">
-                                            <input type="number" min=0 max=100 class="form-control" id="occupational_maximum" name="occupational_maximum"
-                                                placeholder="{{ __('payroll_reference_payroll.label_occupational_maximum') }}" readonly>
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text"><span>%</span></span>
-                                            </div>
-                                        </div>
+                                        <input type="number" class="form-control" id="occupational_maximum" name="occupational_maximum"
+                                            placeholder="{{ __('payroll_reference_payroll.label_occupational_maximum') }}" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -991,7 +991,7 @@
                                                 <label for="tax_rate_with_time_test">{{ __('payroll_reference_payroll.label_tax_rate_with_time_test') }}</label>
                                                 <small class="text-muted">(0 - 100)</small>
                                                 <div class="input-group">
-                                                    <input type="number" min=0 max=100 class="form-control" id="tax_rate_with_time_test" name="tax_rate_with_time_test"
+                                                    <input type="number" min="0" max="100" class="form-control" id="tax_rate_with_time_test" name="tax_rate_with_time_test"
                                                         placeholder="{{ __('payroll_reference_payroll.label_tax_rate_with_time_test') }}" readonly>
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text"><span>%</span></span>
@@ -1094,7 +1094,7 @@
                                                         for="check_on_period_tax_calculation_table">{{ __('payroll_reference_payroll.label_deduction_on_period_period') }}</label>
                                                     <small class="text-muted">(1 - 12)</small>
                                                 </div>
-                                                <input class="form-control" type="number" min=1 max=12 id="on_period_tax_calculation_table" name="deduction_on_period_tax_calculation_table" readonly>
+                                                <input class="form-control" type="number" min="1" max="12" id="on_period_tax_calculation_table" name="deduction_on_period_tax_calculation_table" readonly>
                                             </div>
                                         </div>
                                     </div>
@@ -1111,7 +1111,7 @@
                                                 <label for="tax_penalties_salary">{{ __('payroll_reference_payroll.label_tax_penalties_salary') }}</label>
                                                 <small class="text-muted">(0 - 100)</small>
                                                 <div class="input-group">
-                                                    <input type="number" min=0 max=100 class="form-control" id="tax_penalties_salary" name="tax_penalties_salary"
+                                                    <input type="number" min="0" max="100" class="form-control" id="tax_penalties_salary" name="tax_penalties_salary"
                                                         placeholder="{{ __('payroll_reference_payroll.label_tax_penalties_salary') }}" readonly>
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text"><span>%</span></span>
@@ -1126,7 +1126,7 @@
                                                 <label for="tax_penalties_bonus">{{ __('payroll_reference_payroll.label_tax_penalties_bonus') }}</label>
                                                 <small class="text-muted">(0 - 100)</small>
                                                 <div class="input-group">
-                                                    <input type="number" min=0 max=100 class="form-control" id="tax_penalties_bonus" name="tax_penalties_bonus"
+                                                    <input type="number" min="0" max="100" class="form-control" id="tax_penalties_bonus" name="tax_penalties_bonus"
                                                         placeholder="{{ __('payroll_reference_payroll.label_tax_penalties_bonus') }}" readonly>
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text"><span>%</span></span>
@@ -1141,7 +1141,7 @@
                                                 <label for="tax_penalties_thr">{{ __('payroll_reference_payroll.label_tax_penalties_thr') }}</label>
                                                 <small class="text-muted">(0 - 100)</small>
                                                 <div class="input-group">
-                                                    <input type="number" min=0 max=100 class="form-control" id="tax_penalties_thr" name="tax_penalties_thr"
+                                                    <input type="number" min="0" max="100" class="form-control" id="tax_penalties_thr" name="tax_penalties_thr"
                                                         placeholder="{{ __('payroll_reference_payroll.label_tax_penalties_thr') }}" readonly>
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text"><span>%</span></span>

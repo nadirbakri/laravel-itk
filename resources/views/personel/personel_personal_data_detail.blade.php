@@ -1285,7 +1285,7 @@
                                                 <label
                                                     for="starting_day_absenteeism">{{ __('personel_personal_data.label_starting_day') }}</label>
                                                 <span class="required">*</span>
-                                                <input type="number" min=1 class="form-control" id="starting_day_absenteeism"
+                                                <input type="number" min="1" class="form-control" id="starting_day_absenteeism"
                                                     name="starting_day_absenteeism"
                                                     placeholder="{{ __('personel_personal_data.label_starting_day') }}">
                                             </div>
@@ -1771,7 +1771,7 @@
                                             <div class="form-group">
                                                 <label
                                                     for="percentage_primary">{{ __('personel_personal_data.label_percentage') }}</label>
-                                                <input type="number" min=0 class="form-control" id="percentage_primary"
+                                                <input type="number" min="0" class="form-control" id="percentage_primary"
                                                     name="percentage_primary"
                                                     placeholder="{{ __('personel_personal_data.label_percentage') }}">
                                             </div>
@@ -1839,7 +1839,7 @@
                                             <div class="form-group">
                                                 <label
                                                     for="percentage_optional_one">{{ __('personel_personal_data.label_percentage') }}</label>
-                                                <input type="number" min=0 class="form-control" id="percentage_optional_one"
+                                                <input type="number" min="0" class="form-control" id="percentage_optional_one"
                                                     name="percentage_optional_one"
                                                     placeholder="{{ __('personel_personal_data.label_percentage') }}">
                                             </div>
@@ -1907,7 +1907,7 @@
                                             <div class="form-group">
                                                 <label
                                                     for="percentage_optional_two">{{ __('personel_personal_data.label_percentage') }}</label>
-                                                <input type="number" min=0 class="form-control" id="percentage_optional_two"
+                                                <input type="number" min="0" class="form-control" id="percentage_optional_two"
                                                     name="percentage_optional_two"
                                                     placeholder="{{ __('personel_personal_data.label_percentage') }}">
                                             </div>

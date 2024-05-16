@@ -168,7 +168,7 @@
                         <div class="form-group">
                             <label for="direct_superior form-check-label">{{ __('trans_overtime.employee') }}</label>
                         </div>
-                            <input type="text" class="form-control" id="direct_superior" name="direct_superior" placeholder={{ __('trans_overtime.employee') }}>
+                            <input type="text" class="form-control" id="direct_superior" name="direct_superior" placeholder="{{ __('trans_overtime.employee') }}">
                         </div>
                     </div>
                 </div>

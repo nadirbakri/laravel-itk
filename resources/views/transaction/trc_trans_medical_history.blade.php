@@ -180,7 +180,7 @@
                     <div class="form-group">
                             <label for="direct_superior form-check-label">{{ __('trans_medical.employeeno') }}</label>
                     </div>
-                            <input type="text" class="form-control" id="direct_superior" name="direct_superior" placeholder={{ __('trans_medical.employeeno') }}>
+                            <input type="text" class="form-control" id="direct_superior" name="direct_superior" placeholder="{{ __('trans_medical.employeeno') }}">
                 </div>
             </div>
 

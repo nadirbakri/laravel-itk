@@ -103,7 +103,7 @@
                             <label for="employee_name">{{ __('tm_leave_transaction_by_employee_no.label_employee_name') }}</label>
                             <span class="required">*</span>
                             <input type="text" class="form-control" id="employee_name" name="employee_name"
-                                placeholder={{ __('tm_leave_transaction_by_employee_no.label_employee_name') }} disabled>
+                                placeholder="{{ __('tm_leave_transaction_by_employee_no.label_employee_name') }}" disabled>
                         </div>
                     </div>
                 </div>
@@ -120,7 +120,7 @@
                         <div class="form-group">
                             <label for="balance">{{ __('tm_leave_transaction_by_employee_no.label_balance') }}</label>
                             <input type="text" class="form-control" id="balance" name="balance"
-                                placeholder={{ __('tm_leave_transaction_by_employee_no.label_balance') }} disabled>
+                                placeholder="{{ __('tm_leave_transaction_by_employee_no.label_balance') }}" disabled>
                         </div>
                     </div>
                 </div>

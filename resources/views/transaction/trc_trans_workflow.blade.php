@@ -183,7 +183,7 @@
                         <div class="form-group">
                             <label for="employee_no">{{ __('trans_workflow.employee') }}</label>
                         </div>
-                        <input type="text" class="form-control" id="employee_no" name="employee_no" placeholder={{ __('trans_workflow.employee') }}>
+                        <input type="text" class="form-control" id="employee_no" name="employee_no" placeholder="{{ __('trans_workflow.employee') }}">
                     </div>
                 </div>
                 <!-- BUTTON -->

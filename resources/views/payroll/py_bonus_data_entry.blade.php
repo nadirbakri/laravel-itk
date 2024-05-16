@@ -195,8 +195,8 @@
                                     <label for="greater_than">{{ __('payroll_bonus_data_entry.label_greater_than') }}</label>
                                 </div>
                                 <div class="form-group" style="display: flex">
-                                    <input type="number" min=0 max=30 class="form-control" style="width: 50%" id="greater_than" name="greater_than"
-                                        placeholder={{ __('payroll_bonus_data_entry.label_greater_than') }}>
+                                    <input type="number" min="0" max="30" class="form-control" style="width: 50%" id="greater_than" name="greater_than"
+                                        placeholder="{{ __('payroll_bonus_data_entry.label_greater_than') }}">
                                     <label for="days" style="margin: auto">{{ __('payroll_bonus_data_entry.label_days_become_one_month') }}</label>
                                 </div>
                             </div>

@@ -244,7 +244,7 @@
                                 <div class="form-group">
                                     <label for="employee_name">{{ __('tm_overtime_spl.label_employee_name') }}</label>
                                     <input type="text" class="form-control" id="employee_name" name="employee_name"
-                                        placeholder={{ __('tm_overtime_spl.label_employee_name') }} disabled>
+                                        placeholder="{{ __('tm_overtime_spl.label_employee_name') }}" disabled>
                                 </div>
                             </div>
                         </div>
@@ -281,7 +281,7 @@
                                 <div class="form-group">
                                     <label for="description">{{ __('tm_overtime_spl.label_description') }}</label>
                                     <input type="text" class="form-control" id="description" name="description"
-                                        placeholder={{ __('tm_overtime_spl.label_description') }}>
+                                        placeholder="{{ __('tm_overtime_spl.label_description') }}">
                                 </div>
                             </div>
                         </div>
@@ -290,21 +290,21 @@
                                 <div class="form-group">
                                     <label for="before_in">{{ __('tm_overtime_spl.label_before_in') }}</label>
                                     <input type="text" class="form-control" id="before_in" name="before_in"
-                                        placeholder={{ __('tm_overtime_spl.label_before_in') }}>
+                                        placeholder="{{ __('tm_overtime_spl.label_before_in') }}">
                                 </div>
                             </div>
                             <div class="col-3">
                                 <div class="form-group">
                                     <label for="start_overtime_spl">{{ __('tm_overtime_spl.label_start') }}</label>
                                     <input type="text" class="form-control" id="start_overtime_spl" name="start_overtime_spl"
-                                        placeholder={{ __('tm_overtime_spl.label_start') }}>
+                                        placeholder="{{ __('tm_overtime_spl.label_start') }}">
                                 </div>
                             </div>
                             <div class="col-3">
                                 <div class="form-group">
                                     <label for="finish_overtime_spl">{{ __('tm_overtime_spl.label_finish') }}</label>
                                     <input type="text" class="form-control" id="finish_overtime_spl" name="finish_overtime_spl"
-                                        placeholder={{ __('tm_overtime_spl.label_finish') }}>
+                                        placeholder="{{ __('tm_overtime_spl.label_finish') }}">
                                 </div>
                             </div>
                         </div>
@@ -313,14 +313,14 @@
                                 <div class="form-group">
                                     <label for="hour_overtime_spl">{{ __('tm_overtime_spl.label_hour') }}</label>
                                     <input type="text" class="form-control" id="hour_overtime_spl" name="hour_overtime_spl"
-                                        placeholder={{ __('tm_overtime_spl.label_hour') }}>
+                                        placeholder="{{ __('tm_overtime_spl.label_hour') }}">
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="convert">{{ __('tm_overtime_spl.label_convert') }}</label>
                                     <input type="number" class="form-control" id="convert" name="convert"
-                                        placeholder={{ __('tm_overtime_spl.label_convert') }}>
+                                        placeholder="{{ __('tm_overtime_spl.label_convert') }}">
                                 </div>
                             </div>
                         </div>

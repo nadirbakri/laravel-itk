@@ -158,7 +158,7 @@
                         <div class="form-group">
                             <label for="amount">{{ __('payroll_severance_data_entry.label_amount') }}</label>
                             <small class="text-muted">(0 - 0,9)</small>
-                            <input type="number" min=0 max=0.9 step=0.1 class="form-control" id="amount" name="amount"
+                            <input type="number" min="0" max="0.9" step="0.1" class="form-control" id="amount" name="amount"
                                 placeholder="{{ __('payroll_severance_data_entry.label_amount') }}">
                         </div>
                     </div>
@@ -166,7 +166,7 @@
                         <div class="form-group">
                             <label for="adjustment">{{ __('payroll_severance_data_entry.label_adjusment') }}</label>
                             <small class="text-muted">(0 - 0,9)</small>
-                            <input type="number" min=0 max=0.9 step=0.1 class="form-control" id="adjustment" name="adjustment"
+                            <input type="number" min="0" max="0.9" step="0.1" class="form-control" id="adjustment" name="adjustment"
                                 placeholder="{{ __('payroll_severance_data_entry.label_adjusment') }}">
                         </div>
                     </div>

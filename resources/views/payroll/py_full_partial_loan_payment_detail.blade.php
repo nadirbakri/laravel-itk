@@ -274,7 +274,7 @@
                                 (0 - 100)
                             </small>
                             <div class="input-group">
-                                <input type="number" min=0 max=100 class="form-control" id="new_rate_per_year" name="new_rate_per_year"
+                                <input type="number" min="0" max="100" class="form-control" id="new_rate_per_year" name="new_rate_per_year"
                                     placeholder="{{ __('payroll_full_partial_loan_payment.label_new_rate_per_year') }}">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><span>%</span></span>

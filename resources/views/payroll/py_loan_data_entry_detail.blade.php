@@ -208,7 +208,7 @@
                             <small id="no_of_installment_rules" class="text-muted">
                                 (1 - 360)
                             </small>
-                            <input type="number" min=1 max=360 class="form-control" id="no_of_installment" name="no_of_installment"
+                            <input type="number" min="1" max="360" class="form-control" id="no_of_installment" name="no_of_installment"
                                 placeholder="{{ __('payroll_loan_data_entry.label_no_of_installment') }}" readonly>
                         </div>
                     </div>
@@ -228,7 +228,7 @@
                                 (0 - 100)
                             </small>
                             <div class="input-group">
-                                <input type="number" min=0 max=100 class="form-control" id="rate_per_year" name="rate_per_year"
+                                <input type="number" min="0" max="100" class="form-control" id="rate_per_year" name="rate_per_year"
                                 placeholder="{{ __('payroll_loan_data_entry.label_rate_per_year') }}" readonly>
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><span>%</span></span>
@@ -785,7 +785,7 @@
                         '<input type="number" class="form-control" id="interest_table'+ i +'" data-seq = "'+ i +'" name="interest_table[]" readonly>',
                         '<input type="number" class="form-control" id="payment_table'+ i +'" name="payment_table[]" readonly>',
                         '<input type="number" class="form-control" id="outstanding_table'+ i +'" data-seq = "'+ i +'" name="outstanding_table[]" readonly>',
-                        '<input type="text" class="form-control paid-table" id="paid_table'+ i +'" data-seq = "'+ i +'" name="paid_table[]" value="false" placeholder={{ __("payroll_loan_data_entry.label_select_paid_table") }} readonly>',
+                        '<input type="text" class="form-control paid-table" id="paid_table'+ i +'" data-seq = "'+ i +'" name="paid_table[]" value="false" placeholder="{{ __("payroll_loan_data_entry.label_select_paid_table") }}" readonly>',
                         '<input type="text" class="form-control" id="payment_type_hidden'+ k +'" name="payment_type_hidden[]" hidden>',
                     ]).draw();
 
@@ -1014,7 +1014,7 @@
                         '<input type="number" class="form-control" id="interest_table'+ i +'" data-seq = "'+ i +'" name="interest_table[]" readonly>',
                         '<input type="number" class="form-control" id="payment_table'+ i +'" name="payment_table[]" readonly>',
                         '<input type="number" class="form-control" id="outstanding_table'+ i +'" data-seq = "'+ i +'" name="outstanding_table[]" readonly>',
-                        '<input type="text" class="form-control paid-table" id="paid_table'+ i +'" data-seq = "'+ i +'" name="paid_table[]" value="false" placeholder={{ __("payroll_loan_data_entry.label_select_paid_table") }} readonly>',
+                        '<input type="text" class="form-control paid-table" id="paid_table'+ i +'" data-seq = "'+ i +'" name="paid_table[]" value="false" placeholder="{{ __("payroll_loan_data_entry.label_select_paid_table") }}" readonly>',
                         '<input type="text" class="form-control" id="payment_type_hidden'+ i +'" name="payment_type_hidden[]" hidden>',
                     ]).draw();
 
@@ -1275,7 +1275,7 @@
                         '<input type="number" class="form-control" id="interest_table'+ k +'" name="interest_table[]" value="'+ ((typeof v.paymentInterest !== 'undefined' && v.paymentInterest !== null) ? v.paymentInterest : '') +'" readonly>',
                         '<input type="number" class="form-control" id="payment_table'+ k +'" name="payment_table[]" value="'+ ((typeof v.payment !== 'undefined' && v.payment !== null) ? v.payment : '') +'" readonly>',
                         '<input type="number" class="form-control" id="outstanding_table'+ k +'" data-seq = "'+ k +'" name="outstanding_table[]" value="'+ ((typeof v.outStandingAmount !== 'undefined' && v.outStandingAmount !== null) ? v.outStandingAmount : '') +'" readonly>',
-                        '<input type="text" class="form-control paid-table" id="paid_table'+ k +'" data-seq = "'+ k +'" name="paid_table[]" placeholder={{ __("payroll_loan_data_entry.label_select_paid_table") }} value="'+ ((typeof v.flagStatus !== 'undefined' && v.flagStatus !== null) ? v.flagStatus : '') +'" readonly>',
+                        '<input type="text" class="form-control paid-table" id="paid_table'+ k +'" data-seq = "'+ k +'" name="paid_table[]" placeholder="{{ __("payroll_loan_data_entry.label_select_paid_table") }}" value="'+ ((typeof v.flagStatus !== 'undefined' && v.flagStatus !== null) ? v.flagStatus : '') +'" readonly>',
                         '<input type="text" class="form-control" id="payment_type_hidden'+ k +'" name="payment_type_hidden[]" value="'+ ((typeof v.paymentType !== 'undefined' && v.paymentType !== null) ? v.paymentType : '') +'" hidden>',
                     ]).draw();
 

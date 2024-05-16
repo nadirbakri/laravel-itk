@@ -133,7 +133,7 @@
                         <div class="form-group">
                             <label for="period">{{ __('payroll_multi_cost_center.label_period') }}</label>
                             <span class="required">*</span>
-                            <input type="number" min=0 class="form-control" id="period" name="period"
+                            <input type="number" min="0" class="form-control" id="period" name="period"
                                 placeholder="{{ __('payroll_multi_cost_center.label_period') }}">
                         </div>
                     </div>
@@ -308,7 +308,7 @@
                     '<input type="checkbox" class="chk-select" id="check_grid">',
                     '<select class="form-control select2 cost_center" id="cost_center'+(data_cost_center)+'" name="cost_center[]">',
                     '<input type="text" class="form-control description" id="description'+(data_cost_center)+'" name="description[]" readonly>',
-                    '<input type="number" min=0 max=100 default=0 class="form-control" id="percentage'+(data_cost_center)+'" name="percentage[]">',
+                    '<input type="number" min="0" max="100" default="0" class="form-control" id="percentage'+(data_cost_center)+'" name="percentage[]">',
                     '<input type="checkbox" class="dt-center isDefault" id="isDefault'+(data_cost_center)+'" name="isDefault[]">'
                 ]).draw();
 
@@ -604,7 +604,7 @@
                 '<input type="checkbox" class="chk-select" id="check_grid">',
                 '<select class="form-control select2 cost_center" id="cost_center'+(data_cost_center)+'" name="cost_center[]">',
                 '<input type="text" class="form-control description" id="description'+(data_cost_center)+'" name="description[]" readonly>',
-                '<input type="number" min=0 max=100 default=0 class="form-control" name="percentage[]">',
+                '<input type="number" min="0" max="100" default="0" class="form-control" name="percentage[]">',
                 '<input type="checkbox" class="dt-center isDefault" id="isDefault'+(data_cost_center)+'" name="isDefault[]">'
             ]).draw();
 
