@@ -190,6 +190,8 @@ class PeriodicalReportExport implements FromView, ShouldAutoSize
                         }
                         if (!is_string($v->value)) {
                             $total[$branch][$v->field] = isset($total[$branch][$v->field]) ? $total[$branch][$v->field] + $v->value : $v->value;
+                        }else{
+                            $total[$branch][$v->field] = '';
                         }
                     }
                 }

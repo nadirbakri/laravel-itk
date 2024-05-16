@@ -63,6 +63,10 @@
                             <?php
                             $total[$dataTable->field] = 0;
                             ?>
+                        @else
+                            <?php
+                            $total[$dataTable->field] = '';
+                            ?>
                         @endif
                         <th style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7;">{{ $dataTable->tableName }}</th>
                     @endforeach
@@ -107,8 +111,12 @@
                 @if($grand_total)
                 <tr>
                     <td colspan="3" style="background-color: yellow; text-align:center; border:1px solid #000;">Grand Total</td>
-                    @foreach($data[0]->detail[0]->field as $key3 => $dataTable3)
-                    <td style="text-align:left; border:1px solid #000;">Rp {{ number_format($total[$dataTable3->field], 2, ',', '.') }}</td>
+                    @foreach(array_slice($data[0]->detail[0]->field, 2) as $key3 => $dataTable3)
+                        @if(!is_string($total[$dataTable3->field]))
+                            <td style="text-align:left; border:1px solid #000;">{{ number_format($total[$dataTable3->field], 0, ',', '.') }}</td>
+                        @else
+                            <td style="text-align:left; border:1px solid #000;">&nbsp;</td>
+                        @endif
                     @endforeach
                 </tr>
                 @endif
@@ -239,7 +247,7 @@
                                         $totalCost = '';
                                     }
                                 ?>
-                                <td data-format="#,##0.00" style="text-align:right; border:1px solid #000;">{{ $totalCost }}</td>
+                                <td data-format="#,##0" style="text-align:left; border:1px solid #000;">{{ $totalCost }}</td>
                             @endforeach
                         </tr>
                     @endif
@@ -258,8 +266,8 @@
                                     <?php
                                         $total[$branch][$dataRow->field] = 0;
                                     ?>
-                                <th style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7;">{{ $dataRow->tableName }}</th>
                                 @endif
+                                <th style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7;">{{ $dataRow->tableName }}</th>
                             @endforeach
                         @endif
                     </tr>
@@ -268,13 +276,13 @@
                     <tr>
                         <td style="background-color: yellow; text-align:center; border:1px solid #000;">Total per Branch ({{ $level }})</td>
                         @foreach($grandTotal[$branch] as $key_total => $periodicalTotal)
-                            <td data-format="#,##0.00" style="text-align:right; border:1px solid #000;">{{ $periodicalTotal }}</td>
+                            <td data-format="#,##0" style="text-align:left; border:1px solid #000;">{{ $periodicalTotal }}</td>
                         @endforeach
                     </tr>
                     <tr>
                         <td style="background-color: yellow; text-align:center; border:1px solid #000;">Total per Company</td>
                         @foreach($grandTotal[$branch] as $key_total => $periodicalTotal)
-                            <td data-format="#,##0.00" style="text-align:right; border:1px solid #000;">{{ $periodicalTotal }}</td>
+                            <td data-format="#,##0" style="text-align:left; border:1px solid #000;">{{ $periodicalTotal }}</td>
                         @endforeach
                     </tr>
                 </tbody>
@@ -377,7 +385,7 @@
                         <td style="background-color: yellow; text-align:center; border:1px solid #000;">&nbsp;</td>
                         <td style="background-color: yellow; text-align:center; border:1px solid #000;">{{ $totalJumlah }}</td>
                         @foreach($total[$dataTable->data[0]->companyName] as $key => $totalValue)
-                            <td data-format="#,##0.00" style="text-align:right; border:1px solid #000;">{{ $totalValue }}</td>
+                            <td data-format="#,##0" style="text-align:left; border:1px solid #000;">{{ $totalValue }}</td>
                         @endforeach
                     </tr>
                 </table>
