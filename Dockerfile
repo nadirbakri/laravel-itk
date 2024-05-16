@@ -1,11 +1,11 @@
 # Use the official PHP 8.0 FPM image based on Alpine Linux
-FROM php:8.0-fpm-alpine
+FROM php:8.2-fpm-alpine
 
 # Set the working directory to /app
 WORKDIR /app
 
 # Update the package manager and install necessary dependencies
-RUN apk update && apk add --no-cache \
+RUN apk update && apk add --no-cache linux-headers \
     git \
     libpng-dev \
     libzip-dev \
@@ -27,9 +27,19 @@ COPY . .
 RUN composer install
 # RUN php artisan queue:listen
 COPY php.ini /usr/local/etc/php/php.ini
+RUN chown -R www-data:www-data storage
+RUN chown -R www-data:www-data public/file_excel
+RUN chown -R www-data:www-data public/file_news
+RUN chown -R www-data:www-data public/photo_card
+RUN chown -R www-data:www-data public/photo_news
+RUN chown -R www-data:www-data public/photo_profile
+RUN chown -R www-data:www-data public/pictures
 # COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 # RUN chown -R www-data:www-data storage/logs
 # RUN chown -R www-data:www-data storage/framework
+
+RUN chmod -R 777 storage
+RUN chmod -R 777 bootstrap/cache
 
 # ENV PHP_MEMORY_LIMIT=512M
 # Expose port 9000 (this is usually used for connecting to a web server)
