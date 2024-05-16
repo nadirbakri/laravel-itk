@@ -1164,24 +1164,24 @@
 
         $('#btn-add').on('click', function () {
             if (typeof operator !== 'undefined' && operator !== null) {
-                $('#field_name').val($('#field_name').val() + operator);
+                $('#field_name').val($('#field_name').val() + '"PrYearly"' + '.' + '"' + operator + '"');
             }
         });
 
         $('#btn-plus').on('click', function () {
-            $('#field_name').val($('#field_name').val() + '+');
+            $('#field_name').val($('#field_name').val() + ' + ');
         });
 
         $('#btn-min').on('click', function () {
-            $('#field_name').val($('#field_name').val() + '-');
+            $('#field_name').val($('#field_name').val() + ' - ');
         });
 
         $('#btn-star').on('click', function () {
-            $('#field_name').val($('#field_name').val() + '*');
+            $('#field_name').val($('#field_name').val() + ' * ');
         });
 
         $('#btn-slice').on('click', function () {
-            $('#field_name').val($('#field_name').val() + '/');
+            $('#field_name').val($('#field_name').val() + ' / ');
         });
 
         loadDataOperator();
