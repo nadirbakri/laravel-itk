@@ -2738,32 +2738,37 @@ public function dataDetailReportFormatPY(Request $request)
     // usort($arrResult->dataListSet[0]->detail, function ($a, $b) {
     //     return (int) $a->columnNo - (int) $b->columnNo;
     // });
-
-    $data = array_map(function($item) {
-        $itemClone = clone $item;
-        $itemClone->detail = array_filter($itemClone->detail, function($detailItem) {
-            return isset($detailItem->fieldFormula) && ($detailItem->fieldFormula === '' || is_null($detailItem->fieldFormula));
-        });
-        return $itemClone;
-    }, $arrResult->dataListSet);
-
-    $dataFormula = array_map(function($item) {
-        $itemClone = clone $item;
-        $itemClone->detail = array_filter($itemClone->detail, function($detailItem) {
-            return isset($detailItem->fieldFormula) && ($detailItem->fieldFormula !== '' && !is_null($detailItem->fieldFormula));
-        });
-        return $itemClone;
-    }, $arrResult->dataListSet);
-
-    $data = array_map(function ($item) {
-        $item->detail = array_values($item->detail);
-        return $item;
-    }, $data);
-
-    $dataFormula = array_map(function ($item) {
-        $item->detail = array_values($item->detail);
-        return $item;
-    }, $dataFormula);
+    
+    if($arrResult->dataListSet !== null){
+        $data = array_map(function($item) {
+            $itemClone = clone $item;
+            $itemClone->detail = array_filter($itemClone->detail, function($detailItem) {
+                return isset($detailItem->fieldFormula) && ($detailItem->fieldFormula === '' || is_null($detailItem->fieldFormula));
+            });
+            return $itemClone;
+        }, $arrResult->dataListSet);
+    
+        $dataFormula = array_map(function($item) {
+            $itemClone = clone $item;
+            $itemClone->detail = array_filter($itemClone->detail, function($detailItem) {
+                return isset($detailItem->fieldFormula) && ($detailItem->fieldFormula !== '' && !is_null($detailItem->fieldFormula));
+            });
+            return $itemClone;
+        }, $arrResult->dataListSet);
+    
+        $data = array_map(function ($item) {
+            $item->detail = array_values($item->detail);
+            return $item;
+        }, $data);
+    
+        $dataFormula = array_map(function ($item) {
+            $item->detail = array_values($item->detail);
+            return $item;
+        }, $dataFormula);
+    }else{
+        $data = [];
+        $dataFormula = [];
+    }
 
     return view('payroll.py_report_format_detail', ['data' => $data, 'dataFormula' => $dataFormula, 'func' => $request->func]);
 }
@@ -7500,7 +7505,7 @@ public function dataDetailReportFormatPY(Request $request)
             // dd(json_encode($param));
             // exit;
 
-            $response = $client->post(env('API_URL').'/payroll/PrSlipFixed', [
+            $response = $client->post(env('API_URL').'/payroll/FixedSlip', [
                 'body' => json_encode($param)
             ]);
 
