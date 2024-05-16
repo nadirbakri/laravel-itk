@@ -6980,7 +6980,7 @@ public function dataDetailReportFormatPY(Request $request)
                 $param['displayCompanyLogo'] = $data->display_logo == "0" ? false : true;
             }
 
-            dd(json_encode($param));
+            // dd(json_encode($param));
 
             $response = $client->post(env('API_URL').'/payroll/GetPaymentSlipReport', [
                 'body' => json_encode($param)
@@ -7243,10 +7243,10 @@ public function dataDetailReportFormatPY(Request $request)
         $companyCode = empty(Session::get('companyCode')) ? $request->companyCode : Session::get('companyCode');
 
         if($companyCode == 'DAA'){
-            // $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_digima';
-            // $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_digima';
-            $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_sayurbox';
-            $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_sayurbox';
+            $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_digima';
+            $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_digima';
+            // $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_sayurbox';
+            // $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_sayurbox';
         }else if($companyCode == 'KTM' || $companyCode == 'KTL'){
             $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_sayurbox';
             $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_sayurbox';
@@ -7270,7 +7270,7 @@ public function dataDetailReportFormatPY(Request $request)
                 if($request->mobile){
                     return base64_encode($pdf->stream('Payment Slip.pdf'));
                 }else{
-                    // $pdf->setEncryption(Session::get('userID'), Session::get('userID'), array('print', 'copy'));
+                    $pdf->setEncryption(Session::get('userID'), Session::get('userID'), array('print', 'copy'));
                     return $pdf->stream('Payment Slip.pdf');
                 }
             }else{
@@ -7287,7 +7287,7 @@ public function dataDetailReportFormatPY(Request $request)
                 if($request->mobile){
                     return base64_encode($pdf->stream('Payment Slip.pdf'));
                 }else{
-                    // $pdf->setEncryption(Session::get('userID'), Session::get('userID'), array('print', 'copy'));
+                    $pdf->setEncryption(Session::get('userID'), Session::get('userID'), array('print', 'copy'));
                     return $pdf->stream('Payment Slip.pdf');
                 }
             }
@@ -7306,7 +7306,7 @@ public function dataDetailReportFormatPY(Request $request)
                 if($request->mobile){
                     return base64_encode($pdf->stream('Payment Slip.pdf'));
                 }else{
-                    // $pdf->setEncryption(Session::get('userID'), Session::get('userID'), array('print', 'copy'));
+                    $pdf->setEncryption(Session::get('userID'), Session::get('userID'), array('print', 'copy'));
                     return $pdf->stream('Payment Slip.pdf');
                 }
             }else{
@@ -7323,7 +7323,7 @@ public function dataDetailReportFormatPY(Request $request)
                 if($request->mobile){
                     return base64_encode($pdf->stream('Payment Slip.pdf'));
                 }else{
-                    // $pdf->setEncryption(Session::get('userID'), Session::get('userID'), array('print', 'copy'));
+                    $pdf->setEncryption(Session::get('userID'), Session::get('userID'), array('print', 'copy'));
                     return $pdf->stream('Payment Slip.pdf');
                 }
             }

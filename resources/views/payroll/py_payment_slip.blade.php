@@ -376,6 +376,41 @@
             </form>
         </div>
     </div>
+    <div class="modal fade" role="dialog" id="notification_error">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-header-notification-error">
+                    <h5 class="modal-title">Error!</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <span id="message-notification-error">{{ $errors->first() }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" role="dialog" id="notification_success">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-header-notification-success">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="div-title-notification">
+                        <img src="{{ url('/pictures/checklist-green-confirm-password.svg') }}" alt="Password">
+                        <span class="title-text-notification">{{ __('payroll_multi_cost_center.alert_success') }}</span>
+                    </div>
+                    <div class="div-title-notification">
+                        <span id="message-notification-success"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
@@ -1066,6 +1101,7 @@
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" style="margin: 0;"></span>'+
                 '<span>Loading...</span>'
             );
+            clicked = "PROCESS";
             url = "{{ url('payroll/payment_slip/proses') }}";
             $("#payment_slip_form").submit();
         });
@@ -1132,11 +1168,8 @@
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         }
                     });
-                    // console.log($('#payment_slip_form').serialize());
-                    $.ajax({
-                        xhrFields: {
-                            responseType: 'blob',
-                        },
+
+                    var ajaxOptions = {
                         url: url,
                         type: "POST",
                         data: $('#payment_slip_form').serialize(),
@@ -1156,38 +1189,34 @@
                                 '<span>Process Payment Slip Data</span>'
                             );
 
-                            var disposition = xhr.getResponseHeader(
-                                'content-disposition');
-                            var matches = /"([^"]*)"/.exec(disposition);
-                            var filename = (matches != null && matches[1] ? matches[1] :
-                                'audit_trail.xlsx');
+                            if (clicked == "DOWNLOAD_PDF") {
+                                var disposition = xhr.getResponseHeader('content-disposition');
+                                var matches = /"([^"]*)"/.exec(disposition);
+                                var filename = (matches != null && matches[1] ? matches[1] : 'audit_trail.xlsx');
 
-                            // The actual download
-                            var blob = new Blob([result], {
-                                type: 'application/pdf'
-                            });
+                                var blob = new Blob([result], {
+                                    type: 'application/pdf'
+                                });
 
-                            if(clicked == "DOWNLOAD_PDF"){
                                 var link = document.createElement('a');
                                 link.href = window.URL.createObjectURL(blob);
                                 link.download = filename;
-                                    
-                                document.body.appendChild(link);
 
+                                document.body.appendChild(link);
                                 link.click();
                                 document.body.removeChild(link);
-
-                                clicked = "";
-                            }
-                            else{
+                            } else if (clicked == "PREVIEW") {
                                 var link = document.createElement('a');
-                                const url = URL.createObjectURL(blob);
-                                link.href = window.open(url, "_blank");
+                                const url = URL.createObjectURL(result);
+                                link.href = url;
+                                link.target = '_blank';
 
                                 document.body.appendChild(link);
+                                link.click();
                                 document.body.removeChild(link);
-                                clicked = "";
                             }
+
+                            clicked = ""; // Reset the clicked variable
                         },
                         error: function(response){
                             $('#btn-send-to').prop("disabled", false);
@@ -1207,7 +1236,51 @@
                             $('#notification_error').modal('show');
                             $('#message-notification-error').html(response);
                         }
-                    });
+                    };
+
+                    if (clicked == "DOWNLOAD_PDF" || clicked == "PREVIEW") {
+                        ajaxOptions.xhrFields = { responseType: 'blob' };
+                    } else {
+                        // Define a different success function for regular response
+                        ajaxOptions.success = function(response) {
+                            $('#btn-send-to').prop("disabled", false);
+                            $("#btn-send-to").html(
+                                '<i class="fa fa-print"></i> {{ __("payroll_payment_slip.btn_send_to") }}'
+                            );
+                            $('#btn-preview').prop("disabled", false);
+                            $("#btn-preview").html(
+                                '<i class="fa fa-eye"></i> {{ __("payroll_payment_slip.btn_preview") }}'
+                            );
+                            $("#toolbar-process").prop("disabled", false);
+                            $("#toolbar-process").html(
+                                '<img src="{{ url('/icons/functionbar/process.svg') }}" alt="Process">' +
+                                '<img src="{{ url('/icons/functionbar/process.svg') }}" class="functionbar-hover" alt="Process">' +
+                                '<span>Process Payment Slip Data</span>'
+                            );
+
+                            if (response.status == "true") {
+                                $('#notification_success').modal('show');
+                                $('#message-notification-success').html(response
+                                    .message);
+                                setTimeout(function () {
+                                    window.location =
+                                        "{{ url('payroll/multi_cost_center') }}";
+                                }, 3000);
+                            } else {
+                                $('#notification_error').modal('show');
+                                if (response.message == null || response.message ==
+                                    '') {
+                                    $('#message-notification-error').html(
+                                        "{{ __('login.error') }}");
+                                } else {
+                                    $('#message-notification-error').html(response
+                                        .message);
+                                }
+                            }
+                        };
+                    }
+
+                    $.ajax(ajaxOptions);
                 }
             })
         }
