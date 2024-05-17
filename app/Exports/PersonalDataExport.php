@@ -2,17 +2,33 @@
 
 namespace App\Exports;
 
+use PhpOffice\PhpSpreadsheet\Cell\Cell;
 use Maatwebsite\Excel\Concerns\FromView;
 use Illuminate\Contracts\View\View;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use PhpOffice\PhpSpreadsheet\Cell\DataType;
+use Maatwebsite\Excel\Concerns\WithCustomValueBinder;
+use PhpOffice\PhpSpreadsheet\Cell\DefaultValueBinder;
 use Validator;
 use Session;
 use App;
 
-class PersonalDataExport implements FromView, ShouldAutoSize
+class PersonalDataExport extends DefaultValueBinder implements WithCustomValueBinder, FromView, ShouldAutoSize
 {
+    public function bindValue(Cell $cell, $value)
+    {
+        if (is_numeric($value)) {
+            $cell->setValueExplicit($value, DataType::TYPE_STRING);
+
+            return true;
+        }
+
+        // else return default behavior
+        return parent::bindValue($cell, $value);
+    }
+
     public function view(): View
     {
         try {
@@ -57,5 +73,24 @@ class PersonalDataExport implements FromView, ShouldAutoSize
                 'data' => $arrResult->dataListSet
             ]);
         }
+    }
+
+    public function registerEvents(): array
+    {
+        return [
+            AfterSheet::class => function(AfterSheet $event) {
+                $sheet = $event->sheet;
+
+                $cells = $sheet->getDelegate()->getElementsByTagName('td');
+                foreach ($cells as $cell) {
+                    $dataFormat = $cell->getAttribute('data-format');
+
+                    // Set format sel jika atribut data-format ditemukan
+                    if (!empty($dataFormat)) {
+                        $sheet->getStyle($cell->getCoordinate())->getNumberFormat()->setFormatCode($dataFormat);
+                    }
+                }
+            },
+        ];
     }
 }

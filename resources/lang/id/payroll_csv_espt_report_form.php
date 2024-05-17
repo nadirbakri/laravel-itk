@@ -5,7 +5,7 @@ return [
     'list' => 'Formulir Laporan E-SPT CSV',
     'label_format' => 'Format',
     'label_periodical' => 'Secara Berkala',
-    'label_annual' => 'Tahunan',
+    'label_annual' => 'A1',
     'label_final' => 'Terakhir',
     'label_period' => 'Periode',
     'label_rectification' => 'Pembetulan',
