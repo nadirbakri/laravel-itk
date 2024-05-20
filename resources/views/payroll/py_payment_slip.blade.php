@@ -1264,7 +1264,7 @@
                                     .message);
                                 setTimeout(function () {
                                     window.location =
-                                        "{{ url('payroll/multi_cost_center') }}";
+                                        "{{ url('payroll/payment_slip') }}";
                                 }, 3000);
                             } else {
                                 $('#notification_error').modal('show');

@@ -6982,7 +6982,7 @@ public function dataDetailReportFormatPY(Request $request)
 
             // dd(json_encode($param));
 
-            $response = $client->post(env('API_URL').'/payroll/GetPaymentSlipReport', [
+            $response = $client->post(env('API_URL').'/payroll/GetPaymentSlipReportV2', [
                 'body' => json_encode($param)
             ]);
 
