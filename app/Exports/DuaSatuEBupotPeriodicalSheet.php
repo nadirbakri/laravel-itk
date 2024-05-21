@@ -70,7 +70,7 @@ class DuaSatuEBupotPeriodicalSheet extends DefaultValueBinder implements WithCus
 
             // var_dump(json_encode($param));
 
-            $response = $client->post(env('API_URL') . "/getEBupot", [
+            $response = $client->post(env('API_URL') . "/EBupot/getEBupot", [
                 'body' => json_encode($param)
             ]);
 

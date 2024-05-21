@@ -52,9 +52,9 @@ class RekapEBupotPeriodicalSheet implements FromView, WithTitle, WithEvents, Sho
             //     $param['groupAuthorizeCodeTo'] = (int) $this->groupAuthorizedCodeTo;
             // }
 
-            // var_dump(json_encode($param));
+            // dd(json_encode($param));
 
-            $response = $client->post(env('API_URL') . "/getEBupot", [
+            $response = $client->post(env('API_URL') . "/EBupot/getEBupot", [
                 'body' => json_encode($param)
             ]);
 
@@ -62,6 +62,7 @@ class RekapEBupotPeriodicalSheet implements FromView, WithTitle, WithEvents, Sho
 
         } catch (RequestException $e) {
             $response = $e->getResponse();
+            // dd($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -70,6 +71,8 @@ class RekapEBupotPeriodicalSheet implements FromView, WithTitle, WithEvents, Sho
                 return view('error.bad_request');
             }
         }
+
+        // dd($arrResult->dataListSet);
 
         return view('payroll.py_export_csv_espt_report_rekap_periodical_excel', [
             'periodMonth' => (isset($arrResult->dataListSet[0]->periodMonth)) ? $arrResult->dataListSet[0]->periodMonth : (int) date('n', strtotime($this->period)),
