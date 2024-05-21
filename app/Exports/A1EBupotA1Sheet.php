@@ -70,7 +70,7 @@ class A1EBupotA1Sheet extends DefaultValueBinder implements WithCustomValueBinde
 
             // dd(json_encode($param));
 
-            $response = $client->post(env('API_URL') . "/getEBupotA1", [
+            $response = $client->post(env('API_URL') . "/EBupot/getEBupotA1", [
                 'body' => json_encode($param)
             ]);
 
