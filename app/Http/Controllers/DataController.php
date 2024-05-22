@@ -2528,6 +2528,10 @@ class DataController extends Controller
 			}
 		}
 
+		usort($arrResult->dataListSet, function($a, $b) {
+			return $a->groupAuthorizeCode <=> $b->groupAuthorizeCode;
+		});
+
 	    if($request->func == 'First'){
 	    	return response()->json($arrResult->dataListSet[0]);
 	    }else if($request->func == 'Last'){

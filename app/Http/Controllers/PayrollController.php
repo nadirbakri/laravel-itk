@@ -6944,7 +6944,7 @@ public function dataDetailReportFormatPY(Request $request)
             ];
 
             if(!empty($data->slip_type)){
-                $param['slipType'] = $data->slip_type;
+                $param['slipCode'] = $data->slip_type;
             }
 
             if(!empty($data->period)){
@@ -7134,7 +7134,7 @@ public function dataDetailReportFormatPY(Request $request)
             }
 
             if(!empty($request->slip_type)){
-                $param['slipType'] = $request->slip_type;
+                $param['slipCode'] = $request->slip_type;
             }
 
             if(!empty($request->period)){
@@ -7245,9 +7245,7 @@ public function dataDetailReportFormatPY(Request $request)
         if($companyCode == 'DAA'){
             $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_digima';
             $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_digima';
-            // $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_sayurbox';
-            // $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_sayurbox';
-        }else if($companyCode == 'KTM' || $companyCode == 'KTL'){
+        }else if($companyCode == 'KNM' || $companyCode == 'KTL'){
             $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_sayurbox';
             $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_sayurbox';
         }else{
@@ -7270,7 +7268,7 @@ public function dataDetailReportFormatPY(Request $request)
                 if($request->mobile){
                     return base64_encode($pdf->stream('Payment Slip.pdf'));
                 }else{
-                    $pdf->setEncryption(Session::get('userID'), Session::get('userID'), array('print', 'copy'));
+                    // $pdf->setEncryption(Session::get('userID'), Session::get('userID'), array('print', 'copy'));
                     return $pdf->stream('Payment Slip.pdf');
                 }
             }else{
@@ -7287,7 +7285,7 @@ public function dataDetailReportFormatPY(Request $request)
                 if($request->mobile){
                     return base64_encode($pdf->stream('Payment Slip.pdf'));
                 }else{
-                    $pdf->setEncryption(Session::get('userID'), Session::get('userID'), array('print', 'copy'));
+                    // $pdf->setEncryption(Session::get('userID'), Session::get('userID'), array('print', 'copy'));
                     return $pdf->stream('Payment Slip.pdf');
                 }
             }
@@ -7306,7 +7304,7 @@ public function dataDetailReportFormatPY(Request $request)
                 if($request->mobile){
                     return base64_encode($pdf->stream('Payment Slip.pdf'));
                 }else{
-                    $pdf->setEncryption(Session::get('userID'), Session::get('userID'), array('print', 'copy'));
+                    // $pdf->setEncryption(Session::get('userID'), Session::get('userID'), array('print', 'copy'));
                     return $pdf->stream('Payment Slip.pdf');
                 }
             }else{
@@ -7323,7 +7321,7 @@ public function dataDetailReportFormatPY(Request $request)
                 if($request->mobile){
                     return base64_encode($pdf->stream('Payment Slip.pdf'));
                 }else{
-                    $pdf->setEncryption(Session::get('userID'), Session::get('userID'), array('print', 'copy'));
+                    // $pdf->setEncryption(Session::get('userID'), Session::get('userID'), array('print', 'copy'));
                     return $pdf->stream('Payment Slip.pdf');
                 }
             }
@@ -7351,7 +7349,7 @@ public function dataDetailReportFormatPY(Request $request)
             }
 
             if(!empty($request->slip_type)){
-                $param['slipType'] = $request->slip_type;
+                $param['slipCode'] = $request->slip_type;
             }
 
             if(!empty($request->period)){
