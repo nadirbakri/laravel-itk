@@ -7268,7 +7268,7 @@ public function dataDetailReportFormatPY(Request $request)
                 if($request->mobile){
                     return base64_encode($pdf->stream('Payment Slip.pdf'));
                 }else{
-                    // $pdf->setEncryption(Session::get('userID'), Session::get('userID'), array('print', 'copy'));
+                    $pdf->setEncryption(Session::get('userID'), Session::get('userID'), array('print', 'copy'));
                     return $pdf->stream('Payment Slip.pdf');
                 }
             }else{
@@ -7285,7 +7285,7 @@ public function dataDetailReportFormatPY(Request $request)
                 if($request->mobile){
                     return base64_encode($pdf->stream('Payment Slip.pdf'));
                 }else{
-                    // $pdf->setEncryption(Session::get('userID'), Session::get('userID'), array('print', 'copy'));
+                    $pdf->setEncryption(Session::get('userID'), Session::get('userID'), array('print', 'copy'));
                     return $pdf->stream('Payment Slip.pdf');
                 }
             }
@@ -7304,7 +7304,7 @@ public function dataDetailReportFormatPY(Request $request)
                 if($request->mobile){
                     return base64_encode($pdf->stream('Payment Slip.pdf'));
                 }else{
-                    // $pdf->setEncryption(Session::get('userID'), Session::get('userID'), array('print', 'copy'));
+                    $pdf->setEncryption(Session::get('userID'), Session::get('userID'), array('print', 'copy'));
                     return $pdf->stream('Payment Slip.pdf');
                 }
             }else{
@@ -7321,7 +7321,7 @@ public function dataDetailReportFormatPY(Request $request)
                 if($request->mobile){
                     return base64_encode($pdf->stream('Payment Slip.pdf'));
                 }else{
-                    // $pdf->setEncryption(Session::get('userID'), Session::get('userID'), array('print', 'copy'));
+                    $pdf->setEncryption(Session::get('userID'), Session::get('userID'), array('print', 'copy'));
                     return $pdf->stream('Payment Slip.pdf');
                 }
             }
