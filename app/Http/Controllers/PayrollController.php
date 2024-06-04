@@ -1057,6 +1057,7 @@ class PayrollController extends Controller
             }
         } catch (RequestException $e) {
             $response = $e->getResponse();
+            // dd($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -6936,6 +6937,8 @@ public function dataDetailReportFormatPY(Request $request)
                 'Authorization' => 'Bearer ' . $data->token ]
             ]);
 
+            $userID = null;
+
             $param = [
                 'companyCode' => $data->companyCode,
                 'languageCode' => $data->languageCode,
@@ -6963,6 +6966,7 @@ public function dataDetailReportFormatPY(Request $request)
             if(!empty($data->employee_no_from) || isset($data->employee_no_to)){
                 $param['employeeNoFrom'] = $data->employee_no_from;
                 $param['employeeNoTo'] = $data->employee_no_to;
+                $userID = $data->employee_no_to;
             }
 
             if(!empty($data->sort_by) || isset($data->level)){
@@ -6978,6 +6982,10 @@ public function dataDetailReportFormatPY(Request $request)
 
             if(!empty($data->display_logo)){
                 $param['displayCompanyLogo'] = $data->display_logo == "0" ? false : true;
+            }
+
+            if(!empty($data->user_id)){
+                $userID = $data->user_id;
             }
 
             // dd(json_encode($param));
@@ -7028,7 +7036,7 @@ public function dataDetailReportFormatPY(Request $request)
                 // if($data->mobile){
                 //     return $pdf->stream('Payment Slip.pdf');
                 // }else{
-                    // $pdf->setEncryption(Session::get('userID'), Session::get('userID'), array('print', 'copy'));
+                    $pdf->setEncryption($userID, $userID, array('print', 'copy'));
                     return $pdf->stream('Payment Slip.pdf');
                 // }
             }else{
@@ -7045,7 +7053,7 @@ public function dataDetailReportFormatPY(Request $request)
                 // if($data->mobile){
                 //     return $pdf->stream('Payment Slip.pdf');
                 // }else{
-                    // $pdf->setEncryption(Session::get('userID'), Session::get('userID'), array('print', 'copy'));
+                    $pdf->setEncryption($userID, $userID, array('print', 'copy'));
                     return $pdf->stream('Payment Slip.pdf');
                 // }
             }
@@ -7064,7 +7072,7 @@ public function dataDetailReportFormatPY(Request $request)
                 // if($data->mobile){
                 //     return $pdf->stream('Payment Slip.pdf');
                 // }else{
-                    // $pdf->setEncryption(Session::get('userID'), Session::get('userID'), array('print', 'copy'));
+                    $pdf->setEncryption($userID, $userID, array('print', 'copy'));
                     return $pdf->stream('Payment Slip.pdf');
                 // }
             }else{
@@ -7081,7 +7089,7 @@ public function dataDetailReportFormatPY(Request $request)
                 // if($data->mobile){
                 //     return $pdf->stream('Payment Slip.pdf');
                 // }else{
-                    // $pdf->setEncryption(Session::get('userID'), Session::get('userID'), array('print', 'copy'));
+                    $pdf->setEncryption($userID, $userID, array('print', 'copy'));
                     return $pdf->stream('Payment Slip.pdf');
                 // }
             }
@@ -7224,7 +7232,7 @@ public function dataDetailReportFormatPY(Request $request)
             // var_dump($request->format_type);
         }catch(Exception $e){
             $response = $e->getResponse();
-            // var_dump($response);
+            // dd($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -7266,6 +7274,7 @@ public function dataDetailReportFormatPY(Request $request)
                     'transfer_date' => date('d-M-Y', strtotime($request->print_date))
                 ])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
                 if($request->mobile){
+                    $pdf->setEncryption(Session::get('userID'), Session::get('userID'), array('print', 'copy'));
                     return base64_encode($pdf->stream('Payment Slip.pdf'));
                 }else{
                     $pdf->setEncryption(Session::get('userID'), Session::get('userID'), array('print', 'copy'));
@@ -7283,6 +7292,7 @@ public function dataDetailReportFormatPY(Request $request)
                     'transfer_date' => date('d-M-Y', strtotime($request->print_date))
                 ])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
                 if($request->mobile){
+                    $pdf->setEncryption(Session::get('userID'), Session::get('userID'), array('print', 'copy'));
                     return base64_encode($pdf->stream('Payment Slip.pdf'));
                 }else{
                     $pdf->setEncryption(Session::get('userID'), Session::get('userID'), array('print', 'copy'));
@@ -7302,6 +7312,7 @@ public function dataDetailReportFormatPY(Request $request)
                     'transfer_date' => date('d-M-Y', strtotime($request->print_date))
                 ])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
                 if($request->mobile){
+                    $pdf->setEncryption(Session::get('userID'), Session::get('userID'), array('print', 'copy'));
                     return base64_encode($pdf->stream('Payment Slip.pdf'));
                 }else{
                     $pdf->setEncryption(Session::get('userID'), Session::get('userID'), array('print', 'copy'));
@@ -7319,6 +7330,7 @@ public function dataDetailReportFormatPY(Request $request)
                     'transfer_date' => date('d-M-Y', strtotime($request->print_date))
                 ])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
                 if($request->mobile){
+                    $pdf->setEncryption(Session::get('userID'), Session::get('userID'), array('print', 'copy'));
                     return base64_encode($pdf->stream('Payment Slip.pdf'));
                 }else{
                     $pdf->setEncryption(Session::get('userID'), Session::get('userID'), array('print', 'copy'));
