@@ -193,7 +193,7 @@
 				<table style="width:100%; border-collapse: collapse;">
 					<tr>
 						<th style="width: 42%; text-align: left; padding-top: 0.4%; padding-left: 2%; font-size: 20px;">Take Home Pay</th>
-						<th style="width: 10%; text-align: right; padding-top: 0.4%; padding-right: 6%; font-size: 20px;">Rp{{ number_format((float) $totalDeduction, 0, ',', '.')}}</th>
+						<th style="width: 10%; text-align: right; padding-top: 0.4%; padding-right: 6%; font-size: 20px;">Rp{{ number_format((float) $value->takeHomePaySalary, 0, ',', '.')}}</th>
 					</tr>
 				</table>
 			</td>
