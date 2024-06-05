@@ -221,6 +221,7 @@
                         </div>
                     </div>
                 </div>
+                @if($companyCode == 'NMDI')
                 <div class="row" id="div-level">
                     <div class="col-3">
                         <div class="form-group">
@@ -234,6 +235,7 @@
                         </div>
                     </div>
                 </div>
+                @endif
                 <div class="row">
                     <div class="col-2">
                         <div class="form-group">
@@ -343,6 +345,7 @@
                         </div>
                     </div>
                 </div>
+                @if($companyCode == 'NMDI')
                 <div class="row">
                     <div class="col-2">
                         <div class="form-group">
@@ -356,6 +359,22 @@
                         </div>
                     </div>
                 </div>
+                @else
+                <div class="row" id="div-level">
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label for="location form-check-label">{{ __('payroll_periodical_report.label_location') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <select class="form-control select2" id="location" name="location[]"
+                                multiple="multiple"></select>
+                        </div>
+                        <input type="hidden" class="form-control" id="level_format" name="level_format">
+                    </div>
+                </div>
+                @endif
                 <!-- BUTTON -->
                 <div class="row">
                     <div class="col-3">
@@ -476,6 +495,7 @@
         });
 
         var arrData = @json($data);
+        var companyCode = @json($companyCode);
 
         if (arrData) {
             pickerPeriod.setDate(arrData[0].periodYear + "-" + arrData[0].periodMonth + "-01");
@@ -513,14 +533,29 @@
             type: "GET",
             success: function (response) {
                 $('#level_format').val(response.data[0].levelFormat);
-                for (var i = 1; i <= 1; i++) {
-                    $('#div-level').append(
-                        '<div class="col-4">' +
-                        '<div class="form-group">' +
-                        '<select class="form-control select2" id="level' + i + '" name="level' +
-                        i + '[]"></select>' +
-                        '</div></div>'
-                    );
+                for (var i = 1; i <= ((companyCode == 'NMDI') ? 1 : response.data[0].levelFormat); i++) {
+                    if(companyCode == 'NMDI'){
+                        $('#div-level').append(
+                            '<div class="col-4">' +
+                            '<div class="form-group">' +
+                            '<select class="form-control select2" id="level' + i + '" name="level' +
+                            i + '[]"></select>' +
+                            '</div></div>'
+                        );
+                    }else{
+                        $('#div-level').append(
+                            '<div class="col-2">' +
+                            '<div class="form-group">'+
+                            '<label for="level' + i + ' form-check-label">' + response.data_level[i - 1]
+                            .levelDescription + '</label>' +
+                            '</div></div>'+
+                            '<div class="col-4">' +
+                            '<div class="form-group">' +
+                            '<select class="form-control select2" id="level' + i + '" name="level' +
+                            i + '[]" multiple="multiple"></select>' +
+                            '</div></div>'
+                        );
+                    }
 
                     loadDataLevelCode('#level' + i, i);
                     loadDataFirstLastAllLevel('#level' + i, i);

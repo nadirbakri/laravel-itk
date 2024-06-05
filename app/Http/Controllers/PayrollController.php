@@ -874,7 +874,7 @@ class PayrollController extends Controller
             $data = $arrResult->dataListSet;
         }
 
-        return view('payroll.py_periodical_report', ['data' => $data]);
+        return view('payroll.py_periodical_report', ['data' => $data, 'companyCode' => Session::get('companyCode')]);
     }
 
     public function pageSignatureListReport()
