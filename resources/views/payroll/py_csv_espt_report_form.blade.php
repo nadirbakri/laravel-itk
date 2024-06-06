@@ -354,31 +354,31 @@
             attrYear.append(option);
         }
 
-        $('#npwp_group').on('select2:select', function (e) {
-            var npwpGroup = $(this).select2('data');
+        // $('#npwp_group').on('select2:select', function (e) {
+        //     var npwpGroup = $(this).select2('data');
 
-            if (npwpGroup !== '' && npwpGroup !== null) {
-                $.ajax({
-                    url: "{{ url('npwp/personal_data/api') }}",
-                    type: "GET",
-                    data: {
-                        'npwpCode' : npwpGroup[0].id
-                    },
-                    success: function (response) {
-                        pickerPrintDate.setDate(((typeof response.printDate !== 'undefined') ? response.printDate : ''));
-                    },
-                    error: function (response) {
-                        $('#notification_error').modal('show');
-                        $('#message-notification-error').html(response);
-                    }
-                })
-            }
-        });
+        //     if (npwpGroup !== '' && npwpGroup !== null) {
+        //         $.ajax({
+        //             url: "{{ url('npwp/personal_data/api') }}",
+        //             type: "GET",
+        //             data: {
+        //                 'npwpCode' : npwpGroup[0].id
+        //             },
+        //             success: function (response) {
+        //                 pickerPrintDate.setDate(((typeof response.printDate !== 'undefined') ? response.printDate : ''));
+        //             },
+        //             error: function (response) {
+        //                 $('#notification_error').modal('show');
+        //                 $('#message-notification-error').html(response);
+        //             }
+        //         })
+        //     }
+        // });
 
-        $('#npwp_group').on('select2:unselecting', function (e) {
-            var date = new Date();
-            pickerPrintDate.setDate(date);
-        })
+        // $('#npwp_group').on('select2:unselecting', function (e) {
+        //     var date = new Date();
+        //     pickerPrintDate.setDate(date);
+        // })
 
         loadDataPeriodMonth();
         loadDataNPWPGroup();
