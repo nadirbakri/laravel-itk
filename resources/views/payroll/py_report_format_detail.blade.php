@@ -266,6 +266,7 @@
                                         <option value="PeMaster">PeMaster</option>
                                         <option value="TmFixedComponent">TmFixedComponent</option>
                                         <option value="GmLevel">GmLevel</option>
+                                        <option value="PeMasterView">PeMasterView</option>
                                     </select>
                                 </div>
                             </div>
