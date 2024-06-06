@@ -7256,6 +7256,9 @@ public function dataDetailReportFormatPY(Request $request)
         }else if($companyCode == 'KNM' || $companyCode == 'KTL'){
             $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_sayurbox';
             $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_sayurbox';
+        }else if($companyCode == 'FFS'){
+            $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_fitra_fajar';
+            $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_fitra_fajar';
         }else{
             $viewNamePortrait = 'payroll.py_export_payment_slip_portrait';
             $viewNameLandscape = 'payroll.py_export_payment_slip_landscape';

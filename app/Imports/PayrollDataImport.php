@@ -130,6 +130,7 @@ class PayrollDataImport implements ToCollection, WithStartRow
             );
         } catch (RequestException $e) {
             $response = $e->getResponse();
+            // dd($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -140,6 +141,7 @@ class PayrollDataImport implements ToCollection, WithStartRow
         }
 
         $this->arrResult[] = json_decode($response->getBody()->getContents());
+        // dd($this->arrResult);
     }
 
     public function startRow(): int
