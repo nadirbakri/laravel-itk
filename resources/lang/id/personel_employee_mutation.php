@@ -68,6 +68,9 @@ return [
     'label_company_email_address' => 'Alamat Email Perusahaan',
     'employee_no_required' => 'No Karyawan Harus Diisi',
     'mutation_type_required' => 'Tipe Mutasi Harus Diisi',
+    'termination_reason_new_required' => 'Alasan Penghentian Harus Diisi',
+    'termination_date_new_required' => 'Tanggal Penghentian Harus Diisi',
+    'effective_termination_date_new_required' => 'Tanggal Efektif Penghentian Harus Diisi',
     'alert_success' => 'Sukses!'
 
 ];

@@ -71,6 +71,26 @@
             margin-left: 0.5%;
         }
 
+        .required {
+            color: red;
+        }
+
+        .invalid-feedback {
+            display: block;
+            width: 100%;
+            margin-top: 0.25rem;
+            font-size: 80%;
+            color: #dc3545;
+            position: absolute;
+        }
+
+        .input-group .invalid-feedback {
+            position: absolute;
+            left: 0;
+            top: 100%;
+            width: 100%;
+        }
+
     </style>
 </head>
 
@@ -319,6 +339,16 @@
                                     <input type="text" class="form-control" id="employment_status_current"
                                         name="employment_status_current"
                                         placeholder="{{ __('personel_employee_mutation.label_employment_status') }}"
+                                        disabled>
+                                </div>
+                            </div>
+                            <div class="col-12" id="div_termination_date_current" style="display: none;">
+                                <div class="form-group">
+                                    <label
+                                        for="termination_date_current">{{ __('personel_employee_mutation.label_termination_date') }}</label>
+                                    <input type="text" class="form-control" id="termination_date_current"
+                                        name="termination_date_current"
+                                        placeholder="{{ __('personel_employee_mutation.label_termination_date') }}"
                                         disabled>
                                 </div>
                             </div>
@@ -638,8 +668,8 @@
                             </div>
                             <div class="col-12" id="div_termination_reason_new" style="display: none;">
                                 <div class="form-group">
-                                    <label for="termination_reason_new">{{ __('personel_employee_mutation.label_termination_reason') }}</label>
-                                    <select class="form-control" id="termination_reason_new" name="termination_reason_new">
+                                    <label for="termination_reason_new">{{ __('personel_employee_mutation.label_termination_reason') }} <span class="required">*</span></label>
+                                    <select class="form-control" id="termination_reason_new" name="termination_reason_new" required>
                                         <option value="">
                                             {{ __('personel_employee_mutation.label_termination_reason') }}
                                         </option>
@@ -648,11 +678,11 @@
                             </div>
                             <div class="col-12" id="div_termination_date_new" style="display: none;">
                                 <div class="form-group">
-                                    <label for="termination_date_new">{{ __('personel_employee_mutation.label_termination_date') }}</label>
+                                    <label for="termination_date_new">{{ __('personel_employee_mutation.label_termination_date') }} <span class="required">*</span></label>
                                     <div class='input-group'>
                                         <input type="text" class="form-control" id="termination_date_new"
                                             name="termination_date_new"
-                                            placeholder="{{ __('personel_employee_mutation.label_termination_date') }}">
+                                            placeholder="{{ __('personel_employee_mutation.label_termination_date') }}" required>
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><span class="fa fa-calendar"></span></span>
                                         </div>
@@ -661,11 +691,11 @@
                             </div>
                             <div class="col-12" id="div_effective_termination_date_new" style="display: none;">
                                 <div class="form-group">
-                                    <label for="effective_termination_date_new">{{ __('personel_employee_mutation.label_effective_termination_date') }}</label>
+                                    <label for="effective_termination_date_new">{{ __('personel_employee_mutation.label_effective_termination_date') }} <span class="required">*</span></label>
                                     <div class='input-group'>
                                         <input type="text" class="form-control" id="effective_termination_date_new"
                                             name="effective_termination_date_new"
-                                            placeholder="{{ __('personel_employee_mutation.label_effective_termination_date') }}">
+                                            placeholder="{{ __('personel_employee_mutation.label_effective_termination_date') }}" required>
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><span class="fa fa-calendar"></span></span>
                                         </div>
@@ -885,7 +915,6 @@
         //     defaultDate: "today",
         //     onReady: function () {
         //         var flatPickrInstance = this;
-        //         console.log(flatPickrInstance);
         //         var $flatPickrInput = $(flatPickrInstance.element);
         //         $flatPickrInput.siblings(".input-group-prepend").click(function () {
         //             flatPickrInstance.toggle();
@@ -901,7 +930,6 @@
             defaultDate: "today",
             onReady: function () {
                 var flatPickrInstance = this;
-                console.log(flatPickrInstance);
                 var $flatPickrInput = $(flatPickrInstance.element);
                 $flatPickrInput.siblings(".input-group-prepend").click(function () {
                     flatPickrInstance.toggle();
@@ -917,7 +945,6 @@
             defaultDate: "today",
             onReady: function () {
                 var flatPickrInstance = this;
-                console.log(flatPickrInstance);
                 var $flatPickrInput = $(flatPickrInstance.element);
                 $flatPickrInput.siblings(".input-group-prepend").click(function () {
                     flatPickrInstance.toggle();
@@ -933,7 +960,6 @@
             defaultDate: "today",
             onReady: function () {
                 var flatPickrInstance = this;
-                console.log(flatPickrInstance);
                 var $flatPickrInput = $(flatPickrInstance.element);
                 $flatPickrInput.siblings(".input-group-prepend").click(function () {
                     flatPickrInstance.toggle();
@@ -949,7 +975,6 @@
             defaultDate: "today",
             onReady: function () {
                 var flatPickrInstance = this;
-                console.log(flatPickrInstance);
                 var $flatPickrInput = $(flatPickrInstance.element);
                 $flatPickrInput.siblings(".input-group-prepend").click(function () {
                     flatPickrInstance.toggle();
@@ -965,7 +990,6 @@
             defaultDate: "today",
             onReady: function () {
                 var flatPickrInstance = this;
-                console.log(flatPickrInstance);
                 var $flatPickrInput = $(flatPickrInstance.element);
                 $flatPickrInput.siblings(".input-group-prepend").click(function () {
                     flatPickrInstance.toggle();
@@ -981,7 +1005,6 @@
             defaultDate: "today",
             onReady: function () {
                 var flatPickrInstance = this;
-                console.log(flatPickrInstance);
                 var $flatPickrInput = $(flatPickrInstance.element);
                 $flatPickrInput.siblings(".input-group-prepend").click(function () {
                     flatPickrInstance.toggle();
@@ -997,7 +1020,6 @@
             defaultDate: "today",
             onReady: function () {
                 var flatPickrInstance = this;
-                console.log(flatPickrInstance);
                 var $flatPickrInput = $(flatPickrInstance.element);
                 $flatPickrInput.siblings(".input-group-prepend").click(function () {
                     flatPickrInstance.toggle();
@@ -1013,7 +1035,6 @@
             defaultDate: "today",
             onReady: function () {
                 var flatPickrInstance = this;
-                console.log(flatPickrInstance);
                 var $flatPickrInput = $(flatPickrInstance.element);
                 $flatPickrInput.siblings(".input-group-prepend").click(function () {
                     flatPickrInstance.toggle();
@@ -1029,7 +1050,6 @@
             defaultDate: "today",
             onReady: function () {
                 var flatPickrInstance = this;
-                console.log(flatPickrInstance);
                 var $flatPickrInput = $(flatPickrInstance.element);
                 $flatPickrInput.siblings(".input-group-prepend").click(function () {
                     flatPickrInstance.toggle();
@@ -1045,7 +1065,6 @@
             defaultDate: "today",
             onReady: function () {
                 var flatPickrInstance = this;
-                console.log(flatPickrInstance);
                 var $flatPickrInput = $(flatPickrInstance.element);
                 $flatPickrInput.siblings(".input-group-prepend").click(function () {
                     flatPickrInstance.toggle();
@@ -1107,6 +1126,8 @@
 
         $('#mutation_type').on('change', function () {
             if(this.value == "N"){
+                $("#termination_date_new").removeAttr('required');
+                $("#effective_termination_date_new").removeAttr('required');
                 $('#div_npwp_code_current').show();
                 $('#div_npwp_code_new').show();
                 $('#div_period_start_date_new').show();
@@ -1129,6 +1150,7 @@
                 $('#div_level_current').hide();
                 $('#div_level_new').hide();
                 $('#div_employment_status_current').hide();
+                $('#div_termination_date_current').hide();
                 $('#div_employment_status_new').hide();
                 $('#div_contract_date_current').hide();
                 $('#div_contract_date_new').hide();
@@ -1169,6 +1191,8 @@
                 $('#div_company_email_address_new').hide();
                 $('#div_company_email_address_current').hide();
             }else if(this.value == "M"){
+                $("#termination_date_new").removeAttr('required');
+                $("#effective_termination_date_new").removeAttr('required');
                 $('#div_company_code_current').show();
                 $('#div_company_code_new').show();
                 $('#div_start_date_new').show();
@@ -1194,6 +1218,7 @@
                 $('#div_npwp_code_new').hide();
                 $('#div_period_start_date_new').hide();
                 $('#div_employment_status_current').hide();
+                $('#div_termination_date_current').hide();
                 $('#div_employment_status_new').hide();
                 $('#div_contract_date_current').hide();
                 $('#div_contract_date_new').hide();
@@ -1231,6 +1256,8 @@
                 $('#div_company_email_address_new').hide();
                 $('#div_company_email_address_current').hide();
             }else if(this.value == "P" || this.value == "D"){
+                $("#termination_date_new").removeAttr('required');
+                $("#effective_termination_date_new").removeAttr('required');
                 $('#div_start_date_new').show();
                 $('#div_initial_date_current').show();
                 $('#div_work_location_current').show();
@@ -1257,6 +1284,7 @@
                 $('#div_npwp_code_new').hide();
                 $('#div_period_start_date_new').hide();
                 $('#div_employment_status_current').hide();
+                $('#div_termination_date_current').hide();
                 $('#div_employment_status_new').hide();
                 $('#div_contract_date_current').hide();
                 $('#div_contract_date_new').hide();
@@ -1293,7 +1321,10 @@
                 $('#div_company_email_address_new').hide();
                 $('#div_company_email_address_current').hide();
             }else if(this.value == "O"){
+                $("#termination_date_new").removeAttr('required');
+                $("#effective_termination_date_new").removeAttr('required');
                 $('#div_employment_status_current').show();
+                $('#div_termination_date_current').hide();
                 $('#div_employment_status_new').show();
                 if(employmentStatus == 'C'){
                     $('#div_contract_date_current').show();
@@ -1361,7 +1392,10 @@
                 $('#div_company_email_address_new').hide();
                 $('#div_company_email_address_current').hide();
             }else if(this.value == "T"){
+                $("#termination_date_new").attr('required', true);
+                $("#effective_termination_date_new").attr('required', true);
                 $('#div_employment_status_current').show();
+                $('#div_termination_date_current').show();
                 $('#div_termination_reason_new').show();
                 $('#div_termination_date_new').show();
                 $('#div_effective_termination_date_new').show();
@@ -1423,6 +1457,8 @@
                 $('#div_company_email_address_new').hide();
                 $('#div_company_email_address_current').hide();
             }else if(this.value == "PE"){
+                $("#termination_date_new").removeAttr('required');
+                $("#effective_termination_date_new").removeAttr('required');
                 $('#div_npwp_code_current').hide();
                 $('#div_npwp_code_new').hide();
                 $('#div_period_start_date_new').hide();
@@ -1445,6 +1481,7 @@
                 $('#div_level_current').hide();
                 $('#div_level_new').hide();
                 $('#div_employment_status_current').hide();
+                $('#div_termination_date_current').hide();
                 $('#div_employment_status_new').hide();
                 $('#div_contract_date_current').hide();
                 $('#div_contract_date_new').hide();
@@ -1485,6 +1522,8 @@
                 $('#div_company_email_address_new').show();
                 $('#div_company_email_address_current').show();
             }else{
+                $("#termination_date_new").removeAttr('required');
+                $("#effective_termination_date_new").removeAttr('required');
                 $('#div_start_date_new').hide();
                 $('#div_initial_date_current').hide();
                 $('#div_work_location_current').hide();
@@ -1511,6 +1550,7 @@
                 $('#div_npwp_code_new').hide();
                 $('#div_period_start_date_new').hide();
                 $('#div_employment_status_current').hide();
+                $('#div_termination_date_current').hide();
                 $('#div_employment_status_new').hide();
                 $('#div_contract_date_current').hide();
                 $('#div_contract_date_new').hide();
@@ -1548,6 +1588,8 @@
                 $('#div_company_email_address_current').hide();
                 
             }
+
+            $("#mutation_form").validate().resetForm();
         });
         
         $('#employment_status_new').on('change', function () {
@@ -1571,6 +1613,23 @@
             $('#remarks').prop('disabled', false);
         });
 
+        function isEmpty(obj) {
+            if (Array.isArray(obj)) {
+                return obj.length === 0;
+            }
+
+            if (typeof obj === 'object') {
+                for (var prop in obj) {
+                    if (Object.prototype.hasOwnProperty.call(obj, prop)) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+
+            return false;
+        }
+
         $('#employee_no').on("select2:select", function (e) {
             var data = $('#employee_no').select2('data');
             $('#employee_name').val(htmlDecode(data[0].title));
@@ -1582,66 +1641,70 @@
                     'employeeNo': data[0].id
                 },
                 success: function (response) {
-                    $('#npwp_code_current').val(htmlDecode(response[0].mutationView.groupNPWP));
-                    $('#company_code_current').val(htmlDecode(response[0].mutationView.companyCode));
-                    $('#work_location_current').val(htmlDecode(response[0].mutationView.locationName));
-                    $('#group_code_current').val(htmlDecode(response[0].mutationView.groupName));
-                    $('#grade_code_current').val(htmlDecode(response[0].mutationView.gradeName));
-                    $('#position_current').val(htmlDecode(response[0].mutationView.positionName));
-                    $('#ranking_current').val(htmlDecode(response[0].mutationView.rankingName));
-                    $('#nature_of_work_current').val(htmlDecode(response[0].mutationView
-                        .workNatureName));
-                    $('#cost_center_code_current').val(htmlDecode(response[0].mutationView
-                        .costCenterDescription));
-                    $('#initial_date_current').val(htmlDecode(response[0].mutationView.startDate));
-                    $('#employment_status_current').val(htmlDecode(response[0].mutationView
-                        .employmentStatusVal));
-                    employmentStatus = response[0].mutationView.employmentStatus;
-                    if(employmentStatus == 'C' && $('#mutation_type').val() == 'O'){
-                        $('#div_contract_date_current').show();
-                    } else if(employmentStatus == 'P' && $('#mutation_type').val() == 'O'){
-                        $('#div_contract_date_current').show();
-                    } else{
-                        $('#div_contract_date_current').hide();
+                    if(!isEmpty(response)){
+                        $('#npwp_code_current').val(htmlDecode(response[0].mutationView.groupNPWP));
+                        $('#company_code_current').val(htmlDecode(response[0].mutationView.companyCode));
+                        $('#work_location_current').val(htmlDecode(response[0].mutationView.locationName));
+                        $('#group_code_current').val(htmlDecode(response[0].mutationView.groupName));
+                        $('#grade_code_current').val(htmlDecode(response[0].mutationView.gradeName));
+                        $('#position_current').val(htmlDecode(response[0].mutationView.positionName));
+                        $('#ranking_current').val(htmlDecode(response[0].mutationView.rankingName));
+                        $('#nature_of_work_current').val(htmlDecode(response[0].mutationView
+                            .workNatureName));
+                        $('#cost_center_code_current').val(htmlDecode(response[0].mutationView
+                            .costCenterDescription));
+                        $('#initial_date_current').val(htmlDecode(response[0].mutationView.startDate));
+                        $('#employment_status_current').val(htmlDecode(response[0].mutationView
+                            .employmentStatusVal));
+                        $('#termination_date_current').val(htmlDecode(response[0].mutationView
+                            .terminationDate));
+                        employmentStatus = response[0].mutationView.employmentStatus;
+                        if(employmentStatus == 'C' && $('#mutation_type').val() == 'O'){
+                            $('#div_contract_date_current').show();
+                        } else if(employmentStatus == 'P' && $('#mutation_type').val() == 'O'){
+                            $('#div_contract_date_current').show();
+                        } else{
+                            $('#div_contract_date_current').hide();
+                        }
+                        $('#contract_start_date_current').val(htmlDecode(response[0].mutationView
+                            .contractStartDate));
+                        $('#contract_end_date_current').val(htmlDecode(response[0].mutationView
+                            .contractEndDate));
+                        $('#div-level-current').html('');
+                        $('#div-level-new').html('');
+
+                        $.each(response[0].lastHistoryLevel, function (k, v) {
+                            $('#div-level-current').append(
+                                '<div class="col-12">' +
+                                '<div class="form-group">' +
+                                '<label for="level' + (k + 1) + '_current">Level ' +
+                                v.levelType + ' Code</label>' +
+                                '<input type="text" class="form-control" id="level' +
+                                (k + 1) +
+                                '_current" name="level_current[]" value="' + v
+                                .levelCode + '" disabled>' +
+                                '</div></div>'
+                            );
+
+                            loadDataLevelCode('#level' + v.levelType + '_new', v
+                                .levelType);
+                        });
+
+                        $('#home_address_current').val(htmlDecode(response[0].peMasterInfo.homeAddress));
+                        $('#home_city_code_current').val(htmlDecode(response[0].peMasterInfo.homeCityCode));
+                        $('#home_zip_code_current').val(htmlDecode(response[0].peMasterInfo.homeZipCode));
+                        $('#home_phone_current').val(htmlDecode(response[0].peMasterInfo.homePhone));
+                        $('#emergency_contact_name_current').val(htmlDecode(response[0].peMasterInfo.emergencyName));
+                        $('#emergency_contact_address_current').val(htmlDecode(response[0].peMasterInfo.emergencyAddress));
+                        $('#emergency_contact_phone_current').val(htmlDecode(response[0].peMasterInfo.emergencyPhone));
+                        $('#emergency_contact_relation_current').val(htmlDecode(response[0].peMasterInfo.emergencyRelation));
+                        $('#other_address_current').val(htmlDecode(response[0].peMasterInfo.otherAddress));
+                        $('#other_city_code_current').val(htmlDecode(response[0].peMasterInfo.otherCityCode));
+                        $('#other_zip_code_current').val(htmlDecode(response[0].peMasterInfo.otherZipCode));
+                        $('#other_phone_current').val(htmlDecode(response[0].peMasterInfo.otherPhone));
+                        $('#personal_email_address_current').val(htmlDecode(response[0].peMasterInfo.personalEmailAddress));
+                        $('#company_email_address_current').val(htmlDecode(response[0].peMasterInfo.companyEmailAddress));
                     }
-                    $('#contract_start_date_current').val(htmlDecode(response[0].mutationView
-                        .contractStartDate));
-                    $('#contract_end_date_current').val(htmlDecode(response[0].mutationView
-                        .contractEndDate));
-                    $('#div-level-current').html('');
-                    $('#div-level-new').html('');
-
-                    $.each(response[0].lastHistoryLevel, function (k, v) {
-                        $('#div-level-current').append(
-                            '<div class="col-12">' +
-                            '<div class="form-group">' +
-                            '<label for="level' + (k + 1) + '_current">Level ' +
-                            v.levelType + ' Code</label>' +
-                            '<input type="text" class="form-control" id="level' +
-                            (k + 1) +
-                            '_current" name="level_current[]" value="' + v
-                            .levelCode + '" disabled>' +
-                            '</div></div>'
-                        );
-
-                        loadDataLevelCode('#level' + v.levelType + '_new', v
-                            .levelType);
-                    });
-
-                    $('#home_address_current').val(htmlDecode(response[0].peMasterInfo.homeAddress));
-                    $('#home_city_code_current').val(htmlDecode(response[0].peMasterInfo.homeCityCode));
-                    $('#home_zip_code_current').val(htmlDecode(response[0].peMasterInfo.homeZipCode));
-                    $('#home_phone_current').val(htmlDecode(response[0].peMasterInfo.homePhone));
-                    $('#emergency_contact_name_current').val(htmlDecode(response[0].peMasterInfo.emergencyName));
-                    $('#emergency_contact_address_current').val(htmlDecode(response[0].peMasterInfo.emergencyAddress));
-                    $('#emergency_contact_phone_current').val(htmlDecode(response[0].peMasterInfo.emergencyPhone));
-                    $('#emergency_contact_relation_current').val(htmlDecode(response[0].peMasterInfo.emergencyRelation));
-                    $('#other_address_current').val(htmlDecode(response[0].peMasterInfo.otherAddress));
-                    $('#other_city_code_current').val(htmlDecode(response[0].peMasterInfo.otherCityCode));
-                    $('#other_zip_code_current').val(htmlDecode(response[0].peMasterInfo.otherZipCode));
-                    $('#other_phone_current').val(htmlDecode(response[0].peMasterInfo.otherPhone));
-                    $('#personal_email_address_current').val(htmlDecode(response[0].peMasterInfo.personalEmailAddress));
-                    $('#company_email_address_current').val(htmlDecode(response[0].peMasterInfo.companyEmailAddress));
                 },
                 error: function (response) {
                     $('#notification_error').modal('show');
@@ -2586,7 +2649,45 @@
         }
 
         $("#toolbar-save").on('click', function () {
-            $("#mutation_form").submit();
+            // $("#mutation_form").submit();
+
+            var form = $("#mutation_form");
+            var valid = true;
+            form.find(":input:visible").each(function() {
+                var $this = $(this);
+                if ($this.val().trim() === "" && $this.prop("required")) {
+                    valid = false;
+                    $this.addClass('is-invalid');
+                    var errorMessage = $this.data('error-message') || 'This field is required';
+                    if ($this.closest('.input-group').length) {
+                        if ($this.closest('.input-group').next('.invalid-feedback').length === 0) {
+                            $this.closest('.input-group').after('<div class="invalid-feedback">' + errorMessage + '</div>');
+                        }
+                    } else {
+                        if ($this.next('.invalid-feedback').length === 0) {
+                            $this.after('<div class="invalid-feedback">' + errorMessage + '</div>');
+                        }
+                    }
+                } else {
+                    $this.removeClass('is-invalid');
+                    if ($this.closest('.input-group').length) {
+                        $this.closest('.input-group').next('.invalid-feedback').remove();
+                    } else {
+                        $this.next('.invalid-feedback').remove();
+                    }
+                }
+            });
+            if (valid) {
+                $(this).prop("disabled", true);
+                $(this).html(
+                    '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+                );
+
+                form.submit();
+            }else{
+                $('#notification_error').modal('show');
+                $('#message-notification-error').html("Some Field Are Required, Please Check Again");
+            }
         });
 
         if ($("#mutation_form").length > 0) {
@@ -2598,6 +2699,15 @@
                     mutation_type: {
                         required: true,
                     },
+                    termination_reason_new: {
+                        required: true,
+                    },
+                    termination_date_new: {
+                        required: true,
+                    },
+                    effective_termination_date_new: {
+                        required: true,
+                    },
                 },
                 messages: {
                     employee_no: {
@@ -2605,6 +2715,15 @@
                     },
                     mutation_type: {
                         required: "{{ __('personel_employee_mutation.mutation_type_required') }}",
+                    },
+                    termination_reason_new: {
+                        required: "{{ __('personel_employee_mutation.termination_reason_new_required') }}",
+                    },
+                    termination_date_new: {
+                        required: "{{ __('personel_employee_mutation.termination_date_new_required') }}",
+                    },
+                    effective_termination_date_new: {
+                        required: "{{ __('personel_employee_mutation.effective_termination_date_new_required') }}",
                     },
                 },
                 highlight: function (element) {
@@ -2618,7 +2737,7 @@
                     error.addClass('invalid-feedback');
                     element.closest('.form-group').append(error);
                 },
-                submitHandler: function (form) {
+                submitHandler: function (form) {  
                     $.ajaxSetup({
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -2630,6 +2749,13 @@
                         data: $('#mutation_form').serialize(),
                         success: function (response) {
                             if (response.status == "true") {
+                                $("#toolbar-save").prop("disabled", false);
+                                $("#toolbar-save").html(
+                                    '<img src="{{ url('/icons/functionbar/functionbar-save-blue.svg') }}" alt="Save">'+
+                                    '<img src="{{ url('/icons/functionbar/functionbar-save-white.svg') }}" class="functionbar-hover" alt="Save">'+
+                                    '<span>Save</span>'
+                                );
+                                
                                 $('#notification_success').modal('show');
                                 $('#message-notification-success').html(response
                                     .message);
@@ -2638,6 +2764,13 @@
                                         "{{ url('personnel/employee_mutation') }}";
                                 }, 3000);
                             } else {
+                                $("#toolbar-save").prop("disabled", false);
+                                $("#toolbar-save").html(
+                                    '<img src="{{ url('/icons/functionbar/functionbar-save-blue.svg') }}" alt="Save">'+
+                                    '<img src="{{ url('/icons/functionbar/functionbar-save-white.svg') }}" class="functionbar-hover" alt="Save">'+
+                                    '<span>Save</span>'
+                                );
+
                                 $('#notification_error').modal('show');
                                 if (response.message == null || response.message ==
                                     '') {
@@ -2650,6 +2783,13 @@
                             }
                         },
                         error: function (response) {
+                            $("#toolbar-save").prop("disabled", false);
+                            $("#toolbar-save").html(
+                                '<img src="{{ url('/icons/functionbar/functionbar-save-blue.svg') }}" alt="Save">'+
+                                '<img src="{{ url('/icons/functionbar/functionbar-save-white.svg') }}" class="functionbar-hover" alt="Save">'+
+                                '<span>Save</span>'
+                            );
+                            
                             $('#notification_error').modal('show');
                             $('#message-notification-error').html(response);
                         }

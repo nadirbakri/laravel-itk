@@ -68,6 +68,9 @@ return [
     'label_company_email_address' => 'Company Email Address',
     'employee_no_required' => 'Employee No is Required',
     'mutation_type_required' => 'Mutation Type is Required',
+    'termination_reason_new_required' => 'Termination Reason is Required',
+    'termination_date_new_required' => 'Termination Date is Required',
+    'effective_termination_date_new_required' => 'Effective Termination Date is Required',
     'alert_success' => 'Success!'
 
 ];
