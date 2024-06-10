@@ -87,6 +87,22 @@
             border-radius: 10px;
         }
 
+        .invalid-feedback {
+            display: block;
+            width: 100%;
+            margin-top: 0.25rem;
+            font-size: 80%;
+            color: #dc3545;
+            position: absolute;
+        }
+
+        .input-group .invalid-feedback {
+            position: absolute;
+            left: 0;
+            top: 100%;
+            width: 100%;
+        }
+
     </style>
 </head>
 
@@ -241,13 +257,13 @@
                 <div class="modal-body">
                     <form id="report_format_detail_form" method="post">
                         @csrf
-                        <div class="row">
+                        <div class="row" style="margin: 0;">
                             <div class="col-4">
                                 <div class="form-group">
                                     <label for="column_no">{{ __('payroll_report_format.label_column_no') }}</label>
                                     <span class="required">*</span>
                                     <input type="text" class="form-control" id="column_no" name="column_no"
-                                        placeholder="{{ __('payroll_report_format.label_column_no') }}">
+                                        placeholder="{{ __('payroll_report_format.label_column_no') }}" required>
                                 </div>
                                 <input type="hidden" class="form-control" id="record_function_det" name="record_function_det">
                                 <input type="hidden" class="form-control" id="column_no_edit" name="column_no_edit">
@@ -257,7 +273,7 @@
                                     <label
                                         for="table_name_detail">{{ __('payroll_report_format.label_table_name') }}</label>
                                     <span class="required">*</span>
-                                    <select class="form-control select2" id="table_name_detail" name="table_name_detail">
+                                    <select class="form-control select2" id="table_name_detail" name="table_name_detail" required>
                                         <option value="" disabled selected>{{ __('payroll_report_format.label_select_table_name') }}</option>
                                         <option value="PeMasterInfo">PeMasterInfo</option>
                                         <option value="PrSalaryMaster">PrSalaryMaster</option>
@@ -275,18 +291,39 @@
                                     <label
                                         for="field_name_detail">{{ __('payroll_report_format.label_field_name') }}</label>
                                     <span class="required">*</span>
-                                    <select class="form-control select2" id="field_name_detail" name="field_name_detail"></select>
+                                    <select class="form-control select2" id="field_name_detail" name="field_name_detail" required></select>
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row" id="div-gmlevel-detail" style="margin: 0; display: none;">
+                            <div class="col-4">
+                                &nbsp;
+                            </div>
+                            <div class="col-4">
+                                <div id="radio-buttons-wrapper" style="display: flex; flex-wrap: wrap;">
+                                    <div class="form-check" style="padding-left: 0.75rem; margin-right: 1rem;">
+                                        <input type="radio" id="field_name_type_detail_code" name="field_name_type_detail" value="Code" required>
+                                        <label for="field_name_type_detail_code">Code</label>
+                                    </div>
+                                    <div class="form-check" style="padding-left: 0.75rem; margin-right: 1rem;">
+                                        <input type="radio" id="field_name_type_detail_name" name="field_name_type_detail" value="Name" required>
+                                        <label for="field_name_type_detail_name">Name</label>
+                                    </div>
+                                </div>
+                                <div id="radio-buttons-detail-error" class="invalid-feedback" style="padding-left: 0.75rem; margin-bottom: 0.75rem; display:none;"></div>
+                            </div>
+                            <div class="col-4">
+                                &nbsp;
+                            </div>
+                        </div>
+                        <div class="row" style="margin: 0; margin-top: 3.5%;">
                             <div class="col-4">
                                 <div class="form-group">
                                     <label for="column_header">{{ __('payroll_report_format.label_column_header') }}</label>
                                     <span class="required">*</span>
                                     <div class='input-group'>
                                         <input type="text" class="form-control" id="column_header" name="column_header"
-                                            placeholder="{{ __('payroll_report_format.label_column_header') }}">                                        
+                                            placeholder="{{ __('payroll_report_format.label_column_header') }}" required>                                        
                                     </div>
                                 </div>
                             </div>
@@ -339,7 +376,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row" id="div_add_formula" style="display: none;">
+                        <div class="row" id="div_add_formula" style="margin: 0; display: none;">
                             <div class="col-12">
                                 <div class="form-group box">
                                     <div class="row pt-2 pb-4" style="margin: 0;">
@@ -501,6 +538,7 @@
                                         <option value="PeMaster">PeMaster</option>
                                         <option value="TmFixedComponent">TmFixedComponent</option>
                                         <option value="GmLevel">GmLevel</option>
+                                        <option value="PeMasterView">PeMasterView</option>
                                     </select>
                                 </div>
                             </div>
@@ -511,6 +549,27 @@
                                     <span class="required">*</span>
                                     <select class="form-control select2" id="field_name_condition" name="field_name_condition"></select>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="row" id="div-gmlevel-condition" style="margin: 0; display: none;">
+                            <div class="col-4">
+                                <div id="radio-buttons-wrapper" style="display: flex; flex-wrap: wrap;">
+                                    <div class="form-check" style="padding-left: 0.75rem; margin-right: 1rem;">
+                                        <input type="radio" id="field_name_type_condition_code" name="field_name_type_condition" value="Code" required>
+                                        <label for="field_name_type_condition_code">Code</label>
+                                    </div>
+                                    <div class="form-check" style="padding-left: 0.75rem; margin-right: 1rem;">
+                                        <input type="radio" id="field_name_type_condition_name" name="field_name_type_condition" value="Name" required>
+                                        <label for="field_name_type_condition_name">Name</label>
+                                    </div>
+                                </div>
+                                <div id="radio-buttons-condition-error" class="invalid-feedback" style="padding-left: 0.75rem; margin-bottom: 0.75rem; display:none;"></div>
+                            </div>
+                            <div class="col-4">
+                                &nbsp;
+                            </div>
+                            <div class="col-4">
+                                &nbsp;
                             </div>
                         </div>
                         <div class="row">
@@ -713,6 +772,11 @@
             return $("<textarea/>").html(value).text();
         }
 
+        $('.modal').on('shown.bs.modal', function () {
+            $(this).css('overflow-y', 'auto'); // Enable vertical scrolling
+            $(this).scrollTop(0); // Scroll to the top
+        });
+
         function load_table_report_format_detail() {
             arrayReportFormatDetail.sort(function(a, b) {
                 return a.columnNo - b.columnNo;
@@ -848,6 +912,14 @@
         $('#report_format_detail_table tbody').on('click', 'tr td:not(:first-child)', function () {
             var data = table1.row(this).data();
             var count = table1.rows().count();
+            var field_name_detail_value = data.fieldName;
+            var part1, part2;
+            if (field_name_detail_value.includes('-Code') || field_name_detail_value.includes('-Name')) {
+                var parts = field_name_detail_value.split('-');
+                part1 = parts[0];
+                part2 = parts[1];
+            }
+
             $('#modal_add_report_format_detail').modal('show');
             $('#record_function_det').val("Edit");
             $('#column_no').val((data.columnNo + 1));
@@ -858,6 +930,15 @@
             $('#data_format').val(data.dataFormat);
             $('#display').prop('checked', data.display);
             $('#preview_formula').val(data.fieldFormula);
+            if (field_name_detail_value.includes('-Code') || field_name_detail_value.includes('-Name')) {
+                if(part2 == 'Code'){
+                    $('#field_name_type_detail_code').prop('checked', true);
+                }else if(part2 == 'Name'){
+                    $('#field_name_type_detail_name').prop('checked', true);
+                }else{
+                    $('input[name="field_name_type_detail"]:checked').prop('checked', false);
+                }
+            }
 
             if(data.fieldFormula){
                 $('#add_formula').prop('checked', true);
@@ -870,8 +951,30 @@
             tableName = $('#table_name_detail').val();
             if(tableName == 'GmLevel'){
                 loadDataLevelType();
+                $.ajax({
+                    type: 'GET',
+                    url: "{{ url('/level_type/api') }}",
+                }).then(function (data2) {
+                    // var index = data2.indexOf(part1);
+                    var index = data2.findIndex(function(item) {
+                        return item.levelType === part1;
+                    });
+                    var $newOption = $("<option selected='selected'></option>").val(data2[index].levelType).text(data2[index].levelDescription);
+                    $("#field_name_detail").append($newOption).trigger('change');
+                });
             }else{
                 loadDataFieldName();
+                $.ajax({
+                    type: 'GET',
+                    url: "{{ url('/field/api') }}",
+                    data: {
+                        'tableName' : tableName
+                    }
+                }).then(function (data2) {
+                    var index = data2.indexOf(data.fieldName);
+                    var $newOption = $("<option selected='selected'></option>").val(data2[index]).text(data2[index]);
+                    $("#field_name_detail").append($newOption).trigger('change');
+                });
             }
 
             $('#table_name_detail').on('change', function () {
@@ -881,18 +984,6 @@
                 }else{
                     loadDataFieldName();
                 }
-            });
-
-            $.ajax({
-                type: 'GET',
-                url: "{{ url('/field/api') }}",
-                data: {
-                    'tableName' : tableName
-                }
-            }).then(function (data2) {
-                var index = data2.indexOf(data.fieldName)
-                var $newOption = $("<option selected='selected'></option>").val(data2[index]).text(data2[index]);
-                $("#field_name_detail").append($newOption).trigger('change');
             });
         });
 
@@ -903,6 +994,7 @@
         $('#report_format_formula_table tbody').on('click', 'tr td:not(:first-child)', function () {
             var data = table3.row(this).data();
             var count = table3.rows().count();
+
             $('#modal_add_report_format_detail').modal('show');
             $('#record_function_det').val("Edit");
             $('#column_no').val((data.columnNo + 1));
@@ -936,18 +1028,6 @@
                 }else{
                     loadDataFieldName();
                 }
-            });
-
-            $.ajax({
-                type: 'GET',
-                url: "{{ url('/field/api') }}",
-                data: {
-                    'tableName' : tableName
-                }
-            }).then(function (data2) {
-                var index = data2.indexOf(data.fieldName)
-                var $newOption = $("<option selected='selected'></option>").val(data2[index]).text(data2[index]);
-                $("#field_name_detail").append($newOption).trigger('change');
             });
         });
 
@@ -1156,6 +1236,14 @@
         $('#report_format_condition_table tbody').on('click', 'tr td:not(:first-child)', function () {
             var data = table2.row(this).data();
             var count = table2.rows().count();
+            var field_name_condition_value = data.fieldName;
+            var part1, part2;
+            if (field_name_condition_value.includes('-Code') || field_name_condition_value.includes('-Name')) {
+                var parts = field_name_condition_value.split('-');
+                part1 = parts[0];
+                part2 = parts[1];
+            }
+
             $('#modal_add_report_format_condition').modal('show');
             $('#record_function_con').val("Edit");
             $('#seq_no').val((data.seqNo + 1));
@@ -1163,12 +1251,43 @@
             $('#field_name_condition').val(data.fieldName);
             $('#criteria').val(data.criteria);
             $('#value').val(data.value);
+            if (field_name_condition_value.includes('-Code') || field_name_condition_value.includes('-Name')) {
+                if(part2 == 'Code'){
+                    $('#field_name_type_condition_code').prop('checked', true);
+                }else if(part2 == 'Name'){
+                    $('#field_name_type_condition_name').prop('checked', true);
+                }else{
+                    $('input[name="field_name_type_condition"]:checked').prop('checked', false);
+                }
+            }
 
             tableName = $('#table_name_condition').val();
             if(tableName == 'GmLevel'){
                 loadDataLevelType();
+                $.ajax({
+                    type: 'GET',
+                    url: "{{ url('/level_type/api') }}",
+                }).then(function (data2) {
+                    // var index = data2.indexOf(part1);
+                    var index = data2.findIndex(function(item) {
+                        return item.levelType === part1;
+                    });
+                    var $newOption = $("<option selected='selected'></option>").val(data2[index].levelType).text(data2[index].levelDescription);
+                    $("#field_name_condition").append($newOption).trigger('change');
+                });
             }else{
                 loadDataFieldName();
+                $.ajax({
+                    type: 'GET',
+                    url: "{{ url('/field/api') }}",
+                    data: {
+                        'tableName' : tableName
+                    }
+                }).then(function (data2) {
+                    var index = data2.indexOf(data.fieldName);
+                    var $newOption = $("<option selected='selected'></option>").val(data2[index]).text(data2[index]);
+                    $("#field_name_condition").append($newOption).trigger('change');
+                });
             }
 
             $('#table_name_condition').on('change', function () {
@@ -1178,18 +1297,6 @@
                 }else{
                     loadDataFieldName();
                 }
-            });
-
-            $.ajax({
-                type: 'GET',
-                url: "{{ url('/field/api') }}",
-                data: {
-                    'tableName' : tableName
-                }
-            }).then(function (data2) {
-                var index = data2.indexOf(data.fieldName)
-                var $newOption = $("<option selected='selected'></option>").val(data2[index]).text(data2[index]);
-                $("#field_name_condition").append($newOption).trigger('change');
             });
         });
 
@@ -1202,7 +1309,7 @@
             $('#column_no').val("");
             $('#column_no_edit').val("");
             $('#table_name_detail').val("");
-            $('#field_name_detail').val("");
+            $('#field_name_detail').val(null).trigger('change');
             $('#column_header').val("");
             $('#alignment').val("");
             $('#data_format').val("");
@@ -1213,13 +1320,20 @@
             $('#table_chooser').val("");
             $('#field_chooser').val("");
             $('input[name="operator"]').prop('checked', false);
+            $('#div-gmlevel-detail').hide();
+            $('input[name="field_name_type_detail"]:checked').prop('checked', false);
+            // $('input[name="field_name_type_detail"]').removeAttr('required');
 
             $('#table_name_detail').on('change', function () {
                 tableName = $('#table_name_detail').val();
                 if(tableName == 'GmLevel'){
                     loadDataLevelType();
+                    $('#div-gmlevel-detail').show();
+                    // $('input[name="field_name_type_detail"]').attr('required', true);
                 }else{
                     loadDataFieldName();
+                    $('#div-gmlevel-detail').hide();
+                    // $('input[name="field_name_type_detail"]').removeAttr('required');
                 }
             });
 
@@ -1232,16 +1346,21 @@
             $('#record_function_con').val("New");
             $('#seq_no').val("");
             $('#table_name_condition').val("");
-            $('#field_name_condition').val("");
+            $('#field_name_condition').val(null).trigger('change');
             $('#criteria').val("");
             $('#value').val("");
+            $('#div-gmlevel-condition').hide();
+            $('input[name="field_name_type_condition"]:checked').prop('checked', false);
+            // $('input[name="field_name_type_condition"]').removeAttr('required');
 
             $('#table_name_condition').on('change', function () {
                 tableName = $('#table_name_condition').val();
                 if(tableName == 'GmLevel'){
                     loadDataLevelType();
+                    $('#div-gmlevel-condition').show();
                 }else{
                     loadDataFieldName();
+                    $('#div-gmlevel-condition').hide();
                 }
             });
 
@@ -1432,158 +1551,292 @@
         }
 
         $("#btn-save-report-format-detail").click(function () {
-            $(this).prop("disabled", true);
-            $(this).html(
-                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
-            );
+            var form = $("#report_format_detail_form");
+            var valid = true;
+            if (!$("#add_formula").is(":checked")) {
+                form.find(":input:visible").each(function() {
+                    var $this = $(this);
+                    var value = $this.val();
+                    if (value == null || value === 'undefined' || value === undefined) value = '';
 
-            var previewFormulaValue = $("#preview_formula").val();
-
-            if($("#record_function_det").val() == "New"){
-                if (previewFormulaValue !== null && previewFormulaValue !== '') {
-                    arrayReportFormatFormula.push({
-                        "columnNo": $("#column_no").val() ? parseInt($("#column_no").val()) - 1 : "",
-                        "tableName": $("#table_name_detail").val(),
-                        "fieldName": $("#field_name_detail").val(),
-                        "columnHeader": $("#column_header").val(),
-                        "alignment": $("#alignment").val(),
-                        "dataFormat": $("#data_format").val(),
-                        "display": ($("#display").is(":checked") ? $("#display").val() : false),
-                        "fieldFormula": $("#preview_formula").val()
-                    });
-                }else{
-                    arrayReportFormatDetail.push({
-                        "columnNo": $("#column_no").val() ? parseInt($("#column_no").val()) - 1 : "",
-                        "tableName": $("#table_name_detail").val(),
-                        "fieldName": $("#field_name_detail").val(),
-                        "columnHeader": $("#column_header").val(),
-                        "alignment": $("#alignment").val(),
-                        "dataFormat": $("#data_format").val(),
-                        "display": ($("#display").is(":checked") ? $("#display").val() : false),
-                        "fieldFormula": $("#preview_formula").val()
-                    });
-                }
-            }else{
-                var indexToEdit = getIndexByColumnNo(parseInt($("#column_no_edit").val()) - 1);
-                var indexToEditFormula = getIndexByColumnNoFormula(parseInt($("#column_no_edit").val()) - 1);
-
-                if (indexToEdit !== -1 || indexToEditFormula !== -1) {
-                    if (previewFormulaValue !== null && previewFormulaValue !== '') {
-                        if (arrayReportFormatFormula.hasOwnProperty(indexToEditFormula) && arrayReportFormatFormula[indexToEditFormula].hasOwnProperty('columnNo')) {
-                            arrayReportFormatFormula[indexToEditFormula].columnNo = parseInt($("#column_no").val()) - 1;
-                            arrayReportFormatFormula[indexToEditFormula].tableName = $("#table_name_detail").val();
-                            arrayReportFormatFormula[indexToEditFormula].fieldName = $("#field_name_detail").val();
-                            arrayReportFormatFormula[indexToEditFormula].columnHeader = $("#column_header").val();
-                            arrayReportFormatFormula[indexToEditFormula].alignment = $("#alignment").val();
-                            arrayReportFormatFormula[indexToEditFormula].dataFormat = $("#data_format").val();
-                            arrayReportFormatFormula[indexToEditFormula].display = ($("#display").is(":checked") ? $("#display").val() : false);
-                            arrayReportFormatFormula[indexToEditFormula].fieldFormula = $("#preview_formula").val();
-                        }else{
-                            arrayReportFormatFormula.push({
-                                "columnNo": $("#column_no").val() ? parseInt($("#column_no").val()) - 1 : "",
-                                "tableName": $("#table_name_detail").val(),
-                                "fieldName": $("#field_name_detail").val(),
-                                "columnHeader": $("#column_header").val(),
-                                "alignment": $("#alignment").val(),
-                                "dataFormat": $("#data_format").val(),
-                                "display": ($("#display").is(":checked") ? $("#display").val() : false),
-                                "fieldFormula": $("#preview_formula").val()
-                            });
-
-                            arrayReportFormatDetail.splice(indexToEdit, 1);
+                    if ($this.hasClass('select2-hidden-accessible')) {
+                        if (value === '' && $this.prop("required")) {
+                            valid = false;
+                            $this.next('.select2-container').addClass('is-invalid');
+                            var errorMessage = $this.data('error-message') || 'This field is required';
+                            if ($this.next('.select2-container').next('.invalid-feedback').length === 0) {
+                                $this.next('.select2-container').after('<div class="invalid-feedback">' + errorMessage + '</div>');
+                            }
+                        } else {
+                            $this.next('.select2-container').removeClass('is-invalid');
+                            $this.next('.select2-container').next('.invalid-feedback').remove();
                         }
-                    }else{
-                        arrayReportFormatDetail[indexToEdit].columnNo = parseInt($("#column_no").val()) - 1;
-                        arrayReportFormatDetail[indexToEdit].tableName = $("#table_name_detail").val();
-                        arrayReportFormatDetail[indexToEdit].fieldName = $("#field_name_detail").val();
-                        arrayReportFormatDetail[indexToEdit].columnHeader = $("#column_header").val();
-                        arrayReportFormatDetail[indexToEdit].alignment = $("#alignment").val();
-                        arrayReportFormatDetail[indexToEdit].dataFormat = $("#data_format").val();
-                        arrayReportFormatDetail[indexToEdit].display = ($("#display").is(":checked") ? $("#display").val() : false);
-                        arrayReportFormatDetail[indexToEdit].fieldFormula = $("#preview_formula").val();
+                    } else {
+                        if (value.trim() === "" && $this.prop("required")) {
+                            valid = false;
+                            $this.addClass('is-invalid');
+                            var errorMessage = $this.data('error-message') || 'This field is required';
+                            if ($this.closest('.input-group').length) {
+                                if ($this.closest('.input-group').next('.invalid-feedback').length === 0) {
+                                    $this.closest('.input-group').after('<div class="invalid-feedback">' + errorMessage + '</div>');
+                                }
+                            } else {
+                                if ($this.next('.invalid-feedback').length === 0) {
+                                    $this.after('<div class="invalid-feedback">' + errorMessage + '</div>');
+                                }
+                            }
+                        } else {
+                            $this.removeClass('is-invalid');
+                            if ($this.closest('.input-group').length) {
+                                $this.closest('.input-group').next('.invalid-feedback').remove();
+                            } else {
+                                $this.next('.invalid-feedback').remove();
+                            }
+                        }
                     }
+                });
+            }
+
+            if ($("#div-gmlevel-detail:visible").length > 0) {
+                if ($("input[name='field_name_type_detail']:checked").length === 0) {
+                    valid = false;
+                    $("input[name='field_name_type_detail']").addClass('is-invalid');
+                    var errorMessage = 'Please choose an option';
+                    $("#radio-buttons-detail-error").text(errorMessage).show();
                 } else {
-                    alert("Object with columnNo value " + $("#column_no_edit").val() + " not found.");
+                    $("input[name='field_name_type_detail']").removeClass('is-invalid');
+                    $("#radio-buttons-detail-error").text('').hide();
                 }
             }
 
-            $(this).prop("disabled", false);
-            $(this).html(
-                '<i class="fa fa-floppy-o"></i> {{ __("payroll_report_format.btn_save") }}'
-            );
-            $('#modal_add_report_format_detail').modal('hide');
-            
-            $('#report_format_detail_table').DataTable().destroy();
-            load_table_report_format_detail();
+            if (valid) {
+                $(this).prop("disabled", true);
+                $(this).html(
+                    '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+                );
 
-            $('#report_format_formula_table').DataTable().destroy();
-            load_table_report_format_formula();
+                var previewFormulaValue = $("#preview_formula").val();
+
+                if($("#record_function_det").val() == "New"){
+                    if (previewFormulaValue !== null && previewFormulaValue !== '') {
+                        arrayReportFormatFormula.push({
+                            "columnNo": $("#column_no").val() ? parseInt($("#column_no").val()) - 1 : "",
+                            "tableName": $("#table_name_detail").val(),
+                            "fieldName": ($("#table_name_detail").val() == 'GmLevel') ? $("#field_name_detail").val() + "-" + $("input[name='field_name_type_detail']:checked").val() : $("#field_name_detail").val(),
+                            "columnHeader": $("#column_header").val(),
+                            "alignment": $("#alignment").val(),
+                            "dataFormat": $("#data_format").val(),
+                            "display": ($("#display").is(":checked") ? $("#display").val() : false),
+                            "fieldFormula": $("#preview_formula").val()
+                        });
+                    }else{
+                        arrayReportFormatDetail.push({
+                            "columnNo": $("#column_no").val() ? parseInt($("#column_no").val()) - 1 : "",
+                            "tableName": $("#table_name_detail").val(),
+                            "fieldName": ($("#table_name_detail").val() == 'GmLevel') ? $("#field_name_detail").val() + "-" + $("input[name='field_name_type_detail']:checked").val() : $("#field_name_detail").val(),
+                            "columnHeader": $("#column_header").val(),
+                            "alignment": $("#alignment").val(),
+                            "dataFormat": $("#data_format").val(),
+                            "display": ($("#display").is(":checked") ? $("#display").val() : false),
+                            "fieldFormula": $("#preview_formula").val()
+                        });
+                    }
+                }else{
+                    var indexToEdit = getIndexByColumnNo(parseInt($("#column_no_edit").val()) - 1);
+                    var indexToEditFormula = getIndexByColumnNoFormula(parseInt($("#column_no_edit").val()) - 1);
+
+                    if (indexToEdit !== -1 || indexToEditFormula !== -1) {
+                        if (previewFormulaValue !== null && previewFormulaValue !== '') {
+                            if (arrayReportFormatFormula.hasOwnProperty(indexToEditFormula) && arrayReportFormatFormula[indexToEditFormula].hasOwnProperty('columnNo')) {
+                                arrayReportFormatFormula[indexToEditFormula].columnNo = parseInt($("#column_no").val()) - 1;
+                                arrayReportFormatFormula[indexToEditFormula].tableName = $("#table_name_detail").val();
+                                arrayReportFormatFormula[indexToEditFormula].fieldName = ($("#table_name_detail").val() == 'GmLevel') ? $("#field_name_detail").val() + "-" + $("input[name='field_name_type_detail']:checked").val() : $("#field_name_detail").val();
+                                arrayReportFormatFormula[indexToEditFormula].columnHeader = $("#column_header").val();
+                                arrayReportFormatFormula[indexToEditFormula].alignment = $("#alignment").val();
+                                arrayReportFormatFormula[indexToEditFormula].dataFormat = $("#data_format").val();
+                                arrayReportFormatFormula[indexToEditFormula].display = ($("#display").is(":checked") ? $("#display").val() : false);
+                                arrayReportFormatFormula[indexToEditFormula].fieldFormula = $("#preview_formula").val();
+                            }else{
+                                arrayReportFormatFormula.push({
+                                    "columnNo": $("#column_no").val() ? parseInt($("#column_no").val()) - 1 : "",
+                                    "tableName": $("#table_name_detail").val(),
+                                    "fieldName": ($("#table_name_detail").val() == 'GmLevel') ? $("#field_name_detail").val() + "-" + $("input[name='field_name_type_detail']:checked").val() : $("#field_name_detail").val(),
+                                    "columnHeader": $("#column_header").val(),
+                                    "alignment": $("#alignment").val(),
+                                    "dataFormat": $("#data_format").val(),
+                                    "display": ($("#display").is(":checked") ? $("#display").val() : false),
+                                    "fieldFormula": $("#preview_formula").val()
+                                });
+
+                                arrayReportFormatDetail.splice(indexToEdit, 1);
+                            }
+                        }else{
+                            arrayReportFormatDetail[indexToEdit].columnNo = parseInt($("#column_no").val()) - 1;
+                            arrayReportFormatDetail[indexToEdit].tableName = $("#table_name_detail").val();
+                            arrayReportFormatDetail[indexToEdit].fieldName = ($("#table_name_detail").val() == 'GmLevel') ? $("#field_name_detail").val() + "-" + $("input[name='field_name_type_detail']:checked").val() : $("#field_name_detail").val();
+                            arrayReportFormatDetail[indexToEdit].columnHeader = $("#column_header").val();
+                            arrayReportFormatDetail[indexToEdit].alignment = $("#alignment").val();
+                            arrayReportFormatDetail[indexToEdit].dataFormat = $("#data_format").val();
+                            arrayReportFormatDetail[indexToEdit].display = ($("#display").is(":checked") ? $("#display").val() : false);
+                            arrayReportFormatDetail[indexToEdit].fieldFormula = $("#preview_formula").val();
+                        }
+                    } else {
+                        alert("Object with columnNo value " + $("#column_no_edit").val() + " not found.");
+                    }
+                }
+
+                $(this).prop("disabled", false);
+                $(this).html(
+                    '<i class="fa fa-floppy-o"></i> {{ __("payroll_report_format.btn_save") }}'
+                );
+                $('#modal_add_report_format_detail').modal('hide');
+                
+                $('#report_format_detail_table').DataTable().destroy();
+                load_table_report_format_detail();
+
+                $('#report_format_formula_table').DataTable().destroy();
+                load_table_report_format_formula();
+            }else{
+                $('#notification_error').modal('show');
+                $('#message-notification-error').html("Some Field Are Required, Please Check Again");
+            }
         });
 
-        $("#report_format_detail_form").on("submit", function(){
-            $("#report_format_detail_form").validate({
-                rules: {
-                    column_no: {
-                        required: true
-                    },
-                    table_name_detail: {
-                        required: true
-                    },
-                    field_name_detail: {
-                        required: true
+        // $("#report_format_detail_form").on("submit", function(){
+        //     $("#report_format_detail_form").validate({
+        //         rules: {
+        //             column_no: {
+        //                 required: true
+        //             },
+        //             table_name_detail: {
+        //                 required: true
+        //             },
+        //             field_name_detail: {
+        //                 required: true
+        //             },
+        //             field_name_type_detail: {
+        //                 required: {
+        //                     depends: function(element) {
+        //                         return $("#table_name_detail").val() === "GmLevel";
+        //                     }
+        //                 }
+        //             }
+        //         },
+        //         messages: {
+        //             column_no: {
+        //                 required: "{{ __('payroll_report_format.field_mandatory') }}",
+        //             },
+        //             table_name_detail: {
+        //                 required: "{{ __('payroll_report_format.field_mandatory') }}",
+        //             },
+        //             field_name_detail: {
+        //                 required: "{{ __('payroll_report_format.field_mandatory') }}",
+        //             },
+        //             field_name_type_detail: {
+        //                 required: "{{ __('payroll_report_format.field_mandatory') }}",
+        //             }
+        //         }
+        //     });
+        // });
+
+        $("#btn-save-report-format-condition").click(function () {
+            var form = $("#report_format_condition_form");
+            var valid = true;
+            form.find(":input:visible").each(function() {
+                var $this = $(this);
+                var value = $this.val();
+                if (value == null || value === 'undefined' || value === undefined) value = '';
+
+                if ($this.hasClass('select2-hidden-accessible')) {
+                    if (value === '' && $this.prop("required")) {
+                        valid = false;
+                        $this.next('.select2-container').addClass('is-invalid');
+                        var errorMessage = $this.data('error-message') || 'This field is required';
+                        if ($this.next('.select2-container').next('.invalid-feedback').length === 0) {
+                            $this.next('.select2-container').after('<div class="invalid-feedback">' + errorMessage + '</div>');
+                        }
+                    } else {
+                        $this.next('.select2-container').removeClass('is-invalid');
+                        $this.next('.select2-container').next('.invalid-feedback').remove();
                     }
-                },
-                messages: {
-                    column_no: {
-                        required: "{{ __('payroll_report_format.field_mandatory') }}",
-                    },
-                    table_name_detail: {
-                        required: "{{ __('payroll_report_format.field_mandatory') }}",
-                    },
-                    field_name_detail: {
-                        required: "{{ __('payroll_report_format.field_mandatory') }}",
+                } else {
+                    if (value.trim() === "" && $this.prop("required")) {
+                        valid = false;
+                        $this.addClass('is-invalid');
+                        var errorMessage = $this.data('error-message') || 'This field is required';
+                        if ($this.closest('.input-group').length) {
+                            if ($this.closest('.input-group').next('.invalid-feedback').length === 0) {
+                                $this.closest('.input-group').after('<div class="invalid-feedback">' + errorMessage + '</div>');
+                            }
+                        } else {
+                            if ($this.next('.invalid-feedback').length === 0) {
+                                $this.after('<div class="invalid-feedback">' + errorMessage + '</div>');
+                            }
+                        }
+                    } else {
+                        $this.removeClass('is-invalid');
+                        if ($this.closest('.input-group').length) {
+                            $this.closest('.input-group').next('.invalid-feedback').remove();
+                        } else {
+                            $this.next('.invalid-feedback').remove();
+                        }
                     }
                 }
             });
-        });
 
-        $("#btn-save-report-format-condition").click(function () {
-            $(this).prop("disabled", true);
-            $(this).html(
-                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
-            );
-
-            if($("#record_function_con").val() == "New"){
-                arrayReportFormatCondition.push({
-                    "seqNo": $("#seq_no").val() ? parseInt($("#seq_no").val()) - 1 : "",
-                    "tableName": $("#table_name_condition").val(),
-                    "fieldName": $("#field_name_condition").val(),
-                    "criteria": $("#criteria").val(),
-                    "value": $("#value").val(),
-                });
-            }else{
-                var indexToEdit = getIndexBySeqNo(parseInt($("#seq_no").val()) - 1);
-
-                if (indexToEdit !== -1) {
-                    arrayReportFormatCondition[indexToEdit].seqNo = parseInt($("#seq_no").val()) - 1;
-                    arrayReportFormatCondition[indexToEdit].tableName = $("#table_name_condition").val();
-                    arrayReportFormatCondition[indexToEdit].fieldName = $("#field_name_condition").val();
-                    arrayReportFormatCondition[indexToEdit].criteria = $("#criteria").val();
-                    arrayReportFormatCondition[indexToEdit].value = $("#value").val();
+            if ($("#div-gmlevel-condition:visible").length > 0) {
+                if ($("input[name='field_name_type_condition']:checked").length === 0) {
+                    valid = false;
+                    $("input[name='field_name_type_condition']").addClass('is-invalid');
+                    var errorMessage = 'Please choose an option';
+                    $("#radio-buttons-condition-error").text(errorMessage).show();
                 } else {
-                    alert("Object with columnNo value " + $("#seq_no").val() + " not found.");
+                    $("input[name='field_name_type_condition']").removeClass('is-invalid');
+                    $("#radio-buttons-condition-error").text('').hide();
                 }
             }
 
-            $(this).prop("disabled", false);
-            $(this).html(
-                '<i class="fa fa-floppy-o"></i> {{ __("payroll_report_format.btn_save") }}'
-            );
+            if (valid) {
+                $(this).prop("disabled", true);
+                $(this).html(
+                    '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+                );
 
-            $('#modal_add_report_format_condition').modal('hide');
-            
-            $('#report_format_condition_table').DataTable().destroy();
-            load_table_report_format_condition();
+                if($("#record_function_con").val() == "New"){
+                    arrayReportFormatCondition.push({
+                        "seqNo": $("#seq_no").val() ? parseInt($("#seq_no").val()) - 1 : "",
+                        "tableName": $("#table_name_condition").val(),
+                        "fieldName": ($("#table_name_condition").val() == 'GmLevel') ? $("#field_name_condition").val() + "-" + $("input[name='field_name_type_condition']:checked").val() : $("#field_name_condition").val(),
+                        "criteria": $("#criteria").val(),
+                        "value": $("#value").val(),
+                    });
+                }else{
+                    var indexToEdit = getIndexBySeqNo(parseInt($("#seq_no").val()) - 1);
+
+                    if (indexToEdit !== -1) {
+                        arrayReportFormatCondition[indexToEdit].seqNo = parseInt($("#seq_no").val()) - 1;
+                        arrayReportFormatCondition[indexToEdit].tableName = $("#table_name_condition").val();
+                        arrayReportFormatCondition[indexToEdit].fieldName = ($("#table_name_condition").val() == 'GmLevel') ? $("#field_name_condition").val() + "-" + $("input[name='field_name_type_condition']:checked").val() : $("#field_name_condition").val();
+                        arrayReportFormatCondition[indexToEdit].criteria = $("#criteria").val();
+                        arrayReportFormatCondition[indexToEdit].value = $("#value").val();
+                    } else {
+                        alert("Object with columnNo value " + $("#seq_no").val() + " not found.");
+                    }
+                }
+
+                $(this).prop("disabled", false);
+                $(this).html(
+                    '<i class="fa fa-floppy-o"></i> {{ __("payroll_report_format.btn_save") }}'
+                );
+
+                $('#modal_add_report_format_condition').modal('hide');
+                
+                $('#report_format_condition_table').DataTable().destroy();
+                load_table_report_format_condition();
+            }else{
+                $('#notification_error').modal('show');
+                $('#message-notification-error').html("Some Field Are Required, Please Check Again");
+            }
         });
 
         $('#modal_add_report_format_detail').on('show.bs.modal', function () {
