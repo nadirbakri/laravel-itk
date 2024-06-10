@@ -109,7 +109,10 @@
 		<tr>
 			<td width="18%">Organization</td>
 			<td width="2%" style="text-align:center;">:</td>
-			<td colspan="4" width="80%">{{ $value->organisasi }}</td>
+			<td width="34%">{{ $value->organisasi }}</td>
+			<td width="18%">Email</td>
+			<td width="2%" style="text-align:center;">:</td>
+			<td width="33%">{{ $value->email }}</td>
 		</tr>
 	</table>
 	<br><br>

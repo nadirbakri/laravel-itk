@@ -7016,6 +7016,12 @@ public function dataDetailReportFormatPY(Request $request)
         if($data->companyCode == 'DAA'){
             $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_digima';
             $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_digima';
+        }else if($data->companyCode == 'KNM' || $data->companyCode == 'KTL'){
+            $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_sayurbox';
+            $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_sayurbox';
+        }else if($data->companyCode == 'FFS'){
+            $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_fitra_fajar';
+            $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_fitra_fajar';
         }else{
             $viewNamePortrait = 'payroll.py_export_payment_slip_portrait';
             $viewNameLandscape = 'payroll.py_export_payment_slip_landscape';
