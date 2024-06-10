@@ -61,11 +61,13 @@
                     @foreach($data[0]->detail[0]->field as $key => $dataTable)
                         @if(!is_string($dataTable->value))
                             <?php
-                            $total[$dataTable->field] = 0;
+                            $totalKey = $dataTable->field . '_' . $key;
+                            $total[$totalKey] = 0;
                             ?>
                         @else
                             <?php
-                            $total[$dataTable->field] = '';
+                            $totalKey = $dataTable->field . '_' . $key;
+                            $total[$totalKey] = '';
                             ?>
                         @endif
                         <th style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7;">{{ $dataTable->tableName }}</th>
@@ -89,12 +91,14 @@
                         ?>
                         @if(!is_string($dataTable2->value) && $dataTable2->dataFormat == "#,##0")
                             <?php
-                            $total[$dataTable2->field] += $dataTable2->value;
+                            $totalKey = $dataTable2->field . '_' . $key2;
+                            $total[$totalKey] += $dataTable2->value;
                             ?>
                             <td data-format="{{ $dataTable2->dataFormat }}" style="text-align:{{ $alignment }}; border:1px solid #000;">{{ $dataTable2->value }}</td>
                         @elseif(!is_string($dataTable2->value) && $dataTable2->dataFormat == "#,##0.00")
                             <?php
-                            $total[$dataTable2->field] += $dataTable2->value;
+                            $totalKey = $dataTable2->field . '_' . $key2;
+                            $total[$totalKey] += $dataTable2->value;
                             ?>
                             <td data-format="{{ $dataTable2->dataFormat }}" style="text-align:{{ $alignment }}; border:1px solid #000;">{{ $dataTable2->value }}</td>
                         
@@ -112,8 +116,11 @@
                 <tr>
                     <td colspan="3" style="background-color: yellow; text-align:center; border:1px solid #000;">Grand Total</td>
                     @foreach(array_slice($data[0]->detail[0]->field, 2) as $key3 => $dataTable3)
-                        @if(!is_string($total[$dataTable3->field]))
-                            <td style="text-align:left; border:1px solid #000;">{{ number_format($total[$dataTable3->field], 0, ',', '.') }}</td>
+                        <?php
+                            $totalKey = $dataTable3->field . '_' . ($key3 + 2);
+                        ?>
+                        @if(!is_string($total[$totalKey]))
+                            <td style="text-align:left; border:1px solid #000;">{{ number_format($total[$totalKey], 0, ',', '.') }}</td>
                         @else
                             <td style="text-align:left; border:1px solid #000;">&nbsp;</td>
                         @endif
@@ -186,12 +193,14 @@
                             @foreach($dataTable->data[0]->field as $key_data => $dataRow)
                                 @if(!is_string($dataRow->value))
                                     <?php
-                                        $total[$branch][$dataRow->field] = 0;
+                                        $totalKey = $dataRow->field . '_' . $key_data;
+                                        $total[$branch][$totalKey] = 0;
                                         $totalBranch[$branch] = 0;
                                     ?>
                                 @else
                                     <?php
-                                        $total[$branch][$dataRow->field] = '';
+                                        $totalKey = $dataRow->field . '_' . $key_data;
+                                        $total[$branch][$totalKey] = '';
                                     ?>
                                 @endif
                                 <th style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7;">{{ $dataRow->tableName }}</th>
@@ -216,14 +225,16 @@
                             ?>
                             @if(!is_string($dataRow2->value) && $dataRow2->dataFormat == "#,##0")
                                 <?php
-                                    $total[$branch][$dataRow2->field] += $dataRow2->value;
-                                    $totalBranch[$branch] += $total[$branch][$dataRow2->field];
+                                    $totalKey = $dataRow2->field . '_' . $key2;
+                                    $total[$branch][$totalKey] += $dataRow2->value;
+                                    $totalBranch[$branch] += $total[$branch][$totalKey];
                                 ?>
                                 <td data-format="{{ $dataRow2->dataFormat }}" style="text-align:{{ $alignment }}; border:1px solid #000;">{{ $dataRow2->value }}</td>
                             @elseif(!is_string($dataRow2->value) && $dataRow2->dataFormat == "#,##0.00")
                                 <?php
-                                    $total[$branch][$dataRow2->field] += $dataRow2->value;
-                                    $totalBranch[$branch] += $total[$branch][$dataRow2->field];
+                                    $totalKey = $dataRow2->field . '_' . $key2;
+                                    $total[$branch][$totalKey] += $dataRow2->value;
+                                    $totalBranch[$branch] += $total[$branch][$totalKey];
                                 ?>
                                 <td data-format="{{ $dataRow2->dataFormat }}" style="text-align:{{ $alignment }}; border:1px solid #000;">{{ $dataRow2->value }}</td>
                             @elseif($dataRow2->dataFormat == "dd/MM/YYYY")
@@ -262,9 +273,12 @@
                         <th style="text-align:center; align-items:center; border:1px solid #000; padding:4px; background-color: #97d7f7;">Total</th>
                         @if(!empty($dataTable->data[0]->field))
                             @foreach($dataTable->data[0]->field as $key_data => $dataRow)
+                                <?php
+                                    $totalKey = $dataRow->field . '_' . $key_data;
+                                ?>
                                 @if(!is_string($dataRow->value))
                                     <?php
-                                        $total[$branch][$dataRow->field] = 0;
+                                        $total[$branch][$totalKey] = 0;
                                     ?>
                                 @endif
                                 <th style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7;">{{ $dataRow->tableName }}</th>
