@@ -981,8 +981,10 @@
                 tableName = $('#table_name_detail').val();
                 if(tableName == 'GmLevel'){
                     loadDataLevelType();
+                    $('#div-gmlevel-detail').show();
                 }else{
                     loadDataFieldName();
+                    $('#div-gmlevel-detail').hide();
                 }
             });
         });
@@ -1025,8 +1027,10 @@
                 tableName = $('#table_name_detail').val();
                 if(tableName == 'GmLevel'){
                     loadDataLevelType();
+                    $('#div-gmlevel-detail').show();
                 }else{
                     loadDataFieldName();
+                    $('#div-gmlevel-detail').hide();
                 }
             });
         });
@@ -1294,8 +1298,10 @@
                 tableName = $('#table_name_condition').val();
                 if(tableName == 'GmLevel'){
                     loadDataLevelType();
+                    $('#div-gmlevel-condition').show();
                 }else{
                     loadDataFieldName();
+                    $('#div-gmlevel-condition').hide();
                 }
             });
         });
