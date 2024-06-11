@@ -1243,6 +1243,7 @@ Route::get('employee/status/all/api', 'DataController@dataEmployeeStatusAllAPI')
 Route::get('office_location/api', 'DataController@dataOfficeLocationAPI');
 Route::get('office_location/func/api', 'DataController@dataOfficeLocationFunctionAPI');
 Route::get('output_file/api', 'DataController@dataOutputFileAPI');
+Route::get('business_type/api', 'DataController@dataBusinessTypeAPI');
 Route::get('sasa', 'DataController@dataBusinessUnitAPI');
 Route::get('leave_hour/api', 'DataController@dataLeaveHourAPI');
 

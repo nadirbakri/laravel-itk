@@ -129,7 +129,9 @@
                     </div>
                     <div class="col-6">
                         <select class="form-control select2" id="source_bank" name="source_bank"></select>
+                        <small id="transfer_type_label"></small>
                     </div>
+                    <input type="hidden" class="form-control" id="transfer_type" name="transfer_type" value="">
                 </div>
                 <div class="row">
                     <div class="col-3">
@@ -188,6 +190,26 @@
                                 <span class="input-group-text" id="transfer_date_calendar"><span class="fa fa-calendar"></span></span>
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label for="business_type">{{ __('payroll_transfer_data_to_bank.label_business_type') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <select class="form-control select2" id="business_type" name="business_type"></select>
+                    </div>
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label for="effective_time">{{ __('payroll_transfer_data_to_bank.label_effective_time') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <select class="form-control select2" id="effective_time" name="effective_time">
+                            <option value="">Choose Effective Time</option>
+                        </select>
                     </div>
                 </div>
                 <div class="row">
@@ -348,6 +370,44 @@
             </div>
         </form>
     </div>
+    <div class="modal fade" role="dialog" id="modal_source_bank_bca">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-header-notification">
+                    <h5 class="modal-title">Source Bank BCA</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-check">
+                                <input type="radio" id="transfer_type_bca_bca" name="transfer_type_bca" value="1">
+                                <label for="transfer_type_bca_bca">BCA</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-check">
+                                <input type="radio" id="transfer_type_bca_multi_payroll" name="transfer_type_bca" value="2">
+                                <label for="transfer_type_bca_multi_payroll">Multi Payroll BCA</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-process w-25" name="btn_save_source_bank_bca" id="btn_save_source_bank_bca">
+                        <i class="fa fa-floppy-o"></i> {{ __('payroll_transfer_data_to_bank.btn_save') }}
+                    </button>
+                    <button type="button" class="btn btn-primary w-25" data-dismiss="modal"><i
+                        class="fa fa-times-circle"></i> {{ __('payroll_transfer_data_to_bank.btn_cancel') }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="modal fade" role="dialog" id="notification_error">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -439,12 +499,20 @@
             }
         });
 
+        for (let i = 0; i < 24; i++) {
+            let value = i < 10 ? '0' + i : i;
+            $('#effective_time').append(`<option value="${value}">${value}</option>`);
+        }
+
+        $('#effective_time').select2();
+
         loadDataEmployeeNo('#employee_no_from');
         loadDataEmployeeNo('#employee_no_to');
         loadDataGroupAuthorize('#group_authorized_code_from');
         loadDataGroupAuthorize('#group_authorized_code_to');
         loadDataSourceBank();
         loadDataOutputFile();
+        loadDataBusinessType();
 
         loadDataFirstLastAllEmployeeNo('#employee_no_from', 'First');
         loadDataFirstLastAllEmployeeNo('#employee_no_to', 'Last'); 
@@ -546,6 +614,11 @@
             $('#account_number').val(data[0].data.accountNo);
             $('#transfer_code').val(data[0].data.description);
             loadDataOutputFile(data[0].data.bankCode);
+            $('#transfer_type_label').html('');
+
+            if(data[0].data.bankCode == "BCA"){
+                $('#modal_source_bank_bca').modal('show');
+            }
 
             if(data[0].data.companyCode == "NMDI"){
                 if(data[0].data.bankCode.indexOf("GIC") !== -1){
@@ -570,6 +643,21 @@
 
         $('#output_file').on("select2:unselecting", function (e) {
             $('#format_file').val('');
+        });
+
+        $("#btn_save_source_bank_bca").click(function () {
+            var transferType = $('input[name="transfer_type_bca"]:checked').val();
+            $('#transfer_type').val(transferType);
+
+            if(transferType == 1){
+                $('#transfer_type_label').html('Format Type: BCA');
+            }else if(transferType == 2){
+                $('#transfer_type_label').html('Format Type: Multi Payroll BCA');
+            }else{
+                $('#transfer_type_label').html('');
+            }
+
+            $('#modal_source_bank_bca').modal('hide');
         });
 
         function loadDataFirstLastAllLevel(field = '', levelType = '') {
@@ -800,6 +888,66 @@
                                 return {
                                     text: item.bankCode,
                                     id: item.bankCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataBusinessType(){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' +
+                        '<div class="col-12">' + data.data.value + '</div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+            
+            $('#business_type').select2({
+                width: '100%',
+                placeholder: 'Choose Business Type',
+                allowClear: true,
+                // multiple: true,
+                // tags: true,
+                closeOnSelect: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: "{{ url('/business_type/api') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.value,
+                                    id: item.comGenCode,
                                     data: item
                                 }
                             })

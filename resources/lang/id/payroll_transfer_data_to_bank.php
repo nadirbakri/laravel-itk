@@ -19,6 +19,8 @@ return [
     'label_account_number' => 'Nomor Akun',
     'label_transfer_code' => 'Kode Transfer',
     'label_transfer_date' => 'Tanggal Transfer',
+    'label_business_type' => 'Tipe Bisnis',
+    'label_effective_time' => 'Waktu Efektif',
     'label_employee_no' => 'No Karyawan',
     'label_to' => 'Ke',
     'label_group_authorize_code' => 'Kode Otorisasi Grup',
@@ -32,6 +34,7 @@ return [
     'label_severance' => 'Pesangon',
     'label_none' => 'Tidak Ada',
     'btn_process' => 'Proses',
+    'btn_save' => 'Simpan',
     'btn_cancel' => 'Batal',
     'alert_success' => 'Sukses !'
 ]

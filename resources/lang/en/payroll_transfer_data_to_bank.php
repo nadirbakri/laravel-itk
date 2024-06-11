@@ -19,6 +19,8 @@ return [
     'label_account_number' => 'Account Number',
     'label_transfer_code' => 'Transfer Code',
     'label_transfer_date' => 'Transfer Date',
+    'label_business_type' => 'Business Type',
+    'label_effective_time' => 'Effective Time',
     'label_employee_no' => 'Employee No',
     'label_to' => 'To',
     'label_group_authorize_code' => 'Group Authorize Code',
@@ -32,6 +34,7 @@ return [
     'label_severance' => 'Severance',
     'label_none' => 'None',
     'btn_process' => 'Process',
+    'btn_save' => 'Save',
     'btn_cancel' => 'Cancel',
     'alert_success' => 'Success !'
 ]

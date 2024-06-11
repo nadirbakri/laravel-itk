@@ -4483,6 +4483,9 @@ public function dataDetailReportFormatPY(Request $request)
                         'accountNo' => $request->account_number,
                         'transferDate' => $request->transfer_date,
                         'transferCode' => $request->transfer_code,
+                        'transferType' => (empty($request->transfer_type) ? "" : $request->transfer_type),
+                        'businessType' => (empty($request->business_type) ? "" : $request->business_type),
+                        'effectiveTime' => (empty($request->effective_time) ? "" : $request->effective_time),
                         'employeeNoFrom' => $request->employee_no_from,
                         'employeeNoTo' => $request->employee_no_to,
                         'groupAuthorizeCodeFrom' => $request->group_authorized_code_from,
@@ -4514,7 +4517,7 @@ public function dataDetailReportFormatPY(Request $request)
             );
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            // var_dump($response);
+            // dd($response);
             // exit;
             if($response->getStatusCode() == 401){
                 return view('error.login');
@@ -4527,7 +4530,7 @@ public function dataDetailReportFormatPY(Request $request)
 
         $arrResult = json_decode($response->getBody()->getContents());
 
-        // dd($request->source_bank);
+        // dd($arrResult->dataListSet);
         // exit;
 
         if($arrResult->dataListSet != null){
@@ -4535,8 +4538,13 @@ public function dataDetailReportFormatPY(Request $request)
                 $fullPath = storage_path('app/');
                 array_map('unlink', glob( "$fullPath*.txt"));
                 $arrDataBCA = explode("\r\n", $arrResult->dataListSet[0]->transferBank);
-                Storage::put($arrResult->dataListSet[0]->namaFile, $arrResult->dataListSet[0]->transferBank);
-                return Storage::download($arrResult->dataListSet[0]->namaFile);
+                $namaFile = $arrResult->dataListSet[0]->namaFile;
+                if(!str_contains($arrResult->dataListSet[0]->namaFile, '.txt')){
+                    $namaFile = $arrResult->dataListSet[0]->namaFile . '.txt';
+                }
+                Storage::put($namaFile, $arrResult->dataListSet[0]->transferBank);
+
+                return Storage::download($namaFile);
             }else if($request->source_bank == 'MCM'){
                 return Excel::download(new CSVTransferBankMCMExport($arrResult->dataListSet[0]->transferBank), $arrResult->dataListSet[0]->namaFile);
             }else if($request->source_bank == 'BOT'){
