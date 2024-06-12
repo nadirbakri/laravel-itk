@@ -37,6 +37,7 @@
 	</style>
 </head>
 <body>
+    @if(!empty($data))
 	<table style="width:100%" class="table table-bordered table-hover responsive table_detail">
         <thead>
             <tr>
@@ -63,5 +64,6 @@
             @endforeach
         </tbody>
     </table>
+    @endif
 </body>
 </html>

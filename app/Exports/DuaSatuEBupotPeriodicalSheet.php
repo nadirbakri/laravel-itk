@@ -68,7 +68,7 @@ class DuaSatuEBupotPeriodicalSheet extends DefaultValueBinder implements WithCus
             //     $param['groupAuthorizeCodeTo'] = (int) $this->groupAuthorizedCodeTo;
             // }
 
-            // var_dump(json_encode($param));
+            // dd(json_encode($param));
 
             $response = $client->post(env('API_URL') . "/payroll/getEBupot", [
                 'body' => json_encode($param)
