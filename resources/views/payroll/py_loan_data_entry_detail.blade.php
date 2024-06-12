@@ -485,7 +485,7 @@
         });
 
         function pickerPaymentDateTable(field='') {
-            $(field).flatpickr({
+            return $(field).flatpickr({
                 altInput: true,
                 allowInput: true,
                 altFormat: "j-M-y",
@@ -526,6 +526,8 @@
         var outstandingBalance = null;
         var loan_amount = null;
         var noOfInstallmentChanged = false;
+        let pickerPaymentDateTables = [];
+        let iterationDate = [];
 
         if (func === 'new') {
             $('#record_function').val('New');
@@ -707,6 +709,13 @@
     	    return $("<textarea/>").html(value).text();
 	    }
 
+        function formatDateToString(date) {
+            let year = date.getFullYear();
+            let month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
+            let day = date.getDate().toString().padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+
         $('#employee_no').on('select2:select', function (e) {
             var data = $('#employee_no').select2('data');
             $('#employee_name').val(htmlDecode(data[0].title));
@@ -762,13 +771,15 @@
 
         function load_data_grid() {
             if (func === 'new') {
+                pickerPaymentDateTables = [];
+
                 for (var i = 0; i <= noOfInstallment; i++) {
                     table.row.add([
                         '<div class="form-check">' +
                             '<input class="form-check-input" type="checkbox" id="check_table" name="check_table" value="true">' +
                         '</div>',
                         '<div class="input-group">' +
-                            '<input type="text" class="form-control" id="payment_date_table'+ i +'" name="payment_date_table[]">' +  
+                            '<input type="text" class="form-control" id="payment_date_table'+ i +'" name="payment_date_table[]" data-no="'+ i +'">' +  
                             '<div class="input-group-prepend date" id="payment_date_table_calendar">' +
                                 '<span class="input-group-text"><span class="fa fa-calendar"></span></span>' +
                             '</div>' +
@@ -791,7 +802,30 @@
 
                     // var paymentDate = moment().add(i+1, 'month').format('YYYY-MM-DD');
 
-                    pickerPaymentDateTable('#payment_date_table' + i);
+                    iterationDate[i] = new Date(firstPaymentDate);
+                    iterationDate[i].setMonth(iterationDate[i].getMonth() + i);
+
+                    pickerPaymentDateTables[i] = pickerPaymentDateTable('#payment_date_table' + i);
+
+                    pickerPaymentDateTables[i].setDate((typeof iterationDate[i] !== 'undefined' && iterationDate[i] !== null) ? iterationDate[i] : '');
+
+                    $('#payment_date_table' + i).on('change', function() {
+                        var thisDate = $(this).val();
+                        var no = $(this).data('no');
+                        if(thisDate < formatDateToString(iterationDate[no])){
+                            let tempDate = iterationDate[no];
+                            for (j = (no + 1); j <= noOfInstallment; j++){
+                                if (pickerPaymentDateTables[j] !== undefined) {
+                                    let currentDate = iterationDate[j];
+                                    pickerPaymentDateTables[j].setDate((typeof tempDate !== 'undefined' && tempDate !== null) ? tempDate : '');
+                                    iterationDate[j] = tempDate;
+                                    tempDate = currentDate;
+                                }
+                            }
+
+                            iterationDate[no] = thisDate;
+                        }
+                    });
 
                     $('#payment_type' + 0).on('change', function() {
                         if ($(this).val() == 'S') {
