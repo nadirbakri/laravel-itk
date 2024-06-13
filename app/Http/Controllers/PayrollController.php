@@ -8268,7 +8268,7 @@ public function dataDetailReportFormatPY(Request $request)
         try{
             $dataLevel = [];
 
-            for($i = 0; $i < 1; $i++){
+            for($i = 0; $i < ((Session::get('companyCode') == 'NMDI') ? 1 : $request->level_format); $i++){
                 $dataLevel[] = $request->{'level' . ($i+1)};
             }
 
@@ -8438,7 +8438,7 @@ public function dataDetailReportFormatPY(Request $request)
     public function printPeriodicalReportPayrollExcel(Request $request){
         $dataLevel = [];
 
-        for($i = 0; $i < 1; $i++){
+        for($i = 0; $i < ((Session::get('companyCode') == 'NMDI') ? 1 : $request->level_format); $i++){
             $dataLevel[] = $request->{'level' . ($i+1)};
         }
 
