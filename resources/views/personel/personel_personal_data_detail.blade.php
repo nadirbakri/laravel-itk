@@ -930,6 +930,7 @@
                                 <div class="form-group">
                                     <label
                                         for="cost_center_code_employment">{{ __('personel_personal_data.label_cost_center_code') }}</label>
+                                    <span class="required">*</span>
                                     <select class="form-control" id="cost_center_code_employment"
                                         name="cost_center_code_employment">
                                     </select>
@@ -939,6 +940,7 @@
                                 <div class="form-group">
                                     <label
                                         for="position_code_employment">{{ __('personel_personal_data.label_position_code') }}</label>
+                                    <span class="required">*</span>
                                     <select class="form-control" id="position_code_employment"
                                         name="position_code_employment">
                                     </select>
@@ -950,6 +952,7 @@
                                 <div class="form-group">
                                     <label
                                         for="ranking_code_employment">{{ __('personel_personal_data.label_ranking_code') }}</label>
+                                    <span class="required">*</span>
                                     <select class="form-control" id="ranking_code_employment"
                                         name="ranking_code_employment">
                                     </select>
@@ -959,6 +962,7 @@
                                 <div class="form-group">
                                     <label
                                         for="grade_code_employment">{{ __('personel_personal_data.label_grade_code') }}</label>
+                                    <span class="required">*</span>
                                     <select class="form-control" id="grade_code_employment"
                                         name="grade_code_employment">
                                     </select>
@@ -1001,7 +1005,6 @@
                                 <div class="form-group">
                                     <label
                                         for="contract_start_date_employment">{{ __('personel_personal_data.label_contract_start_date') }}</label>
-                                    <span class="required">*</span>
                                     <div class='input-group'>
                                         <input type="text" class="form-control" id="contract_start_date_employment"
                                             name="contract_start_date_employment"
@@ -1016,7 +1019,6 @@
                                 <div class="form-group">
                                     <label
                                         for="contract_end_date_employment">{{ __('personel_personal_data.label_contract_end_date') }}</label>
-                                    <span class="required">*</span>
                                     <div class='input-group'>
                                         <input type="text" class="form-control" id="contract_end_date_employment"
                                             name="contract_end_date_employment"
@@ -1032,12 +1034,12 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label
-                                        for="termination_date_employment">{{ __('personel_personal_data.label_termination_date') }}</label>
+                                        for="effective_permanent_date_employment">{{ __('personel_personal_data.label_effective_permanent_date') }}</label>
                                     <div class='input-group'>
-                                        <input type="text" class="form-control" id="termination_date_employment"
-                                            name="termination_date_employment"
-                                            placeholder="{{ __('personel_personal_data.label_termination_date') }}">
-                                        <div class="input-group-prepend" id="termination_date_employment_calendar">
+                                        <input type="text" class="form-control" id="effective_permanent_date_employment"
+                                            name="effective_permanent_date_employment"
+                                            placeholder="{{ __('personel_personal_data.label_effective_permanent_date') }}">
+                                        <div class="input-group-prepend" id="effective_permanent_date_employment">
                                             <span class="input-group-text"><span class="fa fa-calendar"></span></span>
                                         </div>
                                     </div>
@@ -1046,12 +1048,12 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label
-                                        for="effective_terminated_employment">{{ __('personel_personal_data.label_effective_terminated') }}</label>
+                                        for="termination_date_employment">{{ __('personel_personal_data.label_termination_date') }}</label>
                                     <div class='input-group'>
-                                        <input type="text" class="form-control" id="effective_terminated_employment"
-                                            name="effective_terminated_employment"
-                                            placeholder="{{ __('personel_personal_data.label_effective_terminated') }}">
-                                        <div class="input-group-prepend" id="effective_terminated_employment_calendar">
+                                        <input type="text" class="form-control" id="termination_date_employment"
+                                            name="termination_date_employment"
+                                            placeholder="{{ __('personel_personal_data.label_termination_date') }}" readonly>
+                                        <div class="input-group-prepend" id="termination_date_employment_calendar">
                                             <span class="input-group-text"><span class="fa fa-calendar"></span></span>
                                         </div>
                                     </div>
@@ -1062,12 +1064,29 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label
+                                        for="effective_terminated_employment">{{ __('personel_personal_data.label_effective_terminated') }}</label>
+                                    <div class='input-group'>
+                                        <input type="text" class="form-control" id="effective_terminated_employment"
+                                            name="effective_terminated_employment"
+                                            placeholder="{{ __('personel_personal_data.label_effective_terminated') }}" readonly>
+                                        <div class="input-group-prepend" id="effective_terminated_employment_calendar">
+                                            <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label
                                         for="termination_code_employment">{{ __('personel_personal_data.label_termination_code') }}</label>
-                                    <select class="form-control" id="termination_code_employment"
-                                        name="termination_code_employment">
+                                        <input type="text" class="form-control" id="termination_code_employment"
+                                            name="termination_code_employment"
+                                            placeholder="{{ __('personel_personal_data.label_termination_code') }}" readonly>
                                     </select>
                                 </div>
                             </div>
+                        </div>
+                        <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="special_reason_resign_employment">&nbsp;</label>
@@ -1088,7 +1107,7 @@
                                         for="termination_remarks_employment">{{ __('personel_personal_data.label_termination_remarks') }}</label>
                                     <textarea class="form-control" id="termination_remarks_employment"
                                         name="termination_remarks_employment" rows="3"
-                                        placeholder="{{ __('personel_personal_data.label_termination_remarks') }}"></textarea>
+                                        placeholder="{{ __('personel_personal_data.label_termination_remarks') }}" readonly></textarea>
                                 </div>
                             </div>
                         </div>
@@ -1160,6 +1179,12 @@
                                             for="commisioner_employment">{{ __('personel_personal_data.label_commisioner') }}</label>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <span
+                                    class="div-title-text">{{ __('personel_personal_data.label_level') }}</span>
                             </div>
                         </div>
                         <div class="row" id="div-level">
@@ -1240,7 +1265,7 @@
                                                 <label
                                                     for="starting_day_absenteeism">{{ __('personel_personal_data.label_starting_day') }}</label>
                                                 <span class="required">*</span>
-                                                <input type="number" min=1 class="form-control" id="starting_day_absenteeism"
+                                                <input type="number" min="1" class="form-control" id="starting_day_absenteeism"
                                                     name="starting_day_absenteeism"
                                                     placeholder="{{ __('personel_personal_data.label_starting_day') }}">
                                             </div>
@@ -1410,7 +1435,7 @@
                                         <div class="col-6">
                                             <div class="form-group">
                                                 <label
-                                                    for="group_authorize_payroll">{{ __('personel_personal_data.label_group_authorize') }}</label>
+                                                    for="group_authorize_payroll">{{ __('personel_personal_data.label_group_authorize') }} <span class="required">*</span></label>
                                                 <select class="form-control select2" id="group_authorize_payroll"
                                                     name="group_authorize_payroll"></select>
                                             </div>
@@ -1726,7 +1751,7 @@
                                             <div class="form-group">
                                                 <label
                                                     for="percentage_primary">{{ __('personel_personal_data.label_percentage') }}</label>
-                                                <input type="number" min=0 class="form-control" id="percentage_primary"
+                                                <input type="number" min="0" class="form-control" id="percentage_primary"
                                                     name="percentage_primary"
                                                     placeholder="{{ __('personel_personal_data.label_percentage') }}">
                                             </div>
@@ -1794,7 +1819,7 @@
                                             <div class="form-group">
                                                 <label
                                                     for="percentage_optional_one">{{ __('personel_personal_data.label_percentage') }}</label>
-                                                <input type="number" min=0 class="form-control" id="percentage_optional_one"
+                                                <input type="number" min="0" class="form-control" id="percentage_optional_one"
                                                     name="percentage_optional_one"
                                                     placeholder="{{ __('personel_personal_data.label_percentage') }}">
                                             </div>
@@ -1862,7 +1887,7 @@
                                             <div class="form-group">
                                                 <label
                                                     for="percentage_optional_two">{{ __('personel_personal_data.label_percentage') }}</label>
-                                                <input type="number" min=0 class="form-control" id="percentage_optional_two"
+                                                <input type="number" min="0" class="form-control" id="percentage_optional_two"
                                                     name="percentage_optional_two"
                                                     placeholder="{{ __('personel_personal_data.label_percentage') }}">
                                             </div>
@@ -2626,7 +2651,7 @@
             }
         });
 
-        let pickerTerminationDate = $('#termination_date_employment').flatpickr({
+        let pickerEffectivePermanentDate = $('#effective_permanent_date_employment').flatpickr({
             altInput: true,
             allowInput: true,
             altFormat: "j-M-y",
@@ -2635,26 +2660,41 @@
             onReady: function () {
                 var flatPickrInstance = this;
                 var $flatPickrInput = $(flatPickrInstance.element);
-                $flatPickrInput.siblings("#termination_date_employment_calendar").click(function () {
+                $flatPickrInput.siblings("#effective_permanent_date_employment_calendar").click(function () {
                     flatPickrInstance.toggle();
                 });
             }
         });
 
-        let pickerEffectiveTerminated = $('#effective_terminated_employment').flatpickr({
-            altInput: true,
-            allowInput: true,
-            altFormat: "j-M-y",
-            dateFormat: "Y-m-d",
-            defaultDate: null,
-            onReady: function () {
-                var flatPickrInstance = this;
-                var $flatPickrInput = $(flatPickrInstance.element);
-                $flatPickrInput.siblings("#effective_terminated_employment_calendar").click(function () {
-                    flatPickrInstance.toggle();
-                });
-            }
-        });
+        // let pickerTerminationDate = $('#termination_date_employment').flatpickr({
+        //     altInput: true,
+        //     allowInput: true,
+        //     altFormat: "j-M-y",
+        //     dateFormat: "Y-m-d",
+        //     defaultDate: null,
+        //     onReady: function () {
+        //         var flatPickrInstance = this;
+        //         var $flatPickrInput = $(flatPickrInstance.element);
+        //         $flatPickrInput.siblings("#termination_date_employment_calendar").click(function () {
+        //             flatPickrInstance.toggle();
+        //         });
+        //     }
+        // });
+
+        // let pickerEffectiveTerminated = $('#effective_terminated_employment').flatpickr({
+        //     altInput: true,
+        //     allowInput: true,
+        //     altFormat: "j-M-y",
+        //     dateFormat: "Y-m-d",
+        //     defaultDate: null,
+        //     onReady: function () {
+        //         var flatPickrInstance = this;
+        //         var $flatPickrInput = $(flatPickrInstance.element);
+        //         $flatPickrInput.siblings("#effective_terminated_employment_calendar").click(function () {
+        //             flatPickrInstance.toggle();
+        //         });
+        //     }
+        // });
 
         let pickerExpatriatStartDate = $('#start_date_employment').flatpickr({
             altInput: true,
@@ -2762,7 +2802,7 @@
         loadDataCostCenter();
         loadDataRanking();
         loadDataGrade();
-        loadDataTerminationCode();
+        // loadDataTerminationCode();
         loadDataBenefits();
         loadDataAbsenteeismType();
         loadDataWorkPatternCode();
@@ -2872,7 +2912,7 @@
             //Tab Employment
             $('#employment_status_employment').val(null).trigger('change');
             $('#employment_type_employment').val(null).trigger('change');
-            $('#termination_code_employment').val(null).trigger('change');
+            $('#termination_code_employment').val(null);
             $('#office_location_employment').val(null).trigger('change');
             $('#position_code_employment').val(null).trigger('change');
             $('#ranking_code_employment').val(null).trigger('change');
@@ -2957,7 +2997,7 @@
                             '<div class="col-6">' +
                             '<div class="form-group">' +
                             '<label for="level' + i + '">' + response.data_level[i - 1]
-                            .levelDescription + '</label>' +
+                            .levelDescription + '</label> <span class="required">*</span>' +
                             '<select class="form-control select2" id="level' + i + '" name="level' +
                             i + '"></select>' +
                             '</div></div>'
@@ -2976,14 +3016,14 @@
         }
         else if (func == 'edit') {
             //Profile
-            $('#employee_name_profile').text(((typeof arrData2[0].fullName !== 'undefined') ? arrData2[0].fullName : ''));
-            $('#record_status').val(((typeof arrData2[0].recordStatus !== 'undefined') ? arrData2[0].recordStatus : ''));
+            $('#employee_name_profile').text(((typeof arrData[0].fullName !== 'undefined') ? arrData[0].fullName : ''));
+            $('#record_status').val(((typeof arrData[0].recordStatus !== 'undefined') ? arrData[0].recordStatus : ''));
             $('#record_function').val("Edit");
-            $('#employee_no_profile').text(((typeof arrData2[0].employeeNo !== 'undefined') ? arrData2[0].employeeNo : ''));
-            $('#company_name_profile').text(((typeof arrData2[0].companyName !== 'undefined') ? arrData2[0].companyName : ''));
-            $('#position_name_profile').text(((typeof arrData2[0].positionName !== 'undefined') ? arrData2[0].positionName : ''));
-            $('#company_email_profile').text(((typeof arrData2[0].companyEmailAddress !== 'undefined') ? arrData2[0].companyEmailAddress : ''));
-            $('#phone_number_profile').text(((typeof arrData2[0].personalHandphone !== 'undefined') ? arrData2[0].personalHandphone : ''));
+            $('#employee_no_profile').text(((typeof arrData[0].employeeNo !== 'undefined') ? arrData[0].employeeNo : ''));
+            $('#company_name_profile').text(((typeof arrData[0].companyName !== 'undefined') ? arrData[0].companyName : ''));
+            $('#position_name_profile').text(((typeof arrData[0].positionName !== 'undefined') ? arrData[0].positionName : ''));
+            $('#company_email_profile').text(((typeof arrData[0].companyEmailAddress !== 'undefined') ? arrData[0].companyEmailAddress : ''));
+            $('#phone_number_profile').text(((typeof arrData[0].personalHandphone !== 'undefined') ? arrData[0].personalHandphone : ''));
             $('#photo_employee').val(((typeof arrData2[0].photo !== 'undefined') ? arrData2[0].photo : ''));
 
             //Tab Info
@@ -2991,6 +3031,7 @@
             $('#employee_no_info').prop('readonly', true);
             $('#fullname_info').val(((typeof arrData[0].fullName !== 'undefined') ? arrData[0].fullName : ''));
             $('#title_info').val(((typeof arrData2[0].title !== 'undefined') ? arrData2[0].title : ''));
+            $("#termination_code_employment").val(((typeof arrData2[0].terminationCode !== 'undefined') ? arrData2[0].terminationCode : ''));
             
             $.ajax({
                 type: 'GET',
@@ -2999,15 +3040,11 @@
                     'birthPlace': ((typeof arrData2[0].birthPlace !== 'undefined') ? arrData2[0].birthPlace : '')
                 }
             }).then(function (data) {
-                var option = $('<option/>', {
-                    id: data.data_birth_place.cityCode,
-                    title: data.data_birth_place.cityName,
-                    text: data.data_birth_place.cityCode
-                });
-                // console.log(data);
-                $("#birth_place_info").append(option).attr('data-alias', 'yourvalue').trigger(
-                    'change');
-                $("#birth_place_info").trigger({
+                var option = new Option(data.data_birth_place.cityCode, data.data_birth_place.cityCode, true, true);
+
+                $('#birth_place_info').append(option).trigger('change');
+
+                $('#birth_place_info').trigger({
                     type: 'select2:select',
                     params: {
                         id: data.data_birth_place.cityCode,
@@ -3040,85 +3077,25 @@
                     'currencyCode3': ((typeof arrData2[0].currencyCode3 !== 'undefined') ? arrData2[0].currencyCode3 : ''),
                 }
             }).then(function (data) {
-                var option_gender = $('<option/>', {
-                    id: data.data_gender.comGenCode,
-                    title: data.data_gender.value,
-                    text: data.data_gender.comGenCode
-                });
-                var option_marital_status = $('<option/>', {
-                    id: data.data_marital_status.comGenCode,
-                    title: data.data_marital_status.value,
-                    text: data.data_marital_status.comGenCode
-                });
-                var option_religion = $('<option/>', {
-                    id: data.data_religion.comGenCode,
-                    title: data.data_religion.value,
-                    text: data.data_religion.comGenCode
-                });
-                var option_nationality = $('<option/>', {
-                    id: data.data_nationality.comGenCode,
-                    title: data.data_nationality.value,
-                    text: data.data_nationality.comGenCode
-                });
-                var option_employment_status = $('<option/>', {
-                    id: data.data_employment_status.comGenCode,
-                    title: data.data_employment_status.value,
-                    text: data.data_employment_status.comGenCode
-                });
-                var option_employment_type = $('<option/>', {
-                    id: data.data_employment_type.comGenCode,
-                    title: data.data_employment_type.value,
-                    text: data.data_employment_type.comGenCode
-                });
-                var option_termination_code = $('<option/>', {
-                    id: data.data_termination_code.comGenCode,
-                    title: data.data_termination_code.value,
-                    text: data.data_termination_code.comGenCode
-                });
-                var option_absenteeism_type = $('<option/>', {
-                    id: data.data_absenteeism_type.comGenCode,
-                    title: data.data_absenteeism_type.value,
-                    text: data.data_absenteeism_type.comGenCode
-                });
-                var option_tax_status = $('<option/>', {
-                    id: data.data_tax_status.comGenCode,
-                    title: data.data_tax_status.value,
-                    text: data.data_tax_status.comGenCode
-                });
-                var option_tax_status_next_year = $('<option/>', {
-                    id: data.data_tax_status_next_year.comGenCode,
-                    title: data.data_tax_status_next_year.value,
-                    text: data.data_tax_status_next_year.comGenCode
-                });
-                var option_tax_office = $('<option/>', {
-                    id: data.data_tax_office.comGenCode,
-                    title: data.data_tax_office.value,
-                    text: data.data_tax_office.comGenCode
-                });
-                var option_tax_calculation_method = $('<option/>', {
-                    id: data.data_tax_calculation_method.comGenCode,
-                    title: data.data_tax_calculation_method.value,
-                    text: data.data_tax_calculation_method.comGenCode
-                });
-                var option_currency_code_1 = $('<option/>', {
-                    id: data.data_currency_code_1.comGenCode,
-                    title: data.data_currency_code_1.value,
-                    text: data.data_currency_code_1.comGenCode
-                });
-                var option_currency_code_2 = $('<option/>', {
-                    id: data.data_currency_code_2.comGenCode,
-                    title: data.data_currency_code_2.value,
-                    text: data.data_currency_code_2.comGenCode
-                });
-                var option_currency_code_3 = $('<option/>', {
-                    id: data.data_currency_code_3.comGenCode,
-                    title: data.data_currency_code_3.value,
-                    text: data.data_currency_code_3.comGenCode
-                });
+                var option_gender = new Option(data.data_gender.comGenCode, data.data_gender.comGenCode, true, true);
+                var option_marital_status = new Option(data.data_marital_status.comGenCode, data.data_marital_status.comGenCode, true, true);
+                var option_religion = new Option(data.data_religion.comGenCode, data.data_religion.comGenCode, true, true);
+                var option_nationality = new Option(data.data_nationality.comGenCode, data.data_nationality.comGenCode, true, true);
+                var option_employment_status = new Option(data.data_employment_status.comGenCode, data.data_employment_status.comGenCode, true, true);
+                var option_employment_type = new Option(data.data_employment_type.comGenCode, data.data_employment_type.comGenCode, true, true);
+                // var option_termination_code = new Option(data.data_termination_code.comGenCode, data.data_termination_code.comGenCode, true, true);
+                var option_absenteeism_type = new Option(data.data_absenteeism_type.comGenCode, data.data_absenteeism_type.comGenCode, true, true);
+                var option_tax_status = new Option(data.data_tax_status.comGenCode, data.data_tax_status.comGenCode, true, true);
+                var option_tax_status_next_year = new Option(data.data_tax_status_next_year.comGenCode, data.data_tax_status_next_year.comGenCode, true, true);
+                var option_tax_office = new Option(data.data_tax_office.comGenCode, data.data_tax_office.comGenCode, true, true);
+                var option_tax_calculation_method = new Option(data.data_tax_calculation_method.comGenCode, data.data_tax_calculation_method.comGenCode, true, true);
+                var option_currency_code_1 = new Option(data.data_currency_code_1.comGenCode, data.data_currency_code_1.comGenCode, true, true);
+                var option_currency_code_2 = new Option(data.data_currency_code_2.comGenCode, data.data_currency_code_2.comGenCode, true, true);
+                var option_currency_code_3 = new Option(data.data_currency_code_3.comGenCode, data.data_currency_code_3.comGenCode, true, true);
 
-                $("#gender_info").append(option_gender).attr('data-alias', 'yourvalue').trigger(
-                    'change');
-                $("#gender_info").trigger({
+                $('#gender_info').append(option_gender).trigger('change');
+
+                $('#gender_info').trigger({
                     type: 'select2:select',
                     params: {
                         id: data.data_gender.comGenCode,
@@ -3126,9 +3103,10 @@
                         data: data.data_gender
                     }
                 });
-                $("#marital_status_info").append(option_marital_status).attr('data-alias', 'yourvalue').trigger(
-                    'change');
-                $("#marital_status_info").trigger({
+
+                $('#marital_status_info').append(option_marital_status).trigger('change');
+
+                $('#marital_status_info').trigger({
                     type: 'select2:select',
                     params: {
                         id: data.data_marital_status.comGenCode,
@@ -3136,9 +3114,10 @@
                         data: data.data_marital_status
                     }
                 });
-                $("#religion_info").append(option_religion).attr('data-alias', 'yourvalue').trigger(
-                    'change');
-                $("#religion_info").trigger({
+
+                $('#religion_info').append(option_religion).trigger('change');
+
+                $('#religion_info').trigger({
                     type: 'select2:select',
                     params: {
                         id: data.data_religion.comGenCode,
@@ -3146,9 +3125,10 @@
                         data: data.data_religion
                     }
                 });
-                $("#nationality_info").append(option_nationality).attr('data-alias', 'yourvalue').trigger(
-                    'change');
-                $("#nationality_info").trigger({
+
+                $('#nationality_info').append(option_nationality).trigger('change');
+
+                $('#nationality_info').trigger({
                     type: 'select2:select',
                     params: {
                         id: data.data_nationality.comGenCode,
@@ -3156,9 +3136,10 @@
                         data: data.data_nationality
                     }
                 });
-                $("#employment_status_employment").append(option_employment_status).attr('data-alias', 'yourvalue').trigger(
-                    'change');
-                $("#employment_status_employment").trigger({
+
+                $('#employment_status_employment').append(option_employment_status).trigger('change');
+
+                $('#employment_status_employment').trigger({
                     type: 'select2:select',
                     params: {
                         id: data.data_employment_status.comGenCode,
@@ -3166,9 +3147,10 @@
                         data: data.data_employment_status
                     }
                 });
-                $("#employment_type_employment").append(option_employment_type).attr('data-alias', 'yourvalue').trigger(
-                    'change');
-                $("#employment_type_employment").trigger({
+
+                $('#employment_type_employment').append(option_employment_type).trigger('change');
+
+                $('#employment_type_employment').trigger({
                     type: 'select2:select',
                     params: {
                         id: data.data_employment_type.comGenCode,
@@ -3176,19 +3158,21 @@
                         data: data.data_employment_type
                     }
                 });
-                $("#termination_code_employment").append(option_termination_code).attr('data-alias', 'yourvalue').trigger(
-                    'change');
-                $("#termination_code_employment").trigger({
-                    type: 'select2:select',
-                    params: {
-                        id: data.data_termination_code.comGenCode,
-                        text: data.data_termination_code.comGenCode,
-                        data: data.data_termination_code
-                    }
-                });
-                $("#absenteeism_type_absenteeism").append(option_absenteeism_type).attr('data-alias', 'yourvalue').trigger(
-                    'change');
-                $("#absenteeism_type_absenteeism").trigger({
+
+                // $('#termination_code_employment').append(option_termination_code).trigger('change');
+
+                // $('#termination_code_employment').trigger({
+                //     type: 'select2:select',
+                //     params: {
+                //         id: data.data_termination_code.comGenCode,
+                //         text: data.data_termination_code.comGenCode,
+                //         data: data.data_termination_code
+                //     }
+                // });
+
+                $('#absenteeism_type_absenteeism').append(option_absenteeism_type).trigger('change');
+
+                $('#absenteeism_type_absenteeism').trigger({
                     type: 'select2:select',
                     params: {
                         id: data.data_absenteeism_type.comGenCode,
@@ -3196,9 +3180,10 @@
                         data: data.data_absenteeism_type
                     }
                 });
-                $("#tax_status_payroll").append(option_tax_status).attr('data-alias', 'yourvalue').trigger(
-                    'change');
-                $("#tax_status_payroll").trigger({
+
+                $('#tax_status_payroll').append(option_tax_status).trigger('change');
+
+                $('#tax_status_payroll').trigger({
                     type: 'select2:select',
                     params: {
                         id: data.data_tax_status.comGenCode,
@@ -3206,9 +3191,10 @@
                         data: data.data_tax_status
                     }
                 });
-                $("#tax_status_next_year_payroll").append(option_tax_status_next_year).attr('data-alias', 'yourvalue').trigger(
-                    'change');
-                $("#tax_status_next_year_payroll").trigger({
+
+                $('#tax_status_next_year_payroll').append(option_tax_status_next_year).trigger('change');
+
+                $('#tax_status_next_year_payroll').trigger({
                     type: 'select2:select',
                     params: {
                         id: data.data_tax_status_next_year.comGenCode,
@@ -3216,9 +3202,10 @@
                         data: data.data_tax_status_next_year
                     }
                 });
-                $("#tax_office_payroll").append(option_tax_office).attr('data-alias', 'yourvalue').trigger(
-                    'change');
-                $("#tax_office_payroll").trigger({
+
+                $('#tax_office_payroll').append(option_tax_office).trigger('change');
+
+                $('#tax_office_payroll').trigger({
                     type: 'select2:select',
                     params: {
                         id: data.data_tax_office.comGenCode,
@@ -3226,9 +3213,10 @@
                         data: data.data_tax_office
                     }
                 });
-                $("#tax_calculation_method_payroll").append(option_tax_calculation_method).attr('data-alias', 'yourvalue').trigger(
-                    'change');
-                $("#tax_calculation_method_payroll").trigger({
+
+                $('#tax_calculation_method_payroll').append(option_tax_calculation_method).trigger('change');
+
+                $('#tax_calculation_method_payroll').trigger({
                     type: 'select2:select',
                     params: {
                         id: data.data_tax_calculation_method.comGenCode,
@@ -3236,9 +3224,10 @@
                         data: data.data_tax_calculation_method
                     }
                 });
-                $("#currency_primary").append(option_currency_code_1).attr('data-alias', 'yourvalue').trigger(
-                    'change');
-                $("#currency_primary").trigger({
+
+                $('#currency_primary').append(option_currency_code_1).trigger('change');
+
+                $('#currency_primary').trigger({
                     type: 'select2:select',
                     params: {
                         id: data.data_currency_code_1.comGenCode,
@@ -3246,9 +3235,10 @@
                         data: data.data_currency_code_1
                     }
                 });
-                $("#currency_optional_one").append(option_currency_code_2).attr('data-alias', 'yourvalue').trigger(
-                    'change');
-                $("#currency_optional_one").trigger({
+
+                $('#currency_optional_one').append(option_currency_code_2).trigger('change');
+
+                $('#currency_optional_one').trigger({
                     type: 'select2:select',
                     params: {
                         id: data.data_currency_code_2.comGenCode,
@@ -3256,9 +3246,10 @@
                         data: data.data_currency_code_2
                     }
                 });
-                $("#currency_optional_two").append(option_currency_code_3).attr('data-alias', 'yourvalue').trigger(
-                    'change');
-                $("#currency_optional_two").trigger({
+
+                $('#currency_optional_two').append(option_currency_code_3).trigger('change');
+
+                $('#currency_optional_two').trigger({
                     type: 'select2:select',
                     params: {
                         id: data.data_currency_code_3.comGenCode,
@@ -3285,20 +3276,12 @@
                         'drivingLicenseMobilType': ((typeof arrData2[0].peMasterInfo.drivingLicenseMobilType !== 'undefined') ? arrData2[0].peMasterInfo.drivingLicenseMobilType : ''),
                     }
                 }).then(function (data) {
-                    var option_blood_type = $('<option/>', {
-                        id: data.data_blood_type.comGenCode,
-                        title: data.data_blood_type.value,
-                        text: data.data_blood_type.comGenCode
-                    });
-                    var option_driving_license_car_type = $('<option/>', {
-                        id: data.data_driving_license_car_type.comGenCode,
-                        title: data.data_driving_license_car_type.value,
-                        text: data.data_driving_license_car_type.comGenCode
-                    });
+                    var option_blood_type = new Option(data.data_blood_type.comGenCode, data.data_blood_type.comGenCode, true, true);
+                    var option_driving_license_car_type = new Option(data.data_driving_license_car_type.comGenCode, data.data_driving_license_car_type.comGenCode, true, true);
 
-                    $("#blood_type_info").append(option_blood_type).attr('data-alias', 'yourvalue').trigger(
-                        'change');
-                    $("#blood_type_info").trigger({
+                    $('#blood_type_info').append(option_blood_type).trigger('change');
+
+                    $('#blood_type_info').trigger({
                         type: 'select2:select',
                         params: {
                             id: data.data_blood_type.comGenCode,
@@ -3306,9 +3289,10 @@
                             data: data.data_blood_type
                         }
                     });
-                    $("#driving_license_car_type_info").append(option_driving_license_car_type).attr('data-alias', 'yourvalue').trigger(
-                        'change');
-                    $("#driving_license_car_type_info").trigger({
+
+                    $('#driving_license_car_type_info').append(option_driving_license_car_type).trigger('change');
+
+                    $('#driving_license_car_type_info').trigger({
                         type: 'select2:select',
                         params: {
                             id: data.data_driving_license_car_type.comGenCode,
@@ -3330,41 +3314,16 @@
                         'correspondenceCityCode': ((typeof arrData2[0].peMasterInfo.correspondenceCityCode !== 'undefined') ? arrData2[0].peMasterInfo.correspondenceCityCode : ''),
                     }
                 }).then(function (data) {
-                    var option1 = $('<option/>', {
-                        id: data.data_driving_license_car_no_place_registration.cityCode,
-                        title: data.data_driving_license_car_no_place_registration.cityName,
-                        text: data.data_driving_license_car_no_place_registration.cityCode
-                    });
-                    var option2 = $('<option/>', {
-                        id: data.data_driving_license_motorcycle_no_place_registration.cityCode,
-                        title: data.data_driving_license_motorcycle_no_place_registration.cityName,
-                        text: data.data_driving_license_motorcycle_no_place_registration.cityCode
-                    });
-                    var option3 = $('<option/>', {
-                        id: data.data_home_city_code.cityCode,
-                        title: data.data_home_city_code.cityName,
-                        text: data.data_home_city_code.cityCode
-                    });
-                    var option4 = $('<option/>', {
-                        id: data.data_other_city_code.cityCode,
-                        title: data.data_other_city_code.cityName,
-                        text: data.data_other_city_code.cityCode
-                    });
-                    var option5 = $('<option/>', {
-                        id: data.data_work_city_code.cityCode,
-                        title: data.data_work_city_code.cityName,
-                        text: data.data_work_city_code.cityCode
-                    });
-                    var option6 = $('<option/>', {
-                        id: data.data_correspondence_city_code.cityCode,
-                        title: data.data_correspondence_city_code.cityName,
-                        text: data.data_correspondence_city_code.cityCode
-                    });
+                    var option1 = new Option(data.data_driving_license_car_no_place_registration.cityCode, data.data_driving_license_car_no_place_registration.cityCode, true, true);
+                    var option2 = new Option(data.data_driving_license_motorcycle_no_place_registration.cityCode, data.data_driving_license_motorcycle_no_place_registration.cityCode, true, true);
+                    var option3 = new Option(data.data_home_city_code.cityCode, data.data_home_city_code.cityCode, true, true);
+                    var option4 = new Option(data.data_other_city_code.cityCode, data.data_other_city_code.cityCode, true, true);
+                    var option5 = new Option(data.data_work_city_code.cityCode, data.data_work_city_code.cityCode, true, true);
+                    var option6 = new Option(data.data_correspondence_city_code.cityCode, data.data_correspondence_city_code.cityCode, true, true);
 
-                    // console.log(data);
-                    $("#driving_license_car_registration_place_info").append(option1).attr('data-alias', 'yourvalue').trigger(
-                        'change');
-                    $("#driving_license_car_registration_place_info").trigger({
+                    $('#driving_license_car_registration_place_info').append(option1).trigger('change');
+
+                    $('#driving_license_car_registration_place_info').trigger({
                         type: 'select2:select',
                         params: {
                             id: data.data_driving_license_car_no_place_registration.cityCode,
@@ -3372,9 +3331,10 @@
                             data: data.data_driving_license_car_no_place_registration
                         }
                     });
-                    $("#driving_license_motorcycle_registration_place_info").append(option2).attr('data-alias', 'yourvalue').trigger(
-                        'change');
-                    $("#driving_license_motorcycle_registration_place_info").trigger({
+
+                    $('#driving_license_motorcycle_registration_place_info').append(option2).trigger('change');
+
+                    $('#driving_license_motorcycle_registration_place_info').trigger({
                         type: 'select2:select',
                         params: {
                             id: data.data_driving_license_motorcycle_no_place_registration.cityCode,
@@ -3382,9 +3342,10 @@
                             data: data.data_driving_license_motorcycle_no_place_registration
                         }
                     });
-                    $("#city_select_home").append(option3).attr('data-alias', 'yourvalue').trigger(
-                        'change');
-                    $("#city_select_home").trigger({
+
+                    $('#city_select_home').append(option3).trigger('change');
+
+                    $('#city_select_home').trigger({
                         type: 'select2:select',
                         params: {
                             id: data.data_home_city_code.cityCode,
@@ -3392,9 +3353,10 @@
                             data: data.data_home_city_code
                         }
                     });
-                    $("#city_select_other").append(option4).attr('data-alias', 'yourvalue').trigger(
-                        'change');
-                    $("#city_select_other").trigger({
+
+                    $('#city_select_other').append(option4).trigger('change');
+
+                    $('#city_select_other').trigger({
                         type: 'select2:select',
                         params: {
                             id: data.data_other_city_code.cityCode,
@@ -3402,9 +3364,10 @@
                             data: data.data_other_city_code
                         }
                     });
-                    $("#city_select_work").append(option5).attr('data-alias', 'yourvalue').trigger(
-                        'change');
-                    $("#city_select_work").trigger({
+
+                    $('#city_select_work').append(option5).trigger('change');
+
+                    $('#city_select_work').trigger({
                         type: 'select2:select',
                         params: {
                             id: data.data_work_city_code.cityCode,
@@ -3412,9 +3375,10 @@
                             data: data.data_work_city_code
                         }
                     });
-                    $("#city_select_correspondence").append(option6).attr('data-alias', 'yourvalue').trigger(
-                        'change');
-                    $("#city_select_correspondence").trigger({
+
+                    $('#city_select_correspondence').append(option6).trigger('change');
+
+                    $('#city_select_correspondence').trigger({
                         type: 'select2:select',
                         params: {
                             id: data.data_correspondence_city_code.cityCode,
@@ -3439,58 +3403,18 @@
                         'otherSubDistrictCode': ((typeof arrData2[0].peMasterInfo.otherSubDistrictCode !== 'undefined') ? arrData2[0].peMasterInfo.otherSubDistrictCode : ''),
                     }
                 }).then(function (data) {
-                    var option1 = $('<option/>', {
-                        id: data.data_home_zip_code.zipCode,
-                        title: data.data_home_zip_code.zipCode,
-                        text: data.data_home_zip_code.zipCode
-                    });
+                    var option1 = new Option(data.data_home_zip_code.zipCode, data.data_home_zip_code.zipCode, true, true);
+                    var option2 = new Option(data.data_other_zip_code.zipCode, data.data_other_zip_code.zipCode, true, true);
+                    var option3 = new Option(data.data_work_zip_code.zipCode, data.data_work_zip_code.zipCode, true, true);
+                    var option4 = new Option(data.data_correspondence_zip_code.zipCode, data.data_correspondence_zip_code.zipCode, true, true);
+                    var option5 = new Option(data.data_home_district_code.propinsi, data.data_home_district_code.propinsi, true, true);
+                    var option6 = new Option(data.data_other_district_code.propinsi, data.data_other_district_code.propinsi, true, true);
+                    var option7 = new Option(data.data_home_subdistrict_code.kabupaten, data.data_home_subdistrict_code.kabupaten, true, true);
+                    var option8 = new Option(data.data_other_district_code.kabupaten, data.data_other_district_code.kabupaten, true, true);
 
-                    var option2 = $('<option/>', {
-                        id: data.data_other_zip_code.zipCode,
-                        title: data.data_other_zip_code.zipCode,
-                        text: data.data_other_zip_code.zipCode
-                    });
+                    $('#zip_code_select_home').append(option1).trigger('change');
 
-                    var option3 = $('<option/>', {
-                        id: data.data_work_zip_code.zipCode,
-                        title: data.data_work_zip_code.zipCode,
-                        text: data.data_work_zip_code.zipCode
-                    });
-
-                    var option4 = $('<option/>', {
-                        id: data.data_correspondence_zip_code.zipCode,
-                        title: data.data_correspondence_zip_code.zipCode,
-                        text: data.data_correspondence_zip_code.zipCode
-                    });
-
-                    var option5 = $('<option/>', {
-                        id: data.data_home_district_code.propinsi,
-                        title: data.data_home_district_code.propinsi,
-                        text: data.data_home_district_code.propinsi
-                    });
-
-                    var option6 = $('<option/>', {
-                        id: data.data_other_district_code.propinsi,
-                        title: data.data_other_district_code.propinsi,
-                        text: data.data_other_district_code.propinsi
-                    });
-
-                    var option7 = $('<option/>', {
-                        id: data.data_home_subdistrict_code.kabupaten,
-                        title: data.data_home_subdistrict_code.kabupaten,
-                        text: data.data_home_subdistrict_code.kabupaten
-                    });
-
-                    var option8 = $('<option/>', {
-                        id: data.data_other_district_code.kabupaten,
-                        title: data.data_other_district_code.kabupaten,
-                        text: data.data_other_district_code.kabupaten
-                    });
-
-                    // console.log(data);
-                    $("#zip_code_select_home").append(option1).attr('data-alias', 'yourvalue').trigger(
-                        'change');
-                    $("#zip_code_select_home").trigger({
+                    $('#zip_code_select_home').trigger({
                         type: 'select2:select',
                         params: {
                             id: data.data_home_zip_code.zipCode,
@@ -3499,9 +3423,9 @@
                         }
                     });
 
-                    $("#zip_code_select_other").append(option2).attr('data-alias', 'yourvalue').trigger(
-                        'change');
-                    $("#zip_code_select_other").trigger({
+                    $('#zip_code_select_other').append(option2).trigger('change');
+
+                    $('#zip_code_select_other').trigger({
                         type: 'select2:select',
                         params: {
                             id: data.data_other_zip_code.zipCode,
@@ -3510,9 +3434,9 @@
                         }
                     });
 
-                    $("#zip_code_select_work").append(option3).attr('data-alias', 'yourvalue').trigger(
-                        'change');
-                    $("#zip_code_select_work").trigger({
+                    $('#zip_code_select_work').append(option3).trigger('change');
+
+                    $('#zip_code_select_work').trigger({
                         type: 'select2:select',
                         params: {
                             id: data.data_work_zip_code.zipCode,
@@ -3521,9 +3445,9 @@
                         }
                     });
 
-                    $("#zip_code_select_correspondence").append(option4).attr('data-alias', 'yourvalue').trigger(
-                        'change');
-                    $("#zip_code_select_correspondence").trigger({
+                    $('#zip_code_select_correspondence').append(option4).trigger('change');
+
+                    $('#zip_code_select_correspondence').trigger({
                         type: 'select2:select',
                         params: {
                             id: data.data_correspondence_zip_code.zipCode,
@@ -3532,9 +3456,9 @@
                         }
                     });
 
-                    $("#district_select_home").append(option5).attr('data-alias', 'yourvalue').trigger(
-                        'change');
-                    $("#district_select_home").trigger({
+                    $('#district_select_home').append(option5).trigger('change');
+
+                    $('#district_select_home').trigger({
                         type: 'select2:select',
                         params: {
                             id: data.data_home_district_code.propinsi,
@@ -3543,34 +3467,34 @@
                         }
                     });
 
-                    $("#district_select_other").append(option6).attr('data-alias', 'yourvalue').trigger(
-                        'change');
-                    $("#district_select_other").trigger({
+                    $('#district_select_other').append(option6).trigger('change');
+
+                    $('#district_select_other').trigger({
                         type: 'select2:select',
                         params: {
-                            id: data.data_other_district_code.zipCode,
+                            id: data.data_other_district_code.propinsi,
                             text: data.data_other_district_code.propinsi,
                             data: data.data_other_district_code
                         }
                     });
 
-                    $("#subdistrict_select_home").append(option7).attr('data-alias', 'yourvalue').trigger(
-                        'change');
-                    $("#subdistrict_select_home").trigger({
+                    $('#subdistrict_select_home').append(option7).trigger('change');
+
+                    $('#subdistrict_select_home').trigger({
                         type: 'select2:select',
                         params: {
-                            id: data.data_home_subdistrict_code.zipCode,
+                            id: data.data_home_subdistrict_code.kabupaten,
                             text: data.data_home_subdistrict_code.kabupaten,
                             data: data.data_home_subdistrict_code
                         }
                     });
 
-                    $("#subdistrict_select_other").append(option8).attr('data-alias', 'yourvalue').trigger(
-                        'change');
-                    $("#subdistrict_select_other").trigger({
+                    $('#subdistrict_select_other').append(option8).trigger('change');
+
+                    $('#subdistrict_select_other').trigger({
                         type: 'select2:select',
                         params: {
-                            id: data.data_other_district_code.zipCode,
+                            id: data.data_other_district_code.kabupaten,
                             text: data.data_other_district_code.kabupaten,
                             data: data.data_other_district_code
                         }
@@ -3581,18 +3505,18 @@
                     type: 'GET',
                     url: "{{ url('/office_location/func/api') }}",
                     data: {
-                        'officeCode': ((typeof arrData2[0].officeCode !== 'undefined') ? arrData2[0].officeCode : ''),
+                        'locationCode': ((typeof arrData2[0].locationCode !== 'undefined') ? arrData2[0].locationCode : ''),
                     }
                 }).then(function (data) {
-                    var option = new Option(data[0].officeDesc, data[0].officeCode, true, true);
+                    var option = new Option(data[0].locationName, data[0].locationCode, true, true);
 
                     $('#office_location_employment').append(option).trigger('change');
 
                     $('#office_location_employment').trigger({
                         type: 'select2:select',
                         params: {
-                            id: data[0].officeCode,
-                            text: data[0].officeDesc,
+                            id: data[0].locationCode,
+                            text: data[0].locationName,
                             data: data[0]
                         }
                     });
@@ -3605,7 +3529,7 @@
                         'positionCode': ((typeof arrData2[0].positionCode !== 'undefined') ? arrData2[0].positionCode : ''),
                     }
                 }).then(function (data) {
-                    var option = new Option(data[0].positionCode, data[0].positionCode, true, true);
+                    var option = new Option(data[0].positionName, data[0].positionCode, true, true);
 
                     $('#position_code_employment').append(option).trigger('change');
 
@@ -3613,7 +3537,7 @@
                         type: 'select2:select',
                         params: {
                             id: data[0].positionCode,
-                            text: data[0].positionCode,
+                            text: data[0].positionName,
                             data: data[0]
                         }
                     });
@@ -3626,7 +3550,7 @@
                         'costCenterCode': ((typeof arrData2[0].costCenterCode !== 'undefined') ? arrData2[0].costCenterCode : ''),
                     }
                 }).then(function (data) {
-                    var option = new Option(data[0].costCenterCode, data[0].costCenterCode, true, true);
+                    var option = new Option(data[0].costCenterDescription, data[0].costCenterCode, true, true);
 
                     $('#cost_center_code_employment').append(option).trigger('change');
 
@@ -3634,7 +3558,7 @@
                         type: 'select2:select',
                         params: {
                             id: data[0].costCenterCode,
-                            text: data[0].costCenterCode,
+                            text: data[0].costCenterDescription,
                             data: data[0]
                         }
                     });
@@ -3647,7 +3571,7 @@
                         'rankingCode': ((typeof arrData2[0].rankingCode !== 'undefined') ? arrData2[0].rankingCode : ''),
                     }
                 }).then(function (data) {
-                    var option = new Option(data[0].rankingCode, data[0].rankingCode, true, true);
+                    var option = new Option(data[0].rankingName, data[0].rankingCode, true, true);
 
                     $('#ranking_code_employment').append(option).trigger('change');
 
@@ -3655,7 +3579,7 @@
                         type: 'select2:select',
                         params: {
                             id: data[0].rankingCode,
-                            text: data[0].rankingCode,
+                            text: data[0].rankingName,
                             data: data[0]
                         }
                     });
@@ -3668,7 +3592,7 @@
                         'gradeCode': ((typeof arrData2[0].gradeCode !== 'undefined') ? arrData2[0].gradeCode : ''),
                     }
                 }).then(function (data) {
-                    var option = new Option(data[0].gradeCode, data[0].gradeCode, true, true);
+                    var option = new Option(data[0].gradeName, data[0].gradeCode, true, true);
 
                     $('#grade_code_employment').append(option).trigger('change');
 
@@ -3676,7 +3600,7 @@
                         type: 'select2:select',
                         params: {
                             id: data[0].gradeCode,
-                            text: data[0].gradeCode,
+                            text: data[0].gradeName,
                             data: data[0]
                         }
                     });
@@ -3731,14 +3655,17 @@
 
             //Tab Employment
             // console.log(arrData2[0].originjoinDate);
-            pickerOriginJoinDate.setDate(((typeof arrData2[0].originJoinDate !== 'undefined') ? arrData2[0].originJoinDate : ''));
+            pickerOriginJoinDate.setDate(((typeof arrData2[0].originJoinDate !== 'undefined' && arrData2[0].originJoinDate !== null) ? arrData2[0].originJoinDate : ''));
             // $('#origin_join_date_employment').prop('disabled', true);
-            pickerJoinDate.setDate(((typeof arrData2[0].joinDate !== 'undefined') ? arrData2[0].joinDate : ''));
-            pickerProbationEndDate.setDate(((typeof arrData2[0].probationEndDate !== 'undefined') ? arrData2[0].probationEndDate : ''));
-            pickerContractStartDate.setDate(((typeof arrData2[0].contractStartDate !== 'undefined') ? arrData2[0].contractStartDate : ''));
-            pickerContractEndDate.setDate(((typeof arrData2[0].contractEndDate !== 'undefined') ? arrData2[0].contractEndDate : ''));
-            pickerTerminationDate.setDate(((typeof arrData2[0].terminationDate !== 'undefined') ? arrData2[0].terminationDate : ''));
-            pickerEffectiveTerminated.setDate(((typeof arrData2[0].effectiveTerminationDate !== 'undefined') ? arrData2[0].effectiveTerminationDate : ''));
+            pickerJoinDate.setDate(((typeof arrData2[0].joinDate !== 'undefined' && arrData2[0].joinDate !== null) ? arrData2[0].joinDate : ''));
+            pickerProbationEndDate.setDate(((typeof arrData2[0].probationEndDate !== 'undefined' && arrData2[0].probationEndDate !== null) ? arrData2[0].probationEndDate : ''));
+            pickerContractStartDate.setDate(((typeof arrData2[0].contractStartDate !== 'undefined' && arrData2[0].contractStartDate !== null) ? arrData2[0].contractStartDate : ''));
+            pickerContractEndDate.setDate(((typeof arrData2[0].contractEndDate !== 'undefined' && arrData2[0].contractEndDate !== null) ? arrData2[0].contractEndDate : ''));
+            pickerEffectivePermanentDate.setDate(((typeof arrData2[0].effectivePermanentDate !== 'undefined' && arrData2[0].effectivePermanentDate !== null) ? arrData2[0].effectivePermanentDate : ''));
+            // pickerTerminationDate.setDate(((typeof arrData2[0].terminationDate !== 'undefined') ? arrData2[0].terminationDate : ''));
+            // pickerEffectiveTerminated.setDate(((typeof arrData2[0].effectiveTerminationDate !== 'undefined') ? arrData2[0].effectiveTerminationDate : ''));
+            $('#termination_date_employment').val(((typeof arrData2[0].terminationDate !== 'undefined' && arrData2[0].terminationDate !== null) ? moment(arrData2[0].terminationDate).format('YYYY-MM-DD') : ''));
+            $('#effective_terminated_employment').val(((typeof arrData2[0].effectiveTerminationDate !== 'undefined' && arrData2[0].effectiveTerminationDate !== null) ? moment(arrData2[0].effectiveTerminationDate).format('YYYY-MM-DD') : ''));
             if (arrData2[0].specialResign == true) {
                 $('#special_reason_resign_employment').prop('checked', true);
             }
@@ -3753,8 +3680,8 @@
                 $('#expatriat_employment').prop('checked', false);
             }
             $('#license_no_employment').val(((typeof arrData2[0].expatLicenseNo !== 'undefined') ? arrData2[0].expatLicenseNo : ''));
-            pickerExpatriatStartDate.setDate(((typeof arrData2[0].expatLicenseStartDate !== 'undefined') ? arrData2[0].expatLicenseStartDate : ''));
-            pickerExpatriatEndDate.setDate(((typeof arrData2[0].expatLicenseEndDate !== 'undefined') ? arrData2[0].expatLicenseEndDate : ''));
+            pickerExpatriatStartDate.setDate(((typeof arrData2[0].expatLicenseStartDate !== 'undefined' && arrData2[0].expatLicenseStartDate !== null) ? arrData2[0].expatLicenseStartDate : ''));
+            pickerExpatriatEndDate.setDate(((typeof arrData2[0].expatLicenseEndDate !== 'undefined' && arrData2[0].expatLicenseEndDate !== null) ? arrData2[0].expatLicenseEndDate : ''));
             if (arrData2[0].flagIsCommissioner == true) {
                 $('#commisioner_employment').prop('checked', true);
             }
@@ -3800,15 +3727,11 @@
                     'workPatternCode': ((typeof arrData2[0].workPatternCode !== 'undefined') ? arrData2[0].workPatternCode : '')
                 }
             }).then(function (data) {
-                var option = $('<option/>', {
-                    id: data.patternCode,
-                    title: data.patternCode,
-                    text: data.patternCode
-                });
-                // console.log(data);
-                $("#work_pattern_code_absenteeism").append(option).attr('data-alias', 'yourvalue').trigger(
-                    'change');
-                $("#work_pattern_code_absenteeism").trigger({
+                var option = new Option(data.patternCode, data.patternCode, true, true);
+
+                $('#work_pattern_code_absenteeism').append(option).trigger('change');
+
+                $('#work_pattern_code_absenteeism').trigger({
                     type: 'select2:select',
                     params: {
                         id: data.patternCode,
@@ -3843,19 +3766,15 @@
                     'npwpCode': ((typeof arrData2[0].groupNpwp !== 'undefined') ? arrData2[0].groupNpwp : '')
                 }
             }).then(function (data) {
-                var option = $('<option/>', {
-                    id: data.npwpCode,
-                    title: data.pemotongKuasa,
-                    text: data.npwpCode
-                });
-                // console.log(option);
-                $("#group_npwp_payroll").append(option).attr('data-alias', 'yourvalue').trigger(
-                    'change');
-                $("#group_npwp_payroll").trigger({
+                var option = new Option(data.npwpCode, data.npwpCode, true, true);
+
+                $('#group_npwp_payroll').append(option).trigger('change');
+
+                $('#group_npwp_payroll').trigger({
                     type: 'select2:select',
                     params: {
                         id: data.npwpCode,
-                        text: data.pemotongKuasa,
+                        text: data.npwpCode,
                         data: data
                     }
                 });
@@ -3868,19 +3787,15 @@
                     'bpjsCode': ((typeof arrData2[0].groupBpjs !== 'undefined') ? arrData2[0].groupBpjs : ''),
                 }
             }).then(function (data) {
-                var option = $('<option/>', {
-                    id: data.bpjsCode,
-                    title: data.bpjsNo,
-                    text: data.bpjsNo
-                });
-                // console.log(data);
-                $("#group_bpjs_payroll").append(option).attr('data-alias', 'yourvalue').trigger(
-                    'change');
-                $("#group_bpjs_payroll").trigger({
+                var option = new Option(data.bpjsCode, data.bpjsCode, true, true);
+
+                $('#group_bpjs_payroll').append(option).trigger('change');
+
+                $('#group_bpjs_payroll').trigger({
                     type: 'select2:select',
                     params: {
                         id: data.bpjsCode,
-                        text: data.bpjsNo,
+                        text: data.bpjsCode,
                         data: data
                     }
                 });
@@ -3900,15 +3815,11 @@
                     'groupAuthorizeCode': ((typeof arrData2[0].groupAuthorizeCode !== 'undefined') ? arrData2[0].groupAuthorizeCode : ''),
                 }
             }).then(function (data) {
-                var option = $('<option/>', {
-                    id: data.groupAuthorizeCode,
-                    title: data.groupAuthorizeDesc,
-                    text: data.groupAuthorizeCode
-                });
-                // console.log(data);
-                $("#group_authorize_payroll").append(option).attr('data-alias', 'yourvalue').trigger(
-                    'change');
-                $("#group_authorize_payroll").trigger({
+                var option = new Option(data.groupAuthorizeDesc, data.groupAuthorizeCode, true, true);
+
+                $('#group_authorize_payroll').append(option).trigger('change');
+
+                $('#group_authorize_payroll').trigger({
                     type: 'select2:select',
                     params: {
                         id: data.groupAuthorizeCode,
@@ -3990,27 +3901,13 @@
                     'companyBankCode3': ((typeof arrData2[0].companyBankCode3 !== 'undefined') ? arrData2[0].companyBankCode3 : ''),
                 }
             }).then(function (data) {
-                var option1 = $('<option/>', {
-                    id: data.data_company_bank_code_one.bankCode,
-                    title: data.data_company_bank_code_one.bankCode,
-                    text: data.data_company_bank_code_one.bankCode
-                });
+                var option1 = new Option(data.data_company_bank_code_one.bankCode, data.data_company_bank_code_one.bankCode, true, true);
+                var option2 = new Option(data.data_company_bank_code_two.bankCode, data.data_company_bank_code_two.bankCode, true, true);
+                var option3 = new Option(data.data_company_bank_code_three.bankCode, data.data_company_bank_code_three.bankCode, true, true);
 
-                var option2 = $('<option/>', {
-                    id: data.data_company_bank_code_two.bankCode,
-                    title: data.data_company_bank_code_two.bankCode,
-                    text: data.data_company_bank_code_two.bankCode
-                });
+                $('#company_bank_code_primary').append(option1).trigger('change');
 
-                var option3 = $('<option/>', {
-                    id: data.data_company_bank_code_three.bankCode,
-                    title: data.data_company_bank_code_three.bankCode,
-                    text: data.data_company_bank_code_three.bankCode
-                });
-                // console.log(data);
-                $("#company_bank_code_primary").append(option1).attr('data-alias', 'yourvalue').trigger(
-                    'change');
-                $("#company_bank_code_primary").trigger({
+                $('#company_bank_code_primary').trigger({
                     type: 'select2:select',
                     params: {
                         id: data.data_company_bank_code_one.bankCode,
@@ -4019,9 +3916,9 @@
                     }
                 });
 
-                $("#company_bank_code_optional_one").append(option2).attr('data-alias', 'yourvalue').trigger(
-                    'change');
-                $("#company_bank_code_optional_one").trigger({
+                $('#company_bank_code_optional_one').append(option2).trigger('change');
+
+                $('#company_bank_code_optional_one').trigger({
                     type: 'select2:select',
                     params: {
                         id: data.data_company_bank_code_two.bankCode,
@@ -4030,9 +3927,9 @@
                     }
                 });
 
-                $("#company_bank_code_optional_two").append(option3).attr('data-alias', 'yourvalue').trigger(
-                    'change');
-                $("#company_bank_code_optional_two").trigger({
+                $('#company_bank_code_optional_two').append(option3).trigger('change');
+
+                $('#company_bank_code_optional_two').trigger({
                     type: 'select2:select',
                     params: {
                         id: data.data_company_bank_code_three.bankCode,
@@ -4051,27 +3948,13 @@
                     'employeeBankCode3': ((typeof arrData2[0].employeeBankCode3 !== 'undefined') ? arrData2[0].employeeBankCode3 : ''),
                 }
             }).then(function (data) {
-                var option1 = $('<option/>', {
-                    id: data.data_employee_bank_code_one.bankCode,
-                    title: data.data_employee_bank_code_one.bankCode,
-                    text: data.data_employee_bank_code_one.bankCode
-                });
+                var option1 = new Option(data.data_employee_bank_code_one.bankCode, data.data_employee_bank_code_one.bankCode, true, true);
+                var option2 = new Option(data.data_employee_bank_code_two.bankCode, data.data_employee_bank_code_two.bankCode, true, true);
+                var option3 = new Option(data.data_employee_bank_code_three.bankCode, data.data_employee_bank_code_three.bankCode, true, true);
 
-                var option2 = $('<option/>', {
-                    id: data.data_employee_bank_code_two.bankCode,
-                    title: data.data_employee_bank_code_two.bankCode,
-                    text: data.data_employee_bank_code_two.bankCode
-                });
+                $('#employee_bank_code_primary').append(option1).trigger('change');
 
-                var option3 = $('<option/>', {
-                    id: data.data_employee_bank_code_three.bankCode,
-                    title: data.data_employee_bank_code_three.bankCode,
-                    text: data.data_employee_bank_code_three.bankCode
-                });
-                // console.log(data);
-                $("#employee_bank_code_primary").append(option1).attr('data-alias', 'yourvalue').trigger(
-                    'change');
-                $("#employee_bank_code_primary").trigger({
+                $('#employee_bank_code_primary').trigger({
                     type: 'select2:select',
                     params: {
                         id: data.data_employee_bank_code_one.bankCode,
@@ -4080,9 +3963,9 @@
                     }
                 });
 
-                $("#employee_bank_code_optional_one").append(option2).attr('data-alias', 'yourvalue').trigger(
-                    'change');
-                $("#employee_bank_code_optional_one").trigger({
+                $('#employee_bank_code_optional_one').append(option2).trigger('change');
+
+                $('#employee_bank_code_optional_one').trigger({
                     type: 'select2:select',
                     params: {
                         id: data.data_employee_bank_code_two.bankCode,
@@ -4091,9 +3974,9 @@
                     }
                 });
 
-                $("#employee_bank_code_optional_two").append(option3).attr('data-alias', 'yourvalue').trigger(
-                    'change');
-                $("#employee_bank_code_optional_two").trigger({
+                $('#employee_bank_code_optional_two').append(option3).trigger('change');
+
+                $('#employee_bank_code_optional_two').trigger({
                     type: 'select2:select',
                     params: {
                         id: data.data_employee_bank_code_three.bankCode,
@@ -4117,26 +4000,26 @@
 
             //Tab Family & Dependent
             load_table_family_dependent_data();
-            if (typeof arrData[0].peMasterFamily !== 'undefined' || arrData[0].peMasterFamily !== null) {
+            if (typeof arrData2[0].peMasterFamily !== 'undefined' || arrData2[0].peMasterFamily !== null) {
                 for (var i = 0; i < arrData2[0].peMasterFamily.length; i++) {
-                    var birthDate = '';
-                    if (arrData2[0].peMasterFamily[i].birthDate !== 'undefined' && arrData2[0].peMasterFamily[i].birthDate !== null)
+                    var birthDate = '-';
+                    if (typeof arrData2[0].peMasterFamily[i].birthDate !== 'undefined' && arrData2[0].peMasterFamily[i].birthDate !== null)
                     {
                         birthDate = moment(arrData2[0].peMasterFamily[i].birthDate).format('YYYY-MM-DD');
                     }
 
                     arrayFamilyDependent.push({
-                        "seqNoFamilyDependent": ((typeof arrData2[0].peMasterFamily[i].seqNo !== 'undefined') ? arrData2[0].peMasterFamily[i].seqNo : i),
-                        "familyName": ((typeof arrData2[0].peMasterFamily[i].familyName !== 'undefined') ? arrData2[0].peMasterFamily[i].familyName : ''),
-                        "relationCode": ((typeof arrData2[0].peMasterFamily[i].relationCode !== 'undefined') ? arrData2[0].peMasterFamily[i].relationCode : ''),
+                        "seqNoFamilyDependent": ((typeof arrData2[0].peMasterFamily[i].seqNo !== 'undefined' && arrData2[0].peMasterFamily[i].seqNo !== null) ? arrData2[0].peMasterFamily[i].seqNo : i),
+                        "familyName": ((typeof arrData2[0].peMasterFamily[i].familyName !== 'undefined' && arrData2[0].peMasterFamily[i].familyName !== null) ? arrData2[0].peMasterFamily[i].familyName : '-'),
+                        "relationCode": ((typeof arrData2[0].peMasterFamily[i].relationCode !== 'undefined' && arrData2[0].peMasterFamily[i].relationCode !== null) ? arrData2[0].peMasterFamily[i].relationCode : '-'),
                         "birthDate": birthDate,
-                        "birthPlace": ((typeof arrData2[0].peMasterFamily[i].birthPlace !== 'undefined') ? arrData2[0].peMasterFamily[i].birthPlace : ''),
-                        "gender": ((typeof arrData2[0].peMasterFamily[i].gender !== 'undefined') ? arrData2[0].peMasterFamily[i].gender : ''),
-                        "bloodType": ((typeof arrData2[0].peMasterFamily[i].bloodType !== 'undefined') ? arrData2[0].peMasterFamily[i].bloodType : ''),
-                        "familyCardNumber": ((typeof arrData2[0].peMasterFamily[i].familyCardNumber !== 'undefined') ? arrData2[0].peMasterFamily[i].familyCardNumber : ''),
-                        "occupation": ((typeof arrData2[0].peMasterFamily[i].occupation !== 'undefined') ? arrData2[0].peMasterFamily[i].occupation : ''),
-                        "flagMedical": ((typeof arrData2[0].peMasterFamily[i].flagMedical !== 'undefined') ? arrData2[0].peMasterFamily[i].flagMedical : ''),
-                        "flagPayroll": ((typeof arrData2[0].peMasterFamily[i].flagPayroll !== 'undefined') ? arrData2[0].peMasterFamily[i].flagPayroll : '')
+                        "birthPlace": ((typeof arrData2[0].peMasterFamily[i].birthPlace !== 'undefined' && arrData2[0].peMasterFamily[i].birthPlace !== null) ? arrData2[0].peMasterFamily[i].birthPlace : '-'),
+                        "gender": ((typeof arrData2[0].peMasterFamily[i].gender !== 'undefined' && arrData2[0].peMasterFamily[i].gender !== null) ? arrData2[0].peMasterFamily[i].gender : '-'),
+                        "bloodType": ((typeof arrData2[0].peMasterFamily[i].bloodType !== 'undefined' && arrData2[0].peMasterFamily[i].bloodType !== null) ? arrData2[0].peMasterFamily[i].bloodType : '-'),
+                        "familyCardNumber": ((typeof arrData2[0].peMasterFamily[i].familyCardNumber !== 'undefined' && arrData2[0].peMasterFamily[i].familyCardNumber !== null) ? arrData2[0].peMasterFamily[i].familyCardNumber : '-'),
+                        "occupation": ((typeof arrData2[0].peMasterFamily[i].occupation !== 'undefined' && arrData2[0].peMasterFamily[i].occupation !== null) ? arrData2[0].peMasterFamily[i].occupation : '-'),
+                        "flagMedical": ((typeof arrData2[0].peMasterFamily[i].flagMedical !== 'undefined' && arrData2[0].peMasterFamily[i].flagMedical !== null) ? arrData2[0].peMasterFamily[i].flagMedical : false),
+                        "flagPayroll": ((typeof arrData2[0].peMasterFamily[i].flagPayroll !== 'undefined' && arrData2[0].peMasterFamily[i].flagPayroll !== null) ? arrData2[0].peMasterFamily[i].flagPayroll : false)
                     });
                 }
             }
@@ -4146,7 +4029,7 @@
                     $('#div-level').append(
                         '<div class="col-6">' +
                         '<div class="form-group">' +
-                        '<label for="level' + k + '">' + k + '</label>' +
+                        '<label for="level' + k + '">' + k + '</label> <span class="required">*</span>' +
                         '<input type="text" class="form-control" id="level' + k + '" name="level' +
                         k + '[]" value="' + v + '" disabled>' +
                         '</div></div>'
@@ -4193,22 +4076,12 @@
                         'insuranceClassCode': ((typeof arrData2[0].peMasterInsurance.insuranceClassCode !== 'undefined') ? arrData2[0].peMasterInsurance.insuranceClassCode : ''),
                     }
                 }).then(function (data) {
-                    var option1 = $('<option/>', {
-                        id: data.data_insurance_code.comGenCode,
-                        title: data.data_insurance_code.value,
-                        text: data.data_insurance_code.comGenCode
-                    });
-                    var option2 = $('<option/>', {
-                        id: data.data_insurance_class.comGenCode,
-                        title: data.data_insurance_class.value,
-                        text: data.data_insurance_class.comGenCode
-                    });
+                    var option1 = new Option(data.data_insurance_code.comGenCode, data.data_insurance_code.comGenCode, true, true);
+                    var option2 = new Option(data.data_insurance_class.comGenCode, data.data_insurance_class.comGenCode, true, true);
 
-                    // console.log(data);
+                    $('#insurance_code_insurance').append(option1).trigger('change');
 
-                    $("#insurance_code_insurance").append(option1).attr('data-alias', 'yourvalue').trigger(
-                        'change');
-                    $("#insurance_code_insurance").trigger({
+                    $('#insurance_code_insurance').trigger({
                         type: 'select2:select',
                         params: {
                             id: data.data_insurance_code.comGenCode,
@@ -4216,14 +4089,15 @@
                             data: data.data_insurance_code
                         }
                     });
-                    $("#insurance_class_insurance").append(option2).attr('data-alias', 'yourvalue').trigger(
-                        'change');
-                    $("#insurance_class_insurance").trigger({
+
+                    $('#insurance_class_insurance').append(option2).trigger('change');
+
+                    $('#insurance_class_insurance').trigger({
                         type: 'select2:select',
                         params: {
                             id: data.data_insurance_class.comGenCode,
                             text: data.data_insurance_class.comGenCode,
-                            data: data.data_insurance_class
+                            data: data.data_insurance_class.comGenCode
                         }
                     });
                 });
@@ -4610,7 +4484,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.cityName + '<div>' +
+                        '<div class="col-12">' + data.data.cityName + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -4650,7 +4524,7 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.cityName,
+                                    text: item.cityCode,
                                     id: item.cityCode,
                                     data: item
                                 }
@@ -4671,7 +4545,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '<div class="col-12">' + data.data.value + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -4712,7 +4586,7 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.value,
+                                    text: item.comGenCode,
                                     id: item.comGenCode,
                                     data: item
                                 }
@@ -4733,7 +4607,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '<div class="col-12">' + data.data.value + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -4773,7 +4647,7 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.value,
+                                    text: item.comGenCode,
                                     id: item.comGenCode,
                                     data: item
                                 }
@@ -4794,7 +4668,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '<div class="col-12">' + data.data.value + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -4834,7 +4708,7 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.value,
+                                    text: item.comGenCode,
                                     id: item.comGenCode,
                                     data: item
                                 }
@@ -4855,7 +4729,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '<div class="col-12">' + data.data.value + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -4894,7 +4768,7 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.value,
+                                    text: item.comGenCode,
                                     id: item.comGenCode,
                                     data: item
                                 }
@@ -4915,7 +4789,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '<div class="col-12">' + data.data.value + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -4955,7 +4829,7 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.value,
+                                    text: item.comGenCode,
                                     id: item.comGenCode,
                                     data: item
                                 }
@@ -4976,7 +4850,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '<div class="col-12">' + data.data.value + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -5015,7 +4889,7 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.value,
+                                    text: item.comGenCode,
                                     id: item.comGenCode,
                                     data: item
                                 }
@@ -5036,7 +4910,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.cityName + '<div>' +
+                        '<div class="col-12">' + data.data.cityName + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -5096,7 +4970,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.cityName + '<div>' +
+                        '<div class="col-12">' + data.data.cityName + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -5156,7 +5030,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.cityName + '<div>' +
+                        '<div class="col-12">' + data.data.cityName + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -5217,7 +5091,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.zipCode + '<div>' +
+                        '<div class="col-12">' + data.data.zipCode + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -5278,7 +5152,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.propinsi + '<div>' +
+                        '<div class="col-12">' + data.data.propinsi + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -5339,7 +5213,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.kabupaten + '<div>' +
+                        '<div class="col-12">' + data.data.kabupaten + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -5400,7 +5274,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '<div class="col-12">' + data.data.value + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -5440,7 +5314,7 @@
                             results: $.map(data, function (item) {
                                 return {
                                     text: item.value,
-                                    id: item.value,
+                                    id: item.comGenCode,
                                     data: item
                                 }
                             })
@@ -5460,7 +5334,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '<div class="col-12">' + data.data.value + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -5499,7 +5373,7 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.value,
+                                    text: item.comGenCode,
                                     id: item.comGenCode,
                                     data: item
                                 }
@@ -5520,7 +5394,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '<div class="col-12">' + data.data.value + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -5559,7 +5433,7 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.value,
+                                    text: item.comGenCode,
                                     id: item.comGenCode,
                                     data: item
                                 }
@@ -5580,7 +5454,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.officeDesc + '<div>' +
+                        '<div class="col-12">' + data.data.locationName + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -5619,8 +5493,8 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.officeDesc,
-                                    id: item.officeCode,
+                                    text: item.locationName,
+                                    id: item.locationCode,
                                     data: item
                                 }
                             })
@@ -5639,9 +5513,8 @@
                 }
 
                 if (data.id) {
-                    var $result2 = $('<div class="row">' + 
-                        '<div class="col-4">' + data.data.positionCode + '</div>' +
-                        '<div class="col-8">' + data.data.positionName + '</div>' +
+                    var $result2 = $('<div class="row">' +
+                        '<div class="col-12">' + data.data.positionName + '</div>' +
                         '</div>');
 
                     return $result2;
@@ -5680,7 +5553,7 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.positionCode,
+                                    text: item.positionName,
                                     id: item.positionCode,
                                     data: item
                                 }
@@ -5701,8 +5574,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-4">' + data.data.costCenterCode + '</div>' +
-                        '<div class="col-8">' + data.data.costCenterDescription + '</div>' +
+                        '<div class="col-12">' + data.data.costCenterDescription + '</div>' +
                         '</div>');
 
                     return $result2;
@@ -5741,7 +5613,7 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.costCenterCode,
+                                    text: item.costCenterDescription,
                                     id: item.costCenterCode,
                                     data: item
                                 }
@@ -5762,7 +5634,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-12">' + data.data.rankingCode + '</div>' +
+                        '<div class="col-12">' + data.data.rankingName + '</div>' +
                         '</div>');
 
                     return $result2;
@@ -5801,7 +5673,7 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.rankingCode,
+                                    text: item.rankingName,
                                     id: item.rankingCode,
                                     data: item
                                 }
@@ -5822,7 +5694,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-12">' + data.data.gradeCode + '</div>' +
+                        '<div class="col-12">' + data.data.gradeName + '</div>' +
                         '</div>');
 
                     return $result2;
@@ -5861,7 +5733,7 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.gradeCode,
+                                    text: item.gradeName,
                                     id: item.gradeCode,
                                     data: item
                                 }
@@ -5882,7 +5754,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '<div class="col-12">' + data.data.value + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -5933,7 +5805,7 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.value,
+                                    text: item.comGenCode,
                                     id: item.comGenCode,
                                     data: item
                                 }
@@ -5954,7 +5826,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '<div class="col-12">' + data.data.value + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -5993,7 +5865,7 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.value,
+                                    text: item.comGenCode,
                                     id: item.comGenCode,
                                     data: item
                                 }
@@ -6014,7 +5886,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '<div class="col-12">' + data.data.value + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -6053,7 +5925,7 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.value,
+                                    text: item.comGenCode,
                                     id: item.comGenCode,
                                     data: item
                                 }
@@ -6074,7 +5946,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.patternCode + '<div>' +
+                        '<div class="col-12">' + data.data.patternCode + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -6134,7 +6006,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '<div class="col-12">' + data.data.value + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -6174,7 +6046,7 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.value,
+                                    text: item.comGenCode,
                                     id: item.comGenCode,
                                     data: item
                                 }
@@ -6195,7 +6067,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '<div class="col-12">' + data.data.value + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -6234,7 +6106,7 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.value,
+                                    text: item.comGenCode,
                                     id: item.comGenCode,
                                     data: item
                                 }
@@ -6255,7 +6127,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '<div class="col-12">' + data.data.value + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -6294,7 +6166,7 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.value,
+                                    text: item.comGenCode,
                                     id: item.comGenCode,
                                     data: item
                                 }
@@ -6315,8 +6187,8 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' +
-                        '<div class="col-6">' + data.data.npwpCode + '<div>' +
-                        '<div class="col-6">' + data.data.pemotongKuasa + '<div>' +
+                        '<div class="col-6">' + data.data.npwpCode + '</div>' +
+                        '<div class="col-6">' + data.data.pemotongKuasa + '</div>' +
                         '</div>');
 
                     return $result2;
@@ -6367,7 +6239,7 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.pemotongKuasa,
+                                    text: item.npwpCode,
                                     id: item.npwpCode,
                                     data: item
                                 }
@@ -6388,8 +6260,8 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' +
-                        '<div class="col-6">' + data.data.bpjsCode + '<div>' +
-                        '<div class="col-6">' + data.data.bpjsNo + '<div>' +
+                        '<div class="col-6">' + data.data.bpjsCode + '</div>' +
+                        '<div class="col-6">' + data.data.bpjsNo + '</div>' +
                         '</div>');
 
                     return $result2;
@@ -6440,7 +6312,7 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.bpjsNo,
+                                    text: item.bpjsCode,
                                     id: item.bpjsCode,
                                     data: item
                                 }
@@ -6611,8 +6483,8 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' +
-                        '<div class="col-4">' + data.data.bankCode + '</div>' +
-                        '<div class="col-4">' + data.data.bankName + '</div>' +
+                        '<div class="col-6">' + data.data.bankCode + '</div>' +
+                        '<div class="col-6">' + data.data.bankName + '</div>' +
                         '</div>');
 
                     return $result2;
@@ -6687,7 +6559,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '<div class="col-12">' + data.data.value + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -6727,7 +6599,7 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.value,
+                                    text: item.comGenCode,
                                     id: item.comGenCode,
                                     data: item
                                 }
@@ -6748,7 +6620,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '<div class="col-12">' + data.data.value + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -6787,7 +6659,7 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.value,
+                                    text: item.comGenCode,
                                     id: item.comGenCode,
                                     data: item
                                 }
@@ -6808,7 +6680,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '<div class="col-12">' + data.data.value + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -6847,7 +6719,7 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.value,
+                                    text: item.comGenCode,
                                     id: item.comGenCode,
                                     data: item
                                 }
@@ -6927,6 +6799,14 @@
                 }
             });
         }
+
+        $('#employment_status_employment').on('change', function(){
+            if ($(this).val().includes('C')) {
+                $('#contract_start_date_employment').parent().parent().parent().parent().removeClass('d-none');
+            } else {
+                $('#contract_start_date_employment').parent().parent().parent().parent().addClass('d-none');
+            }
+        });
 
         $('#fringe_benefit_data_table tbody').on('click', 'input[type="checkbox"]', function(e){
             var $row = $(this).closest('tr');
@@ -7166,6 +7046,21 @@
             // }
         });
 
+        $("#btn-remove-employment-data").on('click', function() {
+            var data = table1.rows('.selected').data().toArray();
+            if(data.length > 0){
+                for (var i = 0; i < data.length; i++) {
+                    var index = arrayFringeBenefit.findIndex(x => x.seqNoFringeBenefit == data[i].seqNoFringeBenefit);
+                    arrayFringeBenefit.splice(index, 1);
+                }
+                $('#fringe_benefit_data_table').DataTable().destroy();
+                load_table_fringe_benefit();
+            }else{
+                $('#notification_error').modal('show');
+                $('#message-notification-error').html('No Data Selected');
+            }
+        });
+
         $("#btn-save-employment-data").click(function () {
             $(this).prop("disabled", true);
             $(this).html(
@@ -7213,16 +7108,16 @@
             
             arrayFamilyDependent.push({
                 "seqNoFamilyDependent": $("#seq_no_family_dependent_data").val(),
-                "familyName": (($("#name_family_dependent_data").val()) ? $("#name_family_dependent_data").val() : '-'),
-                "relationCode": (($("#relation_family_dependent_data").val()) ? $("#relation_family_dependent_data").val() : '-') ,
-                "birthDate": (($("#birth_date_family_dependent_data").val()) ? $("#birth_date_family_dependent_data").val() : '-'),
-                "birthPlace": (($("#birth_place_family_dependent_data").val()) ? $("#birth_place_family_dependent_data").val() : '-'),
-                "gender": (($("#gender_family_dependent_data").val()) ? $("#gender_family_dependent_data").val() : '-'),
-                "bloodType": (($("#blood_type_family_dependent_data").val()) ? $("#blood_type_family_dependent_data").val() : '-'),
-                "familyCardNumber": $("#family_card_no_family_dependent_data").val(),
-                "occupation": (($("#occupation_family_dependent_data").val()) ? $("#occupation_family_dependent_data").val() : '-'),
-                "flagMedical": $("#include_medical_family_dependent_data").val(),
-                "flagPayroll": $("#include_tax_family_dependent_data").val()
+                "familyName": ((typeof $("#name_family_dependent_data").val() !== 'undefined' && $("#name_family_dependent_data").val() !== null && $("#name_family_dependent_data").val() !== '') ? $("#name_family_dependent_data").val() : '-'),
+                "relationCode": ((typeof $("#relation_family_dependent_data").val() !== 'undefined' && $("#relation_family_dependent_data").val() !== null && $("#relation_family_dependent_data").val() !== '') ? $("#relation_family_dependent_data").val() : '-') ,
+                "birthDate": ((typeof $("#birth_date_family_dependent_data").val() !== 'undefined' && $("#birth_date_family_dependent_data").val() !== null && $("#birth_date_family_dependent_data").val() !== '') ? $("#birth_date_family_dependent_data").val() : '-'),
+                "birthPlace": ((typeof $("#birth_place_family_dependent_data").val() !== 'undefined' && $("#birth_place_family_dependent_data").val() !== null && $("#birth_place_family_dependent_data").val() !== '') ? $("#birth_place_family_dependent_data").val() : '-'),
+                "gender": ((typeof $("#gender_family_dependent_data").val() !== 'undefined' && $("#gender_family_dependent_data").val() !== null && $("#gender_family_dependent_data").val() !== '') ? $("#gender_family_dependent_data").val() : '-'),
+                "bloodType": ((typeof $("#blood_type_family_dependent_data").val() !== 'undefined' && $("#blood_type_family_dependent_data").val() !== null && $("#blood_type_family_dependent_data").val() !== '') ? $("#blood_type_family_dependent_data").val() : '-'),
+                "familyCardNumber": ((typeof $("#family_card_no_family_dependent_data").val() !== 'undefined' && $("#family_card_no_family_dependent_data").val() !== null && $("#family_card_no_family_dependent_data").val() !== '') ? $("#family_card_no_family_dependent_data").val() : '-'),
+                "occupation": ((typeof $("#occupation_family_dependent_data").val() !== 'undefined' && $("#occupation_family_dependent_data").val() !== null && $("#occupation_family_dependent_data").val() !== '') ? $("#occupation_family_dependent_data").val() : '-'),
+                "flagMedical": ((typeof $("#include_medical_family_dependent_data").val() !== 'undefined' && $("#include_medical_family_dependent_data").val() !== null) ? $("#include_medical_family_dependent_data").val() : false),
+                "flagPayroll": ((typeof $("#include_tax_family_dependent_data").val() !== 'undefined' && $("#include_tax_family_dependent_data").val() !== null) ? $("#include_tax_family_dependent_data").val() : false)
             });
 
             $(this).prop("disabled", false);
@@ -7235,12 +7130,40 @@
             load_table_family_dependent_data();
         });
 
+        $("#btn-remove-family-dependent-data").on('click', function() {
+            var data = table2.rows('.selected').data().toArray();
+            if(data.length > 0){
+                for (var i = 0; i < data.length; i++) {
+                    var index = arrayFamilyDependent.findIndex(x => x.seqNoFamilyDependent == data[i].seqNoFamilyDependent);
+                    arrayFamilyDependent.splice(index, 1);
+                }
+                $('#family_dependent_data_table').DataTable().destroy();
+                load_table_family_dependent_data();
+            }else{
+                $('#notification_error').modal('show');
+                $('#message-notification-error').html('No Data Selected');
+            }
+        });
+
         $("#btn-save-profile").click(function () {
-            $(this).prop("disabled", true);
-            $(this).html(
-                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
-            );
-            $("#personal_data_form").submit();
+            var form = $("#personal_data_form");
+            var valid = true;
+            form.find(".tab-pane").each(function() {
+                if (!$(this).find("input, select, textarea").valid()) {
+                    valid = false;
+                }
+            });
+            if (valid) {
+                $(this).prop("disabled", true);
+                $(this).html(
+                    '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+                );
+
+                form.submit(); // Submit form jika semua bidang valid
+            }else{
+                $('#notification_error').modal('show');
+                $('#message-notification-error').html("Some Field Are Required, Please Check Again");
+            }
         });
 
         // if ($("#employee_profile_form").length > 0) {

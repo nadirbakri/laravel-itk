@@ -9935,7 +9935,7 @@ class DataController extends Controller
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
 
-			$response = $client->post(env('API_URL') . '/officelocation/getofficelocation',
+			$response = $client->post(env('API_URL') . '/location/getlocation',
 				['body' => json_encode(
 					[
 						'companyCode' => Session::get('companyCode')
@@ -9980,11 +9980,11 @@ class DataController extends Controller
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
 
-			$response = $client->post(env('API_URL') . '/officelocation/getofficelocation',
+			$response = $client->post(env('API_URL') . '/location/getlocation',
 				['body' => json_encode(
 					[
 						'companyCode' => Session::get('companyCode'),
-						'officeCode' => $request->officeCode
+						'locationCode' => $request->locationCode
 					]
 					)]
 				);
