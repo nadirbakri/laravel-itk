@@ -462,6 +462,10 @@
             } );
         });
 
+        function isEmpty(obj) {
+            return Object.keys(obj).length === 0;
+        }
+
         if (func == 'new') {
             $('#record_function').val('New');
             $('#employee_no').prop('disabled', false);
@@ -522,76 +526,78 @@
                         'loanNo': data[0].description
                     },
                     success: function (response) {
-                        responseGrid = response;
-                        $('#rate_per_year').val(response[0].ratePerYear);
+                        if(!isEmpty(response)){
+                            responseGrid = response;
+                            $('#rate_per_year').val(response[0].ratePerYear);
 
-                        $('#full_partial_loan_payment_detail_table').DataTable().destroy();
-                        load_data_table_loan_payment();
-                        table.clear().draw();
+                            $('#full_partial_loan_payment_detail_table').DataTable().destroy();
+                            load_data_table_loan_payment();
+                            table.clear().draw();
 
-                        if (typeof response[0].detail !== 'undefined') {
-                            arrTable = response[0].detail;
-                            $.each(response[0].detail, function(k, v) {
-                                // if (typeof v.paymentType !== 'undefined' && v.paymentType !== null) {
-                                //     if (v.paymentType == 'S') {
-                                //         paymentType = 'Salary';
-                                //     } else if (v.paymentType == 'B') {
-                                //         paymentType = 'Bonus';
-                                //     } else if (v.paymentType == 'T') {
-                                //         paymentType = 'THR';
-                                //     } else {
-                                //         paymentType = 'Cash';
-                                //     }
-                                // }
+                            if (typeof response[0].detail !== 'undefined') {
+                                arrTable = response[0].detail;
+                                $.each(response[0].detail, function(k, v) {
+                                    // if (typeof v.paymentType !== 'undefined' && v.paymentType !== null) {
+                                    //     if (v.paymentType == 'S') {
+                                    //         paymentType = 'Salary';
+                                    //     } else if (v.paymentType == 'B') {
+                                    //         paymentType = 'Bonus';
+                                    //     } else if (v.paymentType == 'T') {
+                                    //         paymentType = 'THR';
+                                    //     } else {
+                                    //         paymentType = 'Cash';
+                                    //     }
+                                    // }
 
-                                table.row.add([
-                                    '<input type="text" class="form-control" id="payment_date_table'+ k +'" name="payment_date_table[]" value="'+ ((typeof v.paymentDate !== 'undefined' && v.paymentDate !== null) ? moment(v.paymentDate).format('DD-MMM-YYYY') : '') +'" readonly>',
-                                    '<input type="number" class="form-control" id="seq_no_table'+ k +'" name="seq_no_table[]" value="'+ ((typeof v.paymentSeq !== 'undefined' && v.paymentSeq !== null) ? v.paymentSeq : '') +'" readonly>',
-                                    '<input type="text" class="form-control" id="payment_type_table'+ k +'" name="payment_type_table[]" value="'+ ((typeof v.paymentType !== 'undefined' && v.paymentType !== null) ? v.paymentType : '') +'" readonly>',
-                                    '<input type="number" class="form-control" id="principal_table'+ k +'" name="principal_table[]" value="'+ ((typeof v.paymentPrincipal !== 'undefined' && v.paymentPrincipal !== null) ? v.paymentPrincipal : '') +'" readonly>',
-                                    '<input type="number" class="form-control" id="interest_table'+ k +'" name="interest_table[]" value="'+ ((typeof v.paymentInterest !== 'undefined' && v.paymentInterest !== null) ? v.paymentInterest : '') +'" readonly>',
-                                    '<input type="number" class="form-control" id="payment_table'+ k +'" name="payment_table[]" data-seq = "'+ k +'" value="'+ ((typeof v.payment !== 'undefined' && v.payment !== null) ? v.payment : '') +'" readonly>',
-                                    '<input type="number" class="form-control" id="outstanding_table'+ k +'" data-seq = "'+ k +'" name="outstanding_table[]" value="'+ ((typeof v.outStandingAmount !== 'undefined' && v.outStandingAmount !== null) ? v.outStandingAmount : '') +'" readonly>',
-                                    '<input type="text" class="form-control paid-table" id="paid_table'+ k +'" data-seq = "'+ k +'" name="paid_table[]" value="'+ ((typeof v.flagStatus !== 'undefined' && v.flagStatus !== null) ? v.flagStatus : '') +'" readonly>',
-                                    '<input type="text" class="form-control" id="employee_no_table'+ k +'" name="employee_no_table[]" hidden>',
-                                    '<input type="text" class="form-control" id="employee_name_table'+ k +'" name="employee_name_table[]" hidden>',
-                                    '<input type="text" class="form-control" id="loan_no_table'+ k +'" name="loan_no_table[]" hidden>',
-                                    '<input type="text" class="form-control" id="rate_per_year_table'+ k +'" name="rate_per_year_table[]" hidden>',
-                                ]).draw();
+                                    table.row.add([
+                                        '<input type="text" class="form-control" id="payment_date_table'+ k +'" name="payment_date_table[]" value="'+ ((typeof v.paymentDate !== 'undefined' && v.paymentDate !== null) ? moment(v.paymentDate).format('DD-MMM-YYYY') : '') +'" readonly>',
+                                        '<input type="number" class="form-control" id="seq_no_table'+ k +'" name="seq_no_table[]" value="'+ ((typeof v.paymentSeq !== 'undefined' && v.paymentSeq !== null) ? v.paymentSeq : '') +'" readonly>',
+                                        '<input type="text" class="form-control" id="payment_type_table'+ k +'" name="payment_type_table[]" value="'+ ((typeof v.paymentType !== 'undefined' && v.paymentType !== null) ? v.paymentType : '') +'" readonly>',
+                                        '<input type="number" class="form-control" id="principal_table'+ k +'" name="principal_table[]" value="'+ ((typeof v.paymentPrincipal !== 'undefined' && v.paymentPrincipal !== null) ? v.paymentPrincipal : '') +'" readonly>',
+                                        '<input type="number" class="form-control" id="interest_table'+ k +'" name="interest_table[]" value="'+ ((typeof v.paymentInterest !== 'undefined' && v.paymentInterest !== null) ? v.paymentInterest : '') +'" readonly>',
+                                        '<input type="number" class="form-control" id="payment_table'+ k +'" name="payment_table[]" data-seq = "'+ k +'" value="'+ ((typeof v.payment !== 'undefined' && v.payment !== null) ? v.payment : '') +'" readonly>',
+                                        '<input type="number" class="form-control" id="outstanding_table'+ k +'" data-seq = "'+ k +'" name="outstanding_table[]" value="'+ ((typeof v.outStandingAmount !== 'undefined' && v.outStandingAmount !== null) ? v.outStandingAmount : '') +'" readonly>',
+                                        '<input type="text" class="form-control paid-table" id="paid_table'+ k +'" data-seq = "'+ k +'" name="paid_table[]" value="'+ ((typeof v.flagStatus !== 'undefined' && v.flagStatus !== null) ? v.flagStatus : '') +'" readonly>',
+                                        '<input type="text" class="form-control" id="employee_no_table'+ k +'" name="employee_no_table[]" hidden>',
+                                        '<input type="text" class="form-control" id="employee_name_table'+ k +'" name="employee_name_table[]" hidden>',
+                                        '<input type="text" class="form-control" id="loan_no_table'+ k +'" name="loan_no_table[]" hidden>',
+                                        '<input type="text" class="form-control" id="rate_per_year_table'+ k +'" name="rate_per_year_table[]" hidden>',
+                                    ]).draw();
 
-                                $('#payment_type_table' + k).text(paymentType);
-                                $('#employee_no_table' + k).val(data[0].id);
-                                $('#employee_name_table' + k).val(data[0].title);
-                                $('#loan_no_table' + k).val(data[0].description);
-                                $('#rate_per_year_table' + k).val($('#new_rate_per_year').val());
+                                    $('#payment_type_table' + k).text(paymentType);
+                                    $('#employee_no_table' + k).val(data[0].id);
+                                    $('#employee_name_table' + k).val(data[0].title);
+                                    $('#loan_no_table' + k).val(data[0].description);
+                                    $('#rate_per_year_table' + k).val($('#new_rate_per_year').val());
 
-                                principal_table = $('#principal_table'+ k).val();
-                                interest_table = $('#interest_table' + k).val();
+                                    principal_table = $('#principal_table'+ k).val();
+                                    interest_table = $('#interest_table' + k).val();
 
-                                paymentTable = parseFloat(principal_table) + parseFloat(interest_table);
-                                $('#payment_table' + 0).val(parseInt(0));
-                                $('#payment_table' + k).val(parseFloat(paymentTable).toFixed(2));
+                                    paymentTable = parseFloat(principal_table) + parseFloat(interest_table);
+                                    $('#payment_table' + 0).val(parseInt(0));
+                                    $('#payment_table' + k).val(parseFloat(paymentTable).toFixed(2));
 
-                                if (v.flagStatus == false && typeof v.flagStatus !== 'undefined') {
-                                    arrSeqNo.push(v.paymentSeq);
-                                    arrPrincipalAmount.push(v.paymentPrincipal);
-                                    arrInterest.push(v.paymentInterest);
-                                    arrOutstandingAmount.push(v.outStandingAmount);
-                                    
-                                    $('#paid_loan_seq').val(arrSeqNo[0]);
-                                    $('#no_of_installment_not_yet_paid').val(arrSeqNo.length + 1);
-                                    $('#principal_amount_installment').val(arrPrincipalAmount[0]);
-                                    $('#interest_amount_per_installment').val(arrInterest[0]);
-                                    $('#outstanding_amount').val(arrOutstandingAmount[0]);
+                                    if (v.flagStatus == false && typeof v.flagStatus !== 'undefined') {
+                                        arrSeqNo.push(v.paymentSeq);
+                                        arrPrincipalAmount.push(v.paymentPrincipal);
+                                        arrInterest.push(v.paymentInterest);
+                                        arrOutstandingAmount.push(v.outStandingAmount);
+                                        
+                                        $('#paid_loan_seq').val(arrSeqNo[0]);
+                                        $('#no_of_installment_not_yet_paid').val(arrSeqNo.length + 1);
+                                        $('#principal_amount_installment').val(arrPrincipalAmount[0]);
+                                        $('#interest_amount_per_installment').val(arrInterest[0]);
+                                        $('#outstanding_amount').val(arrOutstandingAmount[0]);
 
-                                    var principalAmount = parseFloat($('#principal_amount_installment').val());
-                                    var interestAmount = parseFloat($('#interest_amount_per_installment').val());
-                                    var outstandingAmount = parseFloat($('#outstanding_amount').val());
+                                        var principalAmount = parseFloat($('#principal_amount_installment').val());
+                                        var interestAmount = parseFloat($('#interest_amount_per_installment').val());
+                                        var outstandingAmount = parseFloat($('#outstanding_amount').val());
 
-                                    totalNotYetPaid = interestAmount + principalAmount + outstandingAmount;
-                                    $('#total_not_yet_paid').val(totalNotYetPaid);
-                                }
-                            });
+                                        totalNotYetPaid = interestAmount + principalAmount + outstandingAmount;
+                                        $('#total_not_yet_paid').val(totalNotYetPaid);
+                                    }
+                                });
+                            }
                         }
                     }
                 });
