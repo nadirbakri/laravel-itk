@@ -164,34 +164,37 @@ class PeriodicalReportExport implements FromView, ShouldAutoSize
                 'param' => $param, 'grandTotal' => [], 'data' => [], 'data_company' => $arrCompany->dataListSet, 'data_period' => $this->period, 'grand_total' => $this->grandTotal, 'print_signature' => $this->printSignature, 'level1' => $this->dataLevel[0]
             ]);
         }else{
-            if(isset($arrResult->dataListSet[0]->detail)){
-                usort($arrResult->dataListSet[0]->detail, function ($a, $b) {
-                    return (int) $a->employeeNo - (int) $b->employeeNo;
-                });
-            }
-
-            if(isset($arrResult->dataListSet[0]->summary)){
-                usort($arrResult->dataListSet[0]->summary, function ($a, $b) {
-                    return (int) $a->employeeNo - (int) $b->employeeNo;
-                });
-            }
-
             $total = [];
-            $branch = null;
             
-            foreach ($arrResult->dataListSet[0]->departementGroup as $key => $dept) {
-                foreach ($dept->data as $key => $value) {
-                    foreach ($value->field as $v) {
-                        if ($v->tableName === 'Company') {
-                            $branch = $v->value;
-                            if (!isset($total[$branch])) {
-                                $total[$branch] = [];
+            if(Session::get('companyCode') == 'NMDI'){
+                if(isset($arrResult->dataListSet[0]->detail)){
+                    usort($arrResult->dataListSet[0]->detail, function ($a, $b) {
+                        return (int) $a->employeeNo - (int) $b->employeeNo;
+                    });
+                }
+
+                if(isset($arrResult->dataListSet[0]->summary)){
+                    usort($arrResult->dataListSet[0]->summary, function ($a, $b) {
+                        return (int) $a->employeeNo - (int) $b->employeeNo;
+                    });
+                }
+
+                $branch = null;
+                
+                foreach ($arrResult->dataListSet[0]->departementGroup as $key => $dept) {
+                    foreach ($dept->data as $key => $value) {
+                        foreach ($value->field as $v) {
+                            if ($v->tableName === 'Company') {
+                                $branch = $v->value;
+                                if (!isset($total[$branch])) {
+                                    $total[$branch] = [];
+                                }
                             }
-                        }
-                        if (!is_string($v->value)) {
-                            $total[$branch][$v->field] = isset($total[$branch][$v->field]) ? $total[$branch][$v->field] + $v->value : $v->value;
-                        }else{
-                            $total[$branch][$v->field] = '';
+                            if (!is_string($v->value)) {
+                                $total[$branch][$v->field] = isset($total[$branch][$v->field]) ? $total[$branch][$v->field] + $v->value : $v->value;
+                            }else{
+                                $total[$branch][$v->field] = '';
+                            }
                         }
                     }
                 }

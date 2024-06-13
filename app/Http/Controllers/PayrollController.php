@@ -8396,34 +8396,37 @@ public function dataDetailReportFormatPY(Request $request)
             $pdf = PDF::loadView('payroll.py_export_periodical_report', ['param' => $param, 'grandTotal' => [], 'data' => [], 'data_company' => $arrCompany->dataListSet, 'data_period' => $request->period, 'grand_total' => isset($request->grand_total) ? (bool) $request->grand_total : false, 'print_signature' => isset($request->print_signature) ? (bool) $request->print_signature : false, 'level1' => $dataLevel[0]])->setPaper($customPaper, 'landscape')->setOptions(['defaultFont' => 'arial']);
             return $pdf->stream('Periodical Report.pdf');
         }else{
-            if(isset($arrResult->dataListSet[0]->detail) && count($arrResult->dataListSet[0]->detail) > 1){
-                usort($arrResult->dataListSet[0]->detail, function ($a, $b) {
-                    return (int) $a->employeeNo - (int) $b->employeeNo;
-                });
-            }
-
-            if(isset($arrResult->dataListSet[0]->summary) && count($arrResult->dataListSet[0]->summary) > 1){
-                usort($arrResult->dataListSet[0]->summary, function ($a, $b) {
-                    return (int) $a->employeeNo - (int) $b->employeeNo;
-                });
-            }
-
             $total = [];
-            $branch = null;
             
-            foreach ($arrResult->dataListSet[0]->departementGroup as $key => $dept) {
-                foreach ($dept->data as $key => $value) {
-                    foreach ($value->field as $v) {
-                        if ($v->tableName === 'Company') {
-                            $branch = $v->value;
-                            if (!isset($total[$branch])) {
-                                $total[$branch] = [];
+            if(Session::get('companyCode') == 'NMDI'){
+                if(isset($arrResult->dataListSet[0]->detail) && count($arrResult->dataListSet[0]->detail) > 1){
+                    usort($arrResult->dataListSet[0]->detail, function ($a, $b) {
+                        return (int) $a->employeeNo - (int) $b->employeeNo;
+                    });
+                }
+
+                if(isset($arrResult->dataListSet[0]->summary) && count($arrResult->dataListSet[0]->summary) > 1){
+                    usort($arrResult->dataListSet[0]->summary, function ($a, $b) {
+                        return (int) $a->employeeNo - (int) $b->employeeNo;
+                    });
+                }
+
+                $branch = null;
+                
+                foreach ($arrResult->dataListSet[0]->departementGroup as $key => $dept) {
+                    foreach ($dept->data as $key => $value) {
+                        foreach ($value->field as $v) {
+                            if ($v->tableName === 'Company') {
+                                $branch = $v->value;
+                                if (!isset($total[$branch])) {
+                                    $total[$branch] = [];
+                                }
                             }
-                        }
-                        if (!is_string($v->value)) {
-                            $total[$branch][$v->field] = isset($total[$branch][$v->field]) ? $total[$branch][$v->field] + $v->value : $v->value;
-                        }else{
-                            $total[$branch][$v->field] = '';
+                            if (!is_string($v->value)) {
+                                $total[$branch][$v->field] = isset($total[$branch][$v->field]) ? $total[$branch][$v->field] + $v->value : $v->value;
+                            }else{
+                                $total[$branch][$v->field] = '';
+                            }
                         }
                     }
                 }
