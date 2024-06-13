@@ -252,8 +252,8 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>{{ __('trans_workflow.fname') }}</th>
                                     <th>{{ __('trans_workflow.employee') }}</th>
+                                    <th>{{ __('trans_workflow.fname') }}</th>
                                     <th>{{ __('trans_workflow.division') }}</th>
                                     <th>{{ __('trans_workflow.ranking') }}</th>
                                 </tr>
