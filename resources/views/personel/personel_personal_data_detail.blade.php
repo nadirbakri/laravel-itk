@@ -4141,17 +4141,6 @@
                         'insuranceClassCode': ((typeof arrData2[0].peMasterInsurance.insuranceClassCode !== 'undefined') ? arrData2[0].peMasterInsurance.insuranceClassCode : ''),
                     }
                 }).then(function (data) {
-                    var option1 = $('<option/>', {
-                        id: data.data_insurance_code.comGenCode,
-                        title: data.data_insurance_code.value,
-                        text: data.data_insurance_code.comGenCode
-                    });
-                    var option2 = $('<option/>', {
-                        id: data.data_insurance_class.comGenCode,
-                        title: data.data_insurance_class.value,
-                        text: data.data_insurance_class.comGenCode
-                    });
-
                     var option1 = new Option(data.data_insurance_code.comGenCode, data.data_insurance_code.comGenCode, true, true);
                     var option2 = new Option(data.data_insurance_class.comGenCode, data.data_insurance_class.comGenCode, true, true);
 
