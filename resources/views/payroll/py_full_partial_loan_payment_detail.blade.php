@@ -488,6 +488,7 @@
             $('#new_no_of_installment_not_yet_paid').prop('readonly', false);
 
             $('#employee_no').val(null).trigger('change');
+            $('#employee_no_hidden').val("");
             $('#employee_name').val("");
             $('#loan_no').val("");
             $('#rate_per_year').val("");
@@ -510,29 +511,45 @@
 
             $('#employee_no').on('select2:select', function (e) {
                 var data = $('#employee_no').select2('data');
-                $('#employee_name').val(htmlDecode(data[0].title));
-                $('#loan_no').val(htmlDecode(data[0].description));
+                $('#employee_no_hidden').val(htmlDecode(data[0].data.employeeNo));
+                $('#employee_name').val(htmlDecode(data[0].data.fullName));
+                $('#loan_no').val(htmlDecode(data[0].data.loanNo));
 
-                employee_no_table = $('#employee_no').val();
-                employee_name_table = $('#employee_name').val();
-                loan_no_table = $('#loan_no').val();
+                employee_no_table = htmlDecode(data[0].data.employeeNo);
+                employee_name_table = htmlDecode(data[0].data.fullName);
+                loan_no_table = htmlDecode(data[0].data.loanNo);
                 rate_per_year_table = $('#new_rate_per_year').val();
 
                 $.ajax({
                     url: "{{ url('payroll/full_partial_loan_payment/data') }}",
                     type: "GET",
                     data: {
-                        'employeeNo': data[0].id,
-                        'loanNo': data[0].description
+                        'employeeNo': data[0].data.employeeNo,
+                        'loanNo': data[0].data.loanNo
                     },
                     success: function (response) {
+                        $('#rate_per_year').val("");
+                        $('#paid_loan_seq').val("");
+                        $('#no_of_installment_not_yet_paid').val("");
+                        $('#payment_method').val(null).trigger('change');
+                        $('#currency_code').val(null).trigger('change');
+                        $('#principal_amount_installment').val("");
+                        $('#interest_amount_per_installment').val("");
+                        $('#outstanding_amount').val("");
+                        $('#total_not_yet_paid').val("");
+                        $('#payment_amount').val("");
+                        $('#other_cost').val("");
+                        $('#total_payment').val("");
+                        $('#new_outstanding_amount').val("");
+                        $('#new_rate_per_year').val("");
+                        $('#new_no_of_installment_not_yet_paid').val("");
+                        $('#full_partial_loan_payment_detail_table').DataTable().destroy();
+                        load_data_table_loan_payment();
+                        table.clear().draw();
+
                         if(!isEmpty(response)){
                             responseGrid = response;
                             $('#rate_per_year').val(response[0].ratePerYear);
-
-                            $('#full_partial_loan_payment_detail_table').DataTable().destroy();
-                            load_data_table_loan_payment();
-                            table.clear().draw();
 
                             if (typeof response[0].detail !== 'undefined') {
                                 arrTable = response[0].detail;
@@ -565,9 +582,9 @@
                                     ]).draw();
 
                                     $('#payment_type_table' + k).text(paymentType);
-                                    $('#employee_no_table' + k).val(data[0].id);
-                                    $('#employee_name_table' + k).val(data[0].title);
-                                    $('#loan_no_table' + k).val(data[0].description);
+                                    $('#employee_no_table' + k).val(data[0].data.employeeNo);
+                                    $('#employee_name_table' + k).val(data[0].data.fullName);
+                                    $('#loan_no_table' + k).val(data[0].data.loanNo);
                                     $('#rate_per_year_table' + k).val($('#new_rate_per_year').val());
 
                                     principal_table = $('#principal_table'+ k).val();
@@ -604,6 +621,7 @@
             });
 
             $('#employee_no').on('select2:unselecting', function (e) {
+                $('#employee_no_hidden').val("");
                 $('#employee_name').val('');
                 $('#loan_no').val('');
                 $('#rate_per_year').val('');
@@ -750,7 +768,7 @@
                 url: "{{ url('payroll/full_partial_loan_payment/data') }}",
                 type: "GET",
                 data: {
-                    'employeeNo': $('#employee_no').val(),
+                    'employeeNo': (typeof arrData[0].employeeNo !== 'undefined') ? arrData[0].employeeNo : '',
                     'loanNo': $('#loan_no').val(),
                     'auditLoanSeqNo': $('#paid_loan_seq').val()
                 },
@@ -1299,7 +1317,7 @@
                             results: $.map(data, function (item) {
                                 return {
                                     text: item.employeeNo,
-                                    id: item.employeeNo,
+                                    id: item.employeeNo + '_' + item.loanNo,
                                     title: item.fullName,
                                     description: item.loanNo,
                                     data: item

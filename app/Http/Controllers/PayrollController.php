@@ -4065,7 +4065,7 @@ public function dataDetailReportFormatPY(Request $request)
                     ['body' => json_encode(
                         [
                             'companyCode' => Session::get('companyCode'),
-                            "employeeNo" => $request->employee_no,
+                            "employeeNo" => $request->employee_no_hidden,
                             "employeeName" => $request->employee_name,
                             "loanNo" => (int) $request->loan_no,
                             "auditLoanSeqNo" => (int) $request->paid_loan_seq,
