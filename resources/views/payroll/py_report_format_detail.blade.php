@@ -584,6 +584,7 @@
                                         <option value=">=">>=</option>
                                         <option value="<="><=</option>
                                         <option value="like">like</option>
+                                        <option value="is">is</option>
                                     </select>
                                 </div>
                             </div>
