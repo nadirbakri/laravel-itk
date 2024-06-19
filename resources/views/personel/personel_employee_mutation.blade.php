@@ -1704,7 +1704,6 @@
                 },
                 success: function (response) {
                     if(!isEmpty(response)){
-                        console.log(response)
                         $('#npwp_code_current').val(htmlDecode(response[0].mutationView.groupNPWP));
                         $('#company_code_current').val(htmlDecode(response[0].mutationView.companyCode));
                         $('#work_location_current').val(htmlDecode(response[0].mutationView.locationName));
