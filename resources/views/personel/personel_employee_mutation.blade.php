@@ -332,7 +332,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12" id="div_employment_status_current" style="display: none;">
+                            {{-- <div class="col-12" id="div_employment_status_current" style="display: none;">
                                 <div class="form-group">
                                     <label
                                         for="employment_status_current">{{ __('personel_employee_mutation.label_employment_status') }}</label>
@@ -341,15 +341,42 @@
                                         placeholder="{{ __('personel_employee_mutation.label_employment_status') }}"
                                         disabled>
                                 </div>
+                            </div> --}}
+                            <div class="col-12" id="div_termination_reason_current" style="display: none;">
+                                <div class="form-group">
+                                    <label for="termination_reason_current">{{ __('personel_employee_mutation.label_termination_reason') }}</label>
+                                    <input type="text" class="form-control" id="termination_reason_current"
+                                        name="termination_reason_current"
+                                        placeholder="{{ __('personel_employee_mutation.label_termination_reason') }}"
+                                        disabled>
+                                </div>
                             </div>
                             <div class="col-12" id="div_termination_date_current" style="display: none;">
                                 <div class="form-group">
                                     <label
                                         for="termination_date_current">{{ __('personel_employee_mutation.label_termination_date') }}</label>
-                                    <input type="text" class="form-control" id="termination_date_current"
-                                        name="termination_date_current"
-                                        placeholder="{{ __('personel_employee_mutation.label_termination_date') }}"
-                                        disabled>
+                                    <div class='input-group'>
+                                        <input type="text" class="form-control" id="termination_date_current"
+                                            name="termination_date_current"
+                                            placeholder="{{ __('personel_employee_mutation.label_termination_date') }}" disabled>
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12" id="div_effective_termination_date_current" style="display: none;">
+                                <div class="form-group">
+                                    <label
+                                        for="effective_termination_date_current">{{ __('personel_employee_mutation.label_effective_termination_date') }}</label>
+                                    <div class='input-group'>
+                                        <input type="text" class="form-control" id="effective_termination_date_current"
+                                            name="effective_termination_date_current"
+                                            placeholder="{{ __('personel_employee_mutation.label_effective_termination_date') }}" disabled>
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row" id="div_contract_date_current" style="display: none;">
@@ -1042,12 +1069,40 @@
             }
         });
 
+        let pickerTerminationDateCurrent = $('#termination_date_current').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "j-M-y",
+            dateFormat: "Y-m-d",
+            onReady: function () {
+                var flatPickrInstance = this;
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
+
+        let pickerEffectiveTerminationDateCurrent = $('#effective_termination_date_current').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "j-M-y",
+            dateFormat: "Y-m-d",
+            onReady: function () {
+                var flatPickrInstance = this;
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
+
         let pickerTerminationDate = $('#termination_date_new').flatpickr({
             altInput: true,
             allowInput: true,
             altFormat: "j-M-y",
             dateFormat: "Y-m-d",
-            defaultDate: "today",
+            // defaultDate: "today",
             onReady: function () {
                 var flatPickrInstance = this;
                 var $flatPickrInput = $(flatPickrInstance.element);
@@ -1062,7 +1117,7 @@
             allowInput: true,
             altFormat: "j-M-y",
             dateFormat: "Y-m-d",
-            defaultDate: "today",
+            // defaultDate: "today",
             onReady: function () {
                 var flatPickrInstance = this;
                 var $flatPickrInput = $(flatPickrInstance.element);
@@ -1395,7 +1450,9 @@
                 $("#termination_date_new").attr('required', true);
                 $("#effective_termination_date_new").attr('required', true);
                 $('#div_employment_status_current').show();
+                $('#div_termination_reason_current').show();
                 $('#div_termination_date_current').show();
+                $('#div_effective_termination_date_current').show();
                 $('#div_termination_reason_new').show();
                 $('#div_termination_date_new').show();
                 $('#div_effective_termination_date_new').show();
@@ -1630,9 +1687,14 @@
             return false;
         }
 
-        $('#employee_no').on("select2:select", function (e) {
+        $('#employee_no').on("change", function (e) {
             var data = $('#employee_no').select2('data');
             $('#employee_name').val(htmlDecode(data[0].title));
+            $('#termination_reason_current').val(htmlDecode(data[0].data.terminationCode));
+            pickerTerminationDateCurrent.setDate(data[0].data.terminationDate);
+            pickerEffectiveTerminationDateCurrent.setDate(data[0].data.effectiveTerminationDate);
+            pickerTerminationDate.setDate(data[0].data.terminationDate);
+            pickerEffectiveTerminationDate.setDate(data[0].data.effectiveTerminationDate);
 
             $.ajax({
                 url: "{{ url('personnel/employee_mutation/detail_data') }}",
@@ -1642,6 +1704,7 @@
                 },
                 success: function (response) {
                     if(!isEmpty(response)){
+                        console.log(response)
                         $('#npwp_code_current').val(htmlDecode(response[0].mutationView.groupNPWP));
                         $('#company_code_current').val(htmlDecode(response[0].mutationView.companyCode));
                         $('#work_location_current').val(htmlDecode(response[0].mutationView.locationName));
