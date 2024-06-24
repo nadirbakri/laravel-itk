@@ -102,9 +102,9 @@
 			<td width="18%">Job position</td>
 			<td width="2%" style="text-align:center;">:</td>
 			<td width="34%">{{ $value->jabatan }}</td>
-			<td width="18%">NPWP</td>
+			<td width="18%">NIK</td>
 			<td width="2%" style="text-align:center;">:</td>
-			<td width="33%">{{ $value->npwp }}</td>
+			<td width="33%">{{ $value->nik }}</td>
 		</tr>
 		<tr>
 			<td width="18%">Organization</td>
