@@ -128,7 +128,7 @@
                         </div>
                     </div>
                     <div class="col-1">
-                        <input type="text" class="form-control" id="jamsostek_period_month" name="jamsostek_period_month" readonly>
+                        <input type="text" class="form-control" id="jamsostek_period_month" name="jamsostek_period_month">
                     </div>
                     <div class="col-0.5">
                         <h4>/</h4>
