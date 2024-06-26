@@ -10,6 +10,7 @@
     <link href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/select/1.3.3/css/select.dataTables.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/flatpickr.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/flatpickr.monthselect.css') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
     <!-- <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="{{ asset('css/payroll_detail_data.css') }}">
@@ -127,14 +128,16 @@
                             <label for="jamsostek_period">{{ __('payroll_monthly_jamsostek_report.label_jamsostek_period') }}</label>
                         </div>
                     </div>
-                    <div class="col-1">
-                        <input type="text" class="form-control" id="jamsostek_period_month" name="jamsostek_period_month">
-                    </div>
-                    <div class="col-0.5">
-                        <h4>/</h4>
-                    </div>
-                    <div class="col-2">
-                        <input type="text" class="form-control" id="jamsostek_period_year" name="jamsostek_period_year" readonly>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="jamsostek_period" name="jamsostek_period"
+                                    placeholder="{{ __('payroll_monthly_jamsostek_report.label_jamsostek_period') }}">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -312,14 +315,32 @@
 
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
+        let pickerJamsostekPeriod = $('#jamsostek_period').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "j-M-y",
+            dateFormat: "Y-m-d",
+            // defaultDate: "today",
+            plugins: [
+                new monthSelectPlugin({
+                    shorthand: true, //defaults to false
+                    dateFormat: "Y-m-01", //defaults to "F Y"
+                    altFormat: "F Y", //defaults to "F Y"
+                })
+            ],
+            onReady: function () {
+                var flatPickrInstance = this;
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
+
         var arrData = @json($data);
 
         if (arrData) {
-            var period_month = moment(arrData[0].periodMonth.toString()).format('MM');
-            var period_year = moment(arrData[0].periodYear.toString()).format('YYYY');
-
-            $('#jamsostek_period_month').val(period_month);
-            $('#jamsostek_period_year').val(period_year);
+            pickerJamsostekPeriod.setDate(arrData[0].periodYear + "-" + moment(arrData[0].periodMonth).format('MM') + "-01");
         }
                
         loadDataGroupAuthorized('#group_authorize_code_from');

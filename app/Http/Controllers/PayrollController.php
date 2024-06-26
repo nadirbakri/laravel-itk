@@ -7656,8 +7656,8 @@ public function dataDetailReportFormatPY(Request $request)
                 // 'jp' => $request->jp,
                 // 'jk' => $request->jk,
                 // 'jdi' => $request->jdi,
-                'periodMonth' => (int) $request->jamsostek_period_month,
-                'periodYear' => (int) $request->jamsostek_period_year,
+                "periodYear" => (int) date('Y', strtotime($request->jamsostek_period)),
+                "periodMonth" => (int) date('m', strtotime($request->jamsostek_period)),
                 'gAuthFrom' => $request->group_authorize_code_from,
                 'gAuthTo' => $request->group_authorize_code_to,
                 'groupBPJS' => $request->group_bpjs_code,
@@ -7686,7 +7686,7 @@ public function dataDetailReportFormatPY(Request $request)
                 ]);
             }
 
-            // var_dump(json_encode($param));
+            // dd(json_encode($param));
 
         }catch(Exception $e){
             $response = $e->getResponse();
