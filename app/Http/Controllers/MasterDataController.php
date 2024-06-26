@@ -134,7 +134,6 @@ class MasterDataController extends Controller
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
-        // var_dump($arrResult->dataListSet);
 
         if($arrResult->dataListSet == null){
             return Datatables::of([])->make(true);
@@ -287,7 +286,7 @@ class MasterDataController extends Controller
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
-        // var_dump($arrResult->dataListSet);
+        // dd($arrResult->dataListSet);
 
         if($arrResult->dataListSet == null){
             return Datatables::of([])->make(true);
@@ -975,12 +974,12 @@ class MasterDataController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-
             if(isset($request->approvalCode)){
                 foreach($request->approvalCode as $key=>$value){
                     $a[] = [
                         "approvalLevel" => (int) $request->approvalLevel[$key],
-                        "approvalCode" => $value
+                        "approvalCode" => $value,
+                        "delegateGroup" => $request->delegateGroup[$key]
                     ];
                 }
             }else{
@@ -997,19 +996,6 @@ class MasterDataController extends Controller
             }else{
                 $b = [];
             }
-
-            // dd(json_encode(
-            //     [
-            //         'companyCode' => Session::get('companyCode'),
-            //         'groupCode' => $request->group_code,
-            //         'groupName' => $request->group_name,
-            //         'directApproval' => $a,
-            //         'emailSetting' =>$b,
-            //         "sessionID" => 0,
-            //         "sessionUserID" => Session::get('userID'),
-            //         "languageCode" => App::getLocale()
-            //     ]
-            //     ));
 
             $response = $client->post(env('API_URL') . '/mobile/gmgroup/insertgroupcode',
                 ['body' => json_encode(
@@ -1054,7 +1040,8 @@ class MasterDataController extends Controller
                 foreach($request->approvalCode as $key=>$value){
                     $a[] = [
                         "approvalLevel" => (int) $request->approvalLevel[$key],
-                        "approvalCode" => $value
+                        "approvalCode" => $value,
+                        "delegateGroup" => $request->delegateGroup[$key]
                     ];
                 }
             }else{
@@ -1089,7 +1076,6 @@ class MasterDataController extends Controller
     
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            // var_dump($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){

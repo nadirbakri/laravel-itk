@@ -101,7 +101,7 @@
             cursor: pointer;
         }
 
-        .btn{
+        .btn-check{
             margin-top:10px;
             margin: 20px 40px;
         }
@@ -180,13 +180,14 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-10">
+                    <div class="col-11">
                     <table id="exampletwo" class="table table-bordered">
                         <thead>
                             <tr>
                                 <th>#</th>
                                 <th>Approval Level</th>
                                 <th>Approval Code</th>
+                                <th>Delegate Approval</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -194,6 +195,7 @@
                                 <td id="ceklis" name="ceklis"></td>
                                 <td id="group_code1" name="group_code1"></td>
                                 <td id="group_code2" name="group_code2"></td>
+                                <td id="group_code3" name="group_code3"></td>
                             </tr>
                         </tbody>
                     </table>
@@ -219,7 +221,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-10">
+                    <div class="col-11">
                     <table id="exampleemail" class="table table-bordered">
                         <thead>
                             <tr>
@@ -327,6 +329,43 @@
                         </div>
                     <div class="modal-body table-responsive">
                         <table id="examplethree" class="display">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Group Code</th>
+                                    <th>Group Name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td></td>        
+                                    <td></td>        
+                                    <td></td>       
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                    
+            </div>
+        </form>
+    </div>
+
+    <div class="div-form">
+        <form id="payroll_calculation_detail_three_modal_form" method="post">
+            @csrf
+            <div class="modal fade" id="modal_list_group_three">
+                <div class="modal-dialog modal-dialog-centered modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-little">List User</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    <div class="modal-body table-responsive">
+                        <table id="examplefour" class="display">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -492,7 +531,7 @@
                     targets: 0, 
                     "defaultContent": '',
                     render: function(data, type) {
-                        return type === 'display'? '<button type="button"  onclick="klik(this)" class="btn btn-primary" id="btnaja" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/></svg></button>' : '';
+                        return type === 'display'? '<button type="button"  onclick="klik(this)" class="btn btn-primary btn-check" id="btnaja" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/></svg></button>' : '';
                              }
                 },
                 {data: 'groupCode', name: 'groupCode'},
@@ -535,21 +574,26 @@
                     },
                     {data: 'approvalLevel', name: 'approvalLevel',
                     render: function (data, type, row) {
-
                         return '<input type="hidden" class="form-control" name="approvalLevel[]" value="' +
-
                             data + '">' + data;
-
                         }
                     },
                     {data: 'approvalCode', name: 'approvalCode',
-                    render: function (data, type, row) {
-
-                    return '<input type="hidden" class="form-control" name="approvalCode[]" value="' +
-
-                        data + '">' + data;
-
-                    }}
+                        render: function (data, type, row) {
+                            return '<input type="hidden" class="form-control" name="approvalCode[]" value="' +
+                                data + '">' + data;
+                        }
+                    },
+                    {data: 'delegateGroup', name: 'delegateGroup',
+                        render: function (data, type, row) {
+                            return '<div class="form-group form-invalid"><div class="input-group">' +
+                                '<input type="text" class="form-control delegate-approval-input" name="delegateGroup[]" value="' + ((data !== null && data !== undefined && data !== '') ? data : '') + '">' +
+                                '<div class="input-group-append">' +
+                                '<button class="btn btn-outline-secondary rounded-right btn-show-modal-delegate" type="button">' +
+                                '<i class="fa fa-search" aria-hidden="true"></i></button>' +
+                                '</div></div></div>';
+                        }
+                    },
                 ],
                 select: {
                     style:    'multi',
@@ -557,6 +601,44 @@
                 }, 
                 
             }); 
+
+            table3.$('.btn-show-modal-delegate').on('click', function () {
+                var $input = $(this).closest('.input-group').find('.delegate-approval-input');
+                $('#modal_list_group_three').data('input-target', $input).modal('show');
+
+                $('#examplefour').DataTable().destroy();
+                table6 = $('#examplefour').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    orderCellsTop: true,
+                    ajax: {
+                        url : "{{ url('master_data/list/table') }}"
+                    },
+                    error: function(jqXHR, ajaxOptions, thrownError) {
+                        alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
+                    },
+                    "sDom": 'lfrtip',
+                    'sPaginationType': 'full_numbers',
+                    "order": [[ 1, "asc" ]],
+                    columns: [
+                        {
+                            orderable: false,
+                            targets: 0, 
+                            "defaultContent": '',
+                            render: function(data, type) {
+                                return type === 'display'? '<button type="button"  onclick="klik_delegate(this)" class="btn btn-primary btn-check"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/></svg></button>' : '';
+                                    }
+                        },
+                        {data: 'groupCode', name: 'groupCode'},
+                        {data: 'groupName', name: 'groupName'},
+                    ],
+                    select: {
+                        style:    'multi',
+                        selector: 'td:first-child'
+                    }, 
+                    
+                });     
+            });
         } 
 
     const klik = (element) => {
@@ -573,6 +655,15 @@
         load_data_approval_table();
         arrEmailSettings = table2.row($(element).parent()).data().emailSettings;
         load_data_email_table();
+    }
+
+    const klik_delegate = (element) => {
+        var appCode = $(element).parent().siblings('.sorting_1').text();
+        var appName = $(element).parent().siblings('td').eq(1).text().replace("\u00A0", " ");
+
+        var $input = $('#modal_list_group_three').data('input-target');
+        $input.val(appCode);
+        $('#modal_list_group_three').modal('hide');
     }
 
     $('#exampletwo tbody').on('click', 'input[type="checkbox"]', function(e){
@@ -635,7 +726,7 @@
                     targets: 0, 
                     "defaultContent": '',
                     render: function(data, type) {
-                        return type === 'display'? '<button type="button"  onclick="klikk(this)" class="btn btn-primary" id="btnaja" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/></svg></button>' : '';
+                        return type === 'display'? '<button type="button"  onclick="klikk(this)" class="btn btn-primary btn-check" id="btnaja" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/></svg></button>' : '';
                              }
                 },
                 {data: 'groupCode', name: 'groupCode'},
@@ -651,12 +742,12 @@
     const klikk = (element) => {
         var count = table3.data().count();
         var appCode = $(element).parent().siblings('.sorting_1').text();
-        // console.log(appCode);
         $('.close').click();
         table3.row.add({
             'no' : '<input class="chk-select" type="checkbox">',
             'approvalLevel' : (count+1),
-            'approvalCode' : appCode
+            'approvalCode' : appCode,
+            'delegateGroup' : ''
         }).draw();
         // arrApproval = table4.row($(element).parent()).data().directApproval;
         // load_data_approval_table();
@@ -685,7 +776,7 @@
                     targets: 0, 
                     "defaultContent": '',
                     render: function(data, type) {
-                        return type === 'display'? '<button type="button"  onclick="klikemail(this)" class="btn btn-primary" id="btnaja" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/></svg></button>' : '';
+                        return type === 'display'? '<button type="button"  onclick="klikemail(this)" class="btn btn-primary btn-check" id="btnaja" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/></svg></button>' : '';
                              }
                 },
                 {data: 'groupCode', name: 'groupCode'},
