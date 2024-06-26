@@ -76,7 +76,7 @@
 	<br><br>
 	<table style="width:100%; padding-left:1%; padding-right:2%; border-collapse: collapse; font-family: 'Arial Bold', sans-serif;">
 		<tr>
-			<th width="80%" style="text-align: left; font-size: 16px;">PT. Kreasi Nostra Mandiri (Bogor)</th>
+			<th width="80%" style="text-align: left; font-size: 16px;">{{ $value->namaPerusahaan }}</th>
 			<th width="20%" style="text-align:right; font-size: 16px;">PAYSLIP</th>
 		</tr>
 	</table>
@@ -110,6 +110,12 @@
 			<td width="18%">Organization</td>
 			<td width="2%" style="text-align:center;">:</td>
 			<td width="34%">{{ $value->organisasi }}</td>
+			<td width="18%">Bank Account No.</td>
+			<td width="2%" style="text-align:center;">:</td>
+			<td width="33%">{{ $value->noRekening }}</td>
+		</tr>
+		<tr>
+			<td colspan="3" width="54%">&nbsp;</td>
 			<td width="18%">Email</td>
 			<td width="2%" style="text-align:center;">:</td>
 			<td width="33%">{{ $value->email }}</td>
