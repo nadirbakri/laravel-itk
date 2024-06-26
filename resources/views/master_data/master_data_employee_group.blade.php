@@ -555,91 +555,91 @@
     function load_data_approval_table(){
         $('#exampletwo').DataTable().destroy();
         table3 = $('#exampletwo').DataTable({
+            processing: true,
+            data: arrApproval,
+            error: function(jqXHR, ajaxOptions, thrownError) {
+                alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
+            },
+            "sDom": 'lrtip',
+            "order": [[ 1, "asc" ]],
+            paging: false,
+            columns: [
+                {
+                    orderable: false,
+                    targets: 0, 
+                    "defaultContent": '',
+                    render: function(data, type) {
+                        return type === 'display'? '<input class="chk-select" type="checkbox">' : '';
+                            }
+                },
+                {data: 'approvalLevel', name: 'approvalLevel',
+                render: function (data, type, row) {
+                    return '<input type="hidden" class="form-control" name="approvalLevel[]" value="' +
+                        data + '">' + data;
+                    }
+                },
+                {data: 'approvalCode', name: 'approvalCode',
+                    render: function (data, type, row) {
+                        return '<input type="hidden" class="form-control" name="approvalCode[]" value="' +
+                            data + '">' + data;
+                    }
+                },
+                {data: 'delegateGroup', name: 'delegateGroup',
+                    render: function (data, type, row) {
+                        return '<div class="form-group form-invalid"><div class="input-group">' +
+                            '<input type="text" class="form-control delegate-approval-input" name="delegateGroup[]" value="' + ((data !== null && data !== undefined && data !== '') ? data : '') + '">' +
+                            '<div class="input-group-append">' +
+                            '<button class="btn btn-outline-secondary rounded-right btn-show-modal-delegate" type="button">' +
+                            '<i class="fa fa-search" aria-hidden="true"></i></button>' +
+                            '</div></div></div>';
+                    }
+                },
+            ],
+            select: {
+                style:    'multi',
+                selector: 'td:first-child'
+            }, 
+            
+        }); 
+
+        table3.$('.btn-show-modal-delegate').on('click', function () {
+            var $input = $(this).closest('.input-group').find('.delegate-approval-input');
+            $('#modal_list_group_three').data('input-target', $input).modal('show');
+
+            $('#examplefour').DataTable().destroy();
+            table6 = $('#examplefour').DataTable({
                 processing: true,
-                data: arrApproval,
+                serverSide: true,
+                orderCellsTop: true,
+                ajax: {
+                    url : "{{ url('master_data/list/table') }}"
+                },
                 error: function(jqXHR, ajaxOptions, thrownError) {
                     alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
                 },
-                "sDom": 'lrtip',
+                "sDom": 'lfrtip',
+                'sPaginationType': 'full_numbers',
                 "order": [[ 1, "asc" ]],
-                paging: false,
                 columns: [
                     {
                         orderable: false,
                         targets: 0, 
                         "defaultContent": '',
                         render: function(data, type) {
-                            return type === 'display'? '<input class="chk-select" type="checkbox">' : '';
+                            return type === 'display'? '<button type="button"  onclick="klik_delegate(this)" class="btn btn-primary btn-check"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/></svg></button>' : '';
                                 }
                     },
-                    {data: 'approvalLevel', name: 'approvalLevel',
-                    render: function (data, type, row) {
-                        return '<input type="hidden" class="form-control" name="approvalLevel[]" value="' +
-                            data + '">' + data;
-                        }
-                    },
-                    {data: 'approvalCode', name: 'approvalCode',
-                        render: function (data, type, row) {
-                            return '<input type="hidden" class="form-control" name="approvalCode[]" value="' +
-                                data + '">' + data;
-                        }
-                    },
-                    {data: 'delegateGroup', name: 'delegateGroup',
-                        render: function (data, type, row) {
-                            return '<div class="form-group form-invalid"><div class="input-group">' +
-                                '<input type="text" class="form-control delegate-approval-input" name="delegateGroup[]" value="' + ((data !== null && data !== undefined && data !== '') ? data : '') + '">' +
-                                '<div class="input-group-append">' +
-                                '<button class="btn btn-outline-secondary rounded-right btn-show-modal-delegate" type="button">' +
-                                '<i class="fa fa-search" aria-hidden="true"></i></button>' +
-                                '</div></div></div>';
-                        }
-                    },
+                    {data: 'groupCode', name: 'groupCode'},
+                    {data: 'groupName', name: 'groupName'},
                 ],
                 select: {
                     style:    'multi',
                     selector: 'td:first-child'
                 }, 
                 
-            }); 
-
-            table3.$('.btn-show-modal-delegate').on('click', function () {
-                var $input = $(this).closest('.input-group').find('.delegate-approval-input');
-                $('#modal_list_group_three').data('input-target', $input).modal('show');
-
-                $('#examplefour').DataTable().destroy();
-                table6 = $('#examplefour').DataTable({
-                    processing: true,
-                    serverSide: true,
-                    orderCellsTop: true,
-                    ajax: {
-                        url : "{{ url('master_data/list/table') }}"
-                    },
-                    error: function(jqXHR, ajaxOptions, thrownError) {
-                        alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
-                    },
-                    "sDom": 'lfrtip',
-                    'sPaginationType': 'full_numbers',
-                    "order": [[ 1, "asc" ]],
-                    columns: [
-                        {
-                            orderable: false,
-                            targets: 0, 
-                            "defaultContent": '',
-                            render: function(data, type) {
-                                return type === 'display'? '<button type="button"  onclick="klik_delegate(this)" class="btn btn-primary btn-check"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/></svg></button>' : '';
-                                    }
-                        },
-                        {data: 'groupCode', name: 'groupCode'},
-                        {data: 'groupName', name: 'groupName'},
-                    ],
-                    select: {
-                        style:    'multi',
-                        selector: 'td:first-child'
-                    }, 
-                    
-                });     
-            });
-        } 
+            });     
+        });
+    } 
 
     const klik = (element) => {
         let employee_id = $(element).parent().siblings('.sorting_1').text();
@@ -751,6 +751,44 @@
         }).draw();
         // arrApproval = table4.row($(element).parent()).data().directApproval;
         // load_data_approval_table();
+
+        table3.$('.btn-show-modal-delegate').on('click', function () {
+            var $input = $(this).closest('.input-group').find('.delegate-approval-input');
+            $('#modal_list_group_three').data('input-target', $input).modal('show');
+
+            $('#examplefour').DataTable().destroy();
+            table6 = $('#examplefour').DataTable({
+                processing: true,
+                serverSide: true,
+                orderCellsTop: true,
+                ajax: {
+                    url : "{{ url('master_data/list/table') }}"
+                },
+                error: function(jqXHR, ajaxOptions, thrownError) {
+                    alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
+                },
+                "sDom": 'lfrtip',
+                'sPaginationType': 'full_numbers',
+                "order": [[ 1, "asc" ]],
+                columns: [
+                    {
+                        orderable: false,
+                        targets: 0, 
+                        "defaultContent": '',
+                        render: function(data, type) {
+                            return type === 'display'? '<button type="button"  onclick="klik_delegate(this)" class="btn btn-primary btn-check"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/></svg></button>' : '';
+                                }
+                    },
+                    {data: 'groupCode', name: 'groupCode'},
+                    {data: 'groupName', name: 'groupName'},
+                ],
+                select: {
+                    style:    'multi',
+                    selector: 'td:first-child'
+                }, 
+                
+            });     
+        });
     }
      
 </script>
