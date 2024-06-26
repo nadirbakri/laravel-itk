@@ -107,9 +107,9 @@
                                 $totalKey = $dataTable3->field . '_' . ($key3 + 2);
                             ?>
                             @if(!is_string($total[$totalKey]))
-                                <td style="text-align:left; border:1px solid #000;">{{ number_format($total[$totalKey], 0, ',', '.') }}</td>
+                                <td style="text-align:right; border:1px solid #000;">{{ number_format($total[$totalKey], 0, ',', '.') }}</td>
                             @else
-                                <td style="text-align:left; border:1px solid #000;">&nbsp;</td>
+                                <td style="text-align:right; border:1px solid #000;">&nbsp;</td>
                             @endif
                         @endforeach
                     </tr>
@@ -249,7 +249,7 @@
                                         $totalCost = '';
                                     }
                                 ?>
-                                <td style="text-align:left; border:1px solid #000;">{{ $totalCost }}</td>
+                                <td style="text-align:right; border:1px solid #000;">{{ $totalCost }}</td>
                             @endforeach
                         </tr>
                     @endif
@@ -282,9 +282,9 @@
                         <td style="background-color: yellow; text-align:center; border:1px solid #000;">Total per Branch ({{ $level }})</td>
                         @foreach($grandTotal[$branch] as $key_total => $periodicalTotal)
                             @if(!is_string($periodicalTotal))
-                                <td style="text-align:left; border:1px solid #000;">{{ number_format($periodicalTotal, 0, ',', '.') }}</td>
+                                <td style="text-align:right; border:1px solid #000;">{{ number_format($periodicalTotal, 0, ',', '.') }}</td>
                             @else
-                                <td style="text-align:left; border:1px solid #000;">&nbsp;</td>
+                                <td style="text-align:right; border:1px solid #000;">&nbsp;</td>
                             @endif
                         @endforeach
                     </tr>
@@ -292,9 +292,9 @@
                         <td style="background-color: yellow; text-align:center; border:1px solid #000;">Total per Company</td>
                         @foreach($grandTotal[$branch] as $key_total => $periodicalTotal)
                             @if(!is_string($periodicalTotal))
-                                <td style="text-align:left; border:1px solid #000;">{{ number_format($periodicalTotal, 0, ',', '.') }}</td>
+                                <td style="text-align:right; border:1px solid #000;">{{ number_format($periodicalTotal, 0, ',', '.') }}</td>
                             @else
-                                <td style="text-align:left; border:1px solid #000;">&nbsp;</td>
+                                <td style="text-align:right; border:1px solid #000;">&nbsp;</td>
                             @endif
                         @endforeach
                     </tr>
@@ -402,7 +402,7 @@
                             <td style="background-color: yellow; text-align:center; border:1px solid #000;">&nbsp;</td>
                             <td style="background-color: yellow; text-align:center; border:1px solid #000;">{{ $totalJumlah }}</td>
                             @foreach($total[$dataTable->data[0]->companyName] as $key => $totalValue)
-                                <td style="text-align:left; border:1px solid #000;">{{ number_format($totalValue, 0, ',', '.') }}</td>
+                                <td style="text-align:right; border:1px solid #000;">{{ number_format($totalValue, 0, ',', '.') }}</td>
                             @endforeach
                         </tr>
                     @endif
