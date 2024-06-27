@@ -359,8 +359,7 @@
 
         $('#group_bpjs_code').on('select2:select', function (e) {
             var data = $('#group_bpjs_code').select2('data');
-            console.log(data);
-            $('#group_bpjs_name').val(htmlDecode(data[0].data.bpjsNo));
+            $('#group_bpjs_name').val(htmlDecode(data[0].title));
         });
 
         $('#group_bpjs_code').on('select2:unselecting', function (e) {
@@ -536,6 +535,7 @@
                                 return {
                                     text: item.bpjsCode,
                                     id: item.bpjsCode,
+                                    title: item.bpjsNo,
                                     data: item
                                 }
                             })
@@ -555,7 +555,12 @@
                     'func': func
                 }
             }).then(function (data) {
-                var option = new Option(data.bpjsCode, data.bpjsCode, true, true);
+                // var option = new Option(data.bpjsCode, data.bpjsCode, true, true);
+                var option = $('<option/>', {
+                    id: data.bpjsCode,
+                    title: data.bpjsNo,
+                    text: data.bpjsCode
+                });
                 $(field).append(option).trigger('change');
                 $('#group_bpjs_name').val(htmlDecode(data.bpjsNo));
             });
