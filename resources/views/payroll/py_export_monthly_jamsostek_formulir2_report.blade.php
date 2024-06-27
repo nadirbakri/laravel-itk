@@ -59,16 +59,16 @@
 		<tr>
 			<td rowspan="2" width="20%" style="font-size: 10px;">1. Perusahaan</td>
             <td rowspan="2" width="3%" style="font-size: 10px;">:</td>
-            <td rowspan="2" width="35%" style="font-size: 10px;"></td>
+            <td rowspan="2" width="35%" style="font-size: 10px;">{{ $companyName }}</td>
             <td width="25%" style="font-size: 10px; text-align: center; border: 1px solid #000;">No. Pendaftaran (NPP)</td>
 		</tr>
         <tr>
-            <td width="25%" style="font-size: 10px; text-align: center; border: 1px solid #000;"></td>
+            <td width="25%" style="font-size: 10px; text-align: center; border: 1px solid #000;">{{ $bpjsNo }}</td>
 		</tr>
         <tr>
 			<td width="20%" style="font-size: 10px;">2. Iuran untuk bulan / tahun</td>
             <td width="3%" style="font-size: 10px;">:</td>
-            <td colspan="2" width="25%" style="font-size: 10px;"></td>
+            <td colspan="2" width="25%" style="font-size: 10px;">{{ $period }}</td>
 		</tr>
         <tr>
 			<td width="20%" style="font-size: 10px; vertical-align: top;">3. Iuran disetor melalui</td>

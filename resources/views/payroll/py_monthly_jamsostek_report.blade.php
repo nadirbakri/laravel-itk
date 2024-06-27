@@ -167,14 +167,14 @@
                     </div>
                     <div class="col-1">
                         <div class="input-group">
-                            <input type="text" class="form-control" id="kekurangan_kelebihan_period_month" name="kekurangan_kelebihan_period_month">
+                            <input type="text" class="form-control" id="kekurangan_kelebihan_period_month" name="kekurangan_kelebihan_period_month" value="{{ date('m') }}">
                         </div>
                     </div>
                     <div class="col-0.5">
                         <h4>/</h4>
                     </div>
                     <div class="col-2">
-                        <input type="text" class="form-control" id="kekurangan_kelebihan_period_year" name="kekurangan_kelebihan_period_year">
+                        <input type="text" class="form-control" id="kekurangan_kelebihan_period_year" name="kekurangan_kelebihan_period_year"  value="{{ date('Y') }}">
                     </div>
                 </div>
 
@@ -259,7 +259,8 @@
                         </div>
                     </div>
                     <div class="col-4">
-                    <select class="form-control select2" id="group_bpjs_code" name="group_bpjs_code"></select>
+                        <select class="form-control select2" id="group_bpjs_code" name="group_bpjs_code"></select>
+                        <input type="hidden" class="form-control" id="group_bpjs_name" name="group_bpjs_name" value="">
                     </div>
                 </div>
                 
@@ -352,7 +353,19 @@
         loadDataGroupBPJS('#group_bpjs_code');
         loadDataFirstLastGroupBPJS('#group_bpjs_code', 'First');
 
+        function htmlDecode(value) {
+    	    return $("<textarea/>").html(value).text();
+	    }
 
+        $('#group_bpjs_code').on('select2:select', function (e) {
+            var data = $('#group_bpjs_code').select2('data');
+            console.log(data);
+            $('#group_bpjs_name').val(htmlDecode(data[0].data.bpjsNo));
+        });
+
+        $('#group_bpjs_code').on('select2:unselecting', function (e) {
+            $('#group_bpjs_name').val('');
+        });
 
         $('#select').focus(function (event) {
             var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
@@ -521,7 +534,7 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.bpjsNo,
+                                    text: item.bpjsCode,
                                     id: item.bpjsCode,
                                     data: item
                                 }
@@ -542,9 +555,9 @@
                     'func': func
                 }
             }).then(function (data) {
-                var $newOption = $("<option selected='selected'></option>").val(data.bpjsCode).text(
-                    data.bpjsNo);
-                $(field).append($newOption).trigger('change');
+                var option = new Option(data.bpjsCode, data.bpjsCode, true, true);
+                $(field).append(option).trigger('change');
+                $('#group_bpjs_name').val(htmlDecode(data.bpjsNo));
             });
         }
     });

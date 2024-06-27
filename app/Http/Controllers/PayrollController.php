@@ -7702,34 +7702,90 @@ public function dataDetailReportFormatPY(Request $request)
 
         $arrResult = json_decode($response->getBody()->getContents());
 
-        // var_dump($arrResult->dataListSet);
+        // dd($arrResult->dataListSet);
 
         if($arrResult->dataListSet == null){
             if($request->jamsostek_report_type == 'formulir2'){
-                $pdf = PDF::loadView('payroll.py_export_monthly_jamsostek_formulir2_report', ['data' => [], 'period' => $request->jamsostek_period_month . ' / ' . $request->jamsostek_period_year])->setPaper('letter', 'portrait')->setOptions(['defaultFont' => 'arial']);
+                $pdf = PDF::loadView('payroll.py_export_monthly_jamsostek_formulir2_report', 
+                [
+                    'data' => [], 
+                    'period' => $request->kekurangan_kelebihan_period_month . ' / ' . $request->kekurangan_kelebihan_period_year,
+                    'period_now' => date('m/Y'),
+                    'companyName' => Session::get('companyName'),
+                    'bpjsNo' => $request->group_bpjs_name
+                ])->setPaper('letter', 'portrait')->setOptions(['defaultFont' => 'arial']);
                 return $pdf->stream('Jamsostek Formulir 2.pdf');
             }else if($request->jamsostek_report_type == 'formulir1a'){
-                $pdf = PDF::loadView('payroll.py_export_monthly_jamsostek_formulir1a_report', ['data' => [], 'period' => $request->jamsostek_period_month . ' / ' . $request->jamsostek_period_year])->setPaper('letter', 'portrait')->setOptions(['defaultFont' => 'arial']);
+                $pdf = PDF::loadView('payroll.py_export_monthly_jamsostek_formulir1a_report', 
+                [
+                    'data' => [], 
+                    'period' => $request->kekurangan_kelebihan_period_month . ' / ' . $request->kekurangan_kelebihan_period_year,
+                    'period_now' => date('m/Y'),
+                    'companyName' => Session::get('companyName'),
+                    'bpjsNo' => $request->group_bpjs_name
+                ])->setPaper('letter', 'portrait')->setOptions(['defaultFont' => 'arial']);
                 return $pdf->stream('Jamsostek Formulir 1A.pdf');
             }else if($request->jamsostek_report_type == 'formulir1b'){
-                $pdf = PDF::loadView('payroll.py_export_monthly_jamsostek_formulir1b_report', ['data' => [], 'period' => $request->jamsostek_period_month . ' / ' . $request->jamsostek_period_year])->setPaper('letter', 'portrait')->setOptions(['defaultFont' => 'arial']);
+                $pdf = PDF::loadView('payroll.py_export_monthly_jamsostek_formulir1b_report', 
+                [
+                    'data' => [], 
+                    'period' => $request->kekurangan_kelebihan_period_month . ' / ' . $request->kekurangan_kelebihan_period_year,
+                    'period_now' => date('m/Y'),
+                    'companyName' => Session::get('companyName'),
+                    'bpjsNo' => $request->group_bpjs_name
+                ])->setPaper('letter', 'portrait')->setOptions(['defaultFont' => 'arial']);
                 return $pdf->stream('Jamsostek Formulir 1B.pdf');
             }else if($request->jamsostek_report_type == 'formulir2a'){
-                $pdf = PDF::loadView('payroll.py_export_monthly_jamsostek_formulir2a_report', ['data' => [], 'period' => $request->jamsostek_period_month . ' / ' . $request->jamsostek_period_year])->setPaper('letter', 'portrait')->setOptions(['defaultFont' => 'arial']);
+                $pdf = PDF::loadView('payroll.py_export_monthly_jamsostek_formulir2a_report', 
+                [
+                    'data' => [], 
+                    'period' => $request->kekurangan_kelebihan_period_month . ' / ' . $request->kekurangan_kelebihan_period_year,
+                    'period_now' => date('m/Y'),
+                    'companyName' => Session::get('companyName'),
+                    'bpjsNo' => $request->group_bpjs_name
+                ])->setPaper('letter', 'portrait')->setOptions(['defaultFont' => 'arial']);
                 return $pdf->stream('Jamsostek Formulir 2A.pdf');
             }
         }else{
             if($request->jamsostek_report_type == 'formulir2'){
-                $pdf = PDF::loadView('payroll.py_export_monthly_jamsostek_formulir2_report', ['data' => $arrResult->dataListSet, 'period' => $request->jamsostek_period_month . ' / ' . $request->jamsostek_period_year])->setPaper('letter', 'portrait')->setOptions(['defaultFont' => 'arial']);
+                $pdf = PDF::loadView('payroll.py_export_monthly_jamsostek_formulir2_report', 
+                [
+                    'data' => $arrResult->dataListSet, 
+                    'period' => $request->kekurangan_kelebihan_period_month . ' / ' . $request->kekurangan_kelebihan_period_year,
+                    'period_now' => date('m/Y'),
+                    'companyName' => Session::get('companyName'),
+                    'bpjsNo' => $request->group_bpjs_name
+                ])->setPaper('letter', 'portrait')->setOptions(['defaultFont' => 'arial']);
                 return $pdf->stream('Jamsostek Formulir 2.pdf');
             }else if($request->jamsostek_report_type == 'formulir1a'){
-                $pdf = PDF::loadView('payroll.py_export_monthly_jamsostek_formulir1a_report', ['data' => $arrResult->dataListSet, 'period' => $request->jamsostek_period_month . ' / ' . $request->jamsostek_period_year])->setPaper('letter', 'portrait')->setOptions(['defaultFont' => 'arial']);
+                $pdf = PDF::loadView('payroll.py_export_monthly_jamsostek_formulir1a_report', 
+                [
+                    'data' => $arrResult->dataListSet, 
+                    'period' => $request->kekurangan_kelebihan_period_month . ' / ' . $request->kekurangan_kelebihan_period_year,
+                    'period_now' => date('m/Y'),
+                    'companyName' => Session::get('companyName'),
+                    'bpjsNo' => $request->group_bpjs_name
+                ])->setPaper('letter', 'portrait')->setOptions(['defaultFont' => 'arial']);
                 return $pdf->stream('Jamsostek Formulir 1A.pdf');
             }else if($request->jamsostek_report_type == 'formulir1b'){
-                $pdf = PDF::loadView('payroll.py_export_monthly_jamsostek_formulir1b_report', ['data' => $arrResult->dataListSet, 'period' => $request->jamsostek_period_month . ' / ' . $request->jamsostek_period_year])->setPaper('letter', 'portrait')->setOptions(['defaultFont' => 'arial']);
+                $pdf = PDF::loadView('payroll.py_export_monthly_jamsostek_formulir1b_report', 
+                [
+                    'data' => $arrResult->dataListSet, 
+                    'period' => $request->kekurangan_kelebihan_period_month . ' / ' . $request->kekurangan_kelebihan_period_year,
+                    'period_now' => date('m/Y'),
+                    'companyName' => Session::get('companyName'),
+                    'bpjsNo' => $request->group_bpjs_name
+                ])->setPaper('letter', 'portrait')->setOptions(['defaultFont' => 'arial']);
                 return $pdf->stream('Jamsostek Formulir 1B.pdf');
             }else if($request->jamsostek_report_type == 'formulir2a'){
-                $pdf = PDF::loadView('payroll.py_export_monthly_jamsostek_formulir2a_report', ['data' => $arrResult->dataListSet, 'period' => $request->jamsostek_period_month . ' / ' . $request->jamsostek_period_year])->setPaper('letter', 'portrait')->setOptions(['defaultFont' => 'arial']);
+                $pdf = PDF::loadView('payroll.py_export_monthly_jamsostek_formulir2a_report', 
+                [
+                    'data' => $arrResult->dataListSet, 
+                    'period' => $request->kekurangan_kelebihan_period_month . ' / ' . $request->kekurangan_kelebihan_period_year,
+                    'period_now' => date('m/Y'),
+                    'companyName' => Session::get('companyName'),
+                    'bpjsNo' => $request->group_bpjs_name
+                ])->setPaper('letter', 'portrait')->setOptions(['defaultFont' => 'arial']);
                 return $pdf->stream('Jamsostek Formulir 2A.pdf');
             }
         }
