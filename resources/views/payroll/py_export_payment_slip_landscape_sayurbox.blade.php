@@ -37,11 +37,11 @@
 
 		footer {
 			position: fixed; 
-			bottom: 0cm; 
+			bottom: -0.8cm; 
 			left: 0cm; 
 			right: 0cm;
 			height: 3.7cm;
-			font-size: 9.5px;
+			font-size: 7.5px;
 			font-family: 'Arial Bold', sans-serif;
 		}
 
@@ -129,8 +129,8 @@
 	?>
 	<table class="no-page-break" style="width:100%; padding-left:1%; padding-right:2%; border-collapse: collapse; font-family: 'Arial Alternates', sans-serif;">
 		<tr>
-			<th style="width: 48%; text-align: left; padding-left: 3%; padding-top: 0.4%; padding-bottom: 0.6%; background-color: #e2e2e2;">Earnings</th>
-			<th style="width: 52%; text-align: left; padding-left: 4%; padding-top: 0.4%; padding-bottom: 0.6%; background-color: #e2e2e2;">Deductions</th>
+			<th style="width: 48%; text-align: left; padding-left: 3%; padding-top: 0.4%; padding-bottom: 0.6%; background-color: #e2e2e2;">{{ empty($value->a_Name) ? '' : $value->a_Name }}</th>
+			<th style="width: 52%; text-align: left; padding-left: 4%; padding-top: 0.4%; padding-bottom: 0.6%; background-color: #e2e2e2;">{{ empty($value->d_Name) ? '' : $value->d_Name }}</th>
 		</tr>
 		
 	</table>
@@ -208,16 +208,16 @@
 			</td>
 		</tr>
 	</table>
-	<br><br>
 	<table class="no-page-break" style="width:100%; padding-left:1%; padding-right:2%; border-collapse: collapse; font-family: 'Arial Alternates', sans-serif;">
 		<tr>
-			<th style="width: 48%; text-align: left; padding-left: 3%; padding-top: 0.4%; padding-bottom: 0.6%;">Benefits*</th>
-			<th style="width: 52%; text-align: left; padding-left: 3.5%; padding-top: 0.4%; padding-bottom: 0.6%;">Attendance Summary</th>
+			<th style="width: 48%; text-align: left; padding-left: 3%; padding-top: 0.4%; padding-bottom: 0.6%;">{{ empty($value->b_Name) ? '' : $value->b_Name }}</th>
+			<th style="width: 52%; text-align: left; padding-left: 3.5%; padding-top: 0.4%; padding-bottom: 0.6%;">{{ empty($value->c_Name) ? '' : $value->c_Name }}</th>
 		</tr>
 	</table>
 	<table class="table no-page-break" style="width:100%; font-size: 14px; padding-top: 0.7%; padding-left:1%; padding-right:0.1%; border-collapse: collapse; font-family: 'Arial Alternates', sans-serif;">
     	<tr>
         	<td style="width:48%; vertical-align: top;">
+				@if(!empty($value->b))
 				<table style="width:100%; padding-bottom: 1%; border-collapse: collapse; border-top: 1px solid #e2e2e2;">
 					@foreach($value->b as $key2 => $value2)
 						<?php
@@ -235,8 +235,10 @@
 						<th style="width: 10%; text-align: right; padding-top: 0.4%; padding-right: 17%;">{{ number_format((float) $totalBenefit, 0, ',', '.')}}</th>
 					</tr>
 				</table>
+				@endif
 			</td>
 			<td style="width:52%; vertical-align: top;">
+				@if(!empty($value->c))
 				<table style="width:100%; border-collapse: collapse; border-top: 1px solid #e2e2e2;">
 					@foreach($value->c as $key2 => $value2)
 						@if($value2->columnValue > 0)
@@ -247,6 +249,7 @@
 						@endif
 					@endforeach
 				</table>
+				@endif
 			</td>
 		</tr>
 	</table>
