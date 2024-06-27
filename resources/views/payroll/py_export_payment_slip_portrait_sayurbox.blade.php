@@ -86,9 +86,9 @@
 			<td width="18%">Payroll cut off</td>
 			<td width="2%" style="text-align:center;">:</td>
 			<td width="34%">{{ $value->payrollCutOff }}</td>
-			<td width="18%">Grade / Level</td>
+			<td width="18%">Grade</td>
 			<td width="2%" style="text-align:center;">:</td>
-			<td width="33%">{{ $value->grade }} / {{ $value->level }}</td>
+			<td width="33%">{{ $value->grade }}</td>
 		</tr>
 		<tr>
 			<td width="18%">ID / Name</td>
