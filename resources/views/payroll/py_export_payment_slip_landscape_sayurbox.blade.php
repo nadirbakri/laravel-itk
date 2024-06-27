@@ -102,17 +102,17 @@
 			<td width="18%">Job position</td>
 			<td width="2%" style="text-align:center;">:</td>
 			<td width="34%">{{ $value->jabatan }}</td>
-			<td width="18%">NIK</td>
+			<td width="18%">Bank Account No.</td>
 			<td width="2%" style="text-align:center;">:</td>
-			<td width="33%">{{ $value->nik }}</td>
+			<td width="33%">{{ $value->noRekening }}</td>
 		</tr>
 		<tr>
 			<td width="18%">Organization</td>
 			<td width="2%" style="text-align:center;">:</td>
 			<td width="34%">{{ $value->organisasi }}</td>
-			<td width="18%">Bank Account No.</td>
+			<td width="18%">NIK</td>
 			<td width="2%" style="text-align:center;">:</td>
-			<td width="33%">{{ $value->noRekening }}</td>
+			<td width="33%">{{ $value->nik }}</td>
 		</tr>
 		<tr>
 			<td colspan="3" width="54%">&nbsp;</td>
