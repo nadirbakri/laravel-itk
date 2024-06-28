@@ -89,9 +89,9 @@
                             ?>
                             <td style="text-align:{{ $alignment }}; border:1px solid #000;">{{ number_format($dataTable2->value, 2, '.', ',') }}</td>
                         
-                        @elseif($dataTable2->dataFormat == "dd/MM/YYYY")
+                        @elseif($dataTable2->dataFormat == "dd/MM/yyyy")
                             <td style="text-align:{{ $alignment }}; border:1px solid #000;">{{ date('d/m/Y', strtotime($dataTable2->value)) }}</td>
-                        @elseif($dataTable2->dataFormat == "dd MM YYYY")
+                        @elseif($dataTable2->dataFormat == "dd MM yyyy")
                             <td style="text-align:{{ $alignment }}; border:1px solid #000;">{{ date('d m Y', strtotime($dataTable2->value)) }}</td>
                         @else
                             <td style="text-align:{{ $alignment }}; border:1px solid #000;">{{ $dataTable2->value }}</td>
@@ -228,9 +228,9 @@
                                     $total[$branch][$totalKey] += $dataRow2->value;
                                 ?>
                                 <td style="text-align:{{ $alignment }}; border:1px solid #000;">{{ number_format($dataRow2->value, 2, '.', ',') }}</td>
-                            @elseif($dataRow2->dataFormat == "dd/MM/YYYY")
+                            @elseif($dataRow2->dataFormat == "dd/MM/yyyy")
                                 <td style="text-align:{{ $alignment }}; border:1px solid #000;">{{ date('d/m/Y', strtotime($dataRow2->value)) }}</td>
-                            @elseif($dataRow2->dataFormat == "dd MM YYYY")
+                            @elseif($dataRow2->dataFormat == "dd MM yyyy")
                                 <td style="text-align:{{ $alignment }}; border:1px solid #000;">{{ date('d m Y', strtotime($dataRow2->value)) }}</td>
                             @else
                                 <td style="text-align:{{ $alignment }}; border:1px solid #000;">{{ $dataRow2->value }}</td>
@@ -378,9 +378,9 @@
                                     $totalCompany[$dataRow->companyName] += $total[$dataRow->companyName][$key2];
                                 ?>
                                 <td style="text-align:{{ $alignment }}; border:1px solid #000;">{{ number_format($dataRow2->value, 2, '.', ',') }}</td>
-                            @elseif($dataRow2->dataFormat == "dd/MM/YYYY")
+                            @elseif($dataRow2->dataFormat == "dd/MM/yyyy")
                                 <td style="text-align:{{ $alignment }}; border:1px solid #000;">{{ date('d/m/Y', strtotime($dataRow2->value)) }}</td>
-                            @elseif($dataRow2->dataFormat == "dd MM YYYY")
+                            @elseif($dataRow2->dataFormat == "dd MM yyyy")
                                 <td style="text-align:{{ $alignment }}; border:1px solid #000;">{{ date('d m Y', strtotime($dataRow2->value)) }}</td>
                             @else
                                 <td style="text-align:{{ $alignment }}; border:1px solid #000;">{{ $dataRow2->value }}</td>
