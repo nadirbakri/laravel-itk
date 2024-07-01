@@ -41,7 +41,7 @@
 	<table style="width:100%; padding-bottom: 7px;">
 		<tr>
 			<td colspan="3" width="50%"><img src="{{ public_path('/pictures/bpjs_excel.png') }}"></td>
-            <td colspan="5" style="font-size: 16px; font-weight: 700; text-align:center; padding-left: 50px;">FORM 2A DAFTAR PERUBAHAN UPAH</td>
+            <td colspan="5" style="font-size: 16px; font-weight: 700; text-align:center; padding-left: 50px;">FORM 1A DAFTAR TENAGA KERJA MASUK</td>
 		</tr>
         <tr>
             <td colspan="7">&nbsp;</td>
@@ -80,9 +80,9 @@
             <th style="font-size: 10px; text-align: center; font-weight: 500; border:1px solid #000; background-color: #C0C0C0;">NIK</th>
             <th style="font-size: 10px; text-align: center; font-weight: 500; border:1px solid #000; background-color: #C0C0C0;">KPJ</th>
 			<th style="font-size: 10px; text-align: center; font-weight: 500; border:1px solid #000; background-color: #C0C0C0;">KTP</th>
-            <th style="font-size: 10px; text-align: center; font-weight: 500; border:1px solid #000; background-color: #C0C0C0;">Upah Bulan Lalu</th>
-            <th style="font-size: 10px; text-align: center; font-weight: 500; border:1px solid #000; background-color: #C0C0C0;">Upah Bulan Ini</th>
-			<th style="font-size: 10px; text-align: center; font-weight: 500; border:1px solid #000; background-color: #C0C0C0;">Selisih</th>
+            <th style="font-size: 10px; text-align: center; font-weight: 500; border:1px solid #000; background-color: #C0C0C0;">Nama Ibu Kandung</th>
+            <th style="font-size: 10px; text-align: center; font-weight: 500; border:1px solid #000; background-color: #C0C0C0;">Alamat</th>
+			<th style="font-size: 10px; text-align: center; font-weight: 500; border:1px solid #000; background-color: #C0C0C0;">Upah</th>
         </tr>
         <tr style="background-color: #C0C0C0;">
             <th style="font-size: 10px; text-align: center; font-weight: 500; border:1px solid #000; background-color: #C0C0C0;">&nbsp;</th>
@@ -91,15 +91,12 @@
             <th style="font-size: 10px; text-align: center; font-weight: 500; border:1px solid #000; background-color: #C0C0C0;">&nbsp;</th>
             <th style="font-size: 10px; text-align: center; font-weight: 500; border:1px solid #000; background-color: #C0C0C0;">Jika Punya</th>
 			<th style="font-size: 10px; text-align: center; font-weight: 500; border:1px solid #000; background-color: #C0C0C0;">16 Digit (Wajib Isi)</th>
-            <th style="font-size: 10px; text-align: center; font-weight: 500; border:1px solid #000; background-color: #C0C0C0;">Take Home Pay</th>
-            <th style="font-size: 10px; text-align: center; font-weight: 500; border:1px solid #000; background-color: #C0C0C0;">Take Home Pay</th>
+            <th style="font-size: 10px; text-align: center; font-weight: 500; border:1px solid #000; background-color: #C0C0C0;">&nbsp;</th>
+            <th style="font-size: 10px; text-align: center; font-weight: 500; border:1px solid #000; background-color: #C0C0C0;">Sesuai KTP</th>
 			<th style="font-size: 10px; text-align: center; font-weight: 500; border:1px solid #000; background-color: #C0C0C0;">Take Home Pay</th>
         </tr>
         @if(!empty($data))
         @foreach($data as $key => $value)
-        <?php 
-        $selisih = $value->jamsostekSalaryLastMonth - $value->jamsostekSalary;
-        ?>
         <tr>
             <td style="font-size: 10px; text-align: center; border:1px solid #000;">{{ ($key + 1) }}</td>
             <td style="font-size: 10px; text-align: left; border:1px solid #000;">{{ $value->fullName }}</td>
@@ -107,9 +104,9 @@
             <td style="font-size: 10px; text-align: center; border:1px solid #000;">{{ $value->employeeNo }}</td>
             <td style="font-size: 10px; text-align: center; border:1px solid #000;">{{ $value->bpjsTenagaKerjaNo }}</td>
 			<td style="font-size: 10px; text-align: center; border:1px solid #000;">{{ $value->idNo }}</td>
-            <td style="font-size: 10px; text-align: right; border:1px solid #000;">{{ number_format($value->jamsostekSalaryLastMonth, 2, '.', ',') }}</td>
-            <td style="font-size: 10px; text-align: right; border:1px solid #000;">{{ number_format($value->jamsostekSalary, 2, '.', ',') }}</td>
-			<td style="font-size: 10px; text-align: center; border:1px solid #000;">{{ number_format(abs($selisih), 2, '.', ',') }}</td>
+            <td style="font-size: 10px; text-align: center; border:1px solid #000;">{{ $value->motherName }}</td>
+            <td style="font-size: 10px; text-align: center; border:1px solid #000;">{{ $value->homeAddress }}</td>
+			<td style="font-size: 10px; text-align: center; border:1px solid #000;">{{ number_format($value->jamsostekSalary, 2, '.', ',') }}</td>
         </tr>
         @endforeach
         @else

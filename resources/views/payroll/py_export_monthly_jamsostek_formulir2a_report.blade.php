@@ -66,26 +66,26 @@
 	</table>
     <table class="table_detail" style="width:100%;">
         <tr style="background-color: #C0C0C0;">
-            <td width="3%" style="font-size: 10px; text-align: center;">No.</td>
-            <td width="12%" style="font-size: 10px; text-align: center;">Nama TK</td>
-			<td width="12%" style="font-size: 10px; text-align: center;">Tgl Lahir</td>
-            <td width="12%" style="font-size: 10px; text-align: center;">NIK</td>
-            <td width="12%" style="font-size: 10px; text-align: center;">KPJ</td>
-			<td width="12%" style="font-size: 10px; text-align: center;">KTP</td>
-            <td width="12%" style="font-size: 10px; text-align: center;">Upah Bulan Lalu</td>
-            <td width="12%" style="font-size: 10px; text-align: center;">Upah Bulan Ini</td>
-			<td width="12%" style="font-size: 10px; text-align: center;">Selisih</td>
+            <td width="3%" style="font-size: 10px; font-weight: 500; text-align: center;">No.</td>
+            <td width="12%" style="font-size: 10px; font-weight: 500; text-align: center;">Nama TK</td>
+			<td width="12%" style="font-size: 10px; font-weight: 500; text-align: center;">Tgl Lahir</td>
+            <td width="12%" style="font-size: 10px; font-weight: 500; text-align: center;">NIK</td>
+            <td width="12%" style="font-size: 10px; font-weight: 500; text-align: center;">KPJ</td>
+			<td width="12%" style="font-size: 10px; font-weight: 500; text-align: center;">KTP</td>
+            <td width="12%" style="font-size: 10px; font-weight: 500; text-align: center;">Upah Bulan Lalu</td>
+            <td width="12%" style="font-size: 10px; font-weight: 500; text-align: center;">Upah Bulan Ini</td>
+			<td width="12%" style="font-size: 10px; font-weight: 500; text-align: center;">Selisih</td>
         </tr>
         <tr style="background-color: #C0C0C0;">
-            <td width="3%" style="font-size: 10px; text-align: center;">&nbsp;</td>
-            <td width="12%" style="font-size: 10px; text-align: center;">Sesuai KTP</td>
-			<td width="12%" style="font-size: 10px; text-align: center;">DD-MM-YYYY</td>
-            <td width="12%" style="font-size: 10px; text-align: center;">&nbsp;</td>
-            <td width="12%" style="font-size: 10px; text-align: center;">Jika Punya</td>
-			<td width="12%" style="font-size: 10px; text-align: center;">16 Digit (Wajib Isi)</td>
-            <td width="12%" style="font-size: 10px; text-align: center;">Take Home Pay</td>
-            <td width="12%" style="font-size: 10px; text-align: center;">Take Home Pay</td>
-			<td width="12%" style="font-size: 10px; text-align: center;">Take Home Pay</td>
+            <td width="3%" style="font-size: 10px; font-weight: 500; text-align: center;">&nbsp;</td>
+            <td width="12%" style="font-size: 10px; font-weight: 500; text-align: center;">Sesuai KTP</td>
+			<td width="12%" style="font-size: 10px; font-weight: 500; text-align: center;">DD-MM-YYYY</td>
+            <td width="12%" style="font-size: 10px; font-weight: 500; text-align: center;">&nbsp;</td>
+            <td width="12%" style="font-size: 10px; font-weight: 500; text-align: center;">Jika Punya</td>
+			<td width="12%" style="font-size: 10px; font-weight: 500; text-align: center;">16 Digit (Wajib Isi)</td>
+            <td width="12%" style="font-size: 10px; font-weight: 500; text-align: center;">Take Home Pay</td>
+            <td width="12%" style="font-size: 10px; font-weight: 500; text-align: center;">Take Home Pay</td>
+			<td width="12%" style="font-size: 10px; font-weight: 500; text-align: center;">Take Home Pay</td>
         </tr>
         @foreach($data as $key => $value)
         <?php 
