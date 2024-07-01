@@ -7,6 +7,7 @@ use App\Imports\PayrollBonusTHRDataImport;
 use App\Exports\TemplatePayrollDataTemplateSheet;
 use App\Exports\SeveranceReportExcel;
 use App\Exports\JournalReportExcel;
+use App\Exports\MonthlyJamsostekReportExport;
 use App\Exports\DUMTKReportExport;
 use App\Exports\SalaryHistoricalReportExport;
 use App\Exports\CSVESPTReportFormExport;
@@ -7789,6 +7790,32 @@ public function dataDetailReportFormatPY(Request $request)
                 return $pdf->stream('Jamsostek Formulir 2A.pdf');
             }
         }
+    }
+
+    public function printMonthlyJamsostekReportPayrollExcel(Request $request){
+        $fileName = "Monthly Jamsostek Report.xlsx";
+
+        if($request->jamsostek_report_type == 'formulir2'){
+            $fileName = "Jamsostek Formulir 2.xlsx";
+        }else if($request->jamsostek_report_type == 'formulir1a'){
+            $fileName = "Jamsostek Formulir 1A.xlsx";
+        }else if($request->jamsostek_report_type == 'formulir1b'){
+            $fileName = "Jamsostek Formulir 1B.xlsx";
+        }else if($request->jamsostek_report_type == 'formulir2a'){
+            $fileName = "Jamsostek Formulir 2A.xlsx";
+        }
+
+        return Excel::download(new MonthlyJamsostekReportExport(
+            $request->jamsostek_report_type,
+            $request->jamsostek_period,
+            $request->kekurangan_kelebihan_period_month,
+            $request->kekurangan_kelebihan_period_year,
+            $request->group_authorize_code_from, 
+            $request->group_authorize_code_to,
+            $request->group_bpjs_code,
+            $request->group_bpjs_name), 
+            $fileName
+        );
     }
     
     public function printDUMTKPayroll(Request $request){

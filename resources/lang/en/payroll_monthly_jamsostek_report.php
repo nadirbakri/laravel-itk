@@ -18,7 +18,8 @@ return [
     'label_group_authorize_code' => 'Group Authorize Code',
     'label_group_bpjs' => 'Group BPJS',
     'label_to' => 'To',
-    'label_print' => 'Print'
+    'label_print' => 'Print',
+    'label_download_excel' => 'Download Excel'
 ]
 
 ?>

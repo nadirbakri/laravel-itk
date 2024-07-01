@@ -47,25 +47,25 @@
         <br>
         <tr>
 			<td colspan="2" style="font-size: 10px; font-weight: 700; text-align:left;">Nama Perusahaan :</td>
-            <td width="10%" style="font-size: 10px; font-weight: 700; padding-left: 20px;">NPP</td>
+            <td width="5%" style="font-size: 10px; font-weight: 700;">NPP</td>
             <td width="2%" style="font-size: 10px;">:</td>
-            <td width="20%" style="font-size: 10px; font-weight: 700; padding-left: 20px;"></td>
+            <td width="25%" style="font-size: 10px; font-weight: 700; padding-left: 5px;">{{ $bpjsNo }}</td>
         </tr>
         <tr>
 			<td colspan="2" style="font-size: 10px; font-weight: 700; text-align:left;">{{ $data[0]->companyName }}</td>
-            <td width="10%" style="font-size: 10px; font-weight: 700; padding-left: 20px;">Unit</td>
+            <td width="5%" style="font-size: 10px; font-weight: 700;">Unit</td>
             <td width="2%" style="font-size: 10px;">:</td>
-            <td width="20%" style="font-size: 10px; font-weight: 700; padding-left: 20px;"></td>
+            <td width="25%" style="font-size: 10px; font-weight: 700; padding-left: 5px;">{{ $data[0]->companyName }}</td>
         </tr>
         <tr>
 			<td colspan="2" style="font-size: 10px; font-weight: 700; text-align:center;">&nbsp;</td>
-            <td width="10%" style="font-size: 10px; font-weight: 700; padding-left: 20px;">Bulan</td>
+            <td width="5%" style="font-size: 10px; font-weight: 700;">Bulan</td>
             <td width="2%" style="font-size: 10px;">:</td>
-            <td width="20%" style="font-size: 10px; font-weight: 700; padding-left: 20px;">{{ $period }}</td>
+            <td width="25%" style="font-size: 10px; font-weight: 700; padding-left: 5px;">{{ $period }}</td>
         </tr>
 	</table>
     <table class="table_detail" style="width:100%;">
-        <tr style="background-color: grey;">
+        <tr style="background-color: #C0C0C0;">
             <td width="3%" style="font-size: 10px; text-align: center;">No.</td>
             <td width="12%" style="font-size: 10px; text-align: center;">Nama TK</td>
 			<td width="12%" style="font-size: 10px; text-align: center;">Tgl Lahir</td>
@@ -75,6 +75,17 @@
             <td width="12%" style="font-size: 10px; text-align: center;">Upah Bulan Lalu</td>
             <td width="12%" style="font-size: 10px; text-align: center;">Upah Bulan Ini</td>
 			<td width="12%" style="font-size: 10px; text-align: center;">Selisih</td>
+        </tr>
+        <tr style="background-color: #C0C0C0;">
+            <td width="3%" style="font-size: 10px; text-align: center;">&nbsp;</td>
+            <td width="12%" style="font-size: 10px; text-align: center;">Sesuai KTP</td>
+			<td width="12%" style="font-size: 10px; text-align: center;">DD-MM-YYYY</td>
+            <td width="12%" style="font-size: 10px; text-align: center;">&nbsp;</td>
+            <td width="12%" style="font-size: 10px; text-align: center;">Jika Punya</td>
+			<td width="12%" style="font-size: 10px; text-align: center;">16 Digit (Wajib Isi)</td>
+            <td width="12%" style="font-size: 10px; text-align: center;">Take Home Pay</td>
+            <td width="12%" style="font-size: 10px; text-align: center;">Take Home Pay</td>
+			<td width="12%" style="font-size: 10px; text-align: center;">Take Home Pay</td>
         </tr>
         @foreach($data as $key => $value)
         <?php 
@@ -91,31 +102,26 @@
             <td style="font-size: 10px; text-align: right;">{{ number_format($value->jamsostekSalary, 2, '.', ',') }}</td>
 			<td style="font-size: 10px; text-align: center;">{{ number_format(abs($selisih), 2, '.', ',') }}</td>
         </tr>
-        @endforeach
 
-        @if($key == array_key_last($data))
-        <div class="page_break"></div>
+        @if(($key + 1) % 30 == 0 && $key != array_key_last($data))
+        <tr class="page-break"></tr>
         @endif
+        @endforeach
     </table>
-    <br><br><br><br>
+    <br>
     <table style="width:100%; padding-bottom: 7px;">
 		<tr>
-			<td width="60%">&nbsp;</td>
-            <td width="25%" style="font-size: 10px; font-weight: 700; text-align:center; padding-left: 50px;">{{ date('d F Y') }}</td>
-            <td width="15%">&nbsp;</td>
+			<td width="65%">&nbsp;</td>
+            <td width="25%" style="font-size: 10px; font-weight: 700; text-align:center; padding-left: 50px;">{{ date('l, d F Y') }}</td>
+            <td width="10%">&nbsp;</td>
 		</tr>
         <br><br>
         <tr>
-            <td width="60%">&nbsp;</td>
+            <td width="65%">&nbsp;</td>
             <td width="25%" style="font-size: 10px; font-weight: 700; text-align:center; padding-left: 50px;">{{ $data[0]->title . " " . $data[0]->signerName }}</td>
-            <td width="15%">&nbsp;</td>
+            <td width="10%">&nbsp;</td>
         </tr>
 	</table>
-
-    
-
-    
-   
     <script type="text/php">
     if (isset($pdf)) {
         $pdf->page_script('

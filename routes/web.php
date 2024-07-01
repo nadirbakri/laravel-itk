@@ -734,6 +734,7 @@ Route::post('payroll/export_sipp_online/print', 'PayrollController@printExportSI
 Route::post('payroll/spt_pph_report/print', 'PayrollController@printSPTPPHReportPayroll');
 Route::post('payroll/spt_pph_report/print/excel', 'PayrollController@printSPTPPHReportPayrollExcel');
 Route::post('payroll/monthly_jamsostek_report/print', 'PayrollController@printMonthlyJamsostekReportPayroll');
+Route::post('payroll/monthly_jamsostek_report/print/excel', 'PayrollController@printMonthlyJamsostekReportPayrollExcel');
 
 /* Route Untuk Menu Medical */
 Route::get('medical', 'MedicalController@pageMedical')->name('medical');
