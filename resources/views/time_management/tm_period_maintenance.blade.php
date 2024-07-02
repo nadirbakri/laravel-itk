@@ -158,6 +158,8 @@
                                     <select class="form-control select2" id="year" name="year"></select>
                                 </div>
                                 <input type="hidden" class="form-control" id="record_function" name="record_function">
+                                <input type="hidden" class="form-control" id="year_val" name="year_val">
+                                <input type="hidden" class="form-control" id="period_val" name="period_val">
                             </div>
                             <div class="col-4">
                                 <div class="form-group">
@@ -713,8 +715,10 @@
 
         $("#btn-add").on('click', function () {
             $('#record_function').val("New");
-            $('#year').val("2017");
+            $('#year').val(prevYear);
+            $('#year_val').val(prevYear);
             $('#period').val("");
+            $('#period_val').val("");
             $('#year').prop('disabled', false);
             pickerMonth._input.removeAttribute('disabled');
             $('#period').prop('disabled', false);
@@ -733,11 +737,13 @@
                 $('#modal_add_overtime_spl').modal('show');
                 $('#record_function').val("Edit");
                 $('#year').val(data[0].periodYear);
+                $('#year_val').val(data[0].periodYear);
                 $('#year').prop('disabled', true);
                 pickerMonth._input.setAttribute("disabled", "disabled");
                 $('#period').prop('disabled', true);
                 pickerMonth.setDate(String(data[0].periodMonth).padStart(2, '0') + "/01/" + data[0].periodYear, false);
                 $('#period').val(data[0].period);
+                $('#period_val').val(data[0].period);
                 pickerAbsenteeismDateFrom.setDate(data[0].absenteeismStart);
                 pickerAbsenteeismDateTo.setDate(data[0].absenteeismEnd);
                 pickerOvertimeDateFrom.setDate(data[0].overtimeStart);
@@ -758,8 +764,10 @@
             pickerMonth._input.setAttribute("disabled", "disabled");
             $('#period').prop('disabled', true);
             $('#year').val(data.periodYear);
+            $('#year_val').val(data.periodYear);
             pickerMonth.setDate(String(data.periodMonth).padStart(2, '0') + "/01/" + data.periodYear, false);
             $('#period').val(data.period);
+            $('#period_val').val(data.period);
             pickerAbsenteeismDateFrom.setDate(data.absenteeismStart);
             pickerAbsenteeismDateTo.setDate(data.absenteeismEnd);
             pickerOvertimeDateFrom.setDate(data.overtimeStart);
@@ -787,7 +795,6 @@
                         'data' : data
                     },
                     success: function (response) {
-                        console.log(response);
                         if (response.status == "true") {
                             $('#notification_success').modal('show');
                             $('#message-notification-success').html(response
@@ -937,8 +944,8 @@
                                         // "{{ url('time_management/period_maintenance') }}";
                                 }, 3000);
                             } else {
-                                $("#btn-save").prop("disabled", false);
-                                $("#btn-save").html(
+                                $("#btn-save-period-maintenance").prop("disabled", false);
+                                $("#btn-save-period-maintenance").html(
                                     '<i class="fa fa-floppy-o"></i> {{ __("tm_period_maintenance.btn_save") }}'
                                 );
 

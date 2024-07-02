@@ -1850,8 +1850,8 @@ class TimeManagementController extends Controller
                         [
                             'companyCode' => Session::get('companyCode'),
                             'periodMonth' => (int) $request->month,
-                            'periodYear' => (int) $request->year,
-                            'period' => (int) $request->period,
+                            'periodYear' => (int) $request->year_val,
+                            'period' => (int) $request->period_val,
                             'salaryStart' => $request->salary_from,
                             'salaryEnd' => $request->salary_to,
                             'overtimeStart' => $request->overtime_from,
