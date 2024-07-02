@@ -51,12 +51,21 @@
             <td width="2%" style="font-size: 10px;">:</td>
             <td width="25%" style="font-size: 10px; font-weight: 700; padding-left: 5px;">{{ $bpjsNo }}</td>
         </tr>
+        @if(!empty($data))
         <tr>
 			<td colspan="2" style="font-size: 10px; font-weight: 700; text-align:left;">{{ $data[0]->companyName }}</td>
             <td width="5%" style="font-size: 10px; font-weight: 700;">Unit</td>
             <td width="2%" style="font-size: 10px;">:</td>
             <td width="25%" style="font-size: 10px; font-weight: 700; padding-left: 5px;">{{ $data[0]->companyName }}</td>
         </tr>
+        @else
+        <tr>
+			<td colspan="2" style="font-size: 10px; font-weight: 700; text-align:left;">{{ $companyName }}</td>
+            <td width="5%" style="font-size: 10px; font-weight: 700;">Unit</td>
+            <td width="2%" style="font-size: 10px;">:</td>
+            <td width="25%" style="font-size: 10px; font-weight: 700; padding-left: 5px;">{{ $companyName }}</td>
+        </tr>
+        @endif
         <tr>
 			<td colspan="2" style="font-size: 10px; font-weight: 700; text-align:center;">&nbsp;</td>
             <td width="5%" style="font-size: 10px; font-weight: 700;">Bulan</td>
@@ -83,6 +92,7 @@
 			<td width="12%" style="font-size: 10px; font-weight: 500; text-align: center;">16 Digit (Wajib Isi)</td>
 			<td width="12%" style="font-size: 10px; font-weight: 500; text-align: center;">Take Home Pay</td>
         </tr>
+        @if(!empty($data))
         @foreach($data as $key => $value)
         <tr>
             <td style="font-size: 10px; text-align: center;">{{ ($key + 1) }}</td>
@@ -98,6 +108,11 @@
         <tr class="page-break"></tr>
         @endif
         @endforeach
+        @else
+        <tr style="background-color: #C0C0C0;">
+            <td colspan="7" style="font-size: 10px; text-align: center; font-weight: 500;">No Records Found</td>
+        </tr>
+        @endif
     </table>
     <br>
     <table style="width:100%; padding-bottom: 7px;">
@@ -109,7 +124,11 @@
         <br><br>
         <tr>
             <td width="65%">&nbsp;</td>
+            @if(!empty($data))
             <td width="25%" style="font-size: 10px; font-weight: 700; text-align:center; padding-left: 50px;">{{ $data[0]->title . " " . $data[0]->signerName }}</td>
+            @else
+            <td width="25%" style="font-size: 10px; font-weight: 700; text-align:center; padding-left: 50px;">-</td>
+            @endif
             <td width="10%">&nbsp;</td>
         </tr>
 	</table>
