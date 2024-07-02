@@ -77,7 +77,7 @@
         
         <div class="button-container mt-3">
             <a href="https://streamportal.intikom.net/download/new_revamp/Stream_Revamp.apk" type="button" class="btn btn-light rounded-pill pt-2 pb-2 pl-3 pr-3  mr-3">DOWNLOAD FOR ANDROID</a>
-            <a href="https://streamportal.intikom.net/download/new_revamp/mobile_stream_iOS_revamp.plist" type="button" class="btn btn-light rounded-pill pt-2 pb-2 pl-3 pr-3 ">DOWNLOAD FOR IOS</a>
+            <a href="itms-services://?action=download-manifest&url=https://streamportal.intikom.net/download/new_revamp/mobile_stream_iOS_revamp.plist" type="button" class="btn btn-light rounded-pill pt-2 pb-2 pl-3 pr-3 ">DOWNLOAD FOR IOS</a>
         </div>
     </div>
     <div class="col-12 col-lg-5 right-content">
