@@ -148,6 +148,11 @@ class PersonelController extends Controller
          return view('personel.personel_import_update_personal_data');
     }
 
+    public function pageExportLoanWhitelistPersonel()
+    {
+        return view('personel.personel_export_loan_whitelist');
+    }
+
     public function pageEmployeeMutationPersonel()
     {
         return view('personel.personel_employee_mutation');
@@ -320,6 +325,11 @@ class PersonelController extends Controller
     public function pageTransferBankPersonel()
     {
         return view('personel.personel_transfer_bank');
+    }
+
+    public function pageLoanBankPersonel()
+    {
+        return view('personel.personel_loan_bank');
     }
 
     public function pageCurrencyCodePersonel()
@@ -1466,6 +1476,45 @@ class PersonelController extends Controller
         if ($request->ajax()) {
             $data = collect();
             return Datatables::of($data)->make(true);
+        }
+    }
+
+    public function tableLoanBankPersonel(Request $request)
+    {
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/mobile/LoanWhiteList/getLoanCompany',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
         }
     }
 
@@ -2970,6 +3019,42 @@ class PersonelController extends Controller
     {
 
         return view('personel.personel_transfer_bank_detail', ['source_bank_code' => $request->source_bank_code]);
+    }
+
+    public function dataDetailLoanBankPersonel(Request $request)
+    {
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/mobile/LoanWhiteList/getLoanCompany',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'loanBank' => $request->loanBank,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());  
+
+        return view('personel.personel_loan_bank_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
     }
 
     public function dataDetailCurrencyCodePersonel(Request $request)
@@ -7189,6 +7274,72 @@ class PersonelController extends Controller
         return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
     }
 
+    public function prosesLoanBankPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            if($request->record_function == 'New'){
+                $response = $client->post(env('API_URL') . '/mobile/LoanWhiteList/insertLoanCompany',
+                    ['body' => json_encode(
+                        [
+                            'companyCode' => Session::get('companyCode'),
+                            'loanBank' => $request->loan_bank,
+                            'loanCompanyCode' => $request->loan_company_code,
+                            'description' => $request->description,
+                            "changedNo" => 0,
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            'userID' => Session::get('userID'),
+                            'sessionUserID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                            "languageCode" => App::getLocale()
+                        ]
+                    )]
+                );
+            }else{
+                $response = $client->put(env('API_URL') . '/mobile/LoanWhiteList/updateLoanCompany',
+                    ['body' => json_encode(
+                        [
+                            'companyCode' => Session::get('companyCode'),
+                            'loanBank' => $request->loan_bank,
+                            'loanCompanyCode' => $request->loan_company_code,
+                            'description' => $request->description,
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            'userID' => Session::get('userID'),
+                            'sessionUserID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                            "languageCode" => App::getLocale()
+                        ]
+                    )]
+                );
+            }
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
     public function prosesGroupPersonel(Request $request)
     {
         date_default_timezone_set('Asia/Jakarta');
@@ -11054,5 +11205,83 @@ class PersonelController extends Controller
                 $fileName = "Template Master.xlsx";
         }
         return Excel::download(new MasterDataTemplateExport($request->maintenance_type), $fileName);
+    }
+
+    public function downloadExportLoanWhitelistPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/mobile/LoanWhiteList/getFormattedWhiteList',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'loanBank' => $request->loan_bank,
+                        "changedNo" => 0,
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "createdBy" => Session::get('userID'),
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        "languageCode" => App::getLocale(),
+                        'sessionID' => 0, 
+                        'sessionUserID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')        
+                    ])
+                ]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if(!empty($arrResult->dataListSet[0]->employeeWhiteList) && $arrResult->dataListSet != null){
+            $array = explode("\r\n", $arrResult->dataListSet[0]->employeeWhiteList);
+            foreach($array as $key => $value){
+                $arrayTwo = explode(",", $value);
+                if(count($arrayTwo) > 1){
+                    $array[$key] = $arrayTwo;
+                }
+            }
+
+            $array = array_filter($array, function($value) {
+                return !empty($value);
+            });
+
+            $csvHeader = $array[0];
+
+            $tempFile = fopen('php://temp', 'w+');
+
+            foreach ($array as $row) {
+                $row = array_pad($row, count($csvHeader), '');
+
+                fputcsv($tempFile, $row);
+            }
+
+            rewind($tempFile);
+            $csvContent = str_replace('"', '', stream_get_contents($tempFile));
+            
+            fclose($tempFile);
+
+            return Response::make($csvContent, 200, [
+                'Content-Type' => 'text/csv',
+                'Content-Disposition' => 'attachment; filename="' . $arrResult->dataListSet[0]->fileName . '"',
+            ]);
+        }else{
+            return response()->json(['status' => 0, 'message' =>  'Data are Empty'], 400);
+        }
     }
 }

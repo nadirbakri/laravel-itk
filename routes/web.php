@@ -78,6 +78,7 @@ Route::get('personnel/employee_attachment', 'PersonelController@pageEmployeeAtta
 Route::get('personnel/import_export_personal_data', 'PersonelController@pageImportExportPersonel');
 Route::get('personnel/import_master_data', 'PersonelController@pageImportMasterDataPersonel');
 Route::get('personnel/import_update_personal_data', 'PersonelController@pageImportUpdatePersonel');
+Route::get('personnel/export_loan_whitelist', 'PersonelController@pageExportLoanWhitelistPersonel');
 Route::get('personnel/employee_mutation', 'PersonelController@pageEmployeeMutationPersonel');
 Route::get('personnel/npwp_mutation', 'PersonelController@pageNPWPMutationPersonel');
 Route::get('personnel/termination_data_entry', 'PersonelController@pageTerminationDataEntryPersonel');
@@ -104,6 +105,7 @@ Route::get('personnel/bank', 'PersonelController@pageBankPersonel');
 Route::get('personnel/company_bank', 'PersonelController@pageCompanyBankPersonel');
 Route::get('personnel/source_bank', 'PersonelController@pageSourceBankPersonel');
 Route::get('personnel/transfer_bank', 'PersonelController@pageTransferBankPersonel');
+Route::get('personnel/loan_bank', 'PersonelController@pageLoanBankPersonel');
 Route::get('personnel/currency_code', 'PersonelController@pageCurrencyCodePersonel');
 Route::get('personnel/rate_type', 'PersonelController@pageRateTypePersonel');
 Route::get('personnel/exchange_rate', 'PersonelController@pageExchangeRatePersonel');
@@ -174,6 +176,7 @@ Route::get('personnel/bank/table', 'PersonelController@tableBankPersonel');
 Route::get('personnel/company_bank/table', 'PersonelController@tableCompanyBankPersonel');
 Route::get('personnel/source_bank/table', 'PersonelController@tableSourceBankPersonel');
 Route::get('personnel/transfer_bank/table', 'PersonelController@tableTransferBankPersonel');
+Route::get('personnel/loan_bank/table', 'PersonelController@tableLoanBankPersonel');
 Route::get('personnel/currency_code/table', 'PersonelController@tableCurrencyCodePersonel');
 Route::get('personnel/rate_type/table', 'PersonelController@tableRateTypePersonel');
 Route::get('personnel/exchange_rate/table', 'PersonelController@tableExchangeRatePersonel');
@@ -229,6 +232,7 @@ Route::get('personnel/bank/detail_data', 'PersonelController@dataDetailBankPerso
 Route::get('personnel/company_bank/detail_data', 'PersonelController@dataDetailCompanyBankPersonel');
 Route::get('personnel/source_bank/detail_data', 'PersonelController@dataDetailSourceBankPersonel');
 Route::get('personnel/transfer_bank/detail_data', 'PersonelController@dataDetailTransferBankPersonel');
+Route::get('personnel/loan_bank/detail_data', 'PersonelController@dataDetailLoanBankPersonel');
 Route::get('personnel/currency_code/detail_data', 'PersonelController@dataDetailCurrencyCodePersonel');
 Route::get('personnel/rate_type/detail_data', 'PersonelController@dataDetailRateTypePersonel');
 Route::get('personnel/exchange_rate/detail_data', 'PersonelController@dataDetailExchangeRatePersonel');
@@ -344,6 +348,7 @@ Route::post('personnel/competency/training_list/proses', 'PersonelController@pro
 Route::post('personnel/employee_approval/proses', 'PersonelController@prosesEmployeeApprovalPersonel');
 Route::post('personnel/bank/proses', 'PersonelController@prosesBankPersonel');
 Route::post('personnel/company_bank/proses', 'PersonelController@prosesCompanyBankPersonel');
+Route::post('personnel/loan_bank/proses', 'PersonelController@prosesLoanBankPersonel');
 Route::post('personnel/group/proses', 'PersonelController@prosesGroupPersonel');
 Route::post('personnel/zip/proses', 'PersonelController@prosesZipCodePersonel');
 Route::post('personnel/bpjs_group/proses', 'PersonelController@prosesBPJSGroupPersonel');
@@ -382,6 +387,7 @@ Route::get('personnel/competency/skill/remove', 'PersonelController@removeCompet
 Route::get('personnel/competency/project_experience/remove', 'PersonelController@removeCompetencyProjectExperiencePersonel');
 Route::post('personnel/competency/training_list/remove', 'PersonelController@removeCompetencyTrainingListPersonel');
 Route::post('personnel/employee_attachment/remove', 'PersonelController@removeEmployeeAttachmentPersonel');
+Route::post('personnel/loan_bank/remove', 'PersonelController@removeLoanBankPersonel');
 
 Route::get('personnel/number/check', 'PersonelController@checkNumberPersonel');
 Route::get('personel_data_detail/number/check', 'PersonelController@checkNumberPersonelDataDetail');
@@ -405,6 +411,7 @@ Route::get('personnel/performance/result/check', 'PersonelController@checkResult
 Route::get('personnel/employee_attachment/view', 'PersonelController@viewEmployeeAttachmentPersonel');
 Route::post('personnel/import_master_data/download_template', 'PersonelController@downloadTemplateMasterDataPersonel');
 Route::post('personnel/import_master_data/import', 'PersonelController@importMasterDataPersonel');
+Route::post('personnel/export_loan_whitelist/download', 'PersonelController@downloadExportLoanWhitelistPersonel');
 
 /* Route Untuk Menu Time Management */
 Route::get('time_management', 'TimeManagementController@pageTimeManagement')->name('time_management');
@@ -586,6 +593,7 @@ Route::get('payroll/signature_list_report', 'PayrollController@pageSignatureList
 Route::get('payroll/retroactive_report', 'PayrollController@pageRetroactiveReport');
 Route::get('payroll/export_data_kepesertaan_bpjs_tk_report', 'PayrollController@pageExportDataKepesertaanBPJSTKReport');
 Route::get('payroll/export_sipp_online', 'PayrollController@pageExportSIPPOnline');
+Route::get('payroll/pension_fund_report', 'PayrollController@pagePensionFundReport');
 
 /* Route untuk tabel Payroll */
 Route::get('payroll/account/table', 'PayrollController@tableAccountPY');
@@ -735,6 +743,7 @@ Route::post('payroll/spt_pph_report/print', 'PayrollController@printSPTPPHReport
 Route::post('payroll/spt_pph_report/print/excel', 'PayrollController@printSPTPPHReportPayrollExcel');
 Route::post('payroll/monthly_jamsostek_report/print', 'PayrollController@printMonthlyJamsostekReportPayroll');
 Route::post('payroll/monthly_jamsostek_report/print/excel', 'PayrollController@printMonthlyJamsostekReportPayrollExcel');
+Route::post('payroll/pension_fund_report/print/excel', 'PayrollController@printPensionFundReportPayrollExcel');
 
 /* Route Untuk Menu Medical */
 Route::get('medical', 'MedicalController@pageMedical')->name('medical');
@@ -1245,7 +1254,7 @@ Route::get('office_location/api', 'DataController@dataOfficeLocationAPI');
 Route::get('office_location/func/api', 'DataController@dataOfficeLocationFunctionAPI');
 Route::get('output_file/api', 'DataController@dataOutputFileAPI');
 Route::get('business_type/api', 'DataController@dataBusinessTypeAPI');
-Route::get('sasa', 'DataController@dataBusinessUnitAPI');
+Route::get('loan_bank/api', 'DataController@dataLoanBankAPI');
 Route::get('leave_hour/api', 'DataController@dataLeaveHourAPI');
 
 /* Route Untuk Save Token Device dan Notification Firebase */
