@@ -27,6 +27,7 @@ use App\Exports\CSVTransferBankBTPNExport;
 use App\Exports\CSVTransferBankINAExport;
 use App\Exports\EBupotPeriodicalTemplateExport;
 use App\Exports\EBupotA1TemplateExport;
+use App\Exports\PensionFundReportExport;
 use App\Http\Controllers\Redirect;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Contracts\Encryption\DecryptException;
@@ -561,6 +562,48 @@ class PayrollController extends Controller
         }
 
         return view ('payroll.py_monthly_jamsostek_report', ['data' => $data]);
+    }
+
+    public function pagePensionFundReport(){
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/mobile/ReferenceTM/getReferenceTM',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        // var_dump($arrResult->dataListSet);
+
+        if($arrResult->dataListSet == null){
+            $data = [];
+        }else{
+            $data = $arrResult->dataListSet;
+        }
+
+        return view ('payroll.py_pension_fund_report', ['data' => $data]);
     }
      
     public function pageSalaryCalculationProcess()
@@ -8606,6 +8649,20 @@ public function dataDetailReportFormatPY(Request $request)
             return response()->download(public_path() . '/' . $arrResult->dataListSet[0]->filenamezip . '.zip', $arrResult->dataListSet[0]->filenamezip . '.zip');
             // return response()->json(file_get_contents($zip->getArchive()->filename));
         }
+    }
+
+    public function printPensionFundReportPayrollExcel(Request $request){
+        return Excel::download(new PensionFundReportExport(
+            $request->period,
+            $request->group_department,
+            $request->print_date, 
+            $request->denda_bulan, 
+            $request->kelebihan_bayar, 
+            $request->kurang_bayar, 
+            $request->pengurangan_iuran, 
+            $request->materai), 
+            'Pension Fund Report.xlsx'
+        );
     }
 
 }
