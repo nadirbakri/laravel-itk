@@ -19,7 +19,7 @@ use App;
 
 class PeriodicalReportExport extends DefaultValueBinder implements WithCustomValueBinder, FromView, WithEvents, ShouldAutoSize
 {
-    public function __construct($reportName, $grandTotal, $employeeNoFrom, $employeeNoTo, $period, $costCenterCodeFrom, $costCenterCodeTo, $groupDepartment, $multiCostCenter, $reportStatus, $reportType, $groupAuthorizedCodeFrom, $groupAuthorizedCodeTo, $displayLine, $printSignature, $position, $ranking, $location, $dataLevel)
+    public function __construct($reportName, $grandTotal, $employeeNoFrom, $employeeNoTo, $period, $costCenterCodeFrom, $costCenterCodeTo, $groupDepartment, $multiCostCenter, $reportStatus, $reportType, $groupAuthorizedCodeFrom, $groupAuthorizedCodeTo, $displayLine, $printSignature, $position, $ranking, $location, $dataLevel, $reportNameDetail)
     {
         $this->reportName = $reportName;
         $this->grandTotal = $grandTotal;
@@ -40,6 +40,7 @@ class PeriodicalReportExport extends DefaultValueBinder implements WithCustomVal
         $this->ranking = $ranking;
         $this->location = $location;
         $this->dataLevel = $dataLevel;
+        $this->reportNameDetail = $reportNameDetail;
     }
 
     public function bindValue(Cell $cell, $value)
@@ -178,7 +179,7 @@ class PeriodicalReportExport extends DefaultValueBinder implements WithCustomVal
 
         if($arrResult->dataListSet == null){
             return view('payroll.py_export_periodical_report_excel', [
-                'param' => $param, 'grandTotal' => [], 'data' => [], 'data_company' => $arrCompany->dataListSet, 'data_period' => $this->period, 'grand_total' => $this->grandTotal, 'print_signature' => $this->printSignature, 'level1' => $this->dataLevel[0]
+                'param' => $param, 'grandTotal' => [], 'data' => [], 'data_company' => $arrCompany->dataListSet, 'data_period' => $this->period, 'grand_total' => $this->grandTotal, 'print_signature' => $this->printSignature, 'level1' => $this->dataLevel[0], 'report_name' => $this->reportNameDetail
             ]);
         }else{
             $total = [];
@@ -218,7 +219,7 @@ class PeriodicalReportExport extends DefaultValueBinder implements WithCustomVal
             }
 
             return view('payroll.py_export_periodical_report_excel', [
-                'param' => $param, 'grandTotal' => $total, 'data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet, 'data_period' => $this->period, 'grand_total' => $this->grandTotal, 'print_signature' => $this->printSignature, 'level1' => $this->dataLevel[0]
+                'param' => $param, 'grandTotal' => $total, 'data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet, 'data_period' => $this->period, 'grand_total' => $this->grandTotal, 'print_signature' => $this->printSignature, 'level1' => $this->dataLevel[0], 'report_name' => $this->reportNameDetail
             ]); 
         }
     }

@@ -43,7 +43,7 @@
                 </tr>
                 <tr></tr>
                 <tr>
-                    <th colspan="{{ $countcolspan }}" style="text-align:center; font-weight:bold;"><h3>Periodical Report</h3></th>
+                    <th colspan="{{ $countcolspan }}" style="text-align:center; font-weight:bold;"><h3>{{ $report_name }}</h3></th>
                 </tr>
                 <tr>
                     <th colspan="{{ $countcolspan }}" style="text-align:center; font-weight:bold;"><pre>Periode   :    {{ $data_period }}</pre></th>

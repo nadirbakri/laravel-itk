@@ -8509,8 +8509,8 @@ public function dataDetailReportFormatPY(Request $request)
 
         $customPaper = array(0,0,792.00,1224.00);
         if($arrResult->dataListSet == null){
-            $pdf = PDF::loadView('payroll.py_export_periodical_report', ['param' => $param, 'grandTotal' => [], 'data' => [], 'data_company' => $arrCompany->dataListSet, 'data_period' => $request->period, 'grand_total' => isset($request->grand_total) ? (bool) $request->grand_total : false, 'print_signature' => isset($request->print_signature) ? (bool) $request->print_signature : false, 'level1' => $dataLevel[0]])->setPaper($customPaper, 'landscape')->setOptions(['defaultFont' => 'arial']);
-            return $pdf->stream('Periodical Report.pdf');
+            $pdf = PDF::loadView('payroll.py_export_periodical_report', ['param' => $param, 'grandTotal' => [], 'data' => [], 'data_company' => $arrCompany->dataListSet, 'data_period' => $request->period, 'grand_total' => isset($request->grand_total) ? (bool) $request->grand_total : false, 'report_name' => $request->report_name_detail, 'print_signature' => isset($request->print_signature) ? (bool) $request->print_signature : false, 'level1' => $dataLevel[0]])->setPaper($customPaper, 'landscape')->setOptions(['defaultFont' => 'arial']);
+            return $pdf->stream($request->report_name_detail . '.pdf');
         }else{
             $total = [];
             
@@ -8549,8 +8549,8 @@ public function dataDetailReportFormatPY(Request $request)
             }
             // dd($total);
 
-            $pdf = PDF::loadView('payroll.py_export_periodical_report', ['param' => $param, 'grandTotal' => $total, 'data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet, 'data_period' => $request->period, 'grand_total' => isset($request->grand_total) ? (bool) $request->grand_total : false, 'print_signature' => isset($request->print_signature) ? (bool) $request->print_signature : false, 'level1' => $dataLevel[0]])->setPaper($customPaper, 'landscape')->setOptions(['defaultFont' => 'arial']);
-            return $pdf->stream('Periodical Report.pdf');
+            $pdf = PDF::loadView('payroll.py_export_periodical_report', ['param' => $param, 'grandTotal' => $total, 'data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet, 'data_period' => $request->period, 'grand_total' => isset($request->grand_total) ? (bool) $request->grand_total : false, 'report_name' => $request->report_name_detail, 'print_signature' => isset($request->print_signature) ? (bool) $request->print_signature : false, 'level1' => $dataLevel[0]])->setPaper($customPaper, 'landscape')->setOptions(['defaultFont' => 'arial']);
+            return $pdf->stream($request->report_name_detail . '.pdf');
         }
     }
 
@@ -8580,8 +8580,9 @@ public function dataDetailReportFormatPY(Request $request)
             $request->position, 
             $request->ranking,
             $request->location,
-            $dataLevel), 
-            'Periodical Report.xlsx'
+            $dataLevel,
+            $request->report_name_detail), 
+            $request->report_name_detail . '.xlsx'
         );
     }
 

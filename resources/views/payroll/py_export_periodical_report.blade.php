@@ -33,7 +33,7 @@
 <body>
     @if(count($data) > 0 && (count($data[0]->detail) > 0))
         <h3>{{ $data_company[0]->companyName }} <br> {{ $data_company[0]->address }}</h3>
-        <h3 style="text-align:center">Periodical Report</h3>
+        <h3 style="text-align:center">{{ $report_name }}</h3>
         <h4 style="text-align:center">Period : {{ date('F Y', strtotime($data_period)) }}</h4>
         <?php
             $total = [];
