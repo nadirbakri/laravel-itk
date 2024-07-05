@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
+use DataTables;
 use Validator;
 use Session;
 use App;
@@ -1941,7 +1942,7 @@ class DataController extends Controller
 	    if($search == ''){
 	    	$employees = $arrResult->dataListSet;
 	    }else{
-	    	$employees    = array_filter(
+	    	$employees = array_filter(
 	    		$arrResult->dataListSet,
 	    		function($value) use ($search){
 	    			if(preg_match('/' . $search . '/i', $value->fullName)){
@@ -1958,6 +1959,45 @@ class DataController extends Controller
 		});
 
         return response()->json($employees);
+	}
+
+	public function dataEmployeeNoTableAPI(Request $request)
+    {
+    	$search = $request->search;
+
+    	try {
+	    	$client = new Client([
+                'verify' => false,
+	    		'headers' => [ 'Content-Type' => 'application/json',
+	    						'Authorization' => 'Bearer ' . Session::get('token') ]
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/personel/PeMaster/getPeMasterGrid',
+	    		['body' => json_encode(
+	    			[
+	    				'recordStatus' => 'A',
+	    				'companyCode' => Session::get('companyCode')
+	    			]
+	    		)]
+	    	);
+	    } catch (RequestException $e) {
+	    	$response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+		usort($arrResult->dataListSet, function ($a, $b) {
+			return strcmp($a->employeeNo, $b->employeeNo);
+		});
+
+        return Datatables::of($arrResult->dataListSet)->make(true);
 	}
 
 	// public function unique_multidim_array($array, $key) { 
@@ -10930,6 +10970,48 @@ class DataController extends Controller
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode'),
+						"languageCode" => strtoupper(App::getLocale()),
+						"logActionUserID" => Session::get('userID'),
+                        "logActionUsername" => Session::get('userID')
+	    			]
+	    		)]
+	    	);
+	    } catch (RequestException $e) {
+	    	$response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+		if ($arrResult->dataListSet == null) {
+			return response()->json([]);
+		}
+		else {
+			return response()->json($arrResult->dataListSet);
+		}
+	}
+
+	public function dataLoanWhitelistAPI(Request $request)
+    {
+
+    	try {
+	    	$client = new Client([
+                'verify' => false,
+	    		'headers' => [ 'Content-Type' => 'application/json',
+	    						'Authorization' => 'Bearer ' . Session::get('token') ]
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/mobile/LoanWhiteList/getWhiteList',
+	    		['body' => json_encode(
+	    			[
+	    				'companyCode' => Session::get('companyCode'),
+						'loanBank' => $request->loanBank,
 						"languageCode" => strtoupper(App::getLocale()),
 						"logActionUserID" => Session::get('userID'),
                         "logActionUsername" => Session::get('userID')

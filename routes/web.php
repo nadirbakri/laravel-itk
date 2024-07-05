@@ -106,6 +106,7 @@ Route::get('personnel/company_bank', 'PersonelController@pageCompanyBankPersonel
 Route::get('personnel/source_bank', 'PersonelController@pageSourceBankPersonel');
 Route::get('personnel/transfer_bank', 'PersonelController@pageTransferBankPersonel');
 Route::get('personnel/loan_bank', 'PersonelController@pageLoanBankPersonel');
+Route::get('personnel/loan_whitelist', 'PersonelController@pageLoanWhitelistPersonel');
 Route::get('personnel/currency_code', 'PersonelController@pageCurrencyCodePersonel');
 Route::get('personnel/rate_type', 'PersonelController@pageRateTypePersonel');
 Route::get('personnel/exchange_rate', 'PersonelController@pageExchangeRatePersonel');
@@ -371,6 +372,7 @@ Route::post('personnel/city/proses', 'PersonelController@prosesCityPersonel');
 Route::post('personnel/title/proses', 'PersonelController@prosesTitlePersonel');
 Route::post('personnel/employee_mutation/proses', 'PersonelController@prosesEmployeeMutationPersonel');
 Route::post('personnel/employee_attachment/proses', 'PersonelController@prosesEmployeeAttachmentPersonel');
+Route::post('personnel/loan_whitelist/proses', 'PersonelController@prosesLoanWhitelistPersonel');
 
 Route::get('personnel/final_performance_result/remove', 'PersonelController@removeFinalPerformanceResultPersonel');
 Route::get('personnel/evaluation_form/evaluated_aspect/remove', 'PersonelController@removeEvaluationFormEvaluatedAspectPersonel');
@@ -1094,6 +1096,7 @@ Route::get('leave_type/func/api', 'DataController@dataLeaveTypeFunctionAPI');
 Route::get('submit_type/api', 'DataController@dataSubmitTypeAPI');
 Route::get('employee_no/api', 'DataController@dataEmployeeNoAPI');
 Route::get('employee_no/api2', 'DataController@dataEmployeeNoAPI2');
+Route::get('employee_no/table/api', 'DataController@dataEmployeeNoTableAPI');
 Route::get('employee_no/req/api2', 'DataController@dataEmployeeNoReqAPI2');
 Route::get('employee_no/func/api', 'DataController@dataEmployeeNoFunctionAPI');
 Route::get('employee_no/req_detail/api', 'DataController@dataEmployeeNoReqDetailAPI');
@@ -1256,6 +1259,7 @@ Route::get('output_file/api', 'DataController@dataOutputFileAPI');
 Route::get('business_type/api', 'DataController@dataBusinessTypeAPI');
 Route::get('loan_bank/api', 'DataController@dataLoanBankAPI');
 Route::get('leave_hour/api', 'DataController@dataLeaveHourAPI');
+Route::get('loan_whitelist/api', 'DataController@dataLoanWhitelistAPI');
 
 /* Route Untuk Save Token Device dan Notification Firebase */
 Route::get('save-token', 'DashboardController@saveToken');

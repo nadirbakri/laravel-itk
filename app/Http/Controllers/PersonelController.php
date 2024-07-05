@@ -332,6 +332,11 @@ class PersonelController extends Controller
         return view('personel.personel_loan_bank');
     }
 
+    public function pageLoanWhitelistPersonel()
+    {
+        return view('personel.personel_loan_whitelist');
+    }
+
     public function pageCurrencyCodePersonel()
     {
         return view('personel.personel_currency_code');
@@ -10970,6 +10975,60 @@ class PersonelController extends Controller
         $arrResult = json_decode($response->getBody()->getContents());
 
         return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message, 'employeeNo' => $request->employee_no_detail]);
+    }
+
+    public function prosesLoanWhitelistPersonel(Request $request)
+    {
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            if(isset($request->nik)){
+                foreach($request->nik as $key=>$value){
+                    $param[] = [
+                        'companyCode' => Session::get('companyCode'),
+                        "nik" => $value,
+                        "employeeNo" => $request->employee_no[$key],
+                        'loanBank' => $request->loan_bank,
+                        'loanCompanyCode' => $request->loan_company_code,
+                        "changedNo" => 0,
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "createdBy" => Session::get('userID'),
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        "languageCode" => App::getLocale(),
+                        'sessionID' => 0, 
+                        'sessionUserID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')     
+                    ];
+                }
+            }else{
+                $param = [];
+            }
+
+            // dd(json_encode($param));
+
+            $response = $client->post(env('API_URL') . '/mobile/LoanWhiteList/bulkinsertLoanWhiteList',
+                ['body' => json_encode($param)]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            // var_dump($response);
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
     }
 
     // public function prosesCustomReportEmployeePersonel(Request $request)
