@@ -187,6 +187,41 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" role="dialog" id="notification_error">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-header-notification-error">
+                    <h5 class="modal-title">Error!</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <span id="message-notification-error">{{ $errors->first() }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" role="dialog" id="notification_success">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-header-notification-success">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="div-title-notification">
+                        <img src="{{ url('/pictures/checklist-green-confirm-password.svg') }}" alt="Password">
+                        <span class="title-text-notification">{{ __('trans_mass_leave.alert_success') }}</span>
+                    </div>
+                    <div class="div-title-notification">
+                        <span id="message-notification-success"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
@@ -245,8 +280,18 @@
                         'loanBank': $(this).val()
                     }
                 }).then(function (response) {
-                    // console.log(response);
-                    arrayEmp = response;
+                    var updatedDataArray = response.map(function(item) {
+                        var newItem = Object.assign({}, item);
+                        
+                        if (newItem.hasOwnProperty('nik')) {
+                            newItem.idNo = newItem.nik;
+                            newItem.fullName = newItem.employeeNo;
+                            delete newItem.nik;
+                        }
+                        
+                        return newItem;
+                    });
+                    arrayEmp = updatedDataArray;
                     $('#btn-add, #btn-delete').prop('disabled', false);
                     load_table_loan_whitelist();
                 });
@@ -496,7 +541,7 @@
                                 .message);
                                 setTimeout(function () {
                                 window.location =
-                                    "{{ url('master_data/employee_group_permit') }}";
+                                    "{{ url('personnel/loan_whitelist') }}";
                                 }, 3000);
                             } else {
                             $("#btn-save").prop("disabled", false);

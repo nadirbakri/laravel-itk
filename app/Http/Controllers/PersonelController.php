@@ -43,6 +43,7 @@ use DataTables;
 use Excel;
 use PDF;
 use PhpParser\Node\NullableType;
+use Illuminate\Support\Facades\Response;
 
 class PersonelController extends Controller
 {
@@ -11007,7 +11008,23 @@ class PersonelController extends Controller
                     ];
                 }
             }else{
-                $param = [];
+                $param = [
+                    'companyCode' => Session::get('companyCode'),
+                    "nik" => null,
+                    "employeeNo" => null,
+                    'loanBank' => $request->loan_bank,
+                    'loanCompanyCode' => $request->loan_company_code,
+                    "changedNo" => 0,
+                    "createdDate" => date("Y-m-d\TH:i:s"),
+                    "createdBy" => Session::get('userID'),
+                    "changedDate" => date("Y-m-d\TH:i:s"),
+                    "changedBy" => Session::get('userID'),
+                    "languageCode" => App::getLocale(),
+                    'sessionID' => 0, 
+                    'sessionUserID' => Session::get('userID'),
+                    'logActionUserID' => Session::get('userID'),
+                    'logActionUsername' => Session::get('userName')    
+                ];
             }
 
             // dd(json_encode($param));
@@ -11310,7 +11327,7 @@ class PersonelController extends Controller
         if(!empty($arrResult->dataListSet[0]->employeeWhiteList) && $arrResult->dataListSet != null){
             $array = explode("\r\n", $arrResult->dataListSet[0]->employeeWhiteList);
             foreach($array as $key => $value){
-                $arrayTwo = explode(",", $value);
+                $arrayTwo = explode("|", $value);
                 if(count($arrayTwo) > 1){
                     $array[$key] = $arrayTwo;
                 }
