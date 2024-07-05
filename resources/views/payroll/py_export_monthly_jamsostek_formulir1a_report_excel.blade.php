@@ -69,7 +69,7 @@
         <tr>
 			<td colspan="7" style="font-size: 10px; font-weight: 700; text-align:left;">&nbsp;</td>
             <td style="font-size: 10px; font-weight: 700; text-align:right;">Bulan :</td>
-            <td style="font-size: 10px; font-weight: 700; padding-left: 5px; text-align:left;">{{ $period }}</td>
+            <td style="font-size: 10px; font-weight: 700; padding-left: 5px; text-align:left;">{{ date('m/Y', strtotime($period)) }}</td>
         </tr>
 	</table>
     <table class="table_detail" style="width:100%; border-collapse:collapse;">
@@ -119,7 +119,7 @@
     <table style="width:100%; padding-bottom: 7px;">
 		<tr>
 			<td colspan="8">&nbsp;</td>
-            <td style="font-size: 10px; font-weight: 700; text-align:center; padding-left: 50px;">{{ date('l, d F Y') }}</td>
+            <td style="font-size: 10px; font-weight: 700; text-align:center; padding-left: 50px;">{{ date('F Y', strtotime($period)) }}</td>
 		</tr>
         <tr>
             <td colspan="8">&nbsp;</td>

@@ -159,7 +159,7 @@
                     </div>
                 </div>
 
-                <div class="row">
+                <!-- <div class="row">
                     <div class="col-5">
                         <div class="form-group">
                             <label for="kekurangan_kelebihan">{{ __('payroll_monthly_jamsostek_report.label_kelebihan_kekurangan') }}</label>
@@ -231,7 +231,7 @@
                     <div class="col-3">
                         <input type="text" class="form-control" id="jdi" name="jdi">
                     </div>
-                </div>
+                </div> -->
 
                 <div class="row">
                     <div class="col-3">

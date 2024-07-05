@@ -48,7 +48,7 @@
 		</tr>
         <br>
         <tr>
-            <td colspan="2" style="font-size: 16px; font-weight: 700; text-decoration: underline; text-align:center;">REKAPITULASI RINCIAN PEMBAYARAN IURAN</td>
+            <td colspan="3" style="font-size: 16px; font-weight: 700; text-decoration: underline; text-align:center;">REKAPITULASI RINCIAN PEMBAYARAN IURAN</td>
         </tr>
 	</table>
     <br>
@@ -68,7 +68,7 @@
         <tr>
 			<td width="20%" style="font-size: 10px;">2. Iuran untuk bulan / tahun</td>
             <td width="3%" style="font-size: 10px;">:</td>
-            <td colspan="2" width="25%" style="font-size: 10px;">{{ $period }}</td>
+            <td colspan="2" width="25%" style="font-size: 10px;">{{ date('m/Y', strtotime($period)) }}</td>
 		</tr>
         <tr>
 			<td width="20%" style="font-size: 10px; vertical-align: top;">3. Iuran disetor melalui</td>

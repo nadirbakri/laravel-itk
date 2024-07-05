@@ -18,12 +18,10 @@ use App;
 
 class MonthlyJamsostekReportExport extends DefaultValueBinder implements WithCustomValueBinder, FromView, ShouldAutoSize
 {
-    public function __construct($jamsostekReportType, $jamsostekPeriod, $kekuranganKelebihanPeriodMonth, $kekuranganKelebihanPeriodYear, $groupAuthorizeCodeFrom, $groupAuthorizeCodeTo, $groupBPJSCode, $groupBPJSName)
+    public function __construct($jamsostekReportType, $jamsostekPeriod, $groupAuthorizeCodeFrom, $groupAuthorizeCodeTo, $groupBPJSCode, $groupBPJSName)
     {
         $this->jamsostekReportType = $jamsostekReportType;
         $this->jamsostekPeriod = $jamsostekPeriod;
-        $this->kekuranganKelebihanPeriodMonth = $kekuranganKelebihanPeriodMonth;
-        $this->kekuranganKelebihanPeriodYear = $kekuranganKelebihanPeriodYear;
         $this->groupAuthorizeCodeFrom = $groupAuthorizeCodeFrom;
         $this->groupAuthorizeCodeTo = $groupAuthorizeCodeTo;
         $this->groupBPJSCode = $groupBPJSCode;
@@ -111,32 +109,28 @@ class MonthlyJamsostekReportExport extends DefaultValueBinder implements WithCus
             if($this->jamsostekReportType == 'formulir2'){
                 return view('payroll.py_export_monthly_jamsostek_formulir2_report_excel', [
                     'data' => [],
-                    'period' => $this->kekuranganKelebihanPeriodMonth . ' / ' . $this->kekuranganKelebihanPeriodYear,
-                    'period_now' => date('m/Y'),
+                    'period' => $this->jamsostekPeriod,
                     'companyName' => Session::get('companyName'),
                     'bpjsNo' => $this->groupBPJSName
                 ]);
             }else if($this->jamsostekReportType == 'formulir1a'){
                 return view('payroll.py_export_monthly_jamsostek_formulir1a_report_excel', [
                     'data' => [],
-                    'period' => $this->kekuranganKelebihanPeriodMonth . ' / ' . $this->kekuranganKelebihanPeriodYear,
-                    'period_now' => date('m/Y'),
+                    'period' => $this->jamsostekPeriod,
                     'companyName' => Session::get('companyName'),
                     'bpjsNo' => $this->groupBPJSName
                 ]);
             }else if($this->jamsostekReportType == 'formulir1b'){
                 return view('payroll.py_export_monthly_jamsostek_formulir1b_report_excel', [
                     'data' => [],
-                    'period' => $this->kekuranganKelebihanPeriodMonth . ' / ' . $this->kekuranganKelebihanPeriodYear,
-                    'period_now' => date('m/Y'),
+                    'period' => $this->jamsostekPeriod,
                     'companyName' => Session::get('companyName'),
                     'bpjsNo' => $this->groupBPJSName
                 ]);
             }else if($this->jamsostekReportType == 'formulir2a'){
                 return view('payroll.py_export_monthly_jamsostek_formulir2a_report_excel', [
                     'data' => [],
-                    'period' => $this->kekuranganKelebihanPeriodMonth . ' / ' . $this->kekuranganKelebihanPeriodYear,
-                    'period_now' => date('m/Y'),
+                    'period' => $this->jamsostekPeriod,
                     'companyName' => Session::get('companyName'),
                     'bpjsNo' => $this->groupBPJSName
                 ]);
@@ -145,32 +139,28 @@ class MonthlyJamsostekReportExport extends DefaultValueBinder implements WithCus
             if($this->jamsostekReportType == 'formulir2'){
                 return view('payroll.py_export_monthly_jamsostek_formulir2_report_excel', [
                     'data' => $arrResult->dataListSet,
-                    'period' => $this->kekuranganKelebihanPeriodMonth . ' / ' . $this->kekuranganKelebihanPeriodYear,
-                    'period_now' => date('m/Y'),
+                    'period' => $this->jamsostekPeriod,
                     'companyName' => Session::get('companyName'),
                     'bpjsNo' => $this->groupBPJSName
                 ]);
             }else if($this->jamsostekReportType == 'formulir1a'){
                 return view('payroll.py_export_monthly_jamsostek_formulir1a_report_excel', [
                     'data' => $arrResult->dataListSet,
-                    'period' => $this->kekuranganKelebihanPeriodMonth . ' / ' . $this->kekuranganKelebihanPeriodYear,
-                    'period_now' => date('m/Y'),
+                    'period' => $this->jamsostekPeriod,
                     'companyName' => Session::get('companyName'),
                     'bpjsNo' => $this->groupBPJSName
                 ]);
             }else if($this->jamsostekReportType == 'formulir1b'){
                 return view('payroll.py_export_monthly_jamsostek_formulir1b_report_excel', [
                     'data' => $arrResult->dataListSet,
-                    'period' => $this->kekuranganKelebihanPeriodMonth . ' / ' . $this->kekuranganKelebihanPeriodYear,
-                    'period_now' => date('m/Y'),
+                    'period' => $this->jamsostekPeriod,
                     'companyName' => Session::get('companyName'),
                     'bpjsNo' => $this->groupBPJSName
                 ]);
             }else if($this->jamsostekReportType == 'formulir2a'){
                 return view('payroll.py_export_monthly_jamsostek_formulir2a_report_excel', [
                     'data' => $arrResult->dataListSet,
-                    'period' => $this->kekuranganKelebihanPeriodMonth . ' / ' . $this->kekuranganKelebihanPeriodYear,
-                    'period_now' => date('m/Y'),
+                    'period' => $this->jamsostekPeriod,
                     'companyName' => Session::get('companyName'),
                     'bpjsNo' => $this->groupBPJSName
                 ]);

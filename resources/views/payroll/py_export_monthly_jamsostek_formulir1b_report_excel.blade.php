@@ -41,7 +41,7 @@
 	<table style="width:100%; padding-bottom: 7px;">
 		<tr>
 			<td colspan="3" width="50%"><img src="{{ public_path('/pictures/bpjs_excel.png') }}"></td>
-            <td colspan="4" style="font-size: 16px; font-weight: 700; text-align:left; padding-left: 50px;">FORM 1B DAFTAR TENAGA KERJA KELUAR</td>
+            <td colspan="4" style="font-size: 16px; font-weight: 700; text-align:center; padding-left: 50px;">FORM 1B DAFTAR TENAGA KERJA KELUAR</td>
 		</tr>
         <tr>
             <td colspan="5">&nbsp;</td>
@@ -61,7 +61,7 @@
         </tr>
         @else
         <tr>
-			<td colspan="7" style="font-size: 10px; font-weight: 700; text-align:left;">{{ $companyName }}</td>
+			<td colspan="5" style="font-size: 10px; font-weight: 700; text-align:left;">{{ $companyName }}</td>
             <td style="font-size: 10px; font-weight: 700; text-align:right;">Unit :</td>
             <td style="font-size: 10px; font-weight: 700; padding-left: 5px; text-align:left;">{{ $companyName }}</td>
         </tr>
@@ -69,7 +69,7 @@
         <tr>
 			<td colspan="5" style="font-size: 10px; font-weight: 700; text-align:left;">&nbsp;</td>
             <td style="font-size: 10px; font-weight: 700; text-align:right;">Bulan :</td>
-            <td style="font-size: 10px; font-weight: 700; padding-left: 5px; text-align:left;">{{ $period }}</td>
+            <td style="font-size: 10px; font-weight: 700; padding-left: 5px; text-align:left;">{{ date('m/Y', strtotime($period)) }}</td>
         </tr>
 	</table>
     <table class="table_detail" style="width:100%; border-collapse:collapse;">
@@ -113,7 +113,7 @@
     <table style="width:100%; padding-bottom: 7px;">
 		<tr>
 			<td colspan="6">&nbsp;</td>
-            <td style="font-size: 10px; font-weight: 700; text-align:center; padding-left: 50px;">{{ date('l, d F Y') }}</td>
+            <td style="font-size: 10px; font-weight: 700; text-align:center; padding-left: 50px;">{{ date('F Y', strtotime($period)) }}</td>
 		</tr>
         <tr>
             <td colspan="6">&nbsp;</td>

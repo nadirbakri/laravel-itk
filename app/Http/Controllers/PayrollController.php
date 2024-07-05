@@ -7753,8 +7753,7 @@ public function dataDetailReportFormatPY(Request $request)
                 $pdf = PDF::loadView('payroll.py_export_monthly_jamsostek_formulir2_report', 
                 [
                     'data' => [], 
-                    'period' => $request->kekurangan_kelebihan_period_month . ' / ' . $request->kekurangan_kelebihan_period_year,
-                    'period_now' => date('m/Y'),
+                    'period' => $request->jamsostek_period,
                     'companyName' => Session::get('companyName'),
                     'bpjsNo' => $request->group_bpjs_name
                 ])->setPaper('letter', 'portrait')->setOptions(['defaultFont' => 'arial']);
@@ -7763,8 +7762,7 @@ public function dataDetailReportFormatPY(Request $request)
                 $pdf = PDF::loadView('payroll.py_export_monthly_jamsostek_formulir1a_report', 
                 [
                     'data' => [], 
-                    'period' => $request->kekurangan_kelebihan_period_month . ' / ' . $request->kekurangan_kelebihan_period_year,
-                    'period_now' => date('m/Y'),
+                    'period' => $request->jamsostek_period,
                     'companyName' => Session::get('companyName'),
                     'bpjsNo' => $request->group_bpjs_name
                 ])->setPaper('letter', 'portrait')->setOptions(['defaultFont' => 'arial']);
@@ -7773,8 +7771,7 @@ public function dataDetailReportFormatPY(Request $request)
                 $pdf = PDF::loadView('payroll.py_export_monthly_jamsostek_formulir1b_report', 
                 [
                     'data' => [], 
-                    'period' => $request->kekurangan_kelebihan_period_month . ' / ' . $request->kekurangan_kelebihan_period_year,
-                    'period_now' => date('m/Y'),
+                    'period' => $request->jamsostek_period,
                     'companyName' => Session::get('companyName'),
                     'bpjsNo' => $request->group_bpjs_name
                 ])->setPaper('letter', 'portrait')->setOptions(['defaultFont' => 'arial']);
@@ -7783,8 +7780,7 @@ public function dataDetailReportFormatPY(Request $request)
                 $pdf = PDF::loadView('payroll.py_export_monthly_jamsostek_formulir2a_report', 
                 [
                     'data' => [], 
-                    'period' => $request->kekurangan_kelebihan_period_month . ' / ' . $request->kekurangan_kelebihan_period_year,
-                    'period_now' => date('m/Y'),
+                    'period' => $request->jamsostek_period,
                     'companyName' => Session::get('companyName'),
                     'bpjsNo' => $request->group_bpjs_name
                 ])->setPaper('letter', 'portrait')->setOptions(['defaultFont' => 'arial']);
@@ -7795,8 +7791,7 @@ public function dataDetailReportFormatPY(Request $request)
                 $pdf = PDF::loadView('payroll.py_export_monthly_jamsostek_formulir2_report', 
                 [
                     'data' => $arrResult->dataListSet, 
-                    'period' => $request->kekurangan_kelebihan_period_month . ' / ' . $request->kekurangan_kelebihan_period_year,
-                    'period_now' => date('m/Y'),
+                    'period' => $request->jamsostek_period,
                     'companyName' => Session::get('companyName'),
                     'bpjsNo' => $request->group_bpjs_name
                 ])->setPaper('letter', 'portrait')->setOptions(['defaultFont' => 'arial']);
@@ -7805,8 +7800,7 @@ public function dataDetailReportFormatPY(Request $request)
                 $pdf = PDF::loadView('payroll.py_export_monthly_jamsostek_formulir1a_report', 
                 [
                     'data' => $arrResult->dataListSet, 
-                    'period' => $request->kekurangan_kelebihan_period_month . ' / ' . $request->kekurangan_kelebihan_period_year,
-                    'period_now' => date('m/Y'),
+                    'period' => $request->jamsostek_period,
                     'companyName' => Session::get('companyName'),
                     'bpjsNo' => $request->group_bpjs_name
                 ])->setPaper('letter', 'portrait')->setOptions(['defaultFont' => 'arial']);
@@ -7815,8 +7809,7 @@ public function dataDetailReportFormatPY(Request $request)
                 $pdf = PDF::loadView('payroll.py_export_monthly_jamsostek_formulir1b_report', 
                 [
                     'data' => $arrResult->dataListSet, 
-                    'period' => $request->kekurangan_kelebihan_period_month . ' / ' . $request->kekurangan_kelebihan_period_year,
-                    'period_now' => date('m/Y'),
+                    'period' => $request->jamsostek_period,
                     'companyName' => Session::get('companyName'),
                     'bpjsNo' => $request->group_bpjs_name
                 ])->setPaper('letter', 'portrait')->setOptions(['defaultFont' => 'arial']);
@@ -7825,8 +7818,7 @@ public function dataDetailReportFormatPY(Request $request)
                 $pdf = PDF::loadView('payroll.py_export_monthly_jamsostek_formulir2a_report', 
                 [
                     'data' => $arrResult->dataListSet, 
-                    'period' => $request->kekurangan_kelebihan_period_month . ' / ' . $request->kekurangan_kelebihan_period_year,
-                    'period_now' => date('m/Y'),
+                    'period' => $request->jamsostek_period,
                     'companyName' => Session::get('companyName'),
                     'bpjsNo' => $request->group_bpjs_name
                 ])->setPaper('letter', 'portrait')->setOptions(['defaultFont' => 'arial']);
@@ -7851,8 +7843,6 @@ public function dataDetailReportFormatPY(Request $request)
         return Excel::download(new MonthlyJamsostekReportExport(
             $request->jamsostek_report_type,
             $request->jamsostek_period,
-            $request->kekurangan_kelebihan_period_month,
-            $request->kekurangan_kelebihan_period_year,
             $request->group_authorize_code_from, 
             $request->group_authorize_code_to,
             $request->group_bpjs_code,

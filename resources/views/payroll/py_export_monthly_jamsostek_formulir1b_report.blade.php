@@ -42,7 +42,7 @@
 	<table style="width:100%; padding-bottom: 7px;">
 		<tr>
 			<td width="17%"><img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/pictures/bpjs.png'))) }}" style="width: 170px; height: 50px;" alt="Logo"></td>
-            <td colspan="2" style="font-size: 16px; font-weight: 700; text-align:left; padding-left: 50px;">FORM 1B DAFTAR TENAGA KERJA KELUAR</td>
+            <td colspan="4" style="font-size: 16px; font-weight: 700; text-align:left; padding-left: 50px;">FORM 1B DAFTAR TENAGA KERJA KELUAR</td>
 		</tr>
         <br>
         <tr>
@@ -70,7 +70,7 @@
 			<td colspan="2" style="font-size: 10px; font-weight: 700; text-align:center;">&nbsp;</td>
             <td width="5%" style="font-size: 10px; font-weight: 700;">Bulan</td>
             <td width="2%" style="font-size: 10px;">:</td>
-            <td width="25%" style="font-size: 10px; font-weight: 700; padding-left: 5px;">{{ $period }}</td>
+            <td width="25%" style="font-size: 10px; font-weight: 700; padding-left: 5px;">{{ date('m/Y', strtotime($period)) }}</td>
         </tr>
 	</table>
     <table class="table_detail" style="width:100%;">
@@ -118,7 +118,7 @@
     <table style="width:100%; padding-bottom: 7px;">
 		<tr>
 			<td width="65%">&nbsp;</td>
-            <td width="25%" style="font-size: 10px; font-weight: 700; text-align:center; padding-left: 50px;">{{ date('l, d F Y') }}</td>
+            <td width="25%" style="font-size: 10px; font-weight: 700; text-align:center; padding-left: 50px;">{{ date('F Y', strtotime($period)) }}</td>
             <td width="10%">&nbsp;</td>
 		</tr>
         <br><br>

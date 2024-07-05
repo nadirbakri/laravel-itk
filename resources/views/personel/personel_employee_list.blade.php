@@ -445,19 +445,6 @@
                 }
             }
 
-            // $(field).on('select2:open', function (e) {
-            //     html = '<div class="row header-select">' +
-            //         '<div class="col-6"><b>Employee No</b></div>' +
-            //         '<div class="col-6"><b>Employee Name</b></div>' +
-            //         '</div>';
-            //     $('.select2-search--dropdown').append(html);
-            // });
-
-            // $(field).on('select2:close', function (event) {
-            //     var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
-            //     $searchfield.prop('disabled', true);
-            // });
-
             var headerIsAppend = false;
             $(field).on('select2:open', function (e) {
                 if (!headerIsAppend) {
