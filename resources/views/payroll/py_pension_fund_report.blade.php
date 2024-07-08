@@ -125,7 +125,7 @@
                 <div class="row">
                     <div class="col-3">
                         <div class="form-group">
-                            <label for="jamsostek_period">{{ __('payroll_pension_fund_report.label_period') }}</label>
+                            <label for="period">{{ __('payroll_pension_fund_report.label_period') }}</label>
                         </div>
                     </div>
                     <div class="col-5">
@@ -159,7 +159,7 @@
                     <div class="col-5">
                         <div class="form-group">
                             <div class="input-group">
-                                <input type="text" class="form-control" id="print_date" name="period"
+                                <input type="text" class="form-control" id="print_date" name="print_date"
                                     placeholder="{{ __('payroll_pension_fund_report.label_print_date') }}">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><span class="fa fa-calendar"></span></span>

@@ -54,7 +54,13 @@ class PensionFundReportExport extends DefaultValueBinder implements WithCustomVa
                 'companyCode' => Session::get('companyCode'),
                 "periodYear" => (int) date('Y', strtotime($this->period)),
                 "periodMonth" => (int) date('m', strtotime($this->period)),
-                "groupDepartment" => $this->groupDepartment,
+                "levelMaster" => [[
+                    "companyCode" => Session::get('companyCode'),
+                    "levelType" => "1",
+                    "level" => [[
+                        "levelCode" => $this->groupDepartment
+                    ]]
+                ]],
                 "languageCode" => App::getLocale(),
                 "sessionID" => 0,
                 "sessionUserID" => Session::get('userID'),
@@ -63,7 +69,7 @@ class PensionFundReportExport extends DefaultValueBinder implements WithCustomVa
             ];
 
             // dd(json_encode($param));
-            $response = $client->post(env('API_URL').'/payroll/GetPensionFundReport', [
+            $response = $client->post(env('API_URL').'/payroll/GetDanaPensiun', [
                 'body' => json_encode($param)
             ]);
         }catch (RequestException $e){
@@ -84,11 +90,11 @@ class PensionFundReportExport extends DefaultValueBinder implements WithCustomVa
 
         if($arrResult->dataListSet == null){
             return view('payroll.py_export_pension_fund_report_excel', [
-                'data' => [], 'period' => $this->period, 'printDate' => $this->printDate, 'dendaBulan' => $this->dendaBulan, 'kelebihanBayar' => $this->kelebihanBayar, 'kurangBayar' => $this->kurangBayar, 'penguranganIuran' => $this->penguranganIuran, 'materai' => $this->materai
+                'data' => [], 'period' => $this->period, 'printDate' => $this->printDate, 'dendaBulan' => ((!empty($this->dendaBulan)) ? $this->dendaBulan : 0), 'kelebihanBayar' => ((!empty($this->kelebihanBayar)) ? $this->kelebihanBayar : 0), 'kurangBayar' => ((!empty($this->kurangBayar)) ? $this->kurangBayar : 0), 'penguranganIuran' => ((!empty($this->penguranganIuran)) ? $this->penguranganIuran : 0), 'materai' => ((!empty($this->materai)) ? $this->materai : 0)
             ]);
         }else{
             return view('payroll.py_export_pension_fund_report_excel', [
-                'data' => $arrResult->dataListSet, 'period' => $this->period, 'printDate' => $this->printDate, 'dendaBulan' => $this->dendaBulan, 'kelebihanBayar' => $this->kelebihanBayar, 'kurangBayar' => $this->kurangBayar, 'penguranganIuran' => $this->penguranganIuran, 'materai' => $this->materai
+                'data' => $arrResult->dataListSet, 'period' => $this->period, 'printDate' => $this->printDate, 'dendaBulan' => ((!empty($this->dendaBulan)) ? $this->dendaBulan : 0), 'kelebihanBayar' => ((!empty($this->kelebihanBayar)) ? $this->kelebihanBayar : 0), 'kurangBayar' => ((!empty($this->kurangBayar)) ? $this->kurangBayar : 0), 'penguranganIuran' => ((!empty($this->penguranganIuran)) ? $this->penguranganIuran : 0), 'materai' => ((!empty($this->materai)) ? $this->materai : 0)
             ]); 
         }
     }
