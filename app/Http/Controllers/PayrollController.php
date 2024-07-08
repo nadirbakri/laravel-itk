@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Imports\PayrollDataImport;
 use App\Imports\PayrollBonusTHRDataImport;
 use App\Exports\TemplatePayrollDataTemplateSheet;
+use App\Exports\TemplatePayrollDataBonusTHRTemplateSheet;
 use App\Exports\SeveranceReportExcel;
 use App\Exports\JournalReportExcel;
 use App\Exports\MonthlyJamsostekReportExport;
@@ -150,16 +151,8 @@ class PayrollController extends Controller
                 $data = $arrResult_tm->dataListSet;
             }
 
-            if($arrResult_tm->dataListSet[0]->statusProcess > '0'){
-                if(empty(Session::get('accessReference'))){
-                    return redirect()->back()->withErrors(['msg' => 'Invalid Status Process']);
-                }else{
-                    if(Session::pull('accessReference') != "true"){
-                        return redirect()->back()->withErrors(['msg' => 'Invalid Status Process']);
-                    }else{
-                        return view ('payroll.py_import_data_from_excel', ['data_tm' => $data]);
-                    }
-                }
+            if($arrResult_tm->dataListSet[0]->statusProcess > '0' && Session::get('accessReference') != "true"){
+                return redirect()->route('payroll', ['moduleID' => 'PY'])->withErrors(['msg' => 'Invalid Status Process']);
             } else {
                 return view ('payroll.py_import_data_from_excel', ['data_tm' => $data]);
             }
@@ -5805,6 +5798,11 @@ public function dataDetailReportFormatPY(Request $request)
             $request->column_k,
             $request->column_l
         ), 'Template Payroll Data.xlsx');
+    }
+
+    public function templateImportDataFromExcelBonusTHRPY(Request $request)
+    {
+        return Excel::download(new TemplatePayrollDataBonusTHRTemplateSheet(), 'Template Payroll Data Bonus THR.xlsx');
     }
 
     public function prosesSptFormatPY(Request $request)

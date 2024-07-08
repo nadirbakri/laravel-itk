@@ -155,14 +155,19 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-3">
+                            <div class="col-4">
                                 <button type="submit" class="btn btn-process" name="btn-process" id="btn-process">
                                     <i class="fa fa-play-circle-o"></i> {{ __('payroll_import_data_from_excel_bonus_thr.btn_process') }}
                                 </button>
                             </div>
-                            <div class="col-3">
+                            <div class="col-4">
                                 <button type="button" class="btn btn-danger" name="btn-reset" id="btn-reset" style="width: 100%;">
                                     <i class="fa fa-times-circle"></i> {{ __('payroll_import_data_from_excel_bonus_thr.btn_reset') }}
+                                </button>
+                            </div>
+                            <div class="col-4">
+                                <button type="button" class="btn btn-primary" name="btn-download-template" id="btn-download-template">
+                                    <i class="fa fa-print"></i> {{ __('payroll_import_data_from_excel_bonus_thr.btn_download_template') }}
                                 </button>
                             </div>
                         </div>
@@ -254,27 +259,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/additional-methods.js"></script>
 <script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
 
-<script type="text/javascript">
-    function savePreviousURL() {
-        if(!sessionStorage.getItem('previousURL')){
-            const previousURL = document.referrer;
-            sessionStorage.setItem('previousURL', previousURL);
-        }
-    }
-
-    // Fungsi untuk menangani navigasi mundur
-    function goBackWithModuleID() {
-        let newURL = sessionStorage.getItem('previousURL');
-
-        sessionStorage.removeItem('previousURL');
-
-        window.location.href = newURL;
-    }
-
-    window.onload = function() {
-        savePreviousURL();
-    }
-    
+<script type="text/javascript">    
     $(document).ready(function () {
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
@@ -312,6 +297,60 @@
 
             $('#notification_loading').show();
             $('#import_data_from_excel_bonus_thr_form').submit();
+        });
+
+        $("#btn-download-template").on('click', function () {
+            url = "{{ url('payroll/import_data_from_excel_bonus_thr/template') }}";
+            $(this).prop("disabled", true);
+            $(this).html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+
+            var myform = document.getElementById("import_data_from_excel_bonus_thr_form");
+            data = new FormData(myform);
+
+            $.ajax({
+                xhrFields: {
+                    responseType: 'blob',
+                },
+                url: url,
+                type: "POST",
+                processData: false,
+                contentType: false,
+                data: data,
+                success: function (result, status, xhr) {
+                    $("#btn-download-template").prop("disabled", false);
+                    $("#btn-download-template").html(
+                        '<i class="fa fa-print"></i> {{ __("payroll_import_data_from_excel_bonus_thr.btn_download_template") }}'
+                    );
+                    var disposition = xhr.getResponseHeader(
+                        'content-disposition');
+                    var matches = /"([^"]*)"/.exec(disposition);
+                    var filename = (matches != null && matches[1] ? matches[1] :
+                        'audit_trail.xlsx');
+
+                    // The actual download
+                    var blob = new Blob([result], {
+                        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                    });
+                    var link = document.createElement('a');
+                    link.href = window.URL.createObjectURL(blob);
+                    link.download = filename;
+
+                    document.body.appendChild(link);
+
+                    link.click();
+                    document.body.removeChild(link);
+                },
+                error: function (response) {
+                    $("#btn-download-template").prop("disabled", false);
+                    $("#btn-download-template").html(
+                        '<i class="fa fa-print"></i> {{ __("payroll_import_data_from_excel_bonus_thr.btn_download_template") }}'
+                    );
+                    $('#notification_error').modal('show');
+                    $('#message-notification-error').html(response);
+                }
+            });
         });
 
         if ($("#import_data_from_excel_bonus_thr_form").length > 0) {

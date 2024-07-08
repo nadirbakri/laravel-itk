@@ -16,6 +16,7 @@ return [
     'label_transfer_to' => 'Transfer To',
     'btn_process' => 'Process',
     'btn_reset' => 'Reset',
+    'btn_download_template' => 'Download Template',
     'alert_success' => 'Success !'
 ]
 

@@ -629,6 +629,7 @@ Route::post('payroll/salary_accumulation_data/proses', 'PayrollController@proses
 Route::post('payroll/import_data_from_excel/import', 'PayrollController@importDataFromExcelPY');
 Route::post('payroll/import_data_from_excel_bonus_thr/import', 'PayrollController@importDataFromExcelBonusTHRPY');
 Route::post('payroll/import_data_from_excel/template', 'PayrollController@templateImportDataFromExcelPY');
+Route::post('payroll/import_data_from_excel_bonus_thr/template', 'PayrollController@templateImportDataFromExcelBonusTHRPY');
 Route::post('payroll/thr_bonus_data_entry/proses', 'PayrollController@prosesTHRBonusDataEntryPY');
 Route::post('payroll/thr_data_entry_proses/proses', 'PayrollController@prosesTHRDataEntryProcessPY');
 Route::post('payroll/bonus_data_entry_proses/proses', 'PayrollController@prosesBonusDataEntryProcessPY');
@@ -878,11 +879,13 @@ Route::get('utilities/user_log/table', 'UtilitiesController@tableUserLogUtilitie
 Route::get('utilities/menu_master/table', 'UtilitiesController@tableMenuMasterUtilities');
 Route::get('utilities/change_password/employee/table', 'UtilitiesController@tableChangeEmployeeNumberEmployeeUtilities');
 Route::get('utilities/company/table', 'UtilitiesController@tableCompanyUtilities');
+Route::get('utilities/menu_master_mobile/table', 'UtilitiesController@tableMenuMasterMobileUtilities');
 
 Route::get('utilities/group_authorization/detail_data', 'UtilitiesController@dataDetailAuthorizationCodeGroupUtilities');
 Route::get('utilities/group_user_access/detail_data', 'UtilitiesController@dataDetailUserAccessGroupUtilities');
 Route::get('utilities/user_security_maintenance/detail_data', 'UtilitiesController@dataDetailUserSecurityMaintenanceUtilities');
 Route::get('utilities/company/detail_data', 'UtilitiesController@dataDetailCompanyUtilities');
+Route::get('utilities/menu_master_mobile/detail_data', 'UtilitiesController@dataDetailMenuMasterMobileUtilities');
 
 Route::get('utilities/user_security_maintenance/level/table', 'UtilitiesController@tableUserSecurityMaintenanceLevelUtilities');
 Route::get('utilities/user_security_maintenance/company/table', 'UtilitiesController@tableUserSecurityMaintenanceCompanyUtilities');
@@ -908,6 +911,7 @@ Route::post('utilities/user_security_maintenance/module/proses', 'UtilitiesContr
 Route::post('utilities/change_employee_no/proses', 'UtilitiesController@prosesChangeEmployeeNumberUtilities');
 Route::post('utilities/company/proses', 'UtilitiesController@prosesCompanyUtilities');
 Route::post('utilities/process_user_id/proses', 'UtilitiesController@prosesProcessUserIDUtilities');
+Route::post('utilities/menu_master_mobile/proses', 'UtilitiesController@prosesMenuMasterMobileUtilities');
 
 Route::post('utilities/audit_trail/export', 'UtilitiesController@exportAuditTrailUtilities');
 
@@ -1260,6 +1264,7 @@ Route::get('business_type/api', 'DataController@dataBusinessTypeAPI');
 Route::get('loan_bank/api', 'DataController@dataLoanBankAPI');
 Route::get('leave_hour/api', 'DataController@dataLeaveHourAPI');
 Route::get('loan_whitelist/api', 'DataController@dataLoanWhitelistAPI');
+Route::get('menu_mobile/api', 'DataController@dataMenuMobileAPI');
 
 /* Route Untuk Save Token Device dan Notification Firebase */
 Route::get('save-token', 'DashboardController@saveToken');
