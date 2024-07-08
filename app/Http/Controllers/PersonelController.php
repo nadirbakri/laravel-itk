@@ -10989,7 +10989,7 @@ class PersonelController extends Controller
 
             if(isset($request->nik)){
                 foreach($request->nik as $key=>$value){
-                    $param[] = [
+                    $whitelist[] = [
                         'companyCode' => Session::get('companyCode'),
                         "nik" => $value,
                         "employeeNo" => $request->employee_no[$key],
@@ -11008,24 +11008,24 @@ class PersonelController extends Controller
                     ];
                 }
             }else{
-                $param = [
-                    'companyCode' => Session::get('companyCode'),
-                    "nik" => null,
-                    "employeeNo" => null,
-                    'loanBank' => $request->loan_bank,
-                    'loanCompanyCode' => $request->loan_company_code,
-                    "changedNo" => 0,
-                    "createdDate" => date("Y-m-d\TH:i:s"),
-                    "createdBy" => Session::get('userID'),
-                    "changedDate" => date("Y-m-d\TH:i:s"),
-                    "changedBy" => Session::get('userID'),
-                    "languageCode" => App::getLocale(),
-                    'sessionID' => 0, 
-                    'sessionUserID' => Session::get('userID'),
-                    'logActionUserID' => Session::get('userID'),
-                    'logActionUsername' => Session::get('userName')    
-                ];
+                $whitelist = [];
             }
+
+            $param = [
+                'companyCode' => Session::get('companyCode'),
+                'loanBank' => $request->loan_bank,
+                'whitelist' => $whitelist,
+                "changedNo" => 0,
+                "createdDate" => date("Y-m-d\TH:i:s"),
+                "createdBy" => Session::get('userID'),
+                "changedDate" => date("Y-m-d\TH:i:s"),
+                "changedBy" => Session::get('userID'),
+                "languageCode" => App::getLocale(),
+                'sessionID' => 0, 
+                'sessionUserID' => Session::get('userID'),
+                'logActionUserID' => Session::get('userID'),
+                'logActionUsername' => Session::get('userName')  
+            ];
 
             // dd(json_encode($param));
 

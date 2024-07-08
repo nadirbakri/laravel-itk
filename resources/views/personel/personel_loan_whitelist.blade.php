@@ -285,7 +285,7 @@
                         
                         if (newItem.hasOwnProperty('nik')) {
                             newItem.idNo = newItem.nik;
-                            newItem.fullName = newItem.employeeNo;
+                            newItem.fullName = newItem.employeeName;
                             delete newItem.nik;
                         }
                         
