@@ -8,14 +8,16 @@ use Illuminate\Contracts\View\View;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use PhpOffice\PhpSpreadsheet\Cell\DataType;
+use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\WithCustomValueBinder;
 use PhpOffice\PhpSpreadsheet\Cell\DefaultValueBinder;
 use Validator;
 use Session;
 use App;
 
-class PensionFundReportExport extends DefaultValueBinder implements WithCustomValueBinder, FromView, ShouldAutoSize
+class PensionFundReportExport extends DefaultValueBinder implements WithCustomValueBinder, FromView, WithEvents, ShouldAutoSize
 {
     public function __construct($period, $groupDepartment, $printDate, $dendaBulan, $kelebihanBayar, $kurangBayar, $penguranganIuran, $materai)
     {
@@ -90,12 +92,31 @@ class PensionFundReportExport extends DefaultValueBinder implements WithCustomVa
 
         if($arrResult->dataListSet == null){
             return view('payroll.py_export_pension_fund_report_excel', [
-                'data' => [], 'period' => $this->period, 'printDate' => $this->printDate, 'dendaBulan' => ((!empty($this->dendaBulan)) ? $this->dendaBulan : 0), 'kelebihanBayar' => ((!empty($this->kelebihanBayar)) ? $this->kelebihanBayar : 0), 'kurangBayar' => ((!empty($this->kurangBayar)) ? $this->kurangBayar : 0), 'penguranganIuran' => ((!empty($this->penguranganIuran)) ? $this->penguranganIuran : 0), 'materai' => ((!empty($this->materai)) ? $this->materai : 0)
+                'data' => [], 'period' => $this->period, 'printDate' => $this->printDate, 'dendaBulan' => ((!empty($this->dendaBulan)) ? (int) $this->dendaBulan : 0), 'kelebihanBayar' => ((!empty($this->kelebihanBayar)) ? (int) $this->kelebihanBayar : 0), 'kurangBayar' => ((!empty($this->kurangBayar)) ? (int) $this->kurangBayar : 0), 'penguranganIuran' => ((!empty($this->penguranganIuran)) ? (int) $this->penguranganIuran : 0), 'materai' => ((!empty($this->materai)) ? (int) $this->materai : 0)
             ]);
         }else{
             return view('payroll.py_export_pension_fund_report_excel', [
-                'data' => $arrResult->dataListSet, 'period' => $this->period, 'printDate' => $this->printDate, 'dendaBulan' => ((!empty($this->dendaBulan)) ? $this->dendaBulan : 0), 'kelebihanBayar' => ((!empty($this->kelebihanBayar)) ? $this->kelebihanBayar : 0), 'kurangBayar' => ((!empty($this->kurangBayar)) ? $this->kurangBayar : 0), 'penguranganIuran' => ((!empty($this->penguranganIuran)) ? $this->penguranganIuran : 0), 'materai' => ((!empty($this->materai)) ? $this->materai : 0)
+                'data' => $arrResult->dataListSet, 'period' => $this->period, 'printDate' => $this->printDate, 'dendaBulan' => ((!empty($this->dendaBulan)) ? (int) $this->dendaBulan : 0), 'kelebihanBayar' => ((!empty($this->kelebihanBayar)) ? (int) $this->kelebihanBayar : 0), 'kurangBayar' => ((!empty($this->kurangBayar)) ? (int) $this->kurangBayar : 0), 'penguranganIuran' => ((!empty($this->penguranganIuran)) ? (int) $this->penguranganIuran : 0), 'materai' => ((!empty($this->materai)) ? (int) $this->materai : 0)
             ]); 
         }
+    }
+
+    public function registerEvents(): array
+    {
+        return [
+            AfterSheet::class => function(AfterSheet $event) {
+                $sheet = $event->sheet;
+
+                $cells = $sheet->getDelegate()->getElementsByTagName('td');
+                foreach ($cells as $cell) {
+                    $dataFormat = $cell->getAttribute('data-format');
+
+                    // Set format sel jika atribut data-format ditemukan
+                    if (!empty($dataFormat)) {
+                        $sheet->getStyle($cell->getCoordinate())->getNumberFormat()->setFormatCode($dataFormat);
+                    }
+                }
+            },
+        ];
     }
 }

@@ -1246,7 +1246,6 @@
         $('body').on('click', '#btn-edit-job-history', function () {
             var data = table.rows('.selected').data();
             if (data.count() > 0) {
-                console.log(moment(data[0].startDate).format('YYYY-MM-DD'));
                 $('#modal_add_job_history').modal('show');
                 $('#seq_no_job_history').val(data[0].seqNo);
                 pickerStartDate.setDate(data[0].startDate);

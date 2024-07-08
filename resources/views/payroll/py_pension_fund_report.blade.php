@@ -313,7 +313,7 @@
         var arrData = @json($data);
 
         if (arrData) {
-            pickerPeriod.setDate(arrData[0].periodYear + "-" + moment(arrData[0].periodMonth).format('MM') + "-01");
+            pickerPeriod.setDate(moment(arrData[0].periodYear.toString() + "-" + arrData[0].periodMonth.toString().padStart(2,0) + "-01").format('YYYY-MM-DD'));
         }
 
         loadDataGroupDepartment();

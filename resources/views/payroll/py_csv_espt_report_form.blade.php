@@ -335,7 +335,7 @@
         var periodYear = (typeof arrData[0].periodYear !== 'undefined') ? '01-01-' + arrData[0].periodYear : null;
 
         if (arrData) {
-            pickerPeriod.setDate(arrData[0].periodYear + "-" + moment(arrData[0].periodMonth).format('MM') + "-01");
+            pickerPeriod.setDate(arrData[0].periodYear + "-" + moment().month(arrData[0].periodMonth - 1).format('MM') + "-01");
         }
 
         var prevYear = moment(periodYear).subtract(5, 'years');
