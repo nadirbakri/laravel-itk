@@ -159,7 +159,7 @@
 
 <body>
 	<div class="d-flex" id="wrapper">
-		<div class="border-right active" id="sidebar-wrapper">
+		<div class="border-right sidebar-bar active" id="sidebar-wrapper">
 			<div class="sidebar-heading">
 				<img src="{{ url('/pictures/logo.png') }}" alt="Logo">
 				<span class="logo-text">Stream</span>
@@ -181,17 +181,11 @@
 				</a>
 			</div>
 			@endforeach
-			
-			<footer class="footer" id="footer">
-				<div class="container">
-					<span class="text-muted">© Copyright <br>PT Intikom Berlian Mustika <br>{{ date('Y') }}</span>
-				</div>
-			</footer>
 		</div>
 		<div class="bg-light" id="page-content-wrapper">
 
 			<nav class="navbar navbar-expand-lg navbar-light border-bottom">
-				<a href="#" class="toogle-icon" id="menu-toggle"><img src="{{ url('/pictures/bars-white.png') }}" alt="Toogle"></a>
+				<a href="javascript:void(0)" class="toogle-icon" id="menu-toggle"><img src="{{ url('/pictures/bars-white.png') }}" alt="Toogle"></a>
 
 				<div class="navbar-collapse breadcrumb-link" id="div-breadcrumbs">
 					
@@ -229,6 +223,11 @@
 			</nav>
 			<iframe src="{{ url('/home') }}" name="iframe_dashboard" id="iframe_dashboard" class="container-fluid" frameborder="0"></iframe>
 		</div>
+		<footer class="footer active" id="footer">
+			<div class="container">
+				<span class="text-muted">© Copyright PT Intikom Berlian Mustika {{ date('Y') }}</span>
+			</div>
+		</footer>
 	</div>
 	<div class="modal fade" id="modal_change_language"  role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -355,6 +354,7 @@
 
 		$('#menu-toggle').on('click', function () {
 			$('#sidebar-wrapper').toggleClass('active');
+			$('#footer').toggleClass('active');
 		});
 
 	})(jQuery);
