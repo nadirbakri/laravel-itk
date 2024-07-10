@@ -141,7 +141,7 @@
 						<?php
 							$totalIncome += (float) $value2->columnValue;
 						?>
-						@if($value2->columnValue > 0)
+						@if(!empty($value2->columnValue) && $value2->columnValue != 0)
 							<tr>
 								<td style="width: 38%; text-align: left; padding-top: 0.4%; padding-left: 3%;">{{ $value2->columnLabel }}</td>
 								<td style="width: 10%; text-align: right; padding-top: 0.4%; padding-right: 17%;">{{ number_format((float) $value2->columnValue, 0, ',', '.')}}</td>
@@ -156,7 +156,7 @@
 						<?php
 							$totalDeduction += (float) $value2->columnValue;
 						?>
-						@if($value2->columnValue > 0)
+						@if(!empty($value2->columnValue) && $value2->columnValue != 0)
 							<tr>
 								<td style="width: 42%; text-align: left; padding-top: 0.4%; padding-left: 2%;">{{ $value2->columnLabel }}</td>
 								<td style="width: 10%; text-align: right; padding-top: 0.4%; padding-right: 7%;">{{ number_format((float) $value2->columnValue, 0, ',', '.')}}</td>
@@ -222,7 +222,7 @@
 						<?php
 							$totalBenefit += (float) $value2->columnValue;
 						?>
-						@if($value2->columnValue > 0)
+						@if(!empty($value2->columnValue) && $value2->columnValue != 0)
 							<tr>
 								<td style="width: 38%; text-align: left; padding-top: 0.4%; padding-left: 3%;">{{ $value2->columnLabel }}</td>
 								<td style="width: 10%; text-align: right; padding-top: 0.4%; padding-right: 17%;">{{ number_format((float) $value2->columnValue, 0, ',', '.')}}</td>
@@ -240,7 +240,7 @@
 				@if(!empty($value->c))
 				<table style="width:100%; border-collapse: collapse; border-top: 1px solid #e2e2e2;">
 					@foreach($value->c as $key2 => $value2)
-						@if($value2->columnValue > 0)
+						@if(!empty($value2->columnValue) && $value2->columnValue != 0)
 							<tr>
 								<td style="width: 42%; text-align: left; padding-top: 0.4%; padding-left: 2%;">{{ $value2->columnLabel }}</td>
 								<td style="width: 10%; text-align: right; padding-top: 0.4%; padding-right: 6%;">{{ number_format((float) $value2->columnValue, 0, ',', '.')}}d</td>
@@ -254,8 +254,6 @@
 	</table>
 	<div class="div-footer" style="font-family: 'Arial Alternates', sans-serif;">
 		*These are the benefits you'll get from the company, but not included in your take-home pay (THP).
-		<br>
-		*Overtime duration (in hours) grouped by each multiplier
 		<br><br>
 		THIS IS COMPUTER GENERATED PRINTOUT AND NO SIGNATURE IS REQUIRED
 		<br><br>
