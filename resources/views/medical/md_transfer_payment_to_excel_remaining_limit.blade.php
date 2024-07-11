@@ -112,7 +112,7 @@
             @csrf
             <div class="div-medical">
                 <div class="div-title">
-                    <a href="javascript:void(0);" onclick="goBackWithModuleID()" target="iframe_dashboard">
+                    <a href="{{ route('medical', ['moduleID' => 'MD']) }}" target="iframe_dashboard">
                         <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
                         <span class="title-text">{{ __('md_transfer_payment_to_excel_remaining_limit.list') }}</span>
                     </a>

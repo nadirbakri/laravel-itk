@@ -51,7 +51,7 @@
 <body>
     <div class="div-personel">
         <div class="div-title">
-            <a href="javascript:void(0);" onclick="goBackWithModuleID()" target="iframe_dashboard" id="toolbar-prev-page">
+            <a href="{{ route('personnel', ['moduleID' => 'PE']) }}" target="iframe_dashboard" id="toolbar-prev-page">
                 <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
                 <span class="title-text">{{ __('personel_employee_report_by_status.list') }}</span>
             </a>

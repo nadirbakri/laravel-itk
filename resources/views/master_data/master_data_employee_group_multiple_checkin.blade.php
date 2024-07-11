@@ -151,7 +151,7 @@
 <body>
     <div class="div-form">
         <div class="div-title">
-            <a href="javascript:void(0);" onclick="goBackWithModuleID()" target="iframe_dashboard">
+            <a href="{{ route('master_data', ['moduleID' => 'MOB']) }}" target="iframe_dashboard">
                 <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
                 <span class="title-text">{{ __('data_employee_group.judul_employee_group_multiple_checkin') }}</span>
             </a>

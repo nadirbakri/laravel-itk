@@ -73,7 +73,7 @@
 <body>
     <div class="div-time_management">
         <div class="div-title">
-            <a href="javascript:void(0);" onclick="goBackWithModuleID('{{ url()->previous() }}')" target="iframe_dashboard">
+            <a href="{{ url()->previous() }}" target="iframe_dashboard">
                 <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
                 <span class="title-text">{{ __('tm_input_balance_leave.list_detail') }}</span>
             </a>

@@ -904,7 +904,7 @@ Route::get('utilities/organization_chart/get/position', 'OrganizationStructureCo
 
 
 /* Route Untuk Menu Export MOB */
-Route::get('export', 'ExportController@pageExport');
+Route::get('export', 'ExportController@pageExport')->name('export');
 Route::get('export/export_medical', 'ExportController@pageExportMedical');
 Route::get('export/export_reimbursement', 'ExportController@pageExportReimbursement');
 Route::get('export/export_workflow', 'ExportController@pageExportWorkflow');
@@ -945,7 +945,7 @@ Route::get('transaction/checkin_list', 'TransactionController@pageTransactionChe
 Route::get('transaction/mapscheckin_list', 'TransactionController@pageTransactionMapsCheckinList');
 
 /* Route untuk Menu Master Data MOB */
-Route::get('master_data', 'MasterDataController@pageMasterData');
+Route::get('master_data', 'MasterDataController@pageMasterData')->name('master_data');
 Route::get('master_data/employee_master', 'MasterDataController@pageMasterDataEmployeeMaster');
 Route::get('master_data/employee_group_permit', 'MasterDataController@pageMasterDataEmployeeGroup');
 Route::get('master_data/employee_group_leave', 'MasterDataController@pageMasterDataEmployeeGroupLeave');
