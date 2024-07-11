@@ -65,7 +65,7 @@ Route::get('getOvertime', 'DashboardController@getOvertime');
 Route::get('getPayroll', 'DashboardController@getPayroll');
 
 /* Route Untuk Menu Personel */
-Route::get('personnel', 'PersonelController@pagePersonelMain');
+Route::get('personnel', 'PersonelController@pagePersonelMain')->name('personnel');
 Route::get('personnel/personal_data', 'PersonelController@pagePersonalDataPersonel');
 Route::get('personnel/performance', 'PersonelController@pagePerformancePersonel');
 Route::get('personnel/work_detail', 'PersonelController@pageWorkDetailPersonel');
@@ -406,7 +406,7 @@ Route::post('personnel/import_master_data/download_template', 'PersonelControlle
 Route::post('personnel/import_master_data/import', 'PersonelController@importMasterDataPersonel');
 
 /* Route Untuk Menu Time Management */
-Route::get('time_management', 'TimeManagementController@pageTimeManagement');
+Route::get('time_management', 'TimeManagementController@pageTimeManagement')->name('time_management');
 Route::get('time_management/time_recording_process_form', 'TimeManagementController@pageTimeRecordingProcessForm');
 Route::get('time_management/update_absenteeism_data', 'TimeManagementController@pageUpdateAbsenteeismData');
 Route::get('time_management/change_data_shift', 'TimeManagementController@pageChangeDataShift');
@@ -520,7 +520,7 @@ Route::post('time_management/change_data_shift/import', 'TimeManagementControlle
 Route::post('time_management/change_data_shift/download', 'TimeManagementController@templateChangeDataShift');
 
 /* Route Untuk Menu Payroll */
-Route::get('payroll', 'PayrollController@pagePayroll');
+Route::get('payroll', 'PayrollController@pagePayroll')->name('payroll');
 /* Payroll Data Entry Menu */
 Route::get('payroll/salary_master', 'PayrollController@pageSalaryMaster');
 Route::get('payroll/severance_data_entry', 'PayrollController@pageSeveranceDataEntry');
@@ -733,7 +733,7 @@ Route::post('payroll/spt_pph_report/print/excel', 'PayrollController@printSPTPPH
 Route::post('payroll/monthly_jamsostek_report/print', 'PayrollController@printMonthlyJamsostekReportPayroll');
 
 /* Route Untuk Menu Medical */
-Route::get('medical', 'MedicalController@pageMedical');
+Route::get('medical', 'MedicalController@pageMedical')->name('medical');
 /* Medical Maintenance Menu */
 Route::get('medical/medical_reference', 'MedicalController@pageMedicalReference');
 Route::get('medical/claim_code', 'MedicalController@pageClaimCode');
@@ -838,7 +838,7 @@ Route::get('medical/input_personnel_limit/status', 'MedicalController@statusInpu
 Route::get('medical/treatment_eligibility/status', 'MedicalController@statusTreatmentEligibilityMD');
 
 /* Route Untuk Menu Utilities */
-Route::get('utilities', 'UtilitiesController@pageUtilitiesMain');
+Route::get('utilities', 'UtilitiesController@pageUtilitiesMain')->name('utilities');
 Route::get('utilities/organization_chart', 'UtilitiesController@pageOrganizationStructureUtilities');
 Route::get('utilities/user_security_maintenance', 'UtilitiesController@pageUserSecurityMaintenanceUtilities');
 Route::get('utilities/menu_master', 'UtilitiesController@pageMenuMasterUtilities');
@@ -930,7 +930,7 @@ Route::post('export_attendance/print', 'ExportController@printAttendanceExport')
 Route::post('export/company_working_calendar/proses','ExportController@prosesCompanyWorkingCalendar');
 
 /* Route untuk Menu Transaction MOB */
-Route::get('transaction', 'TransactionController@pageTransaction');
+Route::get('transaction', 'TransactionController@pageTransaction')->name('transaction');
 Route::get('transaction/transaction_reimbursement', 'TransactionController@pageTransactionReimbursement');
 Route::get('transaction/transaction_mass_leave', 'TransactionController@pageTransactionMassLeave');
 Route::get('transaction/transaction_workflow', 'TransactionController@pageTransactionWorkflow');

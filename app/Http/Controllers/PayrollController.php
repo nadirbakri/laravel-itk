@@ -5369,12 +5369,16 @@ public function dataDetailReportFormatPY(Request $request)
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
+            $groupNPWP = filter_var($request->group_npwp, FILTER_VALIDATE_BOOLEAN);
+
             $response = $client->post(env('API_URL') . '/prspt/insertprspt',
                 ['body' => json_encode(
                     [
                         "companyCode" => Session::get('companyCode'),
-                        "groupNPWP" => filter_var($request->group_npwp, FILTER_VALIDATE_BOOLEAN),
-                        "groupNPWPCode" => $request->npwp,
+                        "groupNPWP" => $groupNPWP,
+                        "groupNPWPCode" => ($groupNPWP) ? $request->npwp : "ALL",
+                        "employeeNoFrom" => $request->employee_no_from,
+                        "employeeNoTo" => $request->employee_no_to,
                         "languageCode" => App::getLocale(),
                         "changedNo" => 0,
                         "changedBy" => Session::get('userID'),

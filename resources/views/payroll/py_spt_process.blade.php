@@ -117,6 +117,29 @@
                     </a>
                 </div>
                 <div class="row">
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label for="employee_no_from form-check-label">{{ __('payroll_spt_process.label_employee_no') }}</label>
+                            <span style="color: red">*</span>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <select class="form-control select2" id="employee_no_from" name="employee_no_from"></select>
+                        </div>
+                    </div>
+                    <div class="col-0.5">
+                        <div class="form-group">
+                            <label for="employee_no_to form-check-label">{{ __('payroll_spt_process.label_to') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <select class="form-control select2" id="employee_no_to" name="employee_no_to"></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col-3">
                         <div class="form-group">
                             <label for="group_npwp form-check-label">{{ __('payroll_spt_process.label_group_npwp') }}</label>
@@ -141,7 +164,7 @@
                         </button>
                     </div>
                     <div class="col-3">
-                        <a class="btn btn-outline-primary" href="{{ url('/payroll') }}" target="iframe_dashboard"
+                        <a class="btn btn-outline-primary" href="{{ route('payroll', ['moduleID' => 'PY']) }}" target="iframe_dashboard"
                             name="btn-cancel" id="btn-cancel" style="width: 100%;">
                             <i class="fa fa-times-circle"></i> {{ __('payroll_spt_process.btn_cancel') }}
                         </a>
@@ -234,7 +257,99 @@
             }
         });
 
+        loadDataEmployeeNo('#employee_no_from');
+        loadDataEmployeeNo('#employee_no_to');
         loadDataNPWP();
+
+        loadDataFirstLastAllEmployeeNo('#employee_no_from', 'First');
+        loadDataFirstLastAllEmployeeNo('#employee_no_to', 'Last');
+
+        function loadDataFirstLastAllEmployeeNo(field = '', func = '') {
+            $.ajax({
+                type: 'GET',
+                url: "{{ url('/employee_no/func/api') }}",
+                data: {
+                    'func': func
+                }
+            }).then(function (data) {
+                var $newOption = $("<option selected='selected'></option>").val(data.employeeNo).text(
+                    data.fullName);
+                $(field).append($newOption).trigger('change');
+            });
+        }
+
+        function loadDataEmployeeNo(field = '') {
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' +
+                        '<div class="col-6">' + data.data.employeeNo + '</div>' +
+                        '<div class="col-6">' + data.data.fullName + '</div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var headerIsAppend = false;
+            $(field).on('select2:open', function (e) {
+                if (!headerIsAppend) {
+                    html = '<div class="row">' +
+                        '<div class="col-6"><b>Employee No</b></div>' +
+                        '<div class="col-6"><b>Full Name</b></div>' +
+                        '</div>';
+                    $('.select2-search--dropdown').append(html);
+                    headerIsAppend = true;
+                }
+            });
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            var $employeeNo = $(field).select2({
+                width: '100%',
+                placeholder: 'Choose Employee',
+                allowClear: true,
+                // tags: true,
+                closeOnSelect: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: "{{ url('/employee_no/api') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.fullName,
+                                    id: item.employeeNo,
+                                    title: item.fullName,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
 
         function loadDataNPWP(){
             function formatSelect(data) {
@@ -319,11 +434,23 @@
                 rules: {
                     npwp: {
                         required: true,
+                    },
+                    employee_no_from: {
+                        required: true,
+                    },
+                    employee_no_to: {
+                        required: true,
                     }
                 },
                 messages: {
                     npwp: {
                         required: "{{ __('payroll_spt_process.npwp_required') }}",
+                    },
+                    employee_no_from: {
+                        required: "{{ __('payroll_spt_process.employee_no_from_required') }}",
+                    },
+                    employee_no_to: {
+                        required: "{{ __('payroll_spt_process.employee_no_to_required') }}",
                     }
                 },
                 highlight: function (element) {
