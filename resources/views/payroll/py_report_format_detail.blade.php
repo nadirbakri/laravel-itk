@@ -925,7 +925,7 @@
             $('#record_function_det').val("Edit");
             $('#column_no').val((data.columnNo + 1));
             $('#column_no_edit').val((data.columnNo + 1));
-            $('#table_name_detail').val(data.tableName);
+            $('#table_name_detail').val(data.tableName).trigger('change');
             $('#column_header').val(data.columnHeader);
             $('#alignment').val(data.alignment);
             $('#data_format').val(data.dataFormat);
@@ -962,6 +962,7 @@
                     });
                     var $newOption = $("<option selected='selected'></option>").val(data2[index].levelType).text(data2[index].levelDescription);
                     $("#field_name_detail").append($newOption).trigger('change');
+                    $('#div-gmlevel-detail').show();
                 });
             }else{
                 loadDataFieldName();
@@ -975,6 +976,7 @@
                     var index = data2.indexOf(data.fieldName);
                     var $newOption = $("<option selected='selected'></option>").val(data2[index]).text(data2[index]);
                     $("#field_name_detail").append($newOption).trigger('change');
+                    $('#div-gmlevel-detail').hide();
                 });
             }
 
@@ -1002,7 +1004,7 @@
             $('#record_function_det').val("Edit");
             $('#column_no').val((data.columnNo + 1));
             $('#column_no_edit').val((data.columnNo + 1));
-            $('#table_name_detail').val(data.tableName);
+            $('#table_name_detail').val(data.tableName).trigger('change');
             $('#column_header').val(data.columnHeader);
             $('#alignment').val(data.alignment);
             $('#data_format').val(data.dataFormat);
@@ -1020,8 +1022,10 @@
             tableName = $('#table_name_detail').val();
             if(tableName == 'GmLevel'){
                 loadDataLevelType();
+                $('#div-gmlevel-detail').show();
             }else{
                 loadDataFieldName();
+                $('#div-gmlevel-detail').hide();
             }
 
             $('#table_name_detail').on('change', function () {
