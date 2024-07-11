@@ -893,6 +893,7 @@ Route::get('utilities/user_security_maintenance/module/table', 'UtilitiesControl
 Route::get('utilities/user_security_maintenance/level_authorization/table', 'UtilitiesController@tableUserSecurityMaintenanceLevelAuthorizationUtilities');
 Route::get('utilities/group_user_access/user/table', 'UtilitiesController@tableUserAccessGroupUserUtilities');
 Route::get('utilities/menu_master/configure_menu/table', 'UtilitiesController@tableMenuMasterConfigureMenuUtilities');
+Route::get('utilities/menu_master_mobile/child/table', 'UtilitiesController@tableMenuMasterMobileChildUtilities');
 
 Route::get('utilities/group_authorization/status', 'UtilitiesController@statusAuthorizationCodeGroupUtilities');
 Route::get('utilities/group_user_access/status', 'UtilitiesController@statusUserAccessGroupUtilities');
@@ -924,7 +925,7 @@ Route::get('utilities/organization_chart/get/position', 'OrganizationStructureCo
 
 
 /* Route Untuk Menu Export MOB */
-Route::get('export', 'ExportController@pageExport');
+Route::get('export', 'ExportController@pageExport')->name('export');
 Route::get('export/export_medical', 'ExportController@pageExportMedical');
 Route::get('export/export_reimbursement', 'ExportController@pageExportReimbursement');
 Route::get('export/export_workflow', 'ExportController@pageExportWorkflow');
@@ -965,7 +966,7 @@ Route::get('transaction/checkin_list', 'TransactionController@pageTransactionChe
 Route::get('transaction/mapscheckin_list', 'TransactionController@pageTransactionMapsCheckinList');
 
 /* Route untuk Menu Master Data MOB */
-Route::get('master_data', 'MasterDataController@pageMasterData');
+Route::get('master_data', 'MasterDataController@pageMasterData')->name('master_data');
 Route::get('master_data/employee_master', 'MasterDataController@pageMasterDataEmployeeMaster');
 Route::get('master_data/employee_group_permit', 'MasterDataController@pageMasterDataEmployeeGroup');
 Route::get('master_data/employee_group_leave', 'MasterDataController@pageMasterDataEmployeeGroupLeave');
@@ -1265,6 +1266,7 @@ Route::get('loan_bank/api', 'DataController@dataLoanBankAPI');
 Route::get('leave_hour/api', 'DataController@dataLeaveHourAPI');
 Route::get('loan_whitelist/api', 'DataController@dataLoanWhitelistAPI');
 Route::get('menu_mobile/api', 'DataController@dataMenuMobileAPI');
+Route::get('menu_mobile/table/api', 'DataController@dataMenuMobileTableAPI');
 
 /* Route Untuk Save Token Device dan Notification Firebase */
 Route::get('save-token', 'DashboardController@saveToken');
