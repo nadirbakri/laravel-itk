@@ -11,7 +11,9 @@ return [
     'btn_process' => 'Proses',
     'btn_cancel' => 'Batal',
     'alert_success' => 'Sukses !',
-    'npwp_required' => 'Kode NPWP Tidak Bisa Kosong'
+    'npwp_required' => 'Kode NPWP Tidak Bisa Kosong',
+    'employee_no_from_required' => 'No Karyawan Tidak Bisa Kosong',
+    'employee_no_to_required' => 'No Karyawan Tidak Bisa Kosong'
 ]
 
 ?>
