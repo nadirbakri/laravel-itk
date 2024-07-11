@@ -262,7 +262,7 @@
                         data: 'periodMonth', 
                         name: 'periodMonth',
                         render: function (data, type, row) {
-                            return moment(data).format('MMMM');
+                            return moment('2023-' + data + '-01').format('MMMM');
                         }
                     },
                     { data: 'periodYear', name: 'periodYear' },

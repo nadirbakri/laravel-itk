@@ -1266,7 +1266,6 @@
             clicked = "DOWNLOAD_XLS";
 
             var reportNameDetailValue = $('#report_name_detail').val();
-            console.log(reportNameDetailValue);
 
             if (reportNameDetailValue === null || reportNameDetailValue.trim() === '') {
                 $('#btn-send-to').prop("disabled", false);

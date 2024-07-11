@@ -324,10 +324,10 @@
 
         $('#employee_no_hidden').val((typeof arrData[0].employeeNo !== 'undefined') ? arrData[0].employeeNo : '');
 
-        var month = (typeof arrData[0].periodMonth !== 'undefined') ? moment(arrData[0].periodMonth).format('MMMM') : '';
-        var year = (typeof arrData[0].periodYear !== 'undefined') ? arrData[0].periodYear : '';
+        // var month = (typeof arrData[0].periodMonth !== 'undefined') ? moment(arrData[0].periodMonth).format('MMMM') : '';
+        // var year = (typeof arrData[0].periodYear !== 'undefined') ? arrData[0].periodYear : '';
 
-        $('#month_year').val(month + ' ' + year);
+        $('#month_year').val(moment(arrData[0].periodYear.toString() + "-" + arrData[0].periodMonth.toString()).format('MMMM' + ' ' + 'YYYY'));
         $('#month').val((typeof arrData[0].periodMonth !== 'undefined') ? arrData[0].periodMonth : '');
         $('#year').val((typeof arrData[0].periodYear !== 'undefined') ? arrData[0].periodYear : '');
         $('#period').val((typeof arrData[0].statusPeriod !== 'undefined') ? arrData[0].statusPeriod : '');
@@ -335,7 +335,6 @@
         load_data_table_salary_master_detail();
         if (typeof arrData[0].grid !== 'undefined') {
             $.each(arrData[0].grid, function(k, v) {
-                console.log(v);
                 table.row.add([
                     '<input type="text" class="form-control" name="field_name[]" id="field_name" value="'+ ((typeof v.fieldName !== 'undefined' && v.fieldName !== null) ? v.fieldName : '') +'" readonly>',
                     '<input type="text" class="form-control" name="description[]" id="description" value="'+ ((typeof v.description !== 'undefined' && v.description !== null) ? v.description : '') +'" readonly>',
