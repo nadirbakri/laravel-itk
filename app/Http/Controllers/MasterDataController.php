@@ -1183,7 +1183,7 @@ class MasterDataController extends Controller
             }else{
                 $b = [];
             }
-            // var_dump(json_encode(
+            // dd(json_encode(
             //     [
             //         'companyCode' => Session::get('companyCode'),
             //             'groupCode' => $request->group_code,
@@ -1195,7 +1195,7 @@ class MasterDataController extends Controller
             //             "sessionUserID" => Session::get('userID'),
             //             "languageCode" => App::getLocale()
             //     ]
-            //     ));
+            // ));
             $response = $client->post(env('API_URL') . '/mobile/gmgroup/insertgroupcodereimbursement',
                 ['body' => json_encode(
                     [

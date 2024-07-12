@@ -588,14 +588,39 @@
                     'employeeNo': $(this).val()
                 }
             }).then(function (data) {
+                // console.log(data)
                 // $('#user_id').val((typeof data[0].userDetail.userID !== 'undefined') ? data[0].userDetail.userID : '');
                 $('#employee_no').val(data[0].employeeNo);
                 $('#full_name').val(data[0].fullName);
+                $('#phone').val(data[0].peMasterInfo.homePhone);
+                $('#address').val(data[0].peMasterInfo.homeAddress);
+                $('#office_location').val(data[0].locationCode).trigger('change');
                 pickerJoinDate.setDate(((typeof data[0].joinDate !== 'undefined') ? data[0].joinDate : ''));
                 $('#join_date_hidden').val(((typeof data[0].joinDate !== 'undefined') ? data[0].joinDate : ''));
                 $('#user_id').prop('readonly', true);
                 $('#employee_no').prop('readonly', true);
                 $('#password').prop('readonly', true);
+
+                $.ajax({
+                    type: 'GET',
+                    url: "{{ url('/office_location/func/api') }}",
+                    data: {
+                        'locationCode': data[0].locationCode,
+                    }
+                }).then(function (data) {
+                    var option = new Option(data[0].locationName, data[0].locationCode, true, true);
+
+                    $('#office_location').append(option).trigger('change');
+
+                    $('#office_location').trigger({
+                        type: 'select2:select',
+                        params: {
+                            id: data[0].locationCode,
+                            text: data[0].locationName,
+                            data: data[0]
+                        }
+                    });
+                });
             });
         }
     });
@@ -612,7 +637,7 @@
 
     $.get("{{ url('office_location/api') }}", function (data) {
         $.each(data, function (k, v) {
-            $('#office_location').append("<option value=" + v.officeCode + ">" + v.officeDesc +
+            $('#office_location').append("<option value=" + v.locationCode + ">" + v.locationName +
                 "</option>");
         });
     });
