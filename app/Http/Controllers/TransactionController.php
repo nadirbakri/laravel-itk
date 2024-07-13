@@ -196,7 +196,7 @@ class TransactionController extends Controller
                         'businessUnit' => $request->businessUnit,
                         'exportMenu' => false,
                         'companyCode' => Session::get('companyCode'), 
-                        'languageCode' => App::getLocale(), 
+                        'languageCode' => strtoupper(App::getLocale()), 
                         'sessionID' => 0, 
                         'sessionUserID' => Session::get('userID'),
                     ]
@@ -262,7 +262,7 @@ class TransactionController extends Controller
                             'businessUnit' => $request->businessUnit,
                             // 'exportMenu' => false,
                             'companyCode' => Session::get('companyCode'), 
-                            'languageCode' => App::getLocale(), 
+                            'languageCode' => strtoupper(App::getLocale()), 
                             'sessionID' => 0, 
                             'sessionUserID' => Session::get('userID')
                         ]
@@ -323,7 +323,7 @@ class TransactionController extends Controller
                         'businessUnit' => $request->businessUnit,
                         // 'exportMenu' => false,
                         'companyCode' => Session::get('companyCode'), 
-                        'languageCode' => App::getLocale(), 
+                        'languageCode' => strtoupper(App::getLocale()), 
                         'sessionID' => 0, 
                         'sessionUserID' => Session::get('userID'),
                     ]
@@ -386,7 +386,7 @@ class TransactionController extends Controller
                             'businessUnit' => $request->businessUnit,
                             'exportMenu' => false,
                             'companyCode' => Session::get('companyCode'), 
-                            'languageCode' => App::getLocale(), 
+                            'languageCode' => strtoupper(App::getLocale()), 
                             'sessionID' => 0, 
                             'sessionUserID' => Session::get('userID'),
                         ]
@@ -447,7 +447,7 @@ class TransactionController extends Controller
                         'status' => $request->status,
                         'type' => $request->type,
                         'companyCode' => Session::get('companyCode'), 
-                        'languageCode' => App::getLocale(), 
+                        'languageCode' => strtoupper(App::getLocale()), 
                         'sessionID' => 0, 
                         'sessionUserID' => Session::get('userID'),
                     ]
@@ -493,7 +493,7 @@ class TransactionController extends Controller
                             'exportMenu' => false,
                             'companyCode' => Session::get('companyCode'), 
                             'workflowType' => "ER",
-                            'languageCode' => App::getLocale(), 
+                            'languageCode' => strtoupper(App::getLocale()), 
                             'employeeNo'=> $request->employeeNo,
                             'status' => $request->status,
                             'sessionID' => 0, 
@@ -537,7 +537,7 @@ class TransactionController extends Controller
                             'workflowType' => "EW",
                             'status' => $request->status,
                             'companyCode' => Session::get('companyCode'), 
-                            'languageCode' => App::getLocale(), 
+                            'languageCode' => strtoupper(App::getLocale()), 
                             'sessionID' => 0, 
                             'sessionUserID' => Session::get('userID'),
                         ]
@@ -572,7 +572,7 @@ class TransactionController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            // var_dump(json_encode(
+            // dd(json_encode(
             //     [
             //         'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
             //         'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
@@ -600,7 +600,7 @@ class TransactionController extends Controller
                         'businessUnit' => $request->businessUnit,
                         'exportMenu' => false,
                         'companyCode' => Session::get('companyCode'), 
-                        'languageCode' => App::getLocale(), 
+                        'languageCode' => strtoupper(App::getLocale()), 
                         'sessionID' => 0, 
                         'sessionUserID' => Session::get('userID')
                     ]
@@ -663,7 +663,7 @@ class TransactionController extends Controller
                         'employeeNo'=> $request->employeeNo,
                         'exportMenu' => false,
                         'companyCode' => Session::get('companyCode'), 
-                        'languageCode' => App::getLocale(), 
+                        'languageCode' => strtoupper(App::getLocale()), 
                         'sessionID' => 0, 
                         'sessionUserID' => Session::get('userID')
                     ]
@@ -719,7 +719,7 @@ class TransactionController extends Controller
                         'lastCheckIn' => Carbon::parse($request->lastCheckIn)->format('Y-m-d'),
                         'employeeNo'=> $request->employeeNo,
                         'companyCode' => Session::get('companyCode'), 
-                        'languageCode' => App::getLocale(), 
+                        'languageCode' => strtoupper(App::getLocale()), 
                         'sessionID' => 0, 
                         'sessionUserID' => Session::get('userID')
                     ]
@@ -777,7 +777,7 @@ class TransactionController extends Controller
                         'employeeNo'=> $request->employeeNo,
                         'exportMenu' => false,
                         'companyCode' => Session::get('companyCode'), 
-                        'languageCode' => App::getLocale(), 
+                        'languageCode' => strtoupper(App::getLocale()), 
                         'sessionID' => 0, 
                         'sessionUserID' => Session::get('userID')
                     ]
@@ -852,7 +852,7 @@ class TransactionController extends Controller
                         'businessUnit'=> $request->businessUnit,
                         'employeeNo'=> $request->employeeNo,
                         'companyCode' => Session::get('companyCode'), 
-                        'languageCode' => App::getLocale(), 
+                        'languageCode' => strtoupper(App::getLocale()), 
                         'sessionID' => 0, 
                         'sessionUserID' => Session::get('userID'),
                     ]
@@ -918,7 +918,7 @@ class TransactionController extends Controller
                         // 'type' =>  $request->transportType,
                         // 'businessUnit'=> $request->businessUnit,
                         'companyCode' => Session::get('companyCode'), 
-                        'languageCode' => App::getLocale(), 
+                        'languageCode' => strtoupper(App::getLocale()), 
                         'sessionID' => 0, 
                         'sessionUserID' => Session::get('userID'),
                     ]
@@ -1422,7 +1422,7 @@ class TransactionController extends Controller
                         // 'logActionUsername' => Session::get('userName'),
                         'companyCode' => Session::get('companyCode'), 
                         'employeeNo'=> $request->employeeNo,
-                        'languageCode' => App::getLocale(), 
+                        'languageCode' => strtoupper(App::getLocale()), 
                         'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
                         'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
                         'sessionID' => 0, 
