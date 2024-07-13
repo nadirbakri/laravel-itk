@@ -1312,17 +1312,6 @@ class TransactionController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            // var_dump(json_encode(
-            //     [
-            //         'status'=> $request->status,
-            //         'companyCode' => Session::get('companyCode'),
-            //         'ticketNo' => $request->ticketNo,
-            //         'employeeNo'=> $request->employeeNo,
-            //         'sessionUserID' => Session::get('userID'),
-            //         'languageCode' => App::getLocale()
-            //     ]
-            //     ));
-
             $response = $client->put(env('API_URL') . '/mobile/tmovertime/updateovtapprovalbyadmin',
                 ['body' => json_encode(
                     [
