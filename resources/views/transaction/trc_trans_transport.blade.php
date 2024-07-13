@@ -376,12 +376,6 @@
                             <div class="col-3">
                                 <input type="hidden" id="totalclaim" name="totalclaim" class="form-control" readonly><span id="totalclaim_val"></span>
                             </div>
-                            <div class="col-3">
-                                <h5>{{ __('trans_transport.dname') }}</h5>
-                            </div>
-                            <div class="col-3">
-                                <input type="hidden" class="form-control" id="dependent" name="dependent" readonly><span id="dependent_val"></span>
-                            </div>
                         </div>
                         <br>
                         <div class="row approve">
@@ -670,10 +664,10 @@
     const klikdetail = (element) => {
         let data = table.row($(element).parent()).data().transportEntity;
 
-        $('#reqdate').val(data.createdDate)
-        $('#reqdate_val').html(data.createdDate)
-        $('#recdate').val(data.receiptDate)
-        $('#recdate_val').html(data.receiptDate)
+        $('#reqdate').val(moment(data.createdDate).format('YYYY-MM-DD'))
+        $('#reqdate_val').html(moment(data.createdDate).format('YYYY-MM-DD'))
+        $('#recdate').val(moment(data.receiptDate).format('YYYY-MM-DD'))
+        $('#recdate_val').html(moment(data.receiptDate).format('YYYY-MM-DD'))
         $('#tiketno').val(data.ticketNo)
         $('#tiketno_val').html(data.ticketNo)
         $('#status').val(data.status)

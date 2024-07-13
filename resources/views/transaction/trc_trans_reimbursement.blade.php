@@ -365,12 +365,6 @@
                                     <div class="col">
                                         <input id="totalclaim" name="totalclaim" type="hidden" class="form-control"><span id="totalclaim_val"></span>
                                     </div>
-                                    <div class="col-3">
-                                        <h5>Dependent Name</h5>
-                                    </div>
-                                    <div class="col">
-                                        <input type="hidden" class="form-control" id="dependent" name="dependent"><span id="dependent_val"></span>
-                                    </div>
                                 </div>
                                 <br>
                                 <div class="row approve">
@@ -736,16 +730,16 @@
     const klikdetail = (element) => {
         let data = table.row($(element).parent()).data().reimbursementEntity;
 
-        $('#reqdate').val(data.createdBy)
-        $('#reqdate_val').html(data.createdBy)
+        $('#reqdate').val(moment(data.createdDate).format('YYYY-MM-DD'))
+        $('#reqdate_val').html(moment(data.createdDate).format('YYYY-MM-DD'))
         $('#project_name').val(data.projectName)
         $('#project_name_val').html(data.projectName)
-        $('#recdate').val(data.receiptDate)
-        $('#recdate_val').html(data.receiptDate)
+        $('#recdate').val(moment(data.receiptDate).format('YYYY-MM-DD'))
+        $('#recdate_val').html(moment(data.receiptDate).format('YYYY-MM-DD'))
         $('#tiketno').val(data.ticketNo)
         $('#tiketno_val').html(data.ticketNo)
-        $('#status').val(data.status)
-        $('#status_val').html(data.status)
+        $('#status').val(data.reimbursementStatus)
+        $('#status_val').html(data.reimbursementStatus)
         $('#b_unit').val(data.businessUnit)
         $('#b_unit_val').html(data.businessUnit)
         $('#employee_no').val(data.employeeNo)
