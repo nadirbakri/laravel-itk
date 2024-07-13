@@ -626,12 +626,23 @@
 </script>
 
 <script>
+    function isEmpty(obj) {
+        for(var prop in obj) {
+            if(Object.prototype.hasOwnProperty.call(obj, prop)) {
+                return false;
+            }
+        }
+
+        return JSON.stringify(obj) === JSON.stringify({});
+    }
+    
     const klikdetail = (element) => {
         let data;
         let type = $("#workflow_type").val();
         if(type == "ER"){
             $('#modal_list_detail').modal('show')
             data = table.row($(element).parents('tr')).data().permitEntity;
+            console.log(data.permitNameList[0] == null);
 
             $('#directsuperior_permit').val(data.directSuperiorID)
             $('#reqdate_permit').val(data.permitDate)
@@ -651,7 +662,7 @@
             $('#workflow_type_permit').html('Permit')
             $('#workflow_type_permit_val').html('PERMIT')
             $('#permit_type_permit').html(data.permitCode)
-            $('#permit_type_permit_val').html(data.permitCode)
+            $('#permit_type_permit_val').html((data.permitNameList[0] == null) ? data.permitCode : data.permitNameList[0])
             $('#remarks_permit').html(data.permitRemarks)
             $('#remarks_permit_val').html(data.permitRemarks)
         }else{

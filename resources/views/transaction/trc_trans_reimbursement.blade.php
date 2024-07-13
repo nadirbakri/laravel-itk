@@ -329,17 +329,23 @@
                                 </div>
 
                                 <div class="row detailstatus">
-                                    <div class="col-3">
+                                    <!-- <div class="col-3">
                                         <h5>Business Unit</h5>
                                     </div>
                                     <div class="col">
                                         <input id="b_unit" name="b_unit" type="hidden" class="form-control"><span id="b_unit_val"></span>
-                                    </div>
+                                    </div> -->
                                     <div class="col-3">
                                         <h5>Claim Type</h5>
                                     </div>
                                     <div class="col">
                                         <input id="c_type" name="c_type" type="hidden" class="form-control"><span id="c_type_val"></span>
+                                    </div>
+                                    <div class="col-3">
+                                        <h5>Project Name</h5>
+                                    </div>
+                                    <div class="col">
+                                        <input type="hidden" class="form-control" id="project_name" name="project_name"><span id="project_name_val"></span>
                                     </div>
                                 </div>
 
@@ -351,21 +357,16 @@
                                         <input id="employee_no" name="employee_no" type="hidden" class="form-control"><span id="employee_no_val"></span>
                                     </div>
                                     <div class="col-3">
-                                        <h5>Project Name</h5>
-                                    </div>
-                                    <div class="col">
-                                        <input type="hidden" class="form-control" id="project_name" name="project_name"><span id="project_name_val"></span>
-                                    </div>
-                                </div>
-                            
-                                <div class="row detailstatus">
-                                    <div class="col-3">
                                         <h5>Total Claim</h5>
                                     </div>
                                     <div class="col">
                                         <input id="totalclaim" name="totalclaim" type="hidden" class="form-control"><span id="totalclaim_val"></span>
                                     </div>
                                 </div>
+                            
+                                <!-- <div class="row detailstatus">
+                                    
+                                </div> -->
                                 <br>
                                 <div class="row approve">
                                     <div class="col-3">
@@ -686,9 +687,17 @@
                                 }
                             }
                     },
-                    {data: 'reimbursementEntity.totalClaimAmount', name: 'reimbursementEntity.totalClaimAmount'},
+                    {data: 'reimbursementEntity.totalClaimAmount', name: 'reimbursementEntity.totalClaimAmount',
+                        render: function (data, type, row) {
+                            return data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                        }
+                    },
                     {data: 'reimbursementEntity.approvalRemarks', name: 'reimbursementEntity.approvalRemarks'},
-                    {data: 'reimbursementEntity.paidAmount', name: 'reimbursementEntity.paidAmount'},
+                    {data: 'reimbursementEntity.paidAmount', name: 'reimbursementEntity.paidAmount',
+                        render: function (data, type, row) {
+                            return data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                        }
+                    },
                 ],
                 select: {
                     style:    'multi',
@@ -740,14 +749,14 @@
         $('#tiketno_val').html(data.ticketNo)
         $('#status').val(data.reimbursementStatus)
         $('#status_val').html(data.reimbursementStatus)
-        $('#b_unit').val(data.businessUnit)
-        $('#b_unit_val').html(data.businessUnit)
+        // $('#b_unit').val(data.businessUnit)
+        // $('#b_unit_val').html(data.businessUnit)
         $('#employee_no').val(data.employeeNo)
         $('#employee_no_val').html(data.employeeNo)
         $('#c_type').val(data.reimbursementType)
         $('#c_type_val').html(data.reimbursementType)
         $('#totalclaim').val(data.totalClaimAmount)
-        $('#totalclaim_val').html(data.totalClaimAmount)
+        $('#totalclaim_val').html(data.totalClaimAmount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."))
         $('#approvalremarks').val(data.approvalRemarks)
         $('#totalpaid').val(data.paidAmount)
         $('#directsuperior').val(data.directSuperiorID)

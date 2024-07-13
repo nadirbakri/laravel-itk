@@ -584,7 +584,11 @@
                     {data: 'customerName', name: 'customerName'},
                     {data: 'projectName', name: 'projectName'},
                     {data: 'total', name: 'total'},
-                    {data: 'totalClaimAmount', name: 'totalClaimAmount'},
+                    {data: 'totalClaimAmount', name: 'totalClaimAmount',
+                        render: function (data, type, row) {
+                            return data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                        }
+                    },
                     {data: 'purpose', name: 'purpose'},
                 ],
                 select: {

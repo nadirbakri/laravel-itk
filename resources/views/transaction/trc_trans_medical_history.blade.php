@@ -374,7 +374,7 @@
                                         <h5>{{ __('trans_medical.treq') }}</h5>
                                     </div>
                                     <div class="col">
-                                        <input id="totalclaim" name="totalclaim" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from" disabled>
+                                        <input id="totalclaim" name="totalclaim" style="border: none" style="outline: none" type="text" class="form-control" disabled>
                                     </div>
                                     <div class="col-3">
                                         <h5>{{ __('trans_medical.dname') }}</h5>
@@ -773,10 +773,18 @@
                                 }
                             }
                     },
-                    {data: 'reimbursementEntity.totalClaimAmount', name: 'reimbursementEntity.totalClaimAmount'},
+                    {data: 'reimbursementEntity.totalClaimAmount', name: 'reimbursementEntity.totalClaimAmount',
+                        render: function (data, type, row) {
+                            return data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                        }
+                    },
                     {data: 'reimbursementEntity.approvalRemarks', name: 'reimbursementEntity.approvalRemarks'
                     },
-                    {data: 'reimbursementEntity.paidAmount', name: 'reimbursementEntity.paidAmount'},
+                    {data: 'reimbursementEntity.paidAmount', name: 'reimbursementEntity.paidAmount',
+                        render: function (data, type, row) {
+                            return data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                        }
+                    },
                 ],
                 select: {
                     style:    'multi',

@@ -610,11 +610,27 @@
                     {data: 'transportEntity.customerName', name: 'transportEntity.customerName'},
                     {data: 'transportEntity.startLocation', name: 'transportEntity.startLocation'},
                     {data: 'transportEntity.endLocation', name: 'transportEntity.endLocation'},
-                    {data: 'transportEntity.totalAmount', name: 'transportEntity.totalAmount'},
-                    {data: 'transportEntity.paidAmount', name: 'transportEntity.paidAmount'},
+                    {data: 'transportEntity.totalAmount', name: 'transportEntity.totalAmount',
+                        render: function (data, type, row) {
+                            return data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                        }
+                    },
+                    {data: 'transportEntity.paidAmount', name: 'transportEntity.paidAmount',
+                        render: function (data, type, row) {
+                            return data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                        }
+                    },
                     {data: 'transportEntity.remarks', name: 'transportEntity.remarks'},
-                    {data: 'transportEntity.amountParkir', name: 'transportEntity.amountParkir'},
-                    {data: 'transportEntity.amountToll', name: 'transportEntity.amountToll'},
+                    {data: 'transportEntity.amountParkir', name: 'transportEntity.amountParkir',
+                        render: function (data, type, row) {
+                            return data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                        }
+                    },
+                    {data: 'transportEntity.amountToll', name: 'transportEntity.amountToll',
+                        render: function (data, type, row) {
+                            return data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                        }
+                    },
                     // {
                     //     data: 'leaveBalanceBeforeExpiredDate', 
                     //     name: 'leaveBalanceBeforeExpiredDate',
@@ -679,7 +695,7 @@
         $('#c_type').val(data.type)
         $('#c_type_val').html(data.type)
         $('#totalclaim').val(data.totalAmount)
-        $('#totalclaim_val').html(data.totalAmount)
+        $('#totalclaim_val').html(data.totalAmount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."))
         $('#approvalremarks').val(data.approvalRemarks)
         $('#totalpaid').val(data.paidAmount)
         $('#reimbursement_status').val(data.status).trigger('change')
