@@ -176,9 +176,9 @@
                 <div class="row">
                     <div class="col-5">
                         <div class="form-group">
-                            <label for="overtime_status form-check-label">{{ __('trans_overtime.label_overtime_status') }}</label>
+                            <label for="status_overtime form-check-label">{{ __('trans_overtime.label_overtime_status') }}</label>
                         </div>
-                        <select class="form-control select2" id="overtime_status" name="overtime_status"></select>
+                        <select class="form-control select2" id="status_overtime" name="status_overtime"></select>
                     </div>
                     <div class="col-5">
                         <div class="form-group">
@@ -410,7 +410,7 @@
                                         <label for="last_approval_date" style="color: gray; margin-bottom: 0;">{{ __('trans_overtime.label_last_approval_date') }}</label>
                                         <input type="text" name="last_approval_date" id="last_approval_date" class="form-control" readonly>
                                         <input type="hidden" name="overtime_ticket_no" id="overtime_ticket_no" class="form-control" value="">
-                                        <input type="hidden" name="direct_superior" id="direct_superior" class="form-control" value="">
+                                        <input type="hidden" name="overtime_direct_superior" id="overtime_direct_superior" class="form-control" value="">
                                     </div>
                                 </div>
                             </div>
@@ -677,7 +677,7 @@
             var direct_superior = $("#direct_superior").val();
             var business_unit = $("#business_unit").val();
             var reimbursement_type = $("#reimbursement_type").val();
-            var status = $("#overtime_status").val();
+            var status = $("#status_overtime").val();
            
             // $("#btn-search").prop("disabled", true);
             // $("#btn-search").html(
@@ -731,8 +731,10 @@
 
         $('#request_date').html(moment(data.createdDate).format('YYYY-MM-DD'))
         $('#overtime_date').html(moment(data.overtimeDate).format('YYYY-MM-DD'))
+        $('#overtime_ticket_no').val(data.ticketNo)
         $('#ticket_no').html(data.ticketNo)
         $('#status').html(data.status)
+        $('#overtime_direct_superior').val(data.directSuperiorID)
         $('#employee_name').html(data.fullnameRequester)
         $('#business_unit').html(data.businessUnit)
         $('#start_date').html(moment(data.overtimeHourFrom).format('YYYY-MM-DD') + ', ' + moment(data.overtimeHourFrom).format('HH.mm'))
@@ -743,7 +745,7 @@
         $('#location').html(data.locationCode)
         $('#description').html(data.overtimeRemarks)
         $('#customer').html(data.customerName)
-        $('#overtime_status').val(data.status).trigger('chnage')
+        $('#overtime_status').val(data.status).trigger('change')
         $('#last_approval_date').val(moment().format('YYYY-MM-DD'))
         $('#approval_remarks').val(data.approvalRemarks)
 
@@ -773,7 +775,7 @@
         let status = $('#overtime_status').val();
         // let totalpaid = $('#totalpaid').val();
         let ticketNo = $('#overtime_ticket_no').val();
-        let directSuperior = $("#direct_superior").val();
+        let directSuperior = $("#overtime_direct_superior").val();
         let approvalRemarks = $("#approval_remarks").val();
 
         $('.close').click();
@@ -793,62 +795,46 @@
             },
             success: function (response) {
                 // console.log(response);
-                           if (response.status == "true") {
-                               $("#btn-update").prop("disabled", false);
-                               $("#btn-update").html(
-                                   // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
-                                   'Update'
-                               );
-                               
-                               $('#notification_success').modal('show');
-                               $('#message-notification-success').html(response
-                                   .message);
-                               setTimeout(function () {
-                                   window.location =
-                                       "{{ url('transaction/transaction_overtime') }}";
-                               }, 3000);
-                           } else{
-                            $("#btn-update").prop("disabled", false);
-                               $("#btn-update").html(
-                                   // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
-                                   'Update'
-                               );
-                               
-                               $('#notification_update_data_fail').modal('show');
-                               $('#message-notification-update-data-fail').html(response
-                                   .message);
-                               setTimeout(function () {
-                                   window.location =
-                                       "{{ url('transaction/transaction_overtime') }}";
-                               }, 3000);
-                           }
-                       },
+                if (response.status == "true") {
+                    $("#btn-update").prop("disabled", false);
+                    $("#btn-update").html(
+                        // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
+                        'Update'
+                    );
+                    
+                    $('#notification_success').modal('show');
+                    $('#message-notification-success').html(response
+                        .message);
+                    // setTimeout(function () {
+                    //     window.location =
+                    //         "{{ url('transaction/transaction_overtime') }}";
+                    // }, 3000);
+                } else{
+                $("#btn-update").prop("disabled", false);
+                    $("#btn-update").html(
+                        // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
+                        'Update'
+                    );
+                    
+                    $('#notification_update_data_fail').modal('show');
+                    $('#message-notification-update-data-fail').html(response
+                        .message);
+                    // setTimeout(function () {
+                    //     window.location =
+                    //         "{{ url('transaction/transaction_overtime') }}";
+                    // }, 3000);
+                }
+            },
+            error: function (response) {
+                $("#btn-update").prop("disabled", false);
+                $("#btn-update").html(
+                    // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
+                    'Update'
+                );
 
-                    //            $("#btn-update").prop("disabled", false);
-                    //            $("#btn-update").html(
-                    //                // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
-                    //                'Update'
-                    //            );
-                               
-                    //            $('#notification_error').modal('show');
-                    //            $('#message-notification-error').html(response
-                    //                .message);
-                    //            setTimeout(function () {
-                    //                window.location =
-                    //                    "{{ url('transaction/transaction_overtime') }}";
-                    //            }, 3000);
-                    //        }
-                    //    },
-                          error: function (response) {
-                           $("#btn-update").prop("disabled", false);
-                           $("#btn-update").html(
-                               // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
-                               'Update'
-                           );
-
-                           $('#notification_error').modal('show');
-                           $('#message-notification-error').html(response);
-                       }
+                $('#notification_error').modal('show');
+                $('#message-notification-error').html(response);
+            }
         });
              
     }
@@ -894,10 +880,10 @@
                                $('#notification_success').modal('show');
                                $('#message-notification-success').html(response[0]
                                    .message);
-                               setTimeout(function () {
-                                   window.location =
-                                       "{{ url('transaction/transaction_overtime') }}";
-                               }, 3000);
+                            //    setTimeout(function () {
+                            //        window.location =
+                            //            "{{ url('transaction/transaction_overtime') }}";
+                            //    }, 3000);
                            } else {
                                $("#btn-process").prop("disabled", false);
                                $("#btn-process").html(
@@ -1128,7 +1114,7 @@
 
             var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
             
-            $('#overtime_status').select2({
+            $('#status_overtime').select2({
                 width: '100%',
                 placeholder: 'Choose Status',
                 allowClear: true,
@@ -1179,16 +1165,16 @@
         }
 
         function loadDataFirstLastAllStatus() {
-            $('#overtime_status').addClass('spinner-border');
+            $('#status_overtime').addClass('spinner-border');
 
             $.ajax({
                 type: 'GET',
                 url: "{{ url('/status_trans/api') }}",
             }).then(function (data) {
-                $('#overtime_status').prepend($('<option>').val('ALL').text('ALL'));
-                $('#overtime_status option:contains("ALL")').not(':first').remove();
-                $('#overtime_status').val('ALL');
-                $('#overtime_status').removeClass('spinner-border');
+                $('#status_overtime').prepend($('<option>').val('ALL').text('ALL'));
+                $('#status_overtime option:contains("ALL")').not(':first').remove();
+                $('#status_overtime').val('ALL');
+                $('#status_overtime').removeClass('spinner-border');
             });
         }
            
