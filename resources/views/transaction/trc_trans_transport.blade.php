@@ -747,7 +747,7 @@
         let direct_superior = $("#directsuperior").val();
         let approvalremarks = $("#approvalremarks").val();
         // alert(totalpaid)
-        $('.close').click();
+        // $('.close').click();
         update_data(reimbursement_status,totalpaid,ticketNo,direct_superior,approvalremarks)
     })
 
@@ -769,29 +769,27 @@
                                 // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_update") }}'
                                 'Update'
                             );
+
+                            $('.close').click();
                             
                             $('#notification_success').modal('show');
                             $('#message-notification-success').html(response
                                 .message);
-                            setTimeout(function () {
-                                window.location =
-                                    "{{ url('transaction/transaction_transport') }}";
-                            }, 3000);
+                            // setTimeout(function () {
+                            //     window.location =
+                            //         "{{ url('transaction/transaction_transport') }}";
+                            // }, 3000);
                         } else{
-                        $("#btn-update").prop("disabled", false);
-                        $("#btn-update").html(
-                            // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
-                            'Update'
-                        );
-                        
-                        $('#notification_error').modal('show');
-                        $('#message-notification-error').html(response
-                            .message);
-                        setTimeout(function () {
-                            window.location =
-                                "{{ url('transaction/transaction_transport') }}";
-                        }, 3000);
-                    }
+                            $("#btn-update").prop("disabled", false);
+                            $("#btn-update").html(
+                                // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
+                                'Update'
+                            );
+                            
+                            $('#notification_error').modal('show');
+                            $('#message-notification-error').html(response
+                                .message);
+                        }
                 },
                 error: function (response) {
                 $("#btn-update").prop("disabled", false);
@@ -847,10 +845,10 @@ if ($("#upload_paid_overtime_form").length > 0) {
                         $('#notification_success').modal('show');
                         $('#message-notification-success').html(response[0]
                             .message);
-                        setTimeout(function () {
-                            window.location =
-                                "{{ url('transaction/transaction_transport') }}";
-                        }, 3000);
+                        // setTimeout(function () {
+                        //     window.location =
+                        //         "{{ url('transaction/transaction_transport') }}";
+                        // }, 3000);
                     } else {
                         $("#btn-process").prop("disabled", false);
                         $("#btn-process").html(

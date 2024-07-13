@@ -840,21 +840,6 @@ class TransactionController extends Controller
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
-            // var_dump(json_encode(
-            //     [
-            //         'startDate' => $isNull ? null:Carbon::parse($request->startDate)->format('Y-m-d'),
-            //             'endDate' => $isNullenddate ? null:Carbon::parse($request->endDate)->format('Y-m-d'),
-            //             'exportMenu' =>false,
-            //             'processDate'=> $isNullprocessDate ? null:Carbon::parse($request->processDate)->format('Y-m-d'),
-            //             'type' =>  $request->type,
-            //             'businessUnit'=> $request->businessUnit,
-            //             'employeeNo'=> $request->employeeNo,
-            //             'companyCode' => Session::get('companyCode'), 
-            //             'languageCode' => App::getLocale(), 
-            //             'sessionID' => 0, 
-            //             'sessionUserID' => Session::get('userID'),
-            //     ]
-            //     ));
 
             $response = $client->post(env('API_URL') . '/mobile/Transport/getTransportDetailListAll',
                 ['body' => json_encode(
@@ -886,7 +871,7 @@ class TransactionController extends Controller
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
-        // var_dump($arrResult->dataListSet);
+        // dd($arrResult->dataListSet);
 
         if($arrResult->dataListSet == null){
             return Datatables::of([])->make(true);

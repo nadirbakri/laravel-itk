@@ -778,7 +778,7 @@
         let directSuperior = $("#overtime_direct_superior").val();
         let approvalRemarks = $("#approval_remarks").val();
 
-        $('.close').click();
+        // $('.close').click();
         update_data(status, ticketNo, directSuperior, approvalRemarks)
     })
 
@@ -801,6 +801,8 @@
                         // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
                         'Update'
                     );
+
+                    $('.close').click();
                     
                     $('#notification_success').modal('show');
                     $('#message-notification-success').html(response
