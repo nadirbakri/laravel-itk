@@ -15,19 +15,6 @@
     <link rel="stylesheet" href="{{ asset('css/flatpickr.monthselect.css') }}">
     <link rel="stylesheet" href="{{ asset('css/payroll_detail_data.css') }}">
     <link rel="stylesheet" href="{{ asset('css/jquery.inputpicker.css') }}">
-    {{-- <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true&amp;key=ABQIAAAA8tt4eKTuBZMVnLJfP2BZrBT2yXp_ZAY8_ufC3CFXhHIE1NvwkxS4Rz1LFzG0odNPtk8VLkdrQF5grA"></script> --}}
-    {{-- <script type="text/javascript">
-        function initialize() {
-        var latlng = new google.maps.LatLng(-6.4, 106.8186111);
-        var myOptions = {
-        zoom: 13,
-        center: latlng,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-        };
-        var map = new google.maps.Map(document.getElementById("map_canvas"),
-       myOptions);
-        }
-    </script> --}}
     <style type="text/css">
         .div-trans-medical {
             max-width: 100%;
@@ -126,12 +113,26 @@
         .detailstatus input{
             outline: none;
         }
+
+        .myimage{
+            width: 100%;
+            height: 100%;
+        }
+
+        .imgdiv{
+            height: 250px;
+            overflow: hidden;
+            margin: 1%;
+            padding:0.5%;
+            border:2px solid #ddd;
+            border-radius: 5px;
+        }
     </style>
 </head>
 
 <body>
     <div class="div-form">
-        <form id="trans_medical_form" method="post">
+        <form id="trans_checkin_form" method="post">
             @csrf
             <div class="div-trans-medical">
                 <div class="div-title">
@@ -198,10 +199,10 @@
                 </div>
                 <div class="row">
                     <div class="table-responsive">
-                        <table id="medical_table" class="display table-striped table-hover dt-responsive display nowrap" cellspacing="10">
+                        <table id="checkin_table" class="display table-striped table-hover dt-responsive display nowrap" cellspacing="10">
                             <thead>
                                 <tr>
-                                    <th>{{ __('trc_transaction_checkin.location') }}</th>
+                                    <th>#</th>
                                     <th>{{ __('trc_transaction_checkin.userid') }}</th>
                                     <th>{{ __('trc_transaction_checkin.ename') }}</th>
                                     <th>{{ __('trc_transaction_checkin.lcheckin') }}</th>
@@ -260,7 +261,61 @@
         </form>
     </div>
 
-
+    <div class="div-form">
+        <div class="modal fade" id="modal_list_detail">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-little">Detail Multiple Checkin</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="card">
+                            <div class="form-group row" >
+                                <label class="col-2 col-form-label">Employee</label>
+                                <p class="col-4 " id="empName" name="empName"></p>
+                                    
+                                <label class="col-2 col-form-label">Division</label>
+                                <p class="col-4 " id="empDivision" name="empDivision"></p>														
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-2 col-form-label">Check Date</label>
+                                <p class="col-4 " id="checkDate" name="checkDate"></p>
+                                    
+                                <label class="col-2 col-form-label">Type</label>
+                                <p class="col-4 " id="checkType" name="checkType"></p>	
+                            </div>
+                            <div class="form-group row">														
+                                <label class="col-2 col-form-label">Customer</label>
+                                <p class="col-4 " id="customer" name="customer"></p>
+                                    
+                                <label class="col-2 col-form-label">Remarks</label>
+                                <p class="col-4 " id="remarks" name="remarks"></p>
+                            </div>
+                            <hr/>
+                            <div class="form-group row">														
+                                <label class="col-2 col-form-label">Address</label>
+                                <p class="col-6 " id="address" name="address"></p>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-2 col-form-label"></label>																	
+                                <a id="maps" class="col-4 " target="_blank">Maps</a>
+                            </div>
+                            <hr/>
+                            <div class="form-group row">																
+                                <p class="col-10 " id="photoCheck"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="modal fade" role="dialog" id="notification_error">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -362,7 +417,7 @@
 </script>
 <script type="text/javascript">
     function load_data_medical_history(claim_date_from, direct_superior) {
-            table = $('#medical_table').DataTable({
+            table = $('#checkin_table').DataTable({
                 processing: true,
                 serverSide: true,
                 orderCellsTop: true,
@@ -385,7 +440,7 @@
                         targets: 0, 
                         "defaultContent": '',
                         render: function(data, type,row) {
-                            return type === 'display'? `<a  id="checkPaid" href="{{ url('maps/location') }}"   target="iframe_dashboard">Preview Location</a>` : '';
+                            return type === 'display' ? '<button type="button" onclick="klikdetail(this)" class="btn btn-info" name="btn-detail" id="btn-detail" style="width: 100%;" data-toggle="modal" data-target="#modal_list_detail"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-justify" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M2 12.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/></svg> {{ __('trans_medical.detail') }} </button>' : '';
 
                         }
                     },
@@ -402,11 +457,7 @@
                     // {data: 'longitude', name: 'longitude'},
                     // {data: 'latitude', name: 'latitude'}
                     
-                ],
-                select: {
-                    style:    'multi',
-                    selector: 'td:first-child'
-                }
+                ]
             });
 
             // console.log(allLongitudes)
@@ -426,15 +477,50 @@
             );
         }
 
-        $("#trans_medical_form").submit((e)=>{
+        $("#trans_checkin_form").submit((e)=>{
             e.preventDefault();
 
             var claim_date_from = $("#claim_date_from").val();
             var direct_superior = $("#direct_superior").val();
 
-            $('#medical_table').DataTable().destroy();
+            $('#checkin_table').DataTable().destroy();
             load_data_medical_history(claim_date_from, direct_superior);
     })
+
+    const klikdetail = (element) => {
+        let data = table.row($(element).parent()).data();
+        console.log(data);
+
+        $('#detailPhoto').hide();
+        $('#noDetailAtt').hide();
+
+        if(data != null){
+            $('#detailPhoto').show();
+
+            $('#timeIn').html((data.checkInDate != null) ? moment(data.checkInDate).format('HH:mm') : '-');
+            $('#addressIn').html((data.address != null) ? data.address : '-');
+            $('#mapsIn').attr('href', "http://www.google.com/maps/place/" + data.latitude + "," + data.longitude);
+
+            $('#timeOut').html((data.checkOutDate != null) ? moment(data.checkOutDate).format('HH:mm') : '-');
+            $('#addressOut').html((data.addressOut != null) ? data.addressOut : '-');
+            $('#mapsOut').attr('href', "http://www.google.com/maps/place/" + data.latitudeOut + "," + data.longitudeOut);
+
+            if(data.photoCheckIn == "" || data.photoCheckIn == null){
+                $('#photoIn').html('<div class="noImgdiv" ><img id="ItemPreview" alt="no image" class="myimage img-rounded" src="<?= asset('pictures/no_image.png') ?>"/></div>');
+            }else{
+                $('#photoIn').html('<div class="imgdiv" ><img id="ItemPreview" alt="in" class="myimage img-rounded" src="data:image/png;base64,'+ data.photoCheckIn +'"/></div>');
+            }
+            
+            if(data.photoCheckOut == "" || data.photoCheckOut == null ){
+                $('#photoOut').html('<div class="noImgdiv" ><img id="ItemPreview" alt="no image" class="myimage img-rounded" src="<?= asset('pictures/no_image.png') ?>"/></div>');
+            }else{
+                $('#photoOut').html('<div class="imgdiv" ><img id="ItemPreview" alt="in" class="myimage img-rounded" src="data:image/png;base64,'+ data.photoCheckOut +'"/></div>');
+            }	
+
+        }else{
+            $('#noDetailAtt').show();
+        }
+    }
 
     
     $('#btn-list').click(()=> {

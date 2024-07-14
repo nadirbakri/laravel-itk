@@ -116,6 +116,25 @@
         .detailstatus input{
             outline: none;
         }
+
+        .preview {
+            width: 100%;
+            height: 100%;
+        }
+
+        .myimage{
+            width: 100%;
+            height: 100%;
+        }
+
+        .imgdiv{
+            height: 150px;
+            overflow: hidden;
+            margin: 1%;
+            padding:0.5%;
+            border:2px solid #ddd;
+            border-radius: 5px;
+        }
     </style>
 </head>
 
@@ -196,6 +215,7 @@
                     <table id="reimbursement_table" class="display table-striped table-hover dt-responsive display nowrap" cellspacing="10">
                         <thead>
                             <tr>
+                                <th>#</th>
                                 <th>{{ __('trans_attendance.adate') }}</th>
                                 <th>{{ __('trans_attendance.enom') }}</th>
                                 <th>{{ __('trans_attendance.ati') }}</th>
@@ -252,127 +272,73 @@
         </form>
     </div>
 
-    {{-- <div class="div-form">
-        <form id="payroll_calculation_detail_modal_form" method="post">
-            @csrf
-            <div class="modal fade" id="modal_list_detail">
-                <div class="modal-dialog modal-dialog-centered modal-lg">
-                   <div class="modal-content">
+    <div class="div-form">
+        <div class="modal fade" id="modal_list_detail">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-little">Detail Reimbursement</h4>
+                        <h4 class="modal-little">Detail Attendance</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row detailstatus">
-                                    <div class="col-3  ">
-                                        <h5>Request Date</h5>
-                                    </div>
-                                    <div class="col">
-                                        <input id="reqdate" name="reqdate" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
-                                    </div>
-                                    <div class="col-3">
-                                        <h5>Receipt Date</h5>
-                                    </div>
-                                    <div class="col">
-                                        <input id="recdate" name="recdate" style="border: none" style="outline: none"  type="text" class="form-control" id="claim_date_from" name="claim_date_from">
-                                    </div>
-                                </div>
-
-                                <div class="row detailstatus">
-                                    <div class="col-3">
-                                        <h5>Ticket Number</h5>
-                                    </div>
-                                    <div class="col">
-                                        <input id="tiketno" name="tiketno" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
-                                    </div>
-                                    <div class="col-3">
-                                        <h5>Status</h5>
-                                    </div>
-                                    <div class="col">
-                                        <input id="status" name="status" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
-                                    </div>
-                                </div>
-
-                                <div class="row detailstatus">
-                                    <div class="col-3">
-                                        <h5>Business Unit</h5>
-                                    </div>
-                                    <div class="col">
-                                        <input id="b_unit" name="b_unit" style="border: none" style="outline: none"  type="text" class="form-control" id="claim_date_from" name="claim_date_from">
-                                    </div>
-                                    <div class="col-3">
-                                        <h5>Claim Type</h5>
-                                    </div>
-                                    <div class="col">
-                                        <input id="c_type" name="c_type" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
-                                    </div>
-                                </div>
-
-                                <div class="row detailstatus">
-                                    <div class="col-3">
-                                        <h5>Employee Name</h5>
-                                    </div>
-                                    <div class="col">
-                                        <input id="employeeno" name="employeeno" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
-                                    </div>
-                                    <div class="col-3">
-                                        <h5>Project Name</h5>
-                                    </div>
-                                    <div class="col">
-                                        <input id="projectname" name="projectname" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
-                                    </div>
-                                </div>
-
-                                <div class="row detailstatus">
-                                    <div class="col-3">
-                                        <h5>Total Claim</h5>
-                                    </div>
-                                    <div class="col">
-                                        <input id="totalclaim" name="totalclaim" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
-                                    </div>
-                                    <div class="col-3">
-                                        <h5>Dependent Name</h5>
-                                    </div>
-                                    <div class="col">
-                                        <input style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from">
-                                    </div>
-                                </div>
-                            
-                                <br>
+                        <div id="detailPhoto" style="display: none;">
+                            <div class="card">
                                 <div class="row">
-                                    <div class="col-3">
-                                        <h5>Status</h5>
-                                    </div>
-                                    <div class="col-5">
-                                            <select name="reimbursement_status" id="reimbursement_status" class="custom-select">
-                                                <option value="APPROVED">APPROVED</option>
-                                                <option value="REJECTED">REJECTED</option>
-                                                <option value="PAID">PAID</option>
-                                            </select>
-                                    </div>
+                                    <h4>Absence In</h4>
                                 </div>
                                 <div class="row">
-                                    <div class="col-3">
-                                        <h5>Total Paid</h5>
+                                    <div class="col-4">
+                                        <p class="col-12" id="photoIn" name="photoIn"></p>
                                     </div>
-                                    <div class="col-5">
-                                        <input id="totalpaid" name="totalpaid"  type="text" class="form-control" >
+                                    <div class="col-8">														
+                                        <div class="row">
+                                            <h3 class="col-12 " id="timeIn" name="timeIn"></h3>	
+                                        </div>
+                                        <div class="row">																
+                                            <p class="col-12 " id="addressIn" name="addressIn"></p>
+                                        </div>
+                                        <div class="row">
+                                            <a id="mapsIn" class="col-12 " target="_blank">Maps</a>																	
+                                        </div>
                                     </div>
                                 </div>
-                                <hr>
-                                <button class="btn btn-primary btn-block" id="btn-update" type="button">Update</button>
+                            </div>	
+                            <div class="card">
+                                <div class="row">
+                                    <h4>Absence Out</h4>
+                                </div>
+                                <div class= "row">
+                                    <div class="col-4">
+                                        <p class="col-12" id="photoOut" name="photoOut"></p>
+                                    </div>
+                                    <div class="col-8">														
+                                        <div class="row">
+                                            <h3 class="col-12 " id="timeOut" name="timeOut"></h3>	
+                                        </div>
+                                        <div class="row">																
+                                            <p class="col-12 " id="addressOut" name="addressOut"></p>
+                                        </div>
+                                        <div class="row">
+                                            <a id="mapsOut" class="col-12 " target="_blank">Maps</a>																	
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                        <div id="noDetailAtt" style="display: none;">
+                            <h4>No Data Available.</h4>
+                            <br/>
+                        </div>
                     </div>
-                   </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+                    </div>
                 </div>
             </div>
-        </form>
-    </div> --}}
+        </div>
+    </div>
 
     <div class="modal fade" role="dialog" id="notification_error">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -526,14 +492,14 @@
                 'sPaginationType': 'full_numbers',
                 "order": [[ 1, "asc" ]],
                 columns: [
-                    // {
-                    //     orderable: false,
-                    //     targets: 0, 
-                    //     "defaultContent": '',
-                    //     render: function(data, type) {
-                    //         return type === 'display'? '<button type="button" onclick="klikdetail(this)" class="btn btn-info" name="btn-detail" id="btn-detail" style="width: 100%;" data-toggle="modal" data-target="#modal_list_detail"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-justify" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M2 12.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/></svg> {{ __('trans_medical.detail') }} </button>' : '';
-                    //     }
-                    // },
+                    {
+                        orderable: false,
+                        targets: 0, 
+                        "defaultContent": '',
+                        render: function(data, type) {
+                            return type === 'display'? '<button type="button" onclick="klikdetail(this)" class="btn btn-info" name="btn-detail" id="btn-detail" style="width: 100%;" data-toggle="modal" data-target="#modal_list_detail"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-justify" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M2 12.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/></svg> {{ __('trans_medical.detail') }} </button>' : '';
+                        }
+                    },
                     {data: 'createDate', name: 'createDate', 
                             render: function (data, type, row) {
                                 if(data == null){
@@ -563,11 +529,7 @@
                             }
                     },
                     {data: 'absenceType', name: 'absenceType'},
-                ],
-                select: {
-                    style:    'multi',
-                    selector: 'td:first-child'
-                }
+                ]
             });
 
             $("#btn-search").prop("disabled", true);
@@ -602,29 +564,37 @@
     })
 
     const klikdetail = (element) => {
-        let receiptDate = $(element).parent().siblings('.sorting_1').text()
-        let reimbursement_status = $(element).parent().siblings('td').eq(1).text()
-        let tikcetNo = $(element).parent().siblings('td').eq(2).text()
-        let projectname = $(element).parent().siblings('td').eq(5).text()
-        let employeename = $(element).parent().siblings('td').eq(3).text()
-        let totalclaim = $(element).parent().siblings('td').eq(7).text()
-        let totalpaid = $(element).parent().siblings('td').eq(9).text()
-        var reimbursement_type = $("#reimbursement_type").val();
-        var business_unit = $("#business_unit").val();
+        let data = table.row($(element).parent()).data();
 
-        $('#recdate').val(receiptDate)
-        $('#reqdate').val(receiptDate)
-        $('#status').val(reimbursement_status)
-        $('#tiketno').val(tikcetNo)
-        $('#b_unit').val(business_unit)
-        $('#c_type').val(reimbursement_type)
-        $('#employeeno').val(employeename)
-        $('#projectname').val(projectname)
-        $('#totalclaim').val(totalclaim)
-        $('#totalpaid').val(totalpaid)
-        // $('#direct_superior').val(employee_id)
+        $('#detailPhoto').hide();
+        $('#noDetailAtt').hide();
 
-        // alert(reimbursement_type);
+        if(data != null){
+            $('#detailPhoto').show();
+
+            $('#timeIn').html((data.checkInDate != null) ? moment(data.checkInDate).format('HH:mm') : '-');
+            $('#addressIn').html((data.address != null) ? data.address : '-');
+            $('#mapsIn').attr('href', "http://www.google.com/maps/place/" + data.latitude + "," + data.longitude);
+
+            $('#timeOut').html((data.checkOutDate != null) ? moment(data.checkOutDate).format('HH:mm') : '-');
+            $('#addressOut').html((data.addressOut != null) ? data.addressOut : '-');
+            $('#mapsOut').attr('href', "http://www.google.com/maps/place/" + data.latitudeOut + "," + data.longitudeOut);
+
+            if(data.photoCheckIn == "" || data.photoCheckIn == null){
+                $('#photoIn').html('<div class="noImgdiv" ><img id="ItemPreview" alt="no image" class="myimage img-rounded" src="<?= asset('pictures/no_image.png') ?>"/></div>');
+            }else{
+                $('#photoIn').html('<div class="imgdiv" ><img id="ItemPreview" alt="in" class="myimage img-rounded" src="data:image/png;base64,'+ data.photoCheckIn +'"/></div>');
+            }
+            
+            if(data.photoCheckOut == "" || data.photoCheckOut == null ){
+                $('#photoOut').html('<div class="noImgdiv" ><img id="ItemPreview" alt="no image" class="myimage img-rounded" src="<?= asset('pictures/no_image.png') ?>"/></div>');
+            }else{
+                $('#photoOut').html('<div class="imgdiv" ><img id="ItemPreview" alt="in" class="myimage img-rounded" src="data:image/png;base64,'+ data.photoCheckOut +'"/></div>');
+            }	
+
+        }else{
+            $('#noDetailAtt').show();
+        }
     }
 
     $('#btn-list').click(()=> {
