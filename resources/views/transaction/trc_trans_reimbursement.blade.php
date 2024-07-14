@@ -577,7 +577,7 @@
         let direct_superior = $("#directsuperior").val();
         let approvalremarks = $("#approvalremarks").val();
         // alert(totalpaid)
-        $('.close').click();
+        // $('.close').click();
         update_data(reimbursement_status,totalpaid,ticketNo,direct_superior,approvalremarks)
     })
 
@@ -599,14 +599,16 @@
                         // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_update") }}'
                         'Update'
                     );
+
+                    $('.close').click();
                     
                     $('#notification_success').modal('show');
                     $('#message-notification-success').html(response
                         .message);
-                    setTimeout(function () {
-                        window.location =
-                            "{{ url('transaction/transaction_reimbursement') }}";
-                    }, 3000);
+                    // setTimeout(function () {
+                    //     window.location =
+                    //         "{{ url('transaction/transaction_reimbursement') }}";
+                    // }, 3000);
                 } else{
                     $("#btn-update").prop("disabled", false);
                     $("#btn-update").html(
@@ -617,10 +619,6 @@
                     $('#notification_update_data_fail').modal('show');
                     $('#message-notification-update-data-fail').html(response
                         .message);
-                    setTimeout(function () {
-                        window.location =
-                            "{{ url('transaction/transaction_reimbursement') }}";
-                    }, 3000);
                 }
             },
             error: function (response) {
@@ -823,7 +821,7 @@ $("#btn-process").click(function () {
 });
 
 $('#notification_success').on('hide.bs.modal', function () {
-    window.location = "{{ url('transaction/transaction_overtime') }}";
+    window.location = "{{ url('transaction/transaction_reimbursement') }}";
 });
 
 if ($("#upload_paid_overtime_form").length > 0) {

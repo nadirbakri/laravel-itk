@@ -171,21 +171,6 @@ class TransactionController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            // dd(json_encode(
-            //     [
-            //         'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
-            //         'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
-            //         'employeeNo'=> $request->employeeNo,
-            //         'medicalType1'=> $request->medicalType1,
-            //         'businessUnit' => $request->businessUnit,
-            //         'exportMenu' => false,
-            //         'companyCode' => Session::get('companyCode'), 
-            //         'languageCode' => App::getLocale(), 
-            //         'sessionID' => 0, 
-            //         'sessionUserID' => Session::get('userID'),
-            //     ]
-            //     ));
-
             $response = $client->post(env('API_URL') . '/mobile/reimbursementmedical/getreimbursementhistoryall',
                 ['body' => json_encode(
                     [
@@ -234,20 +219,6 @@ class TransactionController extends Controller
                     'Authorization' => 'Bearer ' . Session::get('token') ]
                 ]);
 
-                // var_dump(json_encode(
-                //     [
-                //         'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
-                //             'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
-                //             'employeeNo'=> $request->employeeNo,
-                //             'type'=> "REQUEST",
-                //             'businessUnit' => $request->businessUnit,
-                //             // 'exportMenu' => false,
-                //             'companyCode' => Session::get('companyCode'), 
-                //             'languageCode' => App::getLocale(), 
-                //             'sessionID' => 0, 
-                //             'sessionUserID' => Session::get('userID')
-                //     ]
-                //     ));
                 $response = $client->post(env('API_URL') . '/mobile/BusinessTrip/getBusinessTripAndSettlement',
                     ['body' => json_encode(
                         [
@@ -279,99 +250,72 @@ class TransactionController extends Controller
                 }
             }
 
-        $arrResult = json_decode($response->getBody()->getContents());
-        // var_dump($arrResult->dataListSet);
+            $arrResult = json_decode($response->getBody()->getContents());
+            // var_dump($arrResult->dataListSet);
 
-        if($arrResult->dataListSet == null){
-            return Datatables::of([])->make(true);
-        }else{
-            return Datatables::of($arrResult->dataListSet[0]->responseBusinessTrip)->make(true);
-        }
+            if($arrResult->dataListSet == null){
+                return Datatables::of([])->make(true);
+            }else{
+                return Datatables::of($arrResult->dataListSet[0]->responseBusinessTrip)->make(true);
+            }
 
-    }else if ($request->reimbursement_type == "TTB"){
-        try {
-            $client = new Client([
-                'verify' => false,
-                'headers' => [ 'Content-Type' => 'application/json',
-                'Authorization' => 'Bearer ' . Session::get('token') ]
-            ]);
-
-            // var_dump(json_encode(
-            //     [
-            //         'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
-            //         'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
-            //         'employeeNo'=> $request->employeeNo,
-            //         'medicalType1'=> $request->medicalType1,
-            //         'businessUnit' => $request->businessUnit,
-            //         'companyCode' => Session::get('companyCode'), 
-            //         'languageCode' => App::getLocale(), 
-            //         'sessionID' => 0, 
-            //         'sessionUserID' => Session::get('userID'),
-            //     ]
-            //     ));
-            $response = $client->post(env('API_URL') . '/mobile/BusinessTrip/getBusinessTripAndSettlement',
-                ['body' => json_encode(
-                    [
-                        // 'companyCode' => Session::get('companyCode'),
-                        // 'employeeNo' => $request->employeeNo,
-                        // 'logActionUserID' => Session::get('userID'),
-                        // 'logActionUsername' => Session::get('userName'),
-                        'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
-                        'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
-                        'employeeNo'=> $request->employeeNo,
-                        'type'=> "SETTLEMENT",
-                        'businessUnit' => $request->businessUnit,
-                        // 'exportMenu' => false,
-                        'companyCode' => Session::get('companyCode'), 
-                        'languageCode' => strtoupper(App::getLocale()), 
-                        'sessionID' => 0, 
-                        'sessionUserID' => Session::get('userID'),
-                    ]
-                )]
-            );
-        } catch (RequestException $e) {
-        $response = $e->getResponse();
-        if($response->getStatusCode() == 401){
-            return view('error.login');
-        }else if($response->getStatusCode() == 404){
-            return view('error.not_found');
-        }else{
-            return view('error.bad_request');
-        }
-    }
-
-        $arrResult = json_decode($response->getBody()->getContents());
-        // var_dump($arrResult->dataListSet);
-
-        if($arrResult->dataListSet == null){
-            return Datatables::of([])->make(true);
-        }else{
-            return Datatables::of($arrResult->dataListSet[0]->responseBusinessTrip)->make(true);
-        }
-
-
-    }else{
-         try {
+        }else if ($request->reimbursement_type == "TTB"){
+            try {
                 $client = new Client([
                     'verify' => false,
                     'headers' => [ 'Content-Type' => 'application/json',
                     'Authorization' => 'Bearer ' . Session::get('token') ]
                 ]);
 
-                // var_dump(json_encode(
-                //     [
-                //         'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
-                //             'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
-                //             'employeeNo'=> $request->employeeNo,
-                //             'type'=> "ALL",
-                //             'businessUnit' => $request->businessUnit,
-                //             'exportMenu' => false,
-                //             'companyCode' => Session::get('companyCode'), 
-                //             'languageCode' => App::getLocale(), 
-                //             'sessionID' => 0, 
-                //             'sessionUserID' => Session::get('userID'),
-                //     ]
-                //     ));
+                $response = $client->post(env('API_URL') . '/mobile/BusinessTrip/getBusinessTripAndSettlement',
+                    ['body' => json_encode(
+                        [
+                            // 'companyCode' => Session::get('companyCode'),
+                            // 'employeeNo' => $request->employeeNo,
+                            // 'logActionUserID' => Session::get('userID'),
+                            // 'logActionUsername' => Session::get('userName'),
+                            'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
+                            'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
+                            'employeeNo'=> $request->employeeNo,
+                            'type'=> "SETTLEMENT",
+                            'businessUnit' => $request->businessUnit,
+                            // 'exportMenu' => false,
+                            'companyCode' => Session::get('companyCode'), 
+                            'languageCode' => strtoupper(App::getLocale()), 
+                            'sessionID' => 0, 
+                            'sessionUserID' => Session::get('userID'),
+                        ]
+                    )]
+                );
+            } catch (RequestException $e) {
+                $response = $e->getResponse();
+                if($response->getStatusCode() == 401){
+                    return view('error.login');
+                }else if($response->getStatusCode() == 404){
+                    return view('error.not_found');
+                }else{
+                    return view('error.bad_request');
+                }
+            }
+
+            $arrResult = json_decode($response->getBody()->getContents());
+            // var_dump($arrResult->dataListSet);
+
+            if($arrResult->dataListSet == null){
+                return Datatables::of([])->make(true);
+            }else{
+                return Datatables::of($arrResult->dataListSet[0]->responseBusinessTrip)->make(true);
+            }
+
+
+        }else{
+            try {
+                $client = new Client([
+                    'verify' => false,
+                    'headers' => [ 'Content-Type' => 'application/json',
+                    'Authorization' => 'Bearer ' . Session::get('token') ]
+                ]);
+
                 $response = $client->post(env('API_URL') . '/mobile/BusinessTrip/getBusinessTripAndSettlement',
                     ['body' => json_encode(
                         [
@@ -393,26 +337,25 @@ class TransactionController extends Controller
                     )]
                 );
             } catch (RequestException $e) {
-            $response = $e->getResponse();
-            if($response->getStatusCode() == 401){
-                return view('error.login');
-            }else if($response->getStatusCode() == 404){
-                return view('error.not_found');
+                $response = $e->getResponse();
+                if($response->getStatusCode() == 401){
+                    return view('error.login');
+                }else if($response->getStatusCode() == 404){
+                    return view('error.not_found');
+                }else{
+                    return view('error.bad_request');
+                }
+            }
+
+            $arrResult = json_decode($response->getBody()->getContents());
+            // var_dump($arrResult->dataListSet);
+            if($arrResult->dataListSet == null){
+                return Datatables::of([])->make(true);
             }else{
-                return view('error.bad_request');
+                return Datatables::of($arrResult->dataListSet[0]->responseBusinessTrip)->make(true);
             }
         }
-
-        $arrResult = json_decode($response->getBody()->getContents());
-        // var_dump($arrResult->dataListSet);
-        if($arrResult->dataListSet == null){
-            return Datatables::of([])->make(true);
-        }else{
-            return Datatables::of($arrResult->dataListSet[0]->responseBusinessTrip)->make(true);
-        }
-
     }
-}
 
     public function tableDetailOvertime(Request $request)
     {
@@ -954,47 +897,16 @@ class TransactionController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            // var_dump(json_encode(
-            //     [
-            //         'companyCode' => Session::get('companyCode'),
-            //         'languageCode' => App::getLocale(), 
-            //         'sessionUserID' => Session::get('userID'),
-            //         'employeeNo'=> $request->employeeNo,
-            //         // 'employeeNo' => $request->employeeNo,
-            //         // 'logActionUserID' => Session::get('userID'),
-            //         // 'logActionUsername' => Session::get('userName'),
-            //         // 'startDate' => Carbon::parse($request->claimDateFrom)->format('Y-d-m'),
-            //         // 'endDate' => Carbon::parse($request->claimDateTo)->format('Y-d-m'),
-            //         // 'processDate' => $request->processDate, 
-            //         // 'type' =>  $request->transportType,
-            //         // 'businessUnit'=> $request->businessUnit,
-            //         'approvalRemarks'=> $request->approvalRemarks,
-            //         'logActionUserID'=> 'string',
-            //         'logActionUsername'=> 'string',
-            //         'status'=> $request->status,
-            //         'paidAmount'=> (int) $request->paidAmount,
-            //         'ticketNo' => $request->ticketNo
-            //     ]
-            //     ));
-
-            $response = $client->put(env('API_URL') . '/mobile/TmReimbursement/UpdateReimbursementApproval',
+            $response = $client->put(env('API_URL') . '/mobile/TmReimbursement/UpdateByAdmin',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
                         'languageCode' => App::getLocale(), 
+                        'sessionID' => 0,
                         'sessionUserID' => Session::get('userID'),
-                        'employeeNo'=> $request->employeeNo,
-                        // 'employeeNo' => $request->employeeNo,
-                        // 'logActionUserID' => Session::get('userID'),
-                        // 'logActionUsername' => Session::get('userName'),
-                        // 'startDate' => Carbon::parse($request->claimDateFrom)->format('Y-d-m'),
-                        // 'endDate' => Carbon::parse($request->claimDateTo)->format('Y-d-m'),
-                        // 'processDate' => $request->processDate, 
-                        // 'type' =>  $request->transportType,
-                        // 'businessUnit'=> $request->businessUnit,
                         'approvalRemarks'=> $request->approvalRemarks,
-                        'logActionUserID'=> 'string',
-                        'logActionUsername'=> 'string',
+                        'logActionUserID'=> Session::get('userID'),
+                        'logActionUsername'=> Session::get('userName'),
                         'status'=> $request->status,
                         'paidAmount'=> (int) $request->paidAmount,
                         'ticketNo' => $request->ticketNo
@@ -1113,16 +1025,15 @@ class TransactionController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/mobile/Transport/UpdateTransportApproval',
+            $response = $client->put(env('API_URL') . '/mobile/Transport/UpdateByAdmin',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
-                        'languageCode' => App::getLocale(), 
+                        'languageCode' => strtoupper(App::getLocale()), 
+                        'sessionID' => 0,
                         'sessionUserID' => Session::get('userID'),
-                        'employeeNo'=> $request->employeeNo,
-                        'approvalRemarks'=> 'string',
-                        'logActionUserID'=> 'string',
-                        'logActionUsername'=> 'string',
+                        'logActionUserID'=> Session::get('userID'),
+                        'logActionUsername'=> Session::get('userName'),
                         'status'=> $request->status,
                         'paidAmount'=> (int) $request->paidAmount,
                         'ticketNo' => $request->ticketNo,
@@ -1160,20 +1071,19 @@ class TransactionController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/mobile/BusinessTrip/UpdateBusinessTripApproval',
+            $response = $client->put(env('API_URL') . '/mobile/BusinessTrip/UpdateByAdmin',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
-                        'languageCode' => App::getLocale(), 
+                        'languageCode' => strtoupper(App::getLocale()),
+                        'sessionID' => 0, 
                         'sessionUserID' => Session::get('userID'),
-                        'approvalRemarks'=> 'string',
-                        'logActionUserID'=> 'string',
-                        'logActionUsername'=> 'string',
+                        'logActionUserID'=> Session::get('userID'),
+                        'logActionUsername'=> Session::get('userName'),
                         'status'=> $request->status,
                         'paidAmount'=>(int) $request->paidAmount,
                         'ticketNo' => $request->ticketNo,
-                        'approvalRemarks' => $request->approvalRemarks,
-                        'employeeNo'=> $request->employeeNo
+                        'approvalRemarks' => $request->approvalRemarks
                     ]
                 )]
             );
@@ -1352,7 +1262,7 @@ class TransactionController extends Controller
                    
             //     ]
             //     ));
-            $response = $client->put(env('API_URL') . '/reimbursementmedical/updatereimbursementapproval',
+            $response = $client->put(env('API_URL') . '/mobile/reimbursementmedical/updatereimbursementapproval',
                 ['body' => json_encode(
                     [
                         'status'=> $request->status,
@@ -1399,20 +1309,6 @@ class TransactionController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            // var_dump(json_encode(
-            //     [
-            //         'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
-            //         'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
-            //         'employeeNo'=> $request->employeeNo,
-            //         'reimbursementType'=> $request->reimbursementType,
-            //         'businessUnit' => $request->businessUnit,
-            //         'exportMenu' => false,
-            //         'companyCode' => Session::get('companyCode'), 
-            //         'languageCode' => App::getLocale(), 
-            //         'sessionID' => 0, 
-            //         'sessionUserID' => Session::get('userID')
-            //     ]
-            //     ));
             $response = $client->post(env('API_URL') . '/mobile/TmAbsence/GetTmAbsence',
                 ['body' => json_encode(
                     [

@@ -971,7 +971,6 @@
         let direct_superior = $("#directsuperior").val();
         let approvalremarks = $("#approvalremarks").val();
 
-        $('.close').click();
         update_data_approval_businesstrip(reimbursement_status,totalpaid,ticketNo,direct_superior,approvalremarks)
     })
 
@@ -993,6 +992,8 @@
                         // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
                         'Update'
                     );
+
+                    $('.close').click();
                     
                     $('#notification_success').modal('show');
                     $('#message-notification-success').html(response

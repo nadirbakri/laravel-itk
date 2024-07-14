@@ -60,9 +60,7 @@ class AttendanceExport implements FromView, ShouldAutoSize
 
         $arrResult = json_decode($response->getBody()->getContents());
 
-        // dd($arrResult->dataListSet);
-
-        if($arrResult->dataListSet == null){
+        if($arrResult->dataListSet == null){    
             return view('export.export_attendance_list', [
                 'data' => []
             ]);
