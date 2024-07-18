@@ -42,6 +42,8 @@ use File;
 use DataTables;
 use Excel;
 use PDF;
+use Zip;
+use ZipArchive;
 use PhpParser\Node\NullableType;
 use Illuminate\Support\Facades\Response;
 
@@ -11339,22 +11341,42 @@ class PersonelController extends Controller
 
             $csvHeader = $array[0];
 
-            $tempFile = fopen('php://temp', 'w+');
+            $csvTempFile = tempnam(sys_get_temp_dir(), 'csv');
 
+            $tempFile = fopen($csvTempFile, 'w+');
             foreach ($array as $row) {
                 $row = array_pad($row, count($csvHeader), '');
 
-                fputcsv($tempFile, $row);
+                fputcsv($tempFile, $row, '|');
             }
 
-            rewind($tempFile);
             $csvContent = str_replace('"', '', stream_get_contents($tempFile));
             
             fclose($tempFile);
 
-            return Response::make($csvContent, 200, [
-                'Content-Type' => 'text/csv',
-                'Content-Disposition' => 'attachment; filename="' . $arrResult->dataListSet[0]->fileName . '"',
+            $zipTempFile = tempnam(sys_get_temp_dir(), 'zip');
+
+            $zip = new ZipArchive();
+            if ($zip->open($zipTempFile, ZipArchive::CREATE) === TRUE) {
+                $zip->addFile($csvTempFile, $arrResult->dataListSet[0]->fileName . '.csv');
+                $zip->setPassword($arrResult->dataListSet[0]->loanCompanyCode . '_WHITELIST_Bc@D!@#$%_' . date('Ym'));
+                $zip->setEncryptionName($arrResult->dataListSet[0]->fileName . '.csv', ZipArchive::EM_AES_256);
+
+                $zip->close();
+            }
+
+            $zipContent = file_get_contents($zipTempFile);
+
+            unlink($csvTempFile);
+            unlink($zipTempFile);
+
+            // return Response::make($csvContent, 200, [
+            //     'Content-Type' => 'text/csv',
+            //     'Content-Disposition' => 'attachment; filename="' . $arrResult->dataListSet[0]->fileName . '"',
+            // ]);
+            return Response::make($zipContent, 200, [
+                'Content-Type' => 'application/zip',
+                'Content-Disposition' => 'attachment; filename="' . $arrResult->dataListSet[0]->fileName . '.zip"',
             ]);
         }else{
             return response()->json(['status' => 0, 'message' =>  'Data are Empty'], 400);
