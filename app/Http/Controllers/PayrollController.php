@@ -26,6 +26,7 @@ use App\Exports\CSVTransferBankMCMExport;
 use App\Exports\CSVTransferBankBOTExport;
 use App\Exports\CSVTransferBankBTPNExport;
 use App\Exports\CSVTransferBankINAExport;
+use App\Exports\ExcelTransferBankCIMBExport;
 use App\Exports\EBupotPeriodicalTemplateExport;
 use App\Exports\EBupotA1TemplateExport;
 use App\Exports\PensionFundReportExport;
@@ -4624,6 +4625,20 @@ public function dataDetailReportFormatPY(Request $request)
                 return Excel::download(new CSVTransferBankINAExport($arrResult->dataListSet[0]->transferBank), $arrResult->dataListSet[0]->namaFile);
             }else if($request->source_bank == 'BNI'){
                 return Excel::download(new CSVTransferBankBNIExport($arrResult->dataListSet[0]->transferBank), $arrResult->dataListSet[0]->namaFile);
+            }else if($request->source_bank == 'CIMB'){
+                $array = explode("\r\n", $arrResult->dataListSet[0]->transferBank);
+                foreach($array as $key => $value){
+                    $arrayTwo = explode(";", $value);
+                    if(count($arrayTwo) > 1){
+                        $array[$key] = $arrayTwo;
+                    }
+                }
+
+                $array = array_filter($array, function($value) {
+                    return !empty($value);
+                });
+
+                return Excel::download(new ExcelTransferBankCIMBExport($array), $arrResult->dataListSet[0]->namaFile);
             }
         }
     }
