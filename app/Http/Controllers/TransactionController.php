@@ -584,26 +584,13 @@ class TransactionController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            // var_dump(json_encode(
-            //     [
-            //         'checkInDate' => Carbon::parse($request->checkInDate)->format('Y-m-d'),
-            //         'employeeNo'=> $request->employeeNo,
-            //         'exportMenu' => false,
-            //         'companyCode' => Session::get('companyCode'), 
-            //         'languageCode' => App::getLocale(), 
-            //         'sessionID' => 0, 
-            //         'sessionUserID' => Session::get('userID')
-            //     ]
-            //     ));
-            $response = $client->post(env('API_URL') . '/mobile/MultipleCheckIn/getMultipleCheckIn',
+            $response = $client->post(env('API_URL') . '/mobile/MultipleCheckIn/getMultipleCheckInByAdmin',
                 ['body' => json_encode(
                     [
-                        // 'companyCode' => Session::get('companyCode'),
-                        // 'employeeNo' => $request->employeeNo,
-                        // 'logActionUserID' => Session::get('userID'),
-                        // 'logActionUsername' => Session::get('userName'),
-                        'checkInDate' => Carbon::parse($request->checkInDate)->format('Y-m-d'),
-                        'employeeNo'=> $request->employeeNo,
+                        'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
+                        'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
+                        'employeeNo' => $request->employeeNo,
+                        'businessUnit' => 'ALL',
                         'exportMenu' => false,
                         'companyCode' => Session::get('companyCode'), 
                         'languageCode' => strtoupper(App::getLocale()), 
@@ -624,7 +611,6 @@ class TransactionController extends Controller
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
-        // var_dump($arrResult->dataListSet);
 
         if($arrResult->dataListSet == null){
             return Datatables::of([])->make(true);

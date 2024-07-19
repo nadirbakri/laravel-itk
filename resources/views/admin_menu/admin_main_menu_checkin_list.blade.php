@@ -144,17 +144,30 @@
                 <div class="row">
                     <div class="col-5">
                         <div class="form-group">
-                            <label for="claim_date_from form-check-label">{{ __('admin_main_checkin_list.label_claim_date_start') }}</label>
+                            <label for="claim_date_from">{{ __('admin_main_checkin_list.label_claim_date_start') }}</label>
                         </div>
                         <div class="input-group">
                             <input type="text" class="form-control" id="claim_date_from" name="claim_date_from"
-                                placeholder="{{ __('admin_main_checkin_list.label_claim_date_start') }}">
+                                placeholder="{{ __('admin_main_checkin_list.label_claim_date_start') }}" required>
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="claim_date_from_calendar"><span class="fa fa-calendar"></span></span>
                             </div>
                         </div>
                         <input type="text" class="form-control" id="claim_date_from_hidden" name="claim_date_from_hidden" hidden>
                     </div>
+                    <div class="col-5">
+                        <div class="form-group">
+                            <label for="claim_date_to">{{ __('admin_main_checkin_list.label_claim_date_end') }}</label>
+                        </div>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="claim_date_to" name="claim_date_to"
+                                placeholder="{{ __('admin_main_checkin_list.label_claim_date_end') }}" required>
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="claim_date_to_calendar"><span class="fa fa-calendar"></span></span>
+                            </div>
+                        </div>
+                        <input type="text" class="form-control" id="claim_date_to_hidden" name="claim_date_to_hidden" hidden>
+                    </div>      
                 </div>
                 <div class="row">
                     <div class="col-5">
@@ -205,8 +218,10 @@
                                     <th>#</th>
                                     <th>{{ __('admin_main_checkin_list.employee') }}</th>
                                     <th>{{ __('admin_main_checkin_list.name') }}</th>
-                                    <th>{{ __('admin_main_checkin_list.cdate') }}</th>
-                                    <th>{{ __('admin_main_checkin_list.codate') }}</th>
+                                    <th>{{ __('admin_main_checkin_list.date') }}</th>
+                                    <th>{{ __('admin_main_checkin_list.time') }}</th>
+                                    <th>{{ __('admin_main_checkin_list.type') }}</th>
+                                    <th>{{ __('admin_main_checkin_list.customer') }}</th>
                                     <th>{{ __('admin_main_checkin_list.remarks') }}</th>
                                 </tr>
                             </thead>
@@ -246,10 +261,9 @@
                             <tbody>
                                 <tr>
                                     <td></td>        
+                                    <td></td>    
                                     <td></td>        
-                                    <td></td>        
-                                    <td></td>        
-                                    <td></td>        
+                                    <td></td>           
                                 </tr>
                             </tbody>
                         </table>
@@ -275,24 +289,15 @@
                     <div class="modal-body">
                         <div class="card">
                             <div class="form-group row" >
-                                <label class="col-2 col-form-label">Employee</label>
-                                <p class="col-4 " id="empName" name="empName"></p>
-                                    
-                                <label class="col-2 col-form-label">Division</label>
-                                <p class="col-4 " id="empDivision" name="empDivision"></p>														
+                                <p class="col-2"><b>Employee</b></p>
+                                <p class="col-4" id="empName" name="empName"></p>
+                                <p class="col-2"><b>Check Date</b></p>
+                                <p class="col-4" id="checkDate" name="checkDate"></p>													
                             </div>
                             <div class="form-group row">
-                                <label class="col-2 col-form-label">Check Date</label>
-                                <p class="col-4 " id="checkDate" name="checkDate"></p>
-                                    
-                                <label class="col-2 col-form-label">Type</label>
+                                <P class="col-2"><b>Type</b></p>
                                 <p class="col-4 " id="checkType" name="checkType"></p>	
-                            </div>
-                            <div class="form-group row">														
-                                <label class="col-2 col-form-label">Customer</label>
-                                <p class="col-4 " id="customer" name="customer"></p>
-                                    
-                                <label class="col-2 col-form-label">Remarks</label>
+                                <p class="col-2"><b>Remarks</b></p>
                                 <p class="col-4 " id="remarks" name="remarks"></p>
                             </div>
                             <hr/>
@@ -417,7 +422,7 @@
     }
 </script>
 <script type="text/javascript">
-    function load_data_medical_history(claim_date_from, direct_superior) {
+    function load_data_checkin_list(claim_date_from, claim_date_to, direct_superior) {
             table = $('#checkin_table').DataTable({
                 processing: true,
                 serverSide: true,
@@ -425,7 +430,8 @@
                 ajax: {
                     url : "{{ url('adm/checkinlist/table') }}",
                     data: {
-                        'checkInDate': claim_date_from,
+                        'startDate': claim_date_from,
+                        'endDate': claim_date_to,
                         'employeeNo' : direct_superior
                     }
                 },
@@ -446,17 +452,19 @@
                         }
                     },
                     {data: 'employeeNo', name: 'employeeNo'},
-                    {data: 'directSuperiorID', name: 'directSuperiorID'},
-                    {data: 'checkInDate', name: 'checkInDate', 
-                            render: function (data, type, row) {
+                    {data: 'fullname', name: 'fullname'},
+                    {data: 'date', name: 'date', 
+                        render: function (data, type, row) {
                             return moment(data).format('YYYY-MM-DD');
                         }
                     },
-                    {data: 'checkOutDate', name: 'checkOutDate', 
-                            render: function (data, type, row) {
-                            return moment(data).format('YYYY-MM-DD');
-                            }
+                    {data: 'time', name: 'time', 
+                        render: function (data, type, row) {
+                            return moment(data).format('HH:mm');
+                        }
                     },
+                    {data: 'type', name: 'type'},
+                    {data: 'customerName', name: 'customerName'},
                     {data: 'remarks', name: 'remarks'}
                     
                 ]
@@ -481,10 +489,11 @@
             e.preventDefault();
 
             var claim_date_from = $("#claim_date_from").val();
+            var claim_date_to = $("#claim_date_to").val();
             var direct_superior = $("#direct_superior").val();
 
             $('#checkin_table').DataTable().destroy();
-            load_data_medical_history(claim_date_from, direct_superior);
+            load_data_checkin_list(claim_date_from, claim_date_to, direct_superior);
     })
 
     const klikdetail = (element) => {
@@ -499,7 +508,6 @@
 			}
 			
 			$("#empName").html(data.fullname + " (" + data.employeeNo + ")");
-			$("#empDivision").html('-');
 			$("#checkDate").html((data.checkInDate != null) ? moment(data.checkInDate).format('YYYY-MM-DD') + " (" + moment(data.checkInDate).format('HH:mm') + ")" : '-');
 			$("#checkType").html('-');
 			$("#customer").html(data.customerName);
