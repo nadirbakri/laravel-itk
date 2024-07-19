@@ -860,6 +860,7 @@ Route::get('utilities/organization_chart', 'UtilitiesController@pageOrganization
 Route::get('utilities/user_security_maintenance', 'UtilitiesController@pageUserSecurityMaintenanceUtilities');
 Route::get('utilities/menu_master', 'UtilitiesController@pageMenuMasterUtilities');
 Route::get('utilities/menu_master_mobile', 'UtilitiesController@pageMenuMasterMobileUtilities');
+Route::get('utilities/menu_master_mobile_setting', 'UtilitiesController@pageMenuMasterMobileSettingUtilities');
 Route::get('utilities/group_authorization', 'UtilitiesController@pageAuthorizationCodeGroupUtilities');
 Route::get('utilities/group_user_access', 'UtilitiesController@pageUserAccessGroupUtilities');
 Route::get('utilities/change_employee_no', 'UtilitiesController@pageChangeEmployeeNumberUtilities');
@@ -871,6 +872,7 @@ Route::get('utilities/news_master', 'UtilitiesController@pageNewsMasterUtilities
 Route::get('utilities/announcement', 'UtilitiesController@pageAnnouncementUtilities');
 Route::get('utilities/company', 'UtilitiesController@pageCompanyUtilities');
 Route::get('utilities/process_user_id', 'UtilitiesController@pageProcessUserIDUtilities');
+Route::get('utilities/master_banner', 'UtilitiesController@pageMasterBannerUtilities');
 
 Route::get('utilities/user_security_maintenance/table', 'UtilitiesController@tableUserSecurityMaintenanceUtilities');
 Route::get('utilities/group_authorization/table', 'UtilitiesController@tableAuthorizationCodeGroupUtilities');
@@ -880,12 +882,16 @@ Route::get('utilities/menu_master/table', 'UtilitiesController@tableMenuMasterUt
 Route::get('utilities/change_password/employee/table', 'UtilitiesController@tableChangeEmployeeNumberEmployeeUtilities');
 Route::get('utilities/company/table', 'UtilitiesController@tableCompanyUtilities');
 Route::get('utilities/menu_master_mobile/table', 'UtilitiesController@tableMenuMasterMobileUtilities');
+Route::get('utilities/menu_master_mobile_setting/table', 'UtilitiesController@tableMenuMasterMobileSettingUtilities');
+Route::get('utilities/master_banner/table', 'UtilitiesController@tableMasterBannerUtilities');
 
 Route::get('utilities/group_authorization/detail_data', 'UtilitiesController@dataDetailAuthorizationCodeGroupUtilities');
 Route::get('utilities/group_user_access/detail_data', 'UtilitiesController@dataDetailUserAccessGroupUtilities');
 Route::get('utilities/user_security_maintenance/detail_data', 'UtilitiesController@dataDetailUserSecurityMaintenanceUtilities');
 Route::get('utilities/company/detail_data', 'UtilitiesController@dataDetailCompanyUtilities');
 Route::get('utilities/menu_master_mobile/detail_data', 'UtilitiesController@dataDetailMenuMasterMobileUtilities');
+Route::get('utilities/menu_master_mobile_setting/detail_data', 'UtilitiesController@dataDetailMenuMasterMobileSettingUtilities');
+Route::get('utilities/master_banner/detail_data', 'UtilitiesController@dataDetailMasterBannerUtilities');
 
 Route::get('utilities/user_security_maintenance/level/table', 'UtilitiesController@tableUserSecurityMaintenanceLevelUtilities');
 Route::get('utilities/user_security_maintenance/company/table', 'UtilitiesController@tableUserSecurityMaintenanceCompanyUtilities');
@@ -913,6 +919,10 @@ Route::post('utilities/change_employee_no/proses', 'UtilitiesController@prosesCh
 Route::post('utilities/company/proses', 'UtilitiesController@prosesCompanyUtilities');
 Route::post('utilities/process_user_id/proses', 'UtilitiesController@prosesProcessUserIDUtilities');
 Route::post('utilities/menu_master_mobile/proses', 'UtilitiesController@prosesMenuMasterMobileUtilities');
+Route::post('utilities/menu_master_mobile_setting/proses', 'UtilitiesController@prosesMenuMasterMobileSettingUtilities');
+Route::post('utilities/master_banner/proses', 'UtilitiesController@prosesMasterBannerUtilities');
+
+Route::post('utilities/menu_master_mobile_setting/detail_data/proses', 'UtilitiesController@prosesMenuMasterMobileSettingDetailDataUtilities');
 
 Route::post('utilities/audit_trail/export', 'UtilitiesController@exportAuditTrailUtilities');
 

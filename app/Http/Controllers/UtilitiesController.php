@@ -80,6 +80,45 @@ class UtilitiesController extends Controller
     	return view('utilities.utilities_menu_master_mobile');
     }
 
+    public function pageMenuMasterMobileSettingUtilities()
+    {
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/mobile/MasterMenuMobile/getlistmenumobile',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+						"languageCode" => strtoupper(App::getLocale()),
+						"logActionUserID" => Session::get('userID'),
+                        "logActionUsername" => Session::get('userID')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if(empty($arrResult) && !isset($arrResult->dataListSet)){
+            return view('utilities.utilities_menu_master_mobile_setting', ['data' => []]);
+        }else{
+            return view('utilities.utilities_menu_master_mobile_setting', ['data' => $arrResult->dataListSet]);
+        }
+    }
+
     public function pageAuthorizationCodeGroupUtilities()
     {
     	return view('utilities.utilities_authorization_code_group');
@@ -133,6 +172,11 @@ class UtilitiesController extends Controller
     public function pageProcessUserIDUtilities()
     {
     	return view('utilities.utilities_process_user_id');
+    }
+
+    public function pageMasterBannerUtilities()
+    {
+    	return view('utilities.utilities_master_banner');
     }
 
     public function tableUserSecurityMaintenanceUtilities(Request $request)
@@ -381,6 +425,123 @@ class UtilitiesController extends Controller
         }
     }
 
+    public function tableMenuMasterMobileUtilities(Request $request)
+    {
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/mobile/MasterMenuMobile/getlistmenumobilenc',
+                ['body' => json_encode(
+                    [
+						"languageCode" => strtoupper(App::getLocale()),
+						"logActionUserID" => Session::get('userID'),
+                        "logActionUsername" => Session::get('userID')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if(empty($arrResult) && !isset($arrResult->dataListSet)){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
+        }
+    }
+
+    public function tableMenuMasterMobileSettingUtilities(Request $request)
+    {
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/mobile/MasterMenuMobile/getlistmenumobile',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+						"languageCode" => strtoupper(App::getLocale()),
+						"logActionUserID" => Session::get('userID'),
+                        "logActionUsername" => Session::get('userID')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if(empty($arrResult) && !isset($arrResult->dataListSet)){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
+        }
+    }
+
+    public function tableMasterBannerUtilities(Request $request)
+    {
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/mobile/MasterBanner/getmasterbanner',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if(empty($arrResult) && !isset($arrResult->dataListSet)){
+            return Datatables::of([])->make(true);
+        }else{
+            if(empty($arrResult->dataListSet)){
+                return Datatables::of([])->make(true);
+            }else{
+                return Datatables::of($arrResult->dataListSet)->make(true);
+            }
+        }
+    }
+
     public function dataDetailUserSecurityMaintenanceUtilities(Request $request)
     {
         try {
@@ -535,6 +696,122 @@ class UtilitiesController extends Controller
         return view('utilities.utilities_user_access_group_detail', ['data' => $arrResult->dataListSet, 'data2' => $arrResult2->dataListSet, 'func' => $request->func]);
     }
 
+    public function dataDetailMenuMasterMobileUtilities(Request $request)
+    {
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/mobile/MasterMenuMobile/getlistmenumobilenc',
+                ['body' => json_encode(
+                    [
+                        'menuID' => $request->menuID,
+                        "languageCode" => strtoupper(App::getLocale()),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());  
+
+        if(empty($arrResult) && !isset($arrResult->dataListSet)){
+            return view('utilities.utilities_menu_master_mobile_detail', ['data' => [], 'func' => $request->func]);
+        }else{
+            return view('utilities.utilities_menu_master_mobile_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
+        }
+    }
+
+    public function dataDetailMenuMasterMobileSettingUtilities(Request $request)
+    {
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/mobile/MasterMenuMobile/getlistmenumobile',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'menuID' => $request->menuID,
+                        "languageCode" => strtoupper(App::getLocale()),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());  
+
+        if(empty($arrResult) && !isset($arrResult->dataListSet)){
+            return view('utilities.utilities_menu_master_mobile_setting_detail', ['data' => []]);
+        }else{
+            return view('utilities.utilities_menu_master_mobile_setting_detail', ['data' => $arrResult->dataListSet]);
+        }
+    }
+
+    public function dataDetailMasterBannerUtilities(Request $request)
+    {
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/mobile/MasterBanner/getmasterbanner',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'bannerID' => $request->bannerID
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());  
+
+        if(empty($arrResult) && !isset($arrResult->dataListSet)){
+            return view('utilities.utilities_master_banner_detail', ['data' => [], 'func' => $request->func]);
+        }else{
+            return view('utilities.utilities_master_banner_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
+        }
+    }
+
     public function tableUserSecurityMaintenanceLevelUtilities(Request $request)
     {
         try {
@@ -586,6 +863,7 @@ class UtilitiesController extends Controller
             $response = $client->post(env('API_URL') . '/personel/User/getUserDetail',
                 ['body' => json_encode(
                     [
+                        'companyCode' => Session::get('companyCode'),
                         'userID' => $request->userID,
                         'logActionUserID' => Session::get('userID'),
                         'logActionUsername' => Session::get('userName')
@@ -778,6 +1056,46 @@ class UtilitiesController extends Controller
             return Datatables::of([])->make(true);
         }else{
             return Datatables::of($arrResult->dataListSet)->make(true);
+        }
+    }
+
+    public function tableMenuMasterMobileChildUtilities(Request $request)
+    {
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/mobile/MasterMenuMobile/getlistmenumobile',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'menuID' => $request->menuID,
+                        "languageCode" => strtoupper(App::getLocale()),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if(!isset($arrResult->dataListSet[0]->menuChild) && empty($arrResult)){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet[0]->menuChild)->make(true);
         }
     }
 
@@ -1345,8 +1663,6 @@ class UtilitiesController extends Controller
                 }
             }
 
-            // var_dump($data_menu);
-
             $response = $client->post(env('API_URL') . '/personel/MenuMasterWebDetail',
                 ['body' => json_encode(
                     [
@@ -1752,6 +2068,174 @@ class UtilitiesController extends Controller
         } catch (RequestException $e) {
             $response = $e->getResponse();
             // dd($response);
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function prosesMenuMasterMobileUtilities(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $param = [
+                'menuDesc' => $request->menu_desc,
+                'className' => $request->class_name,
+                "changedNo" => 0,
+                "createdDate" => date("Y-m-d\TH:i:s"),
+                "createdBy" => Session::get('userID'),
+                "changedDate" => date("Y-m-d\TH:i:s"),
+                "changedBy" => Session::get('userID'),
+                'sessionUserID' => Session::get('userID'),
+                'logActionUserID' => Session::get('userID'),
+                'logActionUsername' => Session::get('userName'),
+                "languageCode" => strtoupper(App::getLocale()),
+            ];
+
+            if($request->hasFile('fileInput')) {
+                $file = $request->file('fileInput');
+                $fileContent = file_get_contents($file->getRealPath());
+
+                $param['icon'] = base64_encode($fileContent);
+            }
+
+            // dd(json_encode($param));
+
+            if($request->record_function == 'New'){
+                $response = $client->post(env('API_URL') . '/mobile/MasterMenuMobile/insertmenumobile',
+                    ['body' => json_encode([$param])]
+                );
+            }else{
+                $param['menuID'] = $request->menu_id;
+                $response = $client->put(env('API_URL') . '/mobile/MasterMenuMobile/updatemenumobile',
+                    ['body' => json_encode([$param])]
+                );
+            }
+
+
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function prosesMenuMasterMobileSettingUtilities(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            if(isset($request->menuID)){
+                foreach($request->menuID as $key=>$value){
+                    $param[] = [
+                        'companyCode' => Session::get('companyCode'),
+                        "menuID" => $value,
+                        "parentMenuId" => null,
+                        "changedNo" => 0,
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "createdBy" => Session::get('userID'),
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        'sessionUserID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        "languageCode" => strtoupper(App::getLocale()),
+                    ];
+                }
+            }else{
+                $param = [];
+            }
+
+            $response = $client->post(env('API_URL') . '/mobile/MasterMenuMobile/insertmenusettingmobile',
+                ['body' => json_encode($param)]
+            );
+
+
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+        // return response()->json($request->company_default_checkbox);
+    }
+
+    public function prosesMasterBannerUtilities(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $param = [
+                'companyCode' => Session::get('companyCode'),
+                'infoURL' => $request->info_url,
+                "createdDate" => date("Y-m-d\TH:i:s"),
+                "createdBy" => Session::get('userID')
+            ];
+
+            if($request->hasFile('fileInput')) {
+                $file = $request->file('fileInput');
+                $fileContent = file_get_contents($file->getRealPath());
+
+                $param['imageBanner'] = base64_encode($fileContent);
+            }
+
+            // dd(json_encode($param));
+
+            if($request->record_function == 'New'){
+                $response = $client->post(env('API_URL') . '/mobile/MasterBanner',
+                    ['body' => json_encode([$param])]
+                );
+            }else{
+                $param['bannerID'] = $request->banner_id;
+                $response = $client->put(env('API_URL') . '/mobile/MasterBanner',
+                    ['body' => json_encode([$param])]
+                );
+            }
+
+
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){

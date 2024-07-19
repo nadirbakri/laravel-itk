@@ -11038,4 +11038,88 @@ class DataController extends Controller
 			return response()->json($arrResult->dataListSet);
 		}
 	}
+
+	public function dataMenuMobileAPI(Request $request)
+    {
+
+    	try {
+	    	$client = new Client([
+                'verify' => false,
+	    		'headers' => [ 'Content-Type' => 'application/json',
+	    						'Authorization' => 'Bearer ' . Session::get('token') ]
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/mobile/MasterMenuMobile/getlistmenumobilenc',
+	    		['body' => json_encode(
+	    			[
+						"languageCode" => strtoupper(App::getLocale()),
+						"logActionUserID" => Session::get('userID'),
+                        "logActionUsername" => Session::get('userID')
+	    			]
+	    		)]
+	    	);
+	    } catch (RequestException $e) {
+	    	$response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+		// dd($arrResult->dataListSet);
+
+		if ($arrResult->dataListSet == null) {
+			return response()->json([]);
+		}
+		else {
+			return response()->json($arrResult->dataListSet);
+		}
+	}
+
+	public function dataMenuMobileTableAPI(Request $request)
+    {
+
+    	try {
+	    	$client = new Client([
+                'verify' => false,
+	    		'headers' => [ 'Content-Type' => 'application/json',
+	    						'Authorization' => 'Bearer ' . Session::get('token') ]
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/mobile/MasterMenuMobile/getlistmenumobilenc',
+	    		['body' => json_encode(
+	    			[
+						"languageCode" => strtoupper(App::getLocale()),
+						"logActionUserID" => Session::get('userID'),
+                        "logActionUsername" => Session::get('userID')
+	    			]
+	    		)]
+	    	);
+	    } catch (RequestException $e) {
+	    	$response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+		// dd($arrResult->dataListSet);
+
+		if ($arrResult->dataListSet == null) {
+			return Datatables::of([])->make(true);
+		}
+		else {
+			return Datatables::of($arrResult->dataListSet)->make(true);
+		}
+	}
 }
