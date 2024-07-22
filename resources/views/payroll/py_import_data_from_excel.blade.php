@@ -335,6 +335,10 @@
                                         <label for="salary_actual">Salary Actual</label>
                                     </div>
                                     <div class="form-check">
+                                        <input type="radio" id="fixed_component" name="transfer_to" value="TmFixedComponent">
+                                        <label for="fixed_component">Fixed Component</label>
+                                    </div>
+                                    <div class="form-check">
                                         <input type="radio" id="yearly" name="transfer_to" value="PrYearly">
                                         <label for="yearly">Yearly</label>
                                     </div>
@@ -457,6 +461,12 @@
                 // $('#column_c, #column_d, #column_e, #column_f, #column_g, column_h, #column_i, #column_j, #column_k, #column_l').val(null).trigger('change');
                 $('#column_c2, #column_d2, #column_e2, #column_f2, #column_g2, #column_h2, #column_i2, #column_j2, #column_k2, #column_l2').val(null).trigger('change');
                 column = $('#salary_actual').val();
+                loadDataColumn(column);
+                $('.currency_code').prop('disabled', true);
+            } else if ($('#fixed_component').is(':checked')) {
+                // $('#column_c, #column_d, #column_e, #column_f, #column_g, column_h, #column_i, #column_j, #column_k, #column_l').val(null).trigger('change');
+                $('#column_c2, #column_d2, #column_e2, #column_f2, #column_g2, #column_h2, #column_i2, #column_j2, #column_k2, #column_l2').val(null).trigger('change');
+                column = $('#fixed_component').val();
                 loadDataColumn(column);
                 $('.currency_code').prop('disabled', true);
             } else if ($('#yearly').is(':checked')) {
