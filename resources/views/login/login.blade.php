@@ -30,7 +30,7 @@
         }
 
         .right-content img {
-            max-width: 18%;
+            max-width: 100%;
         }
 
         .logo-text {
@@ -71,7 +71,7 @@
         }
 
         .right-content img {
-            max-width: 13%;
+            max-width: 100%;
         }
 
         .logo-text {
@@ -125,7 +125,7 @@
         }
 
         .right-content img {
-            max-width: 12%;
+            max-width: 100%;
         }
 
         .logo-text {
@@ -213,8 +213,7 @@
     </div>
     <div class='right-content'>
         <a class="image-logo">
-            <img src="{{ url('/pictures/logo.png') }}" alt="Logo">
-            <h4 class="logo-text">Stream</h4>
+            <img src="{{ url('/pictures/blue-logo.png') }}" alt="Logo">
         </a>
         <p class="judul-text">{{ __('login.judul') }}</p>
         <p class="bawah-judul-text">{{ __('login.bawah_judul') }}</p>
