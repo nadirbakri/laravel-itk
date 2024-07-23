@@ -208,7 +208,7 @@
             $('#account_no').val("");
             $('#description').val("");
             $('#bank_code').prop('readonly', false);
-            $('#account_no').prop('readonly', false);
+            // $('#account_no').prop('readonly', false);
         } else if (func == 'edit') {
             $('#record_status').val("{{ isset($data[0]->recordStatus) ? $data[0]->recordStatus : '' }}");
             $('#record_function').val("Edit");
@@ -217,7 +217,7 @@
             $('#description').val(htmlDecode(
                 "{{ isset($data[0]->description) ? $data[0]->description : '' }}"));
             $('#bank_code').prop('readonly', true);
-            $('#account_no').prop('readonly', true);
+            // $('#account_no').prop('readonly', true);
         }
 
         function htmlDecode(value) {
