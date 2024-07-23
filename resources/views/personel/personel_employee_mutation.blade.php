@@ -1179,6 +1179,23 @@
         loadDataCityCode();
         loadDataRelation();
 
+        function isEmpty(obj) {
+            if (Array.isArray(obj)) {
+                return obj.length === 0;
+            }
+
+            if (typeof obj === 'object') {
+                for (var prop in obj) {
+                    if (Object.prototype.hasOwnProperty.call(obj, prop)) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+
+            return false;
+        }
+
         $('#mutation_type').on('change', function () {
             if(this.value == "N"){
                 $("#termination_date_new").removeAttr('required');
@@ -1670,24 +1687,7 @@
             $('#remarks').prop('disabled', false);
         });
 
-        function isEmpty(obj) {
-            if (Array.isArray(obj)) {
-                return obj.length === 0;
-            }
-
-            if (typeof obj === 'object') {
-                for (var prop in obj) {
-                    if (Object.prototype.hasOwnProperty.call(obj, prop)) {
-                        return false;
-                    }
-                }
-                return true;
-            }
-
-            return false;
-        }
-
-        $('#employee_no').on("change", function (e) {
+        $('#employee_no').on("select2:select", function (e) {
             var data = $('#employee_no').select2('data');
             $('#employee_name').val(htmlDecode(data[0].title));
             $('#termination_reason_current').val(htmlDecode(data[0].data.terminationCode));
@@ -1752,6 +1752,32 @@
                                 .levelType);
                         });
 
+                        $.ajax({
+                            url: "{{ url('personnel/report/level/check') }}",
+                            type: "GET",
+                            success: function (response) {
+                                for (var i = 1; i <= response.data[0].levelFormat; i++) {
+                                    $('#div-level-new').append(
+                                        '<div class="col-12">' +
+                                        '<div class="form-group">' +
+                                        '<label for="level' + i +
+                                        '_new">Level ' + i + ' Code</label>' +
+                                        '<select class="form-control select2" id="level' + response.data_level[i - 1].levelType + '_new" name="level_new[]"></select>' +
+                                        '<input type="hidden" class="form-control" id="level_type' +
+                                        i +
+                                        '" name="level_type_new[]" value="' + response.data_level[i - 1].levelType + '">' +
+                                        '</div></div>'
+                                    );
+
+                                    loadDataLevelCode('#level' + response.data_level[i - 1].levelType + '_new', response.data_level[i - 1].levelType);
+                                }
+                            },
+                            error: function (response) {
+                                $('#notification_error').modal('show');
+                                $('#message-notification-error').html(response);
+                            }
+                        });
+
                         $('#home_address_current').val(htmlDecode(response[0].peMasterInfo.homeAddress));
                         $('#home_city_code_current').val(htmlDecode(response[0].peMasterInfo.homeCityCode));
                         $('#home_zip_code_current').val(htmlDecode(response[0].peMasterInfo.homeZipCode));
@@ -1766,6 +1792,33 @@
                         $('#other_phone_current').val(htmlDecode(response[0].peMasterInfo.otherPhone));
                         $('#personal_email_address_current').val(htmlDecode(response[0].peMasterInfo.personalEmailAddress));
                         $('#company_email_address_current').val(htmlDecode(response[0].peMasterInfo.companyEmailAddress));
+                    }else{
+                        $('#div-level-new').html('');
+                        $.ajax({
+                            url: "{{ url('personnel/report/level/check') }}",
+                            type: "GET",
+                            success: function (response) {
+                                for (var i = 1; i <= response.data[0].levelFormat; i++) {
+                                    $('#div-level-new').append(
+                                        '<div class="col-12">' +
+                                        '<div class="form-group">' +
+                                        '<label for="level' + i +
+                                        '_new">Level ' + i + ' Code</label>' +
+                                        '<select class="form-control select2" id="level' + response.data_level[i - 1].levelType + '_new" name="level_new[]"></select>' +
+                                        '<input type="hidden" class="form-control" id="level_type' +
+                                        i +
+                                        '" name="level_type_new[]" value="' + response.data_level[i - 1].levelType + '">' +
+                                        '</div></div>'
+                                    );
+
+                                    loadDataLevelCode('#level' + response.data_level[i - 1].levelType + '_new', response.data_level[i - 1].levelType);
+                                }
+                            },
+                            error: function (response) {
+                                $('#notification_error').modal('show');
+                                $('#message-notification-error').html(response);
+                            }
+                        });
                     }
                 },
                 error: function (response) {
@@ -1773,32 +1826,32 @@
                     $('#message-notification-error').html(response);
                 }
             });
+        });
 
-            $.ajax({
-                url: "{{ url('personnel/report/level/check') }}",
-                type: "GET",
-                success: function (response) {
-                    for (var i = 1; i <= response.data[0].levelFormat; i++) {
-                        $('#div-level-new').append(
-                            '<div class="col-12">' +
-                            '<div class="form-group">' +
-                            '<label for="level' + i +
-                            '_new">Level ' + i + ' Code</label>' +
-                            '<select class="form-control select2" id="level' + response.data_level[i - 1].levelType + '_new" name="level_new[]"></select>' +
-                            '<input type="hidden" class="form-control" id="level_type' +
-                            i +
-                            '" name="level_type_new[]" value="' + response.data_level[i - 1].levelType + '">' +
-                            '</div></div>'
-                        );
+        $.ajax({
+            url: "{{ url('personnel/report/level/check') }}",
+            type: "GET",
+            success: function (response) {
+                for (var i = 1; i <= response.data[0].levelFormat; i++) {
+                    $('#div-level-new').append(
+                        '<div class="col-12">' +
+                        '<div class="form-group">' +
+                        '<label for="level' + i +
+                        '_new">Level ' + i + ' Code</label>' +
+                        '<select class="form-control select2" id="level' + response.data_level[i - 1].levelType + '_new" name="level_new[]"></select>' +
+                        '<input type="hidden" class="form-control" id="level_type' +
+                        i +
+                        '" name="level_type_new[]" value="' + response.data_level[i - 1].levelType + '">' +
+                        '</div></div>'
+                    );
 
-                        loadDataLevelCode('#level' + response.data_level[i - 1].levelType + '_new', response.data_level[i - 1].levelType);
-                    }
-                },
-                error: function (response) {
-                    $('#notification_error').modal('show');
-                    $('#message-notification-error').html(response);
+                    loadDataLevelCode('#level' + response.data_level[i - 1].levelType + '_new', response.data_level[i - 1].levelType);
                 }
-            });
+            },
+            error: function (response) {
+                $('#notification_error').modal('show');
+                $('#message-notification-error').html(response);
+            }
         });
 
         $('#employee_no').on("select2:unselecting", function (e) {
