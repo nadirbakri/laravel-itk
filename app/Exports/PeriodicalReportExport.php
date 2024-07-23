@@ -179,7 +179,7 @@ class PeriodicalReportExport extends DefaultValueBinder implements WithCustomVal
 
         if($arrResult->dataListSet == null){
             return view('payroll.py_export_periodical_report_excel', [
-                'param' => $param, 'grandTotal' => [], 'data' => [], 'data_company' => $arrCompany->dataListSet, 'data_period' => $this->period, 'grand_total' => $this->grandTotal, 'print_signature' => $this->printSignature, 'level1' => $this->dataLevel[0], 'report_name' => $this->reportNameDetail
+                'param' => $param, 'grandTotal' => [], 'data' => [], 'data_company' => $arrCompany->dataListSet, 'data_period' => $this->period, 'grand_total' => $this->grandTotal, 'print_signature' => $this->printSignature, 'level1' => $this->dataLevel[0], 'report_name' => $this->reportNameDetail, 'company' => Session::get('companyCode')
             ]);
         }else{
             $total = [];
@@ -219,7 +219,7 @@ class PeriodicalReportExport extends DefaultValueBinder implements WithCustomVal
             }
 
             return view('payroll.py_export_periodical_report_excel', [
-                'param' => $param, 'grandTotal' => $total, 'data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet, 'data_period' => $this->period, 'grand_total' => $this->grandTotal, 'print_signature' => $this->printSignature, 'level1' => $this->dataLevel[0], 'report_name' => $this->reportNameDetail
+                'param' => $param, 'grandTotal' => $total, 'data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet, 'data_period' => $this->period, 'grand_total' => $this->grandTotal, 'print_signature' => $this->printSignature, 'level1' => $this->dataLevel[0], 'report_name' => $this->reportNameDetail, 'company' => Session::get('companyCode')
             ]); 
         }
     }

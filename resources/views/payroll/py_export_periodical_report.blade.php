@@ -32,7 +32,19 @@
 </head>
 <body>
     @if(count($data) > 0 && (count($data[0]->detail) > 0))
-        <h3>{{ $data_company[0]->companyName }} <br> {{ $data_company[0]->address }}</h3>
+        <h3>
+            @if($company == 'NMDI')
+            {{ ($level1[0] == "ALL") ? $data_company[0]->companyName : 'PT ' . $data[0]->detail[0]->companyName }}
+            @else
+            {{ $data_company[0]->companyName }}
+            @endif
+        <br> 
+            @if($company == 'NMDI')
+            {{ ($level1[0] == "ALL") ? $data_company[0]->address : $data[0]->detail[0]->companyLocation }}
+            @else
+            {{ $data_company[0]->address }}
+            @endif
+        </h3>
         <h3 style="text-align:center">{{ $report_name }}</h3>
         <h4 style="text-align:center">Period : {{ date('F Y', strtotime($data_period)) }}</h4>
         <?php

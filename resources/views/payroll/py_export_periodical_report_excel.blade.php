@@ -36,10 +36,22 @@
         <table>
             <thead>
                 <tr>
-                    <th colspan="{{ $countcolspan }}">{{ $data_company[0]->companyName }}</th>
+                    <th colspan="{{ $countcolspan }}">
+                        @if($company == 'NMDI')
+                        {{ ($level1[0] == "ALL") ? $data_company[0]->companyName : 'PT ' . $data[0]->detail[0]->companyName }}
+                        @else
+                        {{ $data_company[0]->companyName }}
+                        @endif
+                    </th>
                 </tr>
                 <tr>
-                    <th colspan="{{ $countcolspan }}">{{ $data_company[0]->address }}</th>
+                    <th colspan="{{ $countcolspan }}">
+                        @if($company == 'NMDI')
+                        {{ ($level1[0] == "ALL") ? $data_company[0]->address : $data[0]->detail[0]->companyLocation }}
+                        @else
+                        {{ $data_company[0]->address }}
+                        @endif
+                    </th>
                 </tr>
                 <tr></tr>
                 <tr>
