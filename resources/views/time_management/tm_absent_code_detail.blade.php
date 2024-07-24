@@ -448,14 +448,10 @@
                     'absentType': "{{ isset($data[0]->absentType) ? $data[0]->absentType : '' }}"
                 }
             }).then(function (data) {
-                var option = $('<option/>', {
-                    id: data[0].comGenCode,
-                    title: data[0].value,
-                    text: data[0].value
-                });
-                $("#category").append(option).attr('data-alias', 'yourvalue').trigger(
-                    'change');
-                $("#category").trigger({
+                var option = new Option(data[0].value, data[0].comGenCode, true, true);
+                $('#category').append(option).trigger('change');
+
+                $('#category').trigger({
                     type: 'select2:select',
                     params: {
                         id: data[0].comGenCode,

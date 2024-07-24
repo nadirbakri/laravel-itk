@@ -1978,6 +1978,8 @@ class TimeManagementController extends Controller
                 $param['payroll'. ($i+1)] = isset($request->{'check_payroll' . ($i+1)}) ? (bool) $request->{'check_payroll' . ($i+1)} : false;
             }
 
+            // dd(json_encode($param));
+
             if($request->record_function == 'New'){
                 $response = $client->post(env('API_URL') . '/mobile/TmAbsentCode',
                     ['body' => json_encode($param)]
