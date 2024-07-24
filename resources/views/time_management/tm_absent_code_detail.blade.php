@@ -468,16 +468,10 @@
                 }
             }).then(function (data) {
                 // var option = new Option(data.positionCode, data.positionCode, true, true);
-                var option = $('<option/>', {
-                    id: data[0].comGenCode,
-                    title: data[0].value,
-                    text: data[0].value
-                });
-                $("#deduct_leave").append(option).attr('data-alias', 'yourvalue').trigger(
-                    'change');
-                // $("#supervisor_position_code").val(data.positionCode).trigger("change");
-                // $('#supervisor_position_code').select2('data', {id: data.positionCode, text: data.positionCode, data: data});
-                $("#deduct_leave").trigger({
+                var option = new Option(data[0].value, data[0].comGenCode, true, true);
+                $('#deduct_leave').append(option).trigger('change');
+
+                $('#deduct_leave').trigger({
                     type: 'select2:select',
                     params: {
                         id: data[0].comGenCode,
