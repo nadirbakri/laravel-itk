@@ -12,6 +12,7 @@ use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\WithValidation;
 use Carbon\Carbon;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
+use Illuminate\Support\Facades\Storage;
 use Session;
 use App;
 
@@ -71,7 +72,9 @@ class PayrollDataImport implements ToCollection, WithStartRow
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            foreach ($rows as $row) {
+            $rows->filter(function ($row) {
+                return !empty($row[0]);
+            })->each(function ($row) use (&$param) {
                 $param[] = [
                     "companyCode" => Session::get('companyCode'),
                     "processPeriod" => (isset($this->processPeriod)) ? date("Y-m-d", strtotime('01 '.$this->processPeriod)) : null,
@@ -121,8 +124,9 @@ class PayrollDataImport implements ToCollection, WithStartRow
                     "logActionUserID" => Session::get('userID'),
                     "logActionUsername" => Session::get('userName')
                 ];
-            }
+            });
 
+            // Storage::put('debug_data.txt', json_encode($param));
             // dd(json_encode($param));
 
             $response = $client->put(env('API_URL') . '/payroll/UpdateSalaryYearly',

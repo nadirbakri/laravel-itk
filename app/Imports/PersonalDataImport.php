@@ -87,7 +87,9 @@ class PersonalDataImport implements ToCollection, SkipsEmptyRows, WithStartRow, 
                 return $this->arrResult;
             }
 
-            foreach ($rows as $row) {
+            $rows->filter(function ($row) {
+                return !empty($row[1]);
+            })->each(function ($row) use (&$param) {
                 $peMasterLevel = [] ;
                 foreach ($levelType as $type) {
                     $peMasterLevel[] = [
@@ -351,7 +353,7 @@ class PersonalDataImport implements ToCollection, SkipsEmptyRows, WithStartRow, 
                     ],
                     'peMasterLevel' => $peMasterLevel
                 ];
-            }
+            });
 
             // Storage::put('debug_data.txt', json_encode($param));
             // dd(json_encode($param));
