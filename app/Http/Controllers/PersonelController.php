@@ -9039,12 +9039,14 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            if(!empty($request->level_new)){
-                foreach($request->level_new as $key => $value){
-                    $data_level[] = [
-                        'levelType' => $request->level_type_new[$key],
-                        'levelCode' => $value
-                    ];
+            if(!empty($request->level_type_new)){
+                foreach($request->level_type_new as $key => $value){
+                    if(!empty($request->level_new[$key])){
+                        $data_level[] = [
+                            'levelType' => $value,
+                            'levelCode' => $request->level_new[$key]
+                        ];
+                    }
                 }
             }
 

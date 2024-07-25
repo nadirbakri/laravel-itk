@@ -1762,7 +1762,9 @@
                                         '<div class="form-group">' +
                                         '<label for="level' + i +
                                         '_new">Level ' + i + ' Code</label>' +
-                                        '<select class="form-control select2" id="level' + response.data_level[i - 1].levelType + '_new" name="level_new[]"></select>' +
+                                        '<select class="form-control select2" id="level' + response.data_level[i - 1].levelType + '_new" name="level_new[]">' + 
+                                        '<option value="">Select Level</option>' +
+                                        '</select>' +
                                         '<input type="hidden" class="form-control" id="level_type' +
                                         i +
                                         '" name="level_type_new[]" value="' + response.data_level[i - 1].levelType + '">' +
