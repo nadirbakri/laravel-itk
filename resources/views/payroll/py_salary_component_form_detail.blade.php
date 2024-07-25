@@ -598,6 +598,7 @@
             if (typeof arrData[0].flagTaxAllowance !== 'undefined') {
                 if (arrData[0].flagTaxAllowance === true) {
                     $('#tax_allowance').prop('checked', true).trigger('change');
+                    $('#tax_netto_calculation').prop('checked', false).trigger('change');
                 }
                 else {
                     $('#tax_allowance').prop('checked', false).trigger('change');
@@ -607,6 +608,7 @@
             if (typeof arrData[0].flagNetCalculation !== 'undefined') {
                 if (arrData[0].flagNetCalculation === true) {
                     $('#tax_netto_calculation').prop('checked', true).trigger('change');
+                    $('#tax_allowance').prop('checked', false).trigger('change');
                 }
                 else {
                     $('#tax_netto_calculation').prop('checked', false).trigger('change');
@@ -687,6 +689,18 @@
                 $('#overtime_alternative_2').prop('disabled', true);
             }
         }
+
+        $('#tax_allowance').on('change', function() {
+            if (this.checked) {
+                $('#tax_netto_calculation').prop('checked', false);
+            }
+        });
+
+        $('#tax_netto_calculation').on('change', function() {
+            if (this.checked) {
+                $('#tax_allowance').prop('checked', false);
+            }
+        });
 
         $('input[name=display_in]').on('change', function () {
             displayIn = $('input[name=display_in]:checked').val();
