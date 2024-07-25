@@ -2770,25 +2770,27 @@
             var valid = true;
             form.find(":input:visible").each(function() {
                 var $this = $(this);
-                if ($this.val().trim() === "" && $this.prop("required")) {
-                    valid = false;
-                    $this.addClass('is-invalid');
-                    var errorMessage = $this.data('error-message') || 'This field is required';
-                    if ($this.closest('.input-group').length) {
-                        if ($this.closest('.input-group').next('.invalid-feedback').length === 0) {
-                            $this.closest('.input-group').after('<div class="invalid-feedback">' + errorMessage + '</div>');
+                if(!isEmpty($this.val())){
+                    if ($this.val().trim() === "" && $this.prop("required")) {
+                        valid = false;
+                        $this.addClass('is-invalid');
+                        var errorMessage = $this.data('error-message') || 'This field is required';
+                        if ($this.closest('.input-group').length) {
+                            if ($this.closest('.input-group').next('.invalid-feedback').length === 0) {
+                                $this.closest('.input-group').after('<div class="invalid-feedback">' + errorMessage + '</div>');
+                            }
+                        } else {
+                            if ($this.next('.invalid-feedback').length === 0) {
+                                $this.after('<div class="invalid-feedback">' + errorMessage + '</div>');
+                            }
                         }
                     } else {
-                        if ($this.next('.invalid-feedback').length === 0) {
-                            $this.after('<div class="invalid-feedback">' + errorMessage + '</div>');
+                        $this.removeClass('is-invalid');
+                        if ($this.closest('.input-group').length) {
+                            $this.closest('.input-group').next('.invalid-feedback').remove();
+                        } else {
+                            $this.next('.invalid-feedback').remove();
                         }
-                    }
-                } else {
-                    $this.removeClass('is-invalid');
-                    if ($this.closest('.input-group').length) {
-                        $this.closest('.input-group').next('.invalid-feedback').remove();
-                    } else {
-                        $this.next('.invalid-feedback').remove();
                     }
                 }
             });
