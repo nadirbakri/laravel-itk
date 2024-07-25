@@ -5457,6 +5457,9 @@ public function dataDetailReportFormatPY(Request $request)
                 "bonusCooefficient" => (float) $request->bonus_cooficient,
                 "taxAllowanceBonus" => isset($request->check_tax_allowance_bonus) ? (bool) $request->check_tax_allowance_bonus : false,
                 "taxAllowanceTHR" => isset($request->check_tax_allowance_thr) ? (bool) $request->check_tax_allowance_thr : false,
+                "FlagTaxAllowance" => isset($request->check_tax_allowance_custom_set_up) ? (bool) $request->check_tax_allowance_custom_set_up : false,
+                "FlagNetCalculation" => isset($request->check_tax_netto_calculation_custom_set_up) ? (bool) $request->check_tax_netto_calculation_custom_set_up : false,
+                "FlagIteratif" => isset($request->check_tax_allowance_custom_set_up) ? filter_var($request->tax_allowance_custom_set_up_detail, FILTER_VALIDATE_BOOLEAN) : false,
                 "pensionContributionEmployee" => (float) $request->pension_contribution_employee,
                 "pensionContributionEmployer" => (float) $request->pension_contribution_employer,
                 "workRelateAccidentInsurance" => (float) $request->work_related_accident_insurance_one,
@@ -5530,7 +5533,7 @@ public function dataDetailReportFormatPY(Request $request)
                 'logActionUsername' => Session::get('userName')        
             ];
 
-            // var_dump(json_encode($param));
+            // dd(json_encode($param));
 
             if($request->record_function == 'New'){
                 $response = $client->post(env('API_URL') . '/payroll/InsertRefrencePayroll',

@@ -731,6 +731,50 @@
                                 </div>
                             </div>
                             <div class="row">
+                                <div class="col-3"> 
+                                    <div class="form-group" style="margin-bottom: 0;">
+                                        <label for="tax_custom_set_up">{{ __('payroll_reference_payroll.label_tax_custom_set_up') }}</label>
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="form-group" style="margin-bottom: 0;">
+                                        <input class="form-check-input" type="checkbox" id="check_tax_allowance_custom_set_up"
+                                            name="check_tax_allowance_custom_set_up" value="true" disabled>
+                                        <label
+                                            for="check_tax_allowance_custom_set_up">{{ __('payroll_reference_payroll.label_tax_allowance') }}</label>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="form-group" style="margin-bottom: 0;">
+                                        <input class="form-check-input" type="checkbox" id="check_tax_netto_calculation_custom_set_up"
+                                            name="check_tax_netto_calculation_custom_set_up" value="true" disabled>
+                                        <label
+                                            for="check_tax_netto_calculation_custom_set_up">{{ __('payroll_reference_payroll.label_tax_netto_calculation') }}</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-top: 0; display: none;" id="div_tax_allowance_custom_set_up">
+                                <div class="col-3"> 
+                                    &nbsp;
+                                </div>
+                                <div class="col-3">
+                                    <div class="form-group">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" id="tax_allowance_custom_set_up_iterative"
+                                                name="tax_allowance_custom_set_up_detail" value="true" disabled checked>
+                                            <label
+                                                for="tax_allowance_custom_set_up_iterative">{{ __('payroll_reference_payroll.label_iterative') }}</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" id="tax_allowance_custom_set_up_non_iterative"
+                                                name="tax_allowance_custom_set_up_detail" value="false" disabled>
+                                            <label
+                                                for="tax_allowance_custom_set_up_non_iterative">{{ __('payroll_reference_payroll.label_non_iterative') }}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-3">
                                     <div class="form-group">
                                         <br>
@@ -1745,6 +1789,10 @@
             $('#work_insurance_remision_payment_percentage').prop('readonly', false);
             pickerEndPeriod._input.removeAttribute("disabled");
             $('#tax_calculation_method_annualized').prop('disabled', false);
+            $('#check_tax_allowance_custom_set_up').prop('disabled', false);
+            $('#check_tax_netto_calculation_custom_set_up').prop('disabled', false);
+            $('#tax_allowance_custom_set_up_iterative').prop('disabled', false);
+            $('#tax_allowance_custom_set_up_non_iterative').prop('disabled', false);
             $('#tax_calculation_method_prorated').prop('disabled', false);
             $('#non_taxable_income_employee').prop('readonly', false);
             $('#non_taxable_income_each_dependent').prop('readonly', false);
@@ -1827,6 +1875,10 @@
             // $('#work_insurance_remision_payment_percentage').prop('readonly', false);
             // pickerEndPeriod._input.removeAttribute("disabled");
             // $('#tax_calculation_method_annualized').prop('disabled', false);
+            // $('#check_tax_allowance_custom_set_up').prop('disabled', false);
+            // $('#check_tax_netto_calculation_custom_set_up').prop('disabled', false);
+            // $('#tax_allowance_custom_set_up_iterative').prop('disabled', false);
+            // $('#tax_allowance_custom_set_up_non_iterative').prop('disabled', false);
             // $('#tax_calculation_method_prorated').prop('disabled', false);
             // $('#non_taxable_income_employee').prop('readonly', false);
             // $('#non_taxable_income_each_dependent').prop('readonly', false);
@@ -1932,6 +1984,10 @@
             $('#work_insurance_remision_payment_percentage').prop('readonly', false);
             pickerEndPeriod._input.removeAttribute("disabled");
             $('#tax_calculation_method_annualized').prop('disabled', false);
+            $('#check_tax_allowance_custom_set_up').prop('disabled', false);
+            $('#check_tax_netto_calculation_custom_set_up').prop('disabled', false);
+            $('#tax_allowance_custom_set_up_iterative').prop('disabled', false);
+            $('#tax_allowance_custom_set_up_non_iterative').prop('disabled', false);
             $('#tax_calculation_method_prorated').prop('disabled', false);
             $('#non_taxable_income_employee').prop('readonly', false);
             $('#non_taxable_income_each_dependent').prop('readonly', false);
@@ -1975,6 +2031,22 @@
             else {
                 $('#check_on_period_tax_calculation_table').prop('checked', true);
                 $('#on_period_tax_calculation_table').prop('readonly', false);
+            }
+        });
+
+        $('#check_tax_allowance_custom_set_up').on('change', function() {
+            if (this.checked) {
+                $('#check_tax_netto_calculation_custom_set_up').prop('checked', false);
+                $('#div_tax_allowance_custom_set_up').show();
+            }else{
+                $('#div_tax_allowance_custom_set_up').hide();
+            }
+        });
+
+        $('#check_tax_netto_calculation_custom_set_up').on('change', function() {
+            if (this.checked) {
+                $('#check_tax_allowance_custom_set_up').prop('checked', false);
+                $('#div_tax_allowance_custom_set_up').hide();
             }
         });
 
@@ -2087,6 +2159,10 @@
                                 $('#work_insurance_remision_payment_percentage').prop('readonly', false);
                                 pickerEndPeriod._input.removeAttribute("disabled");
                                 $('#tax_calculation_method_annualized').prop('disabled', false);
+                                $('#check_tax_allowance_custom_set_up').prop('disabled', false);
+                                $('#check_tax_netto_calculation_custom_set_up').prop('disabled', false);
+                                $('#tax_allowance_custom_set_up_iterative').prop('disabled', false);
+                                $('#tax_allowance_custom_set_up_non_iterative').prop('disabled', false);
                                 $('#tax_calculation_method_prorated').prop('disabled', false);
                                 $('#non_taxable_income_employee').prop('readonly', false);
                                 $('#non_taxable_income_each_dependent').prop('readonly', false);
