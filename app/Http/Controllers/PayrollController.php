@@ -7093,6 +7093,9 @@ public function dataDetailReportFormatPY(Request $request)
         }else if($data->companyCode == 'IAT'){
             $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_indogal';
             $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_indogal';
+        }else if($data->companyCode == 'MAT'){
+            $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_mega_antusias';
+            $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_mega_antusias';
         }else{
             $viewNamePortrait = 'payroll.py_export_payment_slip_portrait';
             $viewNameLandscape = 'payroll.py_export_payment_slip_landscape';
@@ -7103,6 +7106,7 @@ public function dataDetailReportFormatPY(Request $request)
                 $pdf = PDF::loadView($viewNamePortrait, [
                     'data' => [], 
                     'display_logo' => $data->display_logo,
+                    'slip_code' => $request->slip_type,
                     'no' => date('m', strtotime($data->period)), 
                     'first_day' => $firstDayOfPreviousMonth,
                     'last_day' => $lastDayOfPreviousMonth,
@@ -7120,6 +7124,7 @@ public function dataDetailReportFormatPY(Request $request)
                 $pdf = PDF::loadView($viewNameLandscape, [
                     'data' => [], 
                     'display_logo' => $data->display_logo,
+                    'slip_code' => $request->slip_type,
                     'no' => date('m', strtotime($data->period)), 
                     'first_day' => $firstDayOfPreviousMonth,
                     'last_day' => $lastDayOfPreviousMonth,
@@ -7139,6 +7144,7 @@ public function dataDetailReportFormatPY(Request $request)
                 $pdf = PDF::loadView($viewNamePortrait, [
                     'data' => $arrResult->dataListSet, 
                     'display_logo' => $data->display_logo,
+                    'slip_code' => $request->slip_type,
                     'no' => date('m', strtotime($data->period)), 
                     'first_day' => $firstDayOfPreviousMonth,
                     'last_day' => $lastDayOfPreviousMonth,
@@ -7156,6 +7162,7 @@ public function dataDetailReportFormatPY(Request $request)
                 $pdf = PDF::loadView($viewNameLandscape, [
                     'data' => $arrResult->dataListSet, 
                     'display_logo' => $data->display_logo,
+                    'slip_code' => $request->slip_type,
                     'no' => date('m', strtotime($data->period)), 
                     'first_day' => $firstDayOfPreviousMonth,
                     'last_day' => $lastDayOfPreviousMonth,
@@ -7339,6 +7346,9 @@ public function dataDetailReportFormatPY(Request $request)
         }else if($companyCode == 'IAT'){
             $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_indogal';
             $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_indogal';
+        }else if($companyCode == 'MAT'){
+            $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_mega_antusias';
+            $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_mega_antusias';
         }else{
             $viewNamePortrait = 'payroll.py_export_payment_slip_portrait';
             $viewNameLandscape = 'payroll.py_export_payment_slip_landscape';
@@ -7349,6 +7359,7 @@ public function dataDetailReportFormatPY(Request $request)
                 $pdf = PDF::loadView($viewNamePortrait, [
                     'data' => [], 
                     'display_logo' => $request->display_logo, 
+                    'slip_code' => $request->slip_type,
                     'no' => date('m', strtotime($request->period)), 
                     'first_day' => $firstDayOfPreviousMonth,
                     'last_day' => $lastDayOfPreviousMonth,
@@ -7367,6 +7378,7 @@ public function dataDetailReportFormatPY(Request $request)
                 $pdf = PDF::loadView($viewNameLandscape, [
                     'data' => [], 
                     'display_logo' => $request->display_logo, 
+                    'slip_code' => $request->slip_type,
                     'no' => date('m', strtotime($request->period)), 
                     'first_day' => $firstDayOfPreviousMonth,
                     'last_day' => $lastDayOfPreviousMonth,
@@ -7387,6 +7399,7 @@ public function dataDetailReportFormatPY(Request $request)
                 $pdf = PDF::loadView($viewNamePortrait, [
                     'data' => $arrResult->dataListSet, 
                     'display_logo' => $request->display_logo, 
+                    'slip_code' => $request->slip_type,
                     'no' => date('m', strtotime($request->period)), 
                     'first_day' => $firstDayOfPreviousMonth,
                     'last_day' => $lastDayOfPreviousMonth,
@@ -7405,6 +7418,7 @@ public function dataDetailReportFormatPY(Request $request)
                 $pdf = PDF::loadView($viewNameLandscape, [
                     'data' => $arrResult->dataListSet, 
                     'display_logo' => $request->display_logo, 
+                    'slip_code' => $request->slip_type,
                     'no' => date('m', strtotime($request->period)), 
                     'first_day' => $firstDayOfPreviousMonth,
                     'last_day' => $lastDayOfPreviousMonth,
@@ -7515,6 +7529,9 @@ public function dataDetailReportFormatPY(Request $request)
         }else if($companyCode == 'IAT'){
             $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_indogal';
             $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_indogal';
+        }else if($companyCode == 'MAT'){
+            $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_mega_antusias';
+            $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_mega_antusias';
         }else{
             $viewNamePortrait = 'payroll.py_export_payment_slip_portrait';
             $viewNameLandscape = 'payroll.py_export_payment_slip_landscape';

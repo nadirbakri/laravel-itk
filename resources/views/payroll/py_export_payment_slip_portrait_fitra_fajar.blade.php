@@ -56,7 +56,7 @@
 		</tr>
 		<tr>
 			<td style="padding: 0; margin: 0; text-align:left; font-size: 12px; font-weight: 700;">
-				SALARY SLIP
+				{{ strtoupper($slip_code) }} SLIP
 			</td>
 		</tr>
 	</table>

@@ -54,7 +54,7 @@
 			@endif
 		</tr>
 		<tr>
-			<td width="8%">SALARY SLIP</td>
+			<td width="8%">{{ strtoupper($slip_code) }} SLIP</td>
 			<td width="12%">{{ $periode }}</td>
 		</tr>
 	</table>
