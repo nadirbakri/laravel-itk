@@ -7090,6 +7090,9 @@ public function dataDetailReportFormatPY(Request $request)
         }else if($data->companyCode == 'FFS'){
             $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_fitra_fajar';
             $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_fitra_fajar';
+        }else if($data->companyCode == 'IAT'){
+            $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_indogal';
+            $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_indogal';
         }else{
             $viewNamePortrait = 'payroll.py_export_payment_slip_portrait';
             $viewNameLandscape = 'payroll.py_export_payment_slip_landscape';
@@ -7333,6 +7336,9 @@ public function dataDetailReportFormatPY(Request $request)
         }else if($companyCode == 'FFS'){
             $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_fitra_fajar';
             $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_fitra_fajar';
+        }else if($companyCode == 'IAT'){
+            $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_indogal';
+            $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_indogal';
         }else{
             $viewNamePortrait = 'payroll.py_export_payment_slip_portrait';
             $viewNameLandscape = 'payroll.py_export_payment_slip_landscape';
@@ -7500,6 +7506,15 @@ public function dataDetailReportFormatPY(Request $request)
         if($companyCode == 'DAA'){
             $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_digima';
             $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_digima';
+        }else if($companyCode == 'KNM' || $companyCode == 'KTL'){
+            $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_sayurbox';
+            $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_sayurbox';
+        }else if($companyCode == 'FFS'){
+            $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_fitra_fajar';
+            $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_fitra_fajar';
+        }else if($companyCode == 'IAT'){
+            $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_indogal';
+            $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_indogal';
         }else{
             $viewNamePortrait = 'payroll.py_export_payment_slip_portrait';
             $viewNameLandscape = 'payroll.py_export_payment_slip_landscape';
