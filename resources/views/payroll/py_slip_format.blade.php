@@ -330,9 +330,9 @@
 
         function loadDataSlipCode() {
             var listSlipType = [
-                {id:"SALARY_SLIP", text:"Salary"},
-                {id:"THR_SLIP", text:"THR"},
-                {id:"BONUS_SLIP", text:"Bonus"}
+                {id:"Salary", text:"Salary"},
+                {id:"THR", text:"THR"},
+                {id:"Bonus", text:"Bonus"}
             ];
 
             $('#slip_code').select2({
