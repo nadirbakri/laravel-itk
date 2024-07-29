@@ -7794,8 +7794,6 @@ public function dataDetailReportFormatPY(Request $request)
 
         $arrResult = json_decode($response->getBody()->getContents());
 
-        // dd($arrResult->dataListSet);
-
         if($arrResult->dataListSet == null){
             if($request->jamsostek_report_type == 'formulir2'){
                 $pdf = PDF::loadView('payroll.py_export_monthly_jamsostek_formulir2_report', 
@@ -8578,6 +8576,7 @@ public function dataDetailReportFormatPY(Request $request)
                 $branch = null;
                 
                 foreach ($arrResult->dataListSet[0]->departementGroup as $key => $dept) {
+                    $totalEmployee = count($dept->data);
                     foreach ($dept->data as $key => $value) {
                         foreach ($value->field as $v) {
                             if ($v->tableName === 'Company') {
@@ -8589,7 +8588,12 @@ public function dataDetailReportFormatPY(Request $request)
                             if (!is_string($v->value)) {
                                 $total[$branch][$v->field] = isset($total[$branch][$v->field]) ? $total[$branch][$v->field] + $v->value : $v->value;
                             }else{
-                                $total[$branch][$v->field] = '';
+                                if($v->field == 'EmployeeNo'){
+                                    $total[$branch][$v->field] = isset($total[$branch][$v->field]) ? $total[$branch][$v->field] + $totalEmployee : $totalEmployee;
+                                    $totalEmployee = 0;
+                                }else{
+                                    $total[$branch][$v->field] = '';
+                                }
                             }
                         }
                     }

@@ -200,6 +200,7 @@ class PeriodicalReportExport extends DefaultValueBinder implements WithCustomVal
                 $branch = null;
                 
                 foreach ($arrResult->dataListSet[0]->departementGroup as $key => $dept) {
+                    $totalEmployee = count($dept->data);
                     foreach ($dept->data as $key => $value) {
                         foreach ($value->field as $v) {
                             if ($v->tableName === 'Company') {
@@ -211,7 +212,12 @@ class PeriodicalReportExport extends DefaultValueBinder implements WithCustomVal
                             if (!is_string($v->value)) {
                                 $total[$branch][$v->field] = isset($total[$branch][$v->field]) ? $total[$branch][$v->field] + $v->value : $v->value;
                             }else{
-                                $total[$branch][$v->field] = '';
+                                if($v->field == 'EmployeeNo'){
+                                    $total[$branch][$v->field] = isset($total[$branch][$v->field]) ? $total[$branch][$v->field] + $totalEmployee : $totalEmployee;
+                                    $totalEmployee = 0;
+                                }else{
+                                    $total[$branch][$v->field] = '';
+                                }
                             }
                         }
                     }
