@@ -345,7 +345,7 @@
                 errorPlacement: function (error, element) {
                     $("#btn-import").prop("disabled", false);
                     $("#btn-import").html(
-                        '<i class="fa fa-floppy-o"></i> {{ __("personel_import_export_personal_data.btn-import") }}'
+                        '{{ __("personel_import_export_personal_data.btn-import") }}'
                     );
 
                     error.addClass('invalid-feedback');
@@ -371,20 +371,19 @@
                             if (response[0].status == "true") {
                                 $("#btn-import").prop("disabled", false);
                                 $("#btn-import").html(
-                                    '<i class="fa fa-floppy-o"></i> {{ __("personel_import_export_personal_data.btn-import") }}'
+                                    '{{ __("personel_import_export_personal_data.btn-import") }}'
                                 );
                                 $('#notification_success').modal('show');
                                 $('#message-notification-success').html(response[0]
                                     .message);
-                                setTimeout(function () {
-                                    window.location =
-                                        "{{ url('personnel/import_export_personal_data') }}";
-                                }, 3000);
+                                // setTimeout(function () {
+                                //     window.location =
+                                //         "{{ url('personnel/import_export_personal_data') }}";
+                                // }, 3000);
                             } else {
-                                console.log(response[0]);
                                 $("#btn-import").prop("disabled", false);
                                 $("#btn-import").html(
-                                    '<i class="fa fa-floppy-o"></i> {{ __("personel_import_export_personal_data.btn-import") }}'
+                                    '{{ __("personel_import_export_personal_data.btn-import") }}'
                                 );
                                 $('#notification_error').modal('show');
                                 if (response[0].message == null || response[0].message ==
@@ -400,7 +399,7 @@
                         error: function (response) {
                             $("#btn-import").prop("disabled", false);
                             $("#btn-import").html(
-                                '<i class="fa fa-floppy-o"></i> {{ __("personel_import_export_personal_data.btn-import") }}'
+                                '{{ __("personel_import_export_personal_data.btn-import") }}'
                             );
                             $('#notification_error').modal('show');
                             $('#message-notification-error').html(response);

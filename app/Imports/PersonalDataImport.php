@@ -89,7 +89,7 @@ class PersonalDataImport implements ToCollection, SkipsEmptyRows, WithStartRow, 
 
             $rows->filter(function ($row) {
                 return !empty($row[1]);
-            })->each(function ($row) use (&$param) {
+            })->each(function ($row) use (&$param, &$levelType) {
                 $peMasterLevel = [] ;
                 foreach ($levelType as $type) {
                     $peMasterLevel[] = [
