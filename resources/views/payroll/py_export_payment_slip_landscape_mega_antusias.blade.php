@@ -43,6 +43,15 @@
 			border-collapse:collapse;
 		} */
 
+		.div-footer {
+			position: fixed; 
+			bottom: -0.8cm; 
+			left: 0cm; 
+			right: 0cm;
+			height: 4.7cm;
+			font-size: 7.5px;
+		}
+
 		.page_break { page-break-before: always; }
 	</style>
 </head>
@@ -68,24 +77,18 @@
 	</table>
 	<table class="table" style="width:100%; font-size: 16px; padding-left:3%; padding-right:3%; border-collapse: collapse; font-family: 'ArialCustomBold', sans-serif; border-bottom: 1px solid black;">
         <tr>
-			<td colspan="3" width="50%">&nbsp;</td>
-			<td width="15%" style="padding-left: 10px;">Email</td>
-			<td width="1%">:</td>
-			<td width="34%" style="padding-left: 10px;">{{ $value->email }}</td>
-		</tr>
-        <tr>
 			<td width="15%" style="padding-left: 10px;">BULAN</td>
 			<td width="1%">:</td>
 			<td width="34%" style="padding-left: 10px;">{{ $value->payrollCutOff }}</td>
-			<td width="15%" style="padding-left: 10px;">No. ID</td>
+			<td width="15%" style="padding-left: 10px;">Kode Wilayah</td>
 			<td width="1%">:</td>
-			<td width="34%" style="padding-left: 10px;">{{ $value->nik }}</td>
+			<td width="34%" style="padding-left: 10px;">{{ $value->level2 }}</td>
 		</tr>
 		<tr>
 			<td width="15%" style="padding-left: 10px;">NIK/Status Pjk</td>
 			<td width="1%">:</td>
 			<td width="34%" style="padding-left: 10px;">{{ $value->employeeNo }} / {{ $value->ptkp }}</td>
-			<td width="15%" style="padding-left: 10px;">Dept</td>
+			<td width="15%" style="padding-left: 10px;">Kode Lokasi</td>
 			<td width="1%">:</td>
 			<td width="34%" style="padding-left: 10px;">{{ $value->level3 }}</td>
 		</tr>
@@ -93,7 +96,7 @@
 			<td width="15%" style="padding-left: 10px;">Nama</td>
 			<td width="1%" style="">:</td>
 			<td width="34%" style="padding-left: 10px;">{{ $value->employeeName }}</td>
-			<td width="15%" style="padding-left: 10px;">Cost Center</td>
+			<td width="15%" style="padding-left: 10px;">Kode Toko</td>
 			<td width="1%" style="">:</td>
 			<td width="34%" style="padding-left: 10px;">{{ $value->level4 }}</td>
 		</tr>
@@ -155,7 +158,7 @@
 							<td width="17%" style="padding-left: 20px;">{{ $value2->columnLabel }}</td>
                             <td width="1%">:</td>
 							<td width="5%">Rp.</td>
-							<td width="8%" style="text-align:left;">{{ number_format((float) $value2->columnValue, 0, ',', '.')}}</td>
+							<td width="8%" style="text-align:right;">{{ number_format((float) $value2->columnValue, 0, ',', '.')}}</td>
 						</tr>
 						@endif
 					@endforeach
@@ -163,7 +166,7 @@
                         <td width="17%" style="padding-left: 20px;">Total Potongan</td>
                         <td width="1%">:</td>
                         <td width="5%" style="border-top: 1px solid black;">Rp.</td>
-                        <td width="8%" style="text-align:left; border-top: 1px solid black;">{{ number_format((float) $totalDeduction, 0, ',', '.')}}</td>
+                        <td width="8%" style="text-align:right; border-top: 1px solid black;">{{ number_format((float) $totalDeduction, 0, ',', '.')}}</td>
                     </tr>
                     <tr>
                         <td colspan="4">&nbsp;</td>
@@ -172,16 +175,28 @@
                         <td width="17%" style="padding-left: 20px;">Total Diterima</td>
                         <td width="1%">:</td>
                         <td width="5%">Rp.</td>
-                        <td width="8%" style="text-align:left;">{{ number_format($totalIncome - $totalDeduction, 0, ',', '.')}}</td>
+                        <td width="8%" style="text-align:right;">{{ number_format(($value->takeHomePaySalary + $value->takeHomePayBonus + $value->takeHomePayTHR), 0, ',', '.')}}</td>
                     </tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	<table class="table" style="width:100%; font-size: 16px; padding-left:3%; padding-right:3%; border-collapse: collapse; font-family: 'Arial Alternates', sans-serif;">
+        <tr>
+            <td colspan="2">&nbsp;</td>
+        </tr>
+    	<tr>
+        	<td style="width:55%; vertical-align: top; padding-right: 100px;">
+				<table style="width:100%; padding-bottom: 1%; border-collapse: collapse;">
                     <tr>
                         <td colspan="4">&nbsp;</td>
                     </tr>
+				</table>
+			</td>
+			<td style="width:45%; vertical-align: top; padding-right: 50px;">
+				<table style="width:100%; border-collapse: collapse;">
                     <tr>
-                        <td colspan="4">&nbsp;</td>
-                    </tr>
-                    <tr>
-                        <td colspan="4" style="padding-left: 20px;">{{ $value->level2 }}, {{ date('d') }} {{ $periode }}</td>
+                        <td colspan="4" style="padding-left: 20px;">Jakarta, {{ date('d') }} {{ $periode }}</td>
                     </tr>
                     <tr>
                         <td colspan="4" style="padding-left: 20px;">Yang Menerima</td>
@@ -203,6 +218,18 @@
 		</tr>
 	</table>
 
+	<div class="div-footer" style="font-family: 'Arial Alternates', sans-serif;">
+		<table class="table" style="width:100%; font-size: 16px; padding-left:3%; padding-right:3%; border-collapse: collapse; font-family: 'ArialCustomBold', sans-serif; border-top: 1px solid black;">
+			<tr>
+				<td width="5%" style="padding-left: 10px;">No ID</td>
+				<td width="1%">:</td>
+				<td width="34%" style="padding-left: 5px;">{{ $value->nik }}</td>
+				<td width="5%" style="padding-left: 10px;">Email</td>
+				<td width="1%">:</td>
+				<td width="34%" style="padding-left: 5px;">{{ $value->email }}</td>
+			</tr>
+		</table>
+	</div>
     @if($key != array_key_last($data))
 		<div class="page_break"></div>
 	@endif
