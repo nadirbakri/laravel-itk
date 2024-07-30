@@ -20,6 +20,7 @@
 		}
 		.sidebar-heading {
 			margin-top: 2%;
+			margin-left: 10%;
 			display:flex;
     		align-items:center;
 		}
@@ -161,8 +162,8 @@
 	<div class="d-flex" id="wrapper">
 		<div class="border-right sidebar-bar active" id="sidebar-wrapper">
 			<div class="sidebar-heading">
-				<img src="{{ url('/pictures/logo.png') }}" alt="Logo">
-				<span class="logo-text">Stream</span>
+				<img class="full-image" src="{{ url('/pictures/blue-logo.png') }}" alt="Logo">
+				<img class="half-image" src="{{ url('/pictures/blue-logos.png') }}" alt="Logo">
 			</div>
 			
 			@foreach (Session::get('menuList') as $menu)
