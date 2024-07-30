@@ -76,16 +76,33 @@
   transition: all .3s;
 }
 
+#sidebar-wrapper .sidebar-heading .full-image {
+  display: block;
+}
+
+#sidebar-wrapper .sidebar-heading .half-image {
+  display: none;
+}
+
 #sidebar-wrapper.active .sidebar-heading {
-  padding: 1.5vw 1.25vw;
+  padding: 1vw 1vw;
+  margin-left: 0.5vw;
 }
 
 #sidebar-wrapper.active .sidebar-heading img {
   max-width: 90%;
 }
 
+#sidebar-wrapper.active .sidebar-heading .full-image {
+  display: none;
+}
+
+#sidebar-wrapper.active .sidebar-heading .half-image {
+  display: block;
+}
+
 .sidebar-heading img {
-  max-width: 25%;
+  max-width: 100%;
   transition: all .3s;
 }
 

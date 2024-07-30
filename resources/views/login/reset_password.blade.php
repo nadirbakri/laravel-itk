@@ -23,7 +23,7 @@
 			display: block;
 		}
 		.right-content img {
-			max-width: 18%;
+			max-width: 100%;
 		}
 		.logo-text {
 			font-size: 6.5vh;
@@ -53,7 +53,7 @@
 			display: block;
 		}
 		.right-content img {
-			max-width: 13%;
+			max-width: 100%;
 		}
 		.logo-text {
 			font-size: 6.5vh;
@@ -96,7 +96,7 @@
 			vertical-align: middle;
 		}
 		.right-content img {
-			max-width: 12%;
+			max-width: 100%;
 		}
 		.logo-text {
 			font-size: 5vh;
@@ -137,8 +137,7 @@
 	<main role="main">
 		<div class='right-content'>
 			<a class="image-logo">
-				<img src="{{ url('/pictures/logo.png') }}" alt="Logo">
-				<h4 class="logo-text">Stream</h4>
+				<img src="{{ url('/pictures/blue-logo.png') }}" alt="Logo">
 			</a>
 			<p class="judul-text">{{ __('reset_password.judul') }}</p>
 			<p class="bawah-judul-text">{{ __('reset_password.bawah_judul') }}</p>
