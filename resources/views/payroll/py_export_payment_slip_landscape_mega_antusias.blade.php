@@ -121,7 +121,6 @@
 						<?php
 							$totalIncome += (float) $value2->columnValue;
 						?>
-						@if($value2->columnValue > 0)
 						<?php
 							$totalDataIncome++;
 						?>
@@ -131,7 +130,6 @@
 							<td width="8%">Rp.</td>
 							<td width="8%" style="text-align:right;">{{ number_format((float) $value2->columnValue, 0, ',', '.')}}</td>
 						</tr>
-						@endif
 					@endforeach
                     <tr>
                         <td width="25%" style="padding-left: 20px;">Total Pendapatan</td>
@@ -150,7 +148,6 @@
 						<?php
 							$totalDeduction += (float) $value2->columnValue;
 						?>
-						@if($value2->columnValue > 0)
 						<?php
 							$totalDataDeduction++;
 						?>
@@ -160,7 +157,6 @@
 							<td width="5%">Rp.</td>
 							<td width="8%" style="text-align:right;">{{ number_format((float) $value2->columnValue, 0, ',', '.')}}</td>
 						</tr>
-						@endif
 					@endforeach
 					<tr>
                         <td width="17%" style="padding-left: 20px;">Total Potongan</td>
