@@ -76,26 +76,26 @@
         <tr>
 			<td width="15%" style="padding-left: 10px;">BULAN</td>
 			<td width="1%">:</td>
-			<td width="34%" style="padding-left: 10px;">{{ $value->employeeNo }}</td>
+			<td width="34%" style="padding-left: 10px;">{{ $value->payrollCutOff }}</td>
 			<td width="15%" style="padding-left: 10px;">No. ID</td>
 			<td width="1%">:</td>
-			<td width="34%" style="padding-left: 10px;">{{ $value->jabatan }}</td>
+			<td width="34%" style="padding-left: 10px;">{{ $value->nik }}</td>
 		</tr>
 		<tr>
 			<td width="15%" style="padding-left: 10px;">NIK/Status Pjk</td>
 			<td width="1%">:</td>
-			<td width="34%" style="padding-left: 10px;">{{ $value->employeeNo }} / {{ $value->employeeName }}</td>
+			<td width="34%" style="padding-left: 10px;">{{ $value->employeeNo }} / {{ $value->ptkp }}</td>
 			<td width="15%" style="padding-left: 10px;">Dept</td>
 			<td width="1%">:</td>
-			<td width="34%" style="padding-left: 10px;">{{ $value->departemen }}</td>
+			<td width="34%" style="padding-left: 10px;">{{ $value->level3 }}</td>
 		</tr>
 		<tr>
 			<td width="15%" style="padding-left: 10px;">Nama</td>
 			<td width="1%" style="">:</td>
-			<td width="34%" style="padding-left: 10px;">{{ $periode }}</td>
+			<td width="34%" style="padding-left: 10px;">{{ $value->employeeName }}</td>
 			<td width="15%" style="padding-left: 10px;">Cost Center</td>
 			<td width="1%" style="">:</td>
-			<td width="34%" style="padding-left: 10px;">{{ $value->location }}</td>
+			<td width="34%" style="padding-left: 10px;">{{ $value->level4 }}</td>
 		</tr>
 	</table>
 	<?php
@@ -181,7 +181,7 @@
                         <td colspan="4">&nbsp;</td>
                     </tr>
                     <tr>
-                        <td colspan="4" style="padding-left: 20px;">Jakarta, {{ date('d') }} {{ $periode }}</td>
+                        <td colspan="4" style="padding-left: 20px;">{{ $value->level2 }}, {{ date('d') }} {{ $periode }}</td>
                     </tr>
                     <tr>
                         <td colspan="4" style="padding-left: 20px;">Yang Menerima</td>
