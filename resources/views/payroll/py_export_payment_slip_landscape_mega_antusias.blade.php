@@ -45,10 +45,10 @@
 
 		.div-footer {
 			position: relative; 
-			bottom: -2.8cm; 
+			bottom: -1.8cm; 
 			left: 0cm; 
 			right: 0cm;
-			height: 4.7cm;
+			height: 1.7cm;
 			font-size: 7.5px;
 		}
 

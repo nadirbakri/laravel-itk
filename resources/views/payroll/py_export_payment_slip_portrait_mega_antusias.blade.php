@@ -48,7 +48,7 @@
 			bottom: -2.8cm; 
 			left: 0cm; 
 			right: 0cm;
-			height: 13.7cm;
+			height: 5.7cm;
 			font-size: 7.5px;
 		}
 
