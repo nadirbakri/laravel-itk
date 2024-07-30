@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+// ini_set('memory_limit', '4096M');
 
 use App\Imports\PayrollDataImport;
 use App\Imports\PayrollBonusTHRDataImport;
@@ -7395,6 +7396,7 @@ public function dataDetailReportFormatPY(Request $request)
                 }
             }
         }else{
+            // set_time_limit(-1);
             if($request->format_type == "portrait"){
                 $pdf = PDF::loadView($viewNamePortrait, [
                     'data' => $arrResult->dataListSet, 

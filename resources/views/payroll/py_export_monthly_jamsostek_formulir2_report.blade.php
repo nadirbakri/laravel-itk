@@ -59,7 +59,11 @@
 		<tr>
 			<td rowspan="2" width="20%" style="font-size: 10px;">1. Perusahaan</td>
             <td rowspan="2" width="3%" style="font-size: 10px;">:</td>
+            @if(!empty($data))
+            <td rowspan="2" width="35%" style="font-size: 10px;">{{ $value->companyName }}</td>
+            @else
             <td rowspan="2" width="35%" style="font-size: 10px;">{{ $companyName }}</td>
+            @endif
             <td width="25%" style="font-size: 10px; text-align: center; border: 1px solid #000;">No. Pendaftaran (NPP)</td>
 		</tr>
         <tr>
