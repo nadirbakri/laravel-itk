@@ -44,8 +44,8 @@
 		}	
 
 		.div-footer {
-			position: fixed; 
-			bottom: -0.8cm; 
+			position: relative; 
+			bottom: -2.8cm; 
 			left: 0cm; 
 			right: 0cm;
 			height: 13.7cm;
@@ -98,7 +98,7 @@
 			<td width="34%" style="padding-left: 10px;">{{ $value->employeeName }}</td>
 			<td width="15%" style="padding-left: 10px;">Kode Toko</td>
 			<td width="1%" style="">:</td>
-			<td width="34%" style="padding-left: 10px;">{{ $value->level4 }}</td>
+			<td width="34%" style="padding-left: 10px;">{{ $value->level5 }}</td>
 		</tr>
 	</table>
 	<?php
@@ -234,28 +234,5 @@
 		<div class="page_break"></div>
 	@endif
     @endforeach
-    <script type="text/php">
-    if (isset($pdf)) {
-        $pdf->page_script('
-            $text = sprintf(_("Page %d/%d"),  $PAGE_NUM, $PAGE_COUNT);
-            // Uncomment the following line if you use a Laravel-based i18n
-            //$text = __("Page :pageNum/:pageCount", ["pageNum" => $PAGE_NUM, "pageCount" => $PAGE_COUNT]);
-            $font = null;
-            $size = 9;
-            $color = array(0,0,0);
-            $word_space = 0.5;  //  default
-            $char_space = 0.5;  //  default
-            $angle = 0.5;   //  default
-
-            // Compute text width to center correctly
-            $textWidth = $fontMetrics->getTextWidth($text, $font, $size);
-
-            $x = ($pdf->get_width() - $textWidth) / 2;
-            $y = $pdf->get_height() - 35;
-
-            $pdf->text($x, $y, $text, $font, $size, $color, $word_space, $char_space, $angle);
-        '); // End of page_script
-    }
-    </script>
 </body>
 </html>
