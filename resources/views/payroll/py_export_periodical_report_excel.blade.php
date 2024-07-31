@@ -132,9 +132,9 @@
                             $totalKey = $dataTable3->field . '_' . ($key3 + 2);
                         ?>
                         @if(!is_string($total[$totalKey]))
-                            <td style="text-align:right; border:1px solid #000;">{{ number_format($total[$totalKey], 0, ',', '.') }}</td>
+                            <td data-format="#,##0" style="text-align:right; border:1px solid #000;">{{ $total[$totalKey] }}</td>
                         @else
-                            <td style="text-align:right; border:1px solid #000;">&nbsp;</td>
+                            <td data-format="@" style="text-align:right; border:1px solid #000;">&nbsp;</td>
                         @endif
                     @endforeach
                 </tr>
