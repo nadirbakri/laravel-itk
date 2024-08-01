@@ -253,11 +253,12 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-8">
+                <div class="col-10">
                     <table id="module_table" class="table hover" style="width: 100%;">
                         <thead>
                             <tr>
                                 <th></th>
+                                <th>Company Code</th>
                                 <th>Module Name</th>
                                 <th>Group Authorization Name</th>
                             </tr>
@@ -815,6 +816,10 @@
                             return type === 'display' ?
                                 '<input class="chk-select" type="checkbox">' : '';
                         }
+                    },
+                    {
+                        data: 'companyCode',
+                        name: 'companyCode'
                     },
                     {
                         data: 'moduleName',

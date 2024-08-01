@@ -109,19 +109,32 @@
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
-                            <label
-                                for="npwp_no">{{ __('utilities_company_master.label_npwp_no') }}</label>
-                            <input type="text" class="form-control" id="npwp_no"
-                                name="npwp_no"
-                                placeholder="{{ __('utilities_company_master.label_npwp_no') }}">
+                            <label for="plafond">&nbsp;</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="check_holding_company"
+                                    name="check_holding_company" value="true">
+                                <label
+                                    for="check_holding_company">{{ __('utilities_company_master.label_check_holding_company') }}</label>
+                            </div>
                         </div>
                     </div>
+                </div>
+                <div class="row">
                     <div class="col-6">
                         <div class="form-group">
                             <label
                                 for="holding_company">{{ __('utilities_company_master.label_holding_company') }}</label>
                             <select class="form-control select2" id="holding_company"
                                 name="holding_company"></select>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label
+                                for="npwp_no">{{ __('utilities_company_master.label_npwp_no') }}</label>
+                            <input type="text" class="form-control" id="npwp_no"
+                                name="npwp_no"
+                                placeholder="{{ __('utilities_company_master.label_npwp_no') }}">
                         </div>
                     </div>
                 </div>
@@ -315,6 +328,14 @@
         loadDataHoldingCompany();
         loadDataLocation();
 
+        $('#check_holding_company').on('change', function () {
+            if ($('#check_holding_company').is(':checked')) {
+                $('#holding_company').prop('disabled', true);
+            } else {
+                $('#holding_company').prop('disabled', false);
+            }
+        });
+
         $('#notification_success').on('hide.bs.modal', function () {
             window.location = "{{ url('utilities/company') }}";
         });
@@ -473,7 +494,7 @@
 
         if ($("#company_master_form").length > 0) {
             $("#company_master_form").validate({
-            rules: {
+                rules: {
                     company_code: {
                         required: true,
                     },
@@ -481,7 +502,9 @@
                         required: true,
                     },
                     holding_company: {
-                        required: true,
+                        required: function(element) {
+                            return !$('#check_holding_company').is(':checked');
+                        }
                     },
                     location_code: {
                         required: true,

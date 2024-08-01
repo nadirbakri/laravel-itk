@@ -22,6 +22,7 @@ return [
     'label_holding_company' => 'Perusahaan Induk',
     'label_location_code' => 'Kode Lokasi',
     'label_address' => 'Alamat',
+    'label_check_holding_company' => 'Apakah Perusahaan Induk?',
     'company_code_required' => 'Kode Perusahaan Harus Diisi',
     'company_name_required' => 'Nama Perusahaan Harus Diisi',
     'holding_company_required' => 'Perusahaan Induk Harus Diisi',

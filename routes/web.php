@@ -428,6 +428,7 @@ Route::get('time_management/update_shift_by_date', 'TimeManagementController@pag
 Route::get('time_management/overtime_spl', 'TimeManagementController@pageOvertimeSPL');
 Route::get('time_management/company_working_calendar', 'TimeManagementController@pageCompanyWorkingCalendar');
 Route::get('time_management/input_balance_leave', 'TimeManagementController@pageInputBalanceLeave');
+Route::get('time_management/export_import_leave', 'TimeManagementController@pageExportImportLeave');
 Route::get('time_management/leave_transaction_by_employee_no', 'TimeManagementController@pageLeaveTransactionByEmployeeNo');
 Route::get('time_management/time_recording_reference', 'TimeManagementController@pageTimeRecordingReference');
 Route::get('time_management/period_maintenance', 'TimeManagementController@pagePeriodMaintenance');
@@ -528,6 +529,8 @@ Route::post('time_management/update_absenteeism_data/import', 'TimeManagementCon
 Route::post('time_management/update_absenteeism_data/download', 'TimeManagementController@templateUpdateAbsenteeismData');
 Route::post('time_management/change_data_shift/import', 'TimeManagementController@importChangeDataShift');
 Route::post('time_management/change_data_shift/download', 'TimeManagementController@templateChangeDataShift');
+Route::post('time_management/export_import_leave/import', 'TimeManagementController@importExportImportLeave');
+Route::post('time_management/export_import_leave/export', 'TimeManagementController@exportExportImportLeave');
 
 /* Route Untuk Menu Payroll */
 Route::get('payroll', 'PayrollController@pagePayroll')->name('payroll');
@@ -859,6 +862,7 @@ Route::get('utilities', 'UtilitiesController@pageUtilitiesMain')->name('utilitie
 Route::get('utilities/organization_chart', 'UtilitiesController@pageOrganizationStructureUtilities');
 Route::get('utilities/user_security_maintenance', 'UtilitiesController@pageUserSecurityMaintenanceUtilities');
 Route::get('utilities/menu_master', 'UtilitiesController@pageMenuMasterUtilities');
+Route::get('utilities/menu_master_web', 'UtilitiesController@pageMenuMasterWebUtilities');
 Route::get('utilities/menu_master_mobile', 'UtilitiesController@pageMenuMasterMobileUtilities');
 Route::get('utilities/menu_master_mobile_setting', 'UtilitiesController@pageMenuMasterMobileSettingUtilities');
 Route::get('utilities/group_authorization', 'UtilitiesController@pageAuthorizationCodeGroupUtilities');
@@ -881,6 +885,7 @@ Route::get('utilities/user_log/table', 'UtilitiesController@tableUserLogUtilitie
 Route::get('utilities/menu_master/table', 'UtilitiesController@tableMenuMasterUtilities');
 Route::get('utilities/change_password/employee/table', 'UtilitiesController@tableChangeEmployeeNumberEmployeeUtilities');
 Route::get('utilities/company/table', 'UtilitiesController@tableCompanyUtilities');
+Route::get('utilities/menu_master_web/table', 'UtilitiesController@tableMenuMasterWebUtilities');
 Route::get('utilities/menu_master_mobile/table', 'UtilitiesController@tableMenuMasterMobileUtilities');
 Route::get('utilities/menu_master_mobile_setting/table', 'UtilitiesController@tableMenuMasterMobileSettingUtilities');
 Route::get('utilities/master_banner/table', 'UtilitiesController@tableMasterBannerUtilities');
@@ -889,6 +894,7 @@ Route::get('utilities/group_authorization/detail_data', 'UtilitiesController@dat
 Route::get('utilities/group_user_access/detail_data', 'UtilitiesController@dataDetailUserAccessGroupUtilities');
 Route::get('utilities/user_security_maintenance/detail_data', 'UtilitiesController@dataDetailUserSecurityMaintenanceUtilities');
 Route::get('utilities/company/detail_data', 'UtilitiesController@dataDetailCompanyUtilities');
+Route::get('utilities/menu_master_web/detail_data', 'UtilitiesController@dataDetailMenuMasterWebUtilities');
 Route::get('utilities/menu_master_mobile/detail_data', 'UtilitiesController@dataDetailMenuMasterMobileUtilities');
 Route::get('utilities/menu_master_mobile_setting/detail_data', 'UtilitiesController@dataDetailMenuMasterMobileSettingUtilities');
 Route::get('utilities/master_banner/detail_data', 'UtilitiesController@dataDetailMasterBannerUtilities');
@@ -918,6 +924,7 @@ Route::post('utilities/user_security_maintenance/module/proses', 'UtilitiesContr
 Route::post('utilities/change_employee_no/proses', 'UtilitiesController@prosesChangeEmployeeNumberUtilities');
 Route::post('utilities/company/proses', 'UtilitiesController@prosesCompanyUtilities');
 Route::post('utilities/process_user_id/proses', 'UtilitiesController@prosesProcessUserIDUtilities');
+Route::post('utilities/menu_master_web/proses', 'UtilitiesController@prosesMenuMasterWebUtilities');
 Route::post('utilities/menu_master_mobile/proses', 'UtilitiesController@prosesMenuMasterMobileUtilities');
 Route::post('utilities/menu_master_mobile_setting/proses', 'UtilitiesController@prosesMenuMasterMobileSettingUtilities');
 Route::post('utilities/master_banner/proses', 'UtilitiesController@prosesMasterBannerUtilities');

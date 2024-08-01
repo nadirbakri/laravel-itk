@@ -473,11 +473,9 @@
                     alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText +
                         "\r\n" + ajaxOptions.responseText);
                 },
+                "paging": false,
                 "sDom": 'lrtip',
                 'sPaginationType': 'full_numbers',
-                "order": [
-                    [1, "asc"]
-                ],
                 columns: [{
                         orderable: false,
                         targets: 0,

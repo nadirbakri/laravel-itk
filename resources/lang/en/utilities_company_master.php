@@ -22,6 +22,7 @@ return [
     'label_holding_company' => 'Holding Company',
     'label_location_code' => 'Location Code',
     'label_address' => 'Address',
+    'label_check_holding_company' => 'Is Holding Company?',
     'company_code_required' => 'Company Code is Required',
     'company_name_required' => 'Company Name is Required',
     'holding_company_required' => 'Holding Company is Required',
