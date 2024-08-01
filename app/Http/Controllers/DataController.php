@@ -2430,6 +2430,46 @@ class DataController extends Controller
     {
 		Session::put('companyCode', $request->companyCode);
 		Session::put('companyName', $request->companyName);
+		
+		$menuList = Session::get('menuList');
+
+		foreach($menuList as $value){
+			if ($value->companyCode != $request->companyCode){
+				continue;
+			}
+
+			if($value->moduleID == 'UTI'){
+				Session::put('groupAuthorizeUtilities', $value->groupAuthorizeCode);
+				unset($menuList[$key]);
+			}
+			if($value->moduleID == 'HOME'){
+				Session::put('groupAuthorizeHome', $value->groupAuthorizeCode);
+			}
+			if($value->moduleID == 'TM'){
+				Session::put('groupAuthorizeTimeManagement', $value->groupAuthorizeCode);
+			}
+			if($value->moduleID == 'PE'){
+				Session::put('groupAuthorizePersonnel', $value->groupAuthorizeCode);
+			}
+			if($value->moduleID == 'PY'){
+				Session::put('groupAuthorizePayroll', $value->groupAuthorizeCode);
+			}
+			if($value->moduleID == 'MD'){
+				Session::put('groupAuthorizeMedical', $value->groupAuthorizeCode);
+			}
+			if($value->moduleID == 'REP'){
+				Session::put('groupAuthorizeReport', $value->groupAuthorizeCode);
+			}
+			if($value->moduleID == 'RPT'){
+				Session::put('groupAuthorizeExport', $value->groupAuthorizeCode);
+			}
+			if($value->moduleID == 'TRX'){
+				Session::put('groupAuthorizeTransaction', $value->groupAuthorizeCode);
+			}
+			if($value->moduleID == 'MOB'){
+				Session::put('groupAuthorizeMasterData', $value->groupAuthorizeCode);
+			}
+		}
 
         return response()->json(["status" => true, "message" => "Success!"]);
 	}
