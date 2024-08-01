@@ -100,31 +100,31 @@
 			<td width="10%" style="font-size: 10px; text-align: center;">A</td>
             <td width="30%" style="font-size: 10px; text-align: center;">Bulan lalu</td>
             <td width="30%" style="font-size: 10px; text-align: right;">{{ number_format($value->tK_A, 2, '.', ',') }}</td>
-            <td width="30%" style="font-size: 10px; text-align: right;">{{ number_format($value->upah_BulanLalu, 2, '.', ',') }}</td>
+            <td width="30%" style="font-size: 10px; text-align: right;">{{ number_format($value->upah_TK_A, 2, '.', ',') }}</td>
 		</tr>
         <tr>
 			<td width="10%" style="font-size: 10px; text-align: center;">B</td>
             <td width="30%" style="font-size: 10px; text-align: center;">Penambahan tenaga kerja (F1a)</td>
             <td width="30%" style="font-size: 10px; text-align: right;">{{ number_format($value->tK_B, 2, '.', ',') }}</td>
-            <td width="30%" style="font-size: 10px; text-align: right;">{{ number_format($value->tK_A, 2, '.', ',') }}</td>
+            <td width="30%" style="font-size: 10px; text-align: right;">{{ number_format($value->upah_TK_B, 2, '.', ',') }}</td>
 		</tr>
         <tr>
 			<td width="10%" style="font-size: 10px; text-align: center;">C</td>
             <td width="30%" style="font-size: 10px; text-align: center;">Pengurangan tenaga kerja (F1b)</td>
             <td width="30%" style="font-size: 10px; text-align: right;">{{ number_format($value->tK_C, 2, '.', ',') }}</td>
-            <td width="30%" style="font-size: 10px; text-align: right;">{{ number_format($value->tK_A, 2, '.', ',') }}</td>
+            <td width="30%" style="font-size: 10px; text-align: right;">{{ number_format($value->upah_TK_C, 2, '.', ',') }}</td>
 		</tr>
         <tr>
 			<td width="10%" style="font-size: 10px; text-align: center;">D</td>
             <td width="30%" style="font-size: 10px; text-align: center;">Perubahan upah</td>
-            <td width="30%" style="font-size: 10px; text-align: right;">{{ number_format($value->perubahanUpah, 2, '.', ',') }}</td>
-            <td width="30%" style="font-size: 10px; text-align: right;">{{ number_format($value->perubahanUpah, 2, '.', ',') }}</td>
+            <td width="30%" style="font-size: 10px; text-align: right;">{{ number_format($value->tK_D, 2, '.', ',') }}</td>
+            <td width="30%" style="font-size: 10px; text-align: right;">{{ number_format($value->upah_TK_D, 2, '.', ',') }}</td>
 		</tr>
         <tr>
 			<td width="10%" style="font-size: 10px; text-align: center;">E</td>
             <td width="30%" style="font-size: 10px; text-align: center;">Jumlah (A + B - C + D)</td>
-            <td width="30%" style="font-size: 10px; text-align: right;"></td>
-            <td width="30%" style="font-size: 10px; text-align: right;"></td>
+            <td width="30%" style="font-size: 10px; text-align: right;">{{ number_format(($value->tK_A + $value->tK_B - $value->tK_C + $value->tK_D), 2, '.', ',') }}</td>
+            <td width="30%" style="font-size: 10px; text-align: right;">{{ number_format($value->upah_Total_TK, 2, '.', ',') }}</td>
 		</tr>
     </table>
     <table class="table_detail" style="width:100%; border: 1px solid #000; border-collapse:collapse;">
@@ -147,41 +147,41 @@
 			<td width="10%" style="font-size: 10px; text-align: center;">A</td>
             <td width="20%" style="font-size: 10px; text-align: center;">Jaminan Kecelakaan Kerja (JKK)</td>
             <td width="10%" style="font-size: 10px; text-align: center;">{{ $value->jkk }}%</td>
-            <td width="20%" style="font-size: 10px; text-align: right;">{{ number_format($value->upah_A, 2, '.', ',') }}</td>
-            <td width="20%" style="font-size: 10px; text-align: right;"></td>
+            <td width="20%" style="font-size: 10px; text-align: right;">{{ number_format($value->upah_JKK, 2, '.', ',') }}</td>
+            <td width="20%" style="font-size: 10px; text-align: right;">{{ number_format($value->iuranJKK, 2, '.', ',') }}</td>
 		</tr>
         <tr>
 			<td width="10%" style="font-size: 10px; text-align: center;">B</td>
             <td width="20%" style="font-size: 10px; text-align: center;">Jaminan Hari Tua (JHT)</td>
             <td width="10%" style="font-size: 10px; text-align: center;">{{ $value->jht }}%</td>
-            <td width="20%" style="font-size: 10px; text-align: right;">{{ number_format($value->upah_B, 2, '.', ',') }}</td>
-            <td width="20%" style="font-size: 10px; text-align: right;"></td>
+            <td width="20%" style="font-size: 10px; text-align: right;">{{ number_format($value->upah_JHT, 2, '.', ',') }}</td>
+            <td width="20%" style="font-size: 10px; text-align: right;">{{ number_format($value->iuranJHT, 2, '.', ',') }}</td>
 		</tr>
         <tr>
 			<td width="10%" style="font-size: 10px; text-align: center;">C</td>
             <td width="20%" style="font-size: 10px; text-align: center;">Jaminan Kematian (JK)</td>
             <td width="10%" style="font-size: 10px; text-align: center;">{{ $value->jk }}%</td>
-            <td width="20%" style="font-size: 10px; text-align: right;">{{ number_format($value->upah_C, 2, '.', ',') }}</td>
-            <td width="20%" style="font-size: 10px; text-align: right;"></td>
+            <td width="20%" style="font-size: 10px; text-align: right;">{{ number_format($value->upah_JKM, 2, '.', ',') }}</td>
+            <td width="20%" style="font-size: 10px; text-align: right;">{{ number_format($value->iuranJKM, 2, '.', ',') }}</td>
 		</tr>
         <tr>
 			<td width="10%" style="font-size: 10px; text-align: center;">D</td>
             <td width="20%" style="font-size: 10px; text-align: center;">Jaminan Pensiun (JP)</td>
             <td width="10%" style="font-size: 10px; text-align: center;">{{ $value->jp }}%</td>
             <td width="20%" style="font-size: 10px; text-align: right;">{{ number_format($value->upah_JP, 2, '.', ',') }}</td>
-            <td width="20%" style="font-size: 10px; text-align: right;"></td>
+            <td width="20%" style="font-size: 10px; text-align: right;">{{ number_format($value->iuranJP, 2, '.', ',') }}</td>
 		</tr>
         <tr>
 			<td width="10%" style="font-size: 10px; text-align: center;">E</td>
             <td width="20%" style="font-size: 10px; text-align: center;">Jumlah (A + B + C + D)</td>
             <td width="10%" style="font-size: 10px; text-align: center;"></td>
-            <td width="20%" style="font-size: 10px; text-align: right;"></td>
-            <td width="20%" style="font-size: 10px; text-align: right;"></td>
+            <td width="20%" style="font-size: 10px; text-align: right;">{{ number_format(($value->upah_JP + $value->upah_JKK + $value->upah_JKM + $value->upah_JHT), 2, '.', ',') }}</td>
+            <td width="20%" style="font-size: 10px; text-align: right;">{{ number_format($value->iuranTotal, 2, '.', ',') }}</td>
 		</tr>
 	</table>
     <table class="table_detail" style="width:100%; border: 1px solid #000; border-collapse:collapse;">
         <tr style="background-color: grey;">
-            <td colspan="3" style="font-size: 10px; font-weight: 700;">BAGIAN IV - Kekurangan/Kelebihan **) iuran untuk bulan : Tahun : </td>
+            <td colspan="3" style="font-size: 10px; font-weight: 700;">BAGIAN IV - Kekurangan/Kelebihan **) iuran untuk bulan : {{ $bulan }} Tahun : {{ date('Y', strtotime($period)) }}</td>
         </tr>
 		<tr>
 			<td colspan="2" style="font-size: 10px; text-align: center; border-bottom: none;">Uraian</td>
@@ -190,41 +190,41 @@
         <tr>
 			<td width="10%" style="font-size: 10px; text-align: center;">A</td>
             <td width="40%" style="font-size: 10px; text-align: center;">Jaminan Kecelakaan Kerja (JKK)</td>
-            <td width="40%" style="font-size: 10px; text-align: right;">{{ number_format($value->iuranJKK, 2, '.', ',') }}</td>
+            <td width="40%" style="font-size: 10px; text-align: right;">{{ number_format($value->uraian_JKK, 2, '.', ',') }}</td>
 		</tr>
         <tr>
 			<td width="10%" style="font-size: 10px; text-align: center;">B</td>
             <td width="40%" style="font-size: 10px; text-align: center;">Jaminan Hari Tua (JHT)</td>
-            <td width="40%" style="font-size: 10px; text-align: right;">{{ number_format($value->iuranJHT, 2, '.', ',') }}</td>
+            <td width="40%" style="font-size: 10px; text-align: right;">{{ number_format($value->uraian_JHT, 2, '.', ',') }}</td>
 		</tr>
         <tr>
 			<td width="10%" style="font-size: 10px; text-align: center;">C</td>
             <td width="40%" style="font-size: 10px; text-align: center;">Jaminan Kematian (JK)</td>
-            <td width="40%" style="font-size: 10px; text-align: right;">{{ number_format($value->iuranJK, 2, '.', ',') }}</td>
+            <td width="40%" style="font-size: 10px; text-align: right;">{{ number_format($value->uraian_JKM, 2, '.', ',') }}</td>
 		</tr>
         <tr>
 			<td width="10%" style="font-size: 10px; text-align: center;">D</td>
             <td width="40%" style="font-size: 10px; text-align: center;">Jaminan Pensiun (JP)</td>
-            <td width="40%" style="font-size: 10px; text-align: right;">{{ number_format($value->iuranJP, 2, '.', ',') }}</td>
+            <td width="40%" style="font-size: 10px; text-align: right;">{{ number_format($value->uraian_JP, 2, '.', ',') }}</td>
 		</tr>
         <tr>
 			<td width="10%" style="font-size: 10px; text-align: center;">E</td>
             <td width="40%" style="font-size: 10px; text-align: center;">Jumlah (A + B + C + D)</td>
-            <td width="40%" style="font-size: 10px; text-align: right;">{{ number_format(($value->iuranJKK + $value->iuranJHT + $value->iuranJK + $value->iuranJP), 2, '.', ',') }}</td>
+            <td width="40%" style="font-size: 10px; text-align: right;">{{ number_format(($value->uraian_Total), 2, '.', ',') }}</td>
 		</tr>
         <tr style="background-color: grey;">
             <td colspan="3" style="font-size: 10px; font-weight: 700;">BAGIAN V - Denda Iuran</td>
         </tr>
         <tr>
 			<td colspan="2" style="font-size: 10px; text-align: left;">Jumlah Denda Iuran</td>
-            <td style="font-size: 10px; text-align: right;"></td>
+            <td style="font-size: 10px; text-align: right;">{{ number_format(($value->denda_Iuran), 2, '.', ',') }}</td>
 		</tr>
         <tr style="background-color: grey;">
             <td colspan="3" style="font-size: 10px; font-weight: 700;">BAGIAN VI - Jumlah Seluruhnya</td>
         </tr>
         <tr>
 			<td colspan="2" style="font-size: 10px; text-align: left;">Jumlah Seluruhnya (III + IV + V)</td>
-            <td style="font-size: 10px; text-align: right;"></td>
+            <td style="font-size: 10px; text-align: right;">{{ number_format(($value->jumlahSeluruhIuran), 2, '.', ',') }}</td>
 		</tr>
 	</table>
     <br><br>

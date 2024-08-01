@@ -7733,6 +7733,26 @@ public function dataDetailReportFormatPY(Request $request)
     public function printMonthlyJamsostekReportPayroll(Request $request){
         $response = null;
 
+        function tgl_indo($tanggal){
+            $bulan = array (
+                1 =>   'Januari',
+                'Februari',
+                'Maret',
+                'April',
+                'Mei',
+                'Juni',
+                'Juli',
+                'Agustus',
+                'September',
+                'Oktober',
+                'November',
+                'Desember'
+            );
+            $pecahkan = explode('-', $tanggal);
+         
+            return $bulan[ (int)$pecahkan[1] ];
+        }
+
         try{
             $client = new Client([
                 'verify' => false,
@@ -7802,6 +7822,7 @@ public function dataDetailReportFormatPY(Request $request)
                 [
                     'data' => [], 
                     'period' => $request->jamsostek_period,
+                    'bulan' => tgl_indo(date('Y-m-d', strtotime($request->jamsostek_period))),
                     'companyName' => Session::get('companyName'),
                     'bpjsNo' => $request->group_bpjs_name
                 ])->setPaper('letter', 'portrait')->setOptions(['defaultFont' => 'arial']);
@@ -7811,6 +7832,7 @@ public function dataDetailReportFormatPY(Request $request)
                 [
                     'data' => [], 
                     'period' => $request->jamsostek_period,
+                    'bulan' => tgl_indo(date('Y-m-d', strtotime($request->jamsostek_period))),
                     'companyName' => Session::get('companyName'),
                     'bpjsNo' => $request->group_bpjs_name
                 ])->setPaper('letter', 'portrait')->setOptions(['defaultFont' => 'arial']);
@@ -7820,6 +7842,7 @@ public function dataDetailReportFormatPY(Request $request)
                 [
                     'data' => [], 
                     'period' => $request->jamsostek_period,
+                    'bulan' => tgl_indo(date('Y-m-d', strtotime($request->jamsostek_period))),
                     'companyName' => Session::get('companyName'),
                     'bpjsNo' => $request->group_bpjs_name
                 ])->setPaper('letter', 'portrait')->setOptions(['defaultFont' => 'arial']);
@@ -7829,6 +7852,7 @@ public function dataDetailReportFormatPY(Request $request)
                 [
                     'data' => [], 
                     'period' => $request->jamsostek_period,
+                    'bulan' => tgl_indo(date('Y-m-d', strtotime($request->jamsostek_period))),
                     'companyName' => Session::get('companyName'),
                     'bpjsNo' => $request->group_bpjs_name
                 ])->setPaper('letter', 'portrait')->setOptions(['defaultFont' => 'arial']);
@@ -7840,6 +7864,7 @@ public function dataDetailReportFormatPY(Request $request)
                 [
                     'data' => $arrResult->dataListSet, 
                     'period' => $request->jamsostek_period,
+                    'bulan' => tgl_indo(date('Y-m-d', strtotime($request->jamsostek_period))),
                     'companyName' => Session::get('companyName'),
                     'bpjsNo' => $request->group_bpjs_name
                 ])->setPaper('letter', 'portrait')->setOptions(['defaultFont' => 'arial']);
@@ -7849,6 +7874,7 @@ public function dataDetailReportFormatPY(Request $request)
                 [
                     'data' => $arrResult->dataListSet, 
                     'period' => $request->jamsostek_period,
+                    'bulan' => tgl_indo(date('Y-m-d', strtotime($request->jamsostek_period))),
                     'companyName' => Session::get('companyName'),
                     'bpjsNo' => $request->group_bpjs_name
                 ])->setPaper('letter', 'portrait')->setOptions(['defaultFont' => 'arial']);
@@ -7858,6 +7884,7 @@ public function dataDetailReportFormatPY(Request $request)
                 [
                     'data' => $arrResult->dataListSet, 
                     'period' => $request->jamsostek_period,
+                    'bulan' => tgl_indo(date('Y-m-d', strtotime($request->jamsostek_period))),
                     'companyName' => Session::get('companyName'),
                     'bpjsNo' => $request->group_bpjs_name
                 ])->setPaper('letter', 'portrait')->setOptions(['defaultFont' => 'arial']);
@@ -7867,6 +7894,7 @@ public function dataDetailReportFormatPY(Request $request)
                 [
                     'data' => $arrResult->dataListSet, 
                     'period' => $request->jamsostek_period,
+                    'bulan' => tgl_indo(date('Y-m-d', strtotime($request->jamsostek_period))),
                     'companyName' => Session::get('companyName'),
                     'bpjsNo' => $request->group_bpjs_name
                 ])->setPaper('letter', 'portrait')->setOptions(['defaultFont' => 'arial']);
