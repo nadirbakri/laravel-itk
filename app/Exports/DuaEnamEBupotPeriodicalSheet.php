@@ -100,11 +100,19 @@ class DuaEnamEBupotPeriodicalSheet extends DefaultValueBinder implements WithCus
                 $sheet->getDelegate()->getStyle('A1:BN2')
                     ->getAlignment()
                     ->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+            },
+            AfterSheet::class => function(AfterSheet $event) {
+                $sheet = $event->sheet;
 
-                $sheet->getDelegate()->getStyle('B3:BN500')
-                    ->getNumberFormat()
-                    ->setFormatCode('@');
-   
+                $cells = $sheet->getDelegate()->getElementsByTagName('td');
+                foreach ($cells as $cell) {
+                    $dataFormat = $cell->getAttribute('data-format');
+
+                    // Set format sel jika atribut data-format ditemukan
+                    if (!empty($dataFormat)) {
+                        $sheet->getStyle($cell->getCoordinate())->getNumberFormat()->setFormatCode($dataFormat);
+                    }
+                }
             },
         ];
     }

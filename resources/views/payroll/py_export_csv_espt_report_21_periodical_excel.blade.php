@@ -58,7 +58,11 @@
             <tr>
                 <td>{{ ($key+1) }}</td>
                 @foreach ($value as $key2 => $value2)
-                    <td data-format="@">{{ $value2 }}</td>
+                    @if(is_numeric($value2))
+                        <td data-format="#,##0" style="text-align:right;">{{ $value2 }}</td>
+                    @else
+                        <td data-format="@">{{ $value2 }}</td>
+                    @endif
                 @endforeach
             </tr>
             @endforeach

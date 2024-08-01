@@ -87,6 +87,8 @@ class A1EBupotA1Sheet extends DefaultValueBinder implements WithCustomValueBinde
             }
         }
 
+        // dd($arrResult->dataListSet);
+
         return view('payroll.py_export_csv_espt_report_a1_excel', [
             'data' => (isset($arrResult->dataListSet[0]->list_A1)) ? $arrResult->dataListSet[0]->list_A1[0] : []
         ]);
@@ -100,11 +102,19 @@ class A1EBupotA1Sheet extends DefaultValueBinder implements WithCustomValueBinde
                 $sheet->getDelegate()->getStyle('A1:BN2')
                     ->getAlignment()
                     ->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+            },
+            AfterSheet::class => function(AfterSheet $event) {
+                $sheet = $event->sheet;
 
-                $sheet->getDelegate()->getStyle('B3:BN500')
-                    ->getNumberFormat()
-                    ->setFormatCode('@');
-   
+                $cells = $sheet->getDelegate()->getElementsByTagName('td');
+                foreach ($cells as $cell) {
+                    $dataFormat = $cell->getAttribute('data-format');
+
+                    // Set format sel jika atribut data-format ditemukan
+                    if (!empty($dataFormat)) {
+                        $sheet->getStyle($cell->getCoordinate())->getNumberFormat()->setFormatCode($dataFormat);
+                    }
+                }
             },
         ];
     }

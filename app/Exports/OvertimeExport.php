@@ -23,6 +23,7 @@ class OvertimeExport implements FromView, ShouldAutoSize
         $this->dataLevel = $dataLevel;
         $this->overtime_status = ($overtime_status == 'ALL') ? null : $overtime_status;
     }
+    
     public function view(): View
     {
         try {
