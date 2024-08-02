@@ -37,7 +37,7 @@
             <thead>
                 <tr>
                     <th colspan="{{ $countcolspan }}">
-                        @if($company == 'NMDI')
+                        @if($company == 'NMDI' || $company == 'CITROEN')
                         {{ ($level1[0] == "ALL") ? $data_company[0]->companyName : 'PT ' . $data[0]->detail[0]->companyName }}
                         @else
                         {{ $data_company[0]->companyName }}
@@ -46,7 +46,7 @@
                 </tr>
                 <tr>
                     <th colspan="{{ $countcolspan }}">
-                        @if($company == 'NMDI')
+                        @if($company == 'NMDI' || $company == 'CITROEN')
                         {{ ($level1[0] == "ALL") ? $data_company[0]->address : $data[0]->detail[0]->companyLocation }}
                         @else
                         {{ $data_company[0]->address }}

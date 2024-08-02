@@ -8460,7 +8460,7 @@ public function dataDetailReportFormatPY(Request $request)
         try{
             $dataLevel = [];
 
-            for($i = 0; $i < ((Session::get('companyCode') == 'NMDI') ? 1 : $request->level_format); $i++){
+            for($i = 0; $i < ((Session::get('companyCode') == 'NMDI' || Session::get('companyCode') == 'CITROEN') ? 1 : $request->level_format); $i++){
                 $dataLevel[] = $request->{'level' . ($i+1)};
             }
 
@@ -8590,7 +8590,7 @@ public function dataDetailReportFormatPY(Request $request)
         }else{
             $total = [];
             
-            if(Session::get('companyCode') == 'NMDI'){
+            if(Session::get('companyCode') == 'NMDI' || Session::get('companyCode') == 'CITROEN'){
                 if(isset($arrResult->dataListSet[0]->detail) && count($arrResult->dataListSet[0]->detail) > 1){
                     usort($arrResult->dataListSet[0]->detail, function ($a, $b) {
                         return (int) $a->employeeNo - (int) $b->employeeNo;
@@ -8639,7 +8639,7 @@ public function dataDetailReportFormatPY(Request $request)
     public function printPeriodicalReportPayrollExcel(Request $request){
         $dataLevel = [];
 
-        for($i = 0; $i < ((Session::get('companyCode') == 'NMDI') ? 1 : $request->level_format); $i++){
+        for($i = 0; $i < ((Session::get('companyCode') == 'NMDI' || Session::get('companyCode') == 'CITROEN') ? 1 : $request->level_format); $i++){
             $dataLevel[] = $request->{'level' . ($i+1)};
         }
 

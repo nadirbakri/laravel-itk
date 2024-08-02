@@ -222,7 +222,7 @@
                         </div>
                     </div>
                 </div>
-                @if($companyCode == 'NMDI')
+                @if($companyCode == 'NMDI' || $company == 'CITROEN')
                 <div class="row" id="div-level">
                     <div class="col-3">
                         <div class="form-group">
@@ -346,7 +346,7 @@
                         </div>
                     </div>
                 </div>
-                @if($companyCode == 'NMDI')
+                @if($companyCode == 'NMDI' || $company == 'CITROEN')
                 <div class="row">
                     <div class="col-2">
                         <div class="form-group">
@@ -534,8 +534,8 @@
             type: "GET",
             success: function (response) {
                 $('#level_format').val(response.data[0].levelFormat);
-                for (var i = 1; i <= ((companyCode == 'NMDI') ? 1 : response.data[0].levelFormat); i++) {
-                    if(companyCode == 'NMDI'){
+                for (var i = 1; i <= ((companyCode == 'NMDI' || company == 'CITROEN') ? 1 : response.data[0].levelFormat); i++) {
+                    if(companyCode == 'NMDI' || company == 'CITROEN'){
                         $('#div-level').append(
                             '<div class="col-4">' +
                             '<div class="form-group">' +

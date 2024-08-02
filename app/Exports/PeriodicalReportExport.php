@@ -184,7 +184,7 @@ class PeriodicalReportExport extends DefaultValueBinder implements WithCustomVal
         }else{
             $total = [];
             
-            if(Session::get('companyCode') == 'NMDI'){
+            if(Session::get('companyCode') == 'NMDI' || Session::get('companyCode') == 'CITROEN'){
                 if(isset($arrResult->dataListSet[0]->detail)){
                     usort($arrResult->dataListSet[0]->detail, function ($a, $b) {
                         return (int) $a->employeeNo - (int) $b->employeeNo;
