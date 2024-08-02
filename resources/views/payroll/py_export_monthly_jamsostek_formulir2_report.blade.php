@@ -160,7 +160,7 @@
         <tr>
 			<td width="10%" style="font-size: 10px; text-align: center;">C</td>
             <td width="20%" style="font-size: 10px; text-align: center;">Jaminan Kematian (JK)</td>
-            <td width="10%" style="font-size: 10px; text-align: center;">{{ $value->jk }}%</td>
+            <td width="10%" style="font-size: 10px; text-align: center;">{{ $value->jkm }}%</td>
             <td width="20%" style="font-size: 10px; text-align: right;">{{ number_format($value->upah_JKM, 2, '.', ',') }}</td>
             <td width="20%" style="font-size: 10px; text-align: right;">{{ number_format($value->iuranJKM, 2, '.', ',') }}</td>
 		</tr>
