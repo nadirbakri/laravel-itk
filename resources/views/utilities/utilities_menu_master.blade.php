@@ -584,6 +584,10 @@
         $("#btn-configure-menu").on('click', function () {
             loadDataModule();
 
+            $('.select_all').prop('checked', false);
+            $('.select_all_allow_access').prop('checked', false);
+            $('.select_all_allow_add').prop('checked', false);
+            $('.select_all_allow_edit').prop('checked', false);
             $('#configure_menu_table').DataTable().destroy();
         });
 
