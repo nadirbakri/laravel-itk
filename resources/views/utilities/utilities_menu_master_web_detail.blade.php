@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>{{ __('utilities_menu_master_mobile.judul') }}</title>
+    <title>{{ __('utilities_menu_master_web.judul') }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -108,42 +108,62 @@
         <div class="div-title">
             <a href="{{ url()->previous() }}" target="iframe_dashboard">
                 <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
-                <span class="title-text">{{ __('utilities_menu_master_mobile.list') }}</span>
+                <span class="title-text">{{ __('utilities_menu_master_web.list') }}</span>
             </a>
         </div>
         <div class="div-form">
-            <form id="menu_master_mobile_form" method="post" enctype="multipart/form-data">
+            <form id="menu_master_web_form" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="menu_desc">{{ __('utilities_menu_master_mobile.label_menu_description') }}</label>
-                            <input type="text" class="form-control" id="menu_desc" name="menu_desc"
-                                placeholder="{{ __('utilities_menu_master_mobile.label_menu_description') }}">
+                            <label for="menu_name">{{ __('utilities_menu_master_web.label_menu_name') }}</label>
+                            <input type="text" class="form-control" id="menu_name" name="menu_name"
+                                placeholder="{{ __('utilities_menu_master_web.label_menu_name') }}">
                         </div>
                         <input type="hidden" class="form-control" id="menu_id" name="menu_id">
                         <input type="hidden" class="form-control" id="record_function" name="record_function">
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="page_url">{{ __('utilities_menu_master_web.label_page_url') }}</label>
+                            <input type="text" class="form-control" id="page_url" name="page_url"
+                                placeholder="{{ __('utilities_menu_master_web.label_page_url') }}">
+                        </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="class_name">{{ __('utilities_menu_master_mobile.label_class_name') }}</label>
-                            <input type="text" class="form-control" id="class_name" name="class_name"
-                                placeholder="{{ __('utilities_menu_master_mobile.label_class_name') }}">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="check_have_child"
+                                    name="check_have_child" value="true">
+                                <label
+                                    for="check_have_child">{{ __('utilities_menu_master_web.label_check_have_child') }}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" id="div-parent-id">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="parent_id">{{ __('utilities_menu_master_web.label_parent_id') }}</label>
+                            <select class="form-control select2" id="parent_id" name="parent_id"></select>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-6">
-                        <div class="container">
-                            <div class="preview" id="imagePreview"></div>
-                            <div class="form-group">
-                                <label for="fileInput">{{ __('utilities_menu_master_mobile.label_icon') }}</label>
-                                <div class="file-input-wrapper">
-                                    <input type="file" id="fileInput" name="fileInput" accept=".svg, .png" style="height: 100%;">
-                                </div>
-                            </div>
+                        <div class="form-group">
+                            <label for="module_id">{{ __('utilities_menu_master_web.label_module_id') }}</label>
+                            <select class="form-control select2" id="module_id" name="module_id"></select>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="icon_url">{{ __('utilities_menu_master_web.label_icon_url') }}</label>
+                            <input type="text" class="form-control" id="icon_url" name="icon_url"
+                                placeholder="{{ __('utilities_menu_master_web.label_icon_url') }}">
                         </div>
                     </div>
                 </div>
@@ -151,7 +171,7 @@
                     <div class="col-3">
                         <button type="button" class="btn btn-primary" name="btn-save" id="btn-save"
                             style="width: 100%;">
-                            <i class="fa fa-floppy-o"></i> {{ __('utilities_menu_master_mobile.btn_save') }}
+                            <i class="fa fa-floppy-o"></i> {{ __('utilities_menu_master_web.btn_save') }}
                         </button>
                     </div>
                 </div>
@@ -184,7 +204,7 @@
                 <div class="modal-body">
                     <div class="div-title-notification">
                         <img src="{{ url('/pictures/checklist-green-confirm-password.svg') }}" alt="Password">
-                        <span class="title-text-notification">{{ __('utilities_menu_master_mobile.alert_success') }}</span>
+                        <span class="title-text-notification">{{ __('utilities_menu_master_web.alert_success') }}</span>
                     </div>
                     <div class="div-title-notification">
                         <span id="message-notification-success"></span>
@@ -231,105 +251,248 @@
         var table = null;
         var func = "{{ $func }}";
         var arrData = @json($data);
-        var existingBase64 = null;
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
         if (func == 'new') {
             $('#record_function').val("New");
             $('#menu_id').val("");
-            $('#menu_desc').val("");
-            $('#class_name').val("");
-            existingBase64 = null; 
-            $('#imagePreview').empty();
+            $('#menu_name').val("");
+            $('#page_url').val("");
+            $('#check_have_child').prop('checked', false);
+            $('#parent_id').val(null).trigger('change');
+            $('#module_id').val(null).trigger('change');
+            $('#icon_url').val("");
         } else if (func == 'edit') {
             $('#record_function').val("Edit");
-            $('#menu_id').val(
-                "{{ isset($data[0]->menuID) ? $data[0]->menuID : '' }}");
-            $('#menu_desc').val(htmlDecode(
-                "{{ isset($data[0]->menuDesc) ? $data[0]->menuDesc : '' }}"));
-            $('#class_name').val(htmlDecode(
-                "{{ isset($data[0]->className) ? $data[0]->className : '' }}"));   
-            existingBase64 = "{{ isset($data[0]->icon) ? $data[0]->icon : '' }}"; 
-            setExistingPreview(existingBase64);
+            $('#menu_id').val("{{ isset($data[0]->menuID) ? $data[0]->menuID : '' }}");
+            $('#menu_name').val("{{ isset($data[0]->menuName) ? $data[0]->menuName : '' }}");
+            $('#page_url').val("{{ isset($data[0]->pageURL) ? $data[0]->pageURL : '' }}");
+            $('#icon_url').val("{{ isset($data[0]->iconURL) ? $data[0]->iconURL : '' }}");
+            if (typeof arrData[0].isHaveChild !== 'undefined' && arrData[0].isHaveChild == true) {
+                $('#check_have_child').prop('checked', true);
+            }
+
+            $.ajax({
+                type: 'GET',
+                url: "{{ url('/menu_master_web/detail/api') }}",
+                data: {
+                    'menuID': "{{ isset($data[0]->parentID) ? $data[0]->parentID : '' }}"
+                }
+            }).then(function (data) {
+                var option = new Option(data[0].menuName, data[0].menuID, true, true);
+
+                $('#parent_id').append(option).trigger('change');
+
+                $('#parent_id').trigger({
+                    type: 'select2:select',
+                    params: {
+                        id: data[0].menuID,
+                        text: data[0].menuName,
+                        data: data[0]
+                    }
+                });
+            });
+            
+            $.ajax({
+                type: 'GET',
+                url: "{{ url('/module/detail/api') }}",
+                data: {
+                    'moduleID': "{{ isset($data[0]->moduleID) ? $data[0]->moduleID : '' }}"
+                }
+            }).then(function (data) {
+                var option = new Option(data[0].moduleName, data[0].moduleID, true, true);
+
+                $('#module_id').append(option).trigger('change');
+
+                $('#module_id').trigger({
+                    type: 'select2:select',
+                    params: {
+                        id: data[0].moduleID,
+                        text: data[0].moduleName,
+                        data: data[0]
+                    }
+                });
+            });
         }
 
         function htmlDecode(value) {
             return $("<textarea/>").html(value).text();
         }
 
-        $('#fileInput').on('change', function(event) {
-            const file = event.target.files[0];
-            const preview = $('#imagePreview');
-            preview.empty();
+        loadDataParentMenu();
+        loadDataModule();
 
-            if (file) {
-                const validTypes = ['image/svg+xml', 'image/png'];
-                if (!validTypes.includes(file.type)) {
-                    alert('File harus berupa format SVG atau PNG.');
-                    return;
-                }
-
-                const img = new Image();
-                img.onload = function() {
-                    if (img.width > 60 || img.height > 60) {
-                        alert('Resolusi gambar tidak boleh lebih dari 60x60.');
-                        return;
-                    }
-                    preview.append(img);
-                }
-                img.src = URL.createObjectURL(file);
+        $('#check_have_child').on('change', function () {
+            if ($('#check_have_child').is(':checked')) {
+                $('#div-parent-id').hide();
+            } else {
+                $('#div-parent-id').show();
             }
         });
-
-        // Fungsi untuk menampilkan preview dari data base64 yang sudah ada
-        function setExistingPreview(base64Data) {
-            const preview = $('#imagePreview');
-            preview.empty(); // Kosongkan preview sebelumnya
-
-            const svg = document.createElement('div');
-            svg.innerHTML = atob(base64Data); // Decode base64
-            const svgElement = svg.querySelector('svg');
-            if (svgElement) {
-                svgElement.setAttribute('width', '40');
-                svgElement.setAttribute('height', '40');
-                svgElement.style.maxWidth = '100%'; // Pastikan SVG tidak melebihi lebar div
-                svgElement.style.maxHeight = '100%'; // Pastikan SVG tidak melebihi tinggi div
-                preview.append(svg);
-            } else {
-                const img = new Image();
-                img.src = 'data:image/png;base64,' + base64Data;
-                preview.append(img);
-            }
-        }
 
         $('#notification_success').on('hide.bs.modal', function () {
-            window.location = "{{ url('utilities/menu_master_mobile') }}";
+            window.location = "{{ url('utilities/menu_master_web') }}";
         });
+
+        function loadDataParentMenu() {
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' +
+                        '<div class="col-12">' + data.data.menuName + '</div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $('#parent_id').select2({
+                width: '100%',
+                placeholder: 'Choose Parent Menu',
+                allowClear: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: "{{ url('/menu_master_web/api') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.menuName,
+                                    id: item.menuID,
+                                    title: item.menuName,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataModule() {
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' +
+                        '<div class="col-6">' + data.data.moduleID + '</div>' +
+                        '<div class="col-6">' + data.data.moduleName + '</div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var headerIsAppend = false;
+            $('#module_id').on('select2:open', function (e) {
+                if (!headerIsAppend) {
+                    html = '<div class="row">' +
+                        '<div class="col-6"><b>Module ID</b></div>' +
+                        '<div class="col-6"><b>Module Name</b></div>' +
+                        '</div>';
+                    $('.select2-search--dropdown').append(html);
+                    headerIsAppend = true;
+                }
+            });
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $('#module_id').select2({
+                width: '100%',
+                placeholder: 'Choose Module',
+                allowClear: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: "{{ url('/module/api') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.moduleName,
+                                    id: item.moduleID,
+                                    title: item.moduleName,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
 
         $("#btn-save").click(function () {
             $(this).prop("disabled", true);
             $(this).html(
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
-            $("#menu_master_mobile_form").submit();
+            $("#menu_master_web_form").submit();
         });
 
-        if ($("#menu_master_mobile_form").length > 0) {
-            $("#menu_master_mobile_form").validate({
+        if ($("#menu_master_web_form").length > 0) {
+            $("#menu_master_web_form").validate({
                 rules: {
-                    menu_desc: {
+                    menu_name: {
                         required: true,
                     },
-                    class_name: {
+                    page_url: {
+                        required: true,
+                    },
+                    module_id: {
                         required: true,
                     }
                 },
                 messages: {
-                    menu_desc: {
-                        required: "{{ __('utilities_menu_master_mobile.menu_desc_required') }}",
+                    menu_name: {
+                        required: "{{ __('utilities_menu_master_web.menu_name_required') }}",
                     },
-                    class_name: {
-                        required: "{{ __('utilities_menu_master_mobile.class_name_required') }}",
+                    page_url: {
+                        required: "{{ __('utilities_menu_master_web.page_url_required') }}",
+                    },
+                    module_id: {
+                        required: "{{ __('utilities_menu_master_web.module_id_required') }}",
                     }
                 },
                 highlight: function (element) {
@@ -342,7 +505,7 @@
                 errorPlacement: function (error, element) {
                     $("#btn-save").prop("disabled", false);
                     $("#btn-save").html(
-                        '<i class="fa fa-floppy-o"></i> {{ __("utilities_menu_master_mobile.btn_save") }}'
+                        '<i class="fa fa-floppy-o"></i> {{ __("utilities_menu_master_web.btn_save") }}'
                     );
 
                     error.addClass('invalid-feedback');
@@ -355,21 +518,16 @@
                         }
                     });
 
-                    var myform = document.getElementById("menu_master_mobile_form");
-                    var formdata = new FormData(myform);
-
                     $.ajax({
-                        url: "{{ url('utilities/menu_master_mobile/proses') }}",
+                        url: "{{ url('utilities/menu_master_web/proses') }}",
                         type: "POST",
-                        processData: false,
-                        contentType: false,
-                        data: formdata,
+                        data: $('#menu_master_web_form').serialize(),
                         success: function (response) {
                             if (response.status == "true") {
                                 $("#btn-save").prop("disabled",
                                     false);
                                 $("#btn-save").html(
-                                    '<i class="fa fa-floppy-o"></i> {{ __("utilities_menu_master_mobile.btn_save") }}'
+                                    '<i class="fa fa-floppy-o"></i> {{ __("utilities_menu_master_web.btn_save") }}'
                                 );
 
                                 $('#notification_success').modal('show');
@@ -379,7 +537,7 @@
                                 $("#btn-save").prop("disabled",
                                     false);
                                 $("#btn-save").html(
-                                    '<i class="fa fa-floppy-o"></i> {{ __("utilities_menu_master_mobile.btn_save") }}'
+                                    '<i class="fa fa-floppy-o"></i> {{ __("utilities_menu_master_web.btn_save") }}'
                                 );
 
                                 $('#notification_error').modal('show');
@@ -397,7 +555,7 @@
                             $("#btn-save").prop("disabled",
                             false);
                             $("#btn-save").html(
-                                '<i class="fa fa-floppy-o"></i> {{ __("utilities_menu_master_mobile.btn_save") }}'
+                                '<i class="fa fa-floppy-o"></i> {{ __("utilities_menu_master_web.btn_save") }}'
                             );
                             $('#notification_error').modal('show');
                             $('#message-notification-error').html(response);

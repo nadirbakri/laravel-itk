@@ -2474,6 +2474,113 @@ class DataController extends Controller
         return response()->json(["status" => true, "message" => "Success!"]);
 	}
 
+	public function dataMenuMasterWebAPI(Request $request)
+    {
+    	$search = $request->search;
+
+    	try {
+	    	$client = new Client([
+                'verify' => false,
+	    		'headers' => [ 'Content-Type' => 'application/json',
+	    						'Authorization' => 'Bearer ' . Session::get('token') ]
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/personel/MenuMasterWeb/getMenuMasterWeb',
+	    		['body' => json_encode(
+	    			[
+	    				"languageCode" => App::getLocale(),
+						"logActionUserID" => Session::get('userID'),
+                        "logActionUsername" => Session::get('userID')
+	    			]
+	    		)]
+	    	);
+	    } catch (RequestException $e) {
+	    	$response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+	    if($search == ''){
+	    	$menu = $arrResult->dataListSet;
+	    }else{
+	    	$menu = array_filter(
+	    		$arrResult->dataListSet,
+	    		function($value) use ($search){
+	    			if(preg_match('/' . $search . '/i', $value->menuID)){
+	    				return preg_match('/' . $search . '/i', $value->menuID);
+	    			}else if(preg_match('/' . $search . '/i', $value->menuName)){
+	    				return preg_match('/' . $search . '/i', $value->menuName);
+	    			}
+	    		}
+	    	);
+	    }
+
+        return response()->json($menu);
+	}
+
+	public function dataMenuMasterWebDetailAPI(Request $request)
+    {
+    	$search = $request->search;
+
+    	try {
+	    	$client = new Client([
+                'verify' => false,
+	    		'headers' => [ 'Content-Type' => 'application/json',
+	    						'Authorization' => 'Bearer ' . Session::get('token') ]
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/personel/MenuMasterWeb/getMenuMasterWeb',
+	    		['body' => json_encode(
+	    			[
+						"menuID" => $request->menuID,
+	    				"languageCode" => App::getLocale(),
+						"logActionUserID" => Session::get('userID'),
+                        "logActionUsername" => Session::get('userID')
+	    			]
+	    		)]
+	    	);
+	    } catch (RequestException $e) {
+	    	$response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+	    if($search == ''){
+			if(empty($request->menuID)){
+				$menu = [];
+			}else{
+				$menu = $arrResult->dataListSet;
+			}	    	
+	    }else{
+	    	$menu = array_filter(
+	    		$arrResult->dataListSet,
+	    		function($value) use ($search){
+	    			if(preg_match('/' . $search . '/i', $value->menuName)){
+	    				return preg_match('/' . $search . '/i', $value->menuName);
+	    			}else if(preg_match('/' . $search . '/i', $value->menuID)){
+	    				return preg_match('/' . $search . '/i', $value->menuID);
+	    			}
+	    		}
+	    	);
+	    }
+
+        return response()->json($menu);
+	}
+
 	public function dataModuleAPI(Request $request)
     {
     	$search = $request->search;
@@ -2515,6 +2622,59 @@ class DataController extends Controller
 	    				return preg_match('/' . $search . '/i', $value->moduleID);
 	    			}else if(preg_match('/' . $search . '/i', $value->moduleName)){
 	    				return preg_match('/' . $search . '/i', $value->moduleName);
+	    			}
+	    		}
+	    	);
+	    }
+
+        return response()->json($module);
+	}
+
+	public function dataModuleDetailAPI(Request $request)
+    {
+    	$search = $request->search;
+
+    	try {
+	    	$client = new Client([
+                'verify' => false,
+	    		'headers' => [ 'Content-Type' => 'application/json',
+	    						'Authorization' => 'Bearer ' . Session::get('token') ]
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/personel/Module/getModule',
+	    		['body' => json_encode(
+	    			[
+	    				'moduleID' => $request->moduleID
+	    			]
+	    		)]
+	    	);
+	    } catch (RequestException $e) {
+	    	$response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+	    if($search == ''){
+			if(empty($request->moduleID)){
+				$module = [];
+			}else{
+				$module = $arrResult->dataListSet;
+			}	    	
+	    }else{
+	    	$module = array_filter(
+	    		$arrResult->dataListSet,
+	    		function($value) use ($search){
+	    			if(preg_match('/' . $search . '/i', $value->moduleName)){
+	    				return preg_match('/' . $search . '/i', $value->moduleName);
+	    			}else if(preg_match('/' . $search . '/i', $value->moduleID)){
+	    				return preg_match('/' . $search . '/i', $value->moduleID);
 	    			}
 	    		}
 	    	);

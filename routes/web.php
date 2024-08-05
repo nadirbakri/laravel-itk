@@ -1130,7 +1130,10 @@ Route::get('company_under_holding/api', 'DataController@dataCompanyUnderHoldingA
 Route::get('company/detail/api', 'DataController@dataCompanyDetailAPI');
 Route::get('session_company/api', 'DataController@dataSessionCompanyAPI');
 Route::post('session_company/change', 'DataController@changeSessionCompanyAPI');
+Route::get('menu_master_web/api', 'DataController@dataMenuMasterWebAPI');
+Route::get('menu_master_web/detail/api', 'DataController@dataMenuMasterWebDetailAPI');
 Route::get('module/api', 'DataController@dataModuleAPI');
+Route::get('module/detail/api', 'DataController@dataModuleDetailAPI');
 Route::get('group_authorize/api', 'DataController@dataGroupAuthorizeAPI');
 Route::get('group_authorize/func/api', 'DataController@dataGroupAuthorizeFunctionAPI');
 Route::get('group_authorize/group/api', 'DataController@dataGroupAuthorizeGroupAPI');

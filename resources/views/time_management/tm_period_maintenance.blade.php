@@ -838,7 +838,7 @@
 
         if ($("#period_maintenance_form").length > 0) {
             $("#period_maintenance_form").validate({  
-            rules: {
+                rules: {
                     year: {
                         required: true,
                     },

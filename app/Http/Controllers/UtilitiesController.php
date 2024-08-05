@@ -754,7 +754,7 @@ class UtilitiesController extends Controller
                 ['body' => json_encode(
                     [
                         'menuID' => $request->menuID,
-                        "languageCode" => strtoupper(App::getLocale()),
+                        "languageCode" => App::getLocale(),
                         'logActionUserID' => Session::get('userID'),
                         'logActionUsername' => Session::get('userName')
                     ]
@@ -2179,9 +2179,8 @@ class UtilitiesController extends Controller
             $param = [
                 'menuName' => $request->menu_name,
                 'pageURL' => $request->page_url,
-                "isHaveChild" => $request->have_child,
-                "parentID" => $request->parent_id,
-                "parentID" => $request->parent_id,
+                "isHaveChild" => isset($request->check_have_child) ? (bool) $request->check_have_child : false,
+                "parentID" => (int) $request->parent_id,
                 "moduleID" => $request->module_id,
                 "iconURL" => $request->icon_url,
                 "changedNo" => 0,
@@ -2195,11 +2194,10 @@ class UtilitiesController extends Controller
                 "languageCode" => strtoupper(App::getLocale()),
             ];
 
-            // dd(json_encode($param));
-
             if($request->record_function == 'New'){
+                // dd(json_encode($param));
                 $response = $client->post(env('API_URL') . '/personel/MenuMasterWeb',
-                    ['body' => json_encode([$param])]
+                    ['body' => json_encode($param)]
                 );
             }else{
                 $param['menuID'] = $request->menu_id;
