@@ -9,6 +9,8 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/select/1.3.3/css/select.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/fixedcolumns/4.3.0/css/fixedColumns.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/fixedheader/3.4.0/css/fixedHeader.dataTables.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/flatpickr.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/flatpickr.monthselect.css') }}">
@@ -138,7 +140,8 @@
                 <table id="absenteeism_data_entry_by_date_table" class="table hover" style="font-size: 0.8rem;">
                     <thead>
                         <tr>
-                            <th colspan="2" class="middle">Employee Data</th>
+                            <th rowspan="2" class="middle">No</th>
+                            <th rowspan="2" class="middle">Name</th>
                             <th rowspan="2" class="middle">Absent Date</th>
                             <th rowspan="2" class="middle">Period</th>
                             <th rowspan="2" class="middle">Day</th>
@@ -158,8 +161,6 @@
                             <th rowspan="2" class="middle">Grade</th> -->
                         </tr>
                         <tr>
-                            <th class="middle">No</th>
-                            <th class="middle">Name</th>
                             <th class="middle">Date</th>
                             <th class="middle">Time</th>
                             <th class="middle">Date</th>
@@ -229,6 +230,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/select/1.3.3/js/dataTables.select.min.js"></script>
+<script src="https://cdn.datatables.net/fixedheader/3.4.0/js/dataTables.fixedHeader.min.js"></script>
+<script src="https://cdn.datatables.net/fixedcolumns/4.3.0/js/dataTables.fixedColumns.min.js"></script>
 <script src="https://cdn.datatables.net/plug-ins/1.10.24/pagination/ellipses.js"></script>
 <script src="{{ asset('js/jquery.redirect.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
@@ -560,11 +563,15 @@
             table = $('#absenteeism_data_entry_by_date_table').DataTable({
                 processing: true,
                 orderCellsTop: true,
+                fixedHeader: true,
                 paging: false,
                 "sDom": 'lrtip',
-                scrollY: 2000,
+                scrollY: 300,
                 scrollX: 400,
                 scrollCollapse: true,
+                fixedColumns: {
+                    left: 2
+                },
                 aoColumns : [
                     { "sWidth": '150px' },
                     { "sWidth": '250px' },
