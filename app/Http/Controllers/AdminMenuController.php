@@ -130,6 +130,7 @@ class AdminMenuController extends Controller
                 'title' => $request->t_news,
                 'category' => $request->n_category,
                 'content' => $request->c_news,
+                'sysNo' => $request->sysno,
                 'recordStatus' => "A"
             ];
 
@@ -140,8 +141,6 @@ class AdminMenuController extends Controller
             if($request->hasFile('file_attachment')){
                 $param['pdfFile'] = base64_encode(file_get_contents($pathFile . $fileName));
             }
-
-            // dd(json_encode($param));
 
             if ($request->t_news2 == "new"){
                 $response = $client->post(env('API_URL') . '/mobile/News/insertNews',

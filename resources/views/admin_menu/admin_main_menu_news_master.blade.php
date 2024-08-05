@@ -440,16 +440,56 @@
 </script>
 <script>
     $("#btn-save").click(function () {
-          $(this).prop("disabled", true);
-          $(this).html(
-              '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
-          );
           $("#admin_menu_news_master").submit();
       });
 
       if ($("#admin_menu_news_master").length > 0) {
               $("#admin_menu_news_master").validate({
-                  submitHandler: function (form) {
+                rules: {
+                    t_news: {
+                        required: true,
+                    },
+                    n_category: {
+                        required: true,
+                    },
+                    c_news: {
+                        required: true,
+                    },
+                    image_attachment: {
+                        required: true,
+                    },
+                },
+                messages: {
+                    t_news: {
+                        required: "{{ __('tm_period_maintenance.field_mandatory') }}",
+                    },
+                    n_category: {
+                        required: "{{ __('tm_period_maintenance.field_mandatory') }}",
+                    },
+                    c_news: {
+                        required: "{{ __('tm_period_maintenance.field_mandatory') }}",
+                    },
+                    image_attachment: {
+                        required: "{{ __('tm_period_maintenance.field_mandatory') }}",
+                    },
+                },
+                highlight: function (element) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function (element) {
+                    $(element).removeClass('is-invalid');
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                    $("#btn-save").prop("disabled", false);
+                    $("#btn-save").html(
+                        'Save'
+                    );
+
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').append(error);
+                },
+                submitHandler: function (form) {
                       $.ajaxSetup({
                           headers: {
                               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -458,6 +498,11 @@
 
                       var myForm = document.getElementById('admin_menu_news_master');
                       var formdata = new FormData(myForm);
+
+                      $("#btn-save").prop("disabled", true);
+                      $("#btn-save").html(
+                        '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+                      );
 
                       $.ajax({
                           url: "{{ url('admin_menu/news_master/proses') }}",
