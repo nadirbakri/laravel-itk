@@ -76,6 +76,14 @@
             margin-left: 0.5%;
         }
 
+        .photo {
+            border-radius: 50%;
+        }
+
+        .required {
+            color: red;
+        }
+
     </style>
 </head>
 
@@ -96,13 +104,39 @@
                         </label>
                     </div>
                     <div class="col-9 subdiv-profile">
-                        <p>{{ isset($data[0]->fullName) ? $data[0]->fullName : '-' }} &emsp; | &emsp;
-                            {{ isset($data[0]->employeeNo) ? $data[0]->employeeNo : '-' }}</p>
-                        <p class="small">{{ isset($data[0]->companyName) ? $data[0]->companyName : '-' }} &emsp; |
-                            &emsp; {{ isset($data[0]->positionName) ? $data[0]->positionName : '-' }}</p>
-                        <p class="small">
-                            {{ isset($data[0]->companyEmailAddress) ? $data[0]->companyEmailAddress : '-' }} &emsp; |
-                            &emsp; {{ isset($data[0]->personalHandphone) ? $data[0]->personalHandphone : '-' }}</p>
+                        <div class="row">
+                            <div class="col-auto">
+                                <p id="employee_name_profile" name="employee_name_profile"></p>
+                            </div>
+                            <div class="col-auto">
+                                <p>&emsp; | &emsp;</p>
+                            </div>
+                            <div class="col-auto">
+                                <p id="employee_no_profile" name="employee_no_profile"></p>
+                            </div> 
+                        </div>
+                        <div class="row">
+                            <div class="col-auto">
+                                <p class="small" id="company_name_profile" name="company_name_profile"></p>
+                            </div>
+                            <div class="col-auto">
+                                <p class="small">&emsp; | &emsp;</p>
+                            </div>
+                            <div class="col-auto">
+                                <p  class="small" id="position_name_profile" name="position_name_profile"></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-auto">
+                                <p class="small" id="company_email_profile" name="company_email_profile"></p>
+                            </div>
+                            <div class="col-auto">
+                                <p class="small">&emsp; | &emsp;</p>
+                            </div>
+                            <div class="col-auto">
+                                <p  class="small" id="phone_number_profile" name="phone_number_profile"></p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -877,8 +911,19 @@
         });
 
         var table = null;
+        var arrData = @json($data);
+        var arrData2 = @json($data2);
         var target = $('.nav-tabs a.nav-link.active').attr('href');
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+        $('#employee_name_profile').text(((typeof arrData[0].fullName !== 'undefined') ? arrData[0].fullName : ''));
+        $('#record_status').val(((typeof arrData[0].recordStatus !== 'undefined') ? arrData[0].recordStatus : ''));
+        $('#employee_no_profile').text(((typeof arrData[0].employeeNo !== 'undefined') ? arrData[0].employeeNo : ''));
+        $('#company_name_profile').text(((typeof arrData[0].companyName !== 'undefined') ? arrData[0].companyName : ''));
+        $('#position_name_profile').text(((typeof arrData[0].positionName !== 'undefined') ? arrData[0].positionName : ''));
+        $('#company_email_profile').text(((typeof arrData[0].companyEmailAddress !== 'undefined') ? arrData[0].companyEmailAddress : ''));
+        $('#phone_number_profile').text(((typeof arrData[0].personalHandphone !== 'undefined') ? arrData[0].personalHandphone : ''));
+        $('#photo_employee').val(((typeof arrData2[0].photo !== 'undefined') ? arrData2[0].photo : ''));
 
         load_table_job_history('{{ $data[0]->employeeNo }}');
 

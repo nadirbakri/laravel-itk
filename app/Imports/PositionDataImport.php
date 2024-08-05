@@ -61,7 +61,7 @@ class PositionDataImport implements ToCollection, SkipsEmptyRows, WithStartRow
                 ];
             }
 
-            // var_dump(json_encode($param));
+            // dd(json_encode($param));
 
             $response = $client->post(env('API_URL') . '/personel/GmPosition/bulkInsert',
                 ['body' => json_encode($param)]

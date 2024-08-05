@@ -89,10 +89,6 @@
 
 <body>
     <div class="div-personel">
-        {{-- <form id="employee_profile_form" method="post" enctype="multipart/form-data">
-            @csrf
-            
-        </form> --}}
         <div class="div-form">
             <form id="personal_data_form" method="post" enctype="multipart/form-data">
                 @csrf

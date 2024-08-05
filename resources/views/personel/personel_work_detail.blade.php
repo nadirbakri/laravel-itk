@@ -413,7 +413,8 @@
             var data = table.rows('.selected').data();
             if (data.count() > 0) {
                 $.redirect("{{ url('personnel/work_detail/detail_data') }}", {
-                    'employeeNo': data[0].employeeNo
+                    'employeeNo': data[0].employeeNo,
+                    'userID': data[0].userID
                 }, "GET", "iframe_dashboard");
             } else {
                 $('#notification_error').modal('show');
@@ -424,7 +425,8 @@
         $('#work_detail_table tbody').on('click', 'tr td:not(:first-child)', function () {
             var data = table.row(this).data();
             $.redirect("{{ url('personnel/work_detail/detail_data') }}", {
-                'employeeNo': data.employeeNo
+                'employeeNo': data.employeeNo,
+                'userID' : data.userID
             }, "GET", "iframe_dashboard");
         });
 

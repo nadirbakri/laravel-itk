@@ -643,6 +643,8 @@ class PersonelController extends Controller
 
         $arrResult = json_decode($response->getBody()->getContents());
 
+        // dd($arrResult->dataListSet);
+
         if($arrResult->dataListSet == null){
             return Datatables::of([])->make(true);
         }else{
@@ -2346,7 +2348,7 @@ class PersonelController extends Controller
             ]);
 
             if ($request->employeeNo !== null) {
-                $response = $client->post(env('API_URL') . '/personel/user/getuserdetail',
+                $response = $client->post(env('API_URL') . '/personel/pemasterview/getpemasterview',
                     ['body' => json_encode(
                         [
                             'companyCode' => Session::get('companyCode'),
@@ -2359,29 +2361,49 @@ class PersonelController extends Controller
                     )]
                 );
 
-                $arrResult = json_decode($response->getBody()->getContents());  
+                $response2 = $client->post(env('API_URL') . '/personel/PeMaster/getPeMasterDetail',
+                    ['body' => json_encode(
+                        [
+                            'companyCode' => Session::get('companyCode'),
+                            'employeeNo' => $request->employeeNo,
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName')
+                        ]
+                    )]
+                );
+
+                $arrResult = json_decode($response->getBody()->getContents());
+                $arrResult2 = json_decode($response2->getBody()->getContents());  
 
                 if($arrResult->dataListSet == null){
                     $data = [];
                 }
                 else {
                     $data = $arrResult->dataListSet;
+                    $data2 = $arrResult2->dataListSet;
                     // var_dump($data[0]->photo);
-                    if ($data[0]->detailList[0]->photo == null){
+                    if ($data[0]->photo == null){
                         $filename = 'profile-picture.png';
                     }
                     else {
                         $filename = Session::get('companyCode') . '_' . $data[0]->employeeNo . '.jpg';
-                        file_put_contents(("photo_profile/") . $filename, base64_decode($data[0]->detailList[0]->photo));
+                        file_put_contents(("photo_profile/") . $filename, base64_decode($data[0]->photo));
                     }
                 }
 
-                return view('personel.personel_employee_performance_detail', ['data' => $data, 'photo' => $filename, 'func' => $request->func]);
+                if($arrResult2->dataListSet == null){
+                    $data2 = [];
+                }else{
+                    $data2 = $arrResult2->dataListSet;
+                }
+
+                return view('personel.personel_employee_performance_detail', ['data' => $data, 'data2' => $data2, 'photo' => $filename, 'func' => $request->func]);
             }
 
             else {
                 $filename = 'profile-picture.png';
-                return view('personel.personel_employee_performance_detail', ['data' => '', 'photo' => $filename]);
+                return view('personel.personel_employee_performance_detail', ['data' => '', 'data2' => '', 'photo' => $filename]);
             }
         } catch (RequestException $e) {
             $response = $e->getResponse();
@@ -2416,7 +2438,7 @@ class PersonelController extends Controller
             ]);
 
             if ($request->employeeNo !== null) {
-                $response = $client->post(env('API_URL') . '/personel/user/getuserdetail',
+                $response = $client->post(env('API_URL') . '/personel/pemasterview/getpemasterview',
                     ['body' => json_encode(
                         [
                             'companyCode' => Session::get('companyCode'),
@@ -2429,29 +2451,49 @@ class PersonelController extends Controller
                     )]
                 );
 
-                $arrResult = json_decode($response->getBody()->getContents());  
+                $response2 = $client->post(env('API_URL') . '/personel/PeMaster/getPeMasterDetail',
+                    ['body' => json_encode(
+                        [
+                            'companyCode' => Session::get('companyCode'),
+                            'employeeNo' => $request->employeeNo,
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName')
+                        ]
+                    )]
+                );
+
+                $arrResult = json_decode($response->getBody()->getContents());
+                $arrResult2 = json_decode($response2->getBody()->getContents());  
 
                 if($arrResult->dataListSet == null){
                     $data = [];
                 }
                 else {
                     $data = $arrResult->dataListSet;
+                    $data2 = $arrResult2->dataListSet;
                     // var_dump($data[0]->photo);
-                    if ($data[0]->detailList[0]->photo == null){
+                    if ($data[0]->photo == null){
                         $filename = 'profile-picture.png';
                     }
                     else {
                         $filename = Session::get('companyCode') . '_' . $data[0]->employeeNo . '.jpg';
-                        file_put_contents(("photo_profile/") . $filename, base64_decode($data[0]->detailList[0]->photo));
+                        file_put_contents(("photo_profile/") . $filename, base64_decode($data[0]->photo));
                     }
                 }
 
-                return view('personel.personel_work_detail_detail', ['data' => $data, 'photo' => $filename, 'func' => $request->func]);
+                if($arrResult2->dataListSet == null){
+                    $data2 = [];
+                }else{
+                    $data2 = $arrResult2->dataListSet;
+                }
+
+                return view('personel.personel_work_detail_detail', ['data' => $data, 'data2' => $data2, 'photo' => $filename, 'func' => $request->func]);
             }
 
             else {
                 $filename = 'profile-picture.png';
-                return view('personel.personel_work_detail_detail', ['data' => '', 'photo' => $filename]);
+                return view('personel.personel_work_detail_detail', ['data' => '', 'data2' => '', 'photo' => $filename]);
             }
         } catch (RequestException $e) {
             $response = $e->getResponse();
@@ -2474,18 +2516,62 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/getuserdetail',
-                ['body' => json_encode(
-                    [
-                        'companyCode' => Session::get('companyCode'),
-                        'employeeNo' => $request->employeeNo,
-                        'userID' => Session::get('userID'),
-                        'logActionUserID' => Session::get('userID'),
-                        'logActionUsername' => Session::get('userName'),
-                        'languageCode' => App::getLocale()
-                    ]
-                )]
-            );
+            if ($request->employeeNo !== null) {
+                $response = $client->post(env('API_URL') . '/personel/pemasterview/getpemasterview',
+                    ['body' => json_encode(
+                        [
+                            'companyCode' => Session::get('companyCode'),
+                            'employeeNo' => $request->employeeNo,
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                            'languageCode' => App::getLocale()
+                        ]
+                    )]
+                );
+
+                $response2 = $client->post(env('API_URL') . '/personel/PeMaster/getPeMasterDetail',
+                    ['body' => json_encode(
+                        [
+                            'companyCode' => Session::get('companyCode'),
+                            'employeeNo' => $request->employeeNo,
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName')
+                        ]
+                    )]
+                );
+
+                $arrResult = json_decode($response->getBody()->getContents());
+                $arrResult2 = json_decode($response2->getBody()->getContents());  
+
+                if($arrResult->dataListSet == null){
+                    $data = [];
+                }
+                else {
+                    $data = $arrResult->dataListSet;
+                    $data2 = $arrResult2->dataListSet;
+                    // var_dump($data[0]->photo);
+                    if ($data[0]->photo == null){
+                        $filename = 'profile-picture.png';
+                    }
+                    else {
+                        $filename = Session::get('companyCode') . '_' . $data[0]->employeeNo . '.jpg';
+                        file_put_contents(("photo_profile/") . $filename, base64_decode($data[0]->photo));
+                    }
+                }
+
+                if($arrResult2->dataListSet == null){
+                    $data2 = [];
+                }else{
+                    $data2 = $arrResult2->dataListSet;
+                }
+
+                return view('personel.personel_competency_detail', ['data' => $data, 'data2' => $data2, 'photo' => $filename, 'func' => $request->func]);
+            }else{
+                $filename = 'profile-picture.png';
+                return view('personel.personel_competency_detail', ['data' => '', 'data2' => '', 'photo' => $filename]);
+            }
         } catch (RequestException $e) {
             $response = $e->getResponse();
             if($response->getStatusCode() == 401){
@@ -2496,16 +2582,6 @@ class PersonelController extends Controller
                 return view('error.bad_request');
             }
         }
-
-        $arrResult = json_decode($response->getBody()->getContents());  
-
-        if($arrResult->dataListSet == null){
-            $data = [];
-        }else{
-            $data = $arrResult->dataListSet;
-        }
-
-        return view('personel.personel_competency_detail', ['data' => $data, 'photo' => '']);
     }
 
     public function dataDetailOtherInformationPersonel(Request $request)
