@@ -443,7 +443,7 @@
             $('#max_per_request').val(((typeof arrData[0].reqAdvanceDay !== 'undefined') ? arrData[0].reqAdvanceDay : ''));
             $.ajax({
                 type: 'GET',
-                url: "{{ url('/absenteeism_type/func/api') }}",
+                url: "{{ url('/absent_type/func/api') }}",
                 data: {
                     'absentType': "{{ isset($data[0]->absentType) ? $data[0]->absentType : '' }}"
                 }
@@ -592,7 +592,7 @@
                     }
                 },
                 ajax: {
-                    url: "{{ url('/absenteeism_type/api') }}",
+                    url: "{{ url('/absent_type/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",

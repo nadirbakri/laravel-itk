@@ -1067,6 +1067,8 @@ Route::get('tax_office/api', 'DataController@dataTaxOfficeAPI');
 Route::get('tax_calculation_method/api', 'DataController@dataTaxCalculationMethodAPI');
 Route::get('absenteeism_type/api', 'DataController@dataAbsenteeismTypeAPI');
 Route::get('absenteeism_type/func/api', 'DataController@dataAbsenteeismTypeFuncAPI');
+Route::get('absent_type/api', 'DataController@dataAbsentTypeAPI');
+Route::get('absent_type/func/api', 'DataController@dataAbsentTypeFuncAPI');
 Route::get('currency/api', 'DataController@dataCurrencyAPI');
 Route::get('currency/func/api', 'DataController@dataCurrencyFunctionAPI');
 Route::get('zip_code/api', 'DataController@dataZipCodeAPI');
