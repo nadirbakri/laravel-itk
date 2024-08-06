@@ -61,7 +61,7 @@ class PeMasterLeaveImport implements ToCollection, SkipsEmptyRows, WithStartRow
             foreach ($rows as $row) {
                 $param[] = [
                     "companyCode" => Session::get('companyCode'),
-                    "employeeNo" => (!is_null($row[0]) && $row[0] != "NULL") ? $row[0] : null,
+                    "employeeNo" => (!is_null($row[0]) && $row[0] != "NULL") ? strval($row[0]) : null,
                     "leaveCode" => (!is_null($row[2]) && $row[2] != "NULL") ? $row[2] : null,
                     "leaveBalance" => (!is_null($row[4]) && $row[4] != "NULL") ? (float) number_format($row[4], 1, '.', '') : null,
                     "leaveBalanceBefore" => (!is_null($row[5]) && $row[5] != "NULL") ? (float) number_format($row[5], 1, '.', '') : null,
@@ -77,7 +77,7 @@ class PeMasterLeaveImport implements ToCollection, SkipsEmptyRows, WithStartRow
                 ];
             }
 
-            dd(json_encode($param));
+            // dd(json_encode($param));
 
             $response = $client->post(env('API_URL') . '/personel/PeMasterLeave/importPeMasterLeave',
                 ['body' => json_encode($param)]

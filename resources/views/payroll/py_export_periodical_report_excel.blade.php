@@ -412,6 +412,7 @@
     @endif
     @if($print_signature)
         <br>
+        @if($company == 'NMDI')
         <table style="width: 100%;" class="table table-bordered table-hover responsive table_detail">
             <tbody>
                 @if($level1[0] == "ALL" || $level1[0] == "GIC" || $level1[0] == "NMDI")
@@ -485,6 +486,47 @@
                 @endif
             </tbody>
         </table>
+        @elseif($company == 'CITROEN')
+        <table style="width: 100%;" class="table table-bordered table-hover responsive table_detail">
+            <tbody>
+                <tr>
+                    <td style="text-align: center;">&nbsp;</td>
+                    <td colspan="4">Jakarta, {{ date('d F Y') }}</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center;">&nbsp;</td>
+                    <td colspan="4">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center;">&nbsp;</td>
+                    <td colspan="2" style="text-align: center;">Prepared By,</td>
+                    <td style="text-align: center;">&nbsp;</td>
+                    <td style="text-align: center;">Approved By,</td>
+                </tr>
+                <tr>
+                    <td colspan="5">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="5">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="5">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center;">&nbsp;</td>
+                    <td colspan="2" style="text-align: center; border-bottom: 1px solid black">Natalia Martan</td>
+                    <td style="text-align: center;">&nbsp;</td>
+                    <td style="text-align: center; border-bottom: 1px solid black">Tan Kim Piauw</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center;">&nbsp;</td>
+                    <td colspan="2" style="text-align: center;">HR Administration and ComBen Dept Head</td>
+                    <td style="text-align: center;">&nbsp;</td>
+                    <td style="text-align: center;">Chief Executive Officer</td>
+                </tr>
+            </tbody>
+        </table>
+        @endif
     @endif
 </body>
 </html>

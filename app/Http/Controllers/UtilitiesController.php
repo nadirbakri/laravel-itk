@@ -2179,7 +2179,7 @@ class UtilitiesController extends Controller
             $param = [
                 'menuName' => $request->menu_name,
                 'pageURL' => $request->page_url,
-                "isHaveChild" => isset($request->check_have_child) ? (bool) $request->check_have_child : false,
+                "isHaveChild" => isset($request->check_have_child) ? $request->check_have_child : "0",
                 "parentID" => (int) $request->parent_id,
                 "moduleID" => $request->module_id,
                 "iconURL" => $request->icon_url,
@@ -2195,14 +2195,13 @@ class UtilitiesController extends Controller
             ];
 
             if($request->record_function == 'New'){
-                // dd(json_encode($param));
                 $response = $client->post(env('API_URL') . '/personel/MenuMasterWeb',
                     ['body' => json_encode($param)]
                 );
             }else{
                 $param['menuID'] = $request->menu_id;
                 $response = $client->put(env('API_URL') . '/personel/MenuMasterWeb',
-                    ['body' => json_encode([$param])]
+                    ['body' => json_encode($param)]
                 );
             }
 

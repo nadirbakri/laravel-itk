@@ -137,7 +137,7 @@
                         <div class="form-group">
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="check_have_child"
-                                    name="check_have_child" value="true">
+                                    name="check_have_child" value="1">
                                 <label
                                     for="check_have_child">{{ __('utilities_menu_master_web.label_check_have_child') }}</label>
                             </div>
@@ -268,7 +268,7 @@
             $('#menu_name').val("{{ isset($data[0]->menuName) ? $data[0]->menuName : '' }}");
             $('#page_url').val("{{ isset($data[0]->pageURL) ? $data[0]->pageURL : '' }}");
             $('#icon_url').val("{{ isset($data[0]->iconURL) ? $data[0]->iconURL : '' }}");
-            if (typeof arrData[0].isHaveChild !== 'undefined' && arrData[0].isHaveChild == true) {
+            if (typeof arrData[0].isHaveChild !== 'undefined' && arrData[0].isHaveChild == "1") {
                 $('#check_have_child').prop('checked', true);
             }
 
