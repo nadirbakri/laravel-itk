@@ -13,10 +13,12 @@ use App\Exports\DetailAbsenteeismReasonReportExport;
 use App\Exports\DetailRateOvertimeReportExport;
 use App\Exports\UpdateAbsenteeismDataTemplateExport;
 use App\Exports\ChangeDataShiftTemplateExcel;
+use App\Exports\PeMasterLeaveExport;
 
 use App\Imports\UpdateAbsenteeismDataImport;
 use App\Imports\ChangeDataShiftImport;
 use App\Imports\TimeRecordingImport;
+use App\Imports\PeMasterLeaveImport;
 
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
@@ -210,6 +212,11 @@ class TimeManagementController extends Controller
     public function pageInputBalanceLeave()
     {
         return view ('time_management.tm_input_balance_leave');
+    }
+
+    public function pageExportImportLeave()
+    {
+        return view ('time_management.tm_export_import_leave');
     }
 
     public function pageCompanyWorkingCalendar()
@@ -1481,6 +1488,34 @@ class TimeManagementController extends Controller
     public function templateChangeDataShift()
     {
         return Excel::download(new ChangeDataShiftTemplateExcel, 'Template Change Data Shift.xlsx');
+    }
+
+    public function exportExportImportLeave(Request $request)
+    {
+        return Excel::download(new PeMasterLeaveExport(isset($request->choose_specific_employee_no) ? (bool) $request->choose_specific_employee_no : false, $request->employee_no, isset($request->choose_specific_leave_code) ? (bool) $request->choose_specific_leave_code : false, $request->leave_code), 'Leave Report.xlsx');
+    }
+
+    public function importExportImportLeave(Request $request)
+    {
+        try{
+            $file = $request->file('import_leave');
+            $nama_file = rand().$file->getClientOriginalName();
+            $file->move('file_excel', $nama_file);
+            $import = new PeMasterLeaveImport;
+            Excel::import($import, public_path('file_excel/'.$nama_file), null, \Maatwebsite\Excel\Excel::XLSX);
+            File::delete('file_excel/'.$nama_file);
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            $failures = $e->failures();
+            $objError = (object) ['status' => false, 'message' => $failures[0]->errors()[0]];
+            return array(0 => $objError);
+        }
+
+        if(empty($import->getArrResult())){
+            $objError = (object) ['status' => false, 'message' => "The Uploaded File Doesn't Match The Template"];
+            return array(0 => $objError);
+        }else{
+            return $import->getArrResult();
+        }
     }
 
     public function prosesUpdateShiftByDateTM(Request $request)
