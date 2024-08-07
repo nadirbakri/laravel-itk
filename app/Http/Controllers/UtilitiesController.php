@@ -2293,32 +2293,34 @@ class UtilitiesController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            if(isset($request->menuID)){
-                foreach($request->menuID as $key=>$value){
+            $data = $request->json()->all();
+
+            if (!empty($data)) {
+                foreach ($data as $key => $value) {
                     $param[] = [
                         'companyCode' => Session::get('companyCode'),
-                        "menuID" => $value,
-                        "parentMenuId" => null,
-                        "changedNo" => 0,
-                        "createdDate" => date("Y-m-d\TH:i:s"),
-                        "createdBy" => Session::get('userID'),
-                        "changedDate" => date("Y-m-d\TH:i:s"),
-                        "changedBy" => Session::get('userID'),
+                        'menuID' => $value['menuID'],
+                        'parentMenuID' => $value['parentMenuID'],
+                        'changedNo' => 0,
+                        'createdDate' => date("Y-m-d\TH:i:s"),
+                        'createdBy' => Session::get('userID'),
+                        'changedDate' => date("Y-m-d\TH:i:s"),
+                        'changedBy' => Session::get('userID'),
                         'sessionUserID' => Session::get('userID'),
                         'logActionUserID' => Session::get('userID'),
                         'logActionUsername' => Session::get('userName'),
-                        "languageCode" => strtoupper(App::getLocale()),
+                        'languageCode' => strtoupper(App::getLocale()),
                     ];
                 }
-            }else{
+            } else {
                 $param = [];
             }
 
-            $response = $client->post(env('API_URL') . '/mobile/MasterMenuMobile/insertmenusettingmobile',
+            // dd(json_encode($param));
+
+            $response = $client->put(env('API_URL') . '/mobile/MasterMenuMobile/updatesettingmobile',
                 ['body' => json_encode($param)]
             );
-
-
         } catch (RequestException $e) {
             $response = $e->getResponse();
             if($response->getStatusCode() == 401){
@@ -2333,7 +2335,6 @@ class UtilitiesController extends Controller
         $arrResult = json_decode($response->getBody()->getContents());
 
         return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
-        // return response()->json($request->company_default_checkbox);
     }
 
     public function prosesMasterBannerUtilities(Request $request)
