@@ -668,10 +668,9 @@
                 processing: true,
                 // orderCellsTop: true,
                 data: arrayPayrollCalculation,
-
+                "paging": false,
                 "sDom": 'lrtip',
                 'sPaginationType': 'full_numbers',
-
                 columns: [
                     {
                         orderable: false,
@@ -934,6 +933,13 @@
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         }
                     });
+
+                    var data = table.$('input, textarea').serialize();
+                    data += '&field_name=' + $('#field_name').val();
+                    data += '&field_name_hidden=' + $('#field_name_hidden').val();
+                    data += '&record_function=' + $('#record_function').val();
+                    data += '&sequence=' + $('#sequence').val();
+
                     $.ajax({
                         url: "{{ url('payroll/payroll_calculation/proses') }}",
                         type: "POST",
