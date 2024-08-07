@@ -16,6 +16,7 @@ use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Illuminate\Validation\ValidationException;
 use Carbon\Carbon;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
+use Illuminate\Support\Facades\Storage;
 use Session;
 use App;
 
@@ -46,89 +47,57 @@ class PersonalDataImport implements ToCollection, SkipsEmptyRows, WithStartRow, 
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            Validator::make($rows->toArray(), [
-                '*.0' => 'required|not_in:NULL',
-                '*.1' => 'required|not_in:NULL',
-                '*.2' => 'required|not_in:NULL',
-                '*.3' => 'required|not_in:NULL',
-                '*.4' => 'required|not_in:NULL',
-                '*.5' => 'required|not_in:NULL',
-                '*.6' => 'required|not_in:NULL',
-                '*.12' => 'required|not_in:NULL',
-                '*.28' => 'required|not_in:NULL',
-                '*.30' => 'required|not_in:NULL',
-                '*.32' => 'required|not_in:NULL',
-                '*.33' => 'required|not_in:NULL',
-                '*.38' => 'required|not_in:NULL',
-                '*.39' => 'required|not_in:NULL',
-                '*.40' => 'required|not_in:NULL',
-                '*.41' => 'required|not_in:NULL',
-                '*.42' => 'required|not_in:NULL',
-                '*.43' => 'required|not_in:NULL',
-                '*.44' => 'required|not_in:NULL',
-                '*.45' => 'required|not_in:NULL',
-                '*.46' => 'required|not_in:NULL',
-                '*.49' => 'required|not_in:NULL',
-                '*.53' => 'required|not_in:NULL',
-                '*.75' => 'required|not_in:NULL',
-                '*.34' => 'required|not_in:NULL',
-                '*.129' => 'required|not_in:NULL'
-            ], [
-                '*.0.required' => 'Company Code is Required',
-                '*.0.not_in' => 'Company Code cannot be Null',
-                '*.1.required' => 'Employee No is Required',
-                '*.1.not_in' => 'Employee No cannot be Null',
-                '*.2.required' => 'Full Name is Required',
-                '*.2.not_in' => 'Full Name cannot be Null',
-                '*.3.required' => 'Birth Place is Required',
-                '*.3.not_in' => 'Birth Place cannot be Null',
-                '*.4.required' => 'Birth Date is Required',
-                '*.4.not_in' => 'Birth Date cannot be Null',
-                '*.5.required' => 'Gender is Required',
-                '*.5.not_in' => 'Gender cannot be Null',
-                '*.6.required' => 'Marital Status is Required',
-                '*.6.not_in' => 'Marital Status cannot be Null',
-                '*.12.required' => 'Flag is Expat is Required',
-                '*.12.not_in' => 'Flag is Expat cannot be Null',
-                '*.28.required' => 'Flag is Commissioner is Required',
-                '*.28.not_in' => 'Flag is Commissioner cannot be Null',
-                '*.30.required' => 'Absenteeism Type is Required',
-                '*.30.not_in' => 'Absenteeism Type cannot be Null',
-                '*.32.required' => 'Start At Day is Required',
-                '*.32.not_in' => 'Start At Day cannot be Null',
-                '*.33.required' => 'Flag Not Absent is Required',
-                '*.33.not_in' => 'Flag Not Absent cannot be Null',
-                '*.38.required' => 'Flag Astek Death Not Accident is Required',
-                '*.38.not_in' => 'Flag Astek Death Not Accident cannot be Null',
-                '*.39.required' => 'Flag Astek Work Accident is Required',
-                '*.39.not_in' => 'Flag Astek Work Accident cannot be Null',
-                '*.40.required' => 'Flag Astek Work Accident 2 is Required',
-                '*.40.not_in' => 'Flag Astek Work Accident 2 cannot be Null',
-                '*.41.required' => 'Flag Astek Work Accident 3 is Required',
-                '*.41.not_in' => 'Flag Astek Work Accident 3 cannot be Null',
-                '*.42.required' => 'Flag Astek Pension Employee is Required',
-                '*.42.not_in' => 'Flag Astek Pension Employee cannot be Null',
-                '*.43.required' => 'Flag Astek Pension Employer is Required',
-                '*.43.not_in' => 'Flag Astek Pension Employer cannot be Null',
-                '*.44.required' => 'Flag Astek Health Insurance is Required',
-                '*.44.not_in' => 'Flag Astek Health Insurance cannot be Null',
-                '*.45.required' => 'Flag Tax By Governent is Required',
-                '*.45.not_in' => 'Flag Tax By Governent cannot be Null',
-                '*.46.required' => 'Flag Pension Insurance is Required',
-                '*.46.not_in' => 'Flag Pension Insurance cannot be Null',
-                '*.49.required' => 'Flag BPJS Kesehatan is Required',
-                '*.49.not_in' => 'Flag BPJS Kesehatan cannot be Null',
-                '*.53.required' => 'Flag BPJS Tenaga Kerja is Required',
-                '*.53.not_in' => 'Flag BPJS Tenaga Kerja cannot be Null',
-                '*.75.required' => 'Flag Exclude Payroll is Required',
-                '*.75.not_in' => 'Flag Exclude Payroll cannot be Null',
-                '*.34.required' => 'Flag Not Finger is Required',
-                '*.34.not_in' => 'Flag Not Finger cannot be Null',
-                '*.129.required' => 'Leave Code is Required',
-                '*.129.not_in' => 'Leave Code cannot be Null'
-            ])->validate();
+            $headerRow = $rows->shift();
+            $levelType = [];
+            $dynamicRules = [];
+            $dynamicRMessages = [];
 
-            foreach ($rows as $row) {
+            foreach ($headerRow as $key => $value) {
+                if (strpos($value, '*') !== false) {
+                    $dynamicRules["*.{$key}"] = 'required|not_in:NULL';
+                    $dynamicRMessages["*.{$key}.required"] = strtr($value, ["*" => ""]) . ' is Required';
+                    $dynamicRMessages["*.{$key}.not_in"] = strtr($value, ["*" => ""]) . ' cannot be Null';
+                }
+                
+                if (strpos($value, 'Level Code') !== false) {
+                    $parts = explode("-", $value);
+                    $result = ltrim($parts[1]);    
+                    $levelType[] = [
+                        'levelType' => $result,
+                        'index' => $key
+                    ];
+                }            
+            }
+                        
+            try {
+                Validator::make($rows->toArray(), $dynamicRules, $dynamicRMessages)->validate();
+            } catch (\Illuminate\Validation\ValidationException $e) {
+                $errors = $e->validator->errors()->messages();
+                
+                $errorMessages = [];
+                foreach ($errors as $columnErrors) {
+                    $this->arrResult[]['message'] = array_shift($columnErrors);
+                }
+                
+                return $this->arrResult;
+            }
+
+            if (count($this->arrResult) > 0) {
+                return $this->arrResult;
+            }
+
+            $rows->filter(function ($row) {
+                return !empty($row[1]);
+            })->each(function ($row) use (&$param, &$levelType) {
+                $peMasterLevel = [] ;
+                foreach ($levelType as $type) {
+                    $peMasterLevel[] = [
+                        "companyCode" => (!is_null($row[0]) && $row[0] != "NULL") ? strval($row[0]) : null,
+                        'levelType' => (!is_null($type['levelType']) && $type['levelType'] != "NULL") ? strval($type['levelType']) : null,
+                        'levelCode' => (!is_null($row[$type['index']]) && $row[$type['index']] != "NULL") ? strval($row[$type['index']]) : null,
+                        "employeeNo" => (!is_null($row[1]) && $row[1] != "NULL") ? strval($row[1]) : null
+                    ];
+                }
                 $param[] = [
                     "recordStatus" => "A",
                     "companyCode" => (!is_null($row[0]) && $row[0] != "NULL") ? strval($row[0]) : null,
@@ -382,8 +351,9 @@ class PersonalDataImport implements ToCollection, SkipsEmptyRows, WithStartRow, 
                         'logActionUsername' => Session::get('userName')
                     ]
                 ];
-            }
+            });
 
+            // Storage::put('debug_data.txt', json_encode($param));
             // dd(json_encode($param));
             // exit;
 
