@@ -2736,21 +2736,6 @@ class UtilitiesController extends Controller
                     )]
                 );
             }else{
-                dd(json_encode(
-                    [
-                        'recordStatus' => $request->record_status,
-                        'companyCode' => Session::get('companyCode'),
-                        'categoryCode' => $request->category_code,
-                        'categoryName' => $request->category_name,
-                        "changedDate" => date("Y-m-d\TH:i:s"),
-                        "changedBy" => Session::get('userID'),
-                        'userID' => Session::get('userID'),
-                        'sessionID' => 0,
-                        'logActionUserID' => Session::get('userID'),
-                        'logActionUsername' => Session::get('userName'),
-                        "languageCode" => strtoupper(App::getLocale())
-                    ]
-                    ));
                 $response = $client->put(env('API_URL') . '/mobile/News/updateNewsCat',
                     ['body' => json_encode(
                         [
