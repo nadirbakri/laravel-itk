@@ -1553,6 +1553,34 @@
             if (typeof arrDataPR[0].taxAllowanceTHR !== 'undefined' && arrDataPR[0].taxAllowanceTHR == true) {
                 $('#check_tax_allowance_thr').prop('checked', true);
             }
+            if (typeof arrDataPR[0].flagTaxAllowance !== 'undefined' && arrDataPR[0].flagTaxAllowance === true) {
+                $('#check_tax_allowance_custom_set_up').prop('checked', true);
+                $('#check_tax_netto_calculation_custom_set_up').prop('checked', false);
+                $('#div_tax_allowance_custom_set_up').show();
+            }
+            else {
+                $('#check_tax_allowance_custom_set_up').prop('checked', false);
+            }
+            if (typeof arrDataPR[0].flagNetCalculation !== 'undefined' && arrDataPR[0].flagNetCalculation === true) {
+                $('#check_tax_netto_calculation_custom_set_up').prop('checked', true);
+                $('#check_tax_allowance_custom_set_up').prop('checked', false);
+                $('#div_tax_allowance_custom_set_up').hide();
+            }
+            else {
+                $('#check_tax_netto_calculation_custom_set_up').prop('checked', false);
+            }
+            if (typeof arrDataPR[0].flagIteratif !== 'undefined' && arrDataPR[0].flagIteratif === true) {
+                $('#tax_allowance_custom_set_up_iterative').prop('checked', true);
+                $('#tax_allowance_custom_set_up_non_iterative').prop('checked', false);
+            }
+            else if (typeof arrDataPR[0].flagIteratif !== 'undefined' && arrDataPR[0].flagIteratif === false) {
+                $('#tax_allowance_custom_set_up_iterative').prop('checked', false);
+                $('#tax_allowance_custom_set_up_non_iterative').prop('checked', true);
+            }
+            else {
+                $('#tax_allowance_custom_set_up_iterative').prop('checked', false);
+                $('#tax_allowance_custom_set_up_non_iterative').prop('checked', false);
+            }
             $('#pension_contribution_employee').val((typeof arrDataPR[0].pensionContributionEmployee !== 'undefined') ? arrDataPR[0].pensionContributionEmployee : '');
             $('#pension_contribution_employer').val((typeof arrDataPR[0].pensionContributionEmployer !== 'undefined') ? arrDataPR[0].pensionContributionEmployer : '');
             $('#work_related_accident_insurance_one').val((typeof arrDataPR[0].workRelateAccidentInsurance !== 'undefined') ? arrDataPR[0].workRelateAccidentInsurance : '');
@@ -1589,6 +1617,34 @@
             }
             else {
                 $('#tax_calculation_method_prorated').prop('checked', true);
+            }
+            if (typeof arrDataPR[0].flagTaxAllowance !== 'undefined' && arrDataPR[0].flagTaxAllowance === true) {
+                $('#check_tax_allowance_custom_set_up').prop('checked', true);
+                $('#check_tax_netto_calculation_custom_set_up').prop('checked', false);
+                $('#div_tax_allowance_custom_set_up').show();
+            }
+            else {
+                $('#check_tax_allowance_custom_set_up').prop('checked', false);
+            }
+            if (typeof arrDataPR[0].flagNetCalculation !== 'undefined' && arrDataPR[0].flagNetCalculation === true) {
+                $('#check_tax_netto_calculation_custom_set_up').prop('checked', true);
+                $('#check_tax_allowance_custom_set_up').prop('checked', false);
+                $('#div_tax_allowance_custom_set_up').hide();
+            }
+            else {
+                $('#check_tax_netto_calculation_custom_set_up').prop('checked', false);
+            }
+            if (typeof arrDataPR[0].flagIteratif !== 'undefined' && arrDataPR[0].flagIteratif === true) {
+                $('#tax_allowance_custom_set_up_iterative').prop('checked', true);
+                $('#tax_allowance_custom_set_up_non_iterative').prop('checked', false);
+            }
+            else if (typeof arrDataPR[0].flagIteratif !== 'undefined' && arrDataPR[0].flagIteratif === false) {
+                $('#tax_allowance_custom_set_up_iterative').prop('checked', false);
+                $('#tax_allowance_custom_set_up_non_iterative').prop('checked', true);
+            }
+            else {
+                $('#tax_allowance_custom_set_up_iterative').prop('checked', false);
+                $('#tax_allowance_custom_set_up_non_iterative').prop('checked', false);
             }
             $('#non_taxable_income_employee').val((typeof arrDataPR[0].nonTaxableIncomeEmployee !== 'undefined') ? arrDataPR[0].nonTaxableIncomeEmployee : '');
             $('#non_taxable_income_each_dependent').val((typeof arrDataPR[0].nonTaxableIncomeDependent !== 'undefined') ? arrDataPR[0].nonTaxableIncomeDependent : '');
