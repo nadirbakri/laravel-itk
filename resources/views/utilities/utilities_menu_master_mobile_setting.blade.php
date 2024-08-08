@@ -350,6 +350,8 @@
                         <td>
                             <input type="hidden" class="form-control" name="className[]" value="
                             ${child.className}">
+                            <input type="hidden" class="form-control" name="lineNo[]" value="
+                            ${child.lineNo}">
                             ${child.className}
                         </td>
                         <td>
@@ -419,7 +421,8 @@
                         name: 'className',
                         render: function (data, type, row) {
                             return '<input type="hidden" class="form-control" name="className[]" value="' +
-                                row.className + '"><input type="hidden" class="form-control" name="icon[]" value="' +
+                                row.className + '"><input type="hidden" class="form-control" name="lineNo[]" value="' +
+                                row.lineNo + '"><input type="hidden" class="form-control" name="icon[]" value="' +
                                 row.icon + '">' + data;
                         }
                     },
@@ -719,6 +722,7 @@
                 data.menuChild = [];
             }
 
+            data.lineNo = arrayMenu.length + 1;
             arrayMenu.push(data);
 
             // Refresh DataTable atau menambahkan baris baru ke child row yang sudah terbuka
@@ -748,6 +752,7 @@
             // Menambahkan child ke arrayMenu
             for (var i = 0; i < arrayMenu.length; i++) {
                 if (arrayMenu[i].menuID === parentID) {
+                    data.lineNo = arrayMenu[i].menuChild.length + 1;
                     arrayMenu[i].menuChild.push(data);
                     break;
                 }
@@ -785,7 +790,8 @@
                     menuDesc: parent.menuDesc,
                     className: parent.className,
                     icon: parent.icon,
-                    parentMenuID: parent.parentMenuID
+                    parentMenuID: parent.parentMenuID,
+                    lineNo: parent.lineNo
                 });
 
                 // Salin data child
@@ -795,7 +801,8 @@
                         parentMenuID: parent.menuID,
                         menuDesc: child.menuDesc,
                         className: child.className,
-                        icon: child.icon
+                        icon: child.icon,
+                        lineNo: child.lineNo
                     });
                 });
             });
