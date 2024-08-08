@@ -349,7 +349,8 @@ class PersonalDataImport implements ToCollection, SkipsEmptyRows, WithStartRow, 
                         "changedBy" => Session::get('userID'),
                         'logActionUserID' => Session::get('userID'),
                         'logActionUsername' => Session::get('userName')
-                    ]
+                    ],
+                    'peMasterLevel' => $peMasterLevel
                 ];
             });
 
