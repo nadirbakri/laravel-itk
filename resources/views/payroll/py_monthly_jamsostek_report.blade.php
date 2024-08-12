@@ -280,6 +280,21 @@
             </div>
         </form>
     </div>
+    <div class="modal fade" role="dialog" id="notification_error">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-header-notification-error">
+                    <h5 class="modal-title">Error!</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <span id="message-notification-error">{{ $errors->first() }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -600,6 +615,16 @@
             $('#monthly_jamsostek_report_form').submit();
         });
 
+        function blobToString(b) {
+            var u, x;
+            u = URL.createObjectURL(b);
+            x = new XMLHttpRequest();
+            x.open('GET', u, false); // although sync, you're not fetching over internet
+            x.send();
+            URL.revokeObjectURL(u);
+            return x.responseText;
+        }
+
         if($('#monthly_jamsostek_report_form').length > 0){
             $('#monthly_jamsostek_report_form').validate({
                 rules: {
@@ -679,13 +704,25 @@
                                 clicked = "";
                             },
                             error: function(response){
-                                $('#btn-download').prop("disabled", false);
-                                $("#btn-download").html(
-                                    '<i class="fa fa-download"></i> {{ __("payroll_monthly_jamsostek_report.label_download_excel") }}'
-                                );
-                                
-                                $('#notification_error').modal('show');
-                                $('#message-notification-error').html(response);
+                                var contentType = result.getResponseHeader('Content-Type');
+
+                                if (contentType === 'application/json') {
+                                    $('#btn-download').prop("disabled", false);
+                                    $("#btn-download").html(
+                                        '<i class="fa fa-download"></i> {{ __("payroll_monthly_jamsostek_report.label_download_excel") }}'
+                                    );
+                                    
+                                    $('#notification_error').modal('show');
+                                    $('#message-notification-error').html(result.statusText);
+                                } else {
+                                    $('#btn-download').prop("disabled", false);
+                                    $("#btn-download").html(
+                                        '<i class="fa fa-download"></i> {{ __("payroll_monthly_jamsostek_report.label_download_excel") }}'
+                                    );
+                                    
+                                    $('#notification_error').modal('show');
+                                    $('#message-notification-error').html('Something Went Wrong');
+                                }
                             }
                         });
                     }else{
@@ -721,14 +758,26 @@
 
                                 clicked = "";
                             },
-                            error: function(response){
-                                $('#btn-print').prop("disabled", false);
-                                $('#btn-print').html(
-                                    '<i class="fa fa-print"></i> {{ __("payroll_monthly_jamsostek_report.label_print") }}'
-                                );
-                                
-                                $('#notification_error').modal('show');
-                                $('#message-notification-error').html(response);
+                            error: function(result, status, xhr){
+                                var contentType = result.getResponseHeader('Content-Type');
+
+                                if (contentType === 'application/json') {
+                                    $('#btn-print').prop("disabled", false);
+                                    $('#btn-print').html(
+                                        '<i class="fa fa-print"></i> {{ __("payroll_monthly_jamsostek_report.label_print") }}'
+                                    );
+                                    
+                                    $('#notification_error').modal('show');
+                                    $('#message-notification-error').html(result.statusText);
+                                } else {
+                                    $('#btn-print').prop("disabled", false);
+                                    $('#btn-print').html(
+                                        '<i class="fa fa-print"></i> {{ __("payroll_monthly_jamsostek_report.label_print") }}'
+                                    );
+                                    
+                                    $('#notification_error').modal('show');
+                                    $('#message-notification-error').html('Something Went Wrong');
+                                }
                             }
                         });
                     }

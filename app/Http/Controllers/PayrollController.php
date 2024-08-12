@@ -35,8 +35,10 @@ use App\Http\Controllers\Redirect;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Contracts\Encryption\DecryptException;
 
+
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
 use Validator;
 use Session;
@@ -2778,6 +2780,8 @@ public function dataDetailReportFormatPY(Request $request)
     // usort($arrResult->dataListSet[0]->detail, function ($a, $b) {
     //     return (int) $a->columnNo - (int) $b->columnNo;
     // });
+
+    // dd($arrResult->dataListSet);
     
     if($arrResult->dataListSet !== null){
         $data = array_map(function($item) {
@@ -7097,6 +7101,9 @@ public function dataDetailReportFormatPY(Request $request)
         }else if($data->companyCode == 'MAT'){
             $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_mega_antusias';
             $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_mega_antusias';
+        }else if($data->companyCode == 'ITK'){
+            $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_intikom';
+            $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_intikom';
         }else{
             $viewNamePortrait = 'payroll.py_export_payment_slip_portrait';
             $viewNameLandscape = 'payroll.py_export_payment_slip_landscape';
@@ -7350,6 +7357,9 @@ public function dataDetailReportFormatPY(Request $request)
         }else if($companyCode == 'MAT'){
             $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_mega_antusias';
             $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_mega_antusias';
+        }else if($companyCode == 'ITK'){
+            $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_intikom';
+            $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_intikom';
         }else{
             $viewNamePortrait = 'payroll.py_export_payment_slip_portrait';
             $viewNameLandscape = 'payroll.py_export_payment_slip_landscape';
@@ -7534,6 +7544,9 @@ public function dataDetailReportFormatPY(Request $request)
         }else if($companyCode == 'MAT'){
             $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_mega_antusias';
             $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_mega_antusias';
+        }else if($companyCode == 'ITK'){
+            $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_intikom';
+            $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_intikom';
         }else{
             $viewNamePortrait = 'payroll.py_export_payment_slip_portrait';
             $viewNameLandscape = 'payroll.py_export_payment_slip_landscape';
@@ -7782,6 +7795,8 @@ public function dataDetailReportFormatPY(Request $request)
                 // "logActionUserID" => Session::get('userID')
             ];
 
+            // dd(json_encode($param));
+
             if($request->jamsostek_report_type == 'formulir2'){
                 $response = $client->post(env('API_URL').'/payroll/getRincianIuran', [
                     'body' => json_encode($param)
@@ -7799,22 +7814,20 @@ public function dataDetailReportFormatPY(Request $request)
                     'body' => json_encode($param)
                 ]);
             }
-
-            // dd(json_encode($param));
-
-        }catch(Exception $e){
+        } catch (ClientException $e) {
             $response = $e->getResponse();
-            // var_dump($response);
-            if($response->getStatusCode() == 401){
-                return view('error.login');
-            }else if($response->getStatusCode() == 404){
-                return view('error.not_found');
-            }else{
-                return view('error.bad_request');
-            }
+            $errorBody = (string) $response->getBody();
+            return response()->json(['status' => 'error', 'message' => $errorBody], 400);
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            $errorBody = (string) $response->getBody();
+            return response()->json(['status' => 'error', 'message' => $errorBody], 400);
+        }catch(Exception $e){
+            return response()->json(['status' => 'error', 'message' => $e->getMessage()], 500);
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
+        // dd($arrResult->dataListSet);
 
         if($arrResult->dataListSet == null){
             if($request->jamsostek_report_type == 'formulir2'){
