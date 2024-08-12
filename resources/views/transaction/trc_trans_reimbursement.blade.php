@@ -351,7 +351,7 @@
 
                                 <div class="row detailstatus">
                                     <div class="col-3">
-                                        <h5>Employee Name</h5>
+                                        <h5>Employee No</h5>
                                     </div>
                                     <div class="col">
                                         <input id="employee_no" name="employee_no" type="hidden" class="form-control"><span id="employee_no_val"></span>
@@ -361,6 +361,15 @@
                                     </div>
                                     <div class="col">
                                         <input id="totalclaim" name="totalclaim" type="hidden" class="form-control"><span id="totalclaim_val"></span>
+                                    </div>
+                                </div>
+
+                                <div class="row detailstatus">
+                                    <div class="col-3">
+                                        <h5>Employee Name</h5>
+                                    </div>
+                                    <div class="col">
+                                        <input id="employee_name" name="employee_name" type="hidden" class="form-control"><span id="employee_name_val"></span>
                                     </div>
                                 </div>
                             
@@ -751,6 +760,8 @@
         // $('#b_unit_val').html(data.businessUnit)
         $('#employee_no').val(data.employeeNo)
         $('#employee_no_val').html(data.employeeNo)
+        $('#employee_name').val(data.fullnameRequester)
+        $('#employee_name_val').html(data.fullnameRequester)
         $('#c_type').val(data.reimbursementType)
         $('#c_type_val').html(data.reimbursementType)
         $('#totalclaim').val(data.totalClaimAmount)
