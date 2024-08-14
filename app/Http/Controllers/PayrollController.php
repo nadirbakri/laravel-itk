@@ -4644,6 +4644,54 @@ public function dataDetailReportFormatPY(Request $request)
                 });
 
                 return Excel::download(new ExcelTransferBankCIMBExport($array), $arrResult->dataListSet[0]->namaFile);
+            }else if($request->source_bank == 'PERMATA'){
+                if($request->output_file == 'csv'){
+                    $array = explode("\r\n", $arrResult->dataListSet[0]->transferBank);
+                    foreach($array as $key => $value){
+                        $arrayTwo = explode(",", $value);
+                        if(count($arrayTwo) > 1){
+                            $array[$key] = $arrayTwo;
+                        }
+                    }
+
+                    $array = array_filter($array, function($value) {
+                        return !empty($value);
+                    });
+
+                    $csvHeader = $array[0];
+
+                    $tempFile = fopen('php://temp', 'w+');
+
+                    foreach ($array as $row) {
+                        $row = array_pad($row, count($csvHeader), '');
+
+                        fputcsv($tempFile, $row);
+                    }
+
+                    rewind($tempFile);
+                    $csvContent = str_replace('"', '', stream_get_contents($tempFile));
+                    
+                    fclose($tempFile);
+
+                    return Response::make($csvContent, 200, [
+                        'Content-Type' => 'text/csv',
+                        'Content-Disposition' => 'attachment; filename="' . $arrResult->dataListSet[0]->namaFile . '"',
+                    ]);
+                }else if($request->output_file == 'xlsx'){
+                    $array = explode("\r\n", $arrResult->dataListSet[0]->transferBank);
+                    foreach($array as $key => $value){
+                        $arrayTwo = explode(";", $value);
+                        if(count($arrayTwo) > 1){
+                            $array[$key] = $arrayTwo;
+                        }
+                    }
+
+                    $array = array_filter($array, function($value) {
+                        return !empty($value);
+                    });
+
+                    return Excel::download(new ExcelTransferBankCIMBExport($array), $arrResult->dataListSet[0]->namaFile);
+                }
             }
         }
     }
