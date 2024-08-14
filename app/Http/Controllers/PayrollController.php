@@ -4577,7 +4577,7 @@ public function dataDetailReportFormatPY(Request $request)
         // exit;
 
         if($arrResult->dataListSet != null){
-            if($request->source_bank == 'BCA'){
+            if($request->source_bank == 'BCA' || $request->source_bank == 'JAGO'){
                 $fullPath = storage_path('app/');
                 array_map('unlink', glob( "$fullPath*.txt"));
                 $arrDataBCA = explode("\r\n", $arrResult->dataListSet[0]->transferBank);
