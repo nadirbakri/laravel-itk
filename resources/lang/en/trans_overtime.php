@@ -13,6 +13,8 @@ return [
     'label_reimbursement_type' => 'Reimbursement Type',
     'label_bu' => 'Business Unit',
     'label_overtime_status' => 'Overtime Status',
+    'label_check_extend_expired_date' => 'Extend Expired Date?',
+    'label_expired_date' => 'Expired Date',
     'btn_upload' => 'Upload',
     'btn_search' => 'Search',
     'btn_list' => 'List',

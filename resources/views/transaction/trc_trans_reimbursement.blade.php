@@ -113,6 +113,23 @@
         .detailstatus input{
             outline: none;
         }
+        .preview {
+            width:100%;
+            height:100%;
+        }
+
+        .myimage{
+            width: 100%;
+            height: 100%;
+        }
+
+        .imgdiv{
+            overflow: hidden;
+            margin: 1%;
+            padding:0.5%;
+            border:2px solid #ddd;
+            border-radius: 5px;
+        }
     </style>
 </head>
 
@@ -229,6 +246,7 @@
                                     <th>{{ __('trans_reimbursement.treq') }}</th>
                                     <th>{{ __('trans_reimbursement.premarks') }}</th>
                                     <th>{{ __('trans_reimbursement.tpaid') }}</th>
+                                    <th>{{ __('trans_reimbursement.preview') }}</th>
                                 </tr>
                             </thead>
                         </table>
@@ -456,6 +474,33 @@
         </form>
     </div>
 
+    <!-- Modal Detail Photo Reimbursement-->
+    <div class="modal fade" id="modal_preview_file" role="dialog">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <!-- Modal content-->
+            <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Detail Photo</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2" id="previewPhoto"></div>    
+                </div>
+                <hr></hr>
+                <div class="row">														
+                    <div id="detailPhoto"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary w-25" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
     <div class="modal fade" role="dialog" id="notification_error">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -644,6 +689,7 @@
     }
 </script>
 <script type="text/javascript">
+    var lastImg = 1;
     function load_data_medical_history(claim_date_from, claim_date_to, direct_superior, reimbursement_type, business_unit) {
             table = $('#medical_table').DataTable({
                 processing: true,
@@ -703,6 +749,13 @@
                     {data: 'reimbursementEntity.paidAmount', name: 'reimbursementEntity.paidAmount',
                         render: function (data, type, row) {
                             return data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                        }
+                    },
+                    {
+                        orderable: false,
+                        "defaultContent": '',
+                        render: function(data, type) {
+                            return '<button type="button" title="Preview" class="btn btn-info btn-circle" id="btn-preview" data-toggle="modal" data-target="#modal_preview_file" onclick="klikpreview(this)"><i class="fa fa-file-photo-o"></i></button>';
                         }
                     },
                 ],
@@ -770,6 +823,33 @@
         $('#totalpaid').val(data.paidAmount)
         $('#directsuperior').val(data.directSuperiorID)
         $('#reimbursement_status').val(data.status).trigger('change')
+    }
+
+    function preview(img) {
+        document.getElementById(0).src = img.src;
+        lastImg = img.id;
+    }
+
+    const klikpreview = (element) => {
+        let data = table.row($(element).parent()).data().attachmentEntity;
+
+        $('#detailPhoto').empty();
+        $('#previewPhoto').empty();	
+        
+        if(data[0] != "")
+        {
+            for(var i =0; i < data.length ; i++)
+            {
+                $('#detailPhoto').append('<div class="imgdiv col-2" ><img id="'+(i+1)+'" class="myimage img-rounded" src="data:image/png;base64,'+ data[i].reimbursementAttachment64 +'" onclick="preview(this)" alt="'+i+'"/></div>');					
+            }
+            
+            $('#previewPhoto').append('<img id="0" class="preview" src="" alt="preview" />');
+            document.getElementById(0).src = document.getElementById(lastImg).src;
+        }
+        else
+        {
+            $('#previewPhoto').append('<div>No Data Available.</div>');
+        }
     }
 
     $('#btn-list').click(()=> {

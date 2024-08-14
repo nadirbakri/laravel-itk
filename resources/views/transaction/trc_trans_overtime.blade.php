@@ -180,12 +180,12 @@
                         </div>
                         <select class="form-control select2" id="status_overtime" name="status_overtime"></select>
                     </div>
-                    <div class="col-5">
+                    <!-- <div class="col-5">
                         <div class="form-group">
                             <label for="reimbursement_type form-check-label">{{ __('trans_overtime.label_reimbursement_type') }}</label>
                         </div>
                         <select class="form-control select2" id="reimbursement_type" name="reimbursement_type"></select>
-                    </div>
+                    </div> -->
                 </div>
                 <!-- BUTTON -->
                 <div class="row">
@@ -418,7 +418,20 @@
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="approval_remarks" style="color: gray; margin-bottom: 0;">{{ __('trans_overtime.label_approval_remarks') }}</label>
-                                        <textarea name="approval_remarks" id="approval_remarks" class="form-control"></textarea>
+                                        <textarea name="approval_remarks" id="approval_remarks" rows="3" class="form-control"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="check_extend_expired_date"
+                                                name="check_extend_expired_date" value="true">
+                                            <label
+                                                for="check_extend_expired_date" style="color: gray; margin-bottom: 0;">{{ __('trans_overtime.label_check_extend_expired_date') }}</label>
+                                        </div>
+                                        <br>
+                                        <label for="expired_date" style="color: gray; margin-bottom: 0;">{{ __('trans_overtime.label_expired_date') }}</label>
+                                        <input type="text" name="expired_date" id="expired_date" class="form-control" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -650,10 +663,6 @@
                     //     }
                     // }
                 ],
-                select: {
-                    style:    'multi',
-                    selector: 'td:first-child'
-                }
             });
 
             $("#btn-search").prop("disabled", true);
@@ -687,6 +696,18 @@
             $('#overtime_table').DataTable().destroy();
             load_data_overtime(claim_date_from, claim_date_to, business_unit, direct_superior, reimbursement_type, status);
     })
+
+    $('#check_extend_expired_date').on('change', function() {
+        if (this.checked) {
+            $('#expired_date').prop('readonly', false);
+            $('#overtime_status').prop('disabled', true);
+            $('#approval_remarks').prop('readonly', true);
+        }else{
+            $('#expired_date').prop('readonly', true);
+            $('#overtime_status').prop('disabled', false);
+            $('#approval_remarks').prop('readonly', false);
+        }
+    });
 
     $('#btn-list').click(()=> {
         $('#example').DataTable().destroy();
@@ -748,6 +769,8 @@
         $('#overtime_status').val(data.status).trigger('change')
         $('#last_approval_date').val(moment().format('YYYY-MM-DD'))
         $('#approval_remarks').val(data.approvalRemarks)
+        $('#expired_date').val(moment(data.expiredDate).format('YYYY-MM-DD'))
+        $('#check_extend_expired_date').prop('checked', false).trigger('change');
 
         // $('#totalclaim').val(totalclaim)
         // $('#totalpaid').val(totalpaid)
@@ -777,12 +800,20 @@
         let ticketNo = $('#overtime_ticket_no').val();
         let directSuperior = $("#overtime_direct_superior").val();
         let approvalRemarks = $("#approval_remarks").val();
+        let checkExtend = $("#check_extend_expired_date").prop('checked');
+        let checkExtendExpiredDate = false;
+        if (checkExtend) {
+            checkExtendExpiredDate = true;
+        } else {
+            checkExtendExpiredDate = false;
+        }   
+        let expiredDate = $("#expired_date").val();
 
         // $('.close').click();
-        update_data(status, ticketNo, directSuperior, approvalRemarks)
+        update_data(status, ticketNo, directSuperior, approvalRemarks, checkExtendExpiredDate, expiredDate)
     })
 
-    function update_data(status, ticketNo, directSuperior, approvalRemarks){
+    function update_data(status, ticketNo, directSuperior, approvalRemarks, checkExtendExpiredDate, expiredDate){
         $.ajax({
             url: "{{ url('trans/update_overtime/table') }}",
             type: "get",
@@ -791,7 +822,9 @@
                 // 'paidAmount': totalpaid,
                 'ticketNo' : ticketNo,
                 'directSuperior' : directSuperior,
-                'approvalRemarks' : approvalRemarks
+                'approvalRemarks' : approvalRemarks,
+                'checkExtendExpiredDate' : checkExtendExpiredDate,
+                'expiredDate' : expiredDate
             },
             success: function (response) {
                 // console.log(response);

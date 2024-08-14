@@ -26,7 +26,8 @@ return [
     'pdate' => 'Payment Date',
     'treq' => 'Total Request',
     'premarks' => 'Paid Remarks',
-    'tpaid' => 'Total Paid'
+    'tpaid' => 'Total Paid',
+    'preview' => 'Preview File',
 
 ]
 

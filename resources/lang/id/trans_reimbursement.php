@@ -25,6 +25,7 @@ return [
     'pdate' => 'Tanggal Pembayaran',
     'treq' => 'Jumlah Permintaan',
     'premarks' => 'Catatan pembayaran',
-    'tpaid' => 'Jumlah Dibayar'
+    'tpaid' => 'Jumlah Dibayar',
+    'preview' => 'Pratinjau File',
 ]
 ?>

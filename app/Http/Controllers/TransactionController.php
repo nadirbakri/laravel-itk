@@ -366,20 +366,6 @@ class TransactionController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            // dd(json_encode(
-            //     [
-            //         'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
-            //         'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
-            //         'businessUnit' => $request->businessUnit,
-            //         'employeeNo'=> $request->employeeNo,
-            //         'status' => $request->status,
-            //         'type' => $request->type,
-            //         'companyCode' => Session::get('companyCode'), 
-            //         'languageCode' => App::getLocale(), 
-            //         'sessionID' => 0, 
-            //         'sessionUserID' => Session::get('userID'),
-            //     ]
-            // ));
             $response = $client->post(env('API_URL') . '/mobile/TmOvertime/GetOvertimeDetailList',
                 ['body' => json_encode(
                     [
@@ -388,7 +374,7 @@ class TransactionController extends Controller
                         'businessUnit' => $request->businessUnit,
                         'employeeNo'=> $request->employeeNo,
                         'status' => $request->status,
-                        'type' => $request->type,
+                        // 'type' => $request->type,
                         'companyCode' => Session::get('companyCode'), 
                         'languageCode' => strtoupper(App::getLocale()), 
                         'sessionID' => 0, 
@@ -1193,21 +1179,39 @@ class TransactionController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/mobile/tmovertime/updateovtapprovalbyadmin',
-                ['body' => json_encode(
-                    [
-                        'status'=> $request->status,
-                        'companyCode' => Session::get('companyCode'),
-                        'listRefLeaveID' => null,
-                        'ticketNo' => $request->ticketNo,
-                        'directSuperiorCode'=> $request->directSuperior,
-                        'sessionUserID' => Session::get('userID'),
-                        'logActionUserID' => Session::get('userID'),
-                        'logActionUsername' => Session::get('userName'),
-                        'approvalRemarks' => $request->approvalRemarks,
-                        'languageCode' => App::getLocale()
-                    ]
-                )]
+            $checkExtend = (isset($request->checkExtendExpiredDate) && $request->checkExtendExpiredDate == 'true') ? (bool) $request->checkExtendExpiredDate : false;
+
+            if($checkExtend){
+                $url = '/mobile/tmovertime/extendovertime';
+                $param = [
+                    'companyCode' => Session::get('companyCode'),
+                    'ticketNo' => $request->ticketNo,
+                    'expiredDate' => $request->expiredDate,
+                    'sessionUserID' => Session::get('userID'),
+                    'logActionUserID' => Session::get('userID'),
+                    'logActionUsername' => Session::get('userName'),
+                    'languageCode' => App::getLocale()
+                ];
+            }else{
+                $url = '/mobile/tmovertime/updateovtapprovalbyadmin';
+                $param = [
+                    'status'=> $request->status,
+                    'companyCode' => Session::get('companyCode'),
+                    'listRefLeaveID' => null,
+                    'ticketNo' => $request->ticketNo,
+                    'directSuperiorCode'=> $request->directSuperior,
+                    'sessionUserID' => Session::get('userID'),
+                    'logActionUserID' => Session::get('userID'),
+                    'logActionUsername' => Session::get('userName'),
+                    'approvalRemarks' => $request->approvalRemarks,
+                    'languageCode' => App::getLocale()
+                ];
+            }
+
+            // dd(json_encode($param));
+
+            $response = $client->put(env('API_URL') . $url,
+                ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {
             $response = $e->getResponse();
