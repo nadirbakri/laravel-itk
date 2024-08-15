@@ -769,7 +769,8 @@
         $('#overtime_status').val(data.status).trigger('change')
         $('#last_approval_date').val(moment().format('YYYY-MM-DD'))
         $('#approval_remarks').val(data.approvalRemarks)
-        $('#expired_date').val(moment(data.expiredDate).format('YYYY-MM-DD'))
+        
+        $('#expired_date').val(moment(data.offSubstituteExpDate).format('YYYY-MM-DD'))
         $('#check_extend_expired_date').prop('checked', false).trigger('change');
 
         // $('#totalclaim').val(totalclaim)

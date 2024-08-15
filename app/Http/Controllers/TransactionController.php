@@ -1186,7 +1186,7 @@ class TransactionController extends Controller
                 $param = [
                     'companyCode' => Session::get('companyCode'),
                     'ticketNo' => $request->ticketNo,
-                    'expiredDate' => $request->expiredDate,
+                    'offExpiredDate' => $request->expiredDate,
                     'sessionUserID' => Session::get('userID'),
                     'logActionUserID' => Session::get('userID'),
                     'logActionUsername' => Session::get('userName'),

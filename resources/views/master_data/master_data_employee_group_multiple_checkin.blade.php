@@ -166,7 +166,7 @@
                         </div>
                     </div>
                     <input type="hidden" class="form-control" id="level_format" name="level_format">
-                    <div class="row" id="div-level" style="overflow-y: scroll; height: 16rem;">
+                    <div class="row" id="div-level" style="overflow-y: scroll; height: 5rem;">
                         
                     </div>
                     <div class="row">

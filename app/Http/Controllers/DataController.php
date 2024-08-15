@@ -2527,6 +2527,8 @@ class DataController extends Controller
 
 	public function changeSessionCompanyAPI(Request $request)
     {
+		Session::forget('companyCode');
+		Session::forget('companyName');
 		Session::put('companyCode', $request->companyCode);
 		Session::put('companyName', $request->companyName);
 		
@@ -2538,34 +2540,44 @@ class DataController extends Controller
 			}
 
 			if($value->moduleID == 'UTI'){
+				Session::forget('groupAuthorizeUtilities');
 				Session::put('groupAuthorizeUtilities', $value->groupAuthorizeCode);
 				unset($menuList[$key]);
 			}
 			if($value->moduleID == 'HOME'){
+				Session::forget('groupAuthorizeHome');
 				Session::put('groupAuthorizeHome', $value->groupAuthorizeCode);
 			}
 			if($value->moduleID == 'TM'){
+				Session::forget('groupAuthorizeTimeManagement');
 				Session::put('groupAuthorizeTimeManagement', $value->groupAuthorizeCode);
 			}
 			if($value->moduleID == 'PE'){
+				Session::forget('groupAuthorizePersonnel');
 				Session::put('groupAuthorizePersonnel', $value->groupAuthorizeCode);
 			}
 			if($value->moduleID == 'PY'){
+				Session::forget('groupAuthorizePayroll');
 				Session::put('groupAuthorizePayroll', $value->groupAuthorizeCode);
 			}
 			if($value->moduleID == 'MD'){
+				Session::forget('groupAuthorizeMedical');
 				Session::put('groupAuthorizeMedical', $value->groupAuthorizeCode);
 			}
 			if($value->moduleID == 'REP'){
+				Session::forget('groupAuthorizeReport');
 				Session::put('groupAuthorizeReport', $value->groupAuthorizeCode);
 			}
 			if($value->moduleID == 'RPT'){
+				Session::forget('groupAuthorizeExport');
 				Session::put('groupAuthorizeExport', $value->groupAuthorizeCode);
 			}
 			if($value->moduleID == 'TRX'){
+				Session::forget('groupAuthorizeTransaction');
 				Session::put('groupAuthorizeTransaction', $value->groupAuthorizeCode);
 			}
 			if($value->moduleID == 'MOB'){
+				Session::forget('groupAuthorizeMasterData');
 				Session::put('groupAuthorizeMasterData', $value->groupAuthorizeCode);
 			}
 		}
