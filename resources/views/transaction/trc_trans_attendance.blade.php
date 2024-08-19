@@ -515,7 +515,7 @@
                                 if(data == null){
                                     return '-'
                                 }else{
-                                    return moment(data).format('YYYY-MM-DD')
+                                    return moment(data).format('HH:mm')
                                 }
                             }
                     },
@@ -524,7 +524,7 @@
                                 if(data == null){
                                     return '-'
                                 }else{
-                                    return moment(data).format('YYYY-MM-DD')
+                                    return moment(data).format('HH:mm')
                                 }
                             }
                     },
