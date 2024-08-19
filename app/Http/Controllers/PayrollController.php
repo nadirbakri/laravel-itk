@@ -4263,41 +4263,6 @@ public function dataDetailReportFormatPY(Request $request)
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            // dd(json_encode(
-            //     [
-            //         'companyCode' => Session::get('companyCode'),
-            //         'outputFile' => $request->output_file,
-            //         'sourceBank' => $request->source_bank,
-            //         'accountNo' => $request->account_number,
-            //         'transferDate' => $request->transfer_date,
-            //         'transferCode' => $request->transfer_code,
-            //         'employeeNoFrom' => $request->employee_no_from,
-            //         'employeeNoTo' => $request->employee_no_to,
-            //         'groupAuthorizeCodeFrom' => $request->group_authorized_code_from,
-            //         'groupAuthorizeCodeTo' => $request->group_authorized_code_to,
-            //         'transferAmount' => ($request->data_to_transfer == 'transfer_amount') ? true : false,
-            //         'takeHomePayGroup' => ($request->data_to_transfer == 'take_homepay_group') ? true : false,
-            //         'salary' => isset($request->check_transfer_amount_salary) ? (bool) $request->check_transfer_amount_salary : false,
-            //         'bonus' => isset($request->check_transfer_amount_bonus) ? (bool) $request->check_transfer_amount_bonus : false,
-            //         'thr' => isset($request->check_transfer_amount_thr) ? (bool) $request->check_transfer_amount_thr : false,
-            //         'pension' => isset($request->check_transfer_amount_pension) ? (bool) $request->check_transfer_amount_pension : false,
-            //         'severance' => isset($request->check_transfer_amount_severance) ? (bool) $request->check_transfer_amount_severance : false,
-            //         'one' => ($request->take_homepay_group == "one") ? true : false,
-            //         'two' => ($request->take_homepay_group == "two") ? true : false,
-            //         'three' => ($request->take_homepay_group == "three") ? true : false,
-            //         'none' => ($request->take_homepay_group == "none") ? true : false,
-            //         "changedNo" => 0,
-            //         "createdDate" => date("Y-m-d\TH:i:s"),
-            //         "createdBy" => Session::get('userID'),
-            //         "changedDate" => date("Y-m-d\TH:i:s"),
-            //         "changedBy" => Session::get('userID'),
-            //         "languageCode" => App::getLocale(),
-            //         'sessionID' => 0, 
-            //         'sessionUserID' => Session::get('userID'),
-            //         'logActionUserID' => Session::get('userID'),
-            //         'logActionUsername' => Session::get('userName')        
-            //     ]));
-
             $response = $client->post(env('API_URL') . '/prtransferbank/transferamountprocess',
                 ['body' => json_encode(
                     [
@@ -6207,19 +6172,6 @@ public function dataDetailReportFormatPY(Request $request)
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
-            
-            // var_dump(json_encode(
-            //     [
-            //         "companyCode" => Session::get('companyCode'),
-            //         "periodMonth" => (int) $request->period_month,
-            //         "periodYear" => (int) $request->period_year,
-            //         "languageCode" => App::getLocale(),
-            //         "sessionID" => 0,
-            //         "sessionUserID" => Session::get('userID'),
-            //         "logActionUsername" => Session::get('userID'),
-            //         "logActionUserID" => Session::get('userName') 
-            //     ]
-            // ));
 
             $response = $client->put(env('API_URL') . '/prmonthlyendprocess/updateprmonthlyendprocess',
                 ['body' => json_encode(

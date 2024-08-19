@@ -510,7 +510,8 @@ class TransactionController extends Controller
                 //         'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
                 //         'employeeNo'=> $request->employeeNo,
                 //         'businessUnit' => $request->businessUnit,
-                //         'workflowType' => $request->workflowType,
+                //         'status' => $request->status,
+                //         'workflowType' => "EW",
                 //         'companyCode' => Session::get('companyCode'), 
                 //         'languageCode' => App::getLocale(), 
                 //         'sessionID' => 0, 
@@ -1005,21 +1006,6 @@ class TransactionController extends Controller
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
-
-            // dd(json_encode(
-            //     [
-            //         'companyCode' => Session::get('companyCode'),
-            //         'languageCode' => App::getLocale(), 
-            //         'listRefLeaveID' => null,
-            //         'sessionUserID' => Session::get('userID'),
-            //         'directSuperiorCode'=> $request->directSuperiorCode,
-            //         'approvalRemarks'=> $request->approvalRemarks,
-            //         'logActionUserID'=> Session::get('userID'),
-            //         'logActionUsername'=> Session::get('userName'),
-            //         'status'=> $request->status,
-            //         'ticketNo' => $request->ticketNo
-            //     ]
-            //     ));
 
             $response = $client->put(env('API_URL') . '/TmLeave/UpdateByAdmin',
                 ['body' => json_encode(
