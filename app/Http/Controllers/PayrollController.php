@@ -7885,7 +7885,8 @@ public function dataDetailReportFormatPY(Request $request)
                     'period' => $request->jamsostek_period,
                     'bulan' => tgl_indo(date('Y-m-d', strtotime($request->jamsostek_period))),
                     'companyName' => Session::get('companyName'),
-                    'bpjsNo' => $request->group_bpjs_name
+                    'bpjsNo' => $request->group_bpjs_name,
+                    'grandTotal' => isset($request->grand_total) ? (bool) $request->grand_total : false
                 ])->setPaper('letter', 'portrait')->setOptions(['defaultFont' => 'arial']);
                 return $pdf->stream('Jamsostek Formulir 2.pdf');
             }else if($request->jamsostek_report_type == 'formulir1a'){
@@ -7895,7 +7896,8 @@ public function dataDetailReportFormatPY(Request $request)
                     'period' => $request->jamsostek_period,
                     'bulan' => tgl_indo(date('Y-m-d', strtotime($request->jamsostek_period))),
                     'companyName' => Session::get('companyName'),
-                    'bpjsNo' => $request->group_bpjs_name
+                    'bpjsNo' => $request->group_bpjs_name,
+                    'grandTotal' => isset($request->grand_total) ? (bool) $request->grand_total : false
                 ])->setPaper('letter', 'portrait')->setOptions(['defaultFont' => 'arial']);
                 return $pdf->stream('Jamsostek Formulir 1A.pdf');
             }else if($request->jamsostek_report_type == 'formulir1b'){
@@ -7905,7 +7907,8 @@ public function dataDetailReportFormatPY(Request $request)
                     'period' => $request->jamsostek_period,
                     'bulan' => tgl_indo(date('Y-m-d', strtotime($request->jamsostek_period))),
                     'companyName' => Session::get('companyName'),
-                    'bpjsNo' => $request->group_bpjs_name
+                    'bpjsNo' => $request->group_bpjs_name,
+                    'grandTotal' => isset($request->grand_total) ? (bool) $request->grand_total : false
                 ])->setPaper('letter', 'portrait')->setOptions(['defaultFont' => 'arial']);
                 return $pdf->stream('Jamsostek Formulir 1B.pdf');
             }else if($request->jamsostek_report_type == 'formulir2a'){
@@ -7915,7 +7918,8 @@ public function dataDetailReportFormatPY(Request $request)
                     'period' => $request->jamsostek_period,
                     'bulan' => tgl_indo(date('Y-m-d', strtotime($request->jamsostek_period))),
                     'companyName' => Session::get('companyName'),
-                    'bpjsNo' => $request->group_bpjs_name
+                    'bpjsNo' => $request->group_bpjs_name,
+                    'grandTotal' => isset($request->grand_total) ? (bool) $request->grand_total : false
                 ])->setPaper('letter', 'portrait')->setOptions(['defaultFont' => 'arial']);
                 return $pdf->stream('Jamsostek Formulir 2A.pdf');
             }
@@ -7927,7 +7931,8 @@ public function dataDetailReportFormatPY(Request $request)
                     'period' => $request->jamsostek_period,
                     'bulan' => tgl_indo(date('Y-m-d', strtotime($request->jamsostek_period))),
                     'companyName' => Session::get('companyName'),
-                    'bpjsNo' => $request->group_bpjs_name
+                    'bpjsNo' => $request->group_bpjs_name,
+                    'grandTotal' => isset($request->grand_total) ? (bool) $request->grand_total : false
                 ])->setPaper('letter', 'portrait')->setOptions(['defaultFont' => 'arial']);
                 return $pdf->stream('Jamsostek Formulir 2.pdf');
             }else if($request->jamsostek_report_type == 'formulir1a'){
@@ -7937,7 +7942,8 @@ public function dataDetailReportFormatPY(Request $request)
                     'period' => $request->jamsostek_period,
                     'bulan' => tgl_indo(date('Y-m-d', strtotime($request->jamsostek_period))),
                     'companyName' => Session::get('companyName'),
-                    'bpjsNo' => $request->group_bpjs_name
+                    'bpjsNo' => $request->group_bpjs_name,
+                    'grandTotal' => isset($request->grand_total) ? (bool) $request->grand_total : false
                 ])->setPaper('letter', 'portrait')->setOptions(['defaultFont' => 'arial']);
                 return $pdf->stream('Jamsostek Formulir 1A.pdf');
             }else if($request->jamsostek_report_type == 'formulir1b'){
@@ -7947,7 +7953,8 @@ public function dataDetailReportFormatPY(Request $request)
                     'period' => $request->jamsostek_period,
                     'bulan' => tgl_indo(date('Y-m-d', strtotime($request->jamsostek_period))),
                     'companyName' => Session::get('companyName'),
-                    'bpjsNo' => $request->group_bpjs_name
+                    'bpjsNo' => $request->group_bpjs_name,
+                    'grandTotal' => isset($request->grand_total) ? (bool) $request->grand_total : false
                 ])->setPaper('letter', 'portrait')->setOptions(['defaultFont' => 'arial']);
                 return $pdf->stream('Jamsostek Formulir 1B.pdf');
             }else if($request->jamsostek_report_type == 'formulir2a'){
@@ -7957,7 +7964,8 @@ public function dataDetailReportFormatPY(Request $request)
                     'period' => $request->jamsostek_period,
                     'bulan' => tgl_indo(date('Y-m-d', strtotime($request->jamsostek_period))),
                     'companyName' => Session::get('companyName'),
-                    'bpjsNo' => $request->group_bpjs_name
+                    'bpjsNo' => $request->group_bpjs_name,
+                    'grandTotal' => isset($request->grand_total) ? (bool) $request->grand_total : false
                 ])->setPaper('letter', 'portrait')->setOptions(['defaultFont' => 'arial']);
                 return $pdf->stream('Jamsostek Formulir 2A.pdf');
             }
@@ -7980,6 +7988,7 @@ public function dataDetailReportFormatPY(Request $request)
         return Excel::download(new MonthlyJamsostekReportExport(
             $request->jamsostek_report_type,
             $request->jamsostek_period,
+            isset($request->grand_total) ? (bool) $request->grand_total : false,
             $request->group_authorize_code_from, 
             $request->group_authorize_code_to,
             $request->group_bpjs_code,

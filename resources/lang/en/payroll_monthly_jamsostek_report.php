@@ -5,6 +5,7 @@ return [
     'list' => 'Monthly Jamsostek Report',
     'judul_form' => 'Monthly Jamsostek Report Form',
     'label_jamsostek_period' => 'Jamsostek Period',
+    'label_grand_total' => 'Grand Total',
     'label_formulir_2' => 'Rincian Iuran (Formulir 2)',
     'label_formulir_1a' => 'Pendaftaran Tenaga Kerja (Formulir 1a)',
     'label_formulir_1b' => 'Daftar Tenaga Kerja Keluar (Formulir 1b)',

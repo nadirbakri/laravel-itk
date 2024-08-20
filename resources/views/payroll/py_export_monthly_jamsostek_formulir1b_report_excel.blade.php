@@ -91,8 +91,14 @@
 			<th style="font-size: 10px; text-align: center; font-weight: 500; border:1px solid #000; background-color: #C0C0C0;">16 Digit (Wajib Isi)</th>
 			<th style="font-size: 10px; text-align: center; font-weight: 500; border:1px solid #000; background-color: #C0C0C0;">Take Home Pay</th>
         </tr>
+        <?php
+            $totalJamsostekSalary = 0;
+        ?>
         @if(!empty($data))
         @foreach($data as $key => $value)
+        <?php
+            $totalJamsostekSalary += $value->jamsostekSalary;
+        ?>
         <tr>
             <td style="font-size: 10px; text-align: center; border:1px solid #000;">{{ ($key + 1) }}</td>
             <td style="font-size: 10px; text-align: left; border:1px solid #000;">{{ $value->fullName }}</td>
@@ -106,6 +112,12 @@
         @else
         <tr style="background-color: #C0C0C0;">
             <td colspan="7" style="font-size: 10px; text-align: center; font-weight: 500; border:1px solid #000; background-color: #C0C0C0;">No Records Found</td>
+        </tr>
+        @endif
+        @if($grandTotal)
+        <tr style="background-color: #FFFF00;">
+            <td colspan="6" style="font-size: 10px; text-align: center; font-weight: 500; border:1px solid #000; background-color: #FFFF00;">Total</td>
+            <td style="font-size: 10px; text-align: center; font-weight: 500; border:1px solid #000; background-color: #FFFF00;">{{ number_format($totalJamsostekSalary, 2, '.', ',') }}</td>
         </tr>
         @endif
     </table>

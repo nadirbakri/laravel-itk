@@ -13,6 +13,7 @@ use PhpOffice\PhpSpreadsheet\Cell\DataType;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\WithCustomValueBinder;
 use PhpOffice\PhpSpreadsheet\Cell\DefaultValueBinder;
+use Illuminate\Support\Facades\Storage;
 use Validator;
 use Session;
 use App;
@@ -175,6 +176,24 @@ class PeriodicalReportExport extends DefaultValueBinder implements WithCustomVal
         $arrCompany = json_decode($responseGetCompany->getBody()->getContents());
 
         // dd($arrResult->dataListSet);
+
+        // $indexes = [];
+
+        // Loop melalui array 'detail'
+        // foreach ($arrResult->dataListSet[0]->departementGroup as $detailKey => $detail) {
+        //     foreach ($detail->data as $key => $value) {
+        //         // Loop melalui array 'field'
+        //         foreach ($value->field as $fieldKey => $field) {
+        //             if ($field->field === 'BasicSalary') {
+        //                 // Simpan indeks array yang ditemukan
+        //                 $indexes[] = $fieldKey;
+        //             }
+        //         }
+        //     }
+        // }
+
+        // Storage::put('debug_data.txt', json_encode($arrResult->dataListSet));
+        // dd(implode(', ', $indexes));
         // exit;
 
         if($arrResult->dataListSet == null){

@@ -140,7 +140,18 @@
                         </div>
                     </div>
                 </div>
-
+                <div class="row">
+                    <div class="col-3">
+                        <div class="form-group">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="grand_total"
+                                    name="grand_total" value="true">
+                                <label
+                                    for="grand_total">{{ __('payroll_monthly_jamsostek_report.label_grand_total') }}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">

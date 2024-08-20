@@ -96,10 +96,18 @@
             <td width="12%" style="font-size: 10px; font-weight: 500; text-align: center;">Take Home Pay</td>
 			<td width="12%" style="font-size: 10px; font-weight: 500; text-align: center;">Take Home Pay</td>
         </tr>
+        <?php
+        $totalJamsostekSalaryLastMonth = 0;
+        $totalJamsostekSalary = 0;
+        $totalSelisih = 0;
+        ?>
         @if(!empty($data))
         @foreach($data as $key => $value)
         <?php 
         $selisih = $value->jamsostekSalaryLastMonth - $value->jamsostekSalary;
+        $totalJamsostekSalaryLastMonth += $value->jamsostekSalaryLastMonth;
+        $totalJamsostekSalary += $value->jamsostekSalary;
+        $totalSelisih += $selisih;
         ?>
         <tr>
             <td style="font-size: 10px; text-align: center;">{{ ($key + 1) }}</td>
@@ -120,6 +128,14 @@
         @else
         <tr style="background-color: #C0C0C0;">
             <td colspan="9" style="font-size: 10px; text-align: center; font-weight: 500;">No Records Found</td>
+        </tr>
+        @endif
+        @if($grandTotal)
+        <tr style="background-color: #FFFF00;">
+            <td colspan="6" style="font-size: 10px; text-align: center; font-weight: 500; border:1px solid #000; background-color: #FFFF00;">Total</td>
+            <td style="font-size: 10px; text-align: right; font-weight: 500; border:1px solid #000; background-color: #FFFF00;">{{ number_format($totalJamsostekSalaryLastMonth, 2, '.', ',') }}</td>
+            <td style="font-size: 10px; text-align: right; font-weight: 500; border:1px solid #000; background-color: #FFFF00;">{{ number_format($totalJamsostekSalary, 2, '.', ',') }}</td>
+            <td style="font-size: 10px; text-align: center; font-weight: 500; border:1px solid #000; background-color: #FFFF00;">{{ number_format($totalSelisih, 2, '.', ',') }}</td>
         </tr>
         @endif
     </table>
