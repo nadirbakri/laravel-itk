@@ -429,6 +429,7 @@ Route::get('time_management/overtime_spl', 'TimeManagementController@pageOvertim
 Route::get('time_management/company_working_calendar', 'TimeManagementController@pageCompanyWorkingCalendar');
 Route::get('time_management/input_balance_leave', 'TimeManagementController@pageInputBalanceLeave');
 Route::get('time_management/export_import_leave', 'TimeManagementController@pageExportImportLeave');
+Route::get('time_management/export_import_plafon', 'TimeManagementController@pageExportImportPlafon');
 Route::get('time_management/leave_transaction_by_employee_no', 'TimeManagementController@pageLeaveTransactionByEmployeeNo');
 Route::get('time_management/time_recording_reference', 'TimeManagementController@pageTimeRecordingReference');
 Route::get('time_management/period_maintenance', 'TimeManagementController@pagePeriodMaintenance');
@@ -531,6 +532,8 @@ Route::post('time_management/change_data_shift/import', 'TimeManagementControlle
 Route::post('time_management/change_data_shift/download', 'TimeManagementController@templateChangeDataShift');
 Route::post('time_management/export_import_leave/import', 'TimeManagementController@importExportImportLeave');
 Route::post('time_management/export_import_leave/export', 'TimeManagementController@exportExportImportLeave');
+Route::post('time_management/export_import_plafon/import', 'TimeManagementController@importExportImportPlafon');
+Route::post('time_management/export_import_plafon/export', 'TimeManagementController@exportExportImportPlafon');
 
 /* Route Untuk Menu Payroll */
 Route::get('payroll', 'PayrollController@pagePayroll')->name('payroll');
@@ -919,6 +922,9 @@ Route::get('utilities/user/status', 'UtilitiesController@statusUserUtilities');
 Route::get('utilities/company/status', 'UtilitiesController@statusCompanyUtilities');
 Route::get('utilities/announcement_category/status', 'UtilitiesController@statusAnnouncementCategoryUtilities');
 Route::get('utilities/news_category/status', 'UtilitiesController@statusNewsCategoryUtilities');
+
+Route::get('utilities/announcement_category/delete', 'UtilitiesController@deleteAnnouncementCategoryUtilities');
+Route::get('utilities/news_category/delete', 'UtilitiesController@deleteNewsCategoryUtilities');
 
 Route::post('utilities/group_authorization/proses', 'UtilitiesController@prosesAuthorizationCodeGroupUtilities');
 Route::post('utilities/group_user_access/proses', 'UtilitiesController@prosesUserAccessGroupUtilities');

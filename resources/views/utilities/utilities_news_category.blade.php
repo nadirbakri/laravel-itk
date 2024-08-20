@@ -104,6 +104,11 @@
                 <img src="{{ url('/icons/functionbar/functionbar-list-white.svg') }}" class="functionbar-hover" alt="List">
                 <span>List</span>
             </a>
+            <a class="list-functionbar-md" href="javascript:void(0)" id="toolbar-remove">
+                <img src="{{ url('/icons/functionbar/functionbar-remove-blue.svg') }}" alt="List">
+                <img src="{{ url('/icons/functionbar/functionbar-remove-white.svg') }}" class="functionbar-hover" alt="Delete">
+                <span>Delete</span>
+            </a>
         </div>
 		<div class="div-title">
 			<a href="{{ route('utilities', ['moduleID' => 'UTI']) }}" target="iframe_dashboard">
@@ -371,6 +376,44 @@
                     $('#message-notification-error').html(response);
                 }
             });
+        }else{
+            $('#notification_error').modal('show');
+            $('#message-notification-error').html('No Data Selected');
+        }
+    });
+
+    $("#toolbar-remove").on('click', function() {
+        var data = table.rows('.selected').data();
+        if(data.count() > 0){
+            if (confirm("Are you sure you want to delete this category?")) {
+                $.ajax({
+                    url: "{{ url('utilities/news_category/delete') }}",
+                    type: "GET",
+                    data: { 'categoryCode' : data[0].categoryCode, 'categoryName' : data[0].categoryName },
+                    success: function(response) {
+                        if(response.status == "true"){
+                            $('#notification_success').modal('show');
+                            $('#message-notification-success').html(response.message);
+                            setTimeout(function(){ 
+                                window.location = "{{ url('utilities/news_category') }}";
+                            }, 3000);
+                        }else{
+                            $('#notification_error').modal('show');
+                            if(response.message == null || response.message == ''){
+                                $('#message-notification-error').html("{{ __('login.error') }}");
+                            }else{
+                                $('#message-notification-error').html(response.message);
+                            }
+                        }
+                        var oTable = $('#news_category_table').dataTable();
+                        oTable.fnDraw(false);
+                    },
+                    error: function(response) {
+                        $('#notification_error').modal('show');
+                        $('#message-notification-error').html(response);
+                    }
+                });
+            }
         }else{
             $('#notification_error').modal('show');
             $('#message-notification-error').html('No Data Selected');
