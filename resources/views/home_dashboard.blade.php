@@ -59,6 +59,41 @@
 		@keyframes spin {
 		to { transform: rotate(360deg); }
 		}
+
+		.modal-header-notification-error {
+            border-bottom: 1px solid #eee;
+            background-color: #f44336;
+            -webkit-border-top-left-radius: 1rem;
+            -webkit-border-top-right-radius: 1rem;
+            -moz-border-radius-topleft: 1rem;
+            -moz-border-radius-topright: 1rem;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
+        }
+
+		.div-title-notification {
+            margin: 1.5%;
+            margin-top: 2%;
+            margin-bottom: 5%;
+            font-family: Monserrat;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .div-title-notification img {
+            max-width: 100%;
+            height: 6vh;
+            margin-right: 5%;
+        }
+
+        .title-text-notification {
+            font-family: Inter;
+            font-weight: 700;
+            font-size: 2.5vw;
+            margin-left: 0.5%;
+        }
 	</style>
 </head>
 
@@ -403,6 +438,21 @@
 			</div>
 		</div>
 	</div>
+	<div class="modal fade" role="dialog" id="notification_error">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-header-notification-error">
+                    <h5 class="modal-title">Error!</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <span id="message-notification-error">{{ $errors->first() }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -754,6 +804,9 @@
 			$('#loading').hide();
 		}).fail(function() {
 			console.log('Error!');
+			$('#notification_error').modal('show');
+			$('#message-notification-error').html("There are some services that are showing errors on the dashboard.");
+			$('#loading').hide();
 		});
 
 		$(".tabs-card").click(function() {  
