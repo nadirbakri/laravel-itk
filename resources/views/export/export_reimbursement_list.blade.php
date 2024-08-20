@@ -23,8 +23,10 @@
 				{{-- <th>{{ __('export_reimbursement.reqdate') }}</th> --}}
 				<th>{{ __('export_reimbursement.status') }}</th>
 				<th>{{ __('export_reimbursement.ticket') }}</th>
+				<th>{{ __('export_reimbursement.rtipe') }}</th>
 				<th>{{ __('export_reimbursement.rdate') }}</th>
 				<th>{{ __('export_reimbursement.employee') }}</th>
+				<th>{{ __('export_reimbursement.employeename') }}</th>
 				<th>{{ __('export_reimbursement.cname') }}</th>
                 <th>{{ __('export_reimbursement.pname') }}</th>
 				{{-- <th>{{ __('export_reimbursement.treq') }}</th>
@@ -47,8 +49,10 @@
 				{{-- <td></td> --}}
 				<td>{{ $value->reimbursementEntity->reimbursementStatus}}</td>
 				<td>{{ $value->reimbursementEntity->ticketNo }}</td>
+				<td>{{ $value->reimbursementEntity->reimbursementType }}</td>
 				<td>{{ \Carbon\Carbon::parse($value->reimbursementEntity->receiptDate)->format('Y-m-d') }}</td> 
 				<td>{{ $value->reimbursementEntity->employeeNo }}</td>
+				<td>{{ $value->reimbursementEntity->fullName }}</td>
 				<td>{{ $value->reimbursementEntity->customerName}}</td>
 				<td>{{ $value->reimbursementEntity->projectName }}</td>
 				{{-- <td></td>
