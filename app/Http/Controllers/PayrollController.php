@@ -4680,7 +4680,7 @@ public function dataDetailReportFormatPY(Request $request)
                 }else if($request->output_file == 'xlsx'){
                     $array = explode("\r\n", $arrResult->dataListSet[0]->transferBank);
                     foreach($array as $key => $value){
-                        $arrayTwo = explode(";", $value);
+                        $arrayTwo = explode(",", $value);
                         if(count($arrayTwo) > 1){
                             $array[$key] = $arrayTwo;
                         }
