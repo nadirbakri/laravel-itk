@@ -12,7 +12,9 @@ return [
     'delete' => 'Delete',
     'cancel' => 'Cancel',
     'list' => 'List',
-
+    'label_record_status' => 'Record Status',
+    'label_active' => 'Active',
+    'label_deactive' => 'Deactive',
 ]
 
 ?>

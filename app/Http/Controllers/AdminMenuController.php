@@ -55,14 +55,6 @@ class AdminMenuController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            // var_dump(json_encode(
-            //     [
-            //         'companyCode' => Session::get('companyCode'), 
-            //         'languageCode' => App::getLocale(), 
-            //         'sessionID' => 0, 
-            //         'sessionUserID' => Session::get('userID'),
-            //     ]
-            //     ));
             $response = $client->post(env('API_URL') . '/mobile/News/getNews',
                 ['body' => json_encode(
                     [
@@ -131,7 +123,7 @@ class AdminMenuController extends Controller
                 'category' => $request->n_category,
                 'content' => $request->c_news,
                 'sysNo' => $request->sysno,
-                'recordStatus' => "A"
+                'recordStatus' => $request->record_status
             ];
 
             if($request->hasFile('image_attachment')){
@@ -141,6 +133,8 @@ class AdminMenuController extends Controller
             if($request->hasFile('file_attachment')){
                 $param['pdfFile'] = base64_encode(file_get_contents($pathFile . $fileName));
             }
+
+            // dd(json_encode($param));
 
             if ($request->t_news2 == "new"){
                 $response = $client->post(env('API_URL') . '/mobile/News/insertNews',
@@ -277,7 +271,7 @@ class AdminMenuController extends Controller
             ]);
 
             $param = [
-                'recordStatus' => "A",
+                'recordStatus' => $request->record_status,
                 'companyCode' => Session::get('companyCode'),
                 'languageCode' => App::getLocale(),
                 'sessionID' => 0,

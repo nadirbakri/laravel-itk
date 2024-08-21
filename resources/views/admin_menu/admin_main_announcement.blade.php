@@ -149,7 +149,26 @@
                 <div class="card-header">
                     <h5>{{ __('admin_main_announcement.formjudul') }}</h5>
                 </div>
-            <div class="card-body">
+                <div class="card-body">
+                <div class="row">
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label for="record_status form-check-label">{{ __('admin_main_announcement.label_record_status') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="form-check">
+                            <input type="radio" id="record_status_active" name="record_status" value="A" checked>
+                            <label for="record_status_active">{{ __('admin_main_announcement.label_active') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-check">
+                            <input type="radio" id="record_status_deactive" name="record_status" value="D">
+                            <label for="record_status_deactive">{{ __('admin_main_announcement.label_deactive') }}</label>
+                        </div>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-2">
                         <div class="form-group">
@@ -236,6 +255,7 @@
                                     <th>Title</th>
                                     <th>Category</th>
                                     <th>Created Date</th>
+                                    <th>Record Status</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -243,6 +263,7 @@
                                     <td></td>        
                                     <td></td>        
                                     <td></td>        
+                                    <td></td> 
                                     <td></td>        
                                 </tr>
                             </tbody>
@@ -358,6 +379,7 @@
                         return moment(data).format('YYYY-MM-DD');
                     }
                 },
+                {data: 'recordStatus', name: 'recordStatus'},
             ]
             
         });        
@@ -367,9 +389,16 @@
         let title = $(element).parent().siblings('.sorting_1').text();
         let announcementcategory = $(element).parent().siblings('td').eq(1).text();
         let desc = $(element).parent().siblings('td').eq(2).text();
-        // console.log(table2.row($(element).parent()).data());
+        let data = table2.row($(element).parent()).data();
 
         // alert(newscategory)
+        if (data.recordStatus === 'A') {
+            $('#record_status_active').prop('checked', true).trigger('change');
+            $('#record_status_deactive').prop('checked', false).trigger('change');
+        } else if (data.recordStatus === 'D') {
+            $('#record_status_deactive').prop('checked', true).trigger('change');
+            $('#record_status_active').prop('checked', false).trigger('change');
+        }
         $('#t_announcement').val(title);
         $('#status').val("update");
         $('#c_announcement').val(table2.row($(element).parent()).data().content);

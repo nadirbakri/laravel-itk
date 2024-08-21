@@ -12,7 +12,9 @@ return [
     'delete' => 'Hapus',
     'cancel' => 'Batal',
     'list' => 'List',
-
+    'label_record_status' => 'Status Data',
+    'label_active' => 'Aktif',
+    'label_deactive' => 'Tidak Aktif',
 ]
 
 ?>

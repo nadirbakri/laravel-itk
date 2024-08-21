@@ -149,7 +149,26 @@
                 <div class="card-header">
                     <h5>{{ __('admin_main_menu_news_master.formjudul') }}</h5>
                 </div>
-            <div class="card-body">
+                <div class="card-body">
+                <div class="row">
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label for="record_status form-check-label">{{ __('admin_main_menu_news_master.label_record_status') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="form-check">
+                            <input type="radio" id="record_status_active" name="record_status" value="A" checked>
+                            <label for="record_status_active">{{ __('admin_main_menu_news_master.label_active') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-check">
+                            <input type="radio" id="record_status_deactive" name="record_status" value="D">
+                            <label for="record_status_deactive">{{ __('admin_main_menu_news_master.label_deactive') }}</label>
+                        </div>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-2">
                         <div class="form-group">
@@ -260,6 +279,7 @@
                                     <th>Title</th>
                                     <th>News Category</th>
                                     <th>Created Date</th>
+                                    <th>Record Status</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -267,6 +287,7 @@
                                     <td></td>        
                                     <td></td>        
                                     <td></td>        
+                                    <td></td> 
                                     <td></td>        
                                 </tr>
                             </tbody>
@@ -316,11 +337,6 @@
         </div>
     </div>
 </body>
-<script>
-    $(document).ready(function () {
-        $('table.display').DataTable();
-    });
-</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
@@ -387,7 +403,7 @@
                     "defaultContent": '',
                     render: function(data, type) {
                         return type === 'display'? '<button type="button"  onclick="klik(this)" class="btn btn-primary" id="btnaja" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/></svg></button>' : '';
-                             }
+                    }
                 },
                 {data: 'title', name: 'title'},
                 {data: 'category', name: 'category'},
@@ -397,6 +413,7 @@
                             return moment(data).format('YYYY-MM-DD');
                         }
                 },
+                {data: 'recordStatus', name: 'recordStatus'},
             ],
             select: {
                 style:    'multi',
@@ -410,9 +427,16 @@
         let title = $(element).parent().siblings('.sorting_1').text();
         let newscategory = $(element).parent().siblings('td').eq(1).text();
         let desc = $(element).parent().siblings('td').eq(2).text();
-        // console.log(table2.row($(element).parent()).data());
+        let data = table2.row($(element).parent()).data();
 
         // alert(newscategory)
+        if (data.recordStatus === 'A') {
+            $('#record_status_active').prop('checked', true).trigger('change');
+            $('#record_status_deactive').prop('checked', false).trigger('change');
+        } else if (data.recordStatus === 'D') {
+            $('#record_status_deactive').prop('checked', true).trigger('change');
+            $('#record_status_active').prop('checked', false).trigger('change');
+        }
         $('#t_news').val(title);
         $('#t_news2').val("update");
         $('#c_news').val(table2.row($(element).parent()).data().content);
@@ -456,7 +480,9 @@
                         required: true,
                     },
                     image_attachment: {
-                        required: true,
+                        required: function() {
+                            return $('#t_news2').val() === 'new';
+                        },
                     },
                 },
                 messages: {
