@@ -52,7 +52,7 @@
 				<td>{{ $value->reimbursementEntity->reimbursementType }}</td>
 				<td>{{ \Carbon\Carbon::parse($value->reimbursementEntity->receiptDate)->format('Y-m-d') }}</td> 
 				<td>{{ $value->reimbursementEntity->employeeNo }}</td>
-				<td>{{ $value->reimbursementEntity->fullNameRequester }}</td>
+				<td>{{ $value->reimbursementEntity->fullnameRequester }}</td>
 				<td>{{ $value->reimbursementEntity->customerName}}</td>
 				<td>{{ $value->reimbursementEntity->projectName }}</td>
 				{{-- <td></td>

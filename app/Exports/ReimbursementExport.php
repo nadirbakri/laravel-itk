@@ -42,7 +42,7 @@ class ReimbursementExport implements FromView, ShouldAutoSize
                             'exportMenu' => false,
                             'status' => $this->status,
                             'companyCode' => Session::get('companyCode'), 
-                            'languageCode' => App::getLocale(), 
+                            'languageCode' => strtoupper(App::getLocale()), 
                             'sessionID' => 0, 
                             'sessionUserID' => Session::get('userID'),
                     ]
