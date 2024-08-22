@@ -637,11 +637,11 @@
         }).then(function (data) {
             arrayReimbursement = data;
             $('#medical_table').DataTable().destroy();
-            load_data_medical_history();
+            load_data_table_reimbursement();
         });
     }
 
-    function load_data_medical_history() {
+    function load_data_table_reimbursement() {
         table = $('#medical_table').DataTable({
             processing: true,
             // serverSide: true,
@@ -925,21 +925,6 @@
     })
 
     function updateReimbursementStatus(reimbursement_status, totalpaid, ticketNo, direct_superior, approvalremarks) {
-        // arrayReimbursement = arrayReimbursement.map(obj => {
-        //     if (obj.reimbursementEntity && obj.reimbursementEntity.ticketNo === ticketNo) {
-        //         return {
-        //             ...obj,
-        //             reimbursementEntity: {
-        //                 ...obj.reimbursementEntity,
-        //                 reimbursementStatus: reimbursement_status,
-        //                 paidAmount: totalpaid,
-        //                 approvalRemarks: approvalremarks
-        //             }
-        //         };
-        //     }
-        //     return obj;
-        // });
-
         var item = arrayReimbursement.find(obj => obj.reimbursementEntity && obj.reimbursementEntity.ticketNo === ticketNo);
 
         if (item) {
@@ -947,9 +932,6 @@
             item.reimbursementEntity.paidAmount = totalpaid;
             item.reimbursementEntity.approvalRemarks = approvalremarks;
 
-            // table.ajax.reload(null, false);
-            // var oTable = $('#medical_table').dataTable();
-            // oTable.fnDraw(false);
             table.clear().rows.add(arrayReimbursement).draw(false);
         }
     }

@@ -444,9 +444,11 @@ class TransactionController extends Controller
             $arrResult = json_decode($response->getBody()->getContents());
     
             if($arrResult->dataListSet == null){
-                return Datatables::of([])->make(true);
+                // return Datatables::of([])->make(true);
+                return response()->json([]);
             }else{
-                return Datatables::of($arrResult->dataListSet)->make(true);
+                // return Datatables::of($arrResult->dataListSet)->make(true);
+                return response()->json($arrResult->dataListSet);
             }
         }else{
             try {
@@ -486,9 +488,11 @@ class TransactionController extends Controller
             $arrResult = json_decode($response->getBody()->getContents());
     
             if($arrResult->dataListSet == null){
-                return Datatables::of([])->make(true);
+                // return Datatables::of([])->make(true);
+                return response()->json([]);
             }else{
-                return Datatables::of($arrResult->dataListSet)->make(true);
+                // return Datatables::of($arrResult->dataListSet)->make(true);
+                return response()->json($arrResult->dataListSet);
             }
         }
     }

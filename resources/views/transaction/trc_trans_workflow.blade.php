@@ -210,8 +210,26 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="table-responsive">
-                            <table id="workflow_table" class="display table-striped table-hover dt-responsive display nowrap" cellspacing="10">
+                        <div class="table-responsive" id="div_permit_table">
+                            <table id="permit_table" class="display table-striped table-hover dt-responsive display nowrap" cellspacing="10">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>{{ __('trans_workflow.rdate') }}</th>
+                                        <th>{{ __('trans_workflow.employee') }}</th>
+                                        <th>{{ __('trans_workflow.ename') }}</th>
+                                        <th>{{ __('trans_workflow.status') }}</th>
+                                        <th>{{ __('trans_workflow.remarks') }}</th>
+                                        <th>{{ __('trans_workflow.lduration') }}</th>
+                                        <th>{{ __('trans_workflow.aby') }}</th>
+                                        <th>{{ __('trans_workflow.tno') }}</th>
+                                        <th>{{ __('trans_workflow.appremarks') }}</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div class="table-responsive" id="div_leave_table" style="display: none;">
+                            <table id="leave_table" class="display table-striped table-hover dt-responsive display nowrap" cellspacing="10">
                                 <thead>
                                     <tr>
                                         <th>#</th>
@@ -626,6 +644,11 @@
 </script>
 
 <script>
+    var table = null;
+    var table2 = null;
+    var arrayPermit = [];
+    var arrayLeave = [];
+
     function isEmpty(obj) {
         for(var prop in obj) {
             if(Object.prototype.hasOwnProperty.call(obj, prop)) {
@@ -642,7 +665,6 @@
         if(type == "ER"){
             $('#modal_list_detail').modal('show')
             data = table.row($(element).parents('tr')).data().permitEntity;
-            console.log(data.permitNameList[0] == null);
 
             $('#directsuperior_permit').val(data.directSuperiorID)
             $('#reqdate_permit').val(data.permitDate)
@@ -667,7 +689,7 @@
             $('#remarks_permit_val').html(data.permitRemarks)
         }else{
             $('#modal_list_detail_leave').modal('show')
-            data = table.row($(element).parents('tr')).data().leaveEntity;
+            data = table2.row($(element).parents('tr')).data().leaveEntity;
 
             $('#directsuperior_leave').val(data.directSuperiorID)
             $('#reqdate_leave').val(data.leaveDate)
@@ -696,119 +718,139 @@
         $('.close').click();
     }
 
-    function load_data_workflow(claim_date_from, claim_date_to, employee_no,  business_unit, workflow_type, status) {
+    function load_data_workflow(claim_date_from, claim_date_to, employee_no,  business_unit, workflow_type, status){
+        $.ajax({
+            type: 'GET',
+            url: "{{ url('/trans/workflow/table') }}",
+            data: {
+                'startDate': claim_date_from,
+                'endDate': claim_date_to,
+                'employeeNo' : employee_no,
+                'businessUnit' : business_unit,
+                'workflowType' : workflow_type,
+                'status' : status
+            }
+        }).then(function (data) {
+            if(workflow_type == "ER"){
+                $('#div_permit_table').show();
+                $('#div_leave_table').hide();
+
+                arrayPermit = data;
+
+                $('#permit_table').DataTable().destroy();
+                load_data_table_workflow_permit();
+            }else{
+                $('#div_permit_table').hide();
+                $('#div_leave_table').show();
+
+                arrayLeave = data;
+
+                $('#leave_table').DataTable().destroy();
+                load_data_table_workflow_leave();
+            }
+        });
         
-        if(workflow_type == "ER"){
-            table = $('#workflow_table').DataTable({
-                processing: true,
-                serverSide: true,
-                orderCellsTop: true,
-                ajax: {
-                    url : "{{ url('trans/workflow/table') }}",
-                    data: {
-                        'startDate': claim_date_from,
-                        'endDate': claim_date_to,
-                        'employeeNo' : employee_no,
-                        'businessUnit' : business_unit,
-                        'workflowType' : workflow_type,
-                        'status' : status
+    }
 
+    function load_data_table_workflow_permit() {
+        table = $('#permit_table').DataTable({
+            processing: true,
+            // serverSide: true,
+            orderCellsTop: true,
+            data: arrayPermit,
+            error: function(jqXHR, ajaxOptions, thrownError) {
+                alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
+            },
+            "sDom": 'lfrtip',
+            'sPaginationType': 'full_numbers',
+            "order": [[ 1, "asc" ]],
+            columns: [
+                {
+                    orderable: false,
+                    targets: 0, 
+                    "defaultContent": '',
+                    render: function(data, type) {
+                        return type === 'display'? '<button type="button" onclick="klikdetail(this)" class="btn btn-info" name="btn-detail" id="btn-detail" style="width: 100%;" data-toggle="modal" data-target="#modal_list_detail"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-justify" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M2 12.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/></svg> {{ __('trans_medical.detail') }} </button>' : '';
                     }
                 },
-                error: function(jqXHR, ajaxOptions, thrownError) {
-                    alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
-                },
-                "sDom": 'lfrtip',
-                'sPaginationType': 'full_numbers',
-                "order": [[ 1, "asc" ]],
-                columns: [
-                    {
-                        orderable: false,
-                        targets: 0, 
-                        "defaultContent": '',
-                        render: function(data, type) {
-                            return type === 'display'? '<button type="button" onclick="klikdetail(this)" class="btn btn-info" name="btn-detail" id="btn-detail" style="width: 100%;" data-toggle="modal" data-target="#modal_list_detail"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-justify" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M2 12.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/></svg> {{ __('trans_medical.detail') }} </button>' : '';
+                {data: 'permitEntity.createdDate', name: 'createdDate', 
+                    render: function (data, type, row) {
+                        if (data == null){
+                            return '-'
+                        }else {
+                            return moment(data).format('YYYY-MM-DD');
                         }
-                    },
-                    {data: 'permitEntity.createdDate', name: 'createdDate', 
-                                render: function (data, type, row) {
-                                if (data == null){
-                                    return '-'
-                                }else {
-                                    return moment(data).format('YYYY-MM-DD');
-                                }
-                            }
-                    },
-                    {data: 'permitEntity.employeeNo', name: 'permitEntity.employeeNo'},
-                    {data: 'permitEntity.fullnameRequester', name: 'permitEntity.fullnameRequester'},
-                    {data: 'permitEntity.status', name: 'permitEntity.status'},
-                    {data: 'permitEntity.approvalRemarks', name: 'permitEntity.approvalRemarks'},
-                    {data: 'permitEntity.time', name: 'permitEntity.time'},
-                    {data: 'permitEntity.superiorFullname', name: 'permitEntity.superiorFullname'},
-                    {data: 'permitEntity.ticketNo', name: 'permitEntity.ticketNo'},
-                    {data: 'permitEntity.approvalRemarks', name: 'permitEntity.approvalRemarks'}
-                ]
-            });   
-        }else{
-            table = $('#workflow_table').DataTable({
-                processing: true,
-                serverSide: true,
-                orderCellsTop: true,
-                ajax: {
-                    url : "{{ url('trans/workflow/table') }}",
-                    data: {
-                        'startDate': claim_date_from,
-                        'endDate': claim_date_to,
-                        'employeeNo' : employee_no,
-                        'businessUnit' : business_unit,
-                        'workflowType' : workflow_type,
-                        'status' : status
-
                     }
                 },
-                error: function(jqXHR, ajaxOptions, thrownError) {
-                    alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
-                },
-                "sDom": 'lfrtip',
-                'sPaginationType': 'full_numbers',
-                "order": [[ 1, "asc" ]],
-                columns: [
-                    {
-                        orderable: false,
-                        targets: 0, 
-                        "defaultContent": '',
-                        render: function(data, type) {
-                            return type === 'display'? '<button type="button" onclick="klikdetail(this)" class="btn btn-info" name="btn-detail" id="btn-detail" style="width: 100%;" data-toggle="modal" data-target="#modal_list_detail_leave"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-justify" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M2 12.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/></svg> {{ __('trans_medical.detail') }} </button>' : '';
-                        }
-                    },
-                    {data: 'leaveEntity.createdDate', name: 'createdDate', 
-                            render: function (data, type, row) {
-                            if (data == null){
-                                return '-'
-                            }else {
-                                return moment(data).format('YYYY-MM-DD');
-                            }
-                        }
-                    },
-                    {data: 'leaveEntity.employeeNo', name: 'leaveEntity.employeeNo'},
-                    {data: 'leaveEntity.fullnameRequester', name: 'leaveEntity.fullnameRequester'},
-                    {data: 'leaveEntity.status', name: 'leaveEntity.status'},
-                    {data: 'leaveEntity.approvalRemarks', name: 'leaveEntity.approvalRemarks'},
-                    {data: 'leaveEntity.leaveDurationDepan', name: 'leaveEntity.leaveDurationDepan'},
-                    {data: 'leaveEntity.changedBy', name: 'leaveEntity.changedBy'},
-                    {data: 'leaveEntity.ticketNo', name: 'leaveEntity.ticketNo'},
-                    {data: 'leaveEntity.approvalRemarks', name: 'leaveEntity.approvalRemarks'},
-                ]
-            });
-        }
-            // dari sini
+                {data: 'permitEntity.employeeNo', name: 'permitEntity.employeeNo'},
+                {data: 'permitEntity.fullnameRequester', name: 'permitEntity.fullnameRequester'},
+                {data: 'permitEntity.status', name: 'permitEntity.status'},
+                {data: 'permitEntity.approvalRemarks', name: 'permitEntity.approvalRemarks'},
+                {data: 'permitEntity.time', name: 'permitEntity.time'},
+                {data: 'permitEntity.superiorFullname', name: 'permitEntity.superiorFullname'},
+                {data: 'permitEntity.ticketNo', name: 'permitEntity.ticketNo'},
+                {data: 'permitEntity.approvalRemarks', name: 'permitEntity.approvalRemarks'}
+            ]
+        });  
 
         $("#btn-search").prop("disabled", true);
         $("#btn-search").html(
             '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
 
         );
-    
+
+        $("#btn-search").prop("disabled", false);
+        $("#btn-search").html(
+            "<img src={{ url('icons/mob/button/button-search.svg') }} alt='export'> {{ __('trans_transport.btn_search') }}"
+        );
+    }
+
+    function load_data_table_workflow_leave(){
+        table2 = $('#leave_table').DataTable({
+            processing: true,
+            // serverSide: true,
+            orderCellsTop: true,
+            data: arrayLeave,
+            error: function(jqXHR, ajaxOptions, thrownError) {
+                alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
+            },
+            "sDom": 'lfrtip',
+            'sPaginationType': 'full_numbers',
+            "order": [[ 1, "asc" ]],
+            columns: [
+                {
+                    orderable: false,
+                    targets: 0, 
+                    "defaultContent": '',
+                    render: function(data, type) {
+                        return type === 'display'? '<button type="button" onclick="klikdetail(this)" class="btn btn-info" name="btn-detail" id="btn-detail" style="width: 100%;" data-toggle="modal" data-target="#modal_list_detail_leave"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-justify" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M2 12.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/></svg> {{ __('trans_medical.detail') }} </button>' : '';
+                    }
+                },
+                {data: 'leaveEntity.createdDate', name: 'createdDate', 
+                    render: function (data, type, row) {
+                        if (data == null){
+                            return '-'
+                        }else {
+                            return moment(data).format('YYYY-MM-DD');
+                        }
+                    }
+                },
+                {data: 'leaveEntity.employeeNo', name: 'leaveEntity.employeeNo'},
+                {data: 'leaveEntity.fullnameRequester', name: 'leaveEntity.fullnameRequester'},
+                {data: 'leaveEntity.status', name: 'leaveEntity.status'},
+                {data: 'leaveEntity.approvalRemarks', name: 'leaveEntity.approvalRemarks'},
+                {data: 'leaveEntity.leaveDurationDepan', name: 'leaveEntity.leaveDurationDepan'},
+                {data: 'leaveEntity.changedBy', name: 'leaveEntity.changedBy'},
+                {data: 'leaveEntity.ticketNo', name: 'leaveEntity.ticketNo'},
+                {data: 'leaveEntity.approvalRemarks', name: 'leaveEntity.approvalRemarks'},
+            ]
+        });
+
+        $("#btn-search").prop("disabled", true);
+        $("#btn-search").html(
+            '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+
+        );
 
         $("#btn-search").prop("disabled", false);
         $("#btn-search").html(
@@ -826,16 +868,12 @@
         var workflow_type = $("#workflow_type").val();
         var status = $("#workflow_status").val();
         
-        $('#workflow_table').DataTable().destroy();
         load_data_workflow(claim_date_from, claim_date_to, employee_no,  business_unit, workflow_type, status);
     })
 
-
-
-
     $('#btn-list').click(()=> {
         $('#example').DataTable().destroy();
-        table2 = $('#example').DataTable({
+        table3 = $('#example').DataTable({
             processing: true,
             serverSide: true,
             orderCellsTop: true,
@@ -907,6 +945,30 @@
         update_data_leave(workflow_status, ticketNo, direct_superior, approvalremarks)
     })
 
+    function updatePermitStatus(workflow_status, ticketNo, direct_superior, approvalremarks) {
+        var item = arrayPermit.find(obj => obj.permitEntity && obj.permitEntity.ticketNo === ticketNo);
+
+        if (item) {
+            item.permitEntity.status = workflow_status;
+            item.permitEntity.directSuperiorCode = direct_superior;
+            item.permitEntity.approvalRemarks = approvalremarks;
+
+            table.clear().rows.add(arrayPermit).draw(false);
+        }
+    }
+
+    function updateLeaveStatus(workflow_status, ticketNo, direct_superior, approvalremarks) {
+        var item = arrayLeave.find(obj => obj.leaveEntity && obj.leaveEntity.ticketNo === ticketNo);
+
+        if (item) {
+            item.leaveEntity.status = workflow_status;
+            item.leaveEntity.directSuperiorCode = direct_superior;
+            item.leaveEntity.approvalRemarks = approvalremarks;
+
+            table2.clear().rows.add(arrayLeave).draw(false);
+        }
+    }
+
     function update_data_permit(workflow_status, ticketNo, direct_superior, approvalremarks){
         $.ajax({
             url: "{{ url('trans/update_permit/table') }}",
@@ -930,10 +992,12 @@
                     $('#notification_success').modal('show');
                     $('#message-notification-success').html(response
                         .message);
-                    setTimeout(function () {
-                        window.location =
-                            "{{ url('transaction/transaction_workflow') }}";
-                    }, 3000);
+                    
+                    updatePermitStatus(workflow_status, ticketNo, direct_superior, approvalremarks);
+                    // setTimeout(function () {
+                    //     window.location =
+                    //         "{{ url('transaction/transaction_workflow') }}";
+                    // }, 3000);
                 } else{
                     $("#btn-update").prop("disabled", false);
                     $("#btn-update").html(
@@ -982,10 +1046,12 @@
                     $('#notification_success').modal('show');
                     $('#message-notification-success').html(response
                         .message);
-                    setTimeout(function () {
-                        window.location =
-                            "{{ url('transaction/transaction_workflow') }}";
-                    }, 3000);
+
+                    updateLeaveStatus(workflow_status, ticketNo, direct_superior, approvalremarks);
+                    // setTimeout(function () {
+                    //     window.location =
+                    //         "{{ url('transaction/transaction_workflow') }}";
+                    // }, 3000);
                 } else{
                     $("#btn-update-leave").prop("disabled", false);
                     $("#btn-update-leave").html(
