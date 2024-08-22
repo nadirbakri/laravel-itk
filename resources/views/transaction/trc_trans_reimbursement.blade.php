@@ -270,7 +270,7 @@
                         </button>
                     </div>
                     <div class="modal-body table-responsive">
-                        <table id="example" class="display">
+                        <table id="example" class="table hover display">
                             <thead>
                                 <tr>
                                     <th style="text-align: center;">#</th>
@@ -617,167 +617,102 @@
         });
     }
 </script>
-
-<script>
-    $('input[type="file"]').change(function (e) {
-        var fileName = e.target.files[0].name;
-        $('.custom-file-label').html(fileName);
-    });
-
-    $('#btn-update').click(()=>{
-        let reimbursement_status = $('#reimbursement_status').val();
-        let totalpaid = $('#totalpaid').val();
-        let ticketNo = $('#tiketno').val();
-        let direct_superior = $("#directsuperior").val();
-        let approvalremarks = $("#approvalremarks").val();
-        // alert(totalpaid)
-        // $('.close').click();
-        update_data(reimbursement_status,totalpaid,ticketNo,direct_superior,approvalremarks)
-    })
-
-    function update_data(reimbursement_status, totalpaid, ticketNo,direct_superior,approvalremarks){
-        $.ajax({
-            url: "{{ url('trans/update/table') }}",
-            type: "get",
-            data: {
-                'status': reimbursement_status,
-                'paidAmount': totalpaid,
-                'ticketNo' : ticketNo,
-                'employeeNo' : direct_superior,
-                'approvalRemarks': approvalremarks
-            },
-            success: function (response) {
-                if (response.status == "true") {
-                    $("#btn-update").prop("disabled", false);
-                    $("#btn-update").html(
-                        // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_update") }}'
-                        'Update'
-                    );
-
-                    $('.close').click();
-                    
-                    $('#notification_success').modal('show');
-                    $('#message-notification-success').html(response
-                        .message);
-                    // setTimeout(function () {
-                    //     window.location =
-                    //         "{{ url('transaction/transaction_reimbursement') }}";
-                    // }, 3000);
-                } else{
-                    $("#btn-update").prop("disabled", false);
-                    $("#btn-update").html(
-                        // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
-                        'Update'
-                    );
-                    
-                    $('#notification_update_data_fail').modal('show');
-                    $('#message-notification-update-data-fail').html(response
-                        .message);
-                }
-            },
-            error: function (response) {
-                $("#btn-update").prop("disabled", false);
-                $("#btn-update").html(
-                    // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
-                    'Update'
-                );
-
-                $('#notification_error').modal('show');
-                $('#message-notification-error').html(response);
-            }
-        });
-    }
-</script>
 <script type="text/javascript">
     var lastImg = 1;
-    function load_data_medical_history(claim_date_from, claim_date_to, direct_superior, reimbursement_type, business_unit) {
-            table = $('#medical_table').DataTable({
-                processing: true,
-                serverSide: true,
-                orderCellsTop: true,
-                ajax: {
-                    url : "{{ url('trans/reimbursement/table') }}",
-                    data: {
-                        'startDate': claim_date_from,
-                        'endDate': claim_date_to,
-                        'employeeNo' : direct_superior,
-                        'reimbursementType' : reimbursement_type,
-                        'businessUnit' : business_unit
+    var table = null;
+    var table2 = null;
+    var arrayReimbursement = [];
 
+    function load_data_reimbursement(claim_date_from, claim_date_to, direct_superior, reimbursement_type, business_unit){
+        $.ajax({
+            type: 'GET',
+            url: "{{ url('/trans/reimbursement/table') }}",
+            data: {
+                'startDate': claim_date_from,
+                'endDate': claim_date_to,
+                'employeeNo' : direct_superior,
+                'reimbursementType' : reimbursement_type,
+                'businessUnit' : business_unit
+            }
+        }).then(function (data) {
+            arrayReimbursement = data;
+            $('#medical_table').DataTable().destroy();
+            load_data_medical_history();
+        });
+    }
+
+    function load_data_medical_history() {
+        table = $('#medical_table').DataTable({
+            processing: true,
+            // serverSide: true,
+            orderCellsTop: true,
+            data: arrayReimbursement,
+            error: function(jqXHR, ajaxOptions, thrownError) {
+                alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
+            },
+            "sDom": 'lfrtip',
+            'sPaginationType': 'full_numbers',
+            "order": [[ 1, "asc" ]],
+            columns: [
+                {
+                    orderable: false,
+                    targets: 0, 
+                    "defaultContent": '',
+                    render: function(data, type) {
+                        return type === 'display'? '<button type="button" title="Detail" class="btn btn-info btn-circle" id="btn-detail" data-toggle="modal" data-target="#modal_list_detail" onclick="klikdetail(this)"><i class="fa fa-file-text"></i></button>' : '';
                     }
                 },
-                error: function(jqXHR, ajaxOptions, thrownError) {
-                    alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
+                {data: 'reimbursementEntity.receiptDate', name: 'reimbursementEntity.receiptDate', 
+                    render: function (data, type, row) {
+                        return moment(data).format('YYYY-MM-DD');
+                    }
                 },
-                "sDom": 'lfrtip',
-                'sPaginationType': 'full_numbers',
-                "order": [[ 1, "asc" ]],
-                columns: [
-                    {
-                        orderable: false,
-                        targets: 0, 
-                        "defaultContent": '',
-                        render: function(data, type) {
-                            return type === 'display'? '<button type="button" title="Detail" class="btn btn-info btn-circle" id="btn-detail" data-toggle="modal" data-target="#modal_list_detail" onclick="klikdetail(this)"><i class="fa fa-file-text"></i></button>' : '';
-                        }
-                    },
-                    {data: 'reimbursementEntity.receiptDate', name: 'reimbursementEntity.receiptDate', 
+                {data: 'reimbursementEntity.reimbursementStatus', name: 'reimbursementEntity.reimbursementStatus'},
+                {data: 'reimbursementEntity.ticketNo', name: 'reimbursementEntity.ticketNo'},
+                {data: 'reimbursementEntity.fullnameRequester', name: 'reimbursementEntity.fullnameRequester'},
+                {data: 'reimbursementEntity.customerName', name: 'reimbursementEntity.customerName'},
+                {data: 'reimbursementEntity.projectName', name: 'reimbursementEntity.projectName'},
+                {data: 'reimbursementEntity.paymentDate', name: 'reimbursementEntity.paymentDate', 
                         render: function (data, type, row) {
-                            return moment(data).format('YYYY-MM-DD');
-                        }
-                    },
-                    {data: 'reimbursementEntity.reimbursementStatus', name: 'reimbursementEntity.reimbursementStatus'},
-                    {data: 'reimbursementEntity.ticketNo', name: 'reimbursementEntity.ticketNo'},
-                    {data: 'reimbursementEntity.fullnameRequester', name: 'reimbursementEntity.fullnameRequester'},
-                    {data: 'reimbursementEntity.customerName', name: 'reimbursementEntity.customerName'},
-                    {data: 'reimbursementEntity.projectName', name: 'reimbursementEntity.projectName'},
-                    {data: 'reimbursementEntity.paymentDate', name: 'reimbursementEntity.paymentDate', 
-                            render: function (data, type, row) {
-                                if (data == null){
-                                    return '-'
-                                }else {
-                                    return moment(data).format('YYYY-MM-DD');
-                                }
+                            if (data == null){
+                                return '-'
+                            }else {
+                                return moment(data).format('YYYY-MM-DD');
                             }
-                    },
-                    {data: 'reimbursementEntity.totalClaimAmount', name: 'reimbursementEntity.totalClaimAmount',
-                        render: function (data, type, row) {
-                            return data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
                         }
-                    },
-                    {data: 'reimbursementEntity.approvalRemarks', name: 'reimbursementEntity.approvalRemarks'},
-                    {data: 'reimbursementEntity.paidAmount', name: 'reimbursementEntity.paidAmount',
-                        render: function (data, type, row) {
-                            return data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-                        }
-                    },
-                    {
-                        orderable: false,
-                        "defaultContent": '',
-                        render: function(data, type) {
-                            return '<button type="button" title="Preview" class="btn btn-info btn-circle" id="btn-preview" data-toggle="modal" data-target="#modal_preview_file" onclick="klikpreview(this)"><i class="fa fa-file-photo-o"></i></button>';
-                        }
-                    },
-                ],
-                select: {
-                    style:    'multi',
-                    selector: 'td:first-child'
-                }
-            });
+                },
+                {data: 'reimbursementEntity.totalClaimAmount', name: 'reimbursementEntity.totalClaimAmount',
+                    render: function (data, type, row) {
+                        return data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                    }
+                },
+                {data: 'reimbursementEntity.approvalRemarks', name: 'reimbursementEntity.approvalRemarks'},
+                {data: 'reimbursementEntity.paidAmount', name: 'reimbursementEntity.paidAmount',
+                    render: function (data, type, row) {
+                        return data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                    }
+                },
+                {
+                    orderable: false,
+                    "defaultContent": '',
+                    render: function(data, type) {
+                        return '<button type="button" title="Preview" class="btn btn-info btn-circle" id="btn-preview" data-toggle="modal" data-target="#modal_preview_file" onclick="klikpreview(this)"><i class="fa fa-file-photo-o"></i></button>';
+                    }
+                },
+            ]
+        });
 
-            $("#btn-search").prop("disabled", true);
-            $("#btn-search").html(
-                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+        $("#btn-search").prop("disabled", true);
+        $("#btn-search").html(
+            '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
 
-            );
+        );
 
-            
-
-            $("#btn-search").prop("disabled", false);
-            $("#btn-search").html(
-                "<img src={{ url('icons/mob/button/button-search.svg') }} alt='export'> {{ __('trans_transport.btn_search') }}"
-            );
-        }
+        $("#btn-search").prop("disabled", false);
+        $("#btn-search").html(
+            "<img src={{ url('icons/mob/button/button-search.svg') }} alt='export'> {{ __('trans_transport.btn_search') }}"
+        );
+    }
 
         $("#trans_medical_form").submit((e)=>{
             e.preventDefault();
@@ -793,8 +728,7 @@
             //     '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             // );
 
-            $('#medical_table').DataTable().destroy();
-            load_data_medical_history(claim_date_from, claim_date_to,direct_superior, reimbursement_type, business_unit);
+            load_data_reimbursement(claim_date_from, claim_date_to,direct_superior, reimbursement_type, business_unit);
     })
     const klikdetail = (element) => {
         let data = table.row($(element).parent()).data().reimbursementEntity;
@@ -822,7 +756,7 @@
         $('#approvalremarks').val(data.approvalRemarks)
         $('#totalpaid').val(data.paidAmount)
         $('#directsuperior').val(data.directSuperiorID)
-        $('#reimbursement_status').val(data.status).trigger('change')
+        $('#reimbursement_status').val(data.reimbursementStatus).trigger('change')
     }
 
     function preview(img) {
@@ -895,59 +829,72 @@
         $('#direct_superior').val(employee_id)
 
         $('.close').click();
-        // let fullname = $(element).parent().siblings('td').eq(1).text()
-        // let division = $(element).parent().siblings('td').eq(2).text()
-        // let rankingname = $(element).parent().siblings('td').eq(3).text()
-        // alert(data1)
     }
 
-</script>
-<script>
-$("#btn-process").click(function () {
-    $(this).prop("disabled", true);
-    $(this).html(
-        '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
-    );
-    $("#upload_paid_overtime_form").submit();
-});
+    $("#btn-process").click(function () {
+        $(this).prop("disabled", true);
+        $(this).html(
+            '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+        );
+        $("#upload_paid_overtime_form").submit();
+    });
 
-$('#notification_success').on('hide.bs.modal', function () {
-    window.location = "{{ url('transaction/transaction_reimbursement') }}";
-});
+    // $('#notification_success').on('hide.bs.modal', function () {
+    //     window.location = "{{ url('transaction/transaction_reimbursement') }}";
+    // });
 
-if ($("#upload_paid_overtime_form").length > 0) {
-    $("#upload_paid_overtime_form").validate({
-        submitHandler: function (form) {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            var myForm = document.getElementById('upload_paid_overtime_form');
-            var formdata = new FormData(myForm);
-            
-            $.ajax({
-                url: "{{ url('transaction/update_reimbursement/import') }}",
-                type: "POST",
-                processData: false,
-                contentType: false,
-                data: formdata,
-                success: function (response) {
-                    if (response[0].status == "true") {
-                        $("#btn-process").prop("disabled", false);
-                        $("#btn-process").html(
-                            // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
-                            'Update'
-                        );
-                        
-                        $('#notification_success').modal('show');
-                        $('#message-notification-success').html(response[0]
-                            .message);
-                        setTimeout(function () {
-                            window.location =
-                                "{{ url('transaction/transaction_reimbursement') }}";
-                        }, 3000);
-                    } else {
+    if ($("#upload_paid_overtime_form").length > 0) {
+        $("#upload_paid_overtime_form").validate({
+            submitHandler: function (form) {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                var myForm = document.getElementById('upload_paid_overtime_form');
+                var formdata = new FormData(myForm);
+                
+                $.ajax({
+                    url: "{{ url('transaction/update_reimbursement/import') }}",
+                    type: "POST",
+                    processData: false,
+                    contentType: false,
+                    data: formdata,
+                    success: function (response) {
+                        if (response[0].status == "true") {
+                            $("#btn-process").prop("disabled", false);
+                            $("#btn-process").html(
+                                // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
+                                'Update'
+                            );
+                            
+                            $('#notification_success').modal('show');
+                            $('#message-notification-success').html(response[0]
+                                .message);
+                            
+                            // setTimeout(function () {
+                            //     window.location =
+                            //         "{{ url('transaction/transaction_reimbursement') }}";
+                            // }, 3000);
+                        } else {
+                            $("#btn-process").prop("disabled", false);
+                            $("#btn-process").html(
+                                // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
+                                'Update'
+                            );
+
+                            $('#notification_error').modal('show');
+                            if (response[0].message == null || response[0].message ==
+                                '') {
+                                $('#message-notification-error').html(
+                                    "{{ __('login.error') }}");
+                            } else {
+                                $('#message-notification-error').html(response[0]
+                                    .message);
+                            }
+                        }
+                    },
+                    error: function (response) {
                         $("#btn-process").prop("disabled", false);
                         $("#btn-process").html(
                             // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
@@ -955,30 +902,114 @@ if ($("#upload_paid_overtime_form").length > 0) {
                         );
 
                         $('#notification_error').modal('show');
-                        if (response[0].message == null || response[0].message ==
-                            '') {
-                            $('#message-notification-error').html(
-                                "{{ __('login.error') }}");
-                        } else {
-                            $('#message-notification-error').html(response[0]
-                                .message);
-                        }
+                        $('#message-notification-error').html(response);
                     }
-                },
-                error: function (response) {
-                    $("#btn-process").prop("disabled", false);
-                    $("#btn-process").html(
-                        // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
+                });
+            }
+        })
+    }
+
+    $('input[type="file"]').change(function (e) {
+        var fileName = e.target.files[0].name;
+        $('.custom-file-label').html(fileName);
+    });
+
+    $('#btn-update').click(()=>{
+        let reimbursement_status = $('#reimbursement_status').val();
+        let totalpaid = $('#totalpaid').val();
+        let ticketNo = $('#tiketno').val();
+        let direct_superior = $("#directsuperior").val();
+        let approvalremarks = $("#approvalremarks").val();
+
+        update_data(reimbursement_status,totalpaid,ticketNo,direct_superior,approvalremarks)
+    })
+
+    function updateReimbursementStatus(reimbursement_status, totalpaid, ticketNo, direct_superior, approvalremarks) {
+        // arrayReimbursement = arrayReimbursement.map(obj => {
+        //     if (obj.reimbursementEntity && obj.reimbursementEntity.ticketNo === ticketNo) {
+        //         return {
+        //             ...obj,
+        //             reimbursementEntity: {
+        //                 ...obj.reimbursementEntity,
+        //                 reimbursementStatus: reimbursement_status,
+        //                 paidAmount: totalpaid,
+        //                 approvalRemarks: approvalremarks
+        //             }
+        //         };
+        //     }
+        //     return obj;
+        // });
+
+        var item = arrayReimbursement.find(obj => obj.reimbursementEntity && obj.reimbursementEntity.ticketNo === ticketNo);
+
+        if (item) {
+            item.reimbursementEntity.reimbursementStatus = reimbursement_status;
+            item.reimbursementEntity.paidAmount = totalpaid;
+            item.reimbursementEntity.approvalRemarks = approvalremarks;
+
+            // table.ajax.reload(null, false);
+            // var oTable = $('#medical_table').dataTable();
+            // oTable.fnDraw(false);
+            table.clear().rows.add(arrayReimbursement).draw(false);
+        }
+    }
+
+    function update_data(reimbursement_status, totalpaid, ticketNo, direct_superior, approvalremarks){
+        $.ajax({
+            url: "{{ url('trans/update/table') }}",
+            type: "get",
+            data: {
+                'status': reimbursement_status,
+                'paidAmount': totalpaid,
+                'ticketNo' : ticketNo,
+                'employeeNo' : direct_superior,
+                'approvalRemarks': approvalremarks
+            },
+            success: function (response) {
+                if (response.status == "true") {
+                    $("#btn-update").prop("disabled", false);
+                    $("#btn-update").html(
+                        // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_update") }}'
                         'Update'
                     );
 
-                    $('#notification_error').modal('show');
-                    $('#message-notification-error').html(response);
+                    $('.close').click();
+                    
+                    $('#notification_success').modal('show');
+                    $('#message-notification-success').html(response
+                        .message);
+
+                    updateReimbursementStatus(reimbursement_status, totalpaid, ticketNo, direct_superior, approvalremarks);
+                    // var oTable = $('#medical_table').dataTable();
+                    // oTable.fnDraw(false);
+                    // setTimeout(function () {
+                    //     window.location =
+                    //         "{{ url('transaction/transaction_reimbursement') }}";
+                    // }, 3000);
+                } else{
+                    $("#btn-update").prop("disabled", false);
+                    $("#btn-update").html(
+                        // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
+                        'Update'
+                    );
+                    
+                    $('#notification_update_data_fail').modal('show');
+                    $('#message-notification-update-data-fail').html(response
+                        .message);
                 }
-            });
-        }
-    })
-}
+            },
+            error: function (response) {
+                $("#btn-update").prop("disabled", false);
+                $("#btn-update").html(
+                    // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
+                    'Update'
+                );
+
+                $('#notification_error').modal('show');
+                $('#message-notification-error').html(response);
+            }
+        });
+    }
 </script>
 
 <script type="text/javascript">

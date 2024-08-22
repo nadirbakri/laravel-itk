@@ -501,27 +501,9 @@ class TransactionController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            // dd(json_encode(
-            //     [
-            //         'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
-            //         'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
-            //         'employeeNo'=> $request->employeeNo,
-            //         'reimbursementType'=> $request->reimbursementType,
-            //         'businessUnit' => $request->businessUnit,
-            //         'exportMenu' => false,
-            //         'companyCode' => Session::get('companyCode'), 
-            //         'languageCode' => App::getLocale(), 
-            //         'sessionID' => 0, 
-            //         'sessionUserID' => Session::get('userID')
-            //     ]
-            //     ));
             $response = $client->post(env('API_URL') . '/mobile/TmReimbursement/getReimbursementDetailListAll',
                 ['body' => json_encode(
                     [
-                        // 'companyCode' => Session::get('companyCode'),
-                        // 'employeeNo' => $request->employeeNo,
-                        // 'logActionUserID' => Session::get('userID'),
-                        // 'logActionUsername' => Session::get('userName'),
                         'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
                         'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
                         'employeeNo'=> $request->employeeNo,
@@ -547,16 +529,13 @@ class TransactionController extends Controller
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
-        // var_dump($arrResult->dataListSet);
-        // $serializedData = serialize($arrResult->dataListSet);
-
-        // // save serialized data in a text file
-        // file_put_contents('your_file_name.txt', $serializedData);
 
         if($arrResult->dataListSet == null){
-            return Datatables::of([])->make(true);
+            // return Datatables::of([])->make(true);
+            return response()->json([]);
         }else{
-            return Datatables::of($arrResult->dataListSet)->make(true);
+            // return Datatables::of($arrResult->dataListSet)->make(true);
+            return response()->json($arrResult->dataListSet);
         }
     }
     
