@@ -14,11 +14,13 @@ use App\Exports\DetailRateOvertimeReportExport;
 use App\Exports\UpdateAbsenteeismDataTemplateExport;
 use App\Exports\ChangeDataShiftTemplateExcel;
 use App\Exports\PeMasterLeaveExport;
+use App\Exports\PlafonExport;
 
 use App\Imports\UpdateAbsenteeismDataImport;
 use App\Imports\ChangeDataShiftImport;
 use App\Imports\TimeRecordingImport;
 use App\Imports\PeMasterLeaveImport;
+use App\Imports\PlafonImport;
 
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
@@ -217,6 +219,11 @@ class TimeManagementController extends Controller
     public function pageExportImportLeave()
     {
         return view ('time_management.tm_export_import_leave');
+    }
+
+    public function pageExportImportPlafon()
+    {
+        return view ('time_management.tm_export_import_plafon');
     }
 
     public function pageCompanyWorkingCalendar()
@@ -1502,6 +1509,34 @@ class TimeManagementController extends Controller
             $nama_file = rand().$file->getClientOriginalName();
             $file->move('file_excel', $nama_file);
             $import = new PeMasterLeaveImport;
+            Excel::import($import, public_path('file_excel/'.$nama_file), null, \Maatwebsite\Excel\Excel::XLSX);
+            File::delete('file_excel/'.$nama_file);
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            $failures = $e->failures();
+            $objError = (object) ['status' => false, 'message' => $failures[0]->errors()[0]];
+            return array(0 => $objError);
+        }
+
+        if(empty($import->getArrResult())){
+            $objError = (object) ['status' => false, 'message' => "The Uploaded File Doesn't Match The Template"];
+            return array(0 => $objError);
+        }else{
+            return $import->getArrResult();
+        }
+    }
+
+    public function exportExportImportPlafon(Request $request)
+    {
+        return Excel::download(new PlafonExport(isset($request->choose_specific_employee_no) ? (bool) $request->choose_specific_employee_no : false, $request->employee_no, isset($request->choose_specific_plafon_code) ? (bool) $request->choose_specific_plafon_code : false, $request->plafon_code), 'Plafon Report.xlsx');
+    }
+
+    public function importExportImportPlafon(Request $request)
+    {
+        try{
+            $file = $request->file('import_plafon');
+            $nama_file = rand().$file->getClientOriginalName();
+            $file->move('file_excel', $nama_file);
+            $import = new PlafonImport;
             Excel::import($import, public_path('file_excel/'.$nama_file), null, \Maatwebsite\Excel\Excel::XLSX);
             File::delete('file_excel/'.$nama_file);
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
