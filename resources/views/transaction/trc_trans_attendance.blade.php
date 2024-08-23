@@ -135,6 +135,34 @@
             border:2px solid #ddd;
             border-radius: 5px;
         }
+
+        #loading {
+			display: none;
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(255, 255, 255, 0.8);
+			z-index: 9999;
+		}
+
+		.spinner {
+            position: absolute;
+			margin-left: 45%;
+			margin-top: 20%;
+			border-radius: 50%;
+			width: 50px;
+			height: 50px;
+			border-radius: 50%;
+			border: 5px solid #ccc;
+			border-top-color: #333;
+			animation: spin 1s infinite linear;
+		}
+
+        @keyframes spin {
+		to { transform: rotate(360deg); }
+		}
     </style>
 </head>
 
@@ -206,7 +234,10 @@
             </form>
         </div>
         <br>
-        <div class="card">
+        <div class="card" style="position: relative;">
+            <div id="loading">
+                <div class="spinner"></div>
+            </div>
             <div class="row">
                     <p><b>{{ __('trans_attendance.list_table') }}</b></p>
             </div>
@@ -471,96 +502,101 @@
 </script>
 
 <script type="text/javascript">
-    function load_data_reimbursement(claim_date_from, claim_date_to, direct_superior, reimbursement_type, business_unit) {
-            table = $('#reimbursement_table').DataTable({
-                processing: true,
-                serverSide: true,
-                orderCellsTop: true,
-                ajax: {
-                    url : "{{ url('trans/attendance/table') }}",
-                    data: {
-                        'startDate': claim_date_from,
-                        'endDate': claim_date_to,
-                        'employeeNo' : direct_superior
+    var table = null;
+    var table2 = null;
+    var arrayAttendance = [];
 
+    function load_data_attendance(claim_date_from, claim_date_to, direct_superior){
+        $.ajax({
+            type: 'GET',
+            url: "{{ url('/trans/attendance/table') }}",
+            data: {
+                'startDate': claim_date_from,
+                'endDate': claim_date_to,
+                'employeeNo' : direct_superior
+            }
+        }).then(function (data) {
+            arrayAttendance = data;
+            $('#reimbursement_table').DataTable().destroy();
+            load_data_table_attendance();
+            $('#loading').hide();
+        });
+    }
+
+    function load_data_table_attendance() {
+        table = $('#reimbursement_table').DataTable({
+            processing: true,
+            // serverSide: true,
+            orderCellsTop: true,
+            data: arrayAttendance,
+            error: function(jqXHR, ajaxOptions, thrownError) {
+                alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
+            },
+            "sDom": 'lfrtip',
+            'sPaginationType': 'full_numbers',
+            "order": [[ 1, "asc" ]],
+            columns: [
+                {
+                    orderable: false,
+                    targets: 0, 
+                    "defaultContent": '',
+                    render: function(data, type) {
+                        return type === 'display'? '<button type="button" onclick="klikdetail(this)" class="btn btn-info" name="btn-detail" id="btn-detail" style="width: 100%;" data-toggle="modal" data-target="#modal_list_detail"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-justify" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M2 12.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/></svg> {{ __('trans_medical.detail') }} </button>' : '';
                     }
                 },
-                error: function(jqXHR, ajaxOptions, thrownError) {
-                    alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
+                {data: 'createDate', name: 'createDate', 
+                    render: function (data, type, row) {
+                        if(data == null){
+                            return '-'
+                        }else{
+                            return moment(data).format('YYYY-MM-DD')
+                        }
+                    }
                 },
-                "sDom": 'lfrtip',
-                'sPaginationType': 'full_numbers',
-                "order": [[ 1, "asc" ]],
-                columns: [
-                    {
-                        orderable: false,
-                        targets: 0, 
-                        "defaultContent": '',
-                        render: function(data, type) {
-                            return type === 'display'? '<button type="button" onclick="klikdetail(this)" class="btn btn-info" name="btn-detail" id="btn-detail" style="width: 100%;" data-toggle="modal" data-target="#modal_list_detail"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-justify" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M2 12.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/></svg> {{ __('trans_medical.detail') }} </button>' : '';
+                {data: 'employeeNo', name: 'employeeNo'},
+                {data: 'checkInDate', name: 'checkInDate',
+                    render: function (data, type, row){
+                        if(data == null){
+                            return '-'
+                        }else{
+                            return moment(data).format('HH:mm')
                         }
-                    },
-                    {data: 'createDate', name: 'createDate', 
-                            render: function (data, type, row) {
-                                if(data == null){
-                                    return '-'
-                                }else{
-                                    return moment(data).format('YYYY-MM-DD')
-                                }
+                    }
+                },
+                {data: 'checkOutDate', name: 'checkOutDate',
+                    render: function (data, type, row){
+                        if(data == null){
+                            return '-'
+                        }else{
+                            return moment(data).format('HH:mm')
                         }
-                    },
-                    {data: 'employeeNo', name: 'employeeNo'},
-                    {data: 'checkInDate', name: 'checkInDate',
-                            render: function (data, type, row){
-                                if(data == null){
-                                    return '-'
-                                }else{
-                                    return moment(data).format('HH:mm')
-                                }
-                            }
-                    },
-                    {data: 'checkOutDate', name: 'checkOutDate',
-                            render: function (data, type, row){
-                                if(data == null){
-                                    return '-'
-                                }else{
-                                    return moment(data).format('HH:mm')
-                                }
-                            }
-                    },
-                    {data: 'absenceType', name: 'absenceType'},
-                ]
-            });
+                    }
+                },
+                {data: 'absenceType', name: 'absenceType'},
+            ]
+        });
 
-            $("#btn-search").prop("disabled", true);
-            $("#btn-search").html(
-                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+        $("#btn-search").prop("disabled", true);
+        $("#btn-search").html(
+            '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+        );
+    
+        $("#btn-search").prop("disabled", false);
+        $("#btn-search").html(
+            "<img src={{ url('icons/mob/button/button-search.svg') }} alt='export'> {{ __('trans_transport.btn_search') }}"
+        );
+    }
 
-            );
-       
+    $("#trans_attendance_form").submit((e)=>{
+        e.preventDefault();
 
-            $("#btn-search").prop("disabled", false);
-            $("#btn-search").html(
-                "<img src={{ url('icons/mob/button/button-search.svg') }} alt='export'> {{ __('trans_transport.btn_search') }}"
-            );
-        }
+        var claim_date_from = $("#claim_date_from").val();
+        var claim_date_to = $("#claim_date_to").val();
+        var direct_superior = $("#direct_superior").val();
 
-        $("#trans_attendance_form").submit((e)=>{
-            e.preventDefault();
+        $('#loading').show();
 
-            var claim_date_from = $("#claim_date_from").val();
-            var claim_date_to = $("#claim_date_to").val();
-            var direct_superior = $("#direct_superior").val();
-            var reimbursement_type = $("#reimbursement_type").val();
-            var business_unit = $("#business_unit").val();
-
-            // $("#btn-search").prop("disabled", true);
-            // $("#btn-search").html(
-            //     '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
-            // );
-
-            $('#reimbursement_table').DataTable().destroy();
-            load_data_reimbursement(claim_date_from, claim_date_to,direct_superior, reimbursement_type, business_unit);
+        load_data_attendance(claim_date_from, claim_date_to, direct_superior);
     })
 
     const klikdetail = (element) => {
