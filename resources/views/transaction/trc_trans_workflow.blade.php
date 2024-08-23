@@ -109,6 +109,34 @@
         .detailstatus input{
             outline: none;
         }
+
+        #loading {
+			display: none;
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(255, 255, 255, 0.8);
+			z-index: 9999;
+		}
+
+		.spinner {
+            position: absolute;
+			margin-left: 45%;
+			margin-top: 20%;
+			border-radius: 50%;
+			width: 50px;
+			height: 50px;
+			border-radius: 50%;
+			border: 5px solid #ccc;
+			border-top-color: #333;
+			animation: spin 1s infinite linear;
+		}
+
+        @keyframes spin {
+		to { transform: rotate(360deg); }
+		}
     </style>
 </head>
 
@@ -203,7 +231,10 @@
                 <br>
 
                 <!-- TABLE -->
-                <div class="card">
+                <div class="card" style="position: relative;">
+                    <div id="loading">
+                        <div class="spinner"></div>
+                    </div>
                     <div class="row">
                         <div class="col-6">
                             <p><b>{{ __('trans_workflow.list_table') }}</b></p>
@@ -748,6 +779,7 @@
                 $('#leave_table').DataTable().destroy();
                 load_data_table_workflow_leave();
             }
+            $('#loading').hide();
         });
         
     }
@@ -867,6 +899,8 @@
         var business_unit = $("#business_unit").val();
         var workflow_type = $("#workflow_type").val();
         var status = $("#workflow_status").val();
+
+        $('#loading').show();
         
         load_data_workflow(claim_date_from, claim_date_to, employee_no,  business_unit, workflow_type, status);
     })
@@ -1085,7 +1119,7 @@
     loadDataStatus();
     loadDataFirstLastAllStatus();
     
-        $.get("{{ url('level/api') }}", function (data) {
+        $.get("{{ url('level/all/api') }}", function (data) {
             $.each(data, function (k, v) {
                 $('#business_unit').append("<option value=" + v.levelCode + ">" + v.levelName +
                     "</option>");
@@ -1144,7 +1178,7 @@
                     }
                 },
                 ajax: {
-                    url: "{{ url('/level/api') }}",
+                    url: "{{ url('/level/all/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",

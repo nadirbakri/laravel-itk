@@ -969,7 +969,7 @@
             });
         });
     
-        $.get("{{ url('level/api') }}", function (data) {      
+        $.get("{{ url('level/all/api') }}", function (data) {      
             $.each(data, function (k, v) {
                 $('#business_unit').append("<option value=" + v.levelCode + ">" + v.levelName +
                     "</option>");
@@ -1089,7 +1089,7 @@
                     }
                 },
                 ajax: {
-                    url: "{{ url('/level/api') }}",
+                    url: "{{ url('/level/all/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",

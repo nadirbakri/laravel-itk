@@ -513,6 +513,7 @@ class TransactionController extends Controller
                         'employeeNo'=> $request->employeeNo,
                         'reimbursementType'=> $request->reimbursementType,
                         'businessUnit' => $request->businessUnit,
+                        'reimbursementStatus' => ($request->reimbursementStatus == 'ALL') ? null : $request->reimbursementStatus,
                         'exportMenu' => false,
                         'companyCode' => Session::get('companyCode'), 
                         'languageCode' => strtoupper(App::getLocale()), 

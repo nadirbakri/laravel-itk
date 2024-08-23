@@ -8,6 +8,7 @@ return [
     'label_claim_date_end' => 'Tanggal Ke',
     'label_processed_date' => 'Tanggal di Proses',
     'label_business_unit' => 'Unit Bisnis',
+    'label_reimbursement_status' => 'Status Reimbursement',
     'label_status' => 'Status',
     'label_reimbursement_type' => 'Tipe Reimbursement',
     'label_bu' => 'Unit Bisnis',

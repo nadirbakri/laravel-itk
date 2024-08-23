@@ -671,7 +671,7 @@ loadDataTravelType();
 loadDataFirstLastAllTravelType();
 loadDataFirstLastAllBusinessUnit();
 
-$.get("{{ url('level/api') }}", function (data) {
+$.get("{{ url('level/all/api') }}", function (data) {
             $.each(data, function (k, v) {
                 $('#business_unit').append("<option value=" + v.levelName + ">" + v.levelCode +
                     "</option>");
@@ -744,7 +744,7 @@ $.get("{{ url('level/api') }}", function (data) {
                     }
                 },
                 ajax: {
-                    url: "{{ url('/level/api') }}",
+                    url: "{{ url('/level/all/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",

@@ -252,7 +252,7 @@ tr.shown td.details-control {
     opacity: 1;
 }
 .select2-container .select2-selection--single {
-    height: 6.3vh;
+    height: calc(1.5em + 0.75rem + 2px);
 }
 .select2-container .select2-selection--single .select2-selection__rendered {
     padding-top: 0.7%;

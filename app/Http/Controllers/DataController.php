@@ -9663,6 +9663,11 @@ class DataController extends Controller
 	{
 		$search = $request->search;
 
+		$reimbursement_type[] = (object) [
+    		'comGenCode' => 'ALL',
+    		'value' => 'ALL'
+		];
+
 		try {
 			$client = new Client([
                 'verify' => false,
@@ -9691,12 +9696,15 @@ class DataController extends Controller
 			
 			$arrResult = json_decode($response->getBody()->getContents());
 
+			if($arrResult->dataListSet !== null){
+				$reimbursement_type = array_merge($reimbursement_type, $arrResult->dataListSet);
+			}
+
 			if($search == ''){
-				$data = $arrResult->dataListSet;
+				$data = $reimbursement_type;
 			}else{
-				$data    = array_filter(
-				$arrResult->dataListSet,
-				function($value) use ($search){
+				$data = array_filter(
+				$reimbursement_type, function($value) use ($search){
 					if(preg_match('/' . $search . '/i', $value->value)){
 						return preg_match('/' . $search . '/i', $value->value);
 					}
@@ -10513,9 +10521,13 @@ class DataController extends Controller
 		}
 		return response()->json($data);
 	}
-	public function dataStatusTransactionAPI (Request $request)
+	public function dataStatusTransactionAPI(Request $request)
 	{
 		$search = $request->search;
+		$data[] = (object) [
+    		'code' => 'ALL',
+    		'value' => 'ALL'
+		];
 
 		try {
 			$client = new Client([
@@ -10545,10 +10557,11 @@ class DataController extends Controller
 			$arrResult = json_decode($response->getBody()->getContents());
 			
 			if($search == ''){
-				$data = $arrResult->dataListSet;
+				$data = array_merge($data, $arrResult->dataListSet);
 			}else{
-				$data    = array_filter(
-				$arrResult->dataListSet,
+				$data = array_merge($data, $arrResult->dataListSet);
+				$data = array_filter(
+				$data,
 				function($value) use ($search){
 					if(preg_match('/' . $search . '/i', $value->value)){
 						return preg_match('/' . $search . '/i', $value->value);
