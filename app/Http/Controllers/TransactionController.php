@@ -179,6 +179,7 @@ class TransactionController extends Controller
                         'employeeNo'=> $request->employeeNo,
                         'medicalType1'=> $request->medicalType1,
                         'businessUnit' => $request->businessUnit,
+                        'reimbursementStatus' => ($request->status == 'ALL') ? null : $request->status,
                         'exportMenu' => false,
                         'companyCode' => Session::get('companyCode'), 
                         'languageCode' => strtoupper(App::getLocale()), 
@@ -203,9 +204,11 @@ class TransactionController extends Controller
         // var_dump($arrResult->dataListSet);
 
         if($arrResult->dataListSet == null){
-            return Datatables::of([])->make(true);
+            // return Datatables::of([])->make(true);
+            return response()->json([]);
         }else{
-            return Datatables::of($arrResult->dataListSet)->make(true);
+            // return Datatables::of($arrResult->dataListSet)->make(true);
+            return response()->json($arrResult->dataListSet);
         }
     }
    
@@ -744,6 +747,7 @@ class TransactionController extends Controller
                         'type' =>  $request->type,
                         'businessUnit'=> $request->businessUnit,
                         'employeeNo'=> $request->employeeNo,
+                        'status' => ($request->status == 'ALL') ? null : $request->status,
                         'companyCode' => Session::get('companyCode'), 
                         'languageCode' => strtoupper(App::getLocale()), 
                         'sessionID' => 0, 
@@ -1218,19 +1222,6 @@ class TransactionController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            //  var_dump(json_encode(
-            //     [
-            //         'status'=> $request->status,
-            //         'companyCode' => Session::get('companyCode'),
-            //         'ticketNo' => $request->ticketNo,
-            //         'directSuperiorID'=> $request->directSuperiorID,
-            //         'sessionUserID' => Session::get('userID'),
-            //         'languageCode' => App::getLocale(), 
-            //         'paidAmount'=> (int) $request->paidAmount,
-            //         'approvalRemarks'=> $request->approvalRemarks
-                   
-            //     ]
-            //     ));
             $response = $client->put(env('API_URL') . '/mobile/reimbursementmedical/updatereimbursementapproval',
                 ['body' => json_encode(
                     [

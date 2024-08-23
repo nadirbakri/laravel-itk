@@ -2,8 +2,8 @@
 return [ 
     'judul' => 'Riwayat Kesehatan',
     'list' => 'Riwayat Kesehatan',
-    'label_claim_date_start' => 'Tanggal Pengajuan - Ke',
-    'label_claim_date_end' => 'Tanggal Pengajuan - Sampai',
+    'label_claim_date_start' => 'Tanggal Ke',
+    'label_claim_date_end' => 'Tanggal Sampai',
     'label_reimbursement_type' => 'Tipe Pengajuan',
     'label_business_unit' => 'Unit Bisnis',
     'label_medical_status' => 'Status Kesehatan',

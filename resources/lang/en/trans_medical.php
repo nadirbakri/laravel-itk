@@ -2,8 +2,8 @@
 return [ 
     'judul' => 'Medical History',
     'list' => 'Medical History',
-    'label_claim_date_start' => 'Claim Date - Start',
-    'label_claim_date_end' => 'Claim Date - End',
+    'label_claim_date_start' => 'Start Date',
+    'label_claim_date_end' => 'End Date',
     'label_reimbursement_type' => 'Reimbursement Type',
     'label_business_unit' => 'Business Unit',
     'label_medical_status' => 'Medical Status',

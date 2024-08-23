@@ -113,6 +113,34 @@
         .detailstatus input{
             outline: none;
         }
+
+        #loading {
+			display: none;
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(255, 255, 255, 0.8);
+			z-index: 9999;
+		}
+
+		.spinner {
+            position: absolute;
+			margin-left: 45%;
+			margin-top: 20%;
+			border-radius: 50%;
+			width: 50px;
+			height: 50px;
+			border-radius: 50%;
+			border: 5px solid #ccc;
+			border-top-color: #333;
+			animation: spin 1s infinite linear;
+		}
+
+        @keyframes spin {
+		to { transform: rotate(360deg); }
+		}
     </style>
 </head>
 
@@ -127,62 +155,62 @@
                         <span class="title-text">{{ __('trans_medical.list') }}</span>
                     </a>
                 </div>
-            <div class="row">
-                <div class="col-5">
-                    <div class="form-group">
-                        <label for="claim_date_from form-check-label">{{ __('trans_medical.label_claim_date_start') }}</label>
-                    </div>
-                    <div class="input-group">
-                        <input type="text" class="form-control" id="claim_date_from" name="claim_date_from"
-                            placeholder="{{ __('trans_medical.label_claim_date_start') }}">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="claim_date_from_calendar"><span class="fa fa-calendar"></span></span>
+                <div class="row">
+                    <div class="col-5">
+                        <div class="form-group">
+                            <label for="claim_date_from form-check-label">{{ __('trans_medical.label_claim_date_start') }}</label>
                         </div>
-                    </div>
-                    <input type="text" class="form-control" id="claim_date_from_hidden" name="claim_date_from_hidden" hidden>
-                </div>
-                <div class="col-5">
-                    <div class="form-group">
-                        <label for="claim_date_to form-check-label">{{ __('trans_medical.label_claim_date_end') }}</label>
-                    </div>
-                    <div class="input-group">
-                        <input type="text" class="form-control" id="claim_date_to" name="claim_date_to"
-                            placeholder="{{ __('trans_medical.label_claim_date_end') }}">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="claim_date_to_calendar"><span class="fa fa-calendar"></span></span>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="claim_date_from" name="claim_date_from"
+                                placeholder="{{ __('trans_medical.label_claim_date_start') }}">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="claim_date_from_calendar"><span class="fa fa-calendar"></span></span>
+                            </div>
                         </div>
+                        <input type="text" class="form-control" id="claim_date_from_hidden" name="claim_date_from_hidden" hidden>
                     </div>
-                    <input type="text" class="form-control" id="claim_date_to_hidden" name="claim_date_to_hidden" hidden>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-5">
-                    <div class="form-group">
-                        <label for="reimbursement_type form-check-label">{{ __('trans_medical.label_reimbursement_type') }}</label>
+                    <div class="col-5">
+                        <div class="form-group">
+                            <label for="claim_date_to form-check-label">{{ __('trans_medical.label_claim_date_end') }}</label>
+                        </div>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="claim_date_to" name="claim_date_to"
+                                placeholder="{{ __('trans_medical.label_claim_date_end') }}">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="claim_date_to_calendar"><span class="fa fa-calendar"></span></span>
+                            </div>
+                        </div>
+                        <input type="text" class="form-control" id="claim_date_to_hidden" name="claim_date_to_hidden" hidden>
                     </div>
-                    <select class="form-control select2" id="reimbursement_type" name="reimbursement_type[]"></select>
                 </div>
-                <div class="col-5">
-                    <div class="form-group">
-                        <label for="business_unit form-check-label">{{ __('trans_medical.label_business_unit') }}</label>
+                <div class="row">
+                    <div class="col-5">
+                        <div class="form-group">
+                            <label for="reimbursement_type form-check-label">{{ __('trans_medical.label_reimbursement_type') }}</label>
+                        </div>
+                        <select class="form-control select2" id="reimbursement_type" name="reimbursement_type[]"></select>
                     </div>
-                    <select class="form-control select2" id="business_unit" name="business_unit"></select>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-5">
-                    <div class="form-group">
-                        <label for="medical_status form-check-label">{{ __('trans_medical.label_medical_status') }}</label>
+                    <div class="col-5">
+                        <div class="form-group">
+                            <label for="business_unit form-check-label">{{ __('trans_medical.label_business_unit') }}</label>
+                        </div>
+                        <select class="form-control select2" id="business_unit" name="business_unit"></select>
                     </div>
-                    <select class="form-control select2" id="medical_status" name="medical_status"></select>
                 </div>
-                <div class="col-5">
-                    <div class="form-group">
-                            <label for="direct_superior form-check-label">{{ __('trans_medical.employeeno') }}</label>
+                <div class="row">
+                    <div class="col-5">
+                        <div class="form-group">
+                            <label for="medical_status_filter form-check-label">{{ __('trans_medical.label_medical_status') }}</label>
+                        </div>
+                        <select class="form-control select2" id="medical_status_filter" name="medical_status_filter"></select>
                     </div>
-                            <input type="text" class="form-control" id="direct_superior" name="direct_superior" placeholder="{{ __('trans_medical.employeeno') }}">
+                    <div class="col-5">
+                        <div class="form-group">
+                                <label for="direct_superior form-check-label">{{ __('trans_medical.employeeno') }}</label>
+                        </div>
+                                <input type="text" class="form-control" id="direct_superior" name="direct_superior" placeholder="{{ __('trans_medical.employeeno') }}">
+                    </div>
                 </div>
-            </div>
 
                 <!-- BUTTON -->
                 <div class="row">
@@ -203,46 +231,41 @@
                         <i class="fa fa-plus"></i> {{ __('trans_medical.btn_list') }}
                         </button>
                     </div>
-                    {{-- <div class="col-3">
-                        <button class="btn btn-primary" name="btn-list" id="btn-list" value="preview" style="width: 100%;">
-                            <img src="{{ url('icons/mob/button/button-list.svg') }}" alt="export"> {{ __('trans_medical.btn_list') }}
-                        </button>
-                    </div> --}}
                 </div>
-<br>
+                <br>
                 <!-- TABLE -->
 
-                <div class="card">
-                   
-                <div class="row">
-                    <div class="col-6">
-                        <p><b>{{ __('trans_medical.list_table') }}</b></p>
+                <div class="card" style="position: relative;"> 
+                    <div id="loading">
+                        <div class="spinner"></div>
+                    </div> 
+                    <div class="row">
+                        <div class="col-6">
+                            <p><b>{{ __('trans_medical.list_table') }}</b></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="table-responsive">
+                            <table id="medical_table" class="display table-striped table-hover dt-responsive display nowrap" cellspacing="10">
+                                <thead>
+                                    <tr>
+                                        <th>{{ __('trans_medical.detail') }}</th>
+                                        <th>{{ __('trans_medical.rdate') }}</th>
+                                        <th>{{ __('trans_medical.tnumber') }}</th>
+                                        <th>{{ __('trans_medical.status') }}</th>
+                                        <th>{{ __('trans_medical.enom') }}</th>
+                                        <th>{{ __('trans_medical.ename') }}</th>
+                                        <th>{{ __('trans_medical.redate') }}</th>
+                                        <th>{{ __('trans_medical.treq') }}</th>
+                                        <th>{{ __('trans_medical.prem') }}</th>
+                                        <th>{{ __('trans_medical.tpaid') }}</th>
+                                        {{-- <th>Remarks</th> --}}
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="table-responsive">
-                        <table id="medical_table" class="display table-striped table-hover dt-responsive display nowrap" cellspacing="10">
-                            <thead>
-                                <tr>
-                                    <th>{{ __('trans_medical.detail') }}</th>
-                                    <th>{{ __('trans_medical.rdate') }}</th>
-                                    <th>{{ __('trans_medical.tnumber') }}</th>
-                                    <th>{{ __('trans_medical.status') }}</th>
-                                    <th>{{ __('trans_medical.enom') }}</th>
-                                    <th>{{ __('trans_medical.ename') }}</th>
-                                    <th>{{ __('trans_medical.redate') }}</th>
-                                    <th>{{ __('trans_medical.treq') }}</th>
-                                    <th>{{ __('trans_medical.prem') }}</th>
-                                    <th>{{ __('trans_medical.tpaid') }}</th>
-                                    {{-- <th>Remarks</th> --}}
-                                </tr>
-                            </thead>
-                        </table>
-                    </div>
-                </div>
-                </div>
-                
-
             </div>
         </form>
     </div>
@@ -612,10 +635,10 @@
                             $('#notification_success').modal('show');
                             $('#message-notification-success').html(response[0]
                                 .message);
-                            setTimeout(function () {
-                                window.location =
-                                    "{{ url('transaction/transaction_medical_history') }}";
-                            }, 3000);
+                            // setTimeout(function () {
+                            //     window.location =
+                            //         "{{ url('transaction/transaction_medical_history') }}";
+                            // }, 3000);
                         } else {
                             $("#btn-process").prop("disabled", false);
                             $("#btn-process").html(
@@ -648,181 +671,118 @@
             }
         })
     }
-    </script>
-<script>
-    $('#btn-update').click(()=>{
-        let reimbursement_status = $('#reimbursement_status').val();
-        let totalpaid = $('#totalpaid').val();
-        let ticketNo = $('#tiketno').val();
-        let direct_superior = $("#directsuperior").val();
-        let approvalremarks = $("#approvalremarks").val();
-        let status = $("#medical_status").val();
-        // alert(totalpaid)
-        $('.close').click();
-        update_data(reimbursement_status,totalpaid,ticketNo,direct_superior,approvalremarks)
-    })
-
-    function update_data(reimbursement_status, totalpaid, ticketNo,direct_superior,approvalremarks){
-        $.ajax({
-            url: "{{ url('trans/update_medical/table') }}",
-            type: "get",
-            data: {
-                'status': reimbursement_status,
-                'paidAmount': totalpaid,
-                'ticketNo' : ticketNo,
-                'directSuperiorID' : direct_superior,
-                'approvalRemarks' : approvalremarks
-            },
-            success: function (response) {
-                // console.log(response.status);
-                if (response.status == "true") {
-                    $("#btn-update").prop("disabled", false);
-                    $("#btn-update").html(
-                        // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
-                        'Update'
-                    );
-                    
-                    $('#notification_success').modal('show');
-                    $('#message-notification-success').html(response
-                        .message);
-                    setTimeout(function () {
-                        window.location =
-                            "{{ url('transaction/transaction_medical_history') }}";
-                    }, 3000);
-                } else {
-                    $("#btn-update").prop("disabled", false);
-                               $("#btn-update").html(
-                                   // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
-                                   'Update'
-                               );
-                               
-                               $('#notification_update_data_fail').modal('show');
-                               $('#message-notification-update-data-fail').html(response
-                                   .message);
-                               setTimeout(function () {
-                                window.location =
-                            "{{ url('transaction/transaction_medical_history') }}";
-                    }, 3000);
-                           }
-                       },
-                error: function (response) {
-                $("#btn-update").prop("disabled", false);
-                $("#btn-update").html(
-                    // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
-                    'Update'
-                );
-
-                $('#notification_error').modal('show');
-                $('#message-notification-error').html(response);
-            }
-        });
-    }
 </script>
 <script type="text/javascript">
-    function load_data_medical_history(claim_date_from, claim_date_to, direct_superior, reimbursement_type, business_unit) {
-            table = $('#medical_table').DataTable({
-                processing: true,
-                serverSide: true,
-                orderCellsTop: true,
-                ajax: {
-                    url : "{{ url('trans/medical_history/table') }}",
-                    data: {
-                        'startDate': claim_date_from,
-                        'endDate': claim_date_to,
-                        'employeeNo' : direct_superior,
-                        'medicalType1' : reimbursement_type,
-                        'businessUnit' : business_unit
+    var table = null;
+    var table2 = null;
+    var arrayMedical = [];
+
+    function load_data_medical_history(claim_date_from, claim_date_to, direct_superior, reimbursement_type, business_unit, medical_status){
+        $.ajax({
+            type: 'GET',
+            url: "{{ url('/trans/medical_history/table') }}",
+            data: {
+                'startDate': claim_date_from,
+                'endDate': claim_date_to,
+                'employeeNo' : direct_superior,
+                'medicalType1' : reimbursement_type,
+                'businessUnit' : business_unit,
+                'status' : medical_status,
+            }
+        }).then(function (data) {
+            arrayMedical = data;
+            $('#medical_table').DataTable().destroy();
+            load_data_table_medical_history();
+            $('#loading').hide();
+        });
+    }
+    
+    function load_data_table_medical_history() {
+        table = $('#medical_table').DataTable({
+            processing: true,
+            // serverSide: true,
+            orderCellsTop: true,
+            data: arrayMedical,
+            error: function(jqXHR, ajaxOptions, thrownError) {
+                alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
+            },
+            "sDom": 'lfrtip',
+            'sPaginationType': 'full_numbers',
+            "order": [[ 1, "asc" ]],
+            columns: [
+                {
+                    orderable: false,
+                    targets: 0, 
+                    "defaultContent": '',
+                    render: function(data, type) {
+                        return type === 'display'? '<button type="button" onclick="klikdetail(this)" class="btn btn-info" name="btn-detail" id="btn-detail" style="width: 100%;" data-toggle="modal" data-target="#modal_list_detail"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-justify" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M2 12.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/></svg> {{ __('trans_medical.detail') }} </button>' : '';
 
                     }
                 },
-                error: function(jqXHR, ajaxOptions, thrownError) {
-                    alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
+                {data: 'reimbursementEntity.createdDate', name: 'reimbursementEntity.createdDate', 
+                    render: function (data, type, row) {
+                        if (data == null){
+                            return '-'
+                        }else {
+                            return moment(data).format('YYYY-MM-DD');
+                        }
+                    }
                 },
-                "sDom": 'lfrtip',
-                'sPaginationType': 'full_numbers',
-                "order": [[ 1, "asc" ]],
-                columns: [
-                    {
-                        orderable: false,
-                        targets: 0, 
-                        "defaultContent": '',
-                        render: function(data, type) {
-                            return type === 'display'? '<button type="button" onclick="klikdetail(this)" class="btn btn-info" name="btn-detail" id="btn-detail" style="width: 100%;" data-toggle="modal" data-target="#modal_list_detail"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-justify" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M2 12.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/></svg> {{ __('trans_medical.detail') }} </button>' : '';
-
+                {data: 'reimbursementEntity.ticketNo', name: 'reimbursementEntity.ticketNo'},
+                {data: 'reimbursementEntity.reimbursementStatus', name: 'reimbursementEntity.reimbursementStatus'},
+                {data: 'reimbursementEntity.directSuperiorID', name: 'reimbursementEntity.directSuperiorID'},
+                {data: 'reimbursementEntity.fullnameRequester', name: 'reimbursementEntity.fullnameRequester'},
+                {data: 'reimbursementEntity.receiptDate', name: 'reimbursementEntity.receiptDate',
+                    render: function (data, type, row) {
+                        if (data == null){
+                            return '-'
+                        }else {
+                            return moment(data).format('YYYY-MM-DD');
                         }
-                    },
-                    {data: 'reimbursementEntity.createdDate', name: 'reimbursementEntity.createdDate', 
-                                render: function (data, type, row) {
-                                if (data == null){
-                                    return '-'
-                                }else {
-                                    return moment(data).format('YYYY-MM-DD');
-                                }
-                            }
-                    },
-                    {data: 'reimbursementEntity.ticketNo', name: 'reimbursementEntity.ticketNo'},
-                    {data: 'reimbursementEntity.reimbursementStatus', name: 'reimbursementEntity.reimbursementStatus'},
-                    {data: 'reimbursementEntity.directSuperiorID', name: 'reimbursementEntity.directSuperiorID'},
-                    {data: 'reimbursementEntity.fullnameRequester', name: 'reimbursementEntity.fullnameRequester'},
-                    {data: 'reimbursementEntity.receiptDate', name: 'reimbursementEntity.receiptDate',
-                                render: function (data, type, row) {
-                                if (data == null){
-                                    return '-'
-                                }else {
-                                    return moment(data).format('YYYY-MM-DD');
-                                }
-                            }
-                    },
-                    {data: 'reimbursementEntity.totalClaimAmount', name: 'reimbursementEntity.totalClaimAmount',
-                        render: function (data, type, row) {
-                            return data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-                        }
-                    },
-                    {data: 'reimbursementEntity.approvalRemarks', name: 'reimbursementEntity.approvalRemarks'
-                    },
-                    {data: 'reimbursementEntity.paidAmount', name: 'reimbursementEntity.paidAmount',
-                        render: function (data, type, row) {
-                            return data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-                        }
-                    },
-                ],
-                select: {
-                    style:    'multi',
-                    selector: 'td:first-child'
-                }
-            });
+                    }
+                },
+                {data: 'reimbursementEntity.totalClaimAmount', name: 'reimbursementEntity.totalClaimAmount',
+                    render: function (data, type, row) {
+                        return data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                    }
+                },
+                {data: 'reimbursementEntity.approvalRemarks', name: 'reimbursementEntity.approvalRemarks'
+                },
+                {data: 'reimbursementEntity.paidAmount', name: 'reimbursementEntity.paidAmount',
+                    render: function (data, type, row) {
+                        return data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                    }
+                },
+            ]
+        });
 
-            $("#btn-search").prop("disabled", true);
-            $("#btn-search").html(
-                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+        $("#btn-search").prop("disabled", true);
+        $("#btn-search").html(
+            '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
 
-            );
+        );
 
-            
+        $("#btn-search").prop("disabled", false);
+        $("#btn-search").html(
+            "<img src={{ url('icons/mob/button/button-search.svg') }} alt='export'> {{ __('trans_transport.btn_search') }}"
+        );
+    }
 
-            $("#btn-search").prop("disabled", false);
-            $("#btn-search").html(
-                "<img src={{ url('icons/mob/button/button-search.svg') }} alt='export'> {{ __('trans_transport.btn_search') }}"
-            );
-        }
+    $("#trans_medical_form").submit((e)=>{
+        e.preventDefault();
 
-        $("#trans_medical_form").submit((e)=>{
-            e.preventDefault();
+        var claim_date_from = $("#claim_date_from").val();
+        var claim_date_to = $("#claim_date_to").val();
+        var direct_superior = $("#direct_superior").val();
+        var reimbursement_type = $("#reimbursement_type").val();
+        var business_unit = $("#business_unit").val();
+        var medical_status = $("#medical_status_filter").val();
 
-            var claim_date_from = $("#claim_date_from").val();
-            var claim_date_to = $("#claim_date_to").val();
-            var direct_superior = $("#direct_superior").val();
-            var reimbursement_type = $("#reimbursement_type").val();
-            var business_unit = $("#business_unit").val();
+        $('#loading').show();
 
-            // $("#btn-search").prop("disabled", true);
-            // $("#btn-search").html(
-            //     '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
-            // );
-
-            $('#medical_table').DataTable().destroy();
-            load_data_medical_history(claim_date_from, claim_date_to,direct_superior, reimbursement_type, business_unit);
+        load_data_medical_history(claim_date_from, claim_date_to, direct_superior, reimbursement_type, business_unit, medical_status);
     })
+
     const klikdetail = (element) => {
         let data = table.row($(element).parent()).data().reimbursementEntity;
 
@@ -883,10 +843,89 @@
         $('#direct_superior').val(employee_id)
 
         $('.close').click();
-        // let fullname = $(element).parent().siblings('td').eq(1).text()
-        // let division = $(element).parent().siblings('td').eq(2).text()
-        // let rankingname = $(element).parent().siblings('td').eq(3).text()
-        // alert(data1)
+    }
+
+    $('#btn-update').click(()=>{
+        let reimbursement_status = $('#reimbursement_status').val();
+        let totalpaid = $('#totalpaid').val();
+        let ticketNo = $('#tiketno').val();
+        let direct_superior = $("#directsuperior").val();
+        let approvalremarks = $("#approvalremarks").val();
+
+        update_data(reimbursement_status, totalpaid, ticketNo, direct_superior, approvalremarks)
+    })
+
+    function updateMedicalStatus(reimbursement_status, totalpaid, ticketNo, direct_superior, approvalremarks) {
+        var item = arrayMedical.find(obj => obj.reimbursementEntity && obj.reimbursementEntity.ticketNo === ticketNo);
+
+        if (item) {
+            item.reimbursementEntity.reimbursementStatus = reimbursement_status;
+            item.reimbursementEntity.directSuperiorID = direct_superior;
+            item.reimbursementEntity.paidAmount = totalpaid;
+            item.reimbursementEntity.approvalRemarks = approvalremarks;
+
+            table.clear().rows.add(arrayMedical).draw(false);
+        }
+    }
+
+    function update_data(reimbursement_status, totalpaid, ticketNo, direct_superior, approvalremarks){
+        $.ajax({
+            url: "{{ url('trans/update_medical/table') }}",
+            type: "GET",
+            data: {
+                'status': reimbursement_status,
+                'paidAmount': totalpaid,
+                'ticketNo' : ticketNo,
+                'directSuperiorID' : direct_superior,
+                'approvalRemarks' : approvalremarks
+            },
+            success: function (response) {
+                // console.log(response.status);
+                if (response.status == "true") {
+                    $("#btn-update").prop("disabled", false);
+                    $("#btn-update").html(
+                        // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
+                        'Update'
+                    );
+
+                    $('.close').click();
+                    
+                    $('#notification_success').modal('show');
+                    $('#message-notification-success').html(response
+                        .message);
+
+                    updateMedicalStatus(reimbursement_status, totalpaid, ticketNo, direct_superior, approvalremarks);
+                    // setTimeout(function () {
+                    //     window.location =
+                    //         "{{ url('transaction/transaction_medical_history') }}";
+                    // }, 3000);
+                } else {
+                    $("#btn-update").prop("disabled", false);
+                    $("#btn-update").html(
+                        // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
+                        'Update'
+                    );
+                    
+                    $('#notification_update_data_fail').modal('show');
+                    $('#message-notification-update-data-fail').html(response
+                        .message);
+                    // setTimeout(function () {
+                    //     window.location =
+                    //     "{{ url('transaction/transaction_medical_history') }}";
+                    //     }, 3000);
+                }
+            },
+            error: function (response) {
+                $("#btn-update").prop("disabled", false);
+                $("#btn-update").html(
+                    // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
+                    'Update'
+                );
+
+                $('#notification_error').modal('show');
+                $('#message-notification-error').html(response);
+            }
+        });
     }
 
 </script>
@@ -934,7 +973,6 @@
         $('.header-select').remove();
     });
     
-            
     function loadDataExportReimbrusement(){
         function formatSelect(data) {
             if (data.loading) {
@@ -1117,7 +1155,7 @@
 
         var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
                 
-        $('#medical_status').select2({
+        $('#medical_status_filter').select2({
             width: '100%',
             placeholder: 'Choose Status',
             allowClear: true,
@@ -1168,16 +1206,16 @@
     }
 
     function loadDataFirstLastAllStatus() {
-        $('#medical_status').addClass('spinner-border');
+        $('#medical_status_filter').addClass('spinner-border');
 
         $.ajax({
             type: 'GET',
             url: "{{ url('/status_trans/api') }}",
         }).then(function (data) {
-            $('#medical_status').prepend($('<option>').val('ALL').text('ALL'));
-            $('#medical_status option:contains("ALL")').not(':first').remove();
-            $('#medical_status').val('ALL');
-            $('#medical_status').removeClass('spinner-border');
+            $('#medical_status_filter').prepend($('<option>').val('ALL').text('ALL'));
+            $('#medical_status_filter option:contains("ALL")').not(':first').remove();
+            $('#medical_status_filter').val('ALL');
+            $('#medical_status_filter').removeClass('spinner-border');
         });
     }
          
