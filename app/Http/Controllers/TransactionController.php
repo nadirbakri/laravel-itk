@@ -705,9 +705,7 @@ class TransactionController extends Controller
     
     public function tableDetailTransport(Request $request)
     {
-        // dd(Carbon::parse($request->startDate));
         try {
-          
             $dt = Carbon::now()->format('Y-m-d');
             // startdate
             $startdate=Carbon::parse($request->startDate)->format('Y-m-d');
@@ -722,11 +720,6 @@ class TransactionController extends Controller
             if ($dt == $enddate){
                 $isNullenddate = true;
             }
-            $client = new Client([
-                'verify' => false,
-                'headers' => [ 'Content-Type' => 'application/json',
-                'Authorization' => 'Bearer ' . Session::get('token') ]
-            ]);
 
             // processdate
             $processdate=Carbon::parse($request->processDate)->format('Y-m-d');
@@ -734,6 +727,7 @@ class TransactionController extends Controller
             if ($dt == $processdate){
                 $isNullprocessDate = true;
             }
+
             $client = new Client([
                 'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
@@ -759,7 +753,6 @@ class TransactionController extends Controller
                 );
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            // var_dump($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -773,9 +766,11 @@ class TransactionController extends Controller
         // dd($arrResult->dataListSet);
 
         if($arrResult->dataListSet == null){
-            return Datatables::of([])->make(true);
+            // return Datatables::of([])->make(true);
+            return response()->json([]);
         }else{
-            return Datatables::of($arrResult->dataListSet)->make(true);
+            // return Datatables::of($arrResult->dataListSet)->make(true);
+            return response()->json($arrResult->dataListSet);
         }
     }
    

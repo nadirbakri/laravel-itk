@@ -113,6 +113,34 @@
         .detailstatus input{
             outline: none;
         }
+
+        #loading {
+			display: none;
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(255, 255, 255, 0.8);
+			z-index: 9999;
+		}
+
+		.spinner {
+            position: absolute;
+			margin-left: 45%;
+			margin-top: 20%;
+			border-radius: 50%;
+			width: 50px;
+			height: 50px;
+			border-radius: 50%;
+			border: 5px solid #ccc;
+			border-top-color: #333;
+			animation: spin 1s infinite linear;
+		}
+
+        @keyframes spin {
+		to { transform: rotate(360deg); }
+		}
     </style>
 </head>
 
@@ -172,12 +200,6 @@
                 <div class="row">
                     <div class="col-5">
                         <div class="form-group">
-                                <label for="direct_superior form-check-label">Employee No</label>
-                        </div>
-                                <input type="text" class="form-control" id="direct_superior" name="direct_superior" placeholder="employee-no">
-                    </div>
-                    <div class="col-5">
-                        <div class="form-group">
                             <label for="processed_date form-check-label">{{ __('trans_transport.label_processed_date') }}</label>
                         </div>
                         <div class="input-group">
@@ -187,7 +209,21 @@
                                 <span class="input-group-text" id="processed_date_calendar"><span class="fa fa-calendar"></span></span>
                             </div>
                         </div>
-                        <input type="text" class="form-control" id="processed_date_hidden" name="processed_date_hidden" hidden></div>
+                        <input type="text" class="form-control" id="processed_date_hidden" name="processed_date_hidden" hidden>
+                    </div>
+                    <div class="col-5">
+                        <div class="form-group">
+                            <label for="transport_status form-check-label">{{ __('trans_transport.label_transport_status') }}</label>
+                        </div>
+                        <select class="form-control select2" id="transport_status" name="transport_status"></select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-5">
+                        <div class="form-group">
+                                <label for="direct_superior form-check-label">Employee No</label>
+                        </div>
+                        <input type="text" class="form-control" id="direct_superior" name="direct_superior" placeholder="employee-no">
                     </div>
                 </div>
 
@@ -211,42 +247,42 @@
                         </button>
                     </div>
                 </div>
-<br>
+                <br>
                 <!-- TABLE -->
-                <div class="card">
-                   
-                <div class="row">
-                    <div class="col-6">
-                        <p><b>{{ __('trans_transport.list_table') }}</b></p>
+                <div class="card" style="position: relative;">
+                    <div id="loading">
+                        <div class="spinner"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <p><b>{{ __('trans_transport.list_table') }}</b></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="table-responsive">
+                            <table id="medical_table" class="display table-striped table-hover dt-responsive display nowrap" cellspacing="10">
+                                <thead>
+                                    <tr>
+                                            <th>{{ __('trans_transport.detail') }}</th>
+                                            <th>{{ __('trans_transport.rdate') }}</th>
+                                            <th>{{ __('trans_transport.status') }}</th>
+                                            <th>{{ __('trans_transport.tnom') }}</th>
+                                            <th>{{ __('trans_transport.name') }}</th>
+                                            <th>{{ __('trans_transport.type') }}</th>
+                                            <th>{{ __('trans_transport.cname') }}</th>
+                                            <th>{{ __('trans_transport.sloc') }}</th>
+                                            <th>{{ __('trans_transport.eloc') }}</th>
+                                            <th>{{ __('trans_transport.treq') }}</th>
+                                            <th>{{ __('trans_transport.tpaid') }}</th>
+                                            <th>{{ __('trans_transport.remarks') }}</th>
+                                            <th>{{ __('trans_transport.parking') }}</th>
+                                            <th>{{ __('trans_transport.tol') }}</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="table-responsive">
-                        <table id="medical_table" class="display table-striped table-hover dt-responsive display nowrap" cellspacing="10">
-                            <thead>
-                                <tr>
-                                        <th>{{ __('trans_transport.detail') }}</th>
-                                        <th>{{ __('trans_transport.rdate') }}</th>
-                                        <th>{{ __('trans_transport.status') }}</th>
-                                        <th>{{ __('trans_transport.tnom') }}</th>
-                                        <th>{{ __('trans_transport.name') }}</th>
-                                        <th>{{ __('trans_transport.type') }}</th>
-                                        <th>{{ __('trans_transport.cname') }}</th>
-                                        <th>{{ __('trans_transport.sloc') }}</th>
-                                        <th>{{ __('trans_transport.eloc') }}</th>
-                                        <th>{{ __('trans_transport.treq') }}</th>
-                                        <th>{{ __('trans_transport.tpaid') }}</th>
-                                        <th>{{ __('trans_transport.remarks') }}</th>
-                                        <th>{{ __('trans_transport.parking') }}</th>
-                                        <th>{{ __('trans_transport.tol') }}</th>
-                                </tr>
-                            </thead>
-                        </table>
-                    </div>
-                </div>
-                </div>
-                
-
             </div>
         </form>
     </div>
@@ -564,119 +600,128 @@
 </script>
 <script type="text/javascript">
     var table = null;
-    function load_data_medical_history(claim_date_from, claim_date_to, direct_superior, reimbursement_type, business_unit,processed_date) {
-        // console.log(claim_date_from)
-            table = $('#medical_table').DataTable({
-                processing: true,
-                serverSide: true,
-                orderCellsTop: true,
-                ajax: {
-                    url : "{{ url('trans/transport/table') }}",
-                    data: {
-                        'startDate': claim_date_from,
-                        'endDate': claim_date_to,
-                        'processDate' : processed_date,
-                        'type' : reimbursement_type,
-                        'businessUnit' : business_unit,
-                        'employeeNo' : direct_superior
+    var table2 = null;
+    var arrayTransport = [];
 
+    function load_data_transport(claim_date_from, claim_date_to, direct_superior, reimbursement_type, business_unit, processed_date, transport_status){
+        $.ajax({
+            type: 'GET',
+            url: "{{ url('/trans/transport/table') }}",
+            data: {
+                'startDate': claim_date_from,
+                'endDate': claim_date_to,
+                'processDate' : processed_date,
+                'type' : reimbursement_type,
+                'businessUnit' : business_unit,
+                'employeeNo' : direct_superior,
+                'status' : transport_status,
+            }
+        }).then(function (data) {
+            arrayTransport = data;
+            $('#medical_table').DataTable().destroy();
+            load_data_table_transport();
+            $('#loading').hide();
+        });
+    }
+
+    function load_data_table_transport() {
+        // console.log(claim_date_from)
+        table = $('#medical_table').DataTable({
+            processing: true,
+            // serverSide: true,
+            orderCellsTop: true,
+            data: arrayTransport,
+            error: function(jqXHR, ajaxOptions, thrownError) {
+                alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
+            },
+            "sDom": 'lfrtip',
+            'sPaginationType': 'full_numbers',
+            "order": [[ 1, "asc" ]],
+            columns: [
+                {
+                    orderable: false,
+                    targets: 0, 
+                    "defaultContent": '',
+                    render: function(data, type) {
+                        return type === 'display'? '<button type="button" onclick="klikdetail(this)" class="btn btn-info" name="btn-detail" id="btn-detail" style="width: 100%;" data-toggle="modal" data-target="#modal_list_detail"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-justify" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M2 12.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/></svg> {{ __('trans_medical.detail') }} </button>' : '';
                     }
                 },
-                error: function(jqXHR, ajaxOptions, thrownError) {
-                    alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
+                {data: 'transportEntity.receiptDate', name: 'transportEntity.receiptDate', 
+                        render: function (data, type, row) {
+                        return moment(data).format('DD-MMM-YYYY');
+                    }
                 },
-                "sDom": 'lfrtip',
-                'sPaginationType': 'full_numbers',
-                "order": [[ 1, "asc" ]],
-                columns: [
-                    {
-                        orderable: false,
-                        targets: 0, 
-                        "defaultContent": '',
-                        render: function(data, type) {
-                            return type === 'display'? '<button type="button" onclick="klikdetail(this)" class="btn btn-info" name="btn-detail" id="btn-detail" style="width: 100%;" data-toggle="modal" data-target="#modal_list_detail"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-justify" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M2 12.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/></svg> {{ __('trans_medical.detail') }} </button>' : '';
-                        }
-                    },
-                    {data: 'transportEntity.receiptDate', name: 'transportEntity.receiptDate', 
-                            render: function (data, type, row) {
-                            return moment(data).format('DD-MMM-YYYY');
-                        }
-                    },
-                    {data: 'transportEntity.status', name: 'transportEntity.status'},
-                    {data: 'transportEntity.ticketNo', name: 'transportEntity.ticketNo'},
-                    {data: 'transportEntity.fullnameRequester', name: 'transportEntity.fullnameRequester'},
-                    {data: 'transportEntity.type', name: 'transportEntity.type'},
-                    // {data: 'transportEntity.companyCostumer', name: 'companyCostumer'},
-                    {data: 'transportEntity.customerName', name: 'transportEntity.customerName'},
-                    {data: 'transportEntity.startLocation', name: 'transportEntity.startLocation'},
-                    {data: 'transportEntity.endLocation', name: 'transportEntity.endLocation'},
-                    {data: 'transportEntity.totalAmount', name: 'transportEntity.totalAmount',
-                        render: function (data, type, row) {
-                            return data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-                        }
-                    },
-                    {data: 'transportEntity.paidAmount', name: 'transportEntity.paidAmount',
-                        render: function (data, type, row) {
-                            return data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-                        }
-                    },
-                    {data: 'transportEntity.remarks', name: 'transportEntity.remarks'},
-                    {data: 'transportEntity.amountParkir', name: 'transportEntity.amountParkir',
-                        render: function (data, type, row) {
-                            return data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-                        }
-                    },
-                    {data: 'transportEntity.amountToll', name: 'transportEntity.amountToll',
-                        render: function (data, type, row) {
-                            return data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-                        }
-                    },
-                    // {
-                    //     data: 'leaveBalanceBeforeExpiredDate', 
-                    //     name: 'leaveBalanceBeforeExpiredDate',
-                    //     render: function (data, type, row) {
-                    //         return moment(data).format('DD-MMM-YYYY');
-                    //     }
-                    // }
-                ],
-                select: {
-                    style:    'multi',
-                    selector: 'td:first-child'
-                }
-            });
+                {data: 'transportEntity.status', name: 'transportEntity.status'},
+                {data: 'transportEntity.ticketNo', name: 'transportEntity.ticketNo'},
+                {data: 'transportEntity.fullnameRequester', name: 'transportEntity.fullnameRequester'},
+                {data: 'transportEntity.type', name: 'transportEntity.type'},
+                // {data: 'transportEntity.companyCostumer', name: 'companyCostumer'},
+                {data: 'transportEntity.customerName', name: 'transportEntity.customerName'},
+                {data: 'transportEntity.startLocation', name: 'transportEntity.startLocation'},
+                {data: 'transportEntity.endLocation', name: 'transportEntity.endLocation'},
+                {data: 'transportEntity.totalAmount', name: 'transportEntity.totalAmount',
+                    render: function (data, type, row) {
+                        return data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                    }
+                },
+                {data: 'transportEntity.paidAmount', name: 'transportEntity.paidAmount',
+                    render: function (data, type, row) {
+                        return data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                    }
+                },
+                {data: 'transportEntity.remarks', name: 'transportEntity.remarks'},
+                {data: 'transportEntity.amountParkir', name: 'transportEntity.amountParkir',
+                    render: function (data, type, row) {
+                        return data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                    }
+                },
+                {data: 'transportEntity.amountToll', name: 'transportEntity.amountToll',
+                    render: function (data, type, row) {
+                        return data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                    }
+                },
+            ],
+            select: {
+                style:    'multi',
+                selector: 'td:first-child'
+            }
+        });
 
-            $("#btn-search").prop("disabled", true);
-            $("#btn-search").html(
-                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+        $("#btn-search").prop("disabled", true);
+        $("#btn-search").html(
+            '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
 
-            );
+        );
 
-            
+        
 
-            $("#btn-search").prop("disabled", false);
-            $("#btn-search").html(
-                "<img src={{ url('icons/mob/button/button-search.svg') }} alt='export'> {{ __('trans_transport.btn_search') }}"
-            );
-        }
+        $("#btn-search").prop("disabled", false);
+        $("#btn-search").html(
+            "<img src={{ url('icons/mob/button/button-search.svg') }} alt='export'> {{ __('trans_transport.btn_search') }}"
+        );
+    }
 
-        $("#trans_medical_form").submit((e)=>{
-            e.preventDefault();
+    $("#trans_medical_form").submit((e)=>{
+        e.preventDefault();
 
-            var claim_date_from = $("#claim_date_from").val();
-            var claim_date_to = $("#claim_date_to").val();
-            var direct_superior = $("#direct_superior").val();
-            var reimbursement_type = $("#reimbursement_type").val();
-            var business_unit = $("#business_unit").val();
-            var processed_date = $("#processed_date").val();
+        var claim_date_from = $("#claim_date_from").val();
+        var claim_date_to = $("#claim_date_to").val();
+        var direct_superior = $("#direct_superior").val();
+        var reimbursement_type = $("#reimbursement_type").val();
+        var business_unit = $("#business_unit").val();
+        var processed_date = $("#processed_date").val();
+        var transport_status = $("#transport_status").val();
 
-            // $("#btn-search").prop("disabled", true);
-            // $("#btn-search").html(
-            //     '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
-            // );
+        // $("#btn-search").prop("disabled", true);
+        // $("#btn-search").html(
+        //     '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+        // );
 
-            $('#medical_table').DataTable().destroy();
-            load_data_medical_history(claim_date_from, claim_date_to,direct_superior, reimbursement_type, business_unit,processed_date);
+        $('#loading').show();
+
+        load_data_transport(claim_date_from, claim_date_to,direct_superior, reimbursement_type, business_unit, processed_date, transport_status);
     })
+
     const klikdetail = (element) => {
         let data = table.row($(element).parent()).data().transportEntity;
 
@@ -758,10 +803,22 @@
         let approvalremarks = $("#approvalremarks").val();
         // alert(totalpaid)
         // $('.close').click();
-        update_data(reimbursement_status,totalpaid,ticketNo,direct_superior,approvalremarks)
+        update_data(reimbursement_status, totalpaid, ticketNo, direct_superior, approvalremarks)
     })
 
-    function update_data(reimbursement_status, totalpaid, ticketNo,direct_superior,approvalremarks){
+    function updateTransportStatus(reimbursement_status, totalpaid, ticketNo, direct_superior, approvalremarks) {
+        var item = arrayTransport.find(obj => obj.transportEntity && obj.transportEntity.ticketNo === ticketNo);
+
+        if (item) {
+            item.transportEntity.status = reimbursement_status;
+            item.transportEntity.paidAmount = totalpaid;
+            item.transportEntity.approvalRemarks = approvalremarks;
+
+            table.clear().rows.add(arrayTransport).draw(false);
+        }
+    }
+
+    function update_data(reimbursement_status, totalpaid, ticketNo, direct_superior, approvalremarks){
         $.ajax({
             url: "{{ url('trans/update_transport/table') }}",
             type: "get",
@@ -773,35 +830,37 @@
                 'approvalRemarks' : approvalremarks
             },
             success: function (response) {
-                        if (response.status == "true") {
-                            $("#btn-update").prop("disabled", false);
-                            $("#btn-update").html(
-                                // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_update") }}'
-                                'Update'
-                            );
+                if (response.status == "true") {
+                    $("#btn-update").prop("disabled", false);
+                    $("#btn-update").html(
+                        // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_update") }}'
+                        'Update'
+                    );
 
-                            $('.close').click();
-                            
-                            $('#notification_success').modal('show');
-                            $('#message-notification-success').html(response
-                                .message);
-                            // setTimeout(function () {
-                            //     window.location =
-                            //         "{{ url('transaction/transaction_transport') }}";
-                            // }, 3000);
-                        } else{
-                            $("#btn-update").prop("disabled", false);
-                            $("#btn-update").html(
-                                // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
-                                'Update'
-                            );
-                            
-                            $('#notification_error').modal('show');
-                            $('#message-notification-error').html(response
-                                .message);
-                        }
-                },
-                error: function (response) {
+                    $('.close').click();
+                    
+                    $('#notification_success').modal('show');
+                    $('#message-notification-success').html(response
+                        .message);
+
+                    updateTransportStatus(reimbursement_status, totalpaid, ticketNo, direct_superior, approvalremarks);
+                    // setTimeout(function () {
+                    //     window.location =
+                    //         "{{ url('transaction/transaction_transport') }}";
+                    // }, 3000);
+                } else{
+                    $("#btn-update").prop("disabled", false);
+                    $("#btn-update").html(
+                        // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
+                        'Update'
+                    );
+                    
+                    $('#notification_error').modal('show');
+                    $('#message-notification-error').html(response
+                        .message);
+                }
+            },
+            error: function (response) {
                 $("#btn-update").prop("disabled", false);
                 $("#btn-update").html(
                     // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
@@ -823,9 +882,9 @@ $("#btn-process").click(function () {
     $("#upload_paid_overtime_form").submit();
 });
 
-$('#notification_success').on('hide.bs.modal', function () {
-    window.location = "{{ url('transaction/transaction_transport') }}";
-});
+// $('#notification_success').on('hide.bs.modal', function () {
+//     window.location = "{{ url('transaction/transaction_transport') }}";
+// });
 
 if ($("#upload_paid_overtime_form").length > 0) {
     $("#upload_paid_overtime_form").validate({
@@ -899,192 +958,275 @@ if ($("#upload_paid_overtime_form").length > 0) {
     loadDataFirstLastAllReimbursement();
     loadDataBusinessUnit();
     loadDataFirstLastAllBusinessUnit();
+    loadDataStatus();
+    loadDataFirstLastAllStatus();
     
-            $.get("{{ url('reimbursement_type/transport/api') }}", function (data) {
-                $.each(data, function (k, v) {
-                    $('#reimbursement_type').append("<option value=" + v.comGenCode + ">" + v.value +
-                        "</option>");
-                });
+        $.get("{{ url('reimbursement_type/transport/api') }}", function (data) {
+            $.each(data, function (k, v) {
+                $('#reimbursement_type').append("<option value=" + v.comGenCode + ">" + v.value +
+                    "</option>");
             });
-    
-            $.get("{{ url('level/all/api') }}", function (data) {      
-                $.each(data, function (k, v) {
-                    $('#business_unit').append("<option value=" + v.levelCode + ">" + v.levelName +
-                        "</option>");
-                });
+        });
+
+        $.get("{{ url('level/all/api') }}", function (data) {      
+            $.each(data, function (k, v) {
+                $('#business_unit').append("<option value=" + v.levelCode + ">" + v.levelName +
+                    "</option>");
             });
-    
-            $('#select').focus(function (event) {
-                    var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
-                    $searchfield.prop('disabled', true);
-            });
-    
-            $('#select').click(function (event) {
+        });
+
+        $('#select').focus(function (event) {
                 var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
                 $searchfield.prop('disabled', true);
-            });
-    
-            $('#select').change(function (event) {
-                var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
-                $searchfield.prop('disabled', true);
-            });
-    
-            $('select').on('select2:close', function (e) {
-                $('.header-select').remove();
-            });
-    
+        });
+
+        $('#select').click(function (event) {
+            var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
+            $searchfield.prop('disabled', true);
+        });
+
+        $('#select').change(function (event) {
+            var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
+            $searchfield.prop('disabled', true);
+        });
+
+        $('select').on('select2:close', function (e) {
+            $('.header-select').remove();
+        });
+
+        
+        function loadDataExportReimbrusement(){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' + 
+                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
             
-            function loadDataExportReimbrusement(){
-                function formatSelect(data) {
-                    if (data.loading) {
-                        return $search
+            $('#reimbursement_type').select2({
+                width: '100%',
+                placeholder: 'Choose Reimbursement Type',
+                allowClear: true,
+                // multiple: true,
+                // tags: true,
+                closeOnSelect: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
                     }
-    
-                    if (data.id) {
-                        var $result2 = $('<div class="row">' + 
-                            '<div class="col-6">' + data.data.value + '<div>' +
-                            '</div>');
-    
-                        return $result2;
-                    }
+                },
+                ajax: {
+                    url: "{{ url('/reimbursement_type/transport/api') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: $('meta[name="csrf-token"]').attr('content'),
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.value,
+                                    id: item.comGenCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataFirstLastAllReimbursement () {
+            $('#reimbursement_type').addClass('spinner-border');
+
+            $.ajax({
+                type: 'GET',
+                url: "{{ url('/reimbursement_type/transport/func/api') }}",
+            }).then(function (data) {
+                if (!$('#reimbursement_type').find('option:contains(' + data[0].value + ')').length) {
+                    $('#reimbursement_type').append($('<option>').val(data[0].comGenCode).text(data[0].value));
                 }
-    
-                var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
-                
-                $('#reimbursement_type').select2({
-                    width: '100%',
-                    placeholder: 'Choose Reimbursement Type',
-                    allowClear: true,
-                    // multiple: true,
-                    // tags: true,
-                    closeOnSelect: true,
-                    language: {
-                        errorLoading: function () {
-                            return $search;
-                        },
-                        searching: function () {
-                            return $search;
-                        }
-                    },
-                    ajax: {
-                        url: "{{ url('/reimbursement_type/transport/api') }}",
-                        dataType: 'json',
-                        delay: 250,
-                        type: "GET",
-                        data: function (params) {
-                            return {
-                                _token: $('meta[name="csrf-token"]').attr('content'),
-                                search: params.term
-                            };
-                        },
-                        processResults: function (data) {
-                            return {
-                                results: $.map(data, function (item) {
-                                    return {
-                                        text: item.value,
-                                        id: item.comGenCode,
-                                        data: item
-                                    }
-                                })
-                            };
-                        },
-                        cache: true,
-                    },
-                    templateResult: formatSelect
-                });
-            }
-    
-            function loadDataFirstLastAllReimbursement () {
-                $('#reimbursement_type').addClass('spinner-border');
-    
-                $.ajax({
-                    type: 'GET',
-                    url: "{{ url('/reimbursement_type/transport/func/api') }}",
-                }).then(function (data) {
-                    if (!$('#reimbursement_type').find('option:contains(' + data[0].value + ')').length) {
-                        $('#reimbursement_type').append($('<option>').val(data[0].comGenCode).text(data[0].value));
-                    }
-                    $('#reimbursement_type').val(data[0].comGenCode);
-                    $('#reimbursement_type').removeClass('loading');
-                });
-            }
-    
-            function loadDataBusinessUnit(){
-                function formatSelect(data) {
-                    if (data.loading) {
-                        return $search
-                    }
-    
-                    if (data.id) {
-                        var $result2 = $('<div class="row">' + 
-                            '<div class="col-6">' + data.data.levelName + '<div>' +
-                            '</div>');
-    
-                        return $result2;
-                    }
+                $('#reimbursement_type').val(data[0].comGenCode);
+                $('#reimbursement_type').removeClass('loading');
+            });
+        }
+
+        function loadDataBusinessUnit(){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
                 }
-    
-                var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
-                
-                $('#business_unit').select2({
-                    width: '100%',
-                    placeholder: 'Choose Business Unit',
-                    allowClear: true,
-                    // multiple: true,
-                    // tags: true,
-                    closeOnSelect: true,
-                    language: {
-                        errorLoading: function () {
-                            return $search;
-                        },
-                        searching: function () {
-                            return $search;
-                        }
-                    },
-                    ajax: {
-                        url: "{{ url('/level/all/api') }}",
-                        dataType: 'json',
-                        delay: 250,
-                        type: "GET",
-                        data: function (params) {
-                            return {
-                                _token: $('meta[name="csrf-token"]').attr('content'),
-                                search: params.term, 
-                                levelType: '1' 
-    
-                            };
-                        },
-                        processResults: function (data) {
-                            return {
-                                results: $.map(data, function (item) {
-                                    return {
-                                        text: item.levelName,
-                                        id: item.levelCode,
-                                        data: item
-                                    }
-                                })
-                            };
-                        },
-                        cache: true,
-                    },
-                    templateResult: formatSelect
-                });
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' + 
+                        '<div class="col-6">' + data.data.levelName + '<div>' +
+                        '</div>');
+
+                    return $result2;
+                }
             }
-    
-            function loadDataFirstLastAllBusinessUnit () {
-                $('#business_unit').addClass('spinner-border');
-    
-                $.ajax({
-                    type: 'GET',
-                    url: "{{ url('/level/func/api') }}",
-                }).then(function (data) {
-                    if (!$('#business_unit').find('option:contains(' + data.levelName + ')').length) {
-                        $('#business_unit').append($('<option>').val(data.levelCode).text(data.levelName));
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+            
+            $('#business_unit').select2({
+                width: '100%',
+                placeholder: 'Choose Business Unit',
+                allowClear: true,
+                // multiple: true,
+                // tags: true,
+                closeOnSelect: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
                     }
-                    $('#business_unit').val(data.levelCode);
-                    $('#business_unit').removeClass('loading');
-                });
+                },
+                ajax: {
+                    url: "{{ url('/level/all/api') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: $('meta[name="csrf-token"]').attr('content'),
+                            search: params.term, 
+                            levelType: '1' 
+
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.levelName,
+                                    id: item.levelCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataFirstLastAllBusinessUnit () {
+            $('#business_unit').addClass('spinner-border');
+
+            $.ajax({
+                type: 'GET',
+                url: "{{ url('/level/func/api') }}",
+            }).then(function (data) {
+                if (!$('#business_unit').find('option:contains(' + data.levelName + ')').length) {
+                    $('#business_unit').append($('<option>').val(data.levelCode).text(data.levelName));
+                }
+                $('#business_unit').val(data.levelCode);
+                $('#business_unit').removeClass('loading');
+            });
+        }
+
+        function loadDataStatus(){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' + 
+                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '</div>');
+
+                    return $result2;
+                }
             }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+            
+            $('#transport_status').select2({
+                width: '100%',
+                placeholder: 'Choose Status',
+                allowClear: true,
+                // multiple: true,
+                // tags: true,
+                closeOnSelect: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: "{{ url('/status_trans/api') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: $('meta[name="csrf-token"]').attr('content'),
+                            search: params.term,
+                        };
+                    },
+                    processResults: function (data) {
+                        var filteredData = data.filter(function (item) {
+                            var allowedStatuses = ["NEW", "APPROVED", "CANCELED", "PARTIAL APPROVED", "REJECTED"];
+                            return allowedStatuses.includes(item.value);
+                        });
+
+                        filteredData.unshift({ value: "ALL" });
+
+                        return {
+                            results: $.map(filteredData, function (item) {
+                                return {
+                                    text: item.value,
+                                    id: item.value,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataFirstLastAllStatus() {
+            $('#transport_status').addClass('spinner-border');
+
+            $.ajax({
+                type: 'GET',
+                url: "{{ url('/status_trans/api') }}",
+            }).then(function (data) {
+                $('#transport_status').prepend($('<option>').val('ALL').text('ALL'));
+                $('#transport_status option:contains("ALL")').not(':first').remove();
+                $('#transport_status').val('ALL');
+                $('#transport_status').removeClass('spinner-border');
+            });
+        }
     </script>
 
  </html>

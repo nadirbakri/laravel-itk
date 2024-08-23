@@ -217,9 +217,9 @@
                 <div class="row">
                     <div class="col-5">
                         <div class="form-group">
-                            <label for="reimbursement_status form-check-label">{{ __('trans_reimbursement.label_reimbursement_status') }}</label>
+                            <label for="reimbursement_status_filter form-check-label">{{ __('trans_reimbursement.label_reimbursement_status') }}</label>
                         </div>
-                        <select class="form-control select2" id="reimbursement_status" name="reimbursement_status"></select>
+                        <select class="form-control select2" id="reimbursement_status_filter" name="reimbursement_status_filter"></select>
                     </div>
                     <div class="col-5">
                         <div class="form-group">
@@ -760,7 +760,7 @@
             var direct_superior = $("#directsuperior").val();
             var reimbursement_type = $("#reimbursement_type").val();
             var business_unit = $("#business_unit").val();
-            var reimbursement_status = $("#reimbursement_status").val();
+            var reimbursement_status = $("#reimbursement_status_filter").val();
 
             // $("#btn-search").prop("disabled", true);
             // $("#btn-search").html(
@@ -1260,7 +1260,7 @@
 
             var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
             
-            $('#reimbursement_status').select2({
+            $('#reimbursement_status_filter').select2({
                 width: '100%',
                 placeholder: 'Choose Status',
                 allowClear: true,
@@ -1311,16 +1311,16 @@
         }
 
         function loadDataFirstLastAllStatus() {
-            $('#reimbursement_status').addClass('spinner-border');
+            $('#reimbursement_status_filter').addClass('spinner-border');
 
             $.ajax({
                 type: 'GET',
                 url: "{{ url('/status_trans/api') }}",
             }).then(function (data) {
-                $('#reimbursement_status').prepend($('<option>').val('ALL').text('ALL'));
-                $('#reimbursement_status option:contains("ALL")').not(':first').remove();
-                $('#reimbursement_status').val('ALL');
-                $('#reimbursement_status').removeClass('spinner-border');
+                $('#reimbursement_status_filter').prepend($('<option>').val('ALL').text('ALL'));
+                $('#reimbursement_status_filter option:contains("ALL")').not(':first').remove();
+                $('#reimbursement_status_filter').val('ALL');
+                $('#reimbursement_status_filter').removeClass('spinner-border');
             });
         }
     </script>
