@@ -2943,8 +2943,12 @@ public function dataDetailReportFormatPY(Request $request)
         // dd($arrResult->dataListSet);
 
         if($arrResult->dataListSet == null){
-            return response()->json('');
+            return response()->json([]);
         }else{
+            usort($arrResult->dataListSet, function ($a, $b) {
+                return (int) $a->seqNo - (int) $b->seqNo;
+            });
+        
             return response()->json($arrResult->dataListSet);
         }
     }
