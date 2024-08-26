@@ -169,22 +169,22 @@
 		<tr>
 			<td width="27%" style="padding: 0; margin: 0; font-weight: 600; text-decoration: underline;">KETERANGAN</td>
 			<td width="1.5%" style="margin-left: 10px;">:</td>
-			<td width="70% style="text-align: left; padding: 0; margin: 0;">{{ number_format($totalDeduction, 0, ',', '.')}}</td>
+			<td width="70%" style="text-align: left; padding: 0; margin: 0;">0</td>
 		</tr>
 		<tr>
 			<td width="27%" style="padding: 0; margin: 0;">ANGSURAN KE</td>
 			<td width="1.5%" style="margin-left: 10px;">:</td>
-			<td width="70%" style="text-align: left; padding: 0; margin: 0;">{{ number_format($totalDeduction, 0, ',', '.')}}</td>
+			<td width="70%" style="text-align: left; padding: 0; margin: 0;">0</td>
 		</tr>
 		<tr>
 			<td width="27%" style="padding: 0; margin: 0;">SISA BULAN ANGSURAN</td>
 			<td width="1.5%" style="margin-left: 10px;">:</td>
-			<td width="70%" style="text-align: left; padding: 0; margin: 0;">{{ number_format($totalDeduction, 0, ',', '.')}}</td>
+			<td width="70%" style="text-align: left; padding: 0; margin: 0;">0</td>
 		</tr>
 		<tr>
 			<td width="27%" style="border-bottom: 1px solid black;">SISA PINJAMAN</td>
 			<td width="1.5%" style="margin-left: 10px; border-bottom: 1px solid black;">:</td>
-			<td width="70%" style="text-align: left; border-bottom: 1px solid black;">{{ number_format($totalDeduction, 0, ',', '.')}}</td>
+			<td width="70%" style="text-align: left; border-bottom: 1px solid black;">0</td>
 		</tr>
 	</table>
 
