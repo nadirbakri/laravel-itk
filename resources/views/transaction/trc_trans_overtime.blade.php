@@ -113,6 +113,34 @@
         .detailstatus input{
             outline: none;
         }
+
+        #loading {
+			display: none;
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(255, 255, 255, 0.8);
+			z-index: 9999;
+		}
+
+		.spinner {
+            position: absolute;
+			margin-left: 45%;
+			margin-top: 20%;
+			border-radius: 50%;
+			width: 50px;
+			height: 50px;
+			border-radius: 50%;
+			border: 5px solid #ccc;
+			border-top-color: #333;
+			animation: spin 1s infinite linear;
+		}
+
+        @keyframes spin {
+		to { transform: rotate(360deg); }
+		}
     </style>
 </head>
 
@@ -209,8 +237,10 @@
                 </div>
 
                 <!-- TABLE -->
-                <div class="card">
-
+                <div class="card" style="position: relative;">
+                    <div id="loading">
+                        <div class="spinner"></div>
+                    </div>
                     <div class="row">
                         <div class="col-6">
                             <p><b>{{ __('trans_overtime.list_table') }}</b></p>
@@ -596,23 +626,36 @@
 </script>
 
 <script type="text/javascript">
-    function load_data_overtime(claim_date_from, claim_date_to, business_unit, direct_superior, reimbursement_type, status) {
+    var table = null;
+    var table2 = null;
+    var arrayOvertime = [];
+
+    function load_data_overtime(claim_date_from, claim_date_to, business_unit, direct_superior, reimbursement_type, status){
+        $.ajax({
+            type: 'GET',
+            url: "{{ url('/trans/overtime/table') }}",
+            data: {
+                'startDate': claim_date_from,
+                'endDate': claim_date_to,
+                'employeeNo' : direct_superior,
+                'businessUnit' : business_unit,
+                'type': reimbursement_type,
+                'status' : status
+            }
+        }).then(function (data) {
+            arrayOvertime = data;
+            $('#overtime_table').DataTable().destroy();
+            load_data_table_overtime();
+            $('#loading').hide();
+        });
+    }
+
+    function load_data_table_overtime() {
             table = $('#overtime_table').DataTable({
                 processing: true,
-                serverSide: true,
+                // serverSide: true,
                 orderCellsTop: true,
-                ajax: {
-                    url : "{{ url('trans/overtime/table') }}",
-                    data: {
-                        'startDate': claim_date_from,
-                        'endDate': claim_date_to,
-                        'employeeNo' : direct_superior,
-                        'businessUnit' : business_unit,
-                        'type': reimbursement_type,
-                        'status' : status
-
-                    }
-                },
+                data: arrayOvertime,
                 error: function(jqXHR, ajaxOptions, thrownError) {
                     alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
                 },
@@ -668,9 +711,7 @@
             $("#btn-search").prop("disabled", true);
             $("#btn-search").html(
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
-
             );
-       
 
             $("#btn-search").prop("disabled", false);
             $("#btn-search").html(
@@ -687,13 +728,9 @@
             var business_unit = $("#business_unit").val();
             var reimbursement_type = $("#reimbursement_type").val();
             var status = $("#status_overtime").val();
-           
-            // $("#btn-search").prop("disabled", true);
-            // $("#btn-search").html(
-            //     '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
-            // );
 
-            $('#overtime_table').DataTable().destroy();
+            $('#loading').show();
+
             load_data_overtime(claim_date_from, claim_date_to, business_unit, direct_superior, reimbursement_type, status);
     })
 
@@ -772,12 +809,6 @@
         
         $('#expired_date').val(moment(data.offSubstituteExpDate).format('YYYY-MM-DD'))
         $('#check_extend_expired_date').prop('checked', false).trigger('change');
-
-        // $('#totalclaim').val(totalclaim)
-        // $('#totalpaid').val(totalpaid)
-        // $('#direct_superior').val(employee_id)
-
-        // alert(reimbursement_type);
     }
 
     const klik = (element) => {
@@ -786,15 +817,8 @@
         $('#direct_superior').val(employee_id)
 
         $('.close').click();
-        
-        // let fullname = $(element).parent().siblings('td').eq(1).text()
-        // let division = $(element).parent().siblings('td').eq(2).text()
-        // let rankingname = $(element).parent().siblings('td').eq(3).text()
-        // alert(data1)
     }
 
-</script>
-<script>
     $('#btn-update').click(()=>{
         let status = $('#overtime_status').val();
         // let totalpaid = $('#totalpaid').val();
@@ -813,6 +837,22 @@
         // $('.close').click();
         update_data(status, ticketNo, directSuperior, approvalRemarks, checkExtendExpiredDate, expiredDate)
     })
+
+    function updateOvertimeStatus(status, ticketNo, directSuperior, approvalRemarks, checkExtendExpiredDate, expiredDate) {
+        var item = arrayOvertime.find(obj => obj.overtimeEntity && obj.overtimeEntity.ticketNo === ticketNo);
+
+        if (item) {
+            if (checkExtendExpiredDate) {
+                item.overtimeEntity.offExpiredDate = expiredDate;
+            }else{
+                item.overtimeEntity.status = status;
+                item.overtimeEntity.directSuperiorCode = directSuperior;
+                item.overtimeEntity.approvalRemarks = approvalRemarks;
+            }
+
+            table.clear().rows.add(arrayOvertime).draw(false);
+        }
+    }
 
     function update_data(status, ticketNo, directSuperior, approvalRemarks, checkExtendExpiredDate, expiredDate){
         $.ajax({
@@ -841,6 +881,8 @@
                     $('#notification_success').modal('show');
                     $('#message-notification-success').html(response
                         .message);
+
+                    updateOvertimeStatus(status, ticketNo, directSuperior, approvalRemarks, checkExtendExpiredDate, expiredDate);
                     // setTimeout(function () {
                     //     window.location =
                     //         "{{ url('transaction/transaction_overtime') }}";
@@ -874,6 +916,7 @@
         });
              
     }
+
 </script>
 <script>
     $("#btn-process").click(function () {
@@ -884,9 +927,9 @@
            $("#upload_paid_overtime_form").submit();
        });
 
-       $('#notification_success').on('hide.bs.modal', function () {
-           window.location = "{{ url('transaction/transaction_overtime') }}";
-       });
+    //    $('#notification_success').on('hide.bs.modal', function () {
+    //        window.location = "{{ url('transaction/transaction_overtime') }}";
+    //    });
 
        if ($("#upload_paid_overtime_form").length > 0) {
            $("#upload_paid_overtime_form").validate({

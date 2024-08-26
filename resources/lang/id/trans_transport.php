@@ -3,7 +3,7 @@
 return [ 
     'judul' => 'Daftar Transportasi',
     'list_table' => 'Detail Transportasi',
-    'label_claim_date_start' => 'Tanggal Ke',
+    'label_claim_date_start' => 'Tanggal Dari',
     'label_claim_date_end' => 'Tanggal Sampai',
     'label_processed_date' => 'Tanggal di Proses',
     'label_business_unit' => 'Unit Bisnis',

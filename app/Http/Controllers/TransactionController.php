@@ -406,9 +406,11 @@ class TransactionController extends Controller
         // var_dump($arrResult->dataListSet);
 
         if($arrResult->dataListSet == null){
-            return Datatables::of([])->make(true);
+            // return Datatables::of([])->make(true);
+            return response()->json([]);
         }else{
-            return Datatables::of($arrResult->dataListSet)->make(true);
+            // return Datatables::of($arrResult->dataListSet)->make(true);
+            return response()->json($arrResult->dataListSet);
         }
     }
  

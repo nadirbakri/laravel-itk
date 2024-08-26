@@ -597,7 +597,7 @@
         });
     }
 
-    function load_data_table_business_trip(claim_date_from, claim_date_to, direct_superior, reimbursement_type, business_unit, business_trip_status) {
+    function load_data_table_business_trip() {
         table = $('#business_trip_table').DataTable({
             processing: true,
             // serverSide: true,
@@ -739,17 +739,6 @@
         );
         $("#upload_paid_overtime_form").submit();
     });
-    
-    // $('#notification_success').on('hide.bs.modal', function () {
-    //     var claim_date_from = $("#claim_date_from").val();
-    //     var claim_date_to = $("#claim_date_to").val();
-    //     var direct_superior = $("#direct_superior").val();
-    //     var reimbursement_type = $("#reimbursement_type").val();
-    //     var business_unit = $("#business_unit").val();
-
-    //     $('#business_trip_table').DataTable().destroy();
-    //     load_data_table_business_trip(claim_date_from, claim_date_to, direct_superior, reimbursement_type, business_unit, business_trip_status);
-    // });
     
     if ($("#upload_paid_overtime_form").length > 0) {
         $("#upload_paid_overtime_form").validate({
