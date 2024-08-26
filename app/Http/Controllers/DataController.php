@@ -10398,6 +10398,10 @@ class DataController extends Controller
 	public function dataTravelTypeAPI(Request $request)
 	{
 		$search = $request->search;
+		$reimbursement_type[] = (object) [
+    		'comGenCode' => 'ALL',
+    		'value' => 'ALL'
+		];
 
 		try {
 			$client = new Client([
@@ -10426,12 +10430,16 @@ class DataController extends Controller
 			}
 			
 			$arrResult = json_decode($response->getBody()->getContents());
-			// var_dump($arrResult);
+
+			if($arrResult->dataListSet !== null){
+				$reimbursement_type = array_merge($reimbursement_type, $arrResult->dataListSet);
+			}
+			
 			if($search == ''){
-				$data = $arrResult->dataListSet;
+				$data = $reimbursement_type;
 			}else{
-				$data    = array_filter(
-				$arrResult->dataListSet,
+				$data = array_filter(
+				$reimbursement_type,
 				function($value) use ($search){
 					if(preg_match('/' . $search . '/i', $value->value)){
 						return preg_match('/' . $search . '/i', $value->value);

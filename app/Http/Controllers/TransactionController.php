@@ -257,9 +257,11 @@ class TransactionController extends Controller
             // var_dump($arrResult->dataListSet);
 
             if($arrResult->dataListSet == null){
-                return Datatables::of([])->make(true);
+                // return Datatables::of([])->make(true);
+                return response()->json([]);
             }else{
-                return Datatables::of($arrResult->dataListSet[0]->responseBusinessTrip)->make(true);
+                // return Datatables::of($arrResult->dataListSet[0]->responseBusinessTrip)->make(true);
+                return response()->json($arrResult->dataListSet[0]->responseBusinessTrip);
             }
 
         }else if ($request->reimbursement_type == "TTB"){
@@ -305,9 +307,11 @@ class TransactionController extends Controller
             // var_dump($arrResult->dataListSet);
 
             if($arrResult->dataListSet == null){
-                return Datatables::of([])->make(true);
+                // return Datatables::of([])->make(true);
+                return response()->json([]);
             }else{
-                return Datatables::of($arrResult->dataListSet[0]->responseBusinessTrip)->make(true);
+                // return Datatables::of($arrResult->dataListSet[0]->responseBusinessTrip)->make(true);
+                return response()->json($arrResult->dataListSet[0]->responseBusinessTrip);
             }
 
 
@@ -353,9 +357,11 @@ class TransactionController extends Controller
             $arrResult = json_decode($response->getBody()->getContents());
             // var_dump($arrResult->dataListSet);
             if($arrResult->dataListSet == null){
-                return Datatables::of([])->make(true);
+                // return Datatables::of([])->make(true);
+                return response()->json([]);
             }else{
-                return Datatables::of($arrResult->dataListSet[0]->responseBusinessTrip)->make(true);
+                // return Datatables::of($arrResult->dataListSet[0]->responseBusinessTrip)->make(true);
+                return response()->json($arrResult->dataListSet[0]->responseBusinessTrip);
             }
         }
     }

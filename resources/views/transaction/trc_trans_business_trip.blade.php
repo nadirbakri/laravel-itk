@@ -115,6 +115,34 @@
         .detailstatus input{
             outline: none;
         }
+
+        #loading {
+			display: none;
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(255, 255, 255, 0.8);
+			z-index: 9999;
+		}
+
+		.spinner {
+            position: absolute;
+			margin-left: 45%;
+			margin-top: 20%;
+			border-radius: 50%;
+			width: 50px;
+			height: 50px;
+			border-radius: 50%;
+			border: 5px solid #ccc;
+			border-top-color: #333;
+			animation: spin 1s infinite linear;
+		}
+
+        @keyframes spin {
+		to { transform: rotate(360deg); }
+		}
     </style>
 </head>
 
@@ -190,16 +218,18 @@
                     </div>
                     <div class="col-5">
                         <div class="form-group">
-                                <label for="direct_superior form-check-label">{{ __('trans_business_trip.employee') }}</label>
+                            <label for="business_trip_status form-check-label">{{ __('trans_business_trip.label_business_trip_status') }}</label>
                         </div>
-                                <input type="text" class="form-control" id="direct_superior" name="direct_superior" placeholder="employee-no">
+                        <select class="form-control select2" id="business_trip_status" name="business_trip_status"></select>
                     </div>
-                    {{-- <div class="col-5">
+                </div>
+                <div class="row">
+                    <div class="col-5">
                         <div class="form-group">
-                            <label for="status form-check-label">{{ __('trans_business_trip.label_status') }}</label>
+                            <label for="direct_superior form-check-label">{{ __('trans_business_trip.employee') }}</label>
                         </div>
-                        <select class="form-control select2" id="status" name="status"></select>
-                    </div> --}}
+                        <input type="text" class="form-control" id="direct_superior" name="direct_superior" placeholder="employee-no">
+                    </div>
                 </div>
 
                 <!-- BUTTON -->
@@ -224,7 +254,10 @@
                 </div>
 
                 <!-- TABLE -->
-                <div class="card">
+                <div class="card" style="position: relative;">
+                    <div id="loading">
+                        <div class="spinner"></div>
+                    </div>
                     <div class="row">
                         <div class="col-6">
                             <p><b>{{ __('trans_business_trip.list_table') }}</b></p>
@@ -313,14 +346,14 @@
                                         <h5>{{ __('trans_business_trip.tnom') }}</h5>
                                     </div>
                                     <div class="col">
-                                        <input id="tiketno" name="tiketno" type="text" class="form-control" id="claim_date_from" name="claim_date_from" disabled>
+                                        <input id="tiketno" name="tiketno" type="hidden" class="form-control"><span id="tiketno_val"></span>
                                         <input id="directsuperior" name="directsuperior" type="hidden" class="form-control">
                                     </div>
                                     <div class="col-3">
                                         <h5>{{ __('trans_business_trip.status') }}</h5>
                                     </div>
                                     <div class="col">
-                                        <input id="status" name="status" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from" disabled>
+                                    <input id="status" name="status" type="hidden" class="form-control"><span id="status_val"></span>
                                     </div>
                                 </div>
 
@@ -329,13 +362,13 @@
                                         <h5>{{ __('trans_business_trip.label_bu') }}</h5>
                                     </div>
                                     <div class="col">
-                                        <input id="b_unit" name="b_unit" style="border: none" style="outline: none"  type="text" class="form-control" id="claim_date_from" name="claim_date_from" disabled>
+                                        <input id="b_unit" name="b_unit" type="hidden" class="form-control"><span id="b_unit_val"></span>
                                     </div>
                                     <div class="col-3">
                                         <h5>{{ __('trans_business_trip.treq') }}</h5>
                                     </div>
                                     <div class="col">
-                                        <input id="c_type" name="c_type" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from" disabled>
+                                        <input id="c_type" name="c_type" type="hidden" class="form-control"><span id="c_type_val"></span>
                                     </div>
                                 </div>
 
@@ -344,13 +377,13 @@
                                         <h5>{{ __('trans_business_trip.employee') }}</h5>
                                     </div>
                                     <div class="col">
-                                        <input id="employeeno" name="employeeno" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from" disabled>
+                                        <input id="employee_no" name="employee_no" type="hidden" class="form-control"><span id="employee_no_val"></span>
                                     </div>
                                     <div class="col-3">
                                         <h5>{{ __('trans_business_trip.label_reimbursement_type') }}</h5>
                                     </div>
                                     <div class="col">
-                                        <input style="border: none" style="outline: none" type="text" class="form-control" id="type" name="type" disabled>
+                                        <input id="type" name="type" type="hidden" class="form-control"><span id="type_val"></span>
                                     </div>
                                 </div>
                                 <br>
@@ -499,6 +532,10 @@
 <script src="{{ asset('js/flatpickr.monthselect.js') }}"></script>
 <script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
 <script type="text/javascript">
+    var table = null;
+    var table2 = null;
+    var arrayBusinessTrip = [];
+
     function savePreviousURL() {
         if(!sessionStorage.getItem('previousURL')){
             const previousURL = document.referrer;
@@ -540,92 +577,93 @@
         });
     }
 
-    function load_data_businesstrip(claim_date_from, claim_date_to, direct_superior, reimbursement_type, business_unit) {
-            table = $('#business_trip_table').DataTable({
-                processing: true,
-                serverSide: true,
-                orderCellsTop: true,
-                ajax: {
-                    url : "{{ url('trans/businesstrip/table') }}",
-                    data: {
-                        'startDate': claim_date_from,
-                        'endDate': claim_date_to,
-                        'employeeNo' : direct_superior,
-                        'type' : reimbursement_type,
-                        'businessUnit' : business_unit
+    function load_data_business_trip(claim_date_from, claim_date_to, direct_superior, reimbursement_type, business_unit, business_trip_status){
+        $.ajax({
+            type: 'GET',
+            url: "{{ url('/trans/businesstrip/table') }}",
+            data: {
+                'startDate': claim_date_from,
+                'endDate': claim_date_to,
+                'employeeNo' : direct_superior,
+                'type' : reimbursement_type,
+                'businessUnit' : business_unit,
+                'status' : business_trip_status
+            }
+        }).then(function (data) {
+            arrayBusinessTrip = data;
+            $('#business_trip_table').DataTable().destroy();
+            load_data_table_business_trip();
+            $('#loading').hide();
+        });
+    }
 
+    function load_data_table_business_trip(claim_date_from, claim_date_to, direct_superior, reimbursement_type, business_unit, business_trip_status) {
+        table = $('#business_trip_table').DataTable({
+            processing: true,
+            // serverSide: true,
+            orderCellsTop: true,
+            data: arrayBusinessTrip,
+            error: function(jqXHR, ajaxOptions, thrownError) {
+                alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
+            },
+            "sDom": 'lfrtip',
+            'sPaginationType': 'full_numbers',
+            "order": [[ 1, "asc" ]],
+            columns: [
+                {
+                    orderable: false,
+                    targets: 0, 
+                    "defaultContent": '',
+                    render: function(data, type) {
+                        return type === 'display'? '<button type="button" onclick="klikdetail(this)" class="btn btn-info" name="btn-detail" id="btn-detail" style="width: 100%;" data-toggle="modal" data-target="#modal_list_detail"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-justify" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M2 12.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/></svg> {{ __('trans_medical.detail') }} </button>' : '';
                     }
                 },
-                error: function(jqXHR, ajaxOptions, thrownError) {
-                    alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
+                // {data: 'responseBusinessTrip.requestDate', name: 'requestDate', 
+                //         render: function (data, type, row) {
+                //         return moment(data).format('YYYY-MM-DD');
+                //     }
+                // },
+                {data: 'ticketNo', name: 'ticketNo'},
+                {data: 'fullnameRequester', name: 'fullnameRequester'},
+                {data: 'customerName', name: 'customerName'},
+                {data: 'status', name: 'status'},
+                {data: 'destination', name: 'destination'},
+                {data: 'customerName', name: 'customerName'},
+                {data: 'projectName', name: 'projectName'},
+                {data: 'total', name: 'total'},
+                {data: 'totalClaimAmount', name: 'totalClaimAmount',
+                    render: function (data, type, row) {
+                        return data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                    }
                 },
-                "sDom": 'lrtip',
-                'sPaginationType': 'full_numbers',
-                "order": [[ 1, "asc" ]],
-                columns: [
-                    {
-                        orderable: false,
-                        targets: 0, 
-                        "defaultContent": '',
-                        render: function(data, type) {
-                            return type === 'display'? '<button type="button" onclick="klikdetail(this)" class="btn btn-info" name="btn-detail" id="btn-detail" style="width: 100%;" data-toggle="modal" data-target="#modal_list_detail"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-justify" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M2 12.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/></svg> {{ __('trans_medical.detail') }} </button>' : '';
-                        }
-                    },
-                    // {data: 'responseBusinessTrip.requestDate', name: 'requestDate', 
-                    //         render: function (data, type, row) {
-                    //         return moment(data).format('YYYY-MM-DD');
-                    //     }
-                    // },
-                    {data: 'ticketNo', name: 'ticketNo'},
-                    {data: 'fullnameRequester', name: 'fullnameRequester'},
-                    {data: 'customerName', name: 'customerName'},
-                    {data: 'status', name: 'status'},
-                    {data: 'destination', name: 'destination'},
-                    {data: 'customerName', name: 'customerName'},
-                    {data: 'projectName', name: 'projectName'},
-                    {data: 'total', name: 'total'},
-                    {data: 'totalClaimAmount', name: 'totalClaimAmount',
-                        render: function (data, type, row) {
-                            return data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-                        }
-                    },
-                    {data: 'purpose', name: 'purpose'},
-                ],
-                select: {
-                    style:    'multi',
-                    selector: 'td:first-child'
-                }
-            });
+                {data: 'purpose', name: 'purpose'},
+            ]
+        });
 
-            $("#btn-search").prop("disabled", true);
-            $("#btn-search").html(
-                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+        $("#btn-search").prop("disabled", true);
+        $("#btn-search").html(
+            '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+        );
 
-            );
-       
+        $("#btn-search").prop("disabled", false);
+        $("#btn-search").html(
+            "<img src={{ url('icons/mob/button/button-search.svg') }} alt='export'> {{ __('trans_transport.btn_search') }}"
+        );
+    }
 
-            $("#btn-search").prop("disabled", false);
-            $("#btn-search").html(
-                "<img src={{ url('icons/mob/button/button-search.svg') }} alt='export'> {{ __('trans_transport.btn_search') }}"
-            );
-        }
+    $("#trans_business_trip_form").submit((e)=>{
+        e.preventDefault();
 
-        $("#trans_business_trip_form").submit((e)=>{
-            e.preventDefault();
+        var claim_date_from = $("#claim_date_from").val();
+        var claim_date_to = $("#claim_date_to").val();
+        var direct_superior = $("#direct_superior").val();
+        var reimbursement_type = $("#reimbursement_type").val();
+        var business_unit = $("#business_unit").val();
+        var business_trip_status = $("#business_trip_status").val();
 
-            var claim_date_from = $("#claim_date_from").val();
-            var claim_date_to = $("#claim_date_to").val();
-            var direct_superior = $("#direct_superior").val();
-            var reimbursement_type = $("#reimbursement_type").val();
-            var business_unit = $("#business_unit").val();
+        $('#loading').show();
 
-            // $("#btn-search").prop("disabled", true);
-            // $("#btn-search").html(
-            //     '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
-            // );
-
-            $('#business_trip_table').DataTable().destroy();
-            load_data_businesstrip(claim_date_from, claim_date_to, direct_superior, reimbursement_type, business_unit);
+        load_data_business_trip(claim_date_from, claim_date_to, direct_superior, reimbursement_type, business_unit, business_trip_status);
     })
 
    $('#btn-list').click(()=> {
@@ -670,14 +708,21 @@
         let data = table.row($(element).parent()).data();
 
         $('#tiketno').val(data.ticketNo)
+        $('#tiketno_val').html(data.ticketNo)
         $('#totalpaid').val(data.paidAmount)
         $('#status').val(data.status)
+        $('#status_val').html(data.status)
         $('#b_unit').val(data.businessUnit)
-        $('#employeeno').val(data.employeeNo)
+        $('#b_unit_val').html(data.businessUnit)
+        $('#employee_no').val(data.employeeNo)
+        $('#employee_no_val').html(data.employeeNo)
         $('#c_type').val(data.totalClaimAmount)
+        $('#c_type_val').html(data.totalClaimAmount)
         $('#approvalremarks').val(data.approvalRemarks)
         $('#type').val(data.purpose)
+        $('#type_val').html(data.purpose)
         $('#directsuperior').val(data.directSuperiorID)
+        $('#reimbursement_status').val(data.status).trigger('change')
     }
     const klik = (element) => {
         let employee_id = $(element).parent().siblings('.sorting_1').text()
@@ -695,16 +740,16 @@
         $("#upload_paid_overtime_form").submit();
     });
     
-    $('#notification_success').on('hide.bs.modal', function () {
-        var claim_date_from = $("#claim_date_from").val();
-        var claim_date_to = $("#claim_date_to").val();
-        var direct_superior = $("#direct_superior").val();
-        var reimbursement_type = $("#reimbursement_type").val();
-        var business_unit = $("#business_unit").val();
+    // $('#notification_success').on('hide.bs.modal', function () {
+    //     var claim_date_from = $("#claim_date_from").val();
+    //     var claim_date_to = $("#claim_date_to").val();
+    //     var direct_superior = $("#direct_superior").val();
+    //     var reimbursement_type = $("#reimbursement_type").val();
+    //     var business_unit = $("#business_unit").val();
 
-        $('#business_trip_table').DataTable().destroy();
-        load_data_businesstrip(claim_date_from, claim_date_to, direct_superior, reimbursement_type, business_unit);
-    });
+    //     $('#business_trip_table').DataTable().destroy();
+    //     load_data_table_business_trip(claim_date_from, claim_date_to, direct_superior, reimbursement_type, business_unit, business_trip_status);
+    // });
     
     if ($("#upload_paid_overtime_form").length > 0) {
         $("#upload_paid_overtime_form").validate({
@@ -741,8 +786,9 @@
                             var reimbursement_type = $("#reimbursement_type").val();
                             var business_unit = $("#business_unit").val();
 
-                            $('#business_trip_table').DataTable().destroy();
-                            load_data_businesstrip(claim_date_from, claim_date_to, direct_superior, reimbursement_type, business_unit);
+                            $('#loading').show();
+
+                            load_data_business_trip(claim_date_from, claim_date_to, direct_superior, reimbursement_type, business_unit, business_trip_status);
                         } else {
                             $("#btn-process").prop("disabled", false);
                             $("#btn-process").html(
@@ -780,189 +826,272 @@
     loadDataTravelType();
     loadDataFirstLastAllTravelType();
     loadDataFirstLastAllBusinessUnit();
+    loadDataStatus();
+    loadDataFirstLastAllStatus();
 
     $.get("{{ url('level/all/api') }}", function (data) {
-            $.each(data, function (k, v) {
-                $('#business_unit').append("<option value=" + v.levelName + ">" + v.levelCode +
-                    "</option>");
-            });
+        $.each(data, function (k, v) {
+            $('#business_unit').append("<option value=" + v.levelName + ">" + v.levelCode +
+                "</option>");
         });
-        $.get("{{ url('travel_type/api') }}", function (data) {
-            $.each(data, function (k, v) {
-                $('#travel_type').append("<option value=" + v.variable + ">" + v.value +
-                    "</option>");
-            });
+    });
+
+    $.get("{{ url('travel_type/api') }}", function (data) {
+        $.each(data, function (k, v) {
+            $('#travel_type').append("<option value=" + v.variable + ">" + v.value +
+                "</option>");
         });
+    });
 
-
-        $('#select').focus(function (event) {
-                var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
-                $searchfield.prop('disabled', true);
-        });
-
-        $('#select').click(function (event) {
+    $('#select').focus(function (event) {
             var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
             $searchfield.prop('disabled', true);
-        });
+    });
 
-        $('#select').change(function (event) {
-            var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
-            $searchfield.prop('disabled', true);
-        });
+    $('#select').click(function (event) {
+        var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
+        $searchfield.prop('disabled', true);
+    });
 
-        $('select').on('select2:close', function (e) {
-            $('.header-select').remove();
-        });
+    $('#select').change(function (event) {
+        var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
+        $searchfield.prop('disabled', true);
+    });
 
-        function loadDataBusinessUnit(){
-            function formatSelect(data) {
-                if (data.loading) {
-                    return $search
-                }
+    $('select').on('select2:close', function (e) {
+        $('.header-select').remove();
+    });
 
-                if (data.id) {
-                    var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.levelName + '<div>' +
-                        '</div>');
-
-                    return $result2;
-                }
+    function loadDataBusinessUnit(){
+        function formatSelect(data) {
+            if (data.loading) {
+                return $search
             }
 
-            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
-            
-            $('#business_unit').select2({
-                width: '100%',
-                placeholder: 'Choose Business Unit',
-                allowClear: true,
-                // multiple: true,
-                // tags: true,
-                closeOnSelect: true,
-                language: {
-                    errorLoading: function () {
-                        return $search;
-                    },
-                    searching: function () {
-                        return $search;
-                    }
+            if (data.id) {
+                var $result2 = $('<div class="row">' + 
+                    '<div class="col-6">' + data.data.levelName + '<div>' +
+                    '</div>');
+
+                return $result2;
+            }
+        }
+
+        var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+        
+        $('#business_unit').select2({
+            width: '100%',
+            placeholder: 'Choose Business Unit',
+            allowClear: true,
+            // multiple: true,
+            // tags: true,
+            closeOnSelect: true,
+            language: {
+                errorLoading: function () {
+                    return $search;
                 },
-                ajax: {
-                    url: "{{ url('/level/all/api') }}",
-                    dataType: 'json',
-                    delay: 250,
-                    type: "GET",
-                    data: function (params) {
-                        return {
-                            _token: $('meta[name="csrf-token"]').attr('content'),
-                            search: params.term
-                        };
-                    },
-                    processResults: function (data) {
-                        return {
-                            results: $.map(data, function (item) {
-                                return {
-                                    text: item.levelName,
-                                    id: item.levelCode,
-                                    data: item
-                                }
-                            })
-                        };
-                    },
-                    cache: true,
+                searching: function () {
+                    return $search;
+                }
+            },
+            ajax: {
+                url: "{{ url('/level/all/api') }}",
+                dataType: 'json',
+                delay: 250,
+                type: "GET",
+                data: function (params) {
+                    return {
+                        _token: $('meta[name="csrf-token"]').attr('content'),
+                        search: params.term
+                    };
                 },
-                templateResult: formatSelect
-            });
-        }
+                processResults: function (data) {
+                    return {
+                        results: $.map(data, function (item) {
+                            return {
+                                text: item.levelName,
+                                id: item.levelCode,
+                                data: item
+                            }
+                        })
+                    };
+                },
+                cache: true,
+            },
+            templateResult: formatSelect
+        });
+    }
 
-        function loadDataFirstLastAllBusinessUnit () {
-            $('#business_unit').addClass('spinner-border');
+    function loadDataFirstLastAllBusinessUnit () {
+        $('#business_unit').addClass('spinner-border');
 
-            $.ajax({
-                type: 'GET',
-                url: "{{ url('/level/func/api') }}",
-            }).then(function (data) {
-                if (!$('#business_unit').find('option:contains(' + data.levelName + ')').length) {
-                    $('#business_unit').append($('<option>').val(data.levelCode).text(data.levelName));
-                }
-                $('#business_unit').val(data.levelCode);
-                $('#business_unit').removeClass('loading');
-            });
-        }
+        $.ajax({
+            type: 'GET',
+            url: "{{ url('/level/func/api') }}",
+        }).then(function (data) {
+            if (!$('#business_unit').find('option:contains(' + data.levelName + ')').length) {
+                $('#business_unit').append($('<option>').val(data.levelCode).text(data.levelName));
+            }
+            $('#business_unit').val(data.levelCode);
+            $('#business_unit').removeClass('loading');
+        });
+    }
 
-        function loadDataFirstLastAllTravelType () {
-            $('#reimbursement_type').addClass('spinner-border');
+    function loadDataFirstLastAllTravelType () {
+        $('#reimbursement_type').addClass('spinner-border');
 
-            $.ajax({
-                type: 'GET',
-                url: "{{ url('/travel_type/all/api') }}",
-            }).then(function (data) {
-                if (!$('#reimbursement_type').find('option:contains(' + data.value + ')').length) {
-                    $('#reimbursement_type').append($('<option>').val(data.comGenCode).text(data.value));
-                }
-                $('#reimbursement_type').val(data.comGenCode);
-                $('#reimbursement_type').removeClass('loading');
-            });
-        }
+        $.ajax({
+            type: 'GET',
+            url: "{{ url('/travel_type/all/api') }}",
+        }).then(function (data) {
+            if (!$('#reimbursement_type').find('option:contains(' + data.value + ')').length) {
+                $('#reimbursement_type').append($('<option>').val(data.comGenCode).text(data.value));
+            }
+            $('#reimbursement_type').val(data.comGenCode);
+            $('#reimbursement_type').removeClass('loading');
+        });
+    }
 
-        function loadDataTravelType(){
-            function formatSelect(data) {
-                if (data.loading) {
-                    return $search
-                }
-
-                if (data.id) {
-                    var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.value + '<div>' +
-                        '</div>');
-
-                    return $result2;
-                }
+    function loadDataTravelType(){
+        function formatSelect(data) {
+            if (data.loading) {
+                return $search
             }
 
-            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
-            
-            $('#reimbursement_type').select2({
-                width: '100%',
-                placeholder: 'Choose Travel Type',
-                allowClear: true,
-                // multiple: true,
-                // tags: true,
-                closeOnSelect: true,
-                language: {
-                    errorLoading: function () {
-                        return $search;
-                    },
-                    searching: function () {
-                        return $search;
-                    }
-                },
-                ajax: {
-                    url: "{{ url('/travel_type/api') }}",
-                    dataType: 'json',
-                    delay: 250,
-                    type: "GET",
-                    data: function (params) {
-                        return {
-                            _token: $('meta[name="csrf-token"]').attr('content'),
-                            search: params.term
-                        };
-                    },
-                    processResults: function (data) {
-                        return {
-                            results: $.map(data, function (item) {
-                                return {
-                                    text: item.value,
-                                    id: item.comGenCode,
-                                    data: item
-                                }
-                            })
-                        };
-                    },
-                    cache: true,
-                },
-                templateResult: formatSelect
-            });
+            if (data.id) {
+                var $result2 = $('<div class="row">' + 
+                    '<div class="col-6">' + data.data.value + '<div>' +
+                    '</div>');
+
+                return $result2;
+            }
         }
+
+        var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+        
+        $('#reimbursement_type').select2({
+            width: '100%',
+            placeholder: 'Choose Travel Type',
+            allowClear: true,
+            // multiple: true,
+            // tags: true,
+            closeOnSelect: true,
+            language: {
+                errorLoading: function () {
+                    return $search;
+                },
+                searching: function () {
+                    return $search;
+                }
+            },
+            ajax: {
+                url: "{{ url('/travel_type/api') }}",
+                dataType: 'json',
+                delay: 250,
+                type: "GET",
+                data: function (params) {
+                    return {
+                        _token: $('meta[name="csrf-token"]').attr('content'),
+                        search: params.term
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: $.map(data, function (item) {
+                            return {
+                                text: item.value,
+                                id: item.comGenCode,
+                                data: item
+                            }
+                        })
+                    };
+                },
+                cache: true,
+            },
+            templateResult: formatSelect
+        });
+    }
+
+    function loadDataStatus(){
+        function formatSelect(data) {
+            if (data.loading) {
+                return $search
+            }
+
+            if (data.id) {
+                var $result2 = $('<div class="row">' + 
+                    '<div class="col-6">' + data.data.value + '<div>' +
+                    '</div>');
+
+                return $result2;
+            }
+        }
+
+        var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+        
+        $('#business_trip_status').select2({
+            width: '100%',
+            placeholder: 'Choose Status',
+            allowClear: true,
+            // multiple: true,
+            // tags: true,
+            closeOnSelect: true,
+            language: {
+                errorLoading: function () {
+                    return $search;
+                },
+                searching: function () {
+                    return $search;
+                }
+            },
+            ajax: {
+                url: "{{ url('/status_trans/api') }}",
+                dataType: 'json',
+                delay: 250,
+                type: "GET",
+                data: function (params) {
+                    return {
+                        _token: $('meta[name="csrf-token"]').attr('content'),
+                        search: params.term,
+                    };
+                },
+                processResults: function (data) {
+                    var filteredData = data.filter(function (item) {
+                        var allowedStatuses = ["NEW", "APPROVED", "CANCELED", "PARTIAL APPROVED", "REJECTED"];
+                        return allowedStatuses.includes(item.value);
+                    });
+
+                    filteredData.unshift({ value: "ALL" });
+
+                    return {
+                        results: $.map(filteredData, function (item) {
+                            return {
+                                text: item.value,
+                                id: item.value,
+                                data: item
+                            }
+                        })
+                    };
+                },
+                cache: true,
+            },
+            templateResult: formatSelect
+        });
+    }
+
+    function loadDataFirstLastAllStatus() {
+        $('#business_trip_status').addClass('spinner-border');
+
+        $.ajax({
+            type: 'GET',
+            url: "{{ url('/status_trans/api') }}",
+        }).then(function (data) {
+            $('#business_trip_status').prepend($('<option>').val('ALL').text('ALL'));
+            $('#business_trip_status option:contains("ALL")').not(':first').remove();
+            $('#business_trip_status').val('ALL');
+            $('#business_trip_status').removeClass('spinner-border');
+        });
+    }
 
     $("#btn-update").on( "click", function() {
         let reimbursement_status = $('#reimbursement_status').val();
@@ -971,10 +1100,22 @@
         let direct_superior = $("#directsuperior").val();
         let approvalremarks = $("#approvalremarks").val();
 
-        update_data_approval_businesstrip(reimbursement_status,totalpaid,ticketNo,direct_superior,approvalremarks)
+        update_data_approval_businesstrip(reimbursement_status, totalpaid, ticketNo, direct_superior, approvalremarks)
     })
 
-    function update_data_approval_businesstrip(reimbursement_status, totalpaid, ticketNo,direct_superior,approvalremarks){
+    function updateBusinessTripStatus(reimbursement_status, totalpaid, ticketNo, direct_superior, approvalremarks) {
+        var item = arrayBusinessTrip.find(obj => obj.ticketNo === ticketNo);
+
+        if (item) {
+            item.status = reimbursement_status;
+            item.paidAmount = totalpaid;
+            item.approvalRemarks = approvalremarks;
+
+            table.clear().rows.add(arrayBusinessTrip).draw(false);
+        }
+    }
+
+    function update_data_approval_businesstrip(reimbursement_status, totalpaid, ticketNo, direct_superior, approvalremarks){
         $.ajax({
             url: "{{ url('trans/update_approvalbusinesstrip/table') }}",
             type: "get",
@@ -999,14 +1140,8 @@
                     $('#message-notification-success').html(response
                         .message);
 
-                    var claim_date_from = $("#claim_date_from").val();
-                    var claim_date_to = $("#claim_date_to").val();
-                    var direct_superior = $("#direct_superior").val();
-                    var reimbursement_type = $("#reimbursement_type").val();
-                    var business_unit = $("#business_unit").val();
+                    updateBusinessTripStatus(reimbursement_status, totalpaid, ticketNo, direct_superior, approvalremarks);
 
-                    $('#business_trip_table').DataTable().destroy();
-                    load_data_businesstrip(claim_date_from, claim_date_to, direct_superior, reimbursement_type, business_unit);
                 } else{
                     $("#btn-update").prop("disabled", false);
                     $("#btn-update").html(
