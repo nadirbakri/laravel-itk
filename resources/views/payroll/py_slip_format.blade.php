@@ -366,8 +366,10 @@
                 processing: true,
                 // orderCellsTop: true,
                 data: arraySlipFormat,
+                "paging": false,
                 "sDom": 'lrtip',
                 'sPaginationType': 'full_numbers',
+                "order": [[ 1, "asc" ]],
                 columns: [
                     {
                         orderable: false,
@@ -383,7 +385,7 @@
                         name: 'seqNo',
                         render: function (data, type, row, meta) {
                             return '<input type="hidden" class="form-control" name="no[]" value="' +
-                            (meta.row + 1) +'">' + (meta.row + 1);
+                            data +'">' + data;
                         }
                     },
                     {
@@ -469,6 +471,19 @@
                 $('#func_detail').val('edit');
                 $('#no').val((data[0].seqNo !== null) ? data[0].seqNo : '');
                 $('#label_name').val((data[0].header !== null) ? data[0].header : '');
+
+                var option = new Option(data[0].columnName, data[0].columnName, true, true);
+
+                $('#field_chooser').append(option).trigger('change');
+
+                $('#field_chooser').trigger({
+                    type: 'select2:select',
+                    params: {
+                        id: data[0].columnName,
+                        text: data[0].columnName,
+                        data: data
+                    }
+                });
             }else{
                 $('#notification_error').modal('show');
                 $('#message-notification-error').html('No Data Selected');
@@ -479,7 +494,7 @@
             var data = table.rows('.selected').data().toArray();
             if(data.length > 0){
                 for (var i = 0; i < data.length; i++) {
-                    var index = arraySlipFormat.findIndex(x => x.seqNo == data[i].seqNo);
+                    var index = arraySlipFormat.findIndex(x => x.seqNo == data[i].seqNo && x.columnName == data[i].columnName);
                     arraySlipFormat.splice(index, 1);
                 }
                 $('#payroll_slip_format_table').DataTable().destroy();
@@ -507,7 +522,7 @@
             }else{
                 var data = table.rows('.selected').data().toArray();
                 for (var i = 0; i < data.length; i++) {
-                    var index = arraySlipFormat.findIndex(x => x.seqNo == data[i].seqNo);
+                    var index = arraySlipFormat.findIndex(x => x.seqNo == data[i].seqNo && x.columnName == data[i].columnName);
                     arraySlipFormat[index] = {
                         "seqNo": $("#no").val() ? $("#no").val() : "",
                         "columnName": $("#field_chooser").val(),
