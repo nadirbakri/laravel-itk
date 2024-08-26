@@ -502,7 +502,7 @@
                     <td colspan="3">&nbsp;</td>
                 </tr>
                 <tr>
-                    <td style="width: 100px; text-align: center;">Prepared By,</td>
+                    <td style="width: 100px; text-align: center;">Reviewed By,</td>
                     <td style="width: 5px; text-align: center;">&nbsp;</td>
                     <td style="width: 100px; text-align: center;">Approved By,</td>
                 </tr>
@@ -516,14 +516,14 @@
                     <td colspan="3">&nbsp;</td>
                 </tr>
                 <tr>
-                    <td style="text-align: center; border-bottom: 1px solid black">Natalia Martan</td>
-                    <td style="text-align: center;">&nbsp;</td>
                     <td style="text-align: center; border-bottom: 1px solid black">Tan Kim Piauw</td>
+                    <td style="text-align: center;">&nbsp;</td>
+                    <td style="text-align: center; border-bottom: 1px solid black"></td>
                 </tr>
                 <tr>
-                    <td style="text-align: center;">HR Administration and ComBen Dept Head</td>
-                    <td style="text-align: center;">&nbsp;</td>
                     <td style="text-align: center;">Chief Executive Officer</td>
+                    <td style="text-align: center;">&nbsp;</td>
+                    <td style="text-align: center;">BOD</td>
                 </tr>
             </tbody>
         </table>
