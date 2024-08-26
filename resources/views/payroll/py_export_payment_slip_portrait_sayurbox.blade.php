@@ -188,6 +188,9 @@
 			</td>
 		</tr>
 	</table>
+	<?php
+	$takeHomePay = (float) $value->takeHomePaySalary + (float) $value->takeHomePayBonus + (float) $value->takeHomePayTHR;
+	?>
 	<table class="table no-page-break" style="width:100%; font-size: 14px; padding-left:1%; padding-right:0.1%; border-collapse: collapse; font-family: 'Arial Alternates', sans-serif;">
     	<tr>
         	<td style="width:48%; vertical-align: top;">
@@ -202,7 +205,7 @@
 				<table style="width:100%; border-collapse: collapse;">
 					<tr>
 						<th style="width: 42%; text-align: left; padding-top: 0.4%; padding-left: 2%; font-size: 20px;">Take Home Pay</th>
-						<th style="width: 10%; text-align: right; padding-top: 0.4%; padding-right: 6%; font-size: 20px;">Rp{{ number_format((float) $value->takeHomePaySalary, 0, ',', '.')}}</th>
+						<th style="width: 10%; text-align: right; padding-top: 0.4%; padding-right: 6%; font-size: 20px;">Rp{{ number_format($takeHomePay, 0, ',', '.')}}</th>
 					</tr>
 				</table>
 			</td>
