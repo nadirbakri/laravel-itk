@@ -125,6 +125,7 @@
                                 <tr>
                                     <th></th>
                                     <th></th>
+                                    <th>Line No</th>
                                     <th>Menu</th>
                                     <th>Class Name</th>
                                     <th>Icon</th>
@@ -339,6 +340,11 @@
                 rows += `
                     <tr>
                         <td>
+                            <input type="hidden" class="form-control" name="lineNo[]" value="
+                            ${child.lineNo}">
+                            ${child.lineNo}
+                        </td>
+                        <td>
                             <input type="hidden" class="form-control" name="menuID[]" value="
                             ${child.menuID}">
                             <input type="hidden" class="form-control" name="parentMenuID[]" value="
@@ -369,6 +375,7 @@
             return `
                 <table cellpadding="5" cellspacing="0" border="0" style="width:100%;">
                     <tr>
+                        <th>Line No</th>
                         <th>Menu Name</th>
                         <th>Class Name</th>
                         <th>Icon</th>
@@ -405,6 +412,14 @@
                         orderable: false,
                         data: null,
                         defaultContent: '<i class="fa fa-plus"></i>'
+                    },
+                    {
+                        data: 'lineNo',
+                        name: 'lineNo',
+                        render: function (data, type, row) {
+                            return '<input type="hidden" class="form-control" name="lineNo[]" value="' +
+                                row.lineNo + '">' + data;
+                        }
                     },
                     {
                         data: 'menuDesc',
@@ -722,7 +737,12 @@
                 data.menuChild = [];
             }
 
-            data.lineNo = arrayMenu.length + 1;
+            if (arrayMenu.length > 0) {
+                data.lineNo = arrayMenu[arrayMenu.length - 1].lineNo + 1;
+            } else {
+                data.lineNo = 1;
+            }
+
             arrayMenu.push(data);
 
             // Refresh DataTable atau menambahkan baris baru ke child row yang sudah terbuka
@@ -752,7 +772,11 @@
             // Menambahkan child ke arrayMenu
             for (var i = 0; i < arrayMenu.length; i++) {
                 if (arrayMenu[i].menuID === parentID) {
-                    data.lineNo = arrayMenu[i].menuChild.length + 1;
+                    if (arrayMenu[i].menuChild.length > 0) {
+                        data.lineNo = arrayMenu[i].menuChild[arrayMenu[i].menuChild.length - 1].lineNo + 1;
+                    } else {
+                        data.lineNo = 1;
+                    }
                     arrayMenu[i].menuChild.push(data);
                     break;
                 }
