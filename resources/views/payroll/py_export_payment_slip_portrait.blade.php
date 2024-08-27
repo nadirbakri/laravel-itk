@@ -42,7 +42,7 @@
 		</tr>
 		<tr>
 			<td style="padding: 0; margin: 0; text-align:center; font-size: 16px; font-weight: 700;">
-				{{ $value->namaPerusahaan }}
+				PT {{ $value->namaCabang }}
 			</td>
 		</tr>
 	</table>
