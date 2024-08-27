@@ -28,6 +28,6 @@ return [
     'btn_cancel' => 'Cancel',
     'alert_success' => 'Success !',
     'import_extension' => 'File Format is XLS, XLSX, and XML Only',
-    'import_required' => 'Import File Required'
+    'import_required' => 'Import File Required',
 
 ];

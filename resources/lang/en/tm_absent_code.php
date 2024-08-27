@@ -15,9 +15,12 @@ return [
     'label_description' => 'Description',
     'label_category' => 'Category',
     'label_record_status' => 'Record Status',
+    'label_import_file' => 'Import File',
+    'label_select_import_file' => 'Choose Import File',
     'absent_code_required' => 'Absent Code Required',
     'category_required' => 'Category Required',
     'btn_save' => 'Save',
+    'btn_import' => 'Import',
     'btn_cancel' => 'Cancel',
     'alert_success' => 'Success !',
     'label_deduct_leave' => 'Deduct Leave',
@@ -33,7 +36,9 @@ return [
     'label_mobile' => 'Mobile',
     'label_display_absent_code' => 'Display Absent Code',
     'label_need_attachment' => 'Need Attachment',
-    'label_payroll' => 'Payroll'
+    'label_payroll' => 'Payroll',
+    'import_extension' => 'File Format is XLS, XLSX, and XML Only',
+    'import_required' => 'Import File Required',
 
 ]
 

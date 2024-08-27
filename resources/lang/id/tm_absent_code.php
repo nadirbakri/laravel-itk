@@ -15,9 +15,12 @@ return [
     'label_description' => 'Deskripsi',
     'label_category' => 'Kategori',
     'label_record_status' => 'Rekam Status',
+    'label_import_file' => 'Impor Berkas',
+    'label_select_import_file' => 'Pilih Impor Berkas',
     'absent_code_required' => 'Kode Absen Harus Diisi',
     'category_required' => 'Kategori Harus Diisi',
     'btn_save' => 'Simpan',
+    'btn_import' => 'Unggah',
     'btn_cancel' => 'Batal',
     'alert_success' => 'Sukses !',
     'label_deduct_leave' => 'Mengurangi Cuti',
@@ -33,7 +36,9 @@ return [
     'label_mobile' => 'Seluler',
     'label_display_absent_code' => 'Tampilkan Kode Absen',
     'label_need_attachment' => 'Butuh Lampiran',
-    'label_payroll' => 'Daftar Gaji'
+    'label_payroll' => 'Daftar Gaji',
+    'import_extension' => 'File Format is XLS, XLSX, and XML Only',
+    'import_required' => 'File Impor Dibutuhkan',
 
 ]
 

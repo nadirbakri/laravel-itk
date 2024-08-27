@@ -104,6 +104,12 @@
                 <img src="{{ url('/icons/functionbar/functionbar-list-white.svg') }}" class="functionbar-hover" alt="List">
                 <span>{{ __('tm_absent_code.label_list') }}</span>
             </a>
+            <a class="list-functionbar-lgm" href="javascript:void(0)" id="toolbar-template">
+                <span class="no-image">Download Template</span>
+            </a>
+            <a href="javascript:void(0)" id="toolbar-import" data-toggle="modal" data-target="#modal_import">
+                <span class="no-image">Import</span>
+            </a>
         </div>
         <div class="div-title">
 			<a href="{{ route('time_management', ['moduleID' => 'TM']) }}" target="iframe_dashboard">
@@ -126,6 +132,43 @@
 			</table>
 		</div>
 	</div>
+    <div class="modal fade" id="modal_import"  role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{ __('tm_absent_code.btn_import') }} {{ __('tm_absent_code.list_detail') }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="import_absent_code_form" method="post">
+                        @csrf
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="import_file">{{ __('tm_absent_code.label_import_file') }}</label>
+                                    <span style="color: red;">*</span>
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" id="import_file" name="import_file">
+                                        <label class="custom-file-label" for="import_file">{{ __('tm_absent_code.label_select_import_file') }}</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-primary w-25" name="btn-import" id="btn-import">
+                        <i class="fa fa-play-circle-o"></i> {{ __('tm_absent_code.btn_import') }}
+                    </button>
+                    <button type="button" class="btn btn-outline-primary w-25" data-dismiss="modal"><i
+                        class="fa fa-times-circle"></i> {{ __('tm_absent_code.btn_cancel') }}</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <div class="modal fade" role="dialog" id="notification_error">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -356,6 +399,159 @@
                 $('#notification_error').modal('show');
                 $('#message-notification-error').html('No Data Selected');
             }
+        });
+
+        $("#toolbar-template").on('click', function() {
+            var data = table.rows('.selected').data();
+            if(data.count() > 0){
+                $(this).prop("disabled", true);
+                $(this).html(
+                    '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+                );
+
+                $.ajax({
+                    xhrFields: {
+                        responseType: 'blob',
+                    },
+                    url: "{{ url('payroll/absent_code/template') }}",
+                    type: "POST",
+                    processData: false,
+                    contentType: false,
+                    data: { 
+                        'absentCode' : data[0].absentCode, 
+                        'description' : data[0].description,
+                        'absentType' : data[0].absentType },
+                    success: function (result, status, xhr) {
+                        $("#toolbar-template").prop("disabled", false);
+                        $("#toolbar-template").html(
+                            '<span class="no-image">Download Template</span>'
+                        );
+                        var disposition = xhr.getResponseHeader(
+                            'content-disposition');
+                        var matches = /"([^"]*)"/.exec(disposition);
+                        var filename = (matches != null && matches[1] ? matches[1] :
+                            'audit_trail.xlsx');
+
+                        // The actual download
+                        var blob = new Blob([result], {
+                            type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                        });
+                        var link = document.createElement('a');
+                        link.href = window.URL.createObjectURL(blob);
+                        link.download = filename;
+
+                        document.body.appendChild(link);
+
+                        link.click();
+                        document.body.removeChild(link);
+                    },
+                    error: function (response) {
+                        $("#toolbar-template").prop("disabled", false);
+                        $("#toolbar-template").html(
+                            '<span class="no-image">Download Template</span>'
+                        );
+                        $('#notification_error').modal('show');
+                        $('#message-notification-error').html(response);
+                    }
+                });
+            }else{
+                $('#notification_error').modal('show');
+                $('#message-notification-error').html('No Data Selected');
+            }
+        });
+
+        $("#btn-import").on('click', function() {
+            $(this).prop("disabled", true);
+            $(this).html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+            
+            $("#import_absent_code_form").validate({
+                rules: {
+                    import_file: {
+                        required: true,
+                        extension: "xls|xlsx|xml"
+                    }
+                },
+                messages: {
+                    import_file: {
+                        required: "{{ __('tm_absent_code.import_required') }}",
+                        extension: "{{ __('tm_absent_code.import_extension') }}"
+                    }
+                },
+                highlight: function (element) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function (element) {
+                    $(element).removeClass('is-invalid');
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                    $("#btn-import").prop("disabled", false);
+                    $("#btn-import").html(
+                        '<i class="fa fa-floppy-o"></i> {{ __("tm_absent_code.btn_import") }}'
+                    );
+
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').append(error);
+                },
+                submitHandler: function (form) {
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+
+                    var myform = document.getElementById("import_absent_code_form");
+                    data = new FormData(myform);
+
+                    $.ajax({
+                        url: "{{ url('payroll/absent_code/import') }}",
+                        type: "POST",
+                        processData: false,
+                        contentType: false,
+                        data: data,
+                        success: function (response) {
+                            if (response[0].status == "true") {
+                                $("#btn-import").prop("disabled", false);
+                                $("#btn-import").html(
+                                    '<i class="fa fa-play-circle-o"></i> {{ __("tm_absent_code.btn_import") }}'
+                                );
+                                $('#modal_import').hide();
+                                $('#notification_success').modal('show');
+                                $('#message-notification-success').html(response[0]
+                                    .message);
+                                setTimeout(function () {
+                                    window.location =
+                                        "{{ url('payroll/absent_code') }}";
+                                }, 3000);
+                            } else {
+                                $("#btn-import").prop("disabled", false);
+                                $("#btn-import").html(
+                                    '<i class="fa fa-play-circle-o"></i> {{ __("tm_absent_code.btn_import") }}'
+                                );
+                                $('#notification_error').modal('show');
+                                if (response[0].message == null || response[0].message ==
+                                    '') {
+                                    $('#message-notification-error').html(
+                                        "{{ __('login.error') }}");
+                                } else {
+                                    $('#message-notification-error').html(response[0]
+                                        .message);
+                                }
+                            }
+                        },
+                        error: function (response) {
+                            $("#btn-import").prop("disabled", false);
+                            $("#btn-import").html(
+                                '<i class="fa fa-play-circle-o"></i> {{ __("tm_absent_code.btn_import") }}'
+                            );
+                            $('#notification_error').modal('show');
+                            $('#message-notification-error').html(response);
+                        }
+                    });
+                }
+            })
         });
 
         $('#absent_code_table tbody').on('click', 'tr td:not(:first-child)', function () {
