@@ -239,6 +239,10 @@ tr.shown td.details-control {
     padding: 0.5% 1% !important;
     width: 10% !important;
 }
+.list-functionbar-lgm {
+    padding: 0.5% 1% !important;
+    width: 14% !important;
+}
 .list-functionbar-lgx {
     padding: 0.5% 1% !important;
     width: 20% !important;
@@ -261,6 +265,10 @@ tr.shown td.details-control {
 .div-navbar span {
     position: absolute;
     margin-left: 2%;
+}
+.div-navbar span.no-image{
+    position: absolute;
+    margin-left: 0;
 }
 .functionbar-hover {
     position: absolute;

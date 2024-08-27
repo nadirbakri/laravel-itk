@@ -250,6 +250,10 @@ tr.shown td.details-control {
     position: absolute;
     margin-left: 2%;
 }
+.div-navbar span.no-image{
+    position: absolute;
+    margin-left: 0;
+}
 .functionbar-hover {
     position: absolute;
     opacity: 0;

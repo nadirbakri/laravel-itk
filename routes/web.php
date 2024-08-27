@@ -882,6 +882,7 @@ Route::get('utilities/process_user_id', 'UtilitiesController@pageProcessUserIDUt
 Route::get('utilities/master_banner', 'UtilitiesController@pageMasterBannerUtilities');
 Route::get('utilities/announcement_category', 'UtilitiesController@pageAnnouncementCategoryUtilities');
 Route::get('utilities/news_category', 'UtilitiesController@pageNewsCategoryUtilities');
+Route::get('utilities/reference_mobile', 'UtilitiesController@pageReferenceMobileUtilities');
 
 Route::get('utilities/user_security_maintenance/table', 'UtilitiesController@tableUserSecurityMaintenanceUtilities');
 Route::get('utilities/group_authorization/table', 'UtilitiesController@tableAuthorizationCodeGroupUtilities');
@@ -896,6 +897,7 @@ Route::get('utilities/menu_master_mobile_setting/table', 'UtilitiesController@ta
 Route::get('utilities/master_banner/table', 'UtilitiesController@tableMasterBannerUtilities');
 Route::get('utilities/announcement_category/table', 'UtilitiesController@tableAnnouncementCategoryUtilities');
 Route::get('utilities/news_category/table', 'UtilitiesController@tableNewsCategoryUtilities');
+Route::get('utilities/reference_mobile/table', 'UtilitiesController@tableReferenceMobileUtilities');
 
 Route::get('utilities/group_authorization/detail_data', 'UtilitiesController@dataDetailAuthorizationCodeGroupUtilities');
 Route::get('utilities/group_user_access/detail_data', 'UtilitiesController@dataDetailUserAccessGroupUtilities');
@@ -907,6 +909,7 @@ Route::get('utilities/menu_master_mobile_setting/detail_data', 'UtilitiesControl
 Route::get('utilities/master_banner/detail_data', 'UtilitiesController@dataDetailMasterBannerUtilities');
 Route::get('utilities/announcement_category/detail_data', 'UtilitiesController@dataDetailAnnouncementCategoryUtilities');
 Route::get('utilities/news_category/detail_data', 'UtilitiesController@dataDetailNewsCategoryUtilities');
+Route::get('utilities/reference_mobile/detail_data', 'UtilitiesController@dataDetailReferenceMobileUtilities');
 
 Route::get('utilities/user_security_maintenance/level/table', 'UtilitiesController@tableUserSecurityMaintenanceLevelUtilities');
 Route::get('utilities/user_security_maintenance/company/table', 'UtilitiesController@tableUserSecurityMaintenanceCompanyUtilities');
@@ -944,6 +947,7 @@ Route::post('utilities/menu_master_mobile_setting/proses', 'UtilitiesController@
 Route::post('utilities/master_banner/proses', 'UtilitiesController@prosesMasterBannerUtilities');
 Route::post('utilities/announcement_category/proses', 'UtilitiesController@prosesAnnouncementCategoryUtilities');
 Route::post('utilities/news_category/proses', 'UtilitiesController@prosesNewsCategoryUtilities');
+Route::post('utilities/reference_mobile/proses', 'UtilitiesController@prosesReferenceMobileUtilities');
 
 Route::post('utilities/menu_master_mobile_setting/detail_data/proses', 'UtilitiesController@prosesMenuMasterMobileSettingDetailDataUtilities');
 

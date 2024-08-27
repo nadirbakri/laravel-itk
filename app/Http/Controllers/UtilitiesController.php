@@ -196,6 +196,11 @@ class UtilitiesController extends Controller
     	return view('utilities.utilities_news_category');
     }
 
+    public function pageReferenceMobileUtilities()
+    {
+    	return view('utilities.utilities_reference_mobile');
+    }
+
     public function tableUserSecurityMaintenanceUtilities(Request $request)
     {
         try {
@@ -675,6 +680,45 @@ class UtilitiesController extends Controller
         }
     }
 
+    public function tableReferenceMobileUtilities(Request $request)
+    {
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/mobile/ReferenceMobile/getReferenceMobile',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        "languageCode" => strtoupper(App::getLocale()),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
+        }
+    }
+
     public function dataDetailUserSecurityMaintenanceUtilities(Request $request)
     {
         try {
@@ -1054,6 +1098,43 @@ class UtilitiesController extends Controller
         $arrResult = json_decode($response->getBody()->getContents());  
 
         return view('utilities.utilities_news_category_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
+    }
+
+    public function dataDetailReferenceMobileUtilities(Request $request)
+    {
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/mobile/ReferenceMobile/getReferenceMobile',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'variable' => $request->variable,
+                        'code' => $request->code,
+                        "languageCode" => strtoupper(App::getLocale()),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());  
+
+        return view('utilities.utilities_reference_mobile_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
     }
 
     public function tableUserSecurityMaintenanceLevelUtilities(Request $request)
@@ -2643,7 +2724,7 @@ class UtilitiesController extends Controller
                 $param = [];
             }
 
-            // dd(json_encode($param));
+            dd(json_encode($param));
 
             $response = $client->put(env('API_URL') . '/mobile/MasterMenuMobile/updatesettingmobile',
                 ['body' => json_encode($param)]
@@ -2825,6 +2906,74 @@ class UtilitiesController extends Controller
                             'companyCode' => Session::get('companyCode'),
                             'categoryCode' => $request->category_code,
                             'categoryName' => $request->category_name,
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            'userID' => Session::get('userID'),
+                            'sessionID' => 0,
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                            "languageCode" => strtoupper(App::getLocale())
+                        ]
+                    )]
+                );
+            }
+
+
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function prosesReferenceMobileUtilities(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            if($request->record_function == 'New'){
+                $response = $client->post(env('API_URL') . '/mobile/ReferenceMobile',
+                    ['body' => json_encode(
+                        [
+                            'companyCode' => Session::get('companyCode'),
+                            'variable' => $request->variable,
+                            'code' => $request->code,
+                            'value' => $request->value,
+                            "changedNo" => 0,
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            'userID' => Session::get('userID'),
+                            'sessionID' => 0,
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                            "languageCode" => strtoupper(App::getLocale())
+                        ]
+                    )]
+                );
+            }else{
+                $response = $client->put(env('API_URL') . '/mobile/ReferenceMobile',
+                    ['body' => json_encode(
+                        [
+                            'companyCode' => Session::get('companyCode'),
+                            'variable' => $request->variable,
+                            'code' => $request->code,
+                            'value' => $request->value,
                             "changedDate" => date("Y-m-d\TH:i:s"),
                             "changedBy" => Session::get('userID'),
                             'userID' => Session::get('userID'),
