@@ -605,13 +605,13 @@
                     if ($("#admin_menu_news_master").length> 0) {
                         $.ajax({
                             url: "{{ url('admin_menu/news_master/remove') }}",
-                            type: "GET",
+                            type: "POST",
                             data: $('#admin_menu_news_master').serialize(),
                             success: function (response) {
                                 if (response.status == "true"){
                                     $("#btn-delete").prop("disabled", false);
                                     $("#btn-delete").html(
-                                        'Delete'
+                                        "{{ __('admin_main_menu_news_master.delete') }}"
                                     );
                                     
                                     $('#notification_success').modal('show');
@@ -619,12 +619,12 @@
                                     .message);
                                     setTimeout(function () {
                                     window.location =
-                                        "{{ url('admin_menu/news_master') }}";
+                                        "{{ url('utilities/news_master') }}";
                                     }, 3000);
                                 } else {
                                     $("#btn-delete").prop("disabled", false);
                                     $("#btn-delete").html(
-                                        'Delete'
+                                        "{{ __('admin_main_menu_news_master.delete') }}"
                                     );
                                     $('#notification_error').modal('show');
                                     if (response.message == null || response.message ==
@@ -640,7 +640,7 @@
                             error: function (response) {
                                 $("#btn-delete").prop("disabled", false);
                                 $("#btn-delete").html(
-                                    'Delete'
+                                    "{{ __('admin_main_menu_news_master.delete') }}"
                                 );
 
                                 $('#notification').modal('show');

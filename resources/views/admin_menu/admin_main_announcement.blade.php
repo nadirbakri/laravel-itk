@@ -11,6 +11,7 @@
     <link href="https://cdn.datatables.net/select/1.3.3/css/select.dataTables.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/flatpickr.min.css') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
+    <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css" rel="stylesheet" />
     <!-- <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="{{ asset('css/payroll_detail_data.css') }}">
     <link rel="stylesheet" href="{{ asset('css/jquery.inputpicker.css') }}">
@@ -218,16 +219,16 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-3">
+                    <div class="col-2">
                         <button type="submit" class="btn btn-primary" name="btn-save" id="btn-save" style="width: 100%">{{ __('admin_main_announcement.save') }}</button>  
                     </div>
-                    <!-- <div class="col-2">
-                        <button class="btn btn-primary" type="submit" name="btn-delete" id="btn-delete" style="width: 100%">{{ __('admin_main_menu_news_master.delete') }}</button>  
-                    </div> -->
-                    <div class="col-3">
-                        <button class="btn btn-outline-primary" onClick="window.location.reload();" value="preview" style="width: 100%">{{ __('admin_main_announcement.cancel') }}</button> 
+                    <div class="col-2" id="div-btn-delete" style="display: none;">
+                        <button class="btn btn-danger" type="button" name="btn-delete" id="btn-delete" style="width: 100%">{{ __('admin_main_announcement.delete') }}</button>  
                     </div>
-                    <div class="col-3">
+                    <div class="col-2">
+                        <button type="button" class="btn btn-outline-primary" onClick="window.location.reload();" value="preview" style="width: 100%">{{ __('admin_main_announcement.cancel') }}</button> 
+                    </div>
+                    <div class="col-2">
                         <button type="button" class="btn btn-primary" name="btn-list" id="btn-list" data-toggle="modal" data-target="#modal_list_news" style="width: 100%">{{ __('admin_main_announcement.list') }}</button>  
                     </div>
                 </div>
@@ -323,6 +324,7 @@
 <script src="{{ asset('js/jquery.redirect.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <script src="{{ asset('js/flatpickr.js') }}"></script>
 <script src="{{ asset('js/flatpickr.monthselect.js') }}"></script>
 <script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
@@ -403,6 +405,7 @@
         $('#status').val("update");
         $('#c_announcement').val(table2.row($(element).parent()).data().content);
         $('#seq_no').val(table2.row($(element).parent()).data().seqNo);
+        $('#div-btn-delete').show();
         $.ajax({
             type: 'GET',
             url: "{{ url('/announcement_category/detail/api') }}",
@@ -463,34 +466,120 @@
                                     "{{ url('utilities/announcement') }}";
                                 }, 3000);
                             } else {
+                                $("#btn-save").prop("disabled", false);
+                                $("#btn-save").html(
+                                    ' Save'
+                                );
+                                $('#notification_error').modal('show');
+                                if (response.message == null || response.message ==
+                                    '') {
+                                    $('#message-notification-error').html(
+                                        "{{ __('login.error') }}");
+                                } else {
+                                    $('#message-notification-error').html(response
+                                        .message);
+                                }
+                            }
+                        },
+                        error: function (response) {
                             $("#btn-save").prop("disabled", false);
                             $("#btn-save").html(
-                                ' Save'
+                                '{{ __("md_claim_transaction.btn_save") }}'
                             );
-                            $('#notification_error').modal('show');
-                            if (response.message == null || response.message ==
-                                '') {
-                                $('#message-notification-error').html(
-                                    "{{ __('login.error') }}");
-                            } else {
-                                $('#message-notification-error').html(response
-                                    .message);
-                            }
+
+                            $('#notification').modal('show');
+                            $('#message-notification').html(response);
                         }
-                    },
-                    error: function (response) {
-                        $("#btn-save").prop("disabled", false);
-                        $("#btn-save").html(
-                            '{{ __("md_claim_transaction.btn_save") }}'
+                    });
+                }
+            })
+        }
+
+        function ConfirmDialogDelete(message) {
+            $('<div></div>').appendTo('body')
+                .html('<div><h6>' + message + '?</h6></div>')
+                .dialog({
+                modal: true,
+                title: 'Confirm Alert',
+                zIndex: 10000,
+                autoOpen: true,
+                width: '30%',
+                resizable: false,
+                buttons: {
+                    Yes: function() {
+                        $(this).dialog("close");
+
+                        $("#btn-delete").prop("disabled", true);
+                        $("#btn-delete").html(
+                            '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
                         );
 
-                        $('#notification').modal('show');
-                        $('#message-notification').html(response);
+                        if ($("#admin_menu_announcement").length> 0) {
+                            var myForm = document.getElementById('admin_menu_announcement');
+                            var formdata = new FormData(myForm);
+
+                            $.ajax({
+                                url: "{{ url('admin_menu/announcement/remove') }}",
+                                type: "POST",
+                                processData: false,
+                                contentType: false,
+                                data: formdata,
+                                success: function (response) {
+                                    if (response.status == "true"){
+                                        $("#btn-delete").prop("disabled", false);
+                                        $("#btn-delete").html(
+                                            "{{ __('admin_main_announcement.delete') }}"
+                                        );
+                                        
+                                        $('#notification_success').modal('show');
+                                        $('#message-notification-success').html(response
+                                        .message);
+                                        setTimeout(function () {
+                                        window.location =
+                                            "{{ url('utilities/announcement') }}";
+                                        }, 3000);
+                                    } else {
+                                        $("#btn-delete").prop("disabled", false);
+                                        $("#btn-delete").html(
+                                            "{{ __('admin_main_announcement.delete') }}"
+                                        );
+                                        $('#notification_error').modal('show');
+                                        if (response.message == null || response.message ==
+                                            '') {
+                                            $('#message-notification-error').html(
+                                                "{{ __('login.error') }}");
+                                        } else {
+                                            $('#message-notification-error').html(response
+                                                .message);
+                                        }
+                                    }
+                                },
+                                error: function (response) {
+                                    $("#btn-delete").prop("disabled", false);
+                                    $("#btn-delete").html(
+                                        "{{ __('admin_main_announcement.delete') }}"
+                                    );
+
+                                    $('#notification').modal('show');
+                                    $('#message-notification').html(response);
+                                }
+                            });
+                        } 
+                    },
+                    No: function() {
+                        $(this).dialog("close");
                     }
-                });
-            }
+                },
+                close: function(event, ui) {
+                    $(this).remove();
+                }
+            });
+        };
+
+        // Delete Button  
+        $("#btn-delete").on('click', function () {
+            ConfirmDialogDelete('Are you sure you want to delete this data');
         })
-    }
 
         $.get("{{ url('announcement_category/api') }}", function (data) {
             $.each(data, function (k, v) {
