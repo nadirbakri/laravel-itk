@@ -99,20 +99,6 @@ class AdminMenuController extends Controller
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
-            
-            if($request->hasFile('image_attachment')) {
-                $file = $request->file('image_attachment');
-                $imageName = Session::get('companyCode') . '_News_' . $file->getClientOriginalName();
-                $file->move(public_path('photo_news'), $imageName);
-                $pathImage = public_path('photo_news/');
-            }
-
-            if($request->hasFile('file_attachment')) {
-                $file2 = $request->file('file_attachment');
-                $fileName = Session::get('companyCode') . '_News_' . $file2->getClientOriginalName();
-                $file2->move(public_path('file_news'), $fileName);
-                $pathFile = public_path('file_news/');
-            }
 
             $param = [
                 'companyCode' => Session::get('companyCode'),
@@ -126,12 +112,14 @@ class AdminMenuController extends Controller
                 'recordStatus' => $request->record_status
             ];
 
-            if($request->hasFile('image_attachment')){
-                $param['photo'] = base64_encode(file_get_contents($pathImage . $imageName));
+            if($request->hasFile('image_attachment')) {
+                $file = $request->file('image_attachment');
+                $param['photo'] = base64_encode(file_get_contents($file->getRealPath()));
             }
 
-            if($request->hasFile('file_attachment')){
-                $param['pdfFile'] = base64_encode(file_get_contents($pathFile . $fileName));
+            if($request->hasFile('file_attachment')) {
+                $file2 = $request->file('file_attachment');
+                $param['pdfFile'] = base64_encode(file_get_contents($file2->getRealPath()));
             }
 
             // dd(json_encode($param));
@@ -175,18 +163,10 @@ class AdminMenuController extends Controller
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
-            
-            $imgdata = base64_decode($value['attachmentFile']);
-            $f = finfo_open();
-            $mime_type = finfo_buffer($f, $imgdata, FILEINFO_MIME_TYPE);
 
-            $filename = $value['companyCode'] . '_' . $value['employeeNo'] . '_' . $value['attachmentCode'] . '_' . $value['fileName'] . '.' . $mime_map[$mime_type];
-            File::delete('attachment/'.$filename);
-
-            $response = $client->delete(env('API_URL') . '/mobile/News/deleteNewsCategory',
+            $response = $client->delete(env('API_URL') . '/mobile/News/deleteNews',
                 ['body' => json_encode(
                     [
-                        'recordStatus' => "A",
                         'companyCode' => Session::get('companyCode'),
                         'categoryName' => $request->n_category,
                         'languageCode' => App::getLocale(),

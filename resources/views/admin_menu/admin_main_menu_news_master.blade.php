@@ -11,6 +11,7 @@
     <link href="https://cdn.datatables.net/select/1.3.3/css/select.dataTables.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/flatpickr.min.css') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
+    <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css" rel="stylesheet" />
     <!-- <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="{{ asset('css/payroll_detail_data.css') }}">
     <link rel="stylesheet" href="{{ asset('css/jquery.inputpicker.css') }}">
@@ -242,16 +243,16 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-3">
+                    <div class="col-2">
                         <button type="submit" class="btn btn-primary" name="btn-save" id="btn-save" style="width: 100%">{{ __('admin_main_menu_news_master.save') }}</button>  
                     </div>
-                    <!-- <div class="col-2">
-                        <button class="btn btn-primary" type="submit" name="btn-delete" id="btn-delete" style="width: 100%">{{ __('admin_main_menu_news_master.delete') }}</button>  
-                    </div> -->
-                    <div class="col-3">
-                        <button class="btn btn-outline-primary" onClick="window.location.reload();" value="preview" style="width: 100%">{{ __('admin_main_menu_news_master.cancel') }}</button> 
+                    <div class="col-2" id="div-btn-delete" style="display: none;">
+                        <button class="btn btn-danger" type="button" name="btn-delete" id="btn-delete" style="width: 100%">{{ __('admin_main_menu_news_master.delete') }}</button>  
                     </div>
-                    <div class="col-3">
+                    <div class="col-2">
+                        <button type="button" class="btn btn-outline-primary" onClick="window.location.reload();" value="preview" style="width: 100%">{{ __('admin_main_menu_news_master.cancel') }}</button> 
+                    </div>
+                    <div class="col-2">
                         <button type="button" class="btn btn-primary" name="btn-list" id="btn-list" data-toggle="modal" data-target="#modal_list_news" style="width: 100%">{{ __('admin_main_menu_news_master.list') }}</button>  
                     </div>
                 </div>
@@ -347,6 +348,7 @@
 <script src="{{ asset('js/jquery.redirect.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <script src="{{ asset('js/flatpickr.js') }}"></script>
 <script src="{{ asset('js/flatpickr.monthselect.js') }}"></script>
 <script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
@@ -452,6 +454,7 @@
                 .categoryName).text(data2[0].categoryName);
             $("#n_category").append($newOption).trigger('change');
         });
+        $('#div-btn-delete').show();
         // $('#n_category').append($('<option>', {
         //     value: newscategory,
         //     text: newscategory
@@ -464,173 +467,202 @@
 </script>
 <script>
     $("#btn-save").click(function () {
-          $("#admin_menu_news_master").submit();
-      });
+        $("#admin_menu_news_master").submit();
+    });
 
-      if ($("#admin_menu_news_master").length > 0) {
-              $("#admin_menu_news_master").validate({
-                rules: {
-                    t_news: {
-                        required: true,
-                    },
-                    n_category: {
-                        required: true,
-                    },
-                    c_news: {
-                        required: true,
-                    },
-                    image_attachment: {
-                        required: function() {
-                            return $('#t_news2').val() === 'new';
-                        },
+    if ($("#admin_menu_news_master").length > 0) {
+        $("#admin_menu_news_master").validate({
+            rules: {
+                t_news: {
+                    required: true,
+                },
+                n_category: {
+                    required: true,
+                },
+                c_news: {
+                    required: true,
+                },
+                image_attachment: {
+                    required: function() {
+                        return $('#t_news2').val() === 'new';
                     },
                 },
-                messages: {
-                    t_news: {
-                        required: "{{ __('tm_period_maintenance.field_mandatory') }}",
-                    },
-                    n_category: {
-                        required: "{{ __('tm_period_maintenance.field_mandatory') }}",
-                    },
-                    c_news: {
-                        required: "{{ __('tm_period_maintenance.field_mandatory') }}",
-                    },
-                    image_attachment: {
-                        required: "{{ __('tm_period_maintenance.field_mandatory') }}",
-                    },
+            },
+            messages: {
+                t_news: {
+                    required: "{{ __('tm_period_maintenance.field_mandatory') }}",
                 },
-                highlight: function (element) {
-                    $(element).addClass('is-invalid');
+                n_category: {
+                    required: "{{ __('tm_period_maintenance.field_mandatory') }}",
                 },
-                unhighlight: function (element) {
-                    $(element).removeClass('is-invalid');
+                c_news: {
+                    required: "{{ __('tm_period_maintenance.field_mandatory') }}",
                 },
-                errorElement: 'span',
-                errorPlacement: function (error, element) {
-                    $("#btn-save").prop("disabled", false);
+                image_attachment: {
+                    required: "{{ __('tm_period_maintenance.field_mandatory') }}",
+                },
+            },
+            highlight: function (element) {
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function (element) {
+                $(element).removeClass('is-invalid');
+            },
+            errorElement: 'span',
+            errorPlacement: function (error, element) {
+                $("#btn-save").prop("disabled", false);
+                $("#btn-save").html(
+                    'Save'
+                );
+
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+            },
+            submitHandler: function (form) {
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+
+                    var myForm = document.getElementById('admin_menu_news_master');
+                    var formdata = new FormData(myForm);
+
+                    $("#btn-save").prop("disabled", true);
                     $("#btn-save").html(
-                        'Save'
+                    '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
                     );
 
-                    error.addClass('invalid-feedback');
-                    element.closest('.form-group').append(error);
-                },
-                submitHandler: function (form) {
-                      $.ajaxSetup({
-                          headers: {
-                              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                          }
-                      });
-
-                      var myForm = document.getElementById('admin_menu_news_master');
-                      var formdata = new FormData(myForm);
-
-                      $("#btn-save").prop("disabled", true);
-                      $("#btn-save").html(
-                        '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
-                      );
-
-                      $.ajax({
-                          url: "{{ url('admin_menu/news_master/proses') }}",
-                          type: "POST",
-                          processData: false,
-                          contentType: false,
-                          data: formdata,
-                          success: function (response) {
-                              if (response.status == "true"){
-                                  $("#btn-save").prop("disabled", false);
-                                  $("#btn-save").html(
-                                      'Save'
-                                  );
-                                  
-                                  $('#notification_success').modal('show');
-                                  $('#message-notification-success').html(response
-                                  .message);
-                                  setTimeout(function () {
-                                  window.location =
-                                      "{{ url('admin_menu/news_master') }}";
-                                  }, 3000);
-                              } else {
-                              $("#btn-save").prop("disabled", false);
-                              $("#btn-save").html(
-                                  ' Save'
-                              );
-                              $('#notification_error').modal('show');
-                              if (response.message == null || response.message ==
-                                  '') {
-                                  $('#message-notification-error').html(
-                                      "{{ __('login.error') }}");
-                              } else {
-                                  $('#message-notification-error').html(response
-                                      .message);
-                              }
-                          }
-                      },
-                      error: function (response) {
-                          $("#btn-save").prop("disabled", false);
-                          $("#btn-save").html(
-                              '{{ __("md_claim_transaction.btn_save") }}'
-                          );
-
-                          $('#notification').modal('show');
-                          $('#message-notification').html(response);
-                      }
-                  });
-              }
-          })
-      }
-
-// Delete Button
-      
-    $("#btn-delete").on('click', function () {
-
-            if ($("#admin_menu_news_master").length> 0) {
-                $.ajax({
-                    url: "{{ url('admin_menu/news_master/remove') }}",
-                          type: "GET",
-                          data: $('#admin_menu_news_master').serialize(),
-                          success: function (response) {
-                              if (response.status == "true"){
-                                  $("#btn-Delete").prop("disabled", false);
-                                  $("#btn-Delete").html(
-                                      'Delete'
-                                  );
-                                  
-                                  $('#notification_success').modal('show');
-                                  $('#message-notification-success').html(response
-                                  .message);
-                                  setTimeout(function () {
-                                  window.location =
-                                      "{{ url('admin_menu/news_master') }}";
-                                  }, 3000);
-                              } else {
-                              $("#btn-Delete").prop("disabled", false);
-                              $("#btn-Delete").html(
-                                  '<i class="fa fa-floppy-o"></i> Delete'
-                              );
-                              $('#notification_error').modal('show');
-                              if (response.message == null || response.message ==
-                                  '') {
-                                  $('#message-notification-error').html(
-                                      "{{ __('login.error') }}");
-                              } else {
-                                  $('#message-notification-error').html(response
-                                      .message);
-                              }
+                    $.ajax({
+                        url: "{{ url('admin_menu/news_master/proses') }}",
+                        type: "POST",
+                        processData: false,
+                        contentType: false,
+                        data: formdata,
+                        success: function (response) {
+                            if (response.status == "true"){
+                                $("#btn-save").prop("disabled", false);
+                                $("#btn-save").html(
+                                    'Save'
+                                );
+                                
+                                $('#notification_success').modal('show');
+                                $('#message-notification-success').html(response
+                                .message);
+                                setTimeout(function () {
+                                window.location =
+                                    "{{ url('admin_menu/news_master') }}";
+                                }, 3000);
+                            } else {
+                            $("#btn-save").prop("disabled", false);
+                            $("#btn-save").html(
+                                ' Save'
+                            );
+                            $('#notification_error').modal('show');
+                            if (response.message == null || response.message ==
+                                '') {
+                                $('#message-notification-error').html(
+                                    "{{ __('login.error') }}");
+                            } else {
+                                $('#message-notification-error').html(response
+                                    .message);
+                            }
                         }
                     },
                     error: function (response) {
-                          $("#btn-delete").prop("disabled", false);
-                          $("#btn-delete").html(
-                              '<i class="fa fa-floppy-o"></i> {{ __("md_claim_transaction.btn_save") }}'
-                          );
+                        $("#btn-save").prop("disabled", false);
+                        $("#btn-save").html(
+                            '{{ __("md_claim_transaction.btn_save") }}'
+                        );
 
-                          $('#notification').modal('show');
-                          $('#message-notification').html(response);
-                      }
+                        $('#notification').modal('show');
+                        $('#message-notification').html(response);
+                    }
                 });
-            } 
+            }
         })
+    }
+
+    function ConfirmDialogDelete(message) {
+        $('<div></div>').appendTo('body')
+            .html('<div><h6>' + message + '?</h6></div>')
+            .dialog({
+            modal: true,
+            title: 'Confirm Alert',
+            zIndex: 10000,
+            autoOpen: true,
+            width: '30%',
+            resizable: false,
+            buttons: {
+                Yes: function() {
+                    $(this).dialog("close");
+
+                    $("#btn-delete").prop("disabled", true);
+                    $("#btn-delete").html(
+                        '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+                    );
+
+                    if ($("#admin_menu_news_master").length> 0) {
+                        $.ajax({
+                            url: "{{ url('admin_menu/news_master/remove') }}",
+                            type: "GET",
+                            data: $('#admin_menu_news_master').serialize(),
+                            success: function (response) {
+                                if (response.status == "true"){
+                                    $("#btn-delete").prop("disabled", false);
+                                    $("#btn-delete").html(
+                                        'Delete'
+                                    );
+                                    
+                                    $('#notification_success').modal('show');
+                                    $('#message-notification-success').html(response
+                                    .message);
+                                    setTimeout(function () {
+                                    window.location =
+                                        "{{ url('admin_menu/news_master') }}";
+                                    }, 3000);
+                                } else {
+                                    $("#btn-delete").prop("disabled", false);
+                                    $("#btn-delete").html(
+                                        'Delete'
+                                    );
+                                    $('#notification_error').modal('show');
+                                    if (response.message == null || response.message ==
+                                        '') {
+                                        $('#message-notification-error').html(
+                                            "{{ __('login.error') }}");
+                                    } else {
+                                        $('#message-notification-error').html(response
+                                            .message);
+                                    }
+                                }
+                            },
+                            error: function (response) {
+                                $("#btn-delete").prop("disabled", false);
+                                $("#btn-delete").html(
+                                    'Delete'
+                                );
+
+                                $('#notification').modal('show');
+                                $('#message-notification').html(response);
+                            }
+                        });
+                    } 
+                },
+                No: function() {
+                    $(this).dialog("close");
+                }
+            },
+            close: function(event, ui) {
+                $(this).remove();
+            }
+        });
+    };
+
+    // Delete Button  
+    $("#btn-delete").on('click', function () {
+        ConfirmDialogDelete('Are you sure you want to delete this data');
+    })
     
 </script>
 <script>
