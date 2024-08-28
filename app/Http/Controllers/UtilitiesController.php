@@ -2724,7 +2724,7 @@ class UtilitiesController extends Controller
                 $param = [];
             }
 
-            dd(json_encode($param));
+            // dd(json_encode($param));
 
             $response = $client->put(env('API_URL') . '/mobile/MasterMenuMobile/updatesettingmobile',
                 ['body' => json_encode($param)]
