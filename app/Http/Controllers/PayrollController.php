@@ -5590,7 +5590,7 @@ public function dataDetailReportFormatPY(Request $request)
                 'logActionUsername' => Session::get('userName')        
             ];
 
-            // dd(json_encode($param));
+            dd(json_encode($param));
 
             if($request->record_function == 'New'){
                 $response = $client->post(env('API_URL') . '/payroll/InsertRefrencePayroll',
@@ -5795,8 +5795,6 @@ public function dataDetailReportFormatPY(Request $request)
     {
         try{
             $file = $request->file('import_file');
-            $nama_file = rand().$file->getClientOriginalName();
-            $file->move('file_excel', $nama_file);
             $import = new PayrollDataImport(
                 $request->process_period,
                 $request->transfer_to,
@@ -5823,8 +5821,7 @@ public function dataDetailReportFormatPY(Request $request)
                 $request->column_l,
                 $request->column_l2
             );
-            Excel::import($import, public_path('file_excel/'.$nama_file));
-            File::delete('file_excel/'.$nama_file);
+            Excel::import($import, $file->getRealPath());
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             $failures = $e->failures();
             $objError = (object) ['status' => false, 'message' => $failures[0]->errors()[0]];
@@ -5838,11 +5835,8 @@ public function dataDetailReportFormatPY(Request $request)
     {
         try{
             $file = $request->file('import_file');
-            $nama_file = rand().$file->getClientOriginalName();
-            $file->move('file_excel', $nama_file);
             $import = new PayrollBonusTHRDataImport;
-            Excel::import($import, public_path('file_excel/'.$nama_file), null, \Maatwebsite\Excel\Excel::XLSX);
-            File::delete('file_excel/'.$nama_file);
+            Excel::import($import, $file->getRealPath(), null, \Maatwebsite\Excel\Excel::XLSX);
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             $failures = $e->failures();
             $objError = (object) ['status' => false, 'message' => $failures[0]->errors()[0]];
@@ -7134,8 +7128,8 @@ public function dataDetailReportFormatPY(Request $request)
 
         $arrResult = json_decode($response->getBody()->getContents());
 
-        $firstDayOfPreviousMonth = date("01-M-Y", strtotime( $data->period));
-        $lastDayOfPreviousMonth = date("t-M-Y", strtotime( $data->period));
+        $firstDayOfPreviousMonth = date("01-M-Y", strtotime($data->period));
+        $lastDayOfPreviousMonth = date("t-M-Y", strtotime($data->period));
 
         // dd($arrResult->dataListSet);
         if($data->companyCode == 'DAA'){

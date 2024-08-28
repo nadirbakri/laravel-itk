@@ -5990,10 +5990,7 @@ class PersonelController extends Controller
 
             if($request->hasFile('photo_profile')) {
                 $file = $request->file('photo_profile');
-                $filename = Session::get('companyCode') . '_' . $file->getClientOriginalName();
-                $file->move(public_path('photo_profile'), $filename);
-                $path = public_path('photo_profile/');
-                $param["photo"] = ($request->hasFile('photo_profile')) ? base64_encode(file_get_contents($path . $filename)) : '';
+                $param["photo"] = ($request->hasFile('photo_profile')) ? base64_encode(file_get_contents($file->getRealPath())) : '';
             }
             else {
                 $param["photo"] = isset($request->photo_employee) ? $request->photo_employee : '';
@@ -7173,40 +7170,39 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
+            $param = [
+                'companyCode' => Session::get('companyCode'),
+                'employeeNo' => $request->employee_no_training_list,
+                'seqNo' => (int) $request->seq_no_training_list,
+                'trainingName' => $request->training_name,
+                'organizer' => $request->organizer,
+                'startDate' => date('Y-m-d\TH:i:s', strtotime($request->training_list_start_date)),
+                'endDate' => date('Y-m-d\TH:i:s', strtotime($request->training_list_end_date)),
+                'certificateName' => $request->certificate_name,
+                'certificateNo' => $request->certificate_no,
+                'certificateDate' => date('Y-m-d\TH:i:s', strtotime($request->certificate_date)),
+                'expiredDate' => $request->expired_date,
+                "certificateDescription" => $request->certificate_description,
+                "changedNo" => 0,
+                "createdDate" => date("Y-m-d\TH:i:s"),
+                "createdBy" => Session::get('userID'),
+                "changedDate" => date("Y-m-d\TH:i:s"),
+                "changedBy" => Session::get('userID'),
+                'sessionUserID' => Session::get('userID'),
+                'logActionUserID' => Session::get('userID'),
+                'logActionUsername' => Session::get('userName'),
+                "languageCode" => App::getLocale()
+            ];
+
             if($request->hasFile('certificate_attachment')) {
                 $file = $request->file('certificate_attachment');
-                $filename = Session::get('companyCode') . '_' . $request->employee_no_training_list . '_' . $file->getClientOriginalName();
-                $file->move(public_path('certificate'), $filename);
-                $path = public_path('certificate/');
+                $param['certificateAttachment'] = base64_encode(file_get_contents($file->getRealPath()));
+            } else {
+                $param['certificateAttachment'] = '';
             }
 
             $response = $client->post(env('API_URL') . '/personel/PeTraining',
-                ['body' => json_encode(
-                    [
-                        'companyCode' => Session::get('companyCode'),
-                        'employeeNo' => $request->employee_no_training_list,
-                        'seqNo' => (int) $request->seq_no_training_list,
-                        'trainingName' => $request->training_name,
-                        'organizer' => $request->organizer,
-                        'startDate' => date('Y-m-d\TH:i:s', strtotime($request->training_list_start_date)),
-                        'endDate' => date('Y-m-d\TH:i:s', strtotime($request->training_list_end_date)),
-                        'certificateName' => $request->certificate_name,
-                        'certificateNo' => $request->certificate_no,
-                        'certificateDate' => date('Y-m-d\TH:i:s', strtotime($request->certificate_date)),
-                        'expiredDate' => $request->expired_date,
-                        "certificateDescription" => $request->certificate_description,
-                        'certificateAttachment' => ($request->hasFile('certificate_attachment')) ? base64_encode(file_get_contents($path . $filename)) : '',
-                        "changedNo" => 0,
-                        "createdDate" => date("Y-m-d\TH:i:s"),
-                        "createdBy" => Session::get('userID'),
-                        "changedDate" => date("Y-m-d\TH:i:s"),
-                        "changedBy" => Session::get('userID'),
-                        'sessionUserID' => Session::get('userID'),
-                        'logActionUserID' => Session::get('userID'),
-                        'logActionUsername' => Session::get('userName'),
-                        "languageCode" => App::getLocale()
-                    ]
-                )]
+                ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {
             $response = $e->getResponse();
@@ -8033,101 +8029,55 @@ class PersonelController extends Controller
             ]);
 
             if($request->record_function == 'New'){
+                $param =[
+                    'recordStatus' => $request->record_status,
+                    'companyCode' => Session::get('companyCode'),
+                    'letterType' => $request->letter_type,
+                    'languageID' => $request->language_id,
+                    "changedNo" => 0,
+                    "createdDate" => date("Y-m-d\TH:i:s"),
+                    "createdBy" => Session::get('userID'),
+                    "changedDate" => date("Y-m-d\TH:i:s"),
+                    "changedBy" => Session::get('userID'),
+                    'sessionUserID' => Session::get('userID'),
+                    'logActionUserID' => Session::get('userID'),
+                    'logActionUsername' => Session::get('userName'),
+                    "languageCode" => strtoupper(App::getLocale())
+                ];
+
                 if($request->hasFile('letter_file')) {
                     $file = $request->file('letter_file');
-                    $filename = Session::get('companyCode') . '_' . $file->getClientOriginalName();
-                    $file->move(public_path('letter_template'), $filename);
-                    $path = public_path('letter_template/');
-
-                    $response = $client->post(env('API_URL') . '/printletter/inserttemplate',
-                        ['body' => json_encode(
-                            [
-                                'recordStatus' => $request->record_status,
-                                'companyCode' => Session::get('companyCode'),
-                                'letterType' => $request->letter_type,
-                                'letterFile64' => ($request->hasFile('letter_file')) ? base64_encode(file_get_contents($path . $filename)) : '',
-                                'languageID' => $request->language_id,
-                                "changedNo" => 0,
-                                "createdDate" => date("Y-m-d\TH:i:s"),
-                                "createdBy" => Session::get('userID'),
-                                "changedDate" => date("Y-m-d\TH:i:s"),
-                                "changedBy" => Session::get('userID'),
-                                'sessionUserID' => Session::get('userID'),
-                                'logActionUserID' => Session::get('userID'),
-                                'logActionUsername' => Session::get('userName'),
-                                "languageCode" => strtoupper(App::getLocale())
-                            ]
-                        )]
-                    );
+                    $param['letterFile64'] = base64_encode(file_get_contents($file->getRealPath()));
                 }else{
-                    $response = $client->post(env('API_URL') . '/printletter/inserttemplate',
-                        ['body' => json_encode(
-                            [
-                                'recordStatus' => $request->record_status,
-                                'companyCode' => Session::get('companyCode'),
-                                'letterType' => $request->letter_type,
-                                'languageID' => $request->language_id,
-                                "changedNo" => 0,
-                                "createdDate" => date("Y-m-d\TH:i:s"),
-                                "createdBy" => Session::get('userID'),
-                                "changedDate" => date("Y-m-d\TH:i:s"),
-                                "changedBy" => Session::get('userID'),
-                                'sessionUserID' => Session::get('userID'),
-                                'logActionUserID' => Session::get('userID'),
-                                'logActionUsername' => Session::get('userName'),
-                                "languageCode" => strtoupper(App::getLocale())
-                            ]
-                        )]
-                    );
+                    $param['letterFile64'] = '';
                 }
-                
+
+                $response = $client->post(env('API_URL') . '/printletter/inserttemplate',
+                    ['body' => json_encode($param)]
+                );
             }else{
+                $param = [
+                    'recordStatus' => $request->record_status,
+                    'companyCode' => Session::get('companyCode'),
+                    'letterType' => $request->letter_type,
+                    'languageID' => $request->language_id,
+                    "createdDate" => date("Y-m-d\TH:i:s"),
+                    "createdBy" => Session::get('userID'),
+                    "changedDate" => date("Y-m-d\TH:i:s"),
+                    "changedBy" => Session::get('userID'),
+                    'sessionUserID' => Session::get('userID'),
+                    'logActionUserID' => Session::get('userID'),
+                    'logActionUsername' => Session::get('userName'),
+                    "languageCode" => strtoupper(App::getLocale())
+                ];
                 if($request->hasFile('letter_file')) {
                     $file = $request->file('letter_file');
-                    $filename = Session::get('companyCode') . '_' . $file->getClientOriginalName();
-                    $file->move(public_path('letter_template'), $filename);
-                    $path = public_path('letter_template/');
-
-                    $response = $client->put(env('API_URL') . '/printletter/updatetemplate',
-                        ['body' => json_encode(
-                            [
-                                'recordStatus' => $request->record_status,
-                                'companyCode' => Session::get('companyCode'),
-                                'letterType' => $request->letter_type,
-                                'letterFile64' => base64_encode(file_get_contents($path . $filename)),
-                                'languageID' => $request->language_id,
-                                "createdDate" => date("Y-m-d\TH:i:s"),
-                                "createdBy" => Session::get('userID'),
-                                "changedDate" => date("Y-m-d\TH:i:s"),
-                                "changedBy" => Session::get('userID'),
-                                'sessionUserID' => Session::get('userID'),
-                                'logActionUserID' => Session::get('userID'),
-                                'logActionUsername' => Session::get('userName'),
-                                "languageCode" => strtoupper(App::getLocale())
-                            ]
-                        )]
-                    );
-                }else{
-                    $response = $client->put(env('API_URL') . '/printletter/updatetemplate',
-                        ['body' => json_encode(
-                            [
-                                'recordStatus' => $request->record_status,
-                                'companyCode' => Session::get('companyCode'),
-                                'letterType' => $request->letter_type,
-                                'languageID' => $request->language_id,
-                                "createdDate" => date("Y-m-d\TH:i:s"),
-                                "createdBy" => Session::get('userID'),
-                                "changedDate" => date("Y-m-d\TH:i:s"),
-                                "changedBy" => Session::get('userID'),
-                                'sessionUserID' => Session::get('userID'),
-                                'logActionUserID' => Session::get('userID'),
-                                'logActionUsername' => Session::get('userName'),
-                                "languageCode" => strtoupper(App::getLocale())
-                            ]
-                        )]
-                    );
+                    $param['letterFile64'] = base64_encode(file_get_contents($file->getRealPath()));
                 }
-                
+
+                $response = $client->put(env('API_URL') . '/printletter/updatetemplate',
+                    ['body' => json_encode($param)]
+                );
             }
         } catch (RequestException $e) {
             $response = $e->getResponse();
@@ -10713,10 +10663,7 @@ class PersonelController extends Controller
             ]);
 
             $file = $request->file('photo_profile');
-            $filename = Session::get('companyCode') . '_' . $file->getClientOriginalName();
-            $file->move(public_path('letter_template'), $filename);
-            $path = public_path('letter_template/');
-
+            
             if($request->record_function == 'New'){
                 $response = $client->post(env('API_URL') . '/pemaster/putlevelmaster',
                     ['body' => json_encode(
@@ -10724,7 +10671,7 @@ class PersonelController extends Controller
                             'recordStatus' => $request->record_status,
                             'companyCode' => Session::get('companyCode'),
                             'employeeNo' => $request->employee_no_profile,
-                            'photo' => base64_encode(file_get_contents($path . $filename)),
+                            'photo' => base64_encode(file_get_contents($file->getRealPath())),
                             "changedNo" => 0,
                             "createdDate" => date("Y-m-d\TH:i:s"),
                             "createdBy" => Session::get('userID'),
@@ -10744,7 +10691,7 @@ class PersonelController extends Controller
                             'recordStatus' => $request->record_status,
                             'companyCode' => Session::get('companyCode'),
                             'letterType' => $request->letter_type,
-                            'letterFile64' => base64_encode(file_get_contents($path . $filename)),
+                            'letterFile64' => base64_encode(file_get_contents($file->getRealPath())),
                             "createdDate" => date("Y-m-d\TH:i:s"),
                             "createdBy" => Session::get('userID'),
                             "changedDate" => date("Y-m-d\TH:i:s"),
@@ -11017,30 +10964,29 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
+            $param = [
+                'companyCode' => Session::get('companyCode'),
+                'seqNo' => (int) $request->seq_no,
+                'employeeNo' => $request->employee_no_detail,
+                'fileName' => $request->file_name,
+                'attachmentCode' => $request->attachment_code,
+                "changedNo" => 0,
+                "createdDate" => date("Y-m-d\TH:i:s"),
+                "createdBy" => Session::get('userID'),
+                "changedDate" => date("Y-m-d\TH:i:s"),
+                "changedBy" => Session::get('userID'),
+                "languageCode" => App::getLocale()
+            ];
+
             if($request->hasFile('attachment_file')) {
                 $file = $request->file('attachment_file');
-                $filename = Session::get('companyCode') . '_' . $request->employee_no_detail . '_' . $request->attachment_code . '_' . $request->file_name;
-                $file->move(public_path('attachment'), $filename);
-                $path = public_path('attachment/');
+                $param['attachmentFile'] = base64_encode(file_get_contents($file->getRealPath()));
+            } else {
+                $param['attachmentFile'] = '';
             }
 
             $response = $client->post(env('API_URL') . '/personel/PeAttachment',
-                ['body' => json_encode(
-                    [
-                        'companyCode' => Session::get('companyCode'),
-                        'seqNo' => (int) $request->seq_no,
-                        'employeeNo' => $request->employee_no_detail,
-                        'fileName' => $request->file_name,
-                        'attachmentCode' => $request->attachment_code,
-                        'attachmentFile' => ($request->hasFile('attachment_file')) ? base64_encode(file_get_contents($path . $filename)) : '',
-                        "changedNo" => 0,
-                        "createdDate" => date("Y-m-d\TH:i:s"),
-                        "createdBy" => Session::get('userID'),
-                        "changedDate" => date("Y-m-d\TH:i:s"),
-                        "changedBy" => Session::get('userID'),
-                        "languageCode" => App::getLocale()
-                    ]
-                )]
+                ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {
             $response = $e->getResponse();
@@ -11201,11 +11147,8 @@ class PersonelController extends Controller
     {
         try{
             $file = $request->file('import_export');
-            $nama_file = rand().$file->getClientOriginalName();
-            $file->move('file_excel', $nama_file);
             $import = new PersonalDataImport;
-            Excel::import($import, public_path('file_excel/'.$nama_file), null, \Maatwebsite\Excel\Excel::XLSX);
-            File::delete('file_excel/'.$nama_file);
+            Excel::import($import, $file->getRealPath(), null, \Maatwebsite\Excel\Excel::XLSX);
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             $failures = $e->failures();
             $objError = (object) ['status' => false, 'message' => $failures[0]->errors()[0]];
@@ -11224,11 +11167,8 @@ class PersonelController extends Controller
     {
         try{
             $file = $request->file('import_update');
-            $nama_file = rand().$file->getClientOriginalName();
-            $file->move('file_excel', $nama_file);
             $import = new PersonalDataUpdateImport;
-            Excel::import($import, public_path('file_excel/'.$nama_file), null, \Maatwebsite\Excel\Excel::XLSX);
-            File::delete('file_excel/'.$nama_file);
+            Excel::import($import, $file->getRealPath(), null, \Maatwebsite\Excel\Excel::XLSX);
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             $failures = $e->failures();
             $objError = (object) ['status' => false, 'message' => $failures[0]->errors()[0]];
@@ -11247,8 +11187,6 @@ class PersonelController extends Controller
     {
         try{
             $file = $request->file('import_export');
-            $nama_file = rand().$file->getClientOriginalName();
-            $file->move('file_excel', $nama_file);
             switch ($request->maintenance_type) {
                 case 'level':
                     $import = new LevelDataImport;
@@ -11295,8 +11233,7 @@ class PersonelController extends Controller
                 default:
                     $import = new PersonalDataImport;
             }
-            Excel::import($import, public_path('file_excel/'.$nama_file), null, \Maatwebsite\Excel\Excel::XLSX);
-            File::delete('file_excel/'.$nama_file);
+            Excel::import($import, $file->getRealPath(), null, \Maatwebsite\Excel\Excel::XLSX);
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             $failures = $e->failures();
             $objError = (object) ['status' => false, 'message' => $failures[0]->errors()[0]];

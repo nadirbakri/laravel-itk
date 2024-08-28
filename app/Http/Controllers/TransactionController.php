@@ -1322,11 +1322,8 @@ class TransactionController extends Controller
     {     
         try{
             $file = $request->file('file_overtime');
-            $nama_file = rand().$file->getClientOriginalName();
-            $file->move('file_excel', $nama_file);
             $import = new UpdateReimbursement;
-            Excel::import($import, public_path('file_excel/'.$nama_file));
-            File::delete('file_excel/'.$nama_file);
+            Excel::import($import, $file->getRealPath());
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             $failures = $e->failures();
             $objError = (object) ['status' => false, 'message' => $failures[0]->errors()[0]];
@@ -1340,11 +1337,8 @@ class TransactionController extends Controller
     {     
         try{
             $file = $request->file('file_overtime');
-            $nama_file = rand().$file->getClientOriginalName();
-            $file->move('file_excel', $nama_file);
             $import = new UpdateBusinessTrip;
-            Excel::import($import, public_path('file_excel/'.$nama_file));
-            File::delete('file_excel/'.$nama_file);
+            Excel::import($import, $file->getRealPath());
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             $failures = $e->failures();
             $objError = (object) ['status' => false, 'message' => $failures[0]->errors()[0]];
@@ -1358,11 +1352,8 @@ class TransactionController extends Controller
     {     
         try{
             $file = $request->file('file_overtime');
-            $nama_file = rand().$file->getClientOriginalName();
-            $file->move('file_excel', $nama_file);
             $import = new UpdateTransport;
-            Excel::import($import, public_path('file_excel/'.$nama_file));
-            File::delete('file_excel/'.$nama_file);
+            Excel::import($import, $file->getRealPath());
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             $failures = $e->failures();
             $objError = (object) ['status' => false, 'message' => $failures[0]->errors()[0]];
@@ -1377,11 +1368,8 @@ class TransactionController extends Controller
     {
         try{
             $file = $request->file('file_medical');
-            $nama_file = rand().$file->getClientOriginalName();
-            $file->move('file_excel', $nama_file);
             $import = new UpdateMedical;
-            Excel::import($import, public_path('file_excel/'.$nama_file));
-            File::delete('file_excel/'.$nama_file);
+            Excel::import($import, $file->getRealPath());
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             $failures = $e->failures();
             $objError = (object) ['status' => false, 'message' => $failures[0]->errors()[0]];
@@ -1395,11 +1383,8 @@ class TransactionController extends Controller
     {
         try{
             $file = $request->file('file_overtime');
-            $nama_file = rand().$file->getClientOriginalName();
-            $file->move('file_excel', $nama_file);
             $import = new UpdateOvertime;
-            Excel::import($import, public_path('file_excel/'.$nama_file));
-            File::delete('file_excel/'.$nama_file);
+            Excel::import($import, $file->getRealPath());
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             $failures = $e->failures();
             $objError = (object) ['status' => false, 'message' => $failures[0]->errors()[0]];

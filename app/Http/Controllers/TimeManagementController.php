@@ -1445,11 +1445,8 @@ class TimeManagementController extends Controller
     {
         try{
             $file = $request->file('file_location');
-            $nama_file = rand().$file->getClientOriginalName();
-            $file->move('file_excel', $nama_file);
             $import = new UpdateAbsenteeismDataImport;
-            Excel::import($import, public_path('file_excel/'.$nama_file), null, \Maatwebsite\Excel\Excel::XLSX);
-            File::delete('file_excel/'.$nama_file);
+            Excel::import($import, $file->getRealPath(), null, \Maatwebsite\Excel\Excel::XLSX);
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             $failures = $e->failures();
             $objError = (object) ['status' => false, 'message' => $failures[0]->errors()[0]];
@@ -1473,11 +1470,8 @@ class TimeManagementController extends Controller
     {
         try{
             $file = $request->file('file_location');
-            $nama_file = rand().$file->getClientOriginalName();
-            $file->move('file_excel', $nama_file);
             $import = new ChangeDataShiftImport;
-            Excel::import($import, public_path('file_excel/'.$nama_file), null, \Maatwebsite\Excel\Excel::XLSX);
-            File::delete('file_excel/'.$nama_file);
+            Excel::import($import, $file->getRealPath(), null, \Maatwebsite\Excel\Excel::XLSX);
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             $failures = $e->failures();
             $objError = (object) ['status' => false, 'message' => $failures[0]->errors()[0]];
@@ -1506,11 +1500,8 @@ class TimeManagementController extends Controller
     {
         try{
             $file = $request->file('import_leave');
-            $nama_file = rand().$file->getClientOriginalName();
-            $file->move('file_excel', $nama_file);
             $import = new PeMasterLeaveImport;
-            Excel::import($import, public_path('file_excel/'.$nama_file), null, \Maatwebsite\Excel\Excel::XLSX);
-            File::delete('file_excel/'.$nama_file);
+            Excel::import($import, $file->getRealPath(), null, \Maatwebsite\Excel\Excel::XLSX);
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             $failures = $e->failures();
             $objError = (object) ['status' => false, 'message' => $failures[0]->errors()[0]];
@@ -1534,11 +1525,8 @@ class TimeManagementController extends Controller
     {
         try{
             $file = $request->file('import_plafon');
-            $nama_file = rand().$file->getClientOriginalName();
-            $file->move('file_excel', $nama_file);
             $import = new PlafonImport;
-            Excel::import($import, public_path('file_excel/'.$nama_file), null, \Maatwebsite\Excel\Excel::XLSX);
-            File::delete('file_excel/'.$nama_file);
+            Excel::import($import, $file->getRealPath(), null, \Maatwebsite\Excel\Excel::XLSX);
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             $failures = $e->failures();
             $objError = (object) ['status' => false, 'message' => $failures[0]->errors()[0]];
@@ -2376,11 +2364,8 @@ class TimeManagementController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try{
             $file = $request->file('file_location');
-            $nama_file = rand().$file->getClientOriginalName();
-            $file->move('file_excel', $nama_file);
             $import = new TimeRecordingImport($request->automatic);
-            Excel::import($import, public_path('file_excel/'.$nama_file), null, \Maatwebsite\Excel\Excel::XLSX);
-            File::delete('file_excel/'.$nama_file);
+            Excel::import($import, $file->getRealPath(), null, \Maatwebsite\Excel\Excel::XLSX);
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             $failures = $e->failures();
             $objError = (object) ['status' => false, 'message' => $failures[0]->errors()[0]];
