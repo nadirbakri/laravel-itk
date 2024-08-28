@@ -73,20 +73,20 @@
 			<td width="29%">{{ $value->rank }}</td>
 		</tr>
 		<tr>
-			<td width="20%">NAMA CABANG</td>
-			<td width="1%">:</td>
-			<td width="29%" style="padding-left: 10px;"></td>
-			<td width="20%">JABATAN</td>
-			<td width="1%">:</td>
-			<td width="29%">{{ $value->jabatan }}</td>
-		</tr>
-		<tr>
 			<td width="20%">NAMA PERUSAHAAN</td>
 			<td width="1%">:</td>
 			<td width="29%" style="padding-left: 10px;">PT {{ $value->namaCabang }}</td>
+			<td width="20%">GOLONGAN</td>
+			<td width="1%">:</td>
+			<td width="29%">{{ $value->golongan }}</td>
+		</tr>
+		<tr>
 			<td width="20%">NOMOR REKENING</td>
 			<td width="1%">:</td>
-			<td width="29%">{{ $value->noRekening }}</td>
+			<td width="29%" style="padding-left: 10px;">{{ $value->noRekening }}</td>
+			<td width="20%">JABATAN</td>
+			<td width="1%">:</td>
+			<td width="29%">{{ $value->jabatan }}</td>
 		</tr>
 	</table>
 	<br>
