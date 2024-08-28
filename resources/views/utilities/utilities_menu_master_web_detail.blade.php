@@ -342,12 +342,25 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' +
-                        '<div class="col-12">' + data.data.menuName + '</div>' +
+                        '<div class="col-6">' + data.data.menuID + '</div>' +
+                        '<div class="col-6">' + data.data.menuName + '</div>' +
                         '</div>');
 
                     return $result2;
                 }
             }
+
+            var headerIsAppend = false;
+            $('#parent_id').on('select2:open', function (e) {
+                if (!headerIsAppend) {
+                    html = '<div class="row">' +
+                        '<div class="col-6"><b>Parent ID</b></div>' +
+                        '<div class="col-6"><b>Parent Name</b></div>' +
+                        '</div>';
+                    $('.select2-search--dropdown').append(html);
+                    headerIsAppend = true;
+                }
+            });
 
             var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
 
