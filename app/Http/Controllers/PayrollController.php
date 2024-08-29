@@ -5821,7 +5821,7 @@ public function dataDetailReportFormatPY(Request $request)
                 $request->column_l,
                 $request->column_l2
             );
-            Excel::import($import, $file->getRealPath());
+            Excel::import($import, $file->getRealPath(), null, \Maatwebsite\Excel\Excel::XLSX);
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             $failures = $e->failures();
             $objError = (object) ['status' => false, 'message' => $failures[0]->errors()[0]];
