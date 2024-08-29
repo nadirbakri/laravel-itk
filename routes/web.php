@@ -94,6 +94,7 @@ Route::get('personnel/format_document', 'PersonelController@pageFormatDocumentPe
 Route::get('personnel/job_description', 'PersonelController@pageJobDescriptionPersonel');
 Route::get('personnel/cost_center', 'PersonelController@pageCostCenterCodePersonel');
 Route::get('personnel/location', 'PersonelController@pageLocationCodePersonel');
+Route::get('personnel/office_location', 'PersonelController@pageOfficeLocationCodePersonel');
 Route::get('personnel/position', 'PersonelController@pagePositionPersonel');
 Route::get('personnel/ranking', 'PersonelController@pageRankingPersonel');
 Route::get('personnel/grade', 'PersonelController@pageGradeCodePersonel');
@@ -166,6 +167,7 @@ Route::get('personnel/print_letter/table', 'PersonelController@tablePrintLetterP
 Route::get('personnel/job_description/table', 'PersonelController@tableJobDescriptionPersonel');
 Route::get('personnel/cost_center/table', 'PersonelController@tableCostCenterCodePersonel');
 Route::get('personnel/location/table', 'PersonelController@tableLocationCodePersonel');
+Route::get('personnel/office_location/table', 'PersonelController@tableOfficeLocationCodePersonel');
 Route::get('personnel/position/table', 'PersonelController@tablePositionPersonel');
 Route::get('personnel/ranking/table', 'PersonelController@tableRankingPersonel');
 Route::get('personnel/grade/table', 'PersonelController@tableGradeCodePersonel');
@@ -222,6 +224,7 @@ Route::get('personnel/format_document/detail_data', 'PersonelController@dataDeta
 Route::get('personnel/job_description/detail_data', 'PersonelController@dataDetailJobDescriptionPersonel');
 Route::get('personnel/cost_center/detail_data', 'PersonelController@dataDetailCostCenterCodePersonel');
 Route::get('personnel/location/detail_data', 'PersonelController@dataDetailLocationCodePersonel');
+Route::get('personnel/office_location/detail_data', 'PersonelController@dataDetailOfficeLocationCodePersonel');
 Route::get('personnel/position/detail_data', 'PersonelController@dataDetailPositionPersonel');
 Route::get('personnel/ranking/detail_data', 'PersonelController@dataDetailRankingPersonel');
 Route::get('personnel/grade/detail_data', 'PersonelController@dataDetailGradeCodePersonel');
@@ -302,6 +305,7 @@ Route::get('personnel/nature_of_work/status', 'PersonelController@statusNatureof
 Route::get('personnel/grade/status', 'PersonelController@statusGradeCodePersonel');
 Route::get('personnel/position/status', 'PersonelController@statusPositionPersonel');
 Route::get('personnel/location/status', 'PersonelController@statusLocationCodePersonel');
+Route::get('personnel/office_location/status', 'PersonelController@statusOfficeLocationCodePersonel');
 Route::get('personnel/level/status', 'PersonelController@statusLevelPersonel');
 Route::get('personnel/cost_center/status', 'PersonelController@statusCostCenterCodePersonel');
 Route::get('personnel/performance/status', 'PersonelController@statusPerformancePersonel');
@@ -331,6 +335,7 @@ Route::post('personnel/nature_of_work/proses', 'PersonelController@prosesNatureo
 Route::post('personnel/grade/proses', 'PersonelController@prosesGradeCodePersonel');
 Route::post('personnel/position/proses', 'PersonelController@prosesPositionPersonel');
 Route::post('personnel/location/proses', 'PersonelController@prosesLocationCodePersonel');
+Route::post('personnel/office_location/proses', 'PersonelController@prosesOfficeLocationCodePersonel');
 Route::post('personnel/level/proses', 'PersonelController@prosesLevelPersonel');
 Route::post('personnel/cost_center/proses', 'PersonelController@prosesCostCenterCodePersonel');
 Route::post('personnel/performance/award/proses', 'PersonelController@prosesPerformanceAwardPersonel');
@@ -1014,6 +1019,9 @@ Route::get('master_data/employee_group_reimbursement_detail', 'MasterDataControl
 Route::get('master_data/holiday_calender', 'MasterDataController@pageMasterDataHolidayCalender');
 Route::get('master_data/bussines_trip', 'MasterDataController@pageMasterDataBussinesTrip');
 Route::get('master_data/bussines_trip_detail', 'MasterDataController@pageMasterDataBussinesTripDetail');
+Route::get('master_data/export_import_employee_group', 'MasterDataController@pageMasterDataExportImportEmployeeGroup');
+Route::get('master_data/export_import_employee_group_member', 'MasterDataController@pageMasterDataExportImportEmployeeGroupMember');
+
 Route::get('master_data/list/table', 'MasterDataController@tabelDetailEmployee');
 Route::get('master_data/employee_list/table', 'MasterDataController@tabelDetailEmployeeMaster');
 Route::get('master_data_leave/list/table', 'MasterDataController@tabelDetailEmployeeLeave');
@@ -1028,6 +1036,7 @@ Route::get('master_data/employee_group_detail/table', 'MasterDataController@tabl
 Route::get('master_data/tambah_user/table', 'MasterDataController@tableEmployeeGroupTambahUser');
 Route::get('master_data/holiday_calendar/table', 'MasterDataController@tableHolidayCalendar');
 Route::get('master_data/email_settings/table', 'MasterDataController@tableEmailSettings');
+
 Route::get('master_data/get', 'MasterDataController@getMasterData');
 Route::get('master_data/employee_master/get', 'MasterDataController@getEmployeeMasterData');
 Route::get('master_data/employee_group_detail/get', 'MasterDataController@getMasterDataEmployeeGroupDetail');
@@ -1037,6 +1046,7 @@ Route::get('master_data/detail/get', 'MasterDataController@getDetailMasterData')
 Route::get('master_data/reimbursement/get', 'MasterDataController@getReimbursementMasterData');
 Route::get('master_data/holiday_calendar/get', 'MasterDataController@getHolidayCalendarMasterData');
 Route::get('master_data/business_trip/get', 'MasterDataController@getBusinessTripMasterData');
+
 Route::post('master_data/employee_group/proses', 'MasterDataController@prosesEmployeeGroup');
 Route::post('master_data/employee_group_leave/proses', 'MasterDataController@prosesEmployeeGroupLeave');
 Route::post('master_data/employee_group_overtime/proses', 'MasterDataController@prosesEmployeeGroupOvertime');
@@ -1046,6 +1056,11 @@ Route::post('master_data/employee_businesstrip/proses', 'MasterDataController@pr
 Route::post('master_data/employee_group_detail/proses', 'MasterDataController@prosesEmployeeGroupDetail');
 Route::post('master_data/employee_group_multiple_checkin/select_level', 'MasterDataController@selectLevelEmployeeGroupMultipleCheckin');
 Route::post('master_data/employee_group_multiple_checkin/proses', 'MasterDataController@prosesEmployeeGroupMultipleCheckin');
+
+Route::post('master_data/export_import_employee_group/export', 'MasterDataController@exportExportImportEmployeeGroup');
+Route::post('master_data/export_import_employee_group_member/export', 'MasterDataController@exportExportImportEmployeeGroupMember');
+Route::post('master_data/export_import_employee_group/import', 'MasterDataController@importExportImportEmployeeGroup');
+Route::post('master_data/export_import_employee_group_member/import', 'MasterDataController@importExportImportEmployeeGroupMember');
 
 /* Route untuk Menu Admin MOB */
 Route::get('admin_menu', 'AdminMenuController@pageAdminMenu');
@@ -1057,10 +1072,11 @@ Route::get('admin_menu/news_master', 'AdminMenuController@pageAdminMenuNewsMaste
 Route::get('maps/location', 'AdminMenuController@pageMaps');
 Route::get('mapsall/location', 'AdminMenuController@pageMapsAll');
 Route::get('adm_main_menu/news_master/list', 'AdminMenuController@pageAdminNewsList');
-Route::get('admin_menu/news_master/remove', 'AdminMenuController@pageNewsMasterRemove');
+Route::post('admin_menu/news_master/remove', 'AdminMenuController@pageNewsMasterRemove');
 Route::post('admin_menu/news_master/proses', 'AdminMenuController@pageAdminMenuNews');
 Route::get('adm_main_menu/announcement/list', 'AdminMenuController@listAnnouncementAdminMenu');
 Route::post('admin_menu/announcement/proses', 'AdminMenuController@prosesAnnouncementAdminMenu');
+Route::post('admin_menu/announcement/remove', 'AdminMenuController@removeAnnouncementAdminMenu');
 
 /* Route Untuk Change Password */
 Route::get('change_password', 'ChangePasswordController@pageChangePassword');

@@ -275,6 +275,11 @@ class PersonelController extends Controller
         return view('personel.personel_location_code');
     }
 
+    public function pageOfficeLocationCodePersonel()
+    {
+        return view('personel.personel_office_location_code');
+    }
+
     public function pagePositionPersonel()
     {
         return view('personel.personel_position');
@@ -1093,6 +1098,45 @@ class PersonelController extends Controller
             ]);
 
             $response = $client->post(env('API_URL') . '/personel/Location/getLocation',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
+        }
+    }
+
+    public function tableOfficeLocationCodePersonel(Request $request)
+    {
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/mobile/OfficeLocation/getOfficeLocation',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -2764,6 +2808,42 @@ class PersonelController extends Controller
         $arrResult = json_decode($response->getBody()->getContents());  
 
         return view('personel.personel_location_code_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
+    }
+
+    public function dataDetailOfficeLocationCodePersonel(Request $request)
+    {
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/mobile/OfficeLocation/getOfficeLocation',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'officeCode' => $request->officeCode,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());  
+
+        return view('personel.personel_office_location_code_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
     }
 
     public function dataDetailPositionPersonel(Request $request)
@@ -4887,6 +4967,48 @@ class PersonelController extends Controller
         return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
     }
 
+    public function statusOfficeLocationCodePersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->put(env('API_URL') . '/mobile/OfficeLocation/updateOfficeLocation',
+                ['body' => json_encode(
+                    [
+                        'recordStatus' => $request->func,
+                        'companyCode' => Session::get('companyCode'),
+                        'officeCode' => $request->officeCode,
+                        'officeDesc' => $request->officeDesc,
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        "languageCode" => App::getLocale()
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
     public function statusLevelPersonel(Request $request)
     {
         date_default_timezone_set('Asia/Jakarta');
@@ -6538,6 +6660,78 @@ class PersonelController extends Controller
                             'locationCode' => $request->location_code,
                             'locationName' => $request->location_name,
                             'bpjsLocationCode' => $request->bpjs_location_code,
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                            "languageCode" => App::getLocale()
+                        ]
+                    )]
+                );
+            }
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function prosesOfficeLocationCodePersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            if($request->record_function == 'New'){
+                $response = $client->post(env('API_URL') . '/mobile/OfficeLocation/insertOfficeLocation',
+                    ['body' => json_encode(
+                        [
+                            'recordStatus' => $request->record_status,
+                            'companyCode' => Session::get('companyCode'),
+                            'officeCode' => $request->office_location_code,
+                            'officeDesc' => $request->office_location_desc,
+                            'longitude' => (int) $request->longitude,
+                            'latitude' => (int) $request->latitude,
+                            'maxTolerance' => (int) $request->max_tolerance,
+                            'isLock' => isset($request->check_lock) ? (bool) $request->check_lock : false,
+                            "changedNo" => 0,
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                            "languageCode" => App::getLocale()
+                        ]
+                    )]
+                );
+            }else{
+                $response = $client->put(env('API_URL') . '/mobile/OfficeLocation/updateOfficeLocation',
+                    ['body' => json_encode(
+                        [
+                            'recordStatus' => $request->record_status,
+                            'companyCode' => Session::get('companyCode'),
+                            'officeCode' => $request->office_location_code,
+                            'officeDesc' => $request->office_location_desc,
+                            'longitude' => (int) $request->longitude,
+                            'latitude' => (int) $request->latitude,
+                            'maxTolerance' => (int) $request->max_tolerance,
+                            'isLock' => isset($request->check_lock) ? (bool) $request->check_lock : false,
                             "changedDate" => date("Y-m-d\TH:i:s"),
                             "changedBy" => Session::get('userID'),
                             'userID' => Session::get('userID'),

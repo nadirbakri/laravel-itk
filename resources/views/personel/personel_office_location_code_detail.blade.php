@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>{{ __('personel_location_code.judul') }}</title>
+    <title>{{ __('personel_office_location_code.judul') }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -73,18 +73,18 @@
         <div class="div-title">
             <a href="{{ url()->previous() }}" target="iframe_dashboard">
                 <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
-                <span class="title-text">{{ __('personel_location_code.list_detail') }}</span>
+                <span class="title-text">{{ __('personel_office_location_code.list_detail') }}</span>
             </a>
         </div>
         <div class="div-form">
-            <form id="location_code_form" method="post">
+            <form id="office_location_code_form" method="post">
                 @csrf
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="record_status">{{ __('personel_location_code.label_record_status') }}</label>
+                            <label for="record_status">{{ __('personel_office_location_code.label_record_status') }}</label>
                             <input type="text" class="form-control" id="record_status" name="record_status"
-                                placeholder="{{ __('personel_location_code.label_record_status') }}" readonly>
+                                placeholder="{{ __('personel_office_location_code.label_record_status') }}" readonly>
                         </div>
                         <input type="hidden" class="form-control" id="record_function" name="record_function">
                     </div>
@@ -92,25 +92,52 @@
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="location_code">{{ __('personel_location_code.label_location_code') }}</label>
-                            <input type="text" class="form-control" id="location_code" name="location_code"
-                                placeholder="{{ __('personel_location_code.label_location_code') }}">
+                            <label for="office_location_code">{{ __('personel_office_location_code.label_office_location_code') }}</label>
+                            <input type="text" class="form-control" id="office_location_code" name="office_location_code"
+                                placeholder="{{ __('personel_office_location_code.label_office_location_code') }}">
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="location_name">{{ __('personel_location_code.label_location_name') }}</label>
-                            <input type="text" class="form-control" id="location_name" name="location_name"
-                                placeholder="{{ __('personel_location_code.label_location_name') }}">
+                            <label for="office_location_desc">{{ __('personel_office_location_code.label_office_location_desc') }}</label>
+                            <input type="text" class="form-control" id="office_location_desc" name="office_location_desc"
+                                placeholder="{{ __('personel_office_location_code.label_office_location_desc') }}">
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="bpjs_location_code">{{ __('personel_location_code.label_bpjs_location_code') }}</label>
-                            <input type="text" class="form-control" id="bpjs_location_code" name="bpjs_location_code"
-                                placeholder="{{ __('personel_location_code.label_bpjs_location_code') }}">
+                            <label for="longitude">{{ __('personel_office_location_code.label_longitude') }}</label>
+                            <input type="number" class="form-control" id="longitude" name="longitude"
+                                placeholder="{{ __('personel_office_location_code.label_longitude') }}">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="latitude">{{ __('personel_office_location_code.label_latitude') }}</label>
+                            <input type="number" class="form-control" id="latitude" name="latitude"
+                                placeholder="{{ __('personel_office_location_code.label_latitude') }}">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="max_tolerance">{{ __('personel_office_location_code.label_max_tolerance') }}</label>
+                            <input type="number" class="form-control" id="max_tolerance" name="max_tolerance"
+                                placeholder="{{ __('personel_office_location_code.label_max_tolerance') }}">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="check_lock">&nbsp;</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="check_lock"
+                                    name="check_lock" value="true">
+                                <label
+                                    for="check_lock">{{ __('personel_office_location_code.label_check_lock') }}</label>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -118,13 +145,13 @@
                     <div class="col-3">
                         <button type="submit" class="btn btn-primary" name="btn-save" id="btn-save"
                             style="width: 100%;">
-                            <i class="fa fa-floppy-o"></i> {{ __('personel_location_code.btn_save') }}
+                            <i class="fa fa-floppy-o"></i> {{ __('personel_office_location_code.btn_save') }}
                         </button>
                     </div>
                     <div class="col-3">
-                        <a class="btn btn-outline-primary" href="{{ url('personnel/location') }}" target="iframe_dashboard"
+                        <a class="btn btn-outline-primary" href="{{ url('personnel/office_location') }}" target="iframe_dashboard"
                             name="btn-cancel" id="btn-cancel" style="width: 100%;">
-                            <i class="fa fa-times-circle"></i> {{ __('personel_location_code.btn_cancel') }}
+                            <i class="fa fa-times-circle"></i> {{ __('personel_office_location_code.btn_cancel') }}
                         </a>
                     </div>
                 </div>
@@ -157,7 +184,7 @@
                 <div class="modal-body">
                     <div class="div-title-notification">
                         <img src="{{ url('/pictures/checklist-green-confirm-password.svg') }}" alt="Password">
-                        <span class="title-text-notification">{{ __('personel_location_code.alert_success') }}</span>
+                        <span class="title-text-notification">{{ __('personel_office_location_code.alert_success') }}</span>
                     </div>
                     <div class="div-title-notification">
                         <span id="message-notification-success"></span>
@@ -204,18 +231,29 @@
         if (func == 'new') {
             $('#record_status').val("A");
             $('#record_function').val("New");
-            $('#location_code').val("");
-            $('#location_name').val("");
-            $('#bpjs_location_code').val("");
-            $('#location_code').prop('readonly', false);
+            $('#office_location_code').val("");
+            $('#office_location_desc').val("");
+            $('#longitude').val("");
+            $('#latitude').val("");
+            $('#max_tolerance').val("");
+            $('#check_lock').prop('checked', false);
+            $('#office_location_code').prop('readonly', false);
         } else if (func == 'edit') {
             $('#record_status').val("{{ isset($data[0]->recordStatus) ? $data[0]->recordStatus : '' }}");
             $('#record_function').val("Edit");
-            $('#location_code').val("{{ isset($data[0]->locationCode) ? $data[0]->locationCode : '' }}");
-            $('#location_name').val(htmlDecode(
-                "{{ isset($data[0]->locationName) ? $data[0]->locationName : '' }}"));
-            $('#bpjs_location_code').val("{{ isset($data[0]->bpjsLocationCode) ? $data[0]->bpjsLocationCode : '' }}");
-            $('#location_code').prop('readonly', true);
+            $('#office_location_code').val("{{ isset($data[0]->officeCode) ? $data[0]->officeCode : '' }}");
+            $('#office_location_desc').val(htmlDecode(
+                "{{ isset($data[0]->officeDesc) ? $data[0]->officeDesc : '' }}"));
+            $('#longitude').val("{{ isset($data[0]->longitude) ? $data[0]->longitude : '' }}");
+            $('#latitude').val("{{ isset($data[0]->latitude) ? $data[0]->latitude : '' }}");
+            $('#max_tolerance').val("{{ isset($data[0]->maxTolerance) ? $data[0]->maxTolerance : '' }}");
+            var isLock = "{{ isset($data[0]->isLock) ? $data[0]->isLock : '' }}";
+            if(isLock) {
+                $('#check_lock').prop('checked', true);
+            }else{
+                $('#check_lock').prop('checked', false);
+            }
+            $('#office_location_code').prop('readonly', true);
         }
 
         function htmlDecode(value) {
@@ -223,7 +261,7 @@
         }
 
         $('#notification_success').on('hide.bs.modal', function () {
-            window.location = "{{ url('personnel/location') }}";
+            window.location = "{{ url('personnel/office_location') }}";
         })
 
         $("#btn-save").click(function () {
@@ -231,25 +269,43 @@
             $(this).html(
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
-            $("#location_code_form").submit();
+            $("#office_location_code_form").submit();
         });
 
-        if ($("#location_code_form").length > 0) {
-            $("#location_code_form").validate({
+        if ($("#office_location_code_form").length > 0) {
+            $("#office_location_code_form").validate({
                 rules: {
-                    location_code: {
+                    office_location_code: {
                         required: true,
                     },
-                    location_name: {
+                    office_location_name: {
+                        required: true,
+                    },
+                    longitude: {
+                        required: true,
+                    },
+                    latitude: {
+                        required: true,
+                    },
+                    max_tolerance: {
                         required: true,
                     },
                 },
                 messages: {
-                    location_code: {
-                        required: "{{ __('personel_location_code.location_code_required') }}",
+                    office_location_code: {
+                        required: "{{ __('personel_office_location_code.office_location_code_required') }}",
                     },
-                    location_name: {
-                        required: "{{ __('personel_location_code.location_name_required') }}",
+                    office_location_name: {
+                        required: "{{ __('personel_office_location_code.office_location_name_required') }}",
+                    },
+                    longitude: {
+                        required: "{{ __('personel_office_location_code.longitude_required') }}",
+                    },
+                    latitude: {
+                        required: "{{ __('personel_office_location_code.latitude_required') }}",
+                    },
+                    max_tolerance: {
+                        required: "{{ __('personel_office_location_code.max_tolerance_required') }}",
                     },
                 },
                 highlight: function (element) {
@@ -262,7 +318,7 @@
                 errorPlacement: function (error, element) {
                     $("#btn-save").prop("disabled", false);
                     $("#btn-save").html(
-                        '<i class="fa fa-floppy-o"></i> {{ __("personel_location_code.btn_save") }}'
+                        '<i class="fa fa-floppy-o"></i> {{ __("personel_office_location_code.btn_save") }}'
                     );
 
                     error.addClass('invalid-feedback');
@@ -275,26 +331,26 @@
                         }
                     });
                     $.ajax({
-                        url: "{{ url('personnel/location/proses') }}",
+                        url: "{{ url('personnel/office_location/proses') }}",
                         type: "POST",
-                        data: $('#location_code_form').serialize(),
+                        data: $('#office_location_code_form').serialize(),
                         success: function (response) {
                             if (response.status == "true") {
                                 $("#btn-save").prop("disabled", false);
                                 $("#btn-save").html(
-                                    '<i class="fa fa-floppy-o"></i> {{ __("personel_location_code.btn_save") }}'
+                                    '<i class="fa fa-floppy-o"></i> {{ __("personel_office_location_code.btn_save") }}'
                                 );
                                 $('#notification_success').modal('show');
                                 $('#message-notification-success').html(response
                                     .message);
                                 setTimeout(function () {
                                     window.location =
-                                        "{{ url('personnel/location') }}";
+                                        "{{ url('personnel/office_location') }}";
                                 }, 3000);
                             } else {
                                 $("#btn-save").prop("disabled", false);
                                 $("#btn-save").html(
-                                    '<i class="fa fa-floppy-o"></i> {{ __("personel_location_code.btn_save") }}'
+                                    '<i class="fa fa-floppy-o"></i> {{ __("personel_office_location_code.btn_save") }}'
                                 );
                                 $('#notification_error').modal('show');
                                 if (response.message == null || response.message ==
@@ -310,7 +366,7 @@
                         error: function (response) {
                             $("#btn-save").prop("disabled", false);
                             $("#btn-save").html(
-                                '<i class="fa fa-floppy-o"></i> {{ __("personel_location_code.btn_save") }}'
+                                '<i class="fa fa-floppy-o"></i> {{ __("personel_office_location_code.btn_save") }}'
                             );
 
                             $('#notification_error').modal('show');
