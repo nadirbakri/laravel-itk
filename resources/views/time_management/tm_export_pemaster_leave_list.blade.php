@@ -37,7 +37,7 @@
 				<td>{{ $value->leaveName }}</td>
 				<td>{{ $value->leaveBalance }}</td>
               	<td>{{ $value->leaveBalanceBefore }}</td>
-				<td>{{ $value->leaveBalanceBeforeExpiredDate }}</td>
+				<td>{{ empty($value->leaveBalanceBeforeExpiredDate) ? '' : date('Y-m-d', strtotime($value->leaveBalanceBeforeExpiredDate)) }}</td>
 			</tr>
 			@endforeach
 		</tbody>

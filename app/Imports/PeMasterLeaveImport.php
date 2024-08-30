@@ -23,6 +23,7 @@ class PeMasterLeaveImport implements ToCollection, SkipsEmptyRows, WithStartRow
 
     public function transformDate($value, $format = 'Y-m-d')
     {
+        date_default_timezone_set('Asia/Jakarta');
         try {
             return Carbon::instance(Date::excelToDateTimeObject($value));
         } catch (\Throwable $e) {
@@ -65,7 +66,7 @@ class PeMasterLeaveImport implements ToCollection, SkipsEmptyRows, WithStartRow
                     "leaveCode" => (!is_null($row[2]) && $row[2] != "NULL") ? $row[2] : null,
                     "leaveBalance" => (!is_null($row[4]) && $row[4] != "NULL") ? (float) number_format($row[4], 1, '.', '') : null,
                     "leaveBalanceBefore" => (!is_null($row[5]) && $row[5] != "NULL") ? (float) number_format($row[5], 1, '.', '') : null,
-                    "leaveBalanceBeforeExpiredDate" => (!is_null($row[6]) && $row[6] != "NULL") ? $this->transformDate($row[6]) : null,
+                    "leaveBalanceBeforeExpiredDate" => (!is_null($row[6]) && $row[6] != "NULL") ? $this->transformDate($row[6])->toDateString() : null,
                     "changedNo" => 0,
                     "changedBy" => Session::get('userID'),
                     "changedDate" => date("Y-m-d\TH:i:s"),
