@@ -12,6 +12,7 @@ return [
     'label_employee_no_to' => 'Employee No To',
     'btn_process_upload' => 'Process Upload',
     'btn_process_delete' => 'Process Delete',
+    'btn_download_template' => 'Download Template',
     'label_text' => 'Text',
     'label_text_detail' => 'Setting Refer to "Reference Time Recording"',
     'label_excel' => 'Excel',

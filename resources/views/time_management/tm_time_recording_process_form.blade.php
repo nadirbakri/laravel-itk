@@ -143,6 +143,11 @@
                                     <i class="fa fa-play-circle-o"></i> {{ __('tm_time_recording_process_form.btn_process_upload') }}
                                 </button>
                             </div>
+                            <div class="col-6">
+                                <button type="button" class="btn btn-process" name="btn-download-template" id="btn-download-template">
+                                    <i class="fa fa-download"></i> {{ __('tm_time_recording_process_form.btn_download_template') }}
+                                </button>
+                            </div>
                         </div>
                     </form>
                     <br><br>
@@ -432,6 +437,60 @@
                 templateResult: formatSelect
             });
         }
+
+        $("#btn-download-template").click(function () {
+            $(this).prop("disabled", true);
+            $(this).html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+            
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                xhrFields: {
+                    responseType: 'blob',
+                },
+                url: "{{ url('time_management/time_recording_process_form/download') }}",
+                type: "POST",
+                success: function (result, status, xhr) {
+                    $("#btn-download-template").prop("disabled", false);
+                    $("#btn-download-template").html(
+                        '<i class="fa fa-download"></i> {{ __("tm_time_recording_process_form.btn_download_template") }}'
+                    );
+                    
+                    var disposition = xhr.getResponseHeader(
+                        'content-disposition');
+                    var matches = /"([^"]*)"/.exec(disposition);
+                    var filename = (matches != null && matches[1] ? matches[1] :
+                        'audit_trail.xlsx');
+                
+                    // The actual download
+                    var blob = new Blob([result], {
+                        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                    });
+
+                    var link = document.createElement('a');
+                    link.href = window.URL.createObjectURL(blob);
+                    link.download = filename;
+
+                    document.body.appendChild(link);
+
+                    link.click();
+                    document.body.removeChild(link);
+                },
+                error: function (response) {
+                    $("#btn-download-template").prop("disabled", false);
+                    $("#btn-download-template").html(
+                        '<i class="fa fa-download"></i> {{ __("tm_time_recording_process_form.btn_download_template") }}'
+                    );
+                    $('#notification_error').modal('show');
+                    $('#message-notification-error').html(response);
+                }
+            });
+        });
 
         $("#btn-process-upload").click(function () {
             $(this).prop("disabled", true);

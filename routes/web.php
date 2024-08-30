@@ -539,6 +539,7 @@ Route::post('time_management/export_import_leave/import', 'TimeManagementControl
 Route::post('time_management/export_import_leave/export', 'TimeManagementController@exportExportImportLeave');
 Route::post('time_management/export_import_plafon/import', 'TimeManagementController@importExportImportPlafon');
 Route::post('time_management/export_import_plafon/export', 'TimeManagementController@exportExportImportPlafon');
+Route::post('time_management/time_recording_process_form/download', 'TimeManagementController@templateTimeRecordingProcessFormTM');
 
 /* Route Untuk Menu Payroll */
 Route::get('payroll', 'PayrollController@pagePayroll')->name('payroll');

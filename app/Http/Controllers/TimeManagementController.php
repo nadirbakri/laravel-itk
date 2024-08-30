@@ -12,6 +12,7 @@ use App\Exports\DetailAbsenteeismReportExport;
 use App\Exports\DetailAbsenteeismReasonReportExport;
 use App\Exports\DetailRateOvertimeReportExport;
 use App\Exports\UpdateAbsenteeismDataTemplateExport;
+use App\Exports\TimeRecordingProcessFormTemplateExport;
 use App\Exports\ChangeDataShiftTemplateExcel;
 use App\Exports\PeMasterLeaveExport;
 use App\Exports\PlafonExport;
@@ -1464,6 +1465,11 @@ class TimeManagementController extends Controller
     public function templateUpdateAbsenteeismData()
     {
         return Excel::download(new UpdateAbsenteeismDataTemplateExport, 'Template Update Absenteeism Data.xlsx');
+    }
+
+    public function templateTimeRecordingProcessFormTM()
+    {
+        return Excel::download(new TimeRecordingProcessFormTemplateExport, 'Template Time Recording Process Form.xlsx');
     }
 
     public function importChangeDataShift(Request $request)

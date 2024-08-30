@@ -12,6 +12,7 @@ return [
     'label_employee_no_to' => 'No Karyawan Sampai',
     'btn_process_upload' => 'Proses Unggah',
     'btn_process_delete' => 'Proses Hapus',
+    'btn_download_template' => 'Unduh Template',
     'label_text' => 'Teks',
     'label_text_detail' => 'Setting Refer to "Reference Time Recording"',
     'label_excel' => 'Excel',
