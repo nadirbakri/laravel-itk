@@ -1980,7 +1980,7 @@ class UtilitiesController extends Controller
                     )]
                 );
 
-                if(count($request->userid_group) > 0){
+                if(isset($request->userid_group) && count($request->userid_group) > 0){
                     foreach($request->userid_group as $key => $value){
                         $param[] = [
                             'recordStatus' => 'A',
