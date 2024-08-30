@@ -54,7 +54,7 @@ class AccountDataImport implements ToCollection, SkipsEmptyRows, WithStartRow
                 $param[] = [
                     "recordStatus" => "A",
                     "companyCode" => Session::get('companyCode'),
-                    "accountNo" => (isset($row[0])) ? $row[0] : null,
+                    "accountNo" => (isset($row[0])) ? trim($row[0]) : null,
                     "accountDescription" => (isset($row[1])) ? $row[1] : null,
                     "reference" => (isset($row[2])) ? $row[2] : null,
                     "grouping1" => (isset($row[3])) ? $row[3] : null,

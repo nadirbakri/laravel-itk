@@ -45,7 +45,7 @@ class GroupDataImport implements ToCollection, SkipsEmptyRows, WithStartRow
                 $param[] = [
                     "recordStatus" => "A",
                     "companyCode" => Session::get('companyCode'),
-                    "groupCode" => (isset($row[0])) ? $row[0] : null,
+                    "groupCode" => (isset($row[0])) ? trim($row[0]) : null,
                     "groupName" => (isset($row[1])) ? $row[1] : null,
                     "changedNo" => 0,
                     "changedBy" => Session::get('userID'),

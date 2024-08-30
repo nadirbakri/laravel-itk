@@ -63,7 +63,7 @@ class PeMasterLeaveImport implements ToCollection, SkipsEmptyRows, WithStartRow
                 $param[] = [
                     "companyCode" => Session::get('companyCode'),
                     "employeeNo" => (!is_null($row[0]) && $row[0] != "NULL") ? strval($row[0]) : null,
-                    "leaveCode" => (!is_null($row[2]) && $row[2] != "NULL") ? $row[2] : null,
+                    "leaveCode" => (!is_null($row[2]) && $row[2] != "NULL") ? trim($row[2]) : null,
                     "leaveBalance" => (!is_null($row[4]) && $row[4] != "NULL") ? (float) number_format($row[4], 1, '.', '') : null,
                     "leaveBalanceBefore" => (!is_null($row[5]) && $row[5] != "NULL") ? (float) number_format($row[5], 1, '.', '') : null,
                     "leaveBalanceBeforeExpiredDate" => (!is_null($row[6]) && $row[6] != "NULL") ? $this->transformDate($row[6])->toDateString() : null,
