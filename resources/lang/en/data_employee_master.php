@@ -22,6 +22,8 @@ return [
     'formemployee1' => 'Employee Plafon',
     'formemployee2' => 'Dependant List',
     'formemployee3' => 'Workflow Approval',
+    'judul_employee_group_reimbursement' => 'Employee Group Reimbursement',
+    'judul_employee_group_business_trip' => 'Employee Group Business Trip'
 ]
 
 ?>

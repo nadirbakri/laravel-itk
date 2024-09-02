@@ -1022,6 +1022,7 @@ Route::get('master_data/bussines_trip', 'MasterDataController@pageMasterDataBuss
 Route::get('master_data/bussines_trip_detail', 'MasterDataController@pageMasterDataBussinesTripDetail');
 Route::get('master_data/export_import_employee_group', 'MasterDataController@pageMasterDataExportImportEmployeeGroup');
 Route::get('master_data/export_import_employee_group_member', 'MasterDataController@pageMasterDataExportImportEmployeeGroupMember');
+Route::get('master_data/employee_group_business_trip', 'MasterDataController@pageMasterDataEmployeeGroupBusinessTrip');
 
 Route::get('master_data/list/table', 'MasterDataController@tabelDetailEmployee');
 Route::get('master_data/employee_list/table', 'MasterDataController@tabelDetailEmployeeMaster');

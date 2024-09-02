@@ -85,6 +85,10 @@ class MasterDataController extends Controller
     public function pageMasterDataEmployeeGroupReimbursement(){
         return view('master_data.master_data_employee_group_reimbursement');
     }
+
+    public function pageMasterDataEmployeeGroupBusinessTrip(){
+        return view('master_data.master_data_employee_group_business_trip');
+    }
     
     public function pageMasterDataHolidayCalender(){
         return view('master_data.master_data_holiday_calender');
@@ -104,6 +108,14 @@ class MasterDataController extends Controller
 
     public function pageMasterDataEmployeeGroupMultipleCheckin(){
         return view('master_data.master_data_employee_group_multiple_checkin');
+    }
+
+    public function pageMasterDataExportImportEmployeeGroup(){
+        return view('master_data.master_data_export_import_employee_group');
+    }
+
+    public function pageMasterDataExportImportEmployeeGroupMember(){
+        return view('master_data.master_data_export_import_employee_group_member');
     }
 
     public function tabelDetailEmployee(Request $request)
@@ -1310,18 +1322,7 @@ class MasterDataController extends Controller
             }else{
                 $b = [];
             }
-            // var_dump(json_encode(
-            //     [
-            //         'companyCode' => Session::get('companyCode'),
-            //         'groupCode' => $request->group_code,
-            //         'groupName' => $request->group_name,
-            //         'directApproval' => $a,
-            //         'emailSetting' =>$b,
-            //         "sessionID" => 0,
-            //         "sessionUserID" => Session::get('userID'),
-            //         "languageCode" => App::getLocale()
-            //     ]
-            //     ));
+            
             $response = $client->post(env('API_URL') . '/mobile/gmgroup/insertgroupcodebusinesstrip',
                 ['body' => json_encode(
                     [
