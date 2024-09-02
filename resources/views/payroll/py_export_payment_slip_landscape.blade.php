@@ -14,7 +14,7 @@
 		* { box-sizing: border-box; }
 		html {
 			margin: 1%;
-			font-size: 13px;
+			font-size: 11px;
 		}
 		.table_detail td{
 			border:1px solid #000;
@@ -37,12 +37,12 @@
 	@foreach($data as $key => $value)
     <table class="table" style="width:100%; padding-left:1%; padding-right:1%; padding-bottom:1%;">
 		<tr>
-			<td style="padding: 0; margin: 0; text-align:center; font-size: 18px; font-weight: 700;">
+			<td style="padding: 0; margin: 0; text-align:center; font-size: 15px; font-weight: 700;">
 				SLIP GAJI KARYAWAN
 			</td>
 		</tr>
 		<tr>
-			<td style="padding: 0; margin: 0; text-align:center; font-size: 18px; font-weight: 700;">
+			<td style="padding: 0; margin: 0; text-align:center; font-size: 15px; font-weight: 700;">
 				PT {{ $value->namaCabang }}
 			</td>
 		</tr>
@@ -52,7 +52,7 @@
 		<tr>
 			<td width="20%">NO</td>
 			<td width="1%">:</td>
-			<td width="29%" style="padding-left: 10px;">{{ $no }}</td>
+			<td width="29%" style="padding-left: 10px;">{{ str_pad(($key+1), 2, '0', STR_PAD_LEFT) }}</td>
 			<td width="20%">NIK</td>
 			<td width="1%">:</td>
 			<td width="29%" colspan="2">{{ $value->employeeNo }}</td>

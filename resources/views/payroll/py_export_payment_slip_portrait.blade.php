@@ -51,7 +51,7 @@
 		<tr>
 			<td width="20%">NO</td>
 			<td width="1%">:</td>
-			<td width="29%" style="padding-left: 10px;">{{ $no }}</td>
+			<td width="29%" style="padding-left: 10px;">{{ str_pad(($key+1), 2, '0', STR_PAD_LEFT) }}</td>
 			<td width="20%">NIK</td>
 			<td width="1%">:</td>
 			<td width="29%" colspan="2">{{ $value->employeeNo }}</td>

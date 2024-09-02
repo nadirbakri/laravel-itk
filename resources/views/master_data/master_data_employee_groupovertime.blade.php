@@ -622,7 +622,7 @@
             serverSide: true,
             orderCellsTop: true,
             ajax: {
-                url : "{{ url('master_data/list/table') }}"
+                url : "{{ url('master_data_overtime/list/table') }}"
             },
             error: function(jqXHR, ajaxOptions, thrownError) {
                 alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
@@ -672,7 +672,7 @@
             serverSide: true,
             orderCellsTop: true,
             ajax: {
-                url : "{{ url('master_data/list/table') }}"             
+                url : "{{ url('master_data_overtime/list/table') }}"             
             },
             error: function(jqXHR, ajaxOptions, thrownError) {
                 alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
