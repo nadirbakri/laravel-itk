@@ -930,7 +930,7 @@
                         }
                     });
                     $.ajax({
-                        url: "{{ url('master_data/employee_group_multiple_checkin/proses') }}",
+                        url: "{{ url('master_data/employee_multiple_checkin/proses') }}",
                         type: "POST",
                         data: $('#md_employee_group').serialize(),
                         success: function (response) {

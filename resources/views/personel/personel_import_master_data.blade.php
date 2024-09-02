@@ -407,154 +407,15 @@
             },
             errorElement: 'span',
             errorPlacement: function (error, element) {
-                $("#btn-download-template").prop("disabled", false);
-                $("#btn-download-template").html(
-                    '{{ __("personel_import_master_data.btn-download-template") }}'
+                $("#btn-import").prop("disabled", false);
+                $("#btn-import").html(
+                    '{{ __("personel_import_master_data.btn-import") }}'
                 );
 
                 error.addClass('invalid-feedback');
                 element.closest('.form-group').append(error);
             }
         });
-
-        // if ($("#import_master_data_form").length > 0) {
-        //     $("#import_master_data_form").validate({
-        //         rules: {
-        //             maintenance_type: {
-        //                 required: true,
-        //             },
-        //             import_export: {
-        //                 extension: "xls|xlsx",
-        //             },
-        //         },
-        //         messages: {
-        //             maintenance_type: {
-        //                 required: "{{ __('personel_import_master_data.maintenance_type_required') }}",
-        //             },
-        //             import_export: {
-        //                 extension: "{{ __('personel_import_master_data.import_export_extension') }}",
-        //             },
-        //         },
-        //         highlight: function (element) {
-        //             $(element).addClass('is-invalid');
-        //         },
-        //         unhighlight: function (element) {
-        //             $(element).removeClass('is-invalid');
-        //         },
-        //         errorElement: 'span',
-        //         errorPlacement: function (error, element) {
-        //             $("#btn-download-template").prop("disabled", false);
-        //             $("#btn-download-template").html(
-        //                 '{{ __("personel_import_master_data.btn-download-template") }}'
-        //             );
-
-        //             $("#btn-import").prop("disabled", false);
-        //             $("#btn-import").html(
-        //                 '{{ __("personel_import_master_data.btn-import") }}'
-        //             );
-
-        //             error.addClass('invalid-feedback');
-        //             element.closest('.form-group').append(error);
-        //         },
-        //         submitHandler: function (form) {
-        //             $.ajaxSetup({
-        //                 headers: {
-        //                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        //                 }
-        //             });
-
-        //             var myform = document.getElementById("import_master_data_form");
-        //             var formdata = new FormData(myform);
-
-        //             $.ajax({
-        //                 dataType: 'json',
-        //                 xhrFields: {
-        //                     responseType: 'blob'
-        //                 },
-        //                 url: urlData,
-        //                 type: "POST",
-        //                 processData: false,
-        //                 contentType: false,
-        //                 data: formdata,
-        //                 success: function (result, status, xhr) {
-        //                     // console.log("Result : " + result);
-        //                     // console.log("Status : " + status);
-        //                     // console.log("Xhr : " + xhr);
-        //                     console.log(result);
-        //                     if (urlData == "{{ url('personnel/import_master_data/import') }}") {
-        //                         $("#btn-import").prop("disabled", false);
-        //                         $("#btn-import").html(
-        //                             '{{ __("personel_import_master_data.btn-import") }}'
-        //                         );
-
-        //                         if (response[0].status == "true") {
-        //                             $('#notification_success').modal('show');
-        //                             $('#message-notification-success').html(response[0]
-        //                                 .message);
-        //                             setTimeout(function () {
-        //                                 window.location =
-        //                                     "{{ url('personnel/import_master_data') }}";
-        //                             }, 3000);
-        //                         } else {
-        //                             $('#notification_error').modal('show');
-        //                             if (response[0].message == null || response[0].message ==
-        //                                 '') {
-        //                                 $('#message-notification-error').html(
-        //                                     "{{ __('login.error') }}");
-        //                             } else {
-        //                                 $('#message-notification-error').html(response[0]
-        //                                     .message);
-        //                             }
-        //                         }
-        //                     }else{
-        //                         $("#btn-download-template").prop("disabled", false);
-        //                         $("#btn-download-template").html(
-        //                             '{{ __("personel_import_export_personal_data.btn-download-template") }}'
-        //                         );
-
-        //                         var disposition = xhr.getResponseHeader(
-        //                             'content-disposition');
-        //                         var matches = /"([^"]*)"/.exec(disposition);
-        //                         var filename = (matches != null && matches[1] ? matches[1] :
-        //                             'audit_trail.xlsx');
-                            
-        //                         // The actual download
-        //                         var blob = new Blob([result], {
-        //                             type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-        //                         });
-
-        //                         var link = document.createElement('a');
-        //                         link.href = window.URL.createObjectURL(blob);
-        //                         link.download = filename;
-
-        //                         document.body.appendChild(link);
-
-        //                         link.click();
-        //                         document.body.removeChild(link);
-        //                     }    
-        //                 },
-        //                 error: function (response) {
-        //                     $("#btn-download-template").prop("disabled", false);
-        //                     $("#btn-download-template").html(
-        //                         '{{ __("personel_import_master_data.btn-download-template") }}'
-        //                     );
-
-        //                     $("#btn-import").prop("disabled", false);
-        //                     $("#btn-import").html(
-        //                         '{{ __("personel_import_master_data.btn-import") }}'
-        //                     );
-        //                     $('#notification_error').modal('show');
-        //                     $('#message-notification-error').html(response);
-        //                 },
-        //                 beforeSend: function(xhr) {
-        //                     xhr.setRequestHeader('Accept', 'application/json');
-        //                 }
-        //             });
-        //         }
-        //     })
-        // }
-
-        
     })
 </script>
 
