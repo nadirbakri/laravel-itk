@@ -522,58 +522,58 @@
     function load_data_approval_table(){
         $('#exampletwo').DataTable().destroy();
         table3 = $('#exampletwo').DataTable({
-                processing: true,
-                data: arrApproval,
-                error: function(jqXHR, ajaxOptions, thrownError) {
-                    alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
+            processing: true,
+            data: arrApproval,
+            error: function(jqXHR, ajaxOptions, thrownError) {
+                alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
+            },
+            "sDom": 'lrtip',
+            "order": [[ 1, "asc" ]],
+            paging: false,
+            columns: [
+                {
+                    orderable: false,
+                    targets: 0, 
+                    "defaultContent": '',
+                    render: function(data, type) {
+                        return type === 'display'? '<input class="chk-select" type="checkbox">' : '';
+                            }
                 },
-                "sDom": 'lrtip',
-                "order": [[ 1, "asc" ]],
-                paging: false,
-                columns: [
-                    {
-                        orderable: false,
-                        targets: 0, 
-                        "defaultContent": '',
-                        render: function(data, type) {
-                            return type === 'display'? '<input class="chk-select" type="checkbox">' : '';
-                                }
-                    },
-                    {data: 'approvalLevel', name: 'approvalLevel',
-                    render: function (data, type, row) {
+                {data: 'approvalLevel', name: 'approvalLevel',
+                render: function (data, type, row) {
 
-                        return '<input type="hidden" class="form-control" name="approvalLevel[]" value="' +
+                    return '<input type="hidden" class="form-control" name="approvalLevel[]" value="' +
 
-                            data + '">' + data;
+                        data + '">' + data;
 
-                        }
-                    },
-                    {data: 'approvalCode', name: 'approvalCode',
-                    render: function (data, type, row) {
+                    }
+                },
+                {data: 'approvalCode', name: 'approvalCode',
+                render: function (data, type, row) {
 
-                        return '<input type="hidden" class="form-control" name="approvalCode[]" value="' +
+                    return '<input type="hidden" class="form-control" name="approvalCode[]" value="' +
 
-                            data + '">' + data;
+                        data + '">' + data;
 
-                        }
-                    },
-                    {data: 'limit', name: 'limit',
-                    render: function (data, type, row) {
-                        if(typeof data !== 'undefined'){
-                            return '<input type="text" class="form-control"  id="total_limit" name="total_limit[]" value="' + data 
-                            + '">';
-                        }else{
-                            return '<input type="text" class="form-control"  id="total_limit" name="total_limit[]" value="0">';
-                        }
-                    }}
-                ],
-                select: {
-                    style:    'multi',
-                    selector: 'td:first-child'
-                }, 
-                
-            }); 
-        } 
+                    }
+                },
+                {data: 'limit', name: 'limit',
+                render: function (data, type, row) {
+                    if(typeof data !== 'undefined'){
+                        return '<input type="text" class="form-control"  id="total_limit" name="total_limit[]" value="' + data 
+                        + '">';
+                    }else{
+                        return '<input type="text" class="form-control"  id="total_limit" name="total_limit[]" value="0">';
+                    }
+                }}
+            ],
+            select: {
+                style:    'multi',
+                selector: 'td:first-child'
+            }, 
+            
+        }); 
+    } 
 
     const klik = (element) => {
         let employee_id = $(element).parent().siblings('.sorting_1').text();
@@ -611,7 +611,7 @@
         if($(this).val() != null && $(this).val() != ''){
             $.ajax({
                 type: 'GET',
-                url: "{{ url('/master_data/get') }}",
+                url: "{{ url('/master_data/business_trip/get') }}",
                 data: {
                     'groupCode': $(this).val()
                 }
@@ -686,7 +686,7 @@
             serverSide: true,
             orderCellsTop: true,
             ajax: {
-                url : "{{ url('master_data/list/table') }}"             
+                url : "{{ url('master_data/list_businesstrip/table') }}"             
             },
             error: function(jqXHR, ajaxOptions, thrownError) {
                 alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);

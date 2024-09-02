@@ -1,7 +1,7 @@
 <?php
 
 return [ 
-    'judul' => 'Stream Portal-Employee Master',
+    'judul' => 'Employee Master',
     'subjudul' => 'Employee Master',
     'status' => 'Status',
     'userid' => 'User ID',
@@ -23,7 +23,11 @@ return [
     'formemployee2' => 'Dependant List',
     'formemployee3' => 'Workflow Approval',
     'judul_employee_group_reimbursement' => 'Employee Group Reimbursement',
-    'judul_employee_group_business_trip' => 'Employee Group Business Trip'
+    'judul_employee_group_business_trip' => 'Employee Group Business Trip',
+    'judul_employee_group_multiple_checkin' => 'Employee Group Multiple Checkin',
+    'judul_employee_group_member' => 'Employee Group Member',
+    'judul_employee_group_leave' => 'Employee Group Leave',
+    'judul_employee_group_permit' => 'Employee Group Permit'
 ]
 
 ?>

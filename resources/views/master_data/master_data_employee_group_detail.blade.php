@@ -442,50 +442,48 @@
     function load_data_approval_table(){
         $('#exampletwo').DataTable().destroy();
         table3 = $('#exampletwo').DataTable({
-                processing: true,
-                data: arrApproval,
-                error: function(jqXHR, ajaxOptions, thrownError) {
-                    alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
+            processing: true,
+            data: arrApproval,
+            error: function(jqXHR, ajaxOptions, thrownError) {
+                alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
+            },
+            "sDom": 'lrtip',
+            "order": [[ 1, "asc" ]],
+            paging: false,
+            columns: [
+                {
+                    orderable: false,
+                    targets: 0, 
+                    "defaultContent": '',
+                    render: function(data, type) {
+                        return type === 'display'? '<input class="chk-select" type="checkbox">' : '';
+                            }
                 },
-                "sDom": 'lrtip',
-                "order": [[ 1, "asc" ]],
-                paging: false,
-                columns: [
-                    {
-                        orderable: false,
-                        targets: 0, 
-                        "defaultContent": '',
-                        render: function(data, type) {
-                            return type === 'display'? '<input class="chk-select" type="checkbox">' : '';
-                                }
-                    },
-                    {data: 'employeeNo', name: 'employeeNo',
-                    render: function (data, type, row) {
+                {data: 'employeeNo', name: 'employeeNo',
+                render: function (data, type, row) {
 
-                        return '<input type="hidden" class="form-control" name="employeeNo[]" value="' +
-
-                            data + '">' + data;
-
-                        }
-                    },
-                    {data: 'fullName', name: 'fullName',
-                    render: function (data, type, row) {
-
-                    return '<input type="hidden" class="form-control" name="fullName[]" value="' +
+                    return '<input type="hidden" class="form-control" name="employeeNo[]" value="' +
 
                         data + '">' + data;
 
-                    }}
-                ],
-                select: {
-                    style:    'multi',
-                    selector: 'td:first-child'
-                }, 
-                
-            }); 
-        } 
+                    }
+                },
+                {data: 'fullName', name: 'fullName',
+                render: function (data, type, row) {
 
-       
+                return '<input type="hidden" class="form-control" name="fullName[]" value="' +
+
+                    data + '">' + data;
+
+                }}
+            ],
+            select: {
+                style:    'multi',
+                selector: 'td:first-child'
+            }, 
+            
+        }); 
+    }  
 
     const klik = (element) => {
         let employee_id = $(element).parent().siblings('.sorting_1').text();

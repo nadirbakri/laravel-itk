@@ -388,6 +388,46 @@ class MasterDataController extends Controller
             return Datatables::of($arrResult->dataListSet)->make(true);
         }
     }
+
+    public function tabelDetailMultipleCheckin(Request $request)
+    {
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/mobile/gmgroup/getgroupcodemultiplecheckin',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'), 
+                        'languageCode' => App::getLocale(), 
+                        'sessionID' => 0, 
+                        'sessionUserID' => Session::get('userID'),
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+        // var_dump($arrResult->dataListSet);
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
+        }
+    }
    
     public function tabelDetailEmployeeGroup(Request $request)
     {
@@ -977,6 +1017,39 @@ class MasterDataController extends Controller
         return response()->json($arrResult->dataListSet);
     }
 
+    public function getMultipleCheckinMasterData(Request $request)
+    {
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/mobile/gmgroup/getgroupcodemultiplecheckin',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'), 
+                        'groupCode' => $request->groupCode
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json($arrResult->dataListSet);
+    }
+
     public function prosesEmployeeGroup(Request $request)
     {
         try {
@@ -1478,6 +1551,67 @@ class MasterDataController extends Controller
         } catch (RequestException $e) {
             $response = $e->getResponse();
             // var_dump($response);
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function prosesEmployeeMultipleCheckin(Request $request)
+    {
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            if(isset($request->approvalCode)){
+                foreach($request->approvalCode as $key=>$value){
+                    $a[] = [
+                        "approvalLevel" => (int) $request->approvalLevel[$key],
+                        "approvalCode" => $value
+                    ];
+                }
+            }else{
+                $a = [];
+            }
+
+            if(isset($request->groupName)){
+                foreach($request->groupName as $key=>$value){
+                    $b[] = [
+                        "groupID" => $request->groupID[$key],
+                        "groupName" => $value
+                    ];
+                }
+            }else{
+                $b = [];
+            }
+
+            $response = $client->post(env('API_URL') . '/mobile/gmgroup/insertgroupcodemultiplecheckin',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'groupCode' => $request->group_code,
+                        'groupName' => $request->group_name,
+                        'directApproval' => $a,
+                        'emailSetting' =>$b,
+                        "sessionID" => 0,
+                        "sessionUserID" => Session::get('userID'),
+                        "languageCode" => App::getLocale()
+                    ]
+                )]
+            );
+    
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){

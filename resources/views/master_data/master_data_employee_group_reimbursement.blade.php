@@ -611,7 +611,7 @@
         if($(this).val() != null && $(this).val() != ''){
             $.ajax({
                 type: 'GET',
-                url: "{{ url('/master_data/get') }}",
+                url: "{{ url('/master_data/reimbursement/get') }}",
                 data: {
                     'groupCode': $(this).val()
                 }
@@ -687,7 +687,7 @@
             serverSide: true,
             orderCellsTop: true,
             ajax: {
-                url : "{{ url('master_data/list/table') }}"             
+                url : "{{ url('master_data/list_reimbursement/table') }}"             
             },
             error: function(jqXHR, ajaxOptions, thrownError) {
                 alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);

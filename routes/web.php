@@ -1032,6 +1032,7 @@ Route::get('master_data/list_reimbursement/table', 'MasterDataController@tabelDe
 Route::get('master_data/employee_group_multiple_checkin/table', 'MasterDataController@tabelEmployeeGroupMultipleCheckin');
 Route::get('master_data/list_businesstrip/table', 'MasterDataController@tabelDetailBusinessTrip');
 Route::get('master_data/list_detail/table', 'MasterDataController@tabelDetailEmployeeGroup');
+Route::get('master_data/list_multiple_checkin/table', 'MasterDataController@tabelDetailMultipleCheckin');
 Route::get('master_data/list_email/table', 'MasterDataController@tabelDetailEmail');
 Route::get('master_data/direct_approval/table', 'MasterDataController@tableDirectApproval');
 Route::get('master_data/employee_group_detail/table', 'MasterDataController@tableEmployeeGroupDetail');
@@ -1048,6 +1049,7 @@ Route::get('master_data/detail/get', 'MasterDataController@getDetailMasterData')
 Route::get('master_data/reimbursement/get', 'MasterDataController@getReimbursementMasterData');
 Route::get('master_data/holiday_calendar/get', 'MasterDataController@getHolidayCalendarMasterData');
 Route::get('master_data/business_trip/get', 'MasterDataController@getBusinessTripMasterData');
+Route::get('master_data/multiple_checkin/get', 'MasterDataController@getMultipleCheckinMasterData');
 
 Route::post('master_data/employee_group/proses', 'MasterDataController@prosesEmployeeGroup');
 Route::post('master_data/employee_group_leave/proses', 'MasterDataController@prosesEmployeeGroupLeave');
@@ -1058,6 +1060,7 @@ Route::post('master_data/employee_businesstrip/proses', 'MasterDataController@pr
 Route::post('master_data/employee_group_detail/proses', 'MasterDataController@prosesEmployeeGroupDetail');
 Route::post('master_data/employee_group_multiple_checkin/select_level', 'MasterDataController@selectLevelEmployeeGroupMultipleCheckin');
 Route::post('master_data/employee_group_multiple_checkin/proses', 'MasterDataController@prosesEmployeeGroupMultipleCheckin');
+Route::post('master_data/employee_multiple_checkin/proses', 'MasterDataController@prosesEmployeeMultipleCheckin');
 
 Route::post('master_data/export_import_employee_group/export', 'MasterDataController@exportExportImportEmployeeGroup');
 Route::post('master_data/export_import_employee_group_member/export', 'MasterDataController@exportExportImportEmployeeGroupMember');
