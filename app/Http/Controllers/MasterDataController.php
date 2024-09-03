@@ -2,6 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\EmployeeGroupExport;
+use App\Exports\EmployeeGroupTemplateExport;
+
+use App\Imports\EmployeeGroupImport;
+
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
@@ -1623,5 +1628,77 @@ class MasterDataController extends Controller
 
         $arrResult = json_decode($response->getBody()->getContents());
         return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function downloadTemplateExportImportEmployeeGroup(Request $request)
+    {
+        $fileName = null;
+        switch ($request->type) {
+            case 'BUSINESS_TRIP':
+                $fileName = "Template Employee Group Business Trip.xlsx";
+                break;
+            case 'REIMBURSEMENT':
+                $fileName = "Template Employee Group Reimbursement.xlsx";
+                break;
+            case 'LEAVE':
+                $fileName = "Template Employee Group Leave.xlsx";
+                break;
+            case 'PERMIT':
+                $fileName = "Template Employee Group Permit.xlsx";
+                break;
+            case 'OVERTIME':
+                $fileName = "Template Employee Group Overtime.xlsx";
+                break;
+            case 'MULTIPLE_CHECK_IN':
+                $fileName = "Template Employee Group Multiple Checkin.xlsx";
+                break;
+            default:
+                $fileName = "Template Employee Group.xlsx";
+        }
+        return Excel::download(new EmployeeGroupTemplateExport($request->type), $fileName);
+    }
+
+    public function exportExportImportEmployeeGroup(Request $request)
+    {
+        $fileName = null;
+        switch ($request->type) {
+            case 'BUSINESS_TRIP':
+                $fileName = "Employee Group Business Trip Export.xlsx";
+                break;
+            case 'REIMBURSEMENT':
+                $fileName = "Employee Group Reimbursement Export.xlsx";
+                break;
+            case 'LEAVE':
+                $fileName = "Employee Group Leave Export.xlsx";
+                break;
+            case 'PERMIT':
+                $fileName = "Employee Group Permit Export.xlsx";
+                break;
+            case 'OVERTIME':
+                $fileName = "Employee Group Overtime Export.xlsx";
+                break;
+            case 'MULTIPLE_CHECK_IN':
+                $fileName = "Employee Group Multiple Checkin Export.xlsx";
+                break;
+            default:
+                $fileName = "Employee Group Export.xlsx";
+        }
+
+        return Excel::download(new EmployeeGroupExport($request->type), $fileName);
+    }
+
+    public function importExportImportEmployeeGroup(Request $request)
+    {
+        try{
+            $file = $request->file('import_export');
+            $import = new EmployeeGroupImport($request->type);
+            Excel::import($import, $file->getRealPath(), null, \Maatwebsite\Excel\Excel::XLSX);
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            $failures = $e->failures();
+            $objError = (object) ['status' => false, 'message' => $failures[0]->errors()[0]];
+            return array(0 => $objError);
+        }
+
+        return $import->getArrResult();
     }
 }

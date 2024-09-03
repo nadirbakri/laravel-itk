@@ -1064,6 +1064,8 @@ Route::post('master_data/employee_multiple_checkin/proses', 'MasterDataControlle
 
 Route::post('master_data/export_import_employee_group/export', 'MasterDataController@exportExportImportEmployeeGroup');
 Route::post('master_data/export_import_employee_group_member/export', 'MasterDataController@exportExportImportEmployeeGroupMember');
+Route::post('master_data/export_import_employee_group/download_template', 'MasterDataController@downloadTemplateExportImportEmployeeGroup');
+Route::post('master_data/export_import_employee_group_member/download_template', 'MasterDataController@downloadTemplateExportImportEmployeeGroupMember');
 Route::post('master_data/export_import_employee_group/import', 'MasterDataController@importExportImportEmployeeGroup');
 Route::post('master_data/export_import_employee_group_member/import', 'MasterDataController@importExportImportEmployeeGroupMember');
 
