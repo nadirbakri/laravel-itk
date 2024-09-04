@@ -343,6 +343,21 @@
                                 @csrf
                                 <div class="row detailstatus">
                                     <div class="col-3">
+                                        <h5>{{ __('trans_business_trip.label_claim_date_start') }}</h5>
+                                    </div>
+                                    <div class="col">
+                                        <input id="s_date" name="s_date" type="hidden" class="form-control"><span id="s_date_val"></span>
+                                    </div>
+                                    <div class="col-3">
+                                        <h5>{{ __('trans_business_trip.label_claim_date_end') }}</h5>
+                                    </div>
+                                    <div class="col">
+                                        <input id="e_date" name="e_date" type="hidden" class="form-control"><span id="e_date_val"></span>
+                                    </div>
+                                </div>
+
+                                <div class="row detailstatus">
+                                    <div class="col-3">
                                         <h5>{{ __('trans_business_trip.tnom') }}</h5>
                                     </div>
                                     <div class="col">
@@ -707,6 +722,10 @@
     const klikdetail = (element) => {
         let data = table.row($(element).parent()).data();
 
+        $('#s_date').val(moment(data.startDate).format('DD-MMM-YYYY'))
+        $('#s_date_val').html(moment(data.startDate).format('DD-MMM-YYYY'))
+        $('#e_date').val(moment(data.endDate).format('DD-MMM-YYYY'))
+        $('#e_date_val').html(moment(data.endDate).format('DD-MMM-YYYY'))
         $('#tiketno').val(data.ticketNo)
         $('#tiketno_val').html(data.ticketNo)
         $('#totalpaid').val(data.paidAmount)
