@@ -13,8 +13,10 @@ use App\Exports\EmployeeDependentsExport;
 use App\Exports\EmployeeCardExport;
 use App\Exports\PersonalDataExport;
 use App\Exports\PersonalDataTemplateExport;
+use App\Exports\PersonalDataPartialTemplateExport;
 use App\Imports\PersonalDataImport;
 use App\Imports\PersonalDataUpdateImport;
+use App\Imports\PersonalDataPartialUpdateImport;
 use App\Imports\PersonalDataSheetImport;
 use App\Exports\MasterDataTemplateExport;
 use App\Imports\LevelDataImport;
@@ -11327,8 +11329,25 @@ class PersonelController extends Controller
         return Excel::download(new EmployeeDependentsExport($request->employee_no_from, $request->employee_no_to, $request->period, isset($request->include_resign) ? (bool) $request->include_resign : false, isset($request->include_medical) ? (bool) $request->include_medical : false, isset($request->include_payroll) ? (bool) $request->include_payroll : false, $request->group_authorize_from, $request->group_authorize_to, $request->position, $request->ranking, $request->location, $dataLevel), 'Employee Dependents Report.xlsx');
     }
 
-    public function templatePersonalDataPersonel()
+    public function templatePersonalDataPersonel(Request $request)
     {
+        if(isset($request->import_type) && $request->import_type == "PARTIAL"){
+            return Excel::download(new PersonalDataPartialTemplateExport(
+                $request->column_a,
+                $request->column_b,
+                $request->column_c,
+                $request->column_d,
+                $request->column_e,
+                $request->column_f,
+                $request->column_g,
+                $request->column_h,
+                $request->column_i,
+                $request->column_j,
+                $request->column_k,
+                $request->column_l
+            ), 'Template Personel Data.xlsx');
+        }
+
         return Excel::download(new PersonalDataTemplateExport, 'Template Personel Data.xlsx');
     }
 
@@ -11360,9 +11379,29 @@ class PersonelController extends Controller
     public function importUpdatePersonalDataPersonel(Request $request)
     {
         try{
-            $file = $request->file('import_update');
-            $import = new PersonalDataUpdateImport;
-            Excel::import($import, $file->getRealPath(), null, \Maatwebsite\Excel\Excel::XLSX);
+            if(isset($request->import_type) && $request->import_type == "PARTIAL"){
+                $file = $request->file('import_update');
+                $import = new PersonalDataPartialUpdateImport(
+                    $request->transfer_to,
+                    $request->column_a,
+                    $request->column_b,
+                    $request->column_c,
+                    $request->column_d,
+                    $request->column_e,
+                    $request->column_f,
+                    $request->column_g,
+                    $request->column_h,
+                    $request->column_i,
+                    $request->column_j,
+                    $request->column_k,
+                    $request->column_l
+                );
+                Excel::import($import, $file->getRealPath(), null, \Maatwebsite\Excel\Excel::XLSX);
+            }else{
+                $file = $request->file('import_update');
+                $import = new PersonalDataUpdateImport;
+                Excel::import($import, $file->getRealPath(), null, \Maatwebsite\Excel\Excel::XLSX);
+            }
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             $failures = $e->failures();
             $objError = (object) ['status' => false, 'message' => $failures[0]->errors()[0]];

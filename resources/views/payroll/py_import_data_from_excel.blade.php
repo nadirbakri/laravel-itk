@@ -484,7 +484,7 @@
         });
 
         $('#btn-reset').on('click', function () {
-            $('#column_c, #column_c2, #column_d, #column_d2, #column_e, #column_e2, #column_f, #column_f2, #column_g, #column_g2, column_h, column_h2, #column_i, #column_i2, #column_j, #column_j2, #column_k, #column_k2, #column_l, #column_l2').val(null).trigger('change');
+            $('#column_c, #column_c2, #column_d, #column_d2, #column_e, #column_e2, #column_f, #column_f2, #column_g, #column_g2, #column_h, #column_h2, #column_i, #column_i2, #column_j, #column_j2, #column_k, #column_k2, #column_l, #column_l2').val(null).trigger('change');
             $('#import_file').val('');
             $('.custom-file-label').html('{{ __("payroll_import_data_from_excel.label_select_import_file") }}');
         });
