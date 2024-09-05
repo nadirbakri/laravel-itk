@@ -68,7 +68,7 @@ class PlafonExport implements FromView, ShouldAutoSize
 
         $arrResult = json_decode($response->getBody()->getContents());
 
-        dd($arrResult->dataListSet);
+        // dd($arrResult->dataListSet);
 
         if($arrResult->dataListSet == null){
             return view('time_management.tm_export_pemaster_leave_list', [

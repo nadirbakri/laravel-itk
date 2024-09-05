@@ -5590,7 +5590,7 @@ public function dataDetailReportFormatPY(Request $request)
                 'logActionUsername' => Session::get('userName')        
             ];
 
-            dd(json_encode($param));
+            // dd(json_encode($param));
 
             if($request->record_function == 'New'){
                 $response = $client->post(env('API_URL') . '/payroll/InsertRefrencePayroll',
