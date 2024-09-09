@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>{{ __('personel_import_master_data.judul') }}</title>
+    <title>{{ __('personel_import_employee_level.judul') }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -88,48 +88,23 @@
         <div class="div-title">
             <a href="{{ route('personnel', ['moduleID' => 'PE']) }}" target="iframe_dashboard" id="toolbar-prev-page">
                 <img src="{{ url('pictures/arrow-square-left.png') }}" alt="Back">
-                <span class="title-text">{{ __('personel_import_master_data.list') }}</span>
+                <span class="title-text">{{ __('personel_import_employee_level.list') }}</span>
             </a>
         </div>
     </div>
     <div class="div-form">
-        <form id="import_master_data_form" method="post" enctype="multipart/form-data">
+        <form id="import_employee_level_form" method="post" enctype="multipart/form-data">
             @csrf
             <div class="row">
                 <div class="col-6">
                     <div class="form-group">
-                        <label for="maintenance_type">{{ __('personel_import_master_data.label_maintenance_type') }}</label>
-                        <span class="required">*</span>
-                        <select class="form-control select2" id="maintenance_type" name="maintenance_type">
-                            <option value="">{{ __('personel_import_master_data.label_select_maintenance_type') }}</option>
-                            <option value="level">{{ __('personel_import_master_data.select_level') }}</option>
-                            <option value="cost_center">{{ __('personel_import_master_data.select_cost_center') }}</option>
-                            <option value="location">{{ __('personel_import_master_data.select_location') }}</option>
-                            <option value="position">{{ __('personel_import_master_data.select_position') }}</option>
-                            <option value="ranking">{{ __('personel_import_master_data.select_ranking') }}</option>
-                            <option value="grade">{{ __('personel_import_master_data.select_grade') }}</option>
-                            <option value="group">{{ __('personel_import_master_data.select_group') }}</option>
-                            <option value="nature_of_work">{{ __('personel_import_master_data.select_nature_of_work') }}</option>
-                            <option value="institution">{{ __('personel_import_master_data.select_institution') }}</option>
-                            <option value="major">{{ __('personel_import_master_data.select_major') }}</option>
-                            <option value="city">{{ __('personel_import_master_data.select_city') }}</option>
-                            <option value="zip_code">{{ __('personel_import_master_data.select_zip_code') }}</option>
-                            <option value="account">{{ __('personel_import_master_data.select_account') }}</option>
-                            <option value="journal_template">{{ __('personel_import_master_data.select_journal_template') }}</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-6">
-                    <div class="form-group">
-                        <label for="import_export">{{ __('personel_import_master_data.label_import_export') }}</label>
+                        <label for="import_export">{{ __('personel_import_employee_level.label_import_export') }}</label>
                         <div class="custom-file">
                             <input type="file" class="custom-file-input" name="import_export" id="import_export">
                             <label class="custom-file-label" for="import_export">Choose file</label>
                         </div>
                         <small id="import_export_help" class="text-muted">
-                            {{ __('personel_import_master_data.help_import_export') }}
+                            {{ __('personel_import_employee_level.help_import_export') }}
                         </small>
                     </div>
                 </div>
@@ -138,13 +113,13 @@
                 <div class="col-3">
                     <button type="button" class="btn btn-primary" name="btn-import" id="btn-import"
                         style="width: 100%;">
-                        {{ __('personel_import_master_data.btn-import') }}
+                        {{ __('personel_import_employee_level.btn-import') }}
                     </button>
                 </div>
                 <div class="col-3">
                     <button type="button" class="btn btn-primary" name="btn-download-template" id="btn-download-template"
                         style="width: 100%;">
-                        {{ __('personel_import_master_data.btn-download-template') }}
+                        {{ __('personel_import_employee_level.btn-download-template') }}
                     </button>
                 </div>
             </div>
@@ -176,7 +151,7 @@
                 <div class="modal-body">
                     <div class="div-title-notification">
                         <img src="{{ url('/pictures/checklist-green-confirm-password.svg') }}" alt="Password">
-                        <span class="title-text-notification">{{ __('personel_import_master_data.alert_success') }}</span>
+                        <span class="title-text-notification">{{ __('personel_import_employee_level.alert_success') }}</span>
                     </div>
                     <div class="div-title-notification">
                         <span id="message-notification-success"></span>
@@ -249,18 +224,18 @@
                             '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
                         );
 
-                        if ($('#import_master_data_form').valid()) {
+                        if ($('#import_employee_level_form').valid()) {
                             $.ajaxSetup({
                                 headers: {
                                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                 }
                             });
 
-                            var myform = document.getElementById("import_master_data_form");
+                            var myform = document.getElementById("import_employee_level_form");
                             var formdata = new FormData(myform);
 
                             $.ajax({
-                                url: "{{ url('personnel/import_master_data/import') }}",
+                                url: "{{ url('personnel/import_employee_level/import') }}",
                                 type: "POST",
                                 processData: false,
                                 contentType: false,
@@ -269,7 +244,7 @@
                                 success: function (response) {
                                     $("#btn-import").prop("disabled", false);
                                     $("#btn-import").html(
-                                        '{{ __("personel_import_master_data.btn-import") }}'
+                                        '{{ __("personel_import_employee_level.btn-import") }}'
                                     );
 
                                     // if (response.status == "true") {
@@ -281,14 +256,14 @@
                                             .message);
                                         setTimeout(function () {
                                             window.location =
-                                                "{{ url('personnel/import_master_data') }}";
+                                                "{{ url('personnel/import_employee_level') }}";
                                         }, 3000);
                                     } else {
                                         $('#notification_error').modal('show');
-                                        if (response[0].message == null || response[0].message ==
-                                            '') {
                                         // if (response.message == null || response.message ==
                                         //     '') {
+                                        if (response[0].message == null || response[0].message ==
+                                            '') {
                                             $('#message-notification-error').html(
                                                 "{{ __('login.error') }}");
                                         } else {
@@ -302,7 +277,7 @@
                                 error: function (response) {
                                     $("#btn-import").prop("disabled", false);
                                     $("#btn-import").html(
-                                        '{{ __("personel_import_master_data.btn-import") }}'
+                                        '{{ __("personel_import_employee_level.btn-import") }}'
                                     );
 
                                     $('#notification_error').modal('show');
@@ -322,7 +297,7 @@
         };
 
         $("#btn-import").on('click', function () {
-            ConfirmDialog('Are you sure you want to import data to ' + $('#maintenance_type').find('option:selected').text() + ' Table');
+            ConfirmDialog('Are you sure you want to import data');
         });
 
         $("#btn-download-template").click(function () {
@@ -331,21 +306,21 @@
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
 
-            if ($('#import_master_data_form').valid()) {
+            if ($('#import_employee_level_form').valid()) {
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
                 });
 
-                var myform = document.getElementById("import_master_data_form");
+                var myform = document.getElementById("import_employee_level_form");
                 var formdata = new FormData(myform);
 
                 $.ajax({
                     xhrFields: {
                         responseType: 'blob'
                     },
-                    url: "{{ url('personnel/import_master_data/download_template') }}",
+                    url: "{{ url('personnel/import_employee_level/download_template') }}",
                     type: "POST",
                     processData: false,
                     contentType: false,
@@ -379,7 +354,7 @@
                     error: function (response) {
                         $("#btn-download-template").prop("disabled", false);
                         $("#btn-download-template").html(
-                            '{{ __("personel_import_master_data.btn-download-template") }}'
+                            '{{ __("personel_import_employee_level.btn-download-template") }}'
                         );
 
                         $('#notification_error').modal('show');
@@ -389,21 +364,15 @@
             }
         });
 
-        $("#import_master_data_form").validate({
+        $("#import_employee_level_form").validate({
             rules: {
-                maintenance_type: {
-                    required: true,
-                },
                 import_export: {
                     extension: "xls|xlsx",
                 },
             },
             messages: {
-                maintenance_type: {
-                    required: "{{ __('personel_import_master_data.maintenance_type_required') }}",
-                },
                 import_export: {
-                    extension: "{{ __('personel_import_master_data.import_export_extension') }}",
+                    extension: "{{ __('personel_import_employee_level.import_export_extension') }}",
                 },
             },
             highlight: function (element) {
@@ -416,12 +385,12 @@
             errorPlacement: function (error, element) {
                 $("#btn-download-template").prop("disabled", false);
                 $("#btn-download-template").html(
-                    '{{ __("personel_import_master_data.btn-download-template") }}'
+                    '{{ __("personel_import_employee_level.btn-download-template") }}'
                 );
                 
                 $("#btn-import").prop("disabled", false);
                 $("#btn-import").html(
-                    '{{ __("personel_import_master_data.btn-import") }}'
+                    '{{ __("personel_import_employee_level.btn-import") }}'
                 );
 
                 error.addClass('invalid-feedback');

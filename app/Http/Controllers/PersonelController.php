@@ -14,11 +14,11 @@ use App\Exports\EmployeeCardExport;
 use App\Exports\PersonalDataExport;
 use App\Exports\PersonalDataTemplateExport;
 use App\Exports\PersonalDataPartialTemplateExport;
-use App\Imports\PersonalDataImport;
-use App\Imports\PersonalDataUpdateImport;
-use App\Imports\PersonalDataPartialUpdateImport;
-use App\Imports\PersonalDataSheetImport;
 use App\Exports\MasterDataTemplateExport;
+use App\Exports\EmployeeLevelTemplateExport;
+
+use App\Imports\PersonalDataSheetImport;
+use App\Imports\PersonalDataImport;
 use App\Imports\LevelDataImport;
 use App\Imports\CostCenterDataImport;
 use App\Imports\LocationDataImport;
@@ -33,6 +33,15 @@ use App\Imports\CityDataImport;
 use App\Imports\ZipCodeDataImport;
 use App\Imports\AccountDataImport;
 use App\Imports\JournalTemplateDataImport;
+use App\Imports\PersonalDataUpdateImport;
+use App\Imports\PersonalDataPartialUpdateImport;
+use App\Imports\EmployeeLevelImport;
+
+use App\Jobs\ProcessImportMasterDataPersonel;
+use App\Jobs\ProcessImportPersonalDataPersonel;
+use App\Jobs\ProcessImportUpdatePersonalDataPersonel;
+use App\Jobs\ProcessImportEmployeeLevelPersonel;
+
 
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
@@ -151,6 +160,11 @@ class PersonelController extends Controller
     public function pageImportUpdatePersonel()
     {
          return view('personel.personel_import_update_personal_data');
+    }
+
+    public function pageImportEmployeeLevelPersonel()
+    {
+         return view('personel.personel_import_employee_level');
     }
 
     public function pageExportLoanWhitelistPersonel()
@@ -11358,8 +11372,14 @@ class PersonelController extends Controller
 
     public function importPersonalDataPersonel(Request $request)
     {
+        $file = $request->file('import_export');
+        // $base64File = base64_encode(file_get_contents($file->getRealPath()));
+        // $processJobs = new ProcessImportPersonalDataPersonel($base64File);
+        // $this->dispatch($processJobs);
+
+        // return response()->json(['status' => "true", 'message' => 'Import Personal Data is in Progress']);
+
         try{
-            $file = $request->file('import_export');
             $import = new PersonalDataImport;
             Excel::import($import, $file->getRealPath(), null, \Maatwebsite\Excel\Excel::XLSX);
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
@@ -11378,9 +11398,15 @@ class PersonelController extends Controller
 
     public function importUpdatePersonalDataPersonel(Request $request)
     {
+        $file = $request->file('import_update');
+        // $base64File = base64_encode(file_get_contents($file->getRealPath()));
+        // $processJobs = new ProcessImportUpdatePersonalDataPersonel($request->import_type, $base64File);
+        // $this->dispatch($processJobs);
+
+        // return response()->json(['status' => "true", 'message' => 'Import Update Personal Data is in Progress']);
+        
         try{
             if(isset($request->import_type) && $request->import_type == "PARTIAL"){
-                $file = $request->file('import_update');
                 $import = new PersonalDataPartialUpdateImport(
                     $request->transfer_to,
                     $request->column_a,
@@ -11398,7 +11424,6 @@ class PersonelController extends Controller
                 );
                 Excel::import($import, $file->getRealPath(), null, \Maatwebsite\Excel\Excel::XLSX);
             }else{
-                $file = $request->file('import_update');
                 $import = new PersonalDataUpdateImport;
                 Excel::import($import, $file->getRealPath(), null, \Maatwebsite\Excel\Excel::XLSX);
             }
@@ -11418,8 +11443,14 @@ class PersonelController extends Controller
 
     public function importMasterDataPersonel(Request $request)
     {
+        $file = $request->file('import_export');
+        // $base64File = base64_encode(file_get_contents($file->getRealPath()));
+        // $processJobs = new ProcessImportMasterDataPersonel($request->maintenance_type, $base64File);
+        // $this->dispatch($processJobs);
+
+        // return response()->json(['status' => "true", 'message' => 'Import Master Data is in Progress']);
+
         try{
-            $file = $request->file('import_export');
             switch ($request->maintenance_type) {
                 case 'level':
                     $import = new LevelDataImport;
@@ -11531,6 +11562,36 @@ class PersonelController extends Controller
                 $fileName = "Template Master.xlsx";
         }
         return Excel::download(new MasterDataTemplateExport($request->maintenance_type), $fileName);
+    }
+
+    public function importEmployeeLevelPersonel(Request $request)
+    {
+        $file = $request->file('import_export');
+        // $base64File = base64_encode(file_get_contents($file->getRealPath()));
+        // $processJobs = new ProcessImportEmployeeLevelPersonel($base64File);
+        // $this->dispatch($processJobs);
+
+        // return response()->json(['status' => "true", 'message' => 'Import Employee Level is in Progress']);
+        try{
+            $import = new EmployeeLevelImport;
+            Excel::import($import, $file->getRealPath(), null, \Maatwebsite\Excel\Excel::XLSX);
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            $failures = $e->failures();
+            $objError = (object) ['status' => false, 'message' => $failures[0]->errors()[0]];
+            return array(0 => $objError);
+        }
+
+        if(empty($import->getArrResult())){
+            $objError = (object) ['status' => false, 'message' => "The Uploaded File Doesn't Match The Template"];
+            return array(0 => $objError);
+        }else{
+            return $import->getArrResult();
+        }
+    }
+
+    public function downloadTemplateEmployeeLevelPersonel(Request $request)
+    {
+        return Excel::download(new EmployeeLevelTemplateExport(), "Template Employee Level.xlsx");
     }
 
     public function downloadExportLoanWhitelistPersonel(Request $request)

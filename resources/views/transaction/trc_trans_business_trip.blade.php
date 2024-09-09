@@ -291,7 +291,7 @@
     </div>
 
     <div class="div-form">
-        <div class="modal fade" id="modal_list_mass_leave">
+        <div class="modal fade" id="modal_list_mass_leave" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-lg">
                 <div class="modal-content">
                 <div class="modal-header">
@@ -327,124 +327,124 @@
         </div>
     </div>
     <div class="div-form">
-            <div class="modal fade" id="modal_list_detail">
-                <div class="modal-dialog modal-dialog-centered modal-lg">
-                   <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-little">{{ __('trans_business_trip.dbtrip') }}</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="card">
-                            <div class="card-body">
-                            <form id="payroll_calculation_detail_modal_form" method="post">
-                                @csrf
-                                <div class="row detailstatus">
-                                    <div class="col-3">
-                                        <h5>{{ __('trans_business_trip.label_claim_date_start') }}</h5>
-                                    </div>
-                                    <div class="col">
-                                        <input id="s_date" name="s_date" type="hidden" class="form-control"><span id="s_date_val"></span>
-                                    </div>
-                                    <div class="col-3">
-                                        <h5>{{ __('trans_business_trip.label_claim_date_end') }}</h5>
-                                    </div>
-                                    <div class="col">
-                                        <input id="e_date" name="e_date" type="hidden" class="form-control"><span id="e_date_val"></span>
-                                    </div>
+        <div class="modal fade" id="modal_list_detail" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-little">{{ __('trans_business_trip.dbtrip') }}</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="card">
+                        <div class="card-body">
+                        <form id="payroll_calculation_detail_modal_form" method="post">
+                            @csrf
+                            <div class="row detailstatus">
+                                <div class="col-3">
+                                    <h5>{{ __('trans_business_trip.label_claim_date_start') }}</h5>
                                 </div>
-
-                                <div class="row detailstatus">
-                                    <div class="col-3">
-                                        <h5>{{ __('trans_business_trip.tnom') }}</h5>
-                                    </div>
-                                    <div class="col">
-                                        <input id="tiketno" name="tiketno" type="hidden" class="form-control"><span id="tiketno_val"></span>
-                                        <input id="directsuperior" name="directsuperior" type="hidden" class="form-control">
-                                    </div>
-                                    <div class="col-3">
-                                        <h5>{{ __('trans_business_trip.status') }}</h5>
-                                    </div>
-                                    <div class="col">
-                                    <input id="status" name="status" type="hidden" class="form-control"><span id="status_val"></span>
-                                    </div>
+                                <div class="col">
+                                    <input id="s_date" name="s_date" type="hidden" class="form-control"><span id="s_date_val"></span>
                                 </div>
-
-                                <div class="row detailstatus">
-                                    <div class="col-3">
-                                        <h5>{{ __('trans_business_trip.label_bu') }}</h5>
-                                    </div>
-                                    <div class="col">
-                                        <input id="b_unit" name="b_unit" type="hidden" class="form-control"><span id="b_unit_val"></span>
-                                    </div>
-                                    <div class="col-3">
-                                        <h5>{{ __('trans_business_trip.treq') }}</h5>
-                                    </div>
-                                    <div class="col">
-                                        <input id="c_type" name="c_type" type="hidden" class="form-control"><span id="c_type_val"></span>
-                                    </div>
+                                <div class="col-3">
+                                    <h5>{{ __('trans_business_trip.label_claim_date_end') }}</h5>
                                 </div>
-
-                                <div class="row detailstatus">
-                                    <div class="col-3">
-                                        <h5>{{ __('trans_business_trip.employee') }}</h5>
-                                    </div>
-                                    <div class="col">
-                                        <input id="employee_no" name="employee_no" type="hidden" class="form-control"><span id="employee_no_val"></span>
-                                    </div>
-                                    <div class="col-3">
-                                        <h5>{{ __('trans_business_trip.label_reimbursement_type') }}</h5>
-                                    </div>
-                                    <div class="col">
-                                        <input id="type" name="type" type="hidden" class="form-control"><span id="type_val"></span>
-                                    </div>
+                                <div class="col">
+                                    <input id="e_date" name="e_date" type="hidden" class="form-control"><span id="e_date_val"></span>
                                 </div>
-                                <br>
-                                <div class="row approve">
-                                    <div class="col-3">
-                                        <h5>{{ __('trans_business_trip.status') }}</h5>
-                                    </div>
-                                    <div class="col-5">
-                                            <select name="reimbursement_status" id="reimbursement_status" class="custom-select" required>
-                                                <option value="APPROVED">{{ __('trans_business_trip.approve') }}</option>
-                                                <option value="REJECTED">{{ __('trans_business_trip.reject') }}</option>
-                                                <option value="PAID">{{ __('trans_business_trip.paid') }}</option>
-                                            </select>
-                                    </div>
-                                </div>
-                                <div class="row approve">
-                                    <div class="col-3">
-                                        <h5>{{ __('trans_business_trip.tpaid') }}</h5>
-                                    </div>
-                                    <div class="col-5">
-                                        <input id="totalpaid" name="totalpaid"  type="number" class="form-control" required>
-                                    </div>
-                                </div>
-                                <div class="row approve">
-                                    <div class="col-3">
-                                        <h5>{{ __('trans_business_trip.approvalremarks') }}</h5>
-                                    </div>
-                                    <div class="col-5">
-                                        <input id="approvalremarks" name="approvalremarks"  type="text" class="form-control" required>
-                                    </div>
-                                </div>
-                                <hr>
-                                <button class="btn btn-primary btn-block" id="btn-update" type="button">{{ __('trans_business_trip.update') }}</button>
                             </div>
-                            </form>
+
+                            <div class="row detailstatus">
+                                <div class="col-3">
+                                    <h5>{{ __('trans_business_trip.tnom') }}</h5>
+                                </div>
+                                <div class="col">
+                                    <input id="tiketno" name="tiketno" type="hidden" class="form-control"><span id="tiketno_val"></span>
+                                    <input id="directsuperior" name="directsuperior" type="hidden" class="form-control">
+                                </div>
+                                <div class="col-3">
+                                    <h5>{{ __('trans_business_trip.status') }}</h5>
+                                </div>
+                                <div class="col">
+                                <input id="status" name="status" type="hidden" class="form-control"><span id="status_val"></span>
+                                </div>
+                            </div>
+
+                            <div class="row detailstatus">
+                                <div class="col-3">
+                                    <h5>{{ __('trans_business_trip.label_bu') }}</h5>
+                                </div>
+                                <div class="col">
+                                    <input id="b_unit" name="b_unit" type="hidden" class="form-control"><span id="b_unit_val"></span>
+                                </div>
+                                <div class="col-3">
+                                    <h5>{{ __('trans_business_trip.treq') }}</h5>
+                                </div>
+                                <div class="col">
+                                    <input id="c_type" name="c_type" type="hidden" class="form-control"><span id="c_type_val"></span>
+                                </div>
+                            </div>
+
+                            <div class="row detailstatus">
+                                <div class="col-3">
+                                    <h5>{{ __('trans_business_trip.employee') }}</h5>
+                                </div>
+                                <div class="col">
+                                    <input id="employee_no" name="employee_no" type="hidden" class="form-control"><span id="employee_no_val"></span>
+                                </div>
+                                <div class="col-3">
+                                    <h5>{{ __('trans_business_trip.label_reimbursement_type') }}</h5>
+                                </div>
+                                <div class="col">
+                                    <input id="type" name="type" type="hidden" class="form-control"><span id="type_val"></span>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row approve">
+                                <div class="col-3">
+                                    <h5>{{ __('trans_business_trip.status') }}</h5>
+                                </div>
+                                <div class="col-5">
+                                        <select name="reimbursement_status" id="reimbursement_status" class="custom-select" required>
+                                            <option value="APPROVED">{{ __('trans_business_trip.approve') }}</option>
+                                            <option value="REJECTED">{{ __('trans_business_trip.reject') }}</option>
+                                            <option value="PAID">{{ __('trans_business_trip.paid') }}</option>
+                                        </select>
+                                </div>
+                            </div>
+                            <div class="row approve">
+                                <div class="col-3">
+                                    <h5>{{ __('trans_business_trip.tpaid') }}</h5>
+                                </div>
+                                <div class="col-5">
+                                    <input id="totalpaid" name="totalpaid"  type="number" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="row approve">
+                                <div class="col-3">
+                                    <h5>{{ __('trans_business_trip.approvalremarks') }}</h5>
+                                </div>
+                                <div class="col-5">
+                                    <input id="approvalremarks" name="approvalremarks"  type="text" class="form-control" required>
+                                </div>
+                            </div>
+                            <hr>
+                            <button class="btn btn-primary btn-block" id="btn-update" type="button">{{ __('trans_business_trip.update') }}</button>
                         </div>
+                        </form>
                     </div>
-                   </div>
+                </div>
                 </div>
             </div>
+        </div>
     </div>
     {{-- modal upload excel --}}
     <div class="div-form">
         <form id="upload_paid_overtime_form" method="post" enctype="multipart/form-data">
             @csrf
-            <div class="modal fade" id="modal_upload">
+            <div class="modal fade" id="modal_upload" role="dialog" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-lg">
                    <div class="modal-content">
                     <div class="modal-header">

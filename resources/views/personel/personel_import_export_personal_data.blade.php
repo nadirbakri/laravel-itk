@@ -368,12 +368,15 @@
                         contentType: false,
                         data: formdata,
                         success: function (response) {
+                            // if (response.status == "true") {
                             if (response[0].status == "true") {
                                 $("#btn-import").prop("disabled", false);
                                 $("#btn-import").html(
                                     '{{ __("personel_import_export_personal_data.btn-import") }}'
                                 );
                                 $('#notification_success').modal('show');
+                                // $('#message-notification-success').html(response
+                                //     .message);
                                 $('#message-notification-success').html(response[0]
                                     .message);
                                 // setTimeout(function () {
@@ -386,11 +389,15 @@
                                     '{{ __("personel_import_export_personal_data.btn-import") }}'
                                 );
                                 $('#notification_error').modal('show');
+                                // if (response.message == null || response.message ==
+                                //     '') {
                                 if (response[0].message == null || response[0].message ==
                                     '') {
                                     $('#message-notification-error').html(
                                         "{{ __('login.error') }}");
                                 } else {
+                                    // $('#message-notification-error').html(response
+                                    //     .message);
                                     $('#message-notification-error').html(response[0]
                                         .message);
                                 }

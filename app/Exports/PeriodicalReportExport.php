@@ -184,7 +184,7 @@ class PeriodicalReportExport extends DefaultValueBinder implements WithCustomVal
         //     foreach ($detail->data as $key => $value) {
         //         // Loop melalui array 'field'
         //         foreach ($value->field as $fieldKey => $field) {
-        //             if ($field->field === 'BasicSalary') {
+        //             if ($field->field === 'Tunj_Transportasi') {
         //                 // Simpan indeks array yang ditemukan
         //                 $indexes[] = $fieldKey;
         //             }

@@ -449,7 +449,7 @@
                     }
                 },
                 ajax: {
-                    url: "{{ url('/column/api') }}",
+                    url: "{{ url('/field/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -457,7 +457,7 @@
                         return {
                             _token: CSRF_TOKEN,
                             search: params.term,
-                            transferTo : column
+                            tableName : column
                         };
                     },
                     processResults: function (data) {
@@ -589,6 +589,7 @@
                         contentType: false,
                         data: formdata,
                         success: function (response) {
+                            // if (response.status == "true") {
                             if (response[0].status == "true") {
                                 $("#btn-import").prop("disabled", false);
                                 $("#btn-import").html(
@@ -596,6 +597,8 @@
                                 );
                                 $('#notification_loading').hide();
                                 $('#notification_success').modal('show');
+                                // $('#message-notification-success').html(response
+                                //     .message);
                                 $('#message-notification-success').html(response[0]
                                     .message);
                                 setTimeout(function () {
@@ -603,18 +606,21 @@
                                         "{{ url('personnel/import_update_personal_data') }}";
                                 }, 3000);
                             } else {
-                                console.log(response[0]);
                                 $("#btn-import").prop("disabled", false);
                                 $("#btn-import").html(
                                     '{{ __("personel_import_update_personal_data.btn-import") }}'
                                 );
                                 $('#notification_loading').hide();
                                 $('#notification_error').modal('show');
+                                // if (response.message == null || response.message ==
+                                //     '') {
                                 if (response[0].message == null || response[0].message ==
                                     '') {
                                     $('#message-notification-error').html(
                                         "{{ __('login.error') }}");
                                 } else {
+                                    // $('#message-notification-error').html(response
+                                    //     .message);
                                     $('#message-notification-error').html(response[0]
                                         .message);
                                 }
