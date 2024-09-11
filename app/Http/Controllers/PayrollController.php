@@ -7392,8 +7392,10 @@ public function dataDetailReportFormatPY(Request $request)
             $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_digima';
             $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_digima';
         }else if($companyCode == 'KNM' || $companyCode == 'KTL'){
-            $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_sayurbox';
-            $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_sayurbox';
+            // $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_sayurbox';
+            // $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_sayurbox';
+            $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_ciboodle';
+            $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_ciboodle';
         }else if($companyCode == 'FFS'){
             $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_fitra_fajar';
             $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_fitra_fajar';
@@ -7406,6 +7408,10 @@ public function dataDetailReportFormatPY(Request $request)
         }else if($companyCode == 'ITK'){
             $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_intikom';
             $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_intikom';
+        }else if($companyCode == 'CBI'){
+            $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_ciboodle';
+            $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_ciboodle';
+
         }else{
             $viewNamePortrait = 'payroll.py_export_payment_slip_portrait';
             $viewNameLandscape = 'payroll.py_export_payment_slip_landscape';

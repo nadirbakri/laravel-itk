@@ -1318,6 +1318,50 @@ class TransactionController extends Controller
         }
     }
 
+    public function tableDetailMassLeave(Request $request)
+    {
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/mobile/TmLeave/GetMassLeaveHeader',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'), 
+                        'languageCode' => strtoupper(App::getLocale()), 
+                        'sessionID' => 0, 
+                        'sessionUserID' => Session::get('userID'),
+                        "logActionUserID" => Session::get('userID'),
+                        "logActionUsername" => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+        // var_dump($arrResult->dataListSet);
+
+        if($arrResult->dataListSet == null){
+            // return Datatables::of([])->make(true);
+            return response()->json([]);
+        }else{
+            // return Datatables::of($arrResult->dataListSet)->make(true);
+            return response()->json($arrResult->dataListSet);
+        }
+    }
+
     public function importUpdateReimbursement(Request $request)
     {     
         try{

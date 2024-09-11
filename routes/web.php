@@ -814,6 +814,7 @@ Route::get('trans/update_approvalbusinesstrip/table', 'TransactionController@tab
 Route::get('trans/trans_active_document/detail_data', 'TransactionController@tableUpdateListBusinesstrip');
 Route::get('trans/update_medical/table', 'TransactionController@tableUpdateTransMedical');
 Route::get('trans/update_overtime/table', 'TransactionController@tableUpdateOvertime');
+Route::get('trans/mass_leave/table', 'TransactionController@tableDetailMassLeave');
 Route::get('adm/checkinlist/table', 'TransactionController@tableDetailCheckinList');
 Route::get('adm/checkinlistmaps/table', 'TransactionController@tableDetailMapsCheckinList');
 Route::get('adm/checkinlist_mapsall/table', 'TransactionController@tableDetailCheckinListAll');
