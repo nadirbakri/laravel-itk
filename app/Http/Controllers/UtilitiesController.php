@@ -2000,7 +2000,7 @@ class UtilitiesController extends Controller
                         ];
                     }
 
-                    // var_dump(json_encode($param));
+                    // dd(json_encode($param));
 
                     $response2 = $client->put(env('API_URL') . '/personel/GroupUserAccessDetail',
                         ['body' => json_encode($param)]
@@ -2757,6 +2757,7 @@ class UtilitiesController extends Controller
 
             $param = [
                 'companyCode' => Session::get('companyCode'),
+                'isURL' => isset($request->check_url) ? (bool) $request->check_url : false,
                 'infoURL' => $request->info_url,
                 "createdDate" => date("Y-m-d\TH:i:s"),
                 "createdBy" => Session::get('userID')

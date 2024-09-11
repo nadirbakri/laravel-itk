@@ -16,6 +16,7 @@ return [
     'list' => 'Daftar Menu Utilities',
     'label_info_url' => 'Info URL',
     'label_image_banner' => 'Gambar Banner',
+    'label_check_url' => 'Apakah URL?',
     'info_url_required' => 'Info URL Harus Diisi',
     'image_banner_required' => 'Gambar Banner Harus Diisi',
     'btn_save' => 'Simpan',

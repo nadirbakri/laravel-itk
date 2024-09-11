@@ -16,6 +16,7 @@ return [
     'list' => 'Utilities Menu List',
     'label_info_url' => 'Info URL',
     'label_image_banner' => 'Image Banner',
+    'label_check_url' => 'Is URL?',
     'info_url_required' => 'Info URL is Required',
     'image_banner_required' => 'Image Banner is Required',
     'btn_save' => 'Save',

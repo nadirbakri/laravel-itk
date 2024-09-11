@@ -119,11 +119,21 @@
             <form id="master_banner_form" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
+                    <div class="col-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="check_url"
+                                name="check_url" value="true">
+                            <label
+                                for="check_url">{{ __('utilities_master_banner.label_check_url') }}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col-6">
                         <div class="form-group">
                             <label for="info_url">{{ __('utilities_master_banner.label_info_url') }}</label>
                             <input type="text" class="form-control" id="info_url" name="info_url"
-                                placeholder="{{ __('utilities_master_banner.label_info_url') }}">
+                                placeholder="{{ __('utilities_master_banner.label_info_url') }}" readonly>
                         </div>
                     </div>
                 </div>
@@ -235,19 +245,34 @@
             $('#info_url').val("");
             existingBase64 = null; 
             $('#imagePreview').empty();
+            $('#check_url').prop('checked', false);
+            $('#info_url').prop('readonly', true);
         } else if (func == 'edit') {
             $('#record_function').val("Edit");
-            $('#banner_id').val(
-                "{{ isset($data[0]->bannerID) ? $data[0]->bannerID : '' }}");
-            $('#info_url').val(htmlDecode(
-                "{{ isset($data[0]->infoURL) ? $data[0]->infoURL : '' }}")); 
-            existingBase64 = "{{ isset($data[0]->imageBanner) ? $data[0]->imageBanner : '' }}"; 
+            $('#banner_id').val(((typeof arrData[0].bannerID !== 'undefined') ? arrData[0].bannerID : ''));
+            $('#info_url').val(htmlDecode(((typeof arrData[0].infoURL !== 'undefined') ? arrData[0].infoURL : ''))); 
+            if (typeof arrData[0].isURL !== 'undefined' && arrData[0].isURL === true) {
+                $('#check_url').prop('checked', true);
+                $('#info_url').prop('readonly', false);
+            }else{
+                $('#check_url').prop('checked', false);
+                $('#info_url').prop('readonly', true);
+            }
+            existingBase64 = ((typeof arrData[0].imageBanner !== 'undefined') ? arrData[0].imageBanner : ''); 
             setExistingPreview(existingBase64);
         }
 
         function htmlDecode(value) {
             return $("<textarea/>").html(value).text();
         }
+
+        $('#check_url').on('change', function() {
+            if (this.checked) {
+                $('#info_url').prop('readonly', false);
+            }else{
+                $('#info_url').prop('readonly', true);
+            }
+        });
 
         $('#fileInput').on('change', function(event) {
             const file = event.target.files[0];
@@ -298,17 +323,11 @@
         if ($("#master_banner_form").length > 0) {
             $("#master_banner_form").validate({
                 rules: {
-                    info_url: {
-                        required: true,
-                    },
                     fileInput: {
                         required: true,
                     }
                 },
                 messages: {
-                    info_url: {
-                        required: "{{ __('utilities_master_banner.info_url_required') }}",
-                    },
                     fileInput: {
                         required: "{{ __('utilities_master_banner.image_banner_required') }}",
                     }
