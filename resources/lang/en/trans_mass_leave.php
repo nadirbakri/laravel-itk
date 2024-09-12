@@ -5,7 +5,7 @@ return [
     'list' => 'Mass Leave',
     'list_table' => 'List of Employee',
     'label_status' => 'Status',
-    'label_request_id' => 'Request ID',
+    'label_seq_no' => 'Seq No',
     'label_leave_type' => 'Leave Type',
     'label_leave_time' => 'Leave Time',
     'label_claim_date_start' => 'Start Date',

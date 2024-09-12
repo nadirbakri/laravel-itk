@@ -1219,7 +1219,69 @@ class TransactionController extends Controller
         $arrResult = json_decode($response->getBody()->getContents());
         // var_dump($arrResult->dataListSet);
         return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
 
+    public function tableUpdateTransMassLeave(Request $request)
+    {
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $param = [
+                'companyCode' => Session::get('companyCode'),
+                'leaveType' => $request->leaveType,
+                'leaveTime' => $request->leaveTime,
+                'submitType' => $request->submitType,
+                'dateFrom' => $request->dateFrom,
+                'dateTo' => $request->dateTo,
+                'description' => $request->remarks,
+                'sessionID' => 0,
+                'sessionUserID' => Session::get('userID'),
+                'logActionUserID' => Session::get('userID'),
+                'logActionUsername' => Session::get('userName'),
+                'languageCode' => strtoupper(App::getLocale())
+            ];
+
+
+            if($request->submitType == "STB"){
+                if(isset($request->selectedEmployees)){
+                    foreach ($request->selectedEmployees as $dataSelected) {
+                        $dataEmployee[] = [
+                            'companyCode' => Session::get('companyCode'),
+                            'employeeNo' => $dataSelected['employeeId'],
+                            'userID' => $dataSelected['userId']
+                        ];
+                    }
+                    $param['employeeList'] = $dataEmployee;
+                }else{
+                    $param['employeeList'] = [];
+                }
+            }else{
+                $param['employeeList'] = [];
+            }
+
+            dd(json_encode($param));
+
+            $response = $client->post(env('API_URL') . '/mobile/TmLeave/MassLeave',
+                ['body' => json_encode($param)]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+        // var_dump($arrResult->dataListSet);
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
     }
    
     public function tableUpdateTransMedical(Request $request)

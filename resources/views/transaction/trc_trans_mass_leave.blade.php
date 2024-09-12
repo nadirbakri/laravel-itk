@@ -129,9 +129,9 @@
                     </div>
                     <div class="col-5">
                         <div class="form-group">
-                            <label for="request_id form-check-label">{{ __('trans_mass_leave.label_request_id') }}</label>
+                            <label for="seq_no form-check-label">{{ __('trans_mass_leave.label_seq_no') }}</label>
                         </div>
-                        <input type="text" class="form-control" id="request_id" name="request_id" placeholder="{{ __('trans_mass_leave.label_request_id') }}" readonly>
+                        <input type="text" class="form-control" id="seq_no" name="seq_no" placeholder="{{ __('trans_mass_leave.label_seq_no') }}" readonly>
                     </div>
                 </div>
                 <div class="row">
@@ -194,7 +194,7 @@
                 <!-- BUTTON -->
                 <div class="row">
                     <div class="col-3">
-                        <button class="btn btn-primary" name="btn-save" id="btn-save" value="preview" style="width: 100%;">
+                        <button type="button" class="btn btn-primary" name="btn-save" id="btn-save" value="preview" style="width: 100%;">
                             <i class="fa fa-save"></i> {{ __('trans_mass_leave.btn_save') }}
                         </button>
                     </div>
@@ -411,12 +411,20 @@
                     targets: 0, 
                     "defaultContent": '',
                     render: function(data, type, row) {
-                        return type === 'display'? '<input class="chk-select selected_employee" type="checkbox" name="selected_employee[' +
-                                $('<div />').text(row.employeeNo).html() + ']" value="1">' : '';
+                        return type === 'display'? '<input class="chk-select selected_employee" type="checkbox" name="selected_employee[]" data-employee="'+
+                           row.employeeNo + '" data-userid="' + row.userID + '" value="true">' : '';
                     }
                 },
-                {data: 'userID', name: 'userID'},
-                {data: 'employeeNo', name: 'employeeNo'},
+                {data: 'userID', name: 'userID',
+                    render: function(data, type, row) {
+                        return '<input type="hidden" name="user_id[]" value"' + row.userID + '">' + row.userID;
+                    }
+                },
+                {data: 'employeeNo', name: 'employeeNo',
+                    render: function(data, type, row) {
+                        return '<input type="hidden" name="employee_no[]" value"' + row.employeeNo + '">' + row.employeeNo;
+                    }
+                },
                 {data: 'fullName', name: 'fullName'},
             ],
             select: {
@@ -431,11 +439,16 @@
             // Iterasi semua baris dalam DataTable
             table.rows({ search: 'applied' }).every(function (index) {
                 var data = this.data();
-                var rowId = data.employeeNo; // Misalnya, gunakan kolom pertama sebagai ID unik baris
+                var rowId = data.employeeNo;
+                var userId = data.userID;
 
                 // Simpan status baris dalam object selectedEmployees
                 if (isChecked) {
-                    selectedEmployees[rowId] = true;
+                    selectedEmployees[rowId] = {
+                        isChecked: true,
+                        userId: userId,
+                        employeeId: rowId
+                    };
                     table.rows({ search: 'applied' }).select();
                 } else {
                     delete selectedEmployees[rowId];
@@ -443,19 +456,16 @@
                 }
             });
 
-            // Perbarui semua checkbox di halaman saat ini
             $('.selected_employee').prop('checked', isChecked);
         });
 
-        // Setiap kali tabel digambar ulang (misalnya, ketika berpindah halaman)
         table.on('draw', function () {
-            // Iterasi semua baris di halaman saat ini
             table.rows({ page: 'current' }).every(function (index) {
                 var data = this.data();
-                var rowId = data.employeeNo; // Gunakan kolom pertama sebagai ID unik baris
+                var rowId = data.employeeNo;
+                var userId = data.userID;
 
-                // Atur checkbox sesuai status yang disimpan di selectedEmployees
-                if (selectedEmployees[rowId]) {
+                if (selectedEmployees[rowId] && selectedEmployees[rowId].isChecked) {
                     $(this.node()).find('.selected_employee').prop('checked', true);
                 } else {
                     $(this.node()).find('.selected_employee').prop('checked', false);
@@ -463,14 +473,35 @@
 
                 $(this.node()).find('.selected_employee').off('change').on('change', function () {
                     if ($(this).is(':checked')) {
-                        selectedEmployees[rowId] = true; // Tambahkan ke selectedEmployees jika checked
+                        selectedEmployees[rowId] = {
+                            isChecked: true,
+                            userId: userId,
+                            employeeId: rowId
+                        };
                     } else {
-                        delete selectedEmployees[rowId]; // Hapus dari selectedEmployees jika unchecked
+                        delete selectedEmployees[rowId];
                     }
                 });
             });
         });
     }
+
+    $(document).on('change', '.selected_employee', function () {
+        var $checkbox = $(this);
+        var rowId = $checkbox.data('employee'); // Atau ambil dari data lainnya jika diperlukan
+        var userId = $checkbox.data('userid'); // Ambil userId jika tersedia
+        
+        if ($checkbox.is(':checked')) {
+            selectedEmployees[rowId] = {
+                isChecked: true,
+                userId: userId,
+                employeeId: rowId
+            };
+        } else {
+            delete selectedEmployees[rowId];
+        }
+        console.log(selectedEmployees);
+    });
 
     function load_data_mass_leave(){
         $.ajax({
@@ -536,147 +567,58 @@
     $('#modal_list_mass_leave').on('show.bs.modal', function () {
         load_data_mass_leave();
     })
-
-    $('#check_extend_expired_date').on('change', function() {
-        if (this.checked) {
-            $('#expired_date').prop('readonly', false);
-            $('#overtime_status').prop('disabled', true);
-            $('#approval_remarks').prop('readonly', true);
-        }else{
-            $('#expired_date').prop('readonly', true);
-            $('#overtime_status').prop('disabled', false);
-            $('#approval_remarks').prop('readonly', false);
-        }
-    });
-
-    $('#btn-list').click(()=> {
-        $('#example').DataTable().destroy();
-        table2 = $('#example').DataTable({
-            processing: true,
-            serverSide: true,
-            orderCellsTop: true,
-            ajax: {
-                url : "{{ url('transaction/list/table') }}"             
-            },
-            error: function(jqXHR, ajaxOptions, thrownError) {
-                alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
-            },
-            "sDom": 'lfrtip',
-            'sPaginationType': 'full_numbers',
-            "order": [[ 1, "asc" ]],
-            columns: [
-                {
-                    orderable: false,
-                    targets: 0, 
-                    "defaultContent": '',
-                    render: function(data, type) {
-                        return type === 'display'? '<button type="button"  onclick="klik(this)" class="btn btn-primary" id="btnaja" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/></svg></button>' : '';
-                             }
-                },
-                {data: 'employeeNo', name: 'employeeNo'},
-                {data: 'fullName', name: 'fullName'},
-                {data: 'positionName', name: 'positionName'},
-                {data: 'rankingName', name: 'rankingName'},
-            ],
-            select: {
-                style:    'multi',
-                selector: 'td:first-child'
-            }, 
-            
-        });        
-    })
     
     const klikdetail = (element) => {
-        var data = table.row($(element).parents('tr')).data().overtimeEntity;
-        var duration = moment.duration(data.ovtDuration)
+        var data = table.row($(element).parents('tr')).data();
 
-        $('#request_date').html(moment(data.createdDate).format('YYYY-MM-DD'))
-        $('#overtime_date').html(moment(data.overtimeDate).format('YYYY-MM-DD'))
-        $('#overtime_ticket_no').val(data.ticketNo)
-        $('#ticket_no').html(data.ticketNo)
+        $('#claim_date_from').html(moment(data.createdDate).format('YYYY-MM-DD'))
+        $('#claim_date_to').html(moment(data.overtimeDate).format('YYYY-MM-DD'))
+        $('#seq_no').val(data.seqNo)
         $('#status').html(data.status)
-        $('#overtime_direct_superior').val(data.directSuperiorID)
-        $('#employee_name').html(data.fullnameRequester)
-        $('#business_unit').html(data.businessUnit)
-        $('#start_date').html(moment(data.overtimeHourFrom).format('YYYY-MM-DD') + ', ' + moment(data.overtimeHourFrom).format('HH.mm'))
-        $('#actual_overtime').html(duration.hours() + ' hours ' + duration.minutes() + ' minutes')
-        $('#end_date').html(moment(data.overtimeHourTo).format('YYYY-MM-DD') + ', ' + moment(data.overtimeHourTo).format('HH.mm'))
-        $('#next_day').html(data.isNext)
-        $('#task_name').html(data.projectName)
-        $('#location').html(data.locationCode)
-        $('#description').html(data.overtimeRemarks)
-        $('#customer').html(data.customerName)
-        $('#overtime_status').val(data.status).trigger('change')
-        $('#last_approval_date').val(moment().format('YYYY-MM-DD'))
-        $('#approval_remarks').val(data.approvalRemarks)
-        
-        $('#expired_date').val(moment(data.offSubstituteExpDate).format('YYYY-MM-DD'))
-        $('#check_extend_expired_date').prop('checked', false).trigger('change');
-    }
-
-    const klik = (element) => {
-        let employee_id = $(element).parent().siblings('.sorting_1').text()
-
-        $('#direct_superior').val(employee_id)
+        $('#leave_type').val(data.leaveType).trigger('change')
+        $('#leave_time').val(data.leaveTime).trigger('change')
+        $('#submit_type').val(data.submitType).trigger('change')
+        $('#remarks').val(data.description)
+        $('#btn-save').prop('disabled', true)
 
         $('.close').click();
     }
 
-    $('#btn-update').click(()=>{
-        let status = $('#overtime_status').val();
-        // let totalpaid = $('#totalpaid').val();
-        let ticketNo = $('#overtime_ticket_no').val();
-        let directSuperior = $("#overtime_direct_superior").val();
-        let approvalRemarks = $("#approval_remarks").val();
-        let checkExtend = $("#check_extend_expired_date").prop('checked');
-        let checkExtendExpiredDate = false;
-        if (checkExtend) {
-            checkExtendExpiredDate = true;
-        } else {
-            checkExtendExpiredDate = false;
-        }   
-        let expiredDate = $("#expired_date").val();
+    $('#btn-save').click(()=>{
+        let status = $('#status').val();
+        let seqNo = $('#seq_no').val();
+        let dateFrom = $("#claim_date_from").val();
+        let dateTo = $("#claim_date_to").val();
+        let leaveType = $("#leave_type").val();
+        let leaveTime = $("#leave_time").val();
+        let submitType = $("#submit_type").val();
+        let remarks = $("#remarks").val();
 
         // $('.close').click();
-        update_data(status, ticketNo, directSuperior, approvalRemarks, checkExtendExpiredDate, expiredDate)
+        update_data(status, seqNo, dateFrom, dateTo, leaveType, leaveTime, submitType, remarks, selectedEmployees)
     })
 
-    function updateOvertimeStatus(status, ticketNo, directSuperior, approvalRemarks, checkExtendExpiredDate, expiredDate) {
-        var item = arrayOvertime.find(obj => obj.overtimeEntity && obj.overtimeEntity.ticketNo === ticketNo);
-
-        if (item) {
-            if (checkExtendExpiredDate) {
-                item.overtimeEntity.offExpiredDate = expiredDate;
-            }else{
-                item.overtimeEntity.status = status;
-                item.overtimeEntity.directSuperiorCode = directSuperior;
-                item.overtimeEntity.approvalRemarks = approvalRemarks;
-            }
-
-            table.clear().rows.add(arrayOvertime).draw(false);
-        }
-    }
-
-    function update_data(status, ticketNo, directSuperior, approvalRemarks, checkExtendExpiredDate, expiredDate){
+    function update_data(status, seqNo, dateFrom, dateTo, leaveType, leaveTime, submitType, remarks, selectedEmployees){
         $.ajax({
-            url: "{{ url('trans/update_overtime/table') }}",
+            url: "{{ url('trans/update_mass_leave/table') }}",
             type: "get",
             data: {
                 'status': status,
-                // 'paidAmount': totalpaid,
-                'ticketNo' : ticketNo,
-                'directSuperior' : directSuperior,
-                'approvalRemarks' : approvalRemarks,
-                'checkExtendExpiredDate' : checkExtendExpiredDate,
-                'expiredDate' : expiredDate
+                'seqNo': seqNo,
+                'dateFrom' : dateFrom,
+                'dateTo' : dateTo,
+                'leaveType' : leaveType,
+                'leaveTime' : leaveTime,
+                'submitType' : submitType,
+                'remarks' : remarks,
+                'selectedEmployees' : selectedEmployees
             },
             success: function (response) {
                 // console.log(response);
                 if (response.status == "true") {
-                    $("#btn-update").prop("disabled", false);
-                    $("#btn-update").html(
-                        // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
-                        'Update'
+                    $("#btn-save").prop("disabled", false);
+                    $("#btn-save").html(
+                        '<i class="fa fa-save"></i> {{ __("trans_mass_leave.btn_save") }}'
                     );
 
                     $('.close').click();
@@ -685,20 +627,18 @@
                     $('#message-notification-success').html(response
                         .message);
 
-                    updateOvertimeStatus(status, ticketNo, directSuperior, approvalRemarks, checkExtendExpiredDate, expiredDate);
                     // setTimeout(function () {
                     //     window.location =
                     //         "{{ url('transaction/transaction_overtime') }}";
                     // }, 3000);
                 } else{
-                $("#btn-update").prop("disabled", false);
-                    $("#btn-update").html(
-                        // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
-                        'Update'
+                    $("#btn-save").prop("disabled", false);
+                    $("#btn-save").html(
+                        '<i class="fa fa-save"></i> {{ __("trans_mass_leave.btn_save") }}'
                     );
                     
-                    $('#notification_update_data_fail').modal('show');
-                    $('#message-notification-update-data-fail').html(response
+                    $('#notification_error').modal('show');
+                    $('#message-notification-error').html(response
                         .message);
                     // setTimeout(function () {
                     //     window.location =
@@ -707,97 +647,16 @@
                 }
             },
             error: function (response) {
-                $("#btn-update").prop("disabled", false);
-                $("#btn-update").html(
-                    // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
-                    'Update'
+                $("#btn-save").prop("disabled", false);
+                $("#btn-save").html(
+                    '<i class="fa fa-save"></i> {{ __("trans_mass_leave.btn_save") }}'
                 );
 
                 $('#notification_error').modal('show');
                 $('#message-notification-error').html(response);
             }
-        });
-             
+        });        
     }
-
-</script>
-<script>
-    $("#btn-process").click(function () {
-           $(this).prop("disabled", true);
-           $(this).html(
-               '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
-           );
-           $("#upload_paid_overtime_form").submit();
-       });
-
-    //    $('#notification_success').on('hide.bs.modal', function () {
-    //        window.location = "{{ url('transaction/transaction_overtime') }}";
-    //    });
-
-       if ($("#upload_paid_overtime_form").length > 0) {
-           $("#upload_paid_overtime_form").validate({
-               submitHandler: function (form) {
-                   $.ajaxSetup({
-                       headers: {
-                           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                       }
-                   });
-                   var myForm = document.getElementById('upload_paid_overtime_form');
-                   var formdata = new FormData(myForm);
-                   
-                   $.ajax({
-                       url: "{{ url('transaction/update_overtime/import') }}",
-                       type: "POST",
-                       processData: false,
-                       contentType: false,
-                       data: formdata,
-                       success: function (response) {
-                           if (response[0].status == "true") {
-                               $("#btn-process").prop("disabled", false);
-                               $("#btn-process").html(
-                                   // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
-                                   'Update'
-                               );
-                               
-                               $('#notification_success').modal('show');
-                               $('#message-notification-success').html(response[0]
-                                   .message);
-                            //    setTimeout(function () {
-                            //        window.location =
-                            //            "{{ url('transaction/transaction_overtime') }}";
-                            //    }, 3000);
-                           } else {
-                               $("#btn-process").prop("disabled", false);
-                               $("#btn-process").html(
-                                   // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
-                                   'Update'
-                               );
-
-                               $('#notification_error').modal('show');
-                               if (response[0].message == null || response[0].message ==
-                                   '') {
-                                   $('#message-notification-error').html(
-                                       "{{ __('login.error') }}");
-                               } else {
-                                   $('#message-notification-error').html(response[0]
-                                       .message);
-                               }
-                           }
-                       },
-                       error: function (response) {
-                           $("#btn-process").prop("disabled", false);
-                           $("#btn-process").html(
-                               // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
-                               'Update'
-                           );
-
-                           $('#notification_error').modal('show');
-                           $('#message-notification-error').html(response);
-                       }
-                   });
-               }
-           })
-       }
 </script>
 <script type="text/javascript">
     loadDataLeaveType();
@@ -806,7 +665,7 @@
 
     $.get("{{ url('leave_type/api') }}", function (data) {
         $.each(data, function (k, v) {
-            $('#leave_time').append("<option value=" + v.absentCode + ">" + v.description +
+            $('#leave_type').append("<option value=" + v.absentCode + ">" + v.description +
                 "</option>");
         });
     });
