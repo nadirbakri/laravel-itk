@@ -24,7 +24,7 @@
             <th>Group Name</th>
             <th>Direct Superior Group Code</th>
             <th>Line Approval</th>
-            <th>Delegate Group</th>
+            <th>Delegate Group Code</th>
         </tr>
     </thead>
 </table>

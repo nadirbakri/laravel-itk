@@ -148,6 +148,8 @@ class EmployeeGroupImport implements ToCollection, SkipsEmptyRows, WithStartRow
                     $param = [];
             }
 
+            // dd(json_encode($param));
+
             $response = $client->post(env('API_URL') . '/mobile/GmGroup/ImportApproval',
                 ['body' => json_encode($param)]
             );
