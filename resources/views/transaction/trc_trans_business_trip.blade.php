@@ -408,9 +408,30 @@
                                 </div>
                                 <div class="col-5">
                                         <select name="reimbursement_status" id="reimbursement_status" class="custom-select" required>
+                                            @if(Session::get('companyCode') == 'ITK' || Session::get('companyCode') == 'III')
+                                            <option value="NEW">{{ __('trans_business_trip.new') }}</option>
+                                            <option value="PARTIAL_APPROVED">{{ __('trans_business_trip.partial_approved') }}</option>
+                                            <option value="APPROVED">{{ __('trans_business_trip.approved') }}</option>
+                                            <option value="WAITING_PAYMENT">{{ __('trans_business_trip.waiting_payment') }}</option>
+                                            <option value="PAID">{{ __('trans_business_trip.paid') }}</option>
+                                            <option value="REJECTED">{{ __('trans_business_trip.rejected') }}</option>
+                                            <option value="CANCELLED">{{ __('trans_business_trip.cancelled') }}</option>
+                                            <option value="SETTLEMENT_REQUEST">{{ __('trans_business_trip.settlement_request') }}</option>
+                                            <option value="SETTLEMENT_APPROVED">{{ __('trans_business_trip.settlement_approved') }}</option>
+                                            <option value="SETTLEMENT_PARTIAL_APPROVED">{{ __('trans_business_trip.settlement_partial_approved') }}</option>
+                                            <option value="CHECKING_HRD">{{ __('trans_business_trip.checking_hrd') }}</option>
+                                            <option value="SETTLEMENT_WAITING_PAYMENT">{{ __('trans_business_trip.settlement_waiting_payment') }}</option>
+                                            <option value="WAITING_DEPOSITSLIP">{{ __('trans_business_trip.waiting_deposit_slip') }}</option>
+                                            <option value="SETTLEMENT_CHECKING">{{ __('trans_business_trip.settlement_checking') }}</option>
+                                            <option value="SETTLEMENT_REJECTED">{{ __('trans_business_trip.settlement_rejected') }}</option>
+                                            <option value="SETTLEMENT_CANCELLED">{{ __('trans_business_trip.settlement_cancelled') }}</option>
+                                            <option value="COMPLETED">{{ __('trans_business_trip.completed') }}</option>
+                                            <option value="COMPLETED_MANUAL">{{ __('trans_business_trip.completed_manual') }}</option>
+                                            @else
                                             <option value="APPROVED">{{ __('trans_business_trip.approve') }}</option>
                                             <option value="REJECTED">{{ __('trans_business_trip.reject') }}</option>
                                             <option value="PAID">{{ __('trans_business_trip.paid') }}</option>
+                                            @endif
                                         </select>
                                 </div>
                             </div>
@@ -547,6 +568,7 @@
 <script src="{{ asset('js/flatpickr.monthselect.js') }}"></script>
 <script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
 <script type="text/javascript">
+    var companyCode = "{{ Session::get('companyCode') }}";
     var table = null;
     var table2 = null;
     var arrayBusinessTrip = [];
@@ -1064,22 +1086,34 @@
                     };
                 },
                 processResults: function (data) {
-                    var filteredData = data.filter(function (item) {
-                        var allowedStatuses = ["NEW", "APPROVED", "CANCELED", "PARTIAL APPROVED", "REJECTED"];
-                        return allowedStatuses.includes(item.value);
-                    });
+                    if(companyCode == 'ITK' || companyCode == 'III'){
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.value,
+                                    id: item.value,
+                                    data: item
+                                }
+                            })
+                        };
+                    }else{
+                        var filteredData = data.filter(function (item) {
+                            var allowedStatuses = ["NEW", "APPROVED", "CANCELED", "PARTIAL APPROVED", "REJECTED"];
+                            return allowedStatuses.includes(item.value);
+                        });
 
-                    filteredData.unshift({ value: "ALL" });
+                        filteredData.unshift({ value: "ALL" });
 
-                    return {
-                        results: $.map(filteredData, function (item) {
-                            return {
-                                text: item.value,
-                                id: item.value,
-                                data: item
-                            }
-                        })
-                    };
+                        return {
+                            results: $.map(filteredData, function (item) {
+                                return {
+                                    text: item.value,
+                                    id: item.value,
+                                    data: item
+                                }
+                            })
+                        };
+                    }
                 },
                 cache: true,
             },
