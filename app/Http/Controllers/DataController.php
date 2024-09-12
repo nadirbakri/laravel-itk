@@ -10573,18 +10573,20 @@ class DataController extends Controller
 			
 			$arrResult = json_decode($response->getBody()->getContents());
 			
-			if($search == ''){
-				$data = array_merge($data, $arrResult->dataListSet);
-			}else{
-				$data = array_merge($data, $arrResult->dataListSet);
-				$data = array_filter(
-				$data,
-				function($value) use ($search){
-					if(preg_match('/' . $search . '/i', $value->value)){
-						return preg_match('/' . $search . '/i', $value->value);
+			if($arrResult->dataListSet !== null){
+				if($search == ''){
+					$data = array_merge($data, $arrResult->dataListSet);
+				}else{
+					$data = array_merge($data, $arrResult->dataListSet);
+					$data = array_filter(
+					$data,
+					function($value) use ($search){
+						if(preg_match('/' . $search . '/i', $value->value)){
+							return preg_match('/' . $search . '/i', $value->value);
+						}
 					}
-				}
-			);
+				);
+			}
 		}
 		return response()->json($data);
 	}
