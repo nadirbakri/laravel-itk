@@ -6140,7 +6140,7 @@ class PersonelController extends Controller
                 "email" => null,
                 "userName" => null,
                 "token" => null,
-                "photo" => ($request->hasFile('photo_profile')) ? base64_encode(file_get_contents($path . $filename)) : '',
+                "photo" => ($request->hasFile('photo_profile')) ? base64_encode(file_get_contents($file->getRealPath())) : '',
                 "keyPass" => null,
                 "hashPass" => null,
                 "changedNo" => 0,
