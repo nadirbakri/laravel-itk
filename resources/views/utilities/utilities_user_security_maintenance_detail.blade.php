@@ -251,6 +251,12 @@
                         {{ __('utilities_user_security_maintenance.btn_edit') }}
                     </button>
                 </div>
+                <div class="col-3">
+                    <button type="button" class="btn btn-primary" name="btn-add-level" id="btn-add-level"
+                        style="width: 100%;" data-toggle="modal" data-target="#modal_add_level">
+                        {{ __('utilities_user_security_maintenance.btn_add') }}
+                    </button>
+                </div>
             </div>
             <div class="row">
                 <div class="col-10">
@@ -298,7 +304,7 @@
             </div> -->
         </div>
     </div>
-    <div class="modal fade" id="modal_add_level"  role="dialog" aria-hidden="true">
+    <div class="modal fade" id="modal_add_level" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -315,11 +321,12 @@
                                 <div class="form-group">
                                     <label
                                         for="level_type">{{ __('utilities_user_security_maintenance.label_level_type') }}</label>
-                                    <input type="text" class="form-control" id="level_type" name="level_type"
-                                        placeholder="{{ __('utilities_user_security_maintenance.label_level_type') }}"
-                                        readonly>
+                                    <select class="form-control select2" id="level_type" name="level_type"></select>
                                 </div>
                                 <input type="hidden" class="form-control" id="user_id_level" name="user_id_level">
+                                <input type="hidden" class="form-control" id="level_type_val" name="level_type_val">
+                                <input type="hidden" class="form-control" id="record_function_level"
+                                name="record_function_level">
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
@@ -332,7 +339,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-8">
+                            <div class="col-12">
                                 <div class="form-group">
                                     <label
                                         for="level_authorization">{{ __('utilities_user_security_maintenance.title_level_authorization') }}</label>
@@ -340,7 +347,7 @@
                                 <table id="level_authorization_table" class="table hover">
                                     <thead>
                                         <tr>
-                                            <th></th>
+                                            <th><input type="checkbox" class="select_all" name="select_all" value="all"></th>
                                             <th>Level Code</th>
                                             <th>Level Name</th>
                                         </tr>
@@ -989,13 +996,64 @@
             });
         });
 
+        $(".select_all").on("click", function (e) {
+            if ($(this).is(":checked")) {
+                level_auth_table.rows().select();
+                $('.selected_authorization').prop('checked', true);
+            } else {
+                level_auth_table.rows().deselect();
+                $('.selected_authorization').prop('checked', false);
+            }
+        });
+
+        $('#level_type').on("select2:select", function (e) {
+            var data = $('#level_type').select2('data');
+            $('#level_type_val').val(data[0].id);
+            $("#level_name").val(data[0].title);
+            $('#level_authorization_table').DataTable().destroy();
+            load_table_level_authorization(data[0].id);
+        });
+
+        $('#level_type').on("select2:unselecting", function (e) {
+            $('#level_type_val').val('');
+            $("#level_name").val('');
+            $('#level_authorization_table').DataTable().destroy();
+            load_table_level_authorization(0);
+        });
+
+        $('body').on('click', '#btn-add-level', function () {
+            var user_id = $('#user_id').val();
+            $('#user_id_level').val(user_id);
+
+            var data = level_table.rows('.selected').data();
+            loadDataLevelType();
+            $('#level_type').val(null).trigger('change');
+            $('#level_name').val(null);
+            $('#record_function_level').val('New');
+        });
+
         $('body').on('click', '#btn-edit-level', function () {
             var user_id = $('#user_id').val();
             $('#user_id_level').val(user_id);
 
             var data = level_table.rows('.selected').data();
             if (data.count() > 0) {
-                $('#level_type').val(data[0].levelType);
+                loadDataLevelType();
+                var option = new Option(data[0].levelDescription, data[0].levelType, true, true);
+                $('#level_type').append(option).trigger('change');
+
+                $('#level_type').trigger({
+                    type: 'select2:select',
+                    params: {
+                        id: data[0].levelType,
+                        text: data[0].levelDescription,
+                        data: data[0]
+                    }
+                });
+
+                $('#record_function_level').val('Edit');
+                $('#level_type').prop('disabled', true);                
+                $('#level_type_val').val(data[0].levelType);
                 $('#level_name').val(htmlDecode(data[0].levelDescription));
                 $('#modal_add_level').modal('show');
                 $('#level_authorization_table').DataTable().destroy();
@@ -1189,6 +1247,77 @@
                                 return {
                                     text: item.companyName,
                                     id: item.companyCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataLevelType() {
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' +
+                        '<div class="col-6">' + data.data.levelType + '</div>' +
+                        '<div class="col-6">' + data.data.levelDescription + '</div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var headerIsAppend = false;
+            $('#level_type').on('select2:open', function (e) {
+                if (!headerIsAppend) {
+                    html = '<div class="row">' +
+                        '<div class="col-6"><b>Level Type</b></div>' +
+                        '<div class="col-6"><b>Level Description</b></div>' +
+                        '</div>';
+                    $('.select2-search--dropdown').append(html);
+                    headerIsAppend = true;
+                }
+            });
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $('#level_type').select2({
+                width: '100%',
+                placeholder: 'Choose Level Type',
+                allowClear: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: "{{ url('/level_type/api') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.levelType,
+                                    id: item.levelType,
+                                    title: item.levelDescription,
                                     data: item
                                 }
                             })
