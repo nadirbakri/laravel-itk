@@ -10538,6 +10538,7 @@ class DataController extends Controller
 		}
 		return response()->json($data);
 	}
+
 	public function dataStatusTransactionAPI(Request $request)
 	{
 		$search = $request->search;
@@ -10590,6 +10591,57 @@ class DataController extends Controller
 		}
 		return response()->json($data);
 	}
+
+	public function dataStatusTransactionBusinessTripAPI(Request $request)
+	{
+		$search = $request->search;
+		$data = [];
+
+		try {
+			$client = new Client([
+                'verify' => false,
+				'headers' => [ 'Content-Type' => 'application/json',
+								'Authorization' => 'Bearer ' . Session::get('token') ]
+			]);
+			$response = $client->post(env('API_URL') . '/personel/referencemobile/getreferencemobile',
+			['body' => json_encode(
+					[
+						'companyCode' => Session::get('companyCode'),
+						"variable" => "StatusBST_",
+						"languageCode" => strtoupper(App::getLocale())
+					]
+				)]);
+			} catch (RequestException $e) {
+				$response = $e->getResponse();
+				if($response->getStatusCode() == 401){
+					return view('error.login');
+				}else if($response->getStatusCode() == 404){
+					return view('error.not_found');
+				}else{
+					return view('error.bad_request');
+				}
+			}
+			
+			$arrResult = json_decode($response->getBody()->getContents());
+			
+			if($arrResult->dataListSet !== null){
+				if($search == ''){
+					$data = array_merge($data, $arrResult->dataListSet);
+				}else{
+					$data = array_merge($data, $arrResult->dataListSet);
+					$data = array_filter(
+					$data,
+					function($value) use ($search){
+						if(preg_match('/' . $search . '/i', $value->value)){
+							return preg_match('/' . $search . '/i', $value->value);
+						}
+					}
+				);
+			}
+		}
+		return response()->json($data);
+	}
+
 	public function dataLeaveTypeAPI (Request $request)
 	{
 		$search = $request->search;

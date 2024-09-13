@@ -408,7 +408,7 @@
                                 </div>
                                 <div class="col-5">
                                         <select name="reimbursement_status" id="reimbursement_status" class="custom-select" required>
-                                            @if(Session::get('companyCode') == 'ITK' || Session::get('companyCode') == 'III')
+                                            <!-- @if(Session::get('companyCode') == 'ITK' || Session::get('companyCode') == 'III')
                                             <option value="NEW">{{ __('trans_business_trip.new') }}</option>
                                             <option value="PARTIAL_APPROVED">{{ __('trans_business_trip.partial_approved') }}</option>
                                             <option value="APPROVED">{{ __('trans_business_trip.approved') }}</option>
@@ -431,7 +431,7 @@
                                             <option value="APPROVED">{{ __('trans_business_trip.approve') }}</option>
                                             <option value="REJECTED">{{ __('trans_business_trip.reject') }}</option>
                                             <option value="PAID">{{ __('trans_business_trip.paid') }}</option>
-                                            @endif
+                                            @endif -->
                                         </select>
                                 </div>
                             </div>
@@ -764,6 +764,18 @@
         $('#type_val').html(data.purpose)
         $('#directsuperior').val(data.directSuperiorID)
         $('#reimbursement_status').val(data.status).trigger('change')
+
+        var option = new Option(data.status, data.status, true, true);
+        $('#reimbursement_status').append(option).trigger('change');
+
+        $('#reimbursement_status').trigger({
+            type: 'select2:select',
+            params: {
+                id: data.status,
+                text: data.status,
+                data: data
+            }
+        });
     }
     const klik = (element) => {
         let employee_id = $(element).parent().siblings('.sorting_1').text()
@@ -858,6 +870,7 @@
     loadDataFirstLastAllBusinessUnit();
     loadDataStatus();
     loadDataFirstLastAllStatus();
+    loadDataUpdateStatus();
 
     $.get("{{ url('level/all/api') }}", function (data) {
         $.each(data, function (k, v) {
@@ -1132,6 +1145,85 @@
             $('#business_trip_status option:contains("ALL")').not(':first').remove();
             $('#business_trip_status').val('ALL');
             $('#business_trip_status').removeClass('spinner-border');
+        });
+    }
+
+    function loadDataUpdateStatus(){
+        function formatSelect(data) {
+            if (data.loading) {
+                return $search
+            }
+
+            if (data.id) {
+                var $result2 = $('<div class="row">' + 
+                    '<div class="col-6">' + data.data.value + '<div>' +
+                    '</div>');
+
+                return $result2;
+            }
+        }
+
+        var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+        
+        $('#reimbursement_status').select2({
+            width: '100%',
+            placeholder: 'Choose Status',
+            allowClear: true,
+            // multiple: true,
+            // tags: true,
+            closeOnSelect: true,
+            language: {
+                errorLoading: function () {
+                    return $search;
+                },
+                searching: function () {
+                    return $search;
+                }
+            },
+            ajax: {
+                url: "{{ url('/status_trans/business_trip/api') }}",
+                dataType: 'json',
+                delay: 250,
+                type: "GET",
+                data: function (params) {
+                    return {
+                        _token: $('meta[name="csrf-token"]').attr('content'),
+                        search: params.term,
+                    };
+                },
+                processResults: function (data) {
+                    if(companyCode == 'ITK' || companyCode == 'III'){
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.code,
+                                    id: item.code,
+                                    data: item
+                                }
+                            })
+                        };
+                    }else{
+                        var filteredData = data.filter(function (item) {
+                            var allowedStatuses = ["NEW", "APPROVED", "CANCELED", "PARTIAL_APPROVED", "REJECTED", "PAID"];
+                            return allowedStatuses.includes(item.code);
+                        });
+
+                        filteredData.unshift({ value: "ALL" });
+
+                        return {
+                            results: $.map(filteredData, function (item) {
+                                return {
+                                    text: item.code,
+                                    id: item.code,
+                                    data: item
+                                }
+                            })
+                        };
+                    }
+                },
+                cache: true,
+            },
+            templateResult: formatSelect
         });
     }
 

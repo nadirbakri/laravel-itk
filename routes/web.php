@@ -1162,6 +1162,7 @@ Route::get('workflow/api', 'DataController@dataWorkFlowAPI');
 Route::get('status/api', 'DataController@dataStatusAPI');
 Route::get('status/func/api', 'DataController@dataStatusFunctionAPI');
 Route::get('status_trans/api', 'DataController@dataStatusTransactionAPI');
+Route::get('status_trans/business_trip/api', 'DataController@dataStatusTransactionBusinessTripAPI');
 Route::get('leave_type/api', 'DataController@dataLeaveTypeAPI');
 Route::get('leave_type/func/api', 'DataController@dataLeaveTypeFunctionAPI');
 Route::get('submit_type/api', 'DataController@dataSubmitTypeAPI');
