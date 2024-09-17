@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Exports;
+ini_set('memory_limit', '4096M');
 
 // use Carbon\Carbon;
 use Illuminate\Support\Carbon;

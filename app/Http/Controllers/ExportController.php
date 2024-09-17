@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+ini_set('memory_limit', '4096M');
 
 use App\Exports\WorkflowPermitExport;
 use App\Exports\MultipleChecking;
