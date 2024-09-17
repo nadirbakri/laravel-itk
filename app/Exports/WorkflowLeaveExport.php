@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Exports;
+ini_set('memory_limit', '4096M');
 
 use Illuminate\Support\Carbon;
 use Maatwebsite\Excel\Concerns\FromView;
