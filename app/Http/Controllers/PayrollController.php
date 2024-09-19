@@ -4584,7 +4584,6 @@ public function dataDetailReportFormatPY(Request $request)
             if($request->source_bank == 'BCA' || $request->source_bank == 'JAGO'){
                 $fullPath = storage_path('app/');
                 array_map('unlink', glob( "$fullPath*.txt"));
-                $arrDataBCA = explode("\r\n", $arrResult->dataListSet[0]->transferBank);
                 $namaFile = $arrResult->dataListSet[0]->namaFile;
                 if(!str_contains($arrResult->dataListSet[0]->namaFile, '.txt')){
                     $namaFile = $arrResult->dataListSet[0]->namaFile . '.txt';
@@ -4597,39 +4596,51 @@ public function dataDetailReportFormatPY(Request $request)
             }else if($request->source_bank == 'BOT'){
                 return Excel::download(new CSVTransferBankBOTExport($arrResult->dataListSet[0]->transferBank), $arrResult->dataListSet[0]->namaFile);
             }else if(str_contains($request->source_bank, 'BTPN')){
-                $array = explode("\r\n", $arrResult->dataListSet[0]->transferBank);
-                foreach($array as $key => $value){
-                    $arrayTwo = explode(",", $value);
-                    if(count($arrayTwo) > 1){
-                        $array[$key] = $arrayTwo;
+                if($request->output_file == 'txt'){
+                    $fullPath = storage_path('app/');
+                    array_map('unlink', glob( "$fullPath*.txt"));
+                    $namaFile = $arrResult->dataListSet[0]->namaFile;
+                    if(!str_contains($arrResult->dataListSet[0]->namaFile, '.txt')){
+                        $namaFile = $arrResult->dataListSet[0]->namaFile . '.txt';
                     }
+                    Storage::put($namaFile, $arrResult->dataListSet[0]->transferBank);
+
+                    return Storage::download($namaFile);
+                }else if($request->output_file == 'csv'){
+                    $array = explode("\r\n", $arrResult->dataListSet[0]->transferBank);
+                    foreach($array as $key => $value){
+                        $arrayTwo = explode(",", $value);
+                        if(count($arrayTwo) > 1){
+                            $array[$key] = $arrayTwo;
+                        }
+                    }
+    
+                    $array = array_filter($array, function($value) {
+                        return !empty($value);
+                    });
+    
+                    $csvHeader = $array[0];
+    
+                    $tempFile = fopen('php://temp', 'w+');
+    
+                    foreach ($array as $row) {
+                        $row = array_pad($row, count($csvHeader), '');
+    
+                        fputcsv($tempFile, $row);
+                    }
+    
+                    rewind($tempFile);
+                    $csvContent = str_replace('"', '', stream_get_contents($tempFile));
+                    
+                    fclose($tempFile);
+    
+                    return Response::make($csvContent, 200, [
+                        'Content-Type' => 'text/csv',
+                        'Content-Disposition' => 'attachment; filename="' . $arrResult->dataListSet[0]->namaFile . '"',
+                    ]);
+
+                    // return Excel::download(new CSVTransferBankBTPNExport($arrResult->dataListSet[0]->transferBank), $arrResult->dataListSet[0]->namaFile);
                 }
-
-                $array = array_filter($array, function($value) {
-                    return !empty($value);
-                });
-
-                $csvHeader = $array[0];
-
-                $tempFile = fopen('php://temp', 'w+');
-
-                foreach ($array as $row) {
-                    $row = array_pad($row, count($csvHeader), '');
-
-                    fputcsv($tempFile, $row);
-                }
-
-                rewind($tempFile);
-                $csvContent = str_replace('"', '', stream_get_contents($tempFile));
-                
-                fclose($tempFile);
-
-                return Response::make($csvContent, 200, [
-                    'Content-Type' => 'text/csv',
-                    'Content-Disposition' => 'attachment; filename="' . $arrResult->dataListSet[0]->namaFile . '"',
-                ]);
-
-                // return Excel::download(new CSVTransferBankBTPNExport($arrResult->dataListSet[0]->transferBank), $arrResult->dataListSet[0]->namaFile);
             }else if($request->source_bank == 'BANK INA' || $request->source_bank == 'BANK INA MULTI ACCOUNT'){
                 return Excel::download(new CSVTransferBankINAExport($arrResult->dataListSet[0]->transferBank), $arrResult->dataListSet[0]->namaFile);
             }else if($request->source_bank == 'BNI'){
