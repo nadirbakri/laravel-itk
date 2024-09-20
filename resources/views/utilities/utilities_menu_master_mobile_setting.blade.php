@@ -797,7 +797,34 @@
         });
 
         $('#btn-delete').on('click', function(e){
-            table.rows('.selected').remove().draw(false);
+            var selectedRows = table.rows('.selected').data();
+            openRows = [];
+
+            // Loop melalui setiap baris yang dipilih
+            selectedRows.each(function (rowData) {
+                // Cari indeks dari item yang akan dihapus di arrayMenu berdasarkan menuID atau atribut unik lain
+                var indexToDelete = arrayMenu.findIndex(menu => menu.menuID === rowData.menuID);
+                
+                // Jika item ditemukan di arrayMenu, hapus menggunakan splice
+                if (indexToDelete !== -1) {
+                    arrayMenu.splice(indexToDelete, 1);
+                }
+            });
+
+            // Hapus baris yang dipilih dari DataTable
+            // table.rows('.selected').remove().draw(false);
+
+            $('#menu_master_mobile_setting_table').DataTable().destroy();
+            load_table_menu_master_mobile_setting();
+
+             // Buka kembali row yang terbuka berdasarkan ID yang disimpan
+             table.rows().every(function () {
+                var row = this;
+                if (openRows.includes(row.data().menuID)) {
+                    row.child(format(row.data())).show();
+                    $(row.node()).find('td.dt-control i').removeClass('fa-plus').addClass('fa-minus');
+                }
+            });
         });
 
         $('#notification_success').on('hide.bs.modal', function () {
