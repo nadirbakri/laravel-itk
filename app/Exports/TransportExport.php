@@ -46,6 +46,7 @@ class TransportExport implements FromView, ShouldAutoSize
                 'sessionUserID' => Session::get('userID'),
                 'type' =>  $this->reimbursementType,
                 'businessUnit'=> $this->businessUnit,
+                'userID' => Session::get('userID'),
             ];
 
             $response = $client->post(env('API_URL') . '/mobile/Transport/getTransportDetailListAll',

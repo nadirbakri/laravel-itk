@@ -82,6 +82,7 @@ class EmployeeReportByStatusExport implements FromView, ShouldAutoSize
                     'periodTo' => $this->periodTo,
                     'languageID' => App::getLocale(), 
                     'sessionID' => 0, 
+                    'userID' => Session::get('userID'),
                     'sessionUserID' => Session::get('userID'),
                     'includeResign' => $this->includeResign
                     ]

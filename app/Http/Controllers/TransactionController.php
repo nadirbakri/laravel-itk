@@ -136,6 +136,7 @@ class TransactionController extends Controller
     //                     'directSuperiorID'=> $request->directSuperiorID,
     //                     'companyCode' => Session::get('companyCode'), 
     //                     'languageCode' => App::getLocale(), 
+    //                     'userID' => Session::get('userID'),
     //                     'sessionID' => 0, 
     //                     'sessionUserID' => Session::get('userID'),
     //                 ]
@@ -183,6 +184,7 @@ class TransactionController extends Controller
                         'exportMenu' => false,
                         'companyCode' => Session::get('companyCode'), 
                         'languageCode' => strtoupper(App::getLocale()), 
+                        'userID' => Session::get('userID'),
                         'sessionID' => 0, 
                         'sessionUserID' => Session::get('userID'),
                     ]
@@ -238,6 +240,7 @@ class TransactionController extends Controller
                             // 'exportMenu' => false,
                             'companyCode' => Session::get('companyCode'), 
                             'languageCode' => strtoupper(App::getLocale()), 
+                            'userID' => Session::get('userID'),
                             'sessionID' => 0, 
                             'sessionUserID' => Session::get('userID')
                         ]
@@ -288,6 +291,7 @@ class TransactionController extends Controller
                             // 'exportMenu' => false,
                             'companyCode' => Session::get('companyCode'), 
                             'languageCode' => strtoupper(App::getLocale()), 
+                            'userID' => Session::get('userID'),
                             'sessionID' => 0, 
                             'sessionUserID' => Session::get('userID'),
                         ]
@@ -339,6 +343,7 @@ class TransactionController extends Controller
                             'exportMenu' => false,
                             'companyCode' => Session::get('companyCode'), 
                             'languageCode' => strtoupper(App::getLocale()), 
+                            'userID' => Session::get('userID'),
                             'sessionID' => 0, 
                             'sessionUserID' => Session::get('userID'),
                         ]
@@ -437,6 +442,7 @@ class TransactionController extends Controller
                             'languageCode' => strtoupper(App::getLocale()), 
                             'employeeNo'=> $request->employeeNo,
                             'status' => $request->status,
+                            'userID' => Session::get('userID'),
                             'sessionID' => 0, 
                             'sessionUserID' => Session::get('userID'),
                         ]
@@ -481,6 +487,7 @@ class TransactionController extends Controller
                             'status' => $request->status,
                             'companyCode' => Session::get('companyCode'), 
                             'languageCode' => strtoupper(App::getLocale()), 
+                            'userID' => Session::get('userID'),
                             'sessionID' => 0, 
                             'sessionUserID' => Session::get('userID'),
                         ]
@@ -576,6 +583,7 @@ class TransactionController extends Controller
                         'exportMenu' => false,
                         'companyCode' => Session::get('companyCode'), 
                         'languageCode' => strtoupper(App::getLocale()), 
+                        'userID' => Session::get('userID'),
                         'sessionID' => 0, 
                         'sessionUserID' => Session::get('userID')
                     ]
@@ -759,6 +767,7 @@ class TransactionController extends Controller
                         'status' => ($request->status == 'ALL') ? null : $request->status,
                         'companyCode' => Session::get('companyCode'), 
                         'languageCode' => strtoupper(App::getLocale()), 
+                        'userID' => Session::get('userID'),
                         'sessionID' => 0, 
                         'sessionUserID' => Session::get('userID'),
                     ]
@@ -1352,6 +1361,7 @@ class TransactionController extends Controller
                         'languageCode' => strtoupper(App::getLocale()), 
                         'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
                         'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
+                        'userID' => Session::get('userID'),
                         'sessionID' => 0, 
                         'sessionUserID' => Session::get('userID')
                     ]

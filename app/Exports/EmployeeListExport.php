@@ -39,6 +39,7 @@ class EmployeeListExport implements FromView, ShouldAutoSize
             $param = [ 
                 'companyCode' => Session::get('companyCode'), 
                 'languageID' => App::getLocale(), 
+                'userID' => Session::get('userID'),
                 'sessionID' => 0, 
                 'sessionUserID' => Session::get('userID'),
                 'includeResign' => $this->includeResign

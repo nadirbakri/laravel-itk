@@ -40,7 +40,8 @@ class BusinessTripExportPDF implements FromView, ShouldAutoSize
                 'exportMenu' => true,
                 'type' => 'REQUEST',
                 'businessUnit' =>$this->businessUnit,
-                'sessionUserID' => Session::get('userID')
+                'sessionUserID' => Session::get('userID'),
+                'userID' => Session::get('userID'),
             ];
 
             // if(!empty($this->permitDateFrom) || !empty($this->permitDateTo)){

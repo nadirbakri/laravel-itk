@@ -221,7 +221,8 @@ class ExportController extends Controller
                 'exportMenu' => true,
                 'type' => 'REQUEST',
                 'businessUnit' =>$request->business_unit,
-                'sessionUserID' => Session::get('userID')
+                'sessionUserID' => Session::get('userID'),
+                'userID' => Session::get('userID'),
             ];
 
             $response = $client->post(env('API_URL') . '/mobile/BusinessTrip/getBusinessTripAndSettlement',
@@ -266,7 +267,8 @@ class ExportController extends Controller
                 'exportMenu' => true,
                 'type' => 'SETTLEMENT',
                 'businessUnit' =>$request->business_unit,
-                'sessionUserID' => Session::get('userID')
+                'sessionUserID' => Session::get('userID'),
+                'userID' => Session::get('userID'),
             ];
 
             $response = $client->post(env('API_URL') . '/mobile/BusinessTrip/getBusinessTripAndSettlement',

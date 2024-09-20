@@ -42,6 +42,7 @@ class WorkflowLeaveExport implements FromView, ShouldAutoSize
                 'status' => $this->status,
                 'companyCode' => Session::get('companyCode'), 
                 'languageCode' => App::getLocale(), 
+                'userID' => Session::get('userID'),
                 'sessionID' => 0, 
                 'sessionUserID' => Session::get('userID')
             ];

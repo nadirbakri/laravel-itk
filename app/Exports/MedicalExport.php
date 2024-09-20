@@ -42,12 +42,10 @@ class MedicalExport implements FromView, ShouldAutoSize
                 'status'=> $this->status,
                 'companyCode' => Session::get('companyCode'), 
                 'languageCode' => App::getLocale(), 
+                'userID' => Session::get('userID'),
                 'sessionID' => 0, 
                 'sessionUserID' => Session::get('userID'),
             ];
-
-
-            // dd(json_encode($param));
 
             $response = $client->post(env('API_URL') . '/mobile/reimbursementmedical/getreimbursementdetaillistall',
                 ['body' => json_encode($param)]

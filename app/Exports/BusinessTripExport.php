@@ -41,6 +41,7 @@ class BusinessTripExport implements FromView, ShouldAutoSize
                 'businessUnit' =>$this->businessUnit,
                 'companyCode' => Session::get('companyCode'), 
                 'languageCode' => App::getLocale(), 
+                'userID' => Session::get('userID'),
                 'sessionID' => 0, 
                 'sessionUserID' => Session::get('userID')
             ];

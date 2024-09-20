@@ -42,7 +42,8 @@ class BusinessTripSeattleExport implements FromView, ShouldAutoSize
                 'status' => $this->status,
                 'type' => 'SETTLEMENT',
                 'businessUnit' =>$this->businessUnit,
-                'sessionUserID' => Session::get('userID')
+                'sessionUserID' => Session::get('userID'),
+                'userID' => Session::get('userID'),
             ];
 
             // if(!empty($this->permitDateFrom) || !empty($this->permitDateTo)){
