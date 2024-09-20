@@ -1263,7 +1263,7 @@ class TransactionController extends Controller
                 $param['employeeList'] = [];
             }
 
-            dd(json_encode($param));
+            // dd(json_encode($param));
 
             $response = $client->post(env('API_URL') . '/mobile/TmLeave/MassLeave',
                 ['body' => json_encode($param)]
