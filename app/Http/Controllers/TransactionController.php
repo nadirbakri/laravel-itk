@@ -351,6 +351,7 @@ class TransactionController extends Controller
                 );
             } catch (RequestException $e) {
                 $response = $e->getResponse();
+                // dd($response);
                 if($response->getStatusCode() == 401){
                     return view('error.login');
                 }else if($response->getStatusCode() == 404){

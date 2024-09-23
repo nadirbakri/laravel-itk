@@ -17,6 +17,7 @@ use App\Exports\BusinessTripSeattleExport;
 use App\Exports\BusinessTripExportPDF;
 // use App\Exports\ BusinessTripSeattleExportPDF;
 use App\Exports\BusinessTripSeattleExportPDF;
+use App\Exports\MultipleCheckinExport;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
@@ -111,6 +112,10 @@ class ExportController extends Controller
     
     public function pageExportBusinessTripChecking(){
         return view('export.exp_export_business_trip_checking');
+    }
+
+    public function pageExportMultipleCheckin(){
+        return view('export.exp_export_multiple_checkin');
     }
 
     public function printExportWorkflow(Request $request)
@@ -333,6 +338,12 @@ class ExportController extends Controller
         }
 
         return Excel::download(new AttendanceExport($request->claim_date_from, $request->claim_date_to, $request->business_unit, $request->employee_status, $dataLevel), 'Employee List Attendance Report.xlsx');
+    
+    }
+
+    public function printMultipleCheckinExport(Request $request)
+    {
+        return Excel::download(new MultipleCheckinExport($request->claim_date_from, $request->claim_date_to, $request->business_unit), 'Employee List Multiple Checkin Report.xlsx');
     
     }
 }

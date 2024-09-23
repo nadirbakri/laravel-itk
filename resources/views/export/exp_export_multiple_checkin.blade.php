@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{{ __('export_attendance.judul') }}</title>
+    <title>{{ __('export_multiple_checkin.judul') }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -107,24 +107,24 @@
 
 <body>
     <div class="div-form">
-        <form id="export_attendance_form" method="post">
+        <form id="export_multiple_checkin_form" method="post">
             @csrf
             <div class="div-export-attendance">
                 <div class="div-title">
                     <a href="{{ route('export', ['moduleID' => 'RPT']) }}" target="iframe_dashboard">
                         <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
-                        <span class="title-text">{{ __('export_attendance.list') }}</span>
+                        <span class="title-text">{{ __('export_multiple_checkin.list') }}</span>
                     </a>
                 </div>
 
                 <div class="row">
                     <div class="col-5">
                         <div class="form-group">
-                            <label for="claim_date_from form-check-label">{{ __('export_attendance.label_claim_date') }}</label>
+                            <label for="claim_date_from form-check-label">{{ __('export_multiple_checkin.label_claim_date') }}</label>
                         </div>
                         <div class="input-group">
                             <input type="text" class="form-control" id="claim_date_from" name="claim_date_from"
-                                placeholder="{{ __('export_attendance.label_claim_start') }}">
+                                placeholder="{{ __('export_multiple_checkin.label_claim_start') }}">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="claim_date_from_calendar"><span class="fa fa-calendar"></span></span>
                             </div>
@@ -133,11 +133,11 @@
                     </div>
                     <div class="col-5">
                         <div class="form-group">
-                            <label for="claim_date_to form-check-label">{{ __('export_attendance.label_to') }}</label>
+                            <label for="claim_date_to form-check-label">{{ __('export_multiple_checkin.label_to') }}</label>
                         </div>
                         <div class="input-group">
                             <input type="text" class="form-control" id="claim_date_to" name="claim_date_to"
-                                placeholder="{{ __('export_attendance.label_claim_end') }}">
+                                placeholder="{{ __('export_multiple_checkin.label_claim_end') }}">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="claim_date_to_calendar"><span class="fa fa-calendar"></span></span>
                             </div>
@@ -149,15 +149,9 @@
                 <div class="row">
                     <div class="col-5">
                         <div class="form-group">
-                            <label for="business_unit form-check-label">{{ __('export_attendance.label_business_unit') }}</label>
+                            <label for="business_unit form-check-label">{{ __('export_multiple_checkin.label_business_unit') }}</label>
                         </div>
                         <select class="form-control select2" id="business_unit" name="business_unit"></select>
-                    </div>
-                    <div class="col-5">
-                        <div class="form-group">
-                            <label for="employee_status form-check-label">{{ __('export_attendance.employee_status') }}</label>
-                        </div>
-                        <select class="form-control select2" id="employee_status" name="employee_status"></select>
                     </div>
                 </div>
 
@@ -165,7 +159,7 @@
                 <div class="row">
                     <div class="col-3">
                         <button type="button" class="btn btn-primary" name="btn-preview" id="btn-preview" value="preview" style="width: 100%;">
-                            <i class="fa fa-download"></i> {{ __('export_attendance.btn_export') }}
+                            <i class="fa fa-download"></i> {{ __('export_multiple_checkin.btn_export') }}
                         </button>
                     </div>
                 </div>
@@ -198,7 +192,7 @@
                 <div class="modal-body">
                     <div class="div-title-notification">
                         <img src="{{ url('/pictures/checklist-green-confirm-password.svg') }}" alt="Password">
-                        <span class="title-text-notification">{{ __('export_attendance.alert_success') }}</span>
+                        <span class="title-text-notification">{{ __('export_multiple_checkin.alert_success') }}</span>
                     </div>
                     <div class="div-title-notification">
                         <span id="message-notification-success"></span>
@@ -269,8 +263,6 @@
 <script type="text/javascript">
 loadDataBusinessUnit();
 loadDataFirstLastAllBusinessUnit();
-loadDataEmployeeStatus();
-loadDataFirstLastAllEmployeeStatus();
 
     // $.get("{{ url('level/api') }}", function (data) {
     //         $.each(data, function (k, v) {
@@ -384,11 +376,11 @@ loadDataFirstLastAllEmployeeStatus();
             $(this).html(
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
-            $("#export_attendance_form").submit();
+            $("#export_multiple_checkin_form").submit();
         });
 
-        if ($("#export_attendance_form").length > 0) {
-            $("#export_attendance_form").validate({
+        if ($("#export_multiple_checkin_form").length > 0) {
+            $("#export_multiple_checkin_form").validate({
                 submitHandler: function (form) {
                     $.ajaxSetup({
                         headers: {
@@ -399,13 +391,13 @@ loadDataFirstLastAllEmployeeStatus();
                         xhrFields: {
                             responseType: 'blob',
                         },
-                        url: "{{ url('/export_attendance/print') }}",
+                        url: "{{ url('/export_multiple_checkin/print') }}",
                         type: "POST",
-                        data: $('#export_attendance_form').serialize(),
+                        data: $('#export_multiple_checkin_form').serialize(),
                         success: function (result, status, xhr) {
                             $("#btn-preview").prop("disabled", false);
                             $("#btn-preview").html(
-                                '<i class="fa fa-download"></i> {{ __("export_attendance.btn_export") }}'
+                                '<i class="fa fa-download"></i> {{ __("export_multiple_checkin.btn_export") }}'
                             );
                             var disposition = xhr.getResponseHeader(
                                 'content-disposition');
@@ -429,7 +421,7 @@ loadDataFirstLastAllEmployeeStatus();
                         error: function (response) {
                             $("#btn-preview").prop("disabled", false);
                             $("#btn-preview").html(
-                                '<i class="fa fa-download"></i> {{ __("export_attendance.btn_export") }}'
+                                '<i class="fa fa-download"></i> {{ __("export_multiple_checkin.btn_export") }}'
                             );
                             $('#notification_error').modal('show');
                             $('#message-notification-error').html(response);
@@ -437,81 +429,6 @@ loadDataFirstLastAllEmployeeStatus();
                     });
                 }
             })
-        }
-
-        function loadDataEmployeeStatus(){
-            function formatSelect(data) {
-                if (data.loading) {
-                    return $search
-                }
-
-                if (data.id) {
-                    var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.value + '<div>' +
-                        '</div>');
-
-                    return $result2;
-                }
-            }
-
-            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
-            
-            $('#employee_status').select2({
-                width: '100%',
-                placeholder: 'Choose Employee Status',
-                allowClear: true,
-                // multiple: true,
-                // tags: true,
-                closeOnSelect: true,
-                language: {
-                    errorLoading: function () {
-                        return $search;
-                    },
-                    searching: function () {
-                        return $search;
-                    }
-                },
-                ajax: {
-                    url: "{{ url('/employee/status/all/api') }}",
-                    dataType: 'json',
-                    delay: 250,
-                    type: "GET",
-                    data: function (params) {
-                        return {
-                            _token: $('meta[name="csrf-token"]').attr('content'),
-                            search: params.term
-                        };
-                    },
-                    processResults: function (data) {
-                        return {
-                            results: $.map(data, function (item) {
-                                return {
-                                    text: item.value,
-                                    id: item.comGenCode,
-                                    data: item
-                                }
-                            })
-                        };
-                    },
-                    cache: true,
-                },
-                templateResult: formatSelect
-            });
-        }
-
-        function loadDataFirstLastAllEmployeeStatus() {
-            $('#employee_status').addClass('spinner-border');
-
-            $.ajax({
-                type: 'GET',
-                url: "{{ url('/employee/status/all/api') }}",
-            }).then(function (data) {
-                if (!$('#employee_status').find('option:contains(' + data[0].value + ')').length) {
-                    $('#employee_status').append($('<option>').val(data[0].comGenCode).text(data[0].value));
-                }
-                $('#employee_status').val(data[0].comGenCode);
-                $('#employee_status').removeClass('loading');
-            });
         }
 </script>
 
