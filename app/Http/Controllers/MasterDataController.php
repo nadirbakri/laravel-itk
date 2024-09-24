@@ -172,7 +172,8 @@ class MasterDataController extends Controller
                 ['body' => json_encode(
                     [
                         'recordStatus' => 'A',
-                        'companyCode' => Session::get('companyCode')
+                        'companyCode' => Session::get('companyCode'),
+                        'userID' => Session::get('userID'),
                     ]
                 )]
             );

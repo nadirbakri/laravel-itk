@@ -2021,7 +2021,8 @@ class DataController extends Controller
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
-	    				'companyCode' => Session::get('companyCode')
+	    				'companyCode' => Session::get('companyCode'),
+						'userID' => Session::get('userID'),
 	    			]
 	    		)]
 	    	);
@@ -2075,7 +2076,8 @@ class DataController extends Controller
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
-	    				'companyCode' => Session::get('companyCode')
+	    				'companyCode' => Session::get('companyCode'),
+						'userID' => Session::get('userID'),
 	    			]
 	    		)]
 	    	);
@@ -2242,7 +2244,8 @@ class DataController extends Controller
 	    			[
 	    				'recordStatus' => 'A',
 	    				'companyCode' => Session::get('companyCode'),
-	    				'employeeNo' => $request->employeeNo
+	    				'employeeNo' => $request->employeeNo,
+						'userID' => Session::get('userID'),
 	    			]
 	    		)]
 	    	);
@@ -3249,7 +3252,8 @@ class DataController extends Controller
 	    			[
 	    				'recordStatus' => 'A',
 	    				'companyCode' => Session::get('companyCode'),
-	    				'positionCode' => $request->positionCode
+	    				'positionCode' => $request->positionCode,
+						'userID' => Session::get('userID'),
 	    			]
 	    		)]
 	    	);
@@ -3304,7 +3308,8 @@ class DataController extends Controller
 	    			[
 	    				'recordStatus' => 'A',
 	    				'companyCode' => Session::get('companyCode'),
-	    				'supervisorPositionCode' => $request->supervisorPositionCode
+	    				'supervisorPositionCode' => $request->supervisorPositionCode,
+						'userID' => Session::get('userID'),
 	    			]
 	    		)]
 	    	);
@@ -4494,7 +4499,8 @@ class DataController extends Controller
 	    		['body' => json_encode(
 	    			[
 	    				'recordStatus' => 'A',
-	    				'companyCode' => Session::get('companyCode')
+	    				'companyCode' => Session::get('companyCode'),
+						'userID' => Session::get('userID'),
 	    			]
 	    		)]
 	    	);

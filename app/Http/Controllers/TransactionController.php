@@ -836,6 +836,7 @@ class TransactionController extends Controller
                         // 'businessUnit'=> $request->businessUnit,
                         'companyCode' => Session::get('companyCode'), 
                         'languageCode' => strtoupper(App::getLocale()), 
+                        'userID' => Session::get('userID'),
                         'sessionID' => 0, 
                         'sessionUserID' => Session::get('userID'),
                     ]
