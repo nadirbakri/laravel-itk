@@ -244,7 +244,7 @@
                                             </button>
                                         </div>
                                         <div class="col-6">
-                                            <a class="btn btn-outline-primary btn-sm" href="{{ url('/payroll') }}" target="iframe_dashboard"
+                                            <a class="btn btn-outline-primary btn-sm" href="{{ route('payroll', ['moduleID' => 'PY']) }}" target="iframe_dashboard"
                                                 name="btn-cancel" id="btn-cancel" style="width: 100%;">
                                                 <i class="fa fa-times-circle"></i> {{ __('payroll_cbi_report.btn_cancel') }}
                                             </a>

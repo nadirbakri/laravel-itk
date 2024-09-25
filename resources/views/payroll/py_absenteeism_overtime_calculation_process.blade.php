@@ -193,7 +193,7 @@
                         </button>
                     </div>
                     <div class="col-3">
-                        <a class="btn btn-outline-primary" href="{{ url('/payroll') }}" target="iframe_dashboard"
+                        <a class="btn btn-outline-primary" href="{{ route('payroll', ['moduleID' => 'PY']) }}" target="iframe_dashboard"
                             name="btn-cancel" id="btn-cancel" style="width: 100%;">
                             <i class="fa fa-times-circle"></i> {{ __('payroll_absenteeism_overtime_calculation_process.btn_cancel') }}
                         </a>
