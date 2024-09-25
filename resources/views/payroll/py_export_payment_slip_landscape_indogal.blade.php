@@ -72,25 +72,23 @@
 			<td width="18%">Payroll cut off</td>
 			<td width="2%" style="text-align:center;">:</td>
 			<td width="34%">{{ $value->payrollCutOff }}</td>
-			<td width="18%">Grade</td>
-			<td width="2%" style="text-align:center;">:</td>
-			<td width="33%">{{ $value->grade }}</td>
-		</tr>
-		<tr>
-			<td width="18%">ID / Name</td>
-			<td width="2%" style="text-align:center;">:</td>
-			<td width="34%">{{ $value->employeeNo }} / {{ $value->employeeName }}</td>
 			<td width="18%">Bank Account No.</td>
 			<td width="2%" style="text-align:center;">:</td>
 			<td width="33%">{{ $value->noRekening }}</td>
 		</tr>
 		<tr>
+			<td width="18%">ID / Name</td>
+			<td width="2%" style="text-align:center;">:</td>
+			<td width="34%">{{ $value->employeeNo }} / {{ $value->employeeName }}</td>
+			<td width="18%">Email</td>
+			<td width="2%" style="text-align:center;">:</td>
+			<td width="33%">{{ $value->email }}</td>
+		</tr>
+		<tr>
 			<td width="18%">Job position</td>
 			<td width="2%" style="text-align:center;">:</td>
 			<td width="34%">{{ $value->jabatan }}</td>
-            <td width="18%">Email</td>
-			<td width="2%" style="text-align:center;">:</td>
-			<td width="33%">{{ $value->email }}</td>
+            <td colspan="3" width="54%">&nbsp;</td>
 		</tr>
 		<tr>
 			<td width="18%">Divisi</td>
