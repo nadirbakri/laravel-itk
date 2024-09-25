@@ -133,7 +133,7 @@
                         <div class="form-group">
                             <label for="info_url">{{ __('utilities_master_banner.label_info_url') }}</label>
                             <input type="text" class="form-control" id="info_url" name="info_url"
-                                placeholder="{{ __('utilities_master_banner.label_info_url') }}" readonly>
+                                placeholder="{{ __('utilities_master_banner.label_info_url') }}">
                         </div>
                     </div>
                 </div>
@@ -246,17 +246,17 @@
             existingBase64 = null; 
             $('#imagePreview').empty();
             $('#check_url').prop('checked', false);
-            $('#info_url').prop('readonly', true);
+            // $('#info_url').prop('readonly', true);
         } else if (func == 'edit') {
             $('#record_function').val("Edit");
             $('#banner_id').val(((typeof arrData[0].bannerID !== 'undefined') ? arrData[0].bannerID : ''));
             $('#info_url').val(htmlDecode(((typeof arrData[0].infoURL !== 'undefined') ? arrData[0].infoURL : ''))); 
             if (typeof arrData[0].isURL !== 'undefined' && arrData[0].isURL === true) {
                 $('#check_url').prop('checked', true);
-                $('#info_url').prop('readonly', false);
+                // $('#info_url').prop('readonly', false);
             }else{
                 $('#check_url').prop('checked', false);
-                $('#info_url').prop('readonly', true);
+                // $('#info_url').prop('readonly', true);
             }
             existingBase64 = ((typeof arrData[0].imageBanner !== 'undefined') ? arrData[0].imageBanner : ''); 
             setExistingPreview(existingBase64);
@@ -266,13 +266,13 @@
             return $("<textarea/>").html(value).text();
         }
 
-        $('#check_url').on('change', function() {
-            if (this.checked) {
-                $('#info_url').prop('readonly', false);
-            }else{
-                $('#info_url').prop('readonly', true);
-            }
-        });
+        // $('#check_url').on('change', function() {
+        //     if (this.checked) {
+        //         $('#info_url').prop('readonly', false);
+        //     }else{
+        //         $('#info_url').prop('readonly', true);
+        //     }
+        // });
 
         $('#fileInput').on('change', function(event) {
             const file = event.target.files[0];
