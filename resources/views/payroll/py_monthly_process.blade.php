@@ -612,7 +612,7 @@
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
         var arrData = @json($data);
-        var arrData2 = @json($data2);
+        var arrData2 = @json($data);
         var arrayMinutesRounded = [];
 
         if (arrData2) {

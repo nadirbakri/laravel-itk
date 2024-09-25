@@ -31,6 +31,7 @@ use App\Exports\ExcelTransferBankCIMBExport;
 use App\Exports\EBupotPeriodicalTemplateExport;
 use App\Exports\EBupotA1TemplateExport;
 use App\Exports\PensionFundReportExport;
+use App\Exports\CBIReportExport;
 use App\Http\Controllers\Redirect;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Contracts\Encryption\DecryptException;
@@ -602,6 +603,48 @@ class PayrollController extends Controller
 
         return view ('payroll.py_pension_fund_report', ['data' => $data]);
     }
+
+    public function pageCBIReport(){
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/mobile/ReferenceTM/getReferenceTM',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        // var_dump($arrResult->dataListSet);
+
+        if($arrResult->dataListSet == null){
+            $data = [];
+        }else{
+            $data = $arrResult->dataListSet;
+        }
+
+        return view ('payroll.py_cbi_report', ['data' => $data]);
+    }
      
     public function pageSalaryCalculationProcess()
     {
@@ -726,7 +769,7 @@ class PayrollController extends Controller
         return view ('payroll.py_absenteeism_overtime_calculation_process', ['data' => $data]);
     }
 
-    public function pageMonthlyProses()
+    public function pageMonthlyProcess()
     {
         try {
             $client = new Client([
@@ -736,17 +779,6 @@ class PayrollController extends Controller
             ]);
 
             $response = $client->post(env('API_URL') . '/mobile/ReferenceTM/getReferenceTM',
-                ['body' => json_encode(
-                    [
-                        'companyCode' => Session::get('companyCode'),
-                        'userID' => Session::get('userID'),
-                        'logActionUserID' => Session::get('userID'),
-                        'logActionUsername' => Session::get('userName')
-                    ]
-                )]
-            );
-
-            $response2 = $client->post(env('API_URL') . '/mobile/ReferenceTM/getReferenceTM',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -768,21 +800,14 @@ class PayrollController extends Controller
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
-        $arrResult2 = json_decode($response2->getBody()->getContents()); 
-
+        
         if($arrResult->dataListSet == null){
             $data = [];
         }else{
             $data = $arrResult->dataListSet;
         }
 
-        if($arrResult2->dataListSet == null){
-            $data2 = [];
-        }else{
-            $data2 = $arrResult2->dataListSet;
-        }
-
-        return view ('payroll.py_monthly_process', ['data' => $data, 'data2' => $data2]);
+        return view ('payroll.py_monthly_process', ['data' => $data]);
     }
 
     public function pageDUMTK() 
@@ -8817,6 +8842,22 @@ public function dataDetailReportFormatPY(Request $request)
             $request->pengurangan_iuran, 
             $request->materai), 
             'Pension Fund Report.xlsx'
+        );
+    }
+
+    public function printCBIReportPayrollExcel(Request $request){
+        if($request->report_type == 'MEDICAL_REIMBURSEMENT_LIMIT'){
+            $filename = 'Medical Reimbursement Limit.xlsx';
+        }else if($request->report_type == 'UNUSED_LEAVE'){
+            $filename = 'Unused Leave.xlsx';
+        }else{
+            $filename = 'CBI Report.xlsx';
+        }
+        
+        return Excel::download(new CBIReportExport(
+            $request->period,
+            $request->report_type), 
+            $filename
         );
     }
 

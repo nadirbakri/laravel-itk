@@ -587,6 +587,7 @@ Route::get('payroll/journal_process', 'PayrollController@pageJournalProcess');
 Route::get('payroll/salary_calculation_process', 'PayrollController@pageSalaryCalculationProcess');
 Route::get('payroll/tax_calculation_process', 'PayrollController@pageTaxCalculationProcess');
 Route::get('payroll/absenteeism_overtime_calculation_process', 'PayrollController@pageAbsenteeismOvertimeCalculationProcess');
+Route::get('payroll/monthly_process', 'PayrollController@pageMonthlyProcess');
 Route::get('payroll/absenteeism_calculation_process', 'PayrollController@pageAbsenteeismCalculationProcess');
 Route::get('payroll/transfer_data_to_bank/export_to_file', 'PayrollController@pageTransferDataToBankExportToFile');
 Route::get('payroll/transfer_data_to_bank/api', 'PayrollController@pageTransferDataToBankApi');
@@ -611,6 +612,7 @@ Route::get('payroll/retroactive_report', 'PayrollController@pageRetroactiveRepor
 Route::get('payroll/export_data_kepesertaan_bpjs_tk_report', 'PayrollController@pageExportDataKepesertaanBPJSTKReport');
 Route::get('payroll/export_sipp_online', 'PayrollController@pageExportSIPPOnline');
 Route::get('payroll/pension_fund_report', 'PayrollController@pagePensionFundReport');
+Route::get('payroll/cbi_report', 'PayrollController@pageCBIReport');
 
 /* Route untuk tabel Payroll */
 Route::get('payroll/account/table', 'PayrollController@tableAccountPY');
@@ -762,6 +764,7 @@ Route::post('payroll/spt_pph_report/print/excel', 'PayrollController@printSPTPPH
 Route::post('payroll/monthly_jamsostek_report/print', 'PayrollController@printMonthlyJamsostekReportPayroll');
 Route::post('payroll/monthly_jamsostek_report/print/excel', 'PayrollController@printMonthlyJamsostekReportPayrollExcel');
 Route::post('payroll/pension_fund_report/print/excel', 'PayrollController@printPensionFundReportPayrollExcel');
+Route::post('payroll/cbi_report/print/excel', 'PayrollController@printCBIReportPayrollExcel');
 
 /* Route Untuk Menu Medical */
 Route::get('medical', 'MedicalController@pageMedical')->name('medical');
