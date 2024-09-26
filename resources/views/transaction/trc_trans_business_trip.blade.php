@@ -343,6 +343,14 @@
                             @csrf
                             <div class="row detailstatus">
                                 <div class="col-3">
+                                    <h5>{{ __('trans_business_trip.status') }}</h5>
+                                </div>
+                                <div class="col-9">
+                                <input id="status" name="status" type="hidden" class="form-control"><span id="status_val"></span>
+                                </div>
+                            </div>
+                            <div class="row detailstatus">
+                                <div class="col-3">
                                     <h5>{{ __('trans_business_trip.label_claim_date_start') }}</h5>
                                 </div>
                                 <div class="col">
@@ -365,10 +373,10 @@
                                     <input id="directsuperior" name="directsuperior" type="hidden" class="form-control">
                                 </div>
                                 <div class="col-3">
-                                    <h5>{{ __('trans_business_trip.status') }}</h5>
+                                    <h5>{{ __('trans_business_trip.treq') }}</h5>
                                 </div>
                                 <div class="col">
-                                <input id="status" name="status" type="hidden" class="form-control"><span id="status_val"></span>
+                                    <input id="c_type" name="c_type" type="hidden" class="form-control"><span id="c_type_val"></span>
                                 </div>
                             </div>
 
@@ -380,10 +388,10 @@
                                     <input id="b_unit" name="b_unit" type="hidden" class="form-control"><span id="b_unit_val"></span>
                                 </div>
                                 <div class="col-3">
-                                    <h5>{{ __('trans_business_trip.treq') }}</h5>
+                                    <h5>{{ __('trans_business_trip.label_reimbursement_type') }}</h5>
                                 </div>
                                 <div class="col">
-                                    <input id="c_type" name="c_type" type="hidden" class="form-control"><span id="c_type_val"></span>
+                                    <input id="type" name="type" type="hidden" class="form-control"><span id="type_val"></span>
                                 </div>
                             </div>
 
@@ -394,61 +402,57 @@
                                 <div class="col">
                                     <input id="employee_no" name="employee_no" type="hidden" class="form-control"><span id="employee_no_val"></span>
                                 </div>
-                                <div class="col-3">
-                                    <h5>{{ __('trans_business_trip.label_reimbursement_type') }}</h5>
-                                </div>
-                                <div class="col">
-                                    <input id="type" name="type" type="hidden" class="form-control"><span id="type_val"></span>
-                                </div>
                             </div>
                             <br>
-                            <div class="row approve">
-                                <div class="col-3">
-                                    <h5>{{ __('trans_business_trip.status') }}</h5>
+                            <div id="div-approve">
+                                <div class="row approve">
+                                    <div class="col-3">
+                                        <h5>{{ __('trans_business_trip.status') }}</h5>
+                                    </div>
+                                    <div class="col-5">
+                                            <select name="reimbursement_status" id="reimbursement_status" class="custom-select" required>
+                                                <!-- @if(Session::get('companyCode') == 'ITK' || Session::get('companyCode') == 'III')
+                                                <option value="NEW">{{ __('trans_business_trip.new') }}</option>
+                                                <option value="PARTIAL_APPROVED">{{ __('trans_business_trip.partial_approved') }}</option>
+                                                <option value="APPROVED">{{ __('trans_business_trip.approved') }}</option>
+                                                <option value="WAITING_PAYMENT">{{ __('trans_business_trip.waiting_payment') }}</option>
+                                                <option value="PAID">{{ __('trans_business_trip.paid') }}</option>
+                                                <option value="REJECTED">{{ __('trans_business_trip.rejected') }}</option>
+                                                <option value="CANCELLED">{{ __('trans_business_trip.cancelled') }}</option>
+                                                <option value="SETTLEMENT_REQUEST">{{ __('trans_business_trip.settlement_request') }}</option>
+                                                <option value="SETTLEMENT_APPROVED">{{ __('trans_business_trip.settlement_approved') }}</option>
+                                                <option value="SETTLEMENT_PARTIAL_APPROVED">{{ __('trans_business_trip.settlement_partial_approved') }}</option>
+                                                <option value="CHECKING_HRD">{{ __('trans_business_trip.checking_hrd') }}</option>
+                                                <option value="SETTLEMENT_WAITING_PAYMENT">{{ __('trans_business_trip.settlement_waiting_payment') }}</option>
+                                                <option value="WAITING_DEPOSITSLIP">{{ __('trans_business_trip.waiting_deposit_slip') }}</option>
+                                                <option value="SETTLEMENT_CHECKING">{{ __('trans_business_trip.settlement_checking') }}</option>
+                                                <option value="SETTLEMENT_REJECTED">{{ __('trans_business_trip.settlement_rejected') }}</option>
+                                                <option value="SETTLEMENT_CANCELLED">{{ __('trans_business_trip.settlement_cancelled') }}</option>
+                                                <option value="COMPLETED">{{ __('trans_business_trip.completed') }}</option>
+                                                <option value="COMPLETED_MANUAL">{{ __('trans_business_trip.completed_manual') }}</option>
+                                                @else
+                                                <option value="APPROVED">{{ __('trans_business_trip.approve') }}</option>
+                                                <option value="REJECTED">{{ __('trans_business_trip.reject') }}</option>
+                                                <option value="PAID">{{ __('trans_business_trip.paid') }}</option>
+                                                @endif -->
+                                            </select>
+                                    </div>
                                 </div>
-                                <div class="col-5">
-                                        <select name="reimbursement_status" id="reimbursement_status" class="custom-select" required>
-                                            <!-- @if(Session::get('companyCode') == 'ITK' || Session::get('companyCode') == 'III')
-                                            <option value="NEW">{{ __('trans_business_trip.new') }}</option>
-                                            <option value="PARTIAL_APPROVED">{{ __('trans_business_trip.partial_approved') }}</option>
-                                            <option value="APPROVED">{{ __('trans_business_trip.approved') }}</option>
-                                            <option value="WAITING_PAYMENT">{{ __('trans_business_trip.waiting_payment') }}</option>
-                                            <option value="PAID">{{ __('trans_business_trip.paid') }}</option>
-                                            <option value="REJECTED">{{ __('trans_business_trip.rejected') }}</option>
-                                            <option value="CANCELLED">{{ __('trans_business_trip.cancelled') }}</option>
-                                            <option value="SETTLEMENT_REQUEST">{{ __('trans_business_trip.settlement_request') }}</option>
-                                            <option value="SETTLEMENT_APPROVED">{{ __('trans_business_trip.settlement_approved') }}</option>
-                                            <option value="SETTLEMENT_PARTIAL_APPROVED">{{ __('trans_business_trip.settlement_partial_approved') }}</option>
-                                            <option value="CHECKING_HRD">{{ __('trans_business_trip.checking_hrd') }}</option>
-                                            <option value="SETTLEMENT_WAITING_PAYMENT">{{ __('trans_business_trip.settlement_waiting_payment') }}</option>
-                                            <option value="WAITING_DEPOSITSLIP">{{ __('trans_business_trip.waiting_deposit_slip') }}</option>
-                                            <option value="SETTLEMENT_CHECKING">{{ __('trans_business_trip.settlement_checking') }}</option>
-                                            <option value="SETTLEMENT_REJECTED">{{ __('trans_business_trip.settlement_rejected') }}</option>
-                                            <option value="SETTLEMENT_CANCELLED">{{ __('trans_business_trip.settlement_cancelled') }}</option>
-                                            <option value="COMPLETED">{{ __('trans_business_trip.completed') }}</option>
-                                            <option value="COMPLETED_MANUAL">{{ __('trans_business_trip.completed_manual') }}</option>
-                                            @else
-                                            <option value="APPROVED">{{ __('trans_business_trip.approve') }}</option>
-                                            <option value="REJECTED">{{ __('trans_business_trip.reject') }}</option>
-                                            <option value="PAID">{{ __('trans_business_trip.paid') }}</option>
-                                            @endif -->
-                                        </select>
+                                <div class="row approve" id="div-totalpaid">
+                                    <div class="col-3">
+                                        <h5>{{ __('trans_business_trip.tpaid') }}</h5>
+                                    </div>
+                                    <div class="col-5">
+                                        <input id="totalpaid" name="totalpaid"  type="number" class="form-control" required>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="row approve">
-                                <div class="col-3">
-                                    <h5>{{ __('trans_business_trip.tpaid') }}</h5>
-                                </div>
-                                <div class="col-5">
-                                    <input id="totalpaid" name="totalpaid"  type="number" class="form-control" required>
-                                </div>
-                            </div>
-                            <div class="row approve">
-                                <div class="col-3">
-                                    <h5>{{ __('trans_business_trip.approvalremarks') }}</h5>
-                                </div>
-                                <div class="col-5">
-                                    <input id="approvalremarks" name="approvalremarks"  type="text" class="form-control" required>
+                                <div class="row approve">
+                                    <div class="col-3">
+                                        <h5>{{ __('trans_business_trip.approvalremarks') }}</h5>
+                                    </div>
+                                    <div class="col-5">
+                                        <input id="approvalremarks" name="approvalremarks"  type="text" class="form-control" required>
+                                    </div>
                                 </div>
                             </div>
                             <hr>
@@ -763,20 +767,43 @@
         $('#type').val(data.purpose)
         $('#type_val').html(data.purpose)
         $('#directsuperior').val(data.directSuperiorID)
-        $('#reimbursement_status').val(data.status).trigger('change')
+        $('#div-totalpaid').show();
 
-        var option = new Option(data.status, data.status, true, true);
-        $('#reimbursement_status').append(option).trigger('change');
+        if (!data.statusList || data.statusList.length === 0 || data.statusList[0] == null) {
+            $('#btn-update').hide();
+            $('#div-approve').hide();
+        } else {
+            $('#btn-update').show();
+            $('#div-approve').show();
 
-        $('#reimbursement_status').trigger({
-            type: 'select2:select',
-            params: {
-                id: data.status,
-                text: data.status,
-                data: data
+            $('#reimbursement_status').empty();
+            $.each(data.statusList, function(index, value) {
+                $('#reimbursement_status').append($('<option>', {
+                    value: value,
+                    text: value
+                }));
+            });
+
+            
+
+            var selectedValue = $('#reimbursement_status').val();
+            if (selectedValue === 'COMPLETED' || selectedValue === 'PAID') {
+                $('#div-totalpaid').show();
+            } else {
+                $('#div-totalpaid').hide();
             }
-        });
+        }
     }
+
+    $('#reimbursement_status').on('change', function() {
+        var selectedValue = $(this).val();
+        if(selectedValue == 'COMPLETED' || selectedValue == 'PAID'){
+            $('#div-totalpaid').show();
+        }else{
+            $('#div-totalpaid').hide();
+        }
+    });
+
     const klik = (element) => {
         let employee_id = $(element).parent().siblings('.sorting_1').text()
 
@@ -1148,7 +1175,7 @@
         });
     }
 
-    function loadDataUpdateStatus(){
+    function loadDataUpdateStatus(statusList = []){
         function formatSelect(data) {
             if (data.loading) {
                 return $search
@@ -1165,12 +1192,10 @@
 
         var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
         
-        $('#reimbursement_status').select2({
+        $('#business_trip_status').select2({
             width: '100%',
             placeholder: 'Choose Status',
             allowClear: true,
-            // multiple: true,
-            // tags: true,
             closeOnSelect: true,
             language: {
                 errorLoading: function () {
@@ -1180,49 +1205,12 @@
                     return $search;
                 }
             },
-            ajax: {
-                url: "{{ url('/status_trans/business_trip/api') }}",
-                dataType: 'json',
-                delay: 250,
-                type: "GET",
-                data: function (params) {
-                    return {
-                        _token: $('meta[name="csrf-token"]').attr('content'),
-                        search: params.term,
-                    };
-                },
-                processResults: function (data) {
-                    if(companyCode == 'ITK' || companyCode == 'III'){
-                        return {
-                            results: $.map(data, function (item) {
-                                return {
-                                    text: item.code,
-                                    id: item.code,
-                                    data: item
-                                }
-                            })
-                        };
-                    }else{
-                        var filteredData = data.filter(function (item) {
-                            var allowedStatuses = ["NEW", "APPROVED", "CANCELED", "PARTIAL_APPROVED", "REJECTED", "PAID"];
-                            return allowedStatuses.includes(item.code);
-                        });
-
-                        filteredData.unshift({ value: "ALL" });
-
-                        return {
-                            results: $.map(filteredData, function (item) {
-                                return {
-                                    text: item.code,
-                                    id: item.code,
-                                    data: item
-                                }
-                            })
-                        };
-                    }
-                },
-                cache: true,
-            },
+            data: statusList.map(function(item) {
+                return {
+                    id: item,  // Gunakan item sebagai id dan text
+                    text: item
+                };
+            }),
             templateResult: formatSelect
         });
     }

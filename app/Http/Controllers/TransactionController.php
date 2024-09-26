@@ -265,7 +265,8 @@ class TransactionController extends Controller
                 return response()->json([]);
             }else{
                 // return Datatables::of($arrResult->dataListSet[0]->responseBusinessTrip)->make(true);
-                return response()->json($arrResult->dataListSet[0]->responseBusinessTrip);
+                $data = array_merge($arrResult->dataListSet[0]->responseBusinessTrip, $arrResult->dataListSet[0]->responseSettlement);
+                return response()->json($data);
             }
 
         }else if ($request->reimbursement_type == "TTB"){
@@ -316,7 +317,8 @@ class TransactionController extends Controller
                 return response()->json([]);
             }else{
                 // return Datatables::of($arrResult->dataListSet[0]->responseBusinessTrip)->make(true);
-                return response()->json($arrResult->dataListSet[0]->responseBusinessTrip);
+                $data = array_merge($arrResult->dataListSet[0]->responseBusinessTrip, $arrResult->dataListSet[0]->responseSettlement);
+                return response()->json($data);
             }
 
 
@@ -362,13 +364,13 @@ class TransactionController extends Controller
             }
 
             $arrResult = json_decode($response->getBody()->getContents());
-            // dd($arrResult->dataListSet);
             if($arrResult->dataListSet == null){
                 // return Datatables::of([])->make(true);
                 return response()->json([]);
             }else{
                 // return Datatables::of($arrResult->dataListSet[0]->responseBusinessTrip)->make(true);
-                return response()->json($arrResult->dataListSet[0]->responseBusinessTrip);
+                $data = array_merge($arrResult->dataListSet[0]->responseBusinessTrip, $arrResult->dataListSet[0]->responseSettlement);
+                return response()->json($data);
             }
         }
     }
