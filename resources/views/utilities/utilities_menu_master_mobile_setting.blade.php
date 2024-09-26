@@ -286,6 +286,7 @@
         var arrayMenu = [];
         var arrData = @json($data);
         var openRows = []; // Array untuk menyimpan ID parent row yang terbuka
+        var typingTimer;
 
         arrayMenu = arrData;
         
@@ -340,29 +341,21 @@
                 rows += `
                     <tr>
                         <td>
-                            <input type="hidden" class="form-control" name="lineNo[]" value="
-                            ${child.lineNo}">
-                            ${child.lineNo}
+                            <input type="text" class="form-control lineno-child-input" name="lineNo[]" value="${child.lineNo}">
                         </td>
                         <td>
-                            <input type="hidden" class="form-control" name="menuID[]" value="
-                            ${child.menuID}">
-                            <input type="hidden" class="form-control" name="parentMenuID[]" value="
-                            ${rowData.menuID}">
-                            <input type="hidden" class="form-control" name="menuDesc[]" value="
-                            ${child.menuDesc}">
+                            <input type="hidden" class="form-control" name="menuID[]" value="${child.menuID}">
+                            <input type="hidden" class="form-control" name="parentMenuID[]" value="${rowData.menuID}">
+                            <input type="hidden" class="form-control" name="menuDesc[]" value="${child.menuDesc}">
                             ${child.menuDesc}
                         </td>
                         <td>
-                            <input type="hidden" class="form-control" name="className[]" value="
-                            ${child.className}">
-                            <input type="hidden" class="form-control" name="lineNo[]" value="
-                            ${child.lineNo}">
+                            <input type="hidden" class="form-control" name="className[]" value="${child.className}">
+                            <input type="hidden" class="form-control" name="lineNo[]" value="${child.lineNo}">
                             ${child.className}
                         </td>
                         <td>
-                            <input type="hidden" class="form-control" name="icon[]" value="
-                            ${child.icon}">
+                            <input type="hidden" class="form-control" name="icon[]" value="${child.icon}">
                             ${imageContent}
                         </td>
                         <td>
@@ -375,7 +368,7 @@
             return `
                 <table cellpadding="5" cellspacing="0" border="0" style="width:100%;">
                     <tr>
-                        <th>Line No</th>
+                        <th width="10%">Line No</th>
                         <th>Menu Name</th>
                         <th>Class Name</th>
                         <th>Icon</th>
@@ -397,7 +390,8 @@
                 "sDom": 'lrtip',
                 paging: false,
                 order: [],
-                ordering: false,
+                // ordering: false,
+                order: [[2, 'asc']],
                 columns: [
                     {
                         orderable: false,
@@ -416,9 +410,10 @@
                     {
                         data: 'lineNo',
                         name: 'lineNo',
+                        width: '10%',
                         render: function (data, type, row) {
-                            return '<input type="hidden" class="form-control" name="lineNo[]" value="' +
-                                row.lineNo + '">' + data;
+                            return '<input type="text" class="form-control lineno-input" name="lineNo[]" value="' +
+                                row.lineNo + '">';
                         }
                     },
                     {
@@ -626,6 +621,53 @@
             }
         });
 
+        $('#menu_master_mobile_setting_table').on('input', '.lineno-child-input', function () {
+            clearTimeout(typingTimer);
+            var childInputField = $(this);
+            var childRow = childInputField.closest('tr'); // Ambil row child saat ini
+
+            // Temukan row parent dengan mencari ke atas
+            var parentRow = childRow.closest('table').closest('td').closest('tr').prev('tr'); // Mengambil parent yang memiliki dt-control
+
+            // Simpan state row yang terbuka
+            openRows = []; // Reset array openRows sebelum mengisi ulang
+            $('#menu_master_mobile_setting_table tbody tr').each(function () {
+                var row = table.row(this);
+                if (row.child.isShown()) {
+                    openRows.push(row.data().menuID); // Menyimpan ID parent yang terbuka
+                }
+            });
+
+            typingTimer = setTimeout(function () {
+                // Ambil index row parent
+                var rowIndex = table.row(parentRow).index(); 
+                var childRowIndex = childRow.index(); // Ambil index child row
+
+                var childData = arrayMenu[rowIndex].menuChild;
+
+                // Perbarui lineNo
+                childData[childRowIndex - 1].lineNo = childInputField.val(); // Pastikan indeks yang benar
+
+                // Urutkan menuChild berdasarkan lineNo
+                childData.sort(function(a, b) {
+                    return parseInt(a.lineNo) - parseInt(b.lineNo);
+                });
+                
+                // Hancurkan DataTable yang ada dan muat ulang
+                $('#menu_master_mobile_setting_table').DataTable().destroy();
+                load_table_menu_master_mobile_setting();
+
+                // Buka kembali row yang terbuka berdasarkan ID yang disimpan
+                table.rows().every(function () {
+                    var row = this;
+                    if (openRows.includes(row.data().menuID)) {
+                        row.child(format(row.data())).show();
+                        $(row.node()).find('td.dt-control i').removeClass('fa-plus').addClass('fa-minus');
+                    }
+                });
+            }, 500);
+        });
+
         $('#menu_master_mobile_setting_table tbody').on('click', '.btn-add-child', function() {
             var tr = $(this).closest('tr');
             var row = table.row(tr).data();
@@ -635,6 +677,42 @@
         $('#menu_master_mobile_setting_table tbody').on('click', '.btn-delete-child', function() {
             var menuID = $(this).data('menu-id');
             deleteChildRow(menuID);
+        });
+
+        $('#menu_master_mobile_setting_table').on('input', '.lineno-input', function () {
+            clearTimeout(typingTimer); // Clear the previous timer
+            var inputField = $(this);
+
+            typingTimer = setTimeout(function () {
+                var rowIndex = inputField.closest('tr').index();
+                arrayMenu[rowIndex].lineNo = inputField.val();
+
+                arrayMenu.sort(function(a, b) {
+                    return parseInt(a.lineNo) - parseInt(b.lineNo);
+                });
+
+                // Simpan state row yang terbuka
+                $('#menu_master_mobile_setting_table tbody tr').each(function () {
+                    var tr = $(this).closest('tr');
+                    var row = table.row(tr);
+                    if (row.child.isShown()) {
+                        openRows.push(row.data().menuID); // Menyimpan ID parent yang terbuka
+                    }
+                });
+
+                // Hancurkan dan muat ulang DataTable
+                $('#menu_master_mobile_setting_table').DataTable().destroy();
+                load_table_menu_master_mobile_setting();
+
+                // Buka kembali row yang terbuka berdasarkan ID yang disimpan
+                table.rows().every(function () {
+                    var row = this;
+                    if (openRows.includes(row.data().menuID)) {
+                        row.child(format(row.data())).show();
+                        $(row.node()).find('td.dt-control i').removeClass('fa-plus').addClass('fa-minus');
+                    }
+                });
+            }, 500);
         });
 
         function addChildRow(parentData) {
@@ -782,6 +860,15 @@
                 }
             }
 
+            // Simpan state row yang terbuka
+            $('#menu_master_mobile_setting_table tbody tr').each(function () {
+                var tr = $(this).closest('tr');
+                var row = table.row(tr);
+                if (row.child.isShown()) {
+                    openRows.push(row.data().menuID); // Menyimpan ID parent yang terbuka
+                }
+            });
+
             // Refresh DataTable atau menambahkan baris baru ke child row yang sudah terbuka
             $('#menu_master_mobile_setting_table').DataTable().destroy();
             load_table_menu_master_mobile_setting();
@@ -813,6 +900,15 @@
 
             // Hapus baris yang dipilih dari DataTable
             // table.rows('.selected').remove().draw(false);
+
+            // Simpan state row yang terbuka
+            $('#menu_master_mobile_setting_table tbody tr').each(function () {
+                var tr = $(this).closest('tr');
+                var row = table.row(tr);
+                if (row.child.isShown()) {
+                    openRows.push(row.data().menuID); // Menyimpan ID parent yang terbuka
+                }
+            });
 
             $('#menu_master_mobile_setting_table').DataTable().destroy();
             load_table_menu_master_mobile_setting();
