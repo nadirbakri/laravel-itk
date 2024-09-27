@@ -184,7 +184,7 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>User ID</th>
+                                <th>Employee No</th>
                                 <th>Full Name</th>
                             </tr>
                         </thead>
@@ -295,7 +295,7 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>User ID</th>
+                                    <th>Employee No</th>
                                     <th>Full Name</th>
                                 </tr>
                             </thead>

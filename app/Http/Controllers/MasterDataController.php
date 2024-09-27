@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Exports\EmployeeGroupExport;
 use App\Exports\EmployeeGroupTemplateExport;
+use App\Exports\EmployeeGroupMemberExport;
+use App\Exports\EmployeeGroupMemberTemplateExport;
 
 use App\Imports\EmployeeGroupImport;
+use App\Imports\EmployeeGroupMemberImport;
 
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
@@ -1693,6 +1696,31 @@ class MasterDataController extends Controller
         try{
             $file = $request->file('import_export');
             $import = new EmployeeGroupImport($request->type);
+            Excel::import($import, $file->getRealPath(), null, \Maatwebsite\Excel\Excel::XLSX);
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            $failures = $e->failures();
+            $objError = (object) ['status' => false, 'message' => $failures[0]->errors()[0]];
+            return array(0 => $objError);
+        }
+
+        return $import->getArrResult();
+    }
+
+    public function downloadTemplateExportImportEmployeeGroupMember(Request $request)
+    {
+        return Excel::download(new EmployeeGroupMemberTemplateExport(), "Template Employee Group Member.xlsx");
+    }
+
+    public function exportExportImportEmployeeGroupMember(Request $request)
+    {
+        return Excel::download(new EmployeeGroupMemberExport(), "Employee Group Member Export.xlsx");
+    }
+
+    public function importExportImportEmployeeGroupMember(Request $request)
+    {
+        try{
+            $file = $request->file('import_export');
+            $import = new EmployeeGroupMemberImport();
             Excel::import($import, $file->getRealPath(), null, \Maatwebsite\Excel\Excel::XLSX);
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             $failures = $e->failures();
