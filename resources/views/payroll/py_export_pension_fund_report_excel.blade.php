@@ -186,7 +186,7 @@
         </table>
         <br>
         <?php
-        $totalSeluruh = $data[0]->iuran + $dendaBulan + $kelebihanBayar + $kurangBayar + $penguranganIuran + $materai;
+        $totalSeluruh = $data[0]->iuran + $dendaBulan - $kelebihanBayar + $kurangBayar - $penguranganIuran + $materai;
         ?>
         <table>
             <tr>
