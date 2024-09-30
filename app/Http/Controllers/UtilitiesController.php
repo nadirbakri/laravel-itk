@@ -3027,6 +3027,92 @@ class UtilitiesController extends Controller
         return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
     }
 
+    public function prosesMenuMasterMobileSettingCopyFromAnotherCompanyUtilities(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/mobile/MasterMenuMobile/getlistmenumobile',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => $request->company_code_from,
+						"languageCode" => strtoupper(App::getLocale()),
+						"logActionUserID" => Session::get('userID'),
+                        "logActionUsername" => Session::get('userID')
+                    ]
+                )]
+            );
+
+            $arrResult = json_decode($response->getBody()->getContents());
+
+            if(!empty($arrResult) && isset($arrResult->dataListSet)){
+                $resultMenu = [];
+
+                foreach ($arrResult->dataListSet as $menu) {
+                    $resultMenu[] = [
+                        'companyCode' => $request->company_code_destination,
+                        'lineNo' => $menu->lineNo,
+                        'menuID' => $menu->menuID,
+                        'parentMenuID' => $menu->parentMenuID,
+                        'changedNo' => 0,
+                        'createdDate' => date("Y-m-d\TH:i:s"),
+                        'createdBy' => Session::get('userID'),
+                        'changedDate' => date("Y-m-d\TH:i:s"),
+                        'changedBy' => Session::get('userID'),
+                        'sessionUserID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        'languageCode' => strtoupper(App::getLocale()),
+                    ];
+                
+                    if (!empty($menu->menuChild)) {
+                        foreach ($menu->menuChild as $child) {
+                            $resultMenu[] = [
+                                'companyCode' => $request->company_code_destination,
+                                'lineNo' => $child->lineNo,
+                                'menuID' => $child->menuID,
+                                'parentMenuID' => $menu->menuID,
+                                'changedNo' => 0,
+                                'createdDate' => date("Y-m-d\TH:i:s"),
+                                'createdBy' => Session::get('userID'),
+                                'changedDate' => date("Y-m-d\TH:i:s"),
+                                'changedBy' => Session::get('userID'),
+                                'sessionUserID' => Session::get('userID'),
+                                'logActionUserID' => Session::get('userID'),
+                                'logActionUsername' => Session::get('userName'),
+                                'languageCode' => strtoupper(App::getLocale()),
+                            ];
+                        }
+                    }
+                }
+
+                $response2 = $client->put(env('API_URL') . '/mobile/MasterMenuMobile/updatesettingmobile',
+                    ['body' => json_encode($resultMenu)]
+                );
+
+                $arrResult2 = json_decode($response2->getBody()->getContents());
+
+                return response()->json(['status' => $arrResult2->status, 'message' => $arrResult2->message]);
+            }else{
+                return response()->json(['status' => 'false', 'message' => 'Company Source Does not Have Menu']);
+            }
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+    }
+
     public function exportAuditTrailUtilities(Request $request)
     {
         return Excel::download(new AuditTrailExport($request->user_id, $request->user_name, $request->log_date_from, $request->log_date_to, $request->url_log), 'Audit Trail ' . $request->table . 'Log.xlsx');

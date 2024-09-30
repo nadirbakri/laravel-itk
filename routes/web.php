@@ -962,6 +962,7 @@ Route::post('utilities/master_banner/proses', 'UtilitiesController@prosesMasterB
 Route::post('utilities/announcement_category/proses', 'UtilitiesController@prosesAnnouncementCategoryUtilities');
 Route::post('utilities/news_category/proses', 'UtilitiesController@prosesNewsCategoryUtilities');
 Route::post('utilities/reference_mobile/proses', 'UtilitiesController@prosesReferenceMobileUtilities');
+Route::post('utilities/menu_master_mobile_setting/copy_from_another_company/proses', 'UtilitiesController@prosesMenuMasterMobileSettingCopyFromAnotherCompanyUtilities');
 
 Route::post('utilities/menu_master_mobile_setting/detail_data/proses', 'UtilitiesController@prosesMenuMasterMobileSettingDetailDataUtilities');
 

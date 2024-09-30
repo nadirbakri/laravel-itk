@@ -17,9 +17,30 @@
     <link rel="stylesheet" href="{{ asset('css/jquery.inputpicker.css') }}">
     <style type="text/css">
         .div-utilities {
+			max-width: 97%;
+			margin: auto;
+			margin-top: 1%;
+		}
+        .div-title {
+            margin: 1.5%;
+            margin-bottom: 3%;
+            margin-top: 8%;
+        }
+        .div-title img {
             max-width: 100%;
-            margin: auto;
-            /*margin-top: 1%;*/
+            height: 4.5vh;
+        }
+        .title-text {
+            font-family: Montserrat;
+            color: #106da7;
+            font-weight: 700;
+            font-size: 1.5vw;
+            margin-left: 0.5%;
+        }
+        .div-title a {
+            text-decoration: none;
+            display: flex;
+            align-items: center;
         }
 
         th,
@@ -109,6 +130,53 @@
 
 <body>
     <div class="div-utilities">
+    <div class="div-navbar sticky-navbar">
+            <a href="javascript:void(0)" style="display: none;" id="toolbar-back">
+                <img src="{{ url('/icons/functionbar/functionbar-back-blue.svg') }}" alt="Back">
+                <img src="{{ url('/icons/functionbar/functionbar-back-white.svg') }}" class="functionbar-hover" alt="Back">
+                <span>Back</span>
+            </a>
+            <a href="javascript:void(0)" style="display: none;" id="toolbar-next">
+                <img src="{{ url('/icons/functionbar/functionbar-next-blue.svg') }}" alt="Next">
+                <img src="{{ url('/icons/functionbar/functionbar-next-white.svg') }}" class="functionbar-hover" alt="Next">
+                <span>Next</span>
+            </a>
+            <a href="javascript:void(0)" style="display: none;" id="toolbar-new" target="iframe_dashboard">
+                <img src="{{ url('/icons/functionbar/functionbar-new-blue.svg') }}" alt="New">
+                <img src="{{ url('/icons/functionbar/functionbar-new-white.svg') }}" class="functionbar-hover" alt="New">
+                <span>New</span>
+            </a>
+            <a href="javascript:void(0)" style="display: none;" id="toolbar-edit">
+                <img src="{{ url('/icons/functionbar/functionbar-edit-blue.svg') }}" alt="Edit">
+                <img src="{{ url('/icons/functionbar/functionbar-edit-white.svg') }}" class="functionbar-hover" alt="Edit">
+                <span>Edit</span>
+            </a>
+            <a href="javascript:void(0)" style="display: none;" id="toolbar-save">
+                <img src="{{ url('/icons/functionbar/functionbar-save-blue.svg') }}" alt="Save">
+                <img src="{{ url('/icons/functionbar/functionbar-save-white.svg') }}" class="functionbar-hover" alt="Save">
+                <span>Save</span>
+            </a>
+            <a class="list-functionbar-md" style="display: none;" href="javascript:void(0)" id="toolbar-active">
+                <img src="{{ url('/icons/functionbar/functionbar-checklist-blue.svg') }}" alt="Activate">
+                <img src="{{ url('/icons/functionbar/functionbar-checklist-white.svg') }}" class="functionbar-hover" alt="Activate">
+                <span>Activate</span>
+            </a>
+            <a class="list-functionbar-lg" style="display: none;" href="javascript:void(0)" id="toolbar-deactive">
+                <img src="{{ url('/icons/functionbar/functionbar-deactivate-blue.svg') }}" alt="Deactivate">
+                <img src="{{ url('/icons/functionbar/functionbar-deactivate-white.svg') }}" class="functionbar-hover" alt="Deactivate">
+                <span>Deactivate</span>
+            </a>
+            <a href="javascript:void(0)" style="display: none;" id="toolbar-list">
+                <img src="{{ url('/icons/functionbar/functionbar-list-blue.svg') }}" alt="List">
+                <img src="{{ url('/icons/functionbar/functionbar-list-white.svg') }}" class="functionbar-hover" alt="List">
+                <span>List</span>
+            </a>
+            <a class="list-functionbar-xl" href="javascript:void(0)" id="toolbar-process" data-toggle="modal" data-target="#modal_copy_from_another_company">
+                <img src="{{ url('/icons/functionbar/process.svg') }}" alt="Process">
+                <img src="{{ url('/icons/functionbar/process.svg') }}" class="functionbar-hover" alt="Process">
+                <span>Copy From Another Company</span>
+            </a>
+        </div>
         <div class="div-title">
             <a href="{{ route('utilities', ['moduleID' => 'UTI']) }}" target="iframe_dashboard">
                 <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
@@ -156,6 +224,77 @@
                     </div>
                 </div>
             </form>
+        </div>
+    </div>
+    <div class="modal fade" id="modal_copy_from_another_company"  role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{ __('utilities_menu_master_mobile_setting.label_copy_from_another_company') }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="copy_from_another_company_form" method="post">
+                        @csrf
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label>{{ __('utilities_menu_master_mobile_setting.label_copy_from') }}</label>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label
+                                        for="company_code_from">{{ __('utilities_menu_master_mobile_setting.label_company_code') }}</label>
+                                    <select class="form-control select2" id="company_code_from"
+                                        name="company_code_from"></select>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label
+                                        for="company_name_from">{{ __('utilities_menu_master_mobile_setting.label_company_name') }}</label>
+                                    <input type="text" class="form-control" id="company_name_from"
+                                        name="company_name_from"
+                                        placeholder="{{ __('utilities_menu_master_mobile_setting.label_company_name') }}" readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label>{{ __('utilities_menu_master_mobile_setting.label_copy_destination') }}</label>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label
+                                        for="company_code_destination">{{ __('utilities_menu_master_mobile_setting.label_company_code') }}</label>
+                                    <select class="form-control select2" id="company_code_destination"
+                                        name="company_code_destination"></select>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label
+                                        for="company_name_destination">{{ __('utilities_menu_master_mobile_setting.label_company_name') }}</label>
+                                    <input type="text" class="form-control" id="company_name_destination"
+                                        name="company_name_destination"
+                                        placeholder="{{ __('utilities_menu_master_mobile_setting.label_company_name') }}" readonly>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="submit" id="btn-save-copy-from-another-company" class="btn btn-primary w-25"><i
+                            class="fa fa-floppy-o"></i> {{ __('utilities_menu_master_mobile_setting.btn_save') }}</button>
+                    <button type="button" class="btn btn-primary w-25" data-dismiss="modal"><i
+                            class="fa fa-times-circle"></i> {{ __('utilities_menu_master_mobile_setting.btn_cancel') }}</button>
+                </div>
+                </form>
+            </div>
         </div>
     </div>
     <div class="modal fade" id="modal_list_menu"  role="dialog" aria-hidden="true">
@@ -280,6 +419,7 @@
     }
     
     $(document).ready(function () {
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         var table = null;
         var table2 = null;
         var table3 = null;
@@ -303,6 +443,27 @@
 
         $('#modal_list_menu_child').on('show.bs.modal', function () {
             load_table_list_menu_child();
+        });
+
+        loadDataCompany('#company_code_from');
+        loadDataCompany('#company_code_destination');
+
+        $('#company_code_from').on('select2:select', function (e) {
+            var data = $('#company_code_from').select2('data');
+            $('#company_name_from').val(htmlDecode(data[0].title));
+        });
+
+        $('#company_code_from').on('select2:unselecting', function (e) {
+            $('#company_name_from').val('');
+        });
+
+        $('#company_code_destination').on('select2:select', function (e) {
+            var data = $('#company_code_destination').select2('data');
+            $('#company_name_destination').val(htmlDecode(data[0].title));
+        });
+
+        $('#company_code_destination').on('select2:unselecting', function (e) {
+            $('#company_name_destination').val('');
         });
 
         function format(rowData) {
@@ -957,12 +1118,93 @@
             return allData;
         }
 
+        function loadDataCompany(field = '') {
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' +
+                        '<div class="col-4">' + data.data.companyCode + '</div>' +
+                        '<div class="col-8">' + data.data.companyName + '</div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var headerIsAppend = false;
+            $(field).on('select2:open', function (e) {
+                if (!headerIsAppend) {
+                    html = '<div class="row">' +
+                        '<div class="col-4"><b>Code</b></div>' +
+                        '<div class="col-8"><b>Name</b></div>' +
+                        '</div>';
+                    $('.select2-search--dropdown').append(html);
+                    headerIsAppend = true;
+                }
+            });
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            var $companyCode = $(field).select2({
+                width: '100%',
+                placeholder: 'Choose Company',
+                allowClear: true,
+                // tags: true,
+                closeOnSelect: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: "{{ url('/session_company/api') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.companyCode,
+                                    id: item.companyCode,
+                                    title: item.companyName,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
         $("#btn-save").click(function () {
             $(this).prop("disabled", true);
             $(this).html(
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
             $("#menu_master_mobile_setting_form").submit();
+        });
+
+        $("#btn-save-copy-from-another-company").click(function () {
+            $(this).prop("disabled", true);
+            $(this).html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+            $("#copy_from_another_company_form").submit();
         });
 
         if ($("#menu_master_mobile_setting_form").length > 0) {
@@ -1016,6 +1258,99 @@
                             $("#btn-save").prop("disabled",
                             false);
                             $("#btn-save").html(
+                                '<i class="fa fa-floppy-o"></i> {{ __("utilities_menu_master_mobile_setting.btn_save") }}'
+                            );
+                            $('#notification_error').modal('show');
+                            $('#message-notification-error').html(response);
+                        }
+                    });
+                }
+            })
+        }
+
+        if ($("#copy_from_another_company_form").length > 0) {
+            $("#copy_from_another_company_form").validate({
+                rules: {
+                    company_code_from: {
+                        required: true,
+                    },
+                    company_code_destination: {
+                        required: true,
+                    }
+                },
+                messages: {
+                    company_code_from: {
+                        required: "{{ __('utilities_menu_master_mobile_setting.company_code_required') }}",
+                    },
+                    company_code_destination: {
+                        required: "{{ __('utilities_menu_master_mobile_setting.company_code_required') }}",
+                    }
+                },
+                highlight: function (element) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function (element) {
+                    $(element).removeClass('is-invalid');
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                    $("#btn-save-copy-from-another-company").prop("disabled", false);
+                    $("#btn-save-copy-from-another-company").html(
+                        '<i class="fa fa-floppy-o"></i> {{ __("utilities_menu_master_mobile_setting.btn_save") }}'
+                    );
+
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').append(error);
+                },
+                submitHandler: function (form) {
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    $.ajax({
+                        url: "{{ url('utilities/menu_master_mobile_setting/copy_from_another_company/proses') }}",
+                        type: "POST",
+                        data: $('#copy_from_another_company_form').serialize(),
+                        success: function (response) {
+                            if (response.status == "true") {
+                                $("#btn-save-copy-from-another-company").prop("disabled",
+                                    false);
+                                $("#btn-save-copy-from-another-company").html(
+                                    '<i class="fa fa-floppy-o"></i> {{ __("utilities_menu_master_mobile_setting.btn_save") }}'
+                                );
+
+                                $("#copy_from_another_company_form").trigger('reset');
+                                $('#modal_copy_from_another_company').modal('hide');
+                                $('#notification_success').modal('show');
+                                $('#message-notification-success').html(response
+                                    .message);
+                                setTimeout(function () {
+                                    window.location =
+                                        "{{ url('utilities/menu_master_mobile_setting') }}";
+                                }, 3000);
+                            } else {
+                                $("#btn-save-copy-from-another-company").prop("disabled",
+                                    false);
+                                $("#btn-save-copy-from-another-company").html(
+                                    '<i class="fa fa-floppy-o"></i> {{ __("utilities_menu_master_mobile_setting.btn_save") }}'
+                                );
+
+                                $('#notification_error').modal('show');
+                                if (response.message == null || response.message ==
+                                    '') {
+                                    $('#message-notification-error').html(
+                                        "{{ __('login.error') }}");
+                                } else {
+                                    $('#message-notification-error').html(response
+                                        .message);
+                                }
+                            }
+                        },
+                        error: function (response) {
+                            $("#btn-save-copy-from-another-company").prop("disabled",
+                            false);
+                            $("#btn-save-copy-from-another-company").html(
                                 '<i class="fa fa-floppy-o"></i> {{ __("utilities_menu_master_mobile_setting.btn_save") }}'
                             );
                             $('#notification_error').modal('show');
