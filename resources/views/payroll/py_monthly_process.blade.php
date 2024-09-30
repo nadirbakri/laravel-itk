@@ -680,6 +680,19 @@
             }
         });
 
+        $("#show_password").on('click', function (event) {
+            event.preventDefault();
+            if ($('#password').attr("type") == "text") {
+                $('#password').attr('type', 'password');
+                $('#icon_show_password').addClass("fa-eye");
+                $('#icon_show_password').removeClass("fa-eye-slash");
+            } else if ($('#password').attr("type") == "password") {
+                $('#password').attr('type', 'text');
+                $('#icon_show_password').removeClass("fa-eye");
+                $('#icon_show_password').addClass("fa-eye-slash");
+            }
+        });
+
         $('#range').on('change', function () {
             if ($('#range').is(':checked')) {
                 $('#employee_no_from').prop('disabled', false);

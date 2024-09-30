@@ -2090,6 +2090,19 @@
             }
         });
 
+        $("#show_password").on('click', function (event) {
+            event.preventDefault();
+            if ($('#password').attr("type") == "text") {
+                $('#password').attr('type', 'password');
+                $('#icon_show_password').addClass("fa-eye");
+                $('#icon_show_password').removeClass("fa-eye-slash");
+            } else if ($('#password').attr("type") == "password") {
+                $('#password').attr('type', 'text');
+                $('#icon_show_password').removeClass("fa-eye");
+                $('#icon_show_password').addClass("fa-eye-slash");
+            }
+        });
+
         $('#check_tax_allowance_custom_set_up').on('change', function() {
             if (this.checked) {
                 $('#check_tax_netto_calculation_custom_set_up').prop('checked', false);
