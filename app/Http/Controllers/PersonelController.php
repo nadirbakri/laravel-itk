@@ -6307,16 +6307,16 @@ class PersonelController extends Controller
             $param['peMasterInsurance'] = $datapeMasterInsurance;
 
             if(isset($request->fringe_benefits)){
-                foreach($request->seq_no_fringe_benefit as $value){
+                foreach($request->seq_no_fringe_benefit as $key => $value){
                     // var_dump($request->fringe_benefits[$value]);
                     $datapeMasterFringeBenefit[] = [
                         'companyCode' => Session::get('companyCode'),
                         "employeeNo" => $request->employee_no_info,
                         "seqNo" => (int) $value,
-                        "benefits" => $request->fringe_benefits[$value],
-                        "description" => $request->description[$value],
-                        "startDate" => $request->start_date[$value],
-                        "endDate" => $request->end_date[$value],
+                        "benefits" => $request->fringe_benefits[$key],
+                        "description" => $request->description[$key],
+                        "startDate" => $request->start_date[$key],
+                        "endDate" => $request->end_date[$key],
                         "changedNo" => 0,
                         "createdDate" => date("Y-m-d\TH:i:s"),
                         "createdBy" => Session::get('userID'),
@@ -6330,21 +6330,21 @@ class PersonelController extends Controller
             }
 
             if(isset($request->family_name)){
-                foreach($request->seq_no_family_dependent as $value){
+                foreach($request->seq_no_family_dependent as $key => $value){
                     $datapeMasterFamily[] = [
                         'companyCode' => Session::get('companyCode'),
                         "employeeNo" => $request->employee_no_info,                        
                         "seqNo" => (int) $value,
-                        "familyName" => ($request->family_name[$value] == '-') ? null : $request->family_name[$value],
-                        "relationCode" => ($request->relation_code[$value] == '-') ? null : $request->relation_code[$value],
-                        "birthDate" => ($request->birth_date[$value] == '-') ? null : $request->birth_date[$value],
-                        "birthPlace" => ($request->birth_place[$value] == '-') ? null : $request->birth_place[$value],
-                        "gender" => ($request->gender[$value] == '-') ? null : $request->gender[$value],
-                        "occupation" => ($request->occupation[$value] == '-') ? null : $request->occupation[$value],
-                        "flagMedical" => (isset($request->flag_medical[$value]) && $request->flag_medical[$value] !== 'false') ? (bool) $request->flag_medical[$value] : false,
-                        "flagPayroll" => (isset($request->flag_payroll[$value]) && $request->flag_payroll[$value] !== 'false') ? (bool) $request->flag_payroll[$value] : false,
-                        "bloodType" => ($request->blood_type[$value] == '-') ? null : $request->blood_type[$value],
-                        "familyCardNumber" => ($request->family_card_number[$value] == '-') ? null : $request->family_card_number[$value],
+                        "familyName" => ($request->family_name[$key] == '-') ? null : $request->family_name[$key],
+                        "relationCode" => ($request->relation_code[$key] == '-') ? null : $request->relation_code[$key],
+                        "birthDate" => ($request->birth_date[$key] == '-') ? null : $request->birth_date[$key],
+                        "birthPlace" => ($request->birth_place[$key] == '-') ? null : $request->birth_place[$key],
+                        "gender" => ($request->gender[$key] == '-') ? null : $request->gender[$key],
+                        "occupation" => ($request->occupation[$key] == '-') ? null : $request->occupation[$key],
+                        "flagMedical" => (isset($request->flag_medical[$key]) && $request->flag_medical[$key] !== 'false') ? (bool) $request->flag_medical[$key] : false,
+                        "flagPayroll" => (isset($request->flag_payroll[$key]) && $request->flag_payroll[$key] !== 'false') ? (bool) $request->flag_payroll[$key] : false,
+                        "bloodType" => ($request->blood_type[$key] == '-') ? null : $request->blood_type[$key],
+                        "familyCardNumber" => ($request->family_card_number[$key] == '-') ? null : $request->family_card_number[$key],
                         "changedNo" => 0,
                         "createdDate" => date("Y-m-d\TH:i:s"),
                         "createdBy" => Session::get('userID'),
