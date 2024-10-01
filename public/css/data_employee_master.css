@@ -40,10 +40,6 @@
 .card {
     border-radius: 0.3rem;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.05), 0 6px 20px 0 rgba(0, 0, 0, 0.2);
-    margin-left: 2%;
-    margin-right: 10%;
-    margin-top: 2%;
-    margin-bottom: 2%;
 }
 .card a {
     text-decoration: none;
@@ -86,7 +82,7 @@
     font-size: 3.2vh;
     font-weight: 700;
     margin-left: 1.5%;
-    flex-basis: 90%;
+    flex-basis: 100%;
 }
 a.collapsed .div-dropdown-title .dropdown-triangle {
     height: 3.5vh;

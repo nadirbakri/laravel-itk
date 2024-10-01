@@ -1,0 +1,42 @@
+<?php
+
+return [ 
+    'judul' => 'Master Karyawan',
+    'subjudul' => 'Master Karyawan',
+    'status' => 'Status',
+    'userid' => 'User ID',
+    'label_claim_date_join' => 'Tanggal Bergabung',
+    'employeeno' => 'No Karyawan',
+    'companycode' => 'Kode Perusahaan',
+    'name' => 'Nama Lengkap',
+    'password' => 'Kata Sandi',
+    'position' => 'Posisi',
+    'rank' => 'Peringkat',
+    'personal_email' => 'Email Pribadi',
+    'company_email' => 'Email Perusahaan',
+    'phone' => 'No Telepon',
+    'address' => 'Alamat',
+    'division' => 'Divisi',
+    'ranking' => 'Peringkat',
+    'photo' => 'Foto',
+    'location' => 'Lokasi Kantor',
+    'formemployee' => 'Daftar Cuti Karyawan',
+    'formemployee1' => 'Daftar Plafon Karyawan',
+    'formemployee2' => 'Daftar Tanggungan',
+    'formemployee3' => 'Daftar Approval Izin',
+    'formemployee4' => 'Daftar Approval Cuti',
+    'formemployee5' => 'Daftar Approval Lembur',
+    'formemployee6' => 'Daftar Approval Penggantian Biaya',
+    'formemployee7' => 'Daftar Approval Perjalanan Dinas',
+    'formemployee8' => 'Daftar Approval Multiple Checkin',
+    'judul_employee_group_reimbursement' => 'Grup Karyawan Penggantian Biaya',
+    'judul_employee_group_business_trip' => 'Grup Karyawan Perjalanan Dinas',
+    'judul_employee_group_multiple_checkin' => 'Grup Karyawan Multiple Checkin',
+    'judul_employee_group_member' => 'Anggota Grup Karyawan',
+    'judul_employee_group_leave' => 'Grup Karyawan Cuti',
+    'judul_employee_group_permit' => 'Grup Karyawan Izin',
+    'btn_cancel' => 'Batal',
+    'btn_list' => 'Daftar Karyawan'
+]
+
+?>

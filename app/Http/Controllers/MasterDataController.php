@@ -802,13 +802,17 @@ class MasterDataController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/PeMaster/getPeMasterDetail',
+            $response = $client->post(env('API_URL') . '/personel/PeMaster/GetEmployeeMasterMobile',
                     ['body' => json_encode(
                         [
                             'companyCode' => Session::get('companyCode'),
                             'employeeNo' => $request->employeeNo,
-                            'logActionUserID' => Session::get('userID'),
-                            'logActionUsername' => Session::get('userName')
+                            "languageCode" => strtoupper(App::getLocale()),
+                            "sessionID" => 0,
+                            "sessionCompanyCode" => Session::get('companyCode'),
+                            "sessionUserID" => Session::get('userID'),
+                            "logActionUserID" => Session::get('userID'),
+                            "logActionUsername" => Session::get('userID')
                         ]
                     )]
                 );

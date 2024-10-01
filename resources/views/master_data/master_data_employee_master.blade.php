@@ -9,7 +9,6 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/select/1.3.3/css/select.dataTables.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('css/flatpickr.min.css') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
     <!-- <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="{{ asset('css/jquery.inputpicker.css') }}"> 
@@ -88,22 +87,6 @@
             font-weight: 500;
             font-size: 2.5vw;
         }
-        .row button {
-            background-color: #1E90FF;
-            border: none;
-            color: white;
-            padding: 5px 11px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            margin: 4px 2px;
-            cursor: pointer;
-            }
-
-        .btn{
-            margin-top:10px;
-            margin: 20px 40px;
-        }
     </style>
 </head>
 
@@ -124,7 +107,7 @@
                         <div class="form-group">
                             <label for="status form-check-label">{{ __('data_employee_master.status') }}</label>
                         </div>
-                        <input type="text" class="form-control" id="status" name="status" value="A" readonly>
+                        <input type="text" class="form-control" id="status" name="status" readonly>
                     </div>
                     <div class="col-5">
                         <div class="form-group">
@@ -146,8 +129,7 @@
                             <label for="join_date form-check-label">{{ __('data_employee_master.label_claim_date_join') }}</label>
                         </div>
                         <div class="input-group">
-                            <input type="text" class="form-control" id="join_date" name="join_date"
-                                placeholder="{{ __('trans_mass_leave.label_claim_date_start') }}">
+                            <input type="text" class="form-control" id="join_date" name="join_date" readonly>
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="join_date_calendar"><span class="fa fa-calendar"></span></span>
                             </div>
@@ -161,13 +143,13 @@
                         <div class="form-group">
                             <label for="company_code form-check-label">{{ __('data_employee_master.companycode') }}</label>
                         </div>
-                        <select class="form-control select2" id="company_code" name="company_code" disabled></select>
+                        <input type="text" class="form-control" id="company_code" name="company_code" readonly>
                     </div>
                     <div class="col-5">
                         <div class="form-group">
                             <label for="office_location form-check-label">{{ __('data_employee_master.location') }}</label>
                         </div>
-                        <select class="form-control select2" id="office_location" name="office_location" disabled></select>
+                        <input type="text" class="form-control" id="office_location" name="office_location" readonly>
                     </div>
                 </div>
                 <div class="row">
@@ -179,190 +161,369 @@
                     </div>
                     <div class="col-5">
                         <div class="form-group">
-                            <label for="password form-check-label">{{ __('data_employee_master.password') }}</label>
+                            <label for="phone form-check-label">{{ __('data_employee_master.phone') }}</label>
                         </div>
-                        <input type="text" class="form-control" id="password" name="password" readonly>
+                        <input type="text" class="form-control" id="phone" name="phone" readonly>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-5">
+                        <div class="form-group">
+                            <label for="personal_email form-check-label">{{ __('data_employee_master.personal_email') }}</label>
+                        </div>
+                        <input type="text" class="form-control" id="personal_email" name="personal_email" readonly>
+                    </div>
+                    <div class="col-5">
+                        <div class="form-group">
+                            <label for="company_email form-check-label">{{ __('data_employee_master.company_email') }}</label>
+                        </div>
+                        <input type="text" class="form-control" id="company_email" name="company_email" readonly>
                     </div>
                 </div>
                 
                 <div class="row">
                     <div class="col-5">
                         <div class="form-group">
-                            <label for="phone form-check-label">{{ __('data_employee_master.phone') }}</label>
+                            <label for="address form-check-label">{{ __('data_employee_master.address') }}</label>
                         </div>
-                        <input type="text" class="form-control" id="phone" name="phone" readonly>
+                        <textarea rows="3" class="form-control" id="address" name="address" readonly></textarea>
                     </div>
                     <div class="col-5">
                         <div class="form-group">
-                            <label for="address form-check-label">{{ __('data_employee_master.addres') }}s</label>
+                            <label for="division form-check-label">{{ __('data_employee_master.division') }}</label>
                         </div>
-                        <input type="text" class="form-control" id="address" name="address" readonly>
+                        <input type="text" class="form-control" id="division" name="division" readonly>
                     </div>
                 </div>
+
                 <div class="row">
                     <div class="col-5">
                         <div class="form-group">
-                            <label for="leave_time form-check-label">{{ __('data_employee_master.division') }}</label>
+                            <label for="ranking form-check-label">{{ __('data_employee_master.ranking') }}</label>
                         </div>
-                        <select class="form-control select2" id="leave_time" name="leave_time" disabled></select>
-                    </div>
-                    <div class="col-5">
-                        <div class="form-group">
-                             <label for="leave_time form-check-label">{{ __('data_employee_master.photo') }}</label>
-                        </div>
-                        <form action="aksi.php" method="post" enctype="multipart/form-data">
-                            <input type="file" name="file">
-	                    </form>
+                        <input type="text" class="form-control" id="ranking" name="ranking" readonly>
                     </div>
                 </div>
 
                 <!-- TABLE -->
-                <div class="card" style="display: block">
-                    <a class="collapsed" data-toggle="collapse" href="#employee_leave" aria-expanded="true" aria-controls="employee_leave">
-                        <div class="card-header">
-                            <div class="div-dropdown-title">
-                                <span class="dropdown-title-text">{{ __('data_employee_master.formemployee') }}</span>
+                <div class="row mt-5">
+                    <div class="col-10">
+                        <div class="card" style="display: block">
+                            <a class="collapsed" data-toggle="collapse" href="#employee_leave" aria-expanded="true" aria-controls="employee_leave">
+                                <div class="card-header">
+                                    <div class="div-dropdown-title">
+                                        <span class="dropdown-title-text">{{ __('data_employee_master.formemployee') }}</span>
+                                        <img class="dropdown-triangle" src="{{ url('/pictures/triangle.png') }}" alt="Triangle">
+                                    </div>
+                                </div>
+                            </a>
+                            <div id="employee_leave" class="collapse m-3">
+                                <div class="card-block">
+                                    <table id="leave_table" class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Leave Type</th>
+                                                <th>Leave Balance</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="body_employee_leave_table">
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
-                        </div>
-                    </a>
-                    <div id="employee_leave" class="collapse">
-                        <div class="card-block">
-                            <table id="leave_table" class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Leave Type</th>
-                                        <th>Leave Balance</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="body_leave_table">
-                                </tbody>
-                            </table>
                         </div>
                     </div>
                 </div>
 
-                <div class="card" style="display: block">
-                    <a class="collapsed" data-toggle="collapse" href="#employee_plafon" aria-expanded="true" aria-controls="employee_leave">
-                        <div class="card-header">
-                            <div class="div-dropdown-title">
-                                <span class="dropdown-title-text">{{ __('data_employee_master.formemployee1') }}</span>
+                <div class="row">
+                    <div class="col-10">
+                        <div class="card" style="display: block">
+                            <a class="collapsed" data-toggle="collapse" href="#employee_plafon" aria-expanded="true" aria-controls="employee_plafon">
+                                <div class="card-header">
+                                    <div class="div-dropdown-title">
+                                        <span class="dropdown-title-text">{{ __('data_employee_master.formemployee1') }}</span>
+                                        <img class="dropdown-triangle" src="{{ url('/pictures/triangle.png') }}" alt="Triangle">
+                                    </div>
+                                </div>
+                            </a>
+                            <div id="employee_plafon" class="collapse m-3">
+                                <div class="card-block">
+                                    <table id="plafon_table" class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Reimbursement Type</th>
+                                                <th>Reimbursement Plafon Balance</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="body_employee_plafon_table">
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
-                        </div>
-                    </a>
-                    <div id="employee_plafon" class="collapse">
-                        <div class="card-block">
-                            <table id="plafon_table" class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Reimbursement Type</th>
-                                        <th>Reimbursement Plafon Balance</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="body_plafon_table">
-                                </tbody>
-                            </table>
                         </div>
                     </div>
                 </div>
 
-                <div class="card" style="display: block">
-                    <a class="collapsed" data-toggle="collapse" href="#dependent_list" aria-expanded="true" aria-controls="employee_leave">
-                        <div class="card-header">
-                            <div class="div-dropdown-title">
-                                <span class="dropdown-title-text">{{ __('data_employee_master.formemployee2') }}</span>
+                <div class="row">
+                    <div class="col-10">
+                        <div class="card" style="display: block">
+                            <a class="collapsed" data-toggle="collapse" href="#dependent_list" aria-expanded="true" aria-controls="dependent_list">
+                                <div class="card-header">
+                                    <div class="div-dropdown-title">
+                                        <span class="dropdown-title-text">{{ __('data_employee_master.formemployee2') }}</span>
+                                        <img class="dropdown-triangle" src="{{ url('/pictures/triangle.png') }}" alt="Triangle">
+                                    </div>
+                                </div>
+                            </a>
+                            <div id="dependent_list" class="collapse m-3">
+                                <div class="card-block">
+                                    <table id="dependent_table" class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Relation</th>
+                                                <th>Dependant Name</th>
+                                                <th>Date of Birth</th>
+                                                <th>Gender</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="body_dependent_table">
+                                        </tbody>
+                                        </table>
+                                </div>
                             </div>
                         </div>
-                    </a>
-                    <div id="dependent_list" class="collapse">
-                        <div class="card-block">
-                            <table id="dependent_table" class="table table-bordered">
-                                <!-- <button type="button" class="btn btn-success"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
-                                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-                                    </svg> Add Dependant</button> -->
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Relation</th>
-                                            <th>Dependant Name</th>
-                                            <th>Date of Birth</th>
-                                            <th>Gender</th>
-                                            <th>Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="body_dependent_table">
-                                </tbody>
-                                </table>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-10">
+                        <div class="card" style="display: block">
+                            <a class="collapsed" data-toggle="collapse" href="#permit_approval" aria-expanded="true" aria-controls="permit_approval">
+                                <div class="card-header">
+                                    <div class="div-dropdown-title">
+                                        <span class="dropdown-title-text">{{ __('data_employee_master.formemployee3') }}</span>
+                                        <img class="dropdown-triangle" src="{{ url('/pictures/triangle.png') }}" alt="Triangle">
+                                    </div>
+                                </div>
+                            </a>
+                            <div id="permit_approval" class="collapse m-3">
+                                <div class="card-block">
+                                    <table id="permit_approval_table" class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Employee Group</th>
+                                                <th>Approval</th>
+                                                <th>Employee Supervisor Group</th>
+                                                <th>Supervisor Name</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="body_permit_approval_table">
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="card" style="display: block">
-                    <a class="collapsed" data-toggle="collapse" href="#workflow_approval" aria-expanded="true" aria-controls="employee_leave">
-                        <div class="card-header">
-                            <div class="div-dropdown-title">
-                                <span class="dropdown-title-text">{{ __('data_employee_master.formemployee3') }}</span>
+                <div class="row">
+                    <div class="col-10">
+                        <div class="card" style="display: block">
+                            <a class="collapsed" data-toggle="collapse" href="#leave_approval" aria-expanded="true" aria-controls="leave_approval">
+                                <div class="card-header">
+                                    <div class="div-dropdown-title">
+                                        <span class="dropdown-title-text">{{ __('data_employee_master.formemployee4') }}</span>
+                                        <img class="dropdown-triangle" src="{{ url('/pictures/triangle.png') }}" alt="Triangle">
+                                    </div>
+                                </div>
+                            </a>
+                            <div id="leave_approval" class="collapse m-3">
+                                <div class="card-block">
+                                    <table id="leave_approval_table" class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Employee Group</th>
+                                                <th>Approval</th>
+                                                <th>Employee Supervisor Group</th>
+                                                <th>Supervisor Name</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="body_leave_approval_table">
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
-                    </a>
-                    <div id="workflow_approval" class="collapse">
-                        <div class="card-block">
-                            <table id="workflow_table" class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Employee Group</th>
-                                        <th>Approval</th>
-                                        <th>Employee Supervisor Group</th>
-                                        <th>Supervisor Name</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="body_workflow_table">
-                                </tbody>
-                            </table>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-10">
+                        <div class="card" style="display: block">
+                            <a class="collapsed" data-toggle="collapse" href="#overtime_approval" aria-expanded="true" aria-controls="overtime_approval">
+                                <div class="card-header">
+                                    <div class="div-dropdown-title">
+                                        <span class="dropdown-title-text">{{ __('data_employee_master.formemployee5') }}</span>
+                                        <img class="dropdown-triangle" src="{{ url('/pictures/triangle.png') }}" alt="Triangle">
+                                    </div>
+                                </div>
+                            </a>
+                            <div id="overtime_approval" class="collapse m-3">
+                                <div class="card-block">
+                                    <table id="overtime_approval_table" class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Employee Group</th>
+                                                <th>Approval</th>
+                                                <th>Employee Supervisor Group</th>
+                                                <th>Supervisor Name</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="body_overtime_approval_table">
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-10">
+                        <div class="card" style="display: block">
+                            <a class="collapsed" data-toggle="collapse" href="#reimbursement_approval" aria-expanded="true" aria-controls="reimbursement_approval">
+                                <div class="card-header">
+                                    <div class="div-dropdown-title">
+                                        <span class="dropdown-title-text">{{ __('data_employee_master.formemployee6') }}</span>
+                                        <img class="dropdown-triangle" src="{{ url('/pictures/triangle.png') }}" alt="Triangle">
+                                    </div>
+                                </div>
+                            </a>
+                            <div id="reimbursement_approval" class="collapse m-3">
+                                <div class="card-block">
+                                    <table id="reimbursement_approval_table" class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Employee Group</th>
+                                                <th>Approval</th>
+                                                <th>Employee Supervisor Group</th>
+                                                <th>Supervisor Name</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="body_reimbursement_approval_table">
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-10">
+                        <div class="card" style="display: block">
+                            <a class="collapsed" data-toggle="collapse" href="#business_trip_approval" aria-expanded="true" aria-controls="business_trip_approval">
+                                <div class="card-header">
+                                    <div class="div-dropdown-title">
+                                        <span class="dropdown-title-text">{{ __('data_employee_master.formemployee7') }}</span>
+                                        <img class="dropdown-triangle" src="{{ url('/pictures/triangle.png') }}" alt="Triangle">
+                                    </div>
+                                </div>
+                            </a>
+                            <div id="business_trip_approval" class="collapse m-3">
+                                <div class="card-block">
+                                    <table id="business_trip_approval_table" class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Employee Group</th>
+                                                <th>Approval</th>
+                                                <th>Employee Supervisor Group</th>
+                                                <th>Supervisor Name</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="body_business_trip_approval_table">
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-10">
+                        <div class="card" style="display: block">
+                            <a class="collapsed" data-toggle="collapse" href="#multiple_checkin_approval" aria-expanded="true" aria-controls="multiple_checkin_approval">
+                                <div class="card-header">
+                                    <div class="div-dropdown-title">
+                                        <span class="dropdown-title-text">{{ __('data_employee_master.formemployee8') }}</span>
+                                        <img class="dropdown-triangle" src="{{ url('/pictures/triangle.png') }}" alt="Triangle">
+                                    </div>
+                                </div>
+                            </a>
+                            <div id="multiple_checkin_approval" class="collapse m-3">
+                                <div class="card-block">
+                                    <table id="multiple_checkin_approval_table" class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Employee Group</th>
+                                                <th>Approval</th>
+                                                <th>Employee Supervisor Group</th>
+                                                <th>Supervisor Name</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="body_multiple_checkin_approval_table">
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- BUTTON -->
                 <div class="row">
-                    
-                        <!-- <button type="button" class="btn btn-primary" name="btn-save" id="btn-save" value="save">
-                            {{ __('trans_mass_leave.btn_save') }}
-                        </button> -->
-                        
-                        <button type="button" class="btn btn-primary" name="btn-cancel" id="btn-cancel" value="cancel">
-                            Cancel
+                    <!-- <button type="button" class="btn btn-primary" name="btn-save" id="btn-save" value="save">
+                        {{ __('data_employee_master.btn_save') }}
+                    </button> -->
+                    <div class="col-3">
+                        <button type="button" class="btn btn-outline-secondary" name="btn-cancel" id="btn-cancel" style="width: 100%;"
+                            onClick="window.location.reload();">
+                            {{ __('data_employee_master.btn_cancel') }}
                         </button>
-                  
-                    
-                        <button type="button" class="btn btn-primary" name="btn-list" id="btn-list" value="list"
+                    </div>
+                    <div class="col-3">
+                        <button type="button" class="btn btn-primary" name="btn-list" id="btn-list" style="width: 100%;"
                             data-toggle="modal" data-target="#modal_list">
-                            {{ __('trans_mass_leave.btn_list') }}
+                            {{ __('data_employee_master.btn_list') }}
                         </button>
-                  
-                    
-                        <button type="button" class="btn btn-primary" name="btn-reset" id="btn-reset" value="reset password">
-                            Reset Password
-                        </button>
-                  
-                    
-                        <button type="button" class="btn btn-primary" name="btn-active" id="btn-active" value="active">
-                            Active
-                        </button>
-                    
-                        <button type="button" class="btn btn-primary" name="btn-deactive" id="btn-deactive" value="deactive">
-                            Deactive
-                        </button>
-                  
-                        <button type="button" class="btn btn-primary" name="btn-invoice" id="btn-invoice" value="invoice">
-                            Invoice
-                        </button>
-
-                        <button type="button" class="btn btn-primary" name="btn-export" id="btn-export" value="export">
-                            Export Emp
-                        </button>
+                    </div>
+                    <!-- <button type="button" class="btn btn-primary" name="btn-reset" id="btn-reset" value="reset password">
+                        Reset Password
+                    </button>
+                    <button type="button" class="btn btn-primary" name="btn-active" id="btn-active" value="active">
+                        Active
+                    </button>
+                    <button type="button" class="btn btn-primary" name="btn-deactive" id="btn-deactive" value="deactive">
+                        Deactive
+                    </button>
+                    <button type="button" class="btn btn-primary" name="btn-invoice" id="btn-invoice" value="invoice">
+                        Invoice
+                    </button>
+                    <button type="button" class="btn btn-primary" name="btn-export" id="btn-export" value="export">
+                        Export Emp
+                    </button> -->
                 </div>
             </div>
         </form>
@@ -453,8 +614,6 @@
 <script src="{{ asset('js/jquery.redirect.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-<script src="{{ asset('js/flatpickr.js') }}"></script>
-<script src="{{ asset('js/flatpickr.monthselect.js') }}"></script>
 <script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
 
 <script type="text/javascript">
@@ -477,23 +636,6 @@
     window.onload = function() {
         savePreviousURL();
     }
-    
-    let pickerJoinDate = $('#join_date').flatpickr({
-        altInput: true,
-        allowInput: true,
-        altFormat: "j-M-y",
-        dateFormat: "Y-m-d",
-        defaultDate: "today",
-        onReady: function () {
-            var flatPickrInstance = this;
-            var $flatPickrInput = $(flatPickrInstance.element);
-            $flatPickrInput.siblings("#join_date_calendar").click(function () {
-                flatPickrInstance.toggle();
-            });
-        }
-    });
-
-    pickerJoinDate._input.setAttribute('disabled', 'disalbed');
         
     $('#btn-list').click(()=> {
         $('#example').DataTable().destroy();
@@ -539,16 +681,19 @@
                 'employeeNo': data.employeeNo
             }
         }).then(function (data) {
-            console.log(data);
-            // $('#user_id').val((typeof data[0].userDetail.userID !== 'undefined') ? data[0].userDetail.userID : '');
+            $('#status').val(data[0].recordStatus);
+            $('#user_id').val(data[0].userID);
             $('#employee_no').val(data[0].employeeNo);
             $('#full_name').val(data[0].fullName);
-            pickerJoinDate.setDate(((typeof data[0].joinDate !== 'undefined') ? data[0].joinDate : ''));
-            $('#join_date_hidden').val(((typeof data[0].joinDate !== 'undefined') ? data[0].joinDate : ''));
-            $('#phone').val(data[0].peMasterInfo.personalHandphone);
-            $('#company_code').val(data[0].companyCode).trigger('change');
-            $('#office_location').val(data[0].officeLocation).trigger('change');
-            $('#address').val(data[0].peMasterInfo.homeAddress);
+            $('#phone').val(data[0].personalPhone);
+            $('#company_code').val(data[0].companyName);
+            $('#address').val(data[0].homeAddress);
+            $('#office_location').val(data[0].officeLocation);
+            $('#join_date').val(moment(data[0].joinDate).format('YYYY-MM-DD'));
+            $('#personel_email').val(data[0].personalEmail);
+            $('#company_email').val(data[0].companyEmail);
+            $('#division').val(data[0].division);
+            $('#ranking').val(data[0].rankingCode);
             $('#employee_no').prop('readonly', true);
 
             if(data[0].peMasterFamily.length > 0){
@@ -588,198 +733,47 @@
                     'employeeNo': $(this).val()
                 }
             }).then(function (data) {
-                // console.log(data)
-                // $('#user_id').val((typeof data[0].userDetail.userID !== 'undefined') ? data[0].userDetail.userID : '');
+                $('#status').val(data[0].recordStatus);
+                $('#user_id').val(data[0].userID);
                 $('#employee_no').val(data[0].employeeNo);
                 $('#full_name').val(data[0].fullName);
-                $('#phone').val(data[0].peMasterInfo.homePhone);
-                $('#address').val(data[0].peMasterInfo.homeAddress);
-                $('#office_location').val(data[0].locationCode).trigger('change');
-                pickerJoinDate.setDate(((typeof data[0].joinDate !== 'undefined') ? data[0].joinDate : ''));
-                $('#join_date_hidden').val(((typeof data[0].joinDate !== 'undefined') ? data[0].joinDate : ''));
-                $('#user_id').prop('readonly', true);
+                $('#phone').val(data[0].personalPhone);
+                $('#company_code').val(data[0].companyName);
+                $('#address').val(data[0].homeAddress);
+                $('#office_location').val(data[0].officeLocation);
+                $('#join_date').val(moment(data[0].joinDate).format('YYYY-MM-DD'));
+                $('#personel_email').val(data[0].personalEmail);
+                $('#company_email').val(data[0].companyEmail);
+                $('#division').val(data[0].division);
+                $('#ranking').val(data[0].rankingCode);
                 $('#employee_no').prop('readonly', true);
-                $('#password').prop('readonly', true);
 
-                $.ajax({
-                    type: 'GET',
-                    url: "{{ url('/office_location/func/api') }}",
-                    data: {
-                        'locationCode': data[0].locationCode,
-                    }
-                }).then(function (data) {
-                    var option = new Option(data[0].locationName, data[0].locationCode, true, true);
+                if(data[0].peMasterFamily.length > 0){
+                    $('#body_dependent_table').append('');
+                }else{
+                    $('#body_dependent_table').append(
+                        '<tr><td colspan="6" style="text-align: center;">No Data</td></tr>'
+                    );
+                }
 
-                    $('#office_location').append(option).trigger('change');
+                if(data[0].pePlafon.length > 0){
+                    $('#body_plafon_table').append('');
+                }else{
+                    $('#body_plafon_table').append(
+                        '<tr><td colspan="3" style="text-align: center;">No Data</td></tr>'
+                    );
+                }
 
-                    $('#office_location').trigger({
-                        type: 'select2:select',
-                        params: {
-                            id: data[0].locationCode,
-                            text: data[0].locationName,
-                            data: data[0]
-                        }
-                    });
-                });
+                if(data[0].peMasterLeave != null){
+                    $('#body_leave_table').append('');
+                }else{
+                    $('#body_leave_table').append(
+                        '<tr><td colspan="3" style="text-align: center;">No Data</td></tr>'
+                    );
+                }
             });
         }
     });
-
-    loadDataCompanyCode();
-    loadDataOfficeLocation();
-
-    $.get("{{ url('company_under_holding/api') }}", function (data) {
-            $.each(data, function (k, v) {
-                $('#company_code').append("<option value=" + v.companyCode + ">" + v.companyName +
-                    "</option>");
-            });
-        });
-
-    $.get("{{ url('office_location/api') }}", function (data) {
-        $.each(data, function (k, v) {
-            $('#office_location').append("<option value=" + v.locationCode + ">" + v.locationName +
-                "</option>");
-        });
-    });
-
-    $('#select').focus(function (event) {
-            var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
-            $searchfield.prop('disabled', true);
-    });
-
-    $('#select').click(function (event) {
-        var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
-        $searchfield.prop('disabled', true);
-    });
-
-    $('#select').change(function (event) {
-        var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
-        $searchfield.prop('disabled', true);
-    });
-
-    $('select').on('select2:close', function (e) {
-        $('.header-select').remove();
-    });
-
-    function loadDataCompanyCode(){
-        function formatSelect(data) {
-            if (data.loading) {
-                return $search
-            }
-
-            if (data.id) {
-                var $result2 = $('<div class="row">' + 
-                    '<div class="col-6">' + data.data.companyName + '<div>' +
-                    '</div>');
-
-                return $result2;
-            }
-        }
-
-        var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
-        
-        $('#company_code').select2({
-            width: '100%',
-            placeholder: 'Choose Company Code',
-            allowClear: true,
-            // multiple: true,
-            // tags: true,
-            closeOnSelect: true,
-            language: {
-                errorLoading: function () {
-                    return $search;
-                },
-                searching: function () {
-                    return $search;
-                }
-            },
-            ajax: {
-                url: "{{ url('/company_under_holding/api') }}",
-                dataType: 'json',
-                delay: 250,
-                type: "GET",
-                data: function (params) {
-                    return {
-                        _token: $('meta[name="csrf-token"]').attr('content'),
-                        search: params.term
-                    };
-                },
-                processResults: function (data) {
-                    return {
-                        results: $.map(data, function (item) {
-                            return {
-                                text: item.companyName,
-                                id: item.companyCode,
-                                data: item
-                            }
-                        })
-                    };
-                },
-                cache: true,
-            },
-            templateResult: formatSelect
-        });
-    }
-
-    function loadDataOfficeLocation(){
-        function formatSelect(data) {
-            if (data.loading) {
-                return $search
-            }
-
-            if (data.id) {
-                var $result2 = $('<div class="row">' + 
-                    '<div class="col-6">' + data.data.officeDesc + '<div>' +
-                    '</div>');
-
-                return $result2;
-            }
-        }
-
-        var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
-        
-        $('#office_location').select2({
-            width: '100%',
-            placeholder: 'Choose Office Location',
-            allowClear: true,
-            // multiple: true,
-            // tags: true,
-            closeOnSelect: true,
-            language: {
-                errorLoading: function () {
-                    return $search;
-                },
-                searching: function () {
-                    return $search;
-                }
-            },
-            ajax: {
-                url: "{{ url('/office_location/api') }}",
-                dataType: 'json',
-                delay: 250,
-                type: "GET",
-                data: function (params) {
-                    return {
-                        _token: $('meta[name="csrf-token"]').attr('content'),
-                        search: params.term
-                    };
-                },
-                processResults: function (data) {
-                    return {
-                        results: $.map(data, function (item) {
-                            return {
-                                text: item.officeDesc,
-                                id: item.officeCode,
-                                data: item
-                            }
-                        })
-                    };
-                },
-                cache: true,
-            },
-            templateResult: formatSelect
-        });
-    }
 </script>
 
 </html>
