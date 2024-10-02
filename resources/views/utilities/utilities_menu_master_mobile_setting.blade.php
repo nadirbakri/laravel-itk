@@ -771,12 +771,19 @@
             var row = table.row(tr);
             var icon = $(this).find('i');
 
+            // Tutup semua child row yang sedang terbuka
+            table.rows().every(function () {
+                if (this.child.isShown() && !this.node().isEqualNode(tr[0])) {
+                    this.child.hide();
+                    $(this.node()).find('i').removeClass('fa-minus').addClass('fa-plus');
+                }
+            });
+
+            // Toggle untuk child row yang diklik
             if (row.child.isShown()) {
-                // Child row sedang terbuka - tutup sekarang
                 row.child.hide();
                 icon.removeClass('fa-minus').addClass('fa-plus');
             } else {
-                // Child row sedang tertutup - buka sekarang
                 row.child(format(row.data())).show();
                 icon.removeClass('fa-plus').addClass('fa-minus');
             }
