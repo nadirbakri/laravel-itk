@@ -223,9 +223,10 @@
                                     <table id="leave_table" class="table table-bordered">
                                         <thead>
                                             <tr>
-                                                <th>#</th>
                                                 <th>Leave Type</th>
                                                 <th>Leave Balance</th>
+                                                <th>Leave Balance Before</th>
+                                                <th>Leave Balance Before Expired Date</th>
                                             </tr>
                                         </thead>
                                         <tbody id="body_employee_leave_table">
@@ -253,9 +254,8 @@
                                     <table id="plafon_table" class="table table-bordered">
                                         <thead>
                                             <tr>
-                                                <th>#</th>
-                                                <th>Reimbursement Type</th>
-                                                <th>Reimbursement Plafon Balance</th>
+                                                <th>Plafon Type</th>
+                                                <th>Plafon Balance</th>
                                             </tr>
                                         </thead>
                                         <tbody id="body_employee_plafon_table">
@@ -283,12 +283,12 @@
                                     <table id="dependent_table" class="table table-bordered">
                                         <thead>
                                             <tr>
-                                                <th>#</th>
                                                 <th>Relation</th>
                                                 <th>Dependant Name</th>
                                                 <th>Date of Birth</th>
                                                 <th>Gender</th>
-                                                <th>Status</th>
+                                                <th>Flag Medical</th>
+                                                <th>Flag Payroll</th>
                                             </tr>
                                         </thead>
                                         <tbody id="body_dependent_table">
@@ -690,33 +690,64 @@
             $('#address').val(data[0].homeAddress);
             $('#office_location').val(data[0].officeLocation);
             $('#join_date').val(moment(data[0].joinDate).format('YYYY-MM-DD'));
-            $('#personel_email').val(data[0].personalEmail);
+            $('#personal_email').val(data[0].personalEmail);
             $('#company_email').val(data[0].companyEmail);
             $('#division').val(data[0].division);
             $('#ranking').val(data[0].rankingCode);
             $('#employee_no').prop('readonly', true);
 
-            if(data[0].peMasterFamily.length > 0){
-                $('#body_dependent_table').append('');
+            if(data[0].leave != null){
+                $.each(data[0].leave, function (k, v) {
+                    let leaveBalanceBeforeExpiredDate = '-'
+                    if(v.leaveBalanceBeforeExpiredDate != null){
+                        leaveBalanceBeforeExpiredDate = moment(v.leaveBalanceBeforeExpiredDate).format('YYYY-MM-DD')
+                    }
+                    $('#body_employee_leave_table').append(
+                        '<tr>'+
+                        '<td>'+ v.leaveCode +'</td>'+
+                        '<td>'+ v.leaveBalance +'</td>'+
+                        '<td>'+ v.leaveBalanceBefore +'</td>'+
+                        '<td>'+ leaveBalanceBeforeExpiredDate +'</td>'+
+                        '</tr>'
+                    );
+                });
+            }else{
+                $('#body_employee_leave_table').append(
+                    '<tr><td colspan="4" style="text-align: center;">No Data</td></tr>'
+                );
+            }
+
+            if(data[0].plafon != null){
+                $.each(data[0].plafon, function (k, v) {
+                    $('#body_employee_plafon_table').append(
+                        '<tr>'+
+                        '<td>'+ v.plafonCode +'</td>'+
+                        '<td>'+ v.plafonAmount +'</td>'+
+                        '</tr>'
+                    );
+                });
+            }else{
+                $('#body_employee_plafon_table').append(
+                    '<tr><td colspan="2" style="text-align: center;">No Data</td></tr>'
+                );
+            }
+
+            if(data[0].family != null){
+                $.each(data[0].family, function (k, v) {
+                    $('#body_dependent_table').append(
+                        '<tr>'+
+                        '<td>'+ v.relationCode +'</td>'+
+                        '<td>'+ v.familyName +'</td>'+
+                        '<td>'+ v.birthDate +'</td>'+
+                        '<td>'+ v.gender +'</td>'+
+                        '<td>'+ v.flagMedical +'</td>'+
+                        '<td>'+ v.flagPayroll +'</td>'+
+                        '</tr>'
+                    );
+                });
             }else{
                 $('#body_dependent_table').append(
                     '<tr><td colspan="6" style="text-align: center;">No Data</td></tr>'
-                );
-            }
-
-            if(data[0].pePlafon.length > 0){
-                $('#body_plafon_table').append('');
-            }else{
-                $('#body_plafon_table').append(
-                    '<tr><td colspan="3" style="text-align: center;">No Data</td></tr>'
-                );
-            }
-
-            if(data[0].peMasterLeave != null){
-                $('#body_leave_table').append('');
-            }else{
-                $('#body_leave_table').append(
-                    '<tr><td colspan="3" style="text-align: center;">No Data</td></tr>'
                 );
             }
         });
@@ -742,33 +773,64 @@
                 $('#address').val(data[0].homeAddress);
                 $('#office_location').val(data[0].officeLocation);
                 $('#join_date').val(moment(data[0].joinDate).format('YYYY-MM-DD'));
-                $('#personel_email').val(data[0].personalEmail);
+                $('#personal_email').val(data[0].personalEmail);
                 $('#company_email').val(data[0].companyEmail);
                 $('#division').val(data[0].division);
                 $('#ranking').val(data[0].rankingCode);
                 $('#employee_no').prop('readonly', true);
 
-                if(data[0].peMasterFamily.length > 0){
-                    $('#body_dependent_table').append('');
+                if(data[0].leave != null){
+                    $.each(data[0].leave, function (k, v) {
+                        let leaveBalanceBeforeExpiredDate = '-'
+                        if(v.leaveBalanceBeforeExpiredDate != null){
+                            leaveBalanceBeforeExpiredDate = moment(v.leaveBalanceBeforeExpiredDate).format('YYYY-MM-DD')
+                        }
+                        $('#body_employee_leave_table').append(
+                            '<tr>'+
+                            '<td>'+ v.leaveCode +'</td>'+
+                            '<td>'+ v.leaveBalance +'</td>'+
+                            '<td>'+ v.leaveBalanceBefore +'</td>'+
+                            '<td>'+ leaveBalanceBeforeExpiredDate +'</td>'+
+                            '</tr>'
+                        );
+                    });
+                }else{
+                    $('#body_employee_leave_table').append(
+                        '<tr><td colspan="4" style="text-align: center;">No Data</td></tr>'
+                    );
+                }
+
+                if(data[0].plafon != null){
+                    $.each(data[0].plafon, function (k, v) {
+                        $('#body_employee_plafon_table').append(
+                            '<tr>'+
+                            '<td>'+ v.plafonCode +'</td>'+
+                            '<td>'+ v.plafonAmount +'</td>'+
+                            '</tr>'
+                        );
+                    });
+                }else{
+                    $('#body_employee_plafon_table').append(
+                        '<tr><td colspan="2" style="text-align: center;">No Data</td></tr>'
+                    );
+                }
+
+                if(data[0].family != null){
+                    $.each(data[0].family, function (k, v) {
+                        $('#body_dependent_table').append(
+                            '<tr>'+
+                            '<td>'+ v.relationCode +'</td>'+
+                            '<td>'+ v.familyName +'</td>'+
+                            '<td>'+ moment(v.birthDate).format('YYYY-MM-DD') +'</td>'+
+                            '<td>'+ v.gender +'</td>'+
+                            '<td>'+ v.flagMedical +'</td>'+
+                            '<td>'+ v.flagPayroll +'</td>'+
+                            '</tr>'
+                        );
+                    });
                 }else{
                     $('#body_dependent_table').append(
                         '<tr><td colspan="6" style="text-align: center;">No Data</td></tr>'
-                    );
-                }
-
-                if(data[0].pePlafon.length > 0){
-                    $('#body_plafon_table').append('');
-                }else{
-                    $('#body_plafon_table').append(
-                        '<tr><td colspan="3" style="text-align: center;">No Data</td></tr>'
-                    );
-                }
-
-                if(data[0].peMasterLeave != null){
-                    $('#body_leave_table').append('');
-                }else{
-                    $('#body_leave_table').append(
-                        '<tr><td colspan="3" style="text-align: center;">No Data</td></tr>'
                     );
                 }
             });
