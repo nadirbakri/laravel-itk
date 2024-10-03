@@ -10,6 +10,7 @@ return [
     'label_business_unit' => 'Business Unit',
     'label_to' => 'To',
     'label_status' => 'Status',
+    'label_bst_status' => 'Business Trip Status',
     'btn_export' => 'Export',
     'label_slip' => 'Slip',
     'btn_preview' => 'Preview',

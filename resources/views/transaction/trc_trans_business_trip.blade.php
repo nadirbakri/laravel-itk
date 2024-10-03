@@ -897,7 +897,7 @@
     loadDataFirstLastAllBusinessUnit();
     loadDataStatus();
     loadDataFirstLastAllStatus();
-    loadDataUpdateStatus();
+    // loadDataUpdateStatus();
 
     $.get("{{ url('level/all/api') }}", function (data) {
         $.each(data, function (k, v) {

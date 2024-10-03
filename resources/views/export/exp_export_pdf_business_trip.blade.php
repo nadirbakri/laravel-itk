@@ -171,6 +171,18 @@
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label for="business_trip_status">{{ __('export_business_trip.label_bst_status') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <select class="form-control select2" id="business_trip_status" name="business_trip_status"></select>
+                        </div>
+                    </div>
+                </div>
 
                 <!-- BUTTON -->
                 <div class="row">
@@ -281,8 +293,10 @@
 
 loadDataBusinessUnit();
 loadDataTravelType();
+loadDataFirstLastAllTravelType();
+loadDataFirstLastAllBusinessUnit();
 loadDataStatus();
-loadDataFirstLastAllBusinessUnit ();
+loadDataFirstLastAllStatus();
 
         // $.get("{{ url('level/api') }}", function (data) {
         //     $.each(data, function (k, v) {
@@ -296,13 +310,6 @@ loadDataFirstLastAllBusinessUnit ();
                     "</option>");
             });
         });
-        // $.get("{{ url('status/func/api') }}", function (data) {
-        //     $.each(data, function (k, v) {
-        //         $('#status').append("<option value=" + v.variable + ">" + v.value +
-        //             "</option>");
-        //     });
-        // });
-
 
         $('#select').focus(function (event) {
                 var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
@@ -458,6 +465,21 @@ loadDataFirstLastAllBusinessUnit ();
             });
         }
 
+        function loadDataFirstLastAllTravelType () {
+            $('#travel_type').addClass('spinner-border');
+
+            $.ajax({
+                type: 'GET',
+                url: "{{ url('/travel_type/all/api') }}",
+            }).then(function (data) {
+                if (!$('#travel_type').find('option:contains(' + data.value + ')').length) {
+                    $('#travel_type').append($('<option>').val(data.comGenCode).text(data.value));
+                }
+                $('#travel_type').val(data.comGenCode);
+                $('#travel_type').removeClass('loading');
+            });
+        }
+
         function loadDataStatus(){
             function formatSelect(data) {
                 if (data.loading) {
@@ -475,7 +497,7 @@ loadDataFirstLastAllBusinessUnit ();
 
             var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
             
-            $('#status').select2({
+            $('#business_trip_status').select2({
                 width: '100%',
                 placeholder: 'Choose Status',
                 allowClear: true,
@@ -491,14 +513,14 @@ loadDataFirstLastAllBusinessUnit ();
                     }
                 },
                 ajax: {
-                    url: "{{ url('/status/func/api') }}",
+                    url: "{{ url('/status_trans/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
                     data: function (params) {
                         return {
                             _token: $('meta[name="csrf-token"]').attr('content'),
-                            search: params.term
+                            search: params.term,
                         };
                     },
                     processResults: function (data) {
@@ -506,7 +528,7 @@ loadDataFirstLastAllBusinessUnit ();
                             results: $.map(data, function (item) {
                                 return {
                                     text: item.value,
-                                    id: item.comGenCode,
+                                    id: item.value,
                                     data: item
                                 }
                             })
@@ -515,6 +537,20 @@ loadDataFirstLastAllBusinessUnit ();
                     cache: true,
                 },
                 templateResult: formatSelect
+            });
+        }
+
+        function loadDataFirstLastAllStatus() {
+            $('#business_trip_status').addClass('spinner-border');
+
+            $.ajax({
+                type: 'GET',
+                url: "{{ url('/status_trans/api') }}",
+            }).then(function (data) {
+                $('#business_trip_status').prepend($('<option>').val('ALL').text('ALL'));
+                $('#business_trip_status option:contains("ALL")').not(':first').remove();
+                $('#business_trip_status').val('ALL');
+                $('#business_trip_status').removeClass('spinner-border');
             });
         }
 
@@ -544,7 +580,7 @@ loadDataFirstLastAllBusinessUnit ();
                         success: function (result, status, xhr) {
                             $("#btn-preview").prop("disabled", false);
                             $("#btn-preview").html(
-                                '<i class="fa fa-print"></i> {{ __("personel_employee_list.btn_print") }}'
+                                '<i class="fa fa-download"></i> {{ __("export_pdf_business_trip.btn_export") }}'
                             );
                             var disposition = xhr.getResponseHeader('content-disposition');
                             var matches = /"([^"]*)"/.exec(disposition);
@@ -570,7 +606,7 @@ loadDataFirstLastAllBusinessUnit ();
                         error: function (response) {
                             $("#btn-preview").prop("disabled", false);
                             $("#btn-preview").html(
-                                '<i class="fa fa-print"></i> {{ __("personel_employee_list.btn_print") }}'
+                                '<i class="fa fa-download"></i> {{ __("export_pdf_business_trip.btn_export") }}'
                             );
                             $('#notification_error').modal('show');
                             $('#message-notification-error').html(response);

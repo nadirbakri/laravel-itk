@@ -174,12 +174,12 @@
                 <div class="row">
                     <div class="col-3">
                         <div class="form-group">
-                            <label for="business_trp_status">{{ __('export_business_trip.label_bst_status') }}</label>
+                            <label for="business_trip_status">{{ __('export_business_trip.label_bst_status') }}</label>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
-                            <select class="form-control select2" id="business_trp_status" name="business_trp_status"></select>
+                            <select class="form-control select2" id="business_trip_status" name="business_trip_status"></select>
                         </div>
                     </div>
                 </div>
@@ -500,7 +500,7 @@ loadDataFirstLastAllStatus();
 
             var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
             
-            $('#business_trp_status').select2({
+            $('#business_trip_status').select2({
                 width: '100%',
                 placeholder: 'Choose Status',
                 allowClear: true,
@@ -544,16 +544,16 @@ loadDataFirstLastAllStatus();
         }
 
         function loadDataFirstLastAllStatus() {
-            $('#business_trp_status').addClass('spinner-border');
+            $('#business_trip_status').addClass('spinner-border');
 
             $.ajax({
                 type: 'GET',
                 url: "{{ url('/status_trans/api') }}",
             }).then(function (data) {
-                $('#business_trp_status').prepend($('<option>').val('ALL').text('ALL'));
-                $('#business_trp_status option:contains("ALL")').not(':first').remove();
-                $('#business_trp_status').val('ALL');
-                $('#business_trp_status').removeClass('spinner-border');
+                $('#business_trip_status').prepend($('<option>').val('ALL').text('ALL'));
+                $('#business_trip_status option:contains("ALL")').not(':first').remove();
+                $('#business_trip_status').val('ALL');
+                $('#business_trip_status').removeClass('spinner-border');
             });
         }
 
