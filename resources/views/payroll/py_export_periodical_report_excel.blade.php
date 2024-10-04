@@ -53,12 +53,11 @@
                         @endif
                     </th>
                 </tr>
-                <tr></tr>
                 <tr>
-                    <th colspan="{{ $countcolspan }}" style="text-align:center; font-weight:bold;"><h3>{{ $report_name }}</h3></th>
+                    <th colspan="{{ $countcolspan }}" style="text-align:left; font-weight:bold;">{{ $report_name }}</th>
                 </tr>
                 <tr>
-                    <th colspan="{{ $countcolspan }}" style="text-align:center; font-weight:bold;"><pre>Periode   :    {{ $data_period }}</pre></th>
+                    <th colspan="{{ $countcolspan }}" style="text-align:left; font-weight:bold;"><pre>Periode   :    {{ $data_period }}</pre></th>
                 </tr>
                 <tr></tr>
             </thead>
@@ -103,14 +102,18 @@
                         ?>
                         @if(!is_string($dataTable2->value) && $dataTable2->dataFormat == "#,##0")
                             <?php
-                            $totalKey = $dataTable2->field . '_' . $key2;
-                            $total[$totalKey] += $dataTable2->value;
+                            if(!empty($dataTable2->value)){
+                                $totalKey = $dataTable2->field . '_' . $key2;
+                                $total[$totalKey] += $dataTable2->value;
+                            }
                             ?>
                             <td data-format="{{ $dataTable2->dataFormat }}" style="text-align:{{ $alignment }}; border:1px solid #000;">{{ $dataTable2->value }}</td>
                         @elseif(!is_string($dataTable2->value) && $dataTable2->dataFormat == "#,##0.00")
                             <?php
-                            $totalKey = $dataTable2->field . '_' . $key2;
-                            $total[$totalKey] += $dataTable2->value;
+                            if(!empty($dataTable2->value)){
+                                $totalKey = $dataTable2->field . '_' . $key2;
+                                $total[$totalKey] += $dataTable2->value;
+                            }
                             ?>
                             <td data-format="{{ $dataTable2->dataFormat }}" style="text-align:{{ $alignment }}; border:1px solid #000;">{{ $dataTable2->value }}</td>
                         
@@ -244,16 +247,20 @@
                             ?>
                             @if(!is_string($dataRow2->value) && $dataRow2->dataFormat == "#,##0")
                                 <?php
-                                    $totalKey = $dataRow2->field . '_' . $key2;
-                                    $total[$branch][$totalKey] += $dataRow2->value;
-                                    $totalBranch[$branch] += $total[$branch][$totalKey];
+                                    if(!empty($dataRow2->value)){
+                                        $totalKey = $dataRow2->field . '_' . $key2;
+                                        $total[$branch][$totalKey] += $dataRow2->value;
+                                        $totalBranch[$branch] += $total[$branch][$totalKey];
+                                    }
                                 ?>
                                 <td data-format="{{ $dataRow2->dataFormat }}" style="text-align:{{ $alignment }}; border:1px solid #000;">{{ $dataRow2->value }}</td>
                             @elseif(!is_string($dataRow2->value) && $dataRow2->dataFormat == "#,##0.00")
                                 <?php
-                                    $totalKey = $dataRow2->field . '_' . $key2;
-                                    $total[$branch][$totalKey] += $dataRow2->value;
-                                    $totalBranch[$branch] += $total[$branch][$totalKey];
+                                    if(!empty($dataRow2->value)){
+                                        $totalKey = $dataRow2->field . '_' . $key2;
+                                        $total[$branch][$totalKey] += $dataRow2->value;
+                                        $totalBranch[$branch] += $total[$branch][$totalKey];
+                                    }
                                 ?>
                                 <td data-format="{{ $dataRow2->dataFormat }}" style="text-align:{{ $alignment }}; border:1px solid #000;">{{ $dataRow2->value }}</td>
                             @elseif($dataRow2->dataFormat == "dd/MM/yyyy")
@@ -373,14 +380,18 @@
                             ?>
                             @if(!is_string($dataRow2->value) && $dataRow2->dataFormat == "#,##0")
                                 <?php
-                                    $total[$dataRow->companyName][$key2] += $dataRow2->value;
-                                    $totalCompany[$dataRow->companyName] += $total[$dataRow->companyName][$key2];
+                                    if(!empty($dataRow2->value)){
+                                        $total[$dataRow->companyName][$key2] += $dataRow2->value;
+                                        $totalCompany[$dataRow->companyName] += $total[$dataRow->companyName][$key2];
+                                    }
                                 ?>
                                 <td data-format="{{ $dataRow2->dataFormat }}" style="text-align:{{ $alignment }}; border:1px solid #000;">{{ $dataRow2->value }}</td>
                             @elseif(!is_string($dataRow2->value) && $dataRow2->dataFormat == "#,##0.00")
                                 <?php
-                                    $total[$dataRow->companyName][$key2] += $dataRow2->value;
-                                    $totalCompany[$dataRow->companyName] += $total[$dataRow->companyName][$key2];
+                                    if(!empty($dataRow2->value)){
+                                        $total[$dataRow->companyName][$key2] += $dataRow2->value;
+                                        $totalCompany[$dataRow->companyName] += $total[$dataRow->companyName][$key2];
+                                    }
                                 ?>
                                 <td data-format="{{ $dataRow2->dataFormat }}" style="text-align:{{ $alignment }}; border:1px solid #000;">{{ $dataRow2->value }}</td>
                             @elseif($dataRow2->dataFormat == "dd/MM/yyyy")

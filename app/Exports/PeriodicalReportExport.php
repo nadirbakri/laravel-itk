@@ -175,7 +175,22 @@ class PeriodicalReportExport extends DefaultValueBinder implements WithCustomVal
         $arrResult = json_decode($response->getBody()->getContents());
         $arrCompany = json_decode($responseGetCompany->getBody()->getContents());
 
-        // dd($arrResult->dataListSet);
+        // dd($arrResult->dataListSet[0]->detail[0]->field);
+
+        // foreach ($arrResult->dataListSet[0]->detail as $key => $dataTable) {
+            // var_dump($dataTable->employeeNo);
+            // var_dump(count($dataTable->field));
+            // foreach ($dataTable->field as $key2 => $dataTable2) {
+            //     if (!is_string($dataTable2->value) && $dataTable2->dataFormat == "#,##0") {
+            //         $totalKey = $dataTable2->field . '_' . $key2;
+            //         $total[$totalKey] += $dataTable2->value;
+            //     } else if (!is_string($dataTable2->value) && $dataTable2->dataFormat == "#,##0.00") {
+            //         $totalKey = $dataTable2->field . '_' . $key2;
+            //         $total[$totalKey] += $dataTable2->value;
+            //     }
+            // }
+        // }
+        // exit;
 
         // $indexes = [];
 
@@ -192,8 +207,32 @@ class PeriodicalReportExport extends DefaultValueBinder implements WithCustomVal
         //     }
         // }
 
+        // Check Total
+        // foreach ($arrResult->dataListSet[0]->detail[0]->field as $key => $dataTable) {
+        //     if(!empty($dataTable->value) && !is_string($dataTable->value)){
+        //         $totalKey = $dataTable->field . '_' . $key;
+        //         $total[$totalKey] = 0;
+        //     }else{
+        //         $totalKey = $dataTable->field . '_' . $key;
+        //         $total[$totalKey] = '';
+        //     }
+        // }
+
+        // foreach ($arrResult->dataListSet[0]->detail as $key => $dataTable) {
+        //     foreach ($dataTable->field as $key2 => $dataTable2) {
+        //         if (!empty($dataTable2->value) && !is_string($dataTable2->value) && $dataTable2->dataFormat == "#,##0") {
+        //             $totalKey = $dataTable2->field . '_' . $key2;
+        //             $total[$totalKey] += $dataTable2->value;
+        //         } else if (!empty($dataTable2->value) && !is_string($dataTable2->value) && $dataTable2->dataFormat == "#,##0.00") {
+        //             $totalKey = $dataTable2->field . '_' . $key2;
+        //             $total[$totalKey] += $dataTable2->value;
+        //         }
+        //     }
+        // }
+
         // Storage::put('debug_data.txt', json_encode($arrResult->dataListSet));
         // dd(implode(', ', $indexes));
+        // dd($this->reportNameDetail);
         // exit;
 
         if($arrResult->dataListSet == null){
