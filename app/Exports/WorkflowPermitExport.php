@@ -37,6 +37,7 @@ class WorkflowPermitExport implements FromView, ShouldAutoSize
                 'endDate' => $this->permitDateTo,
                 'businessUnit' =>$this->businessUnit,
                 'exportMenu' => false,
+                'isWeb' => true,
                 'status' => $this->status,
                 'companyCode' => Session::get('companyCode'), 
                 'languageCode' => App::getLocale(), 

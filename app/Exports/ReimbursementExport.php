@@ -41,6 +41,7 @@ class ReimbursementExport implements FromView, ShouldAutoSize
                             'reimbursementType' => $this->reimbursementType,
                             'businessUnit'=> $this->businessUnit,
                             'exportMenu' => false,
+                            'isWeb' => true,
                             'status' => $this->status,
                             'companyCode' => Session::get('companyCode'), 
                             'languageCode' => strtoupper(App::getLocale()), 

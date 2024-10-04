@@ -38,6 +38,7 @@ class MultipleChecking implements FromView, ShouldAutoSize
                 'businessUnit'=> $this->businessUnit,
                 'userID'=> $this->userID,
                 'exportMenu'=> true,
+                'isWeb' => true,
                 'companyCode' => Session::get('companyCode'), 
                 'languageCode' => App::getLocale(), 
                 'sessionID' => 0, 

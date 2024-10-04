@@ -38,6 +38,7 @@ class BusinessTripSeattleExportPDF implements FromView, ShouldAutoSize
                 'languageCode' => App::getLocale(), 
                 'sessionID' => 0, 
                 'exportMenu' => true,
+                'isWeb' => true,
                 'type' => 'SETTLEMENT',
                 'businessUnit' =>$this->businessUnit,
                 'sessionUserID' => Session::get('userID'),

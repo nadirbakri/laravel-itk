@@ -36,6 +36,7 @@ class AttendanceExport implements FromView, ShouldAutoSize
                 'startDate' => Carbon::parse($this->claimDateFrom)->format('Y-m-d'),
                 'endDate' => Carbon::parse($this->claimDateTo)->format('Y-m-d'),
                 'companyCode' => Session::get('companyCode'), 
+                'isWeb' => true,
                 'languageCode' => App::getLocale(), 
                 'userID' => Session::get('userID'),
                 'sessionID' => 0, 

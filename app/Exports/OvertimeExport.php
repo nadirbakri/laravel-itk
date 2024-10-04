@@ -43,6 +43,7 @@ class OvertimeExport implements FromView, ShouldAutoSize
                 'sessionID' => 0, 
                 'sessionUserID' => Session::get('userID'),
                 'exportMenu' => false,
+                'isWeb' => true,
                 'status'=> $this->overtime_status
             ];
 

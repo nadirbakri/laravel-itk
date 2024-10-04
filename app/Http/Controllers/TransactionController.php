@@ -1494,7 +1494,6 @@ class TransactionController extends Controller
         return $import->getArrResult();
     }
    
-
     public function importUpdateMedical(Request $request)
     {
         try{

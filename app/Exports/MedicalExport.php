@@ -39,6 +39,7 @@ class MedicalExport implements FromView, ShouldAutoSize
                 'medicalType1'=> $this->reimbursementType,
                 'businessUnit'=> $this->businessUnit,
                 'exportMenu' => false,
+                'isWeb' => true,
                 'status'=> $this->status,
                 'companyCode' => Session::get('companyCode'), 
                 'languageCode' => App::getLocale(), 

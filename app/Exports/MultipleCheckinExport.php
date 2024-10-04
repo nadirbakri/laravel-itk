@@ -37,6 +37,7 @@ class MultipleCheckinExport implements FromView, ShouldAutoSize
                 'businessUnit' => $this->businessUnit,
                 'employeeNo' => null,
                 'exportMenu' => false,
+                'isWeb' => true,
                 'companyCode' => Session::get('companyCode'), 
                 'languageCode' => strtoupper(App::getLocale()), 
                 'userID' => Session::get('userID'),
