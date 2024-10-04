@@ -48,7 +48,7 @@ class MedicalExport implements FromView, ShouldAutoSize
                 'sessionUserID' => Session::get('userID'),
             ];
 
-            $response = $client->post(env('API_URL') . '/mobile/reimbursementmedical/getreimbursementdetaillistall',
+            $response = $client->post(env('API_URL') . '/mobile/reimbursementmedical/getreimbursementdetaillistallweb',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {
