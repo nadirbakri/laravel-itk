@@ -51,8 +51,6 @@ class UpdateMedical implements ToCollection, WithStartRow
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            dd($rows);
-
             foreach ($rows as $row) {
                 $param[] = [
                     "companyCode" => Session::get('companyCode'),
