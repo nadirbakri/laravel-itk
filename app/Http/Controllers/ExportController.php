@@ -264,7 +264,7 @@ class ExportController extends Controller
 
             $arrResult = json_decode($response->getBody()->getContents());
             
-            // var_dump($arrResult->dataListSet);
+            // dd($arrResult->dataListSet);
 
             // if($arrResult->dataListSet == null){
             //     $pdf = PDF::loadView('export.exp_businesstrippdf_list', ['data' => []])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled'=> true]);
@@ -318,7 +318,7 @@ class ExportController extends Controller
 
             $arrResult = json_decode($response->getBody()->getContents());
 
-            // dd(json_encode($param));
+            // dd($arrResult->dataListSet);
 
             if($arrResult->dataListSet == null){
                 $pdf = PDF::loadView('export.exp_businesstrippdf_list2', ['data' => []])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
@@ -365,7 +365,7 @@ class ExportController extends Controller
 
             $arrResult = json_decode($response->getBody()->getContents());
 
-            // dd(json_encode($param));
+            // dd($arrResult->dataListSet);
 
             if($arrResult->dataListSet == null){
                 $pdf = PDF::loadView('export.exp_businesstrippdf_list2', ['data' => []])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
