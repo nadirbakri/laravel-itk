@@ -43,18 +43,22 @@
 			@foreach($data as $value)
 			<tr>
                 <td>{{ $no++ }}</td> 
+				<td>{{ isset($value->reimbursementEntity->createdDate) ? \Carbon\Carbon::parse($value->reimbursementEntity->createdDate)->format('Y-m-d') : '' }}</td>
 				<td>{{ isset($value->reimbursementEntity->reimbursementStatus) ? $value->reimbursementEntity->reimbursementStatus : '' }}</td>
 				<td>{{ isset($value->reimbursementEntity->ticketNo) ? $value->reimbursementEntity->ticketNo : '' }}</td>
 				<td>{{ isset($value->reimbursementEntity->reimbursementType) ? $value->reimbursementEntity->reimbursementType : '' }}</td>
-				<td>{{ isset($value->reimbursementEntity->receiptDate) ? \Carbon\Carbon::parse($value->reimbursementEntity->receiptDate)->format('Y-m-d') : '' }}</td> 
-				<td>{{ isset($value->reimbursementEntity->employeeNo) ? $value->reimbursementEntity->employeeNo : '' }}</td>
 				<td>{{ isset($value->reimbursementEntity->fullnameRequester) ? $value->reimbursementEntity->fullnameRequester : '' }}</td>
+				<td>{{ isset($value->reimbursementEntity->businessUnit) ? $value->reimbursementEntity->businessUnit : '' }}</td>
+				<td>{{ isset($value->reimbursementEntity->receiptDate) ? \Carbon\Carbon::parse($value->reimbursementEntity->receiptDate)->format('Y-m-d') : '' }}</td> 
 				<td>{{ isset($value->reimbursementEntity->customerName) ? $value->reimbursementEntity->customerName : '' }}</td>
-				<td>{{ isset($value->reimbursementEntity->projectName) ? $value->reimbursementEntity->projectName : '' }}</td>
-				<td>{{ isset($value->reimbursementEntity->currency) ? $value->reimbursementEntity->currency : '' }}</td>
-				<td>{{ isset($value->reimbursementEntity->totalClaimAmount) ? $value->reimbursementEntity->totalClaimAmount : '' }}</td>
-				<td>{{ isset($value->reimbursementEntity->paidAmount) ? $value->reimbursementEntity->paidAmount : '' }}</td>
-				<td>{{ isset($value->reimbursementEntity->paymentDate) ? \Carbon\Carbon::parse($value->reimbursementEntity->paymentDate)->format('Y-m-d') : '' }}</td> 
+				<td>{{ isset($value->reimbursementEntity->reimbursementRemarks) ? $value->reimbursementEntity->reimbursementRemarks : '' }}</td>
+				<td data-format="#,##0">{{ isset($value->reimbursementEntity->totalClaimAmount) ? $value->reimbursementEntity->totalClaimAmount : '' }}</td>
+				<td data-format="#,##0">{{ isset($value->reimbursementEntity->totalClaimAmountPerEmployee) ? $value->reimbursementEntity->totalClaimAmountPerEmployee : '' }}</td>
+				<td data-format="@">{{ isset($value->reimbursementEntity->bankAccountNo) ? $value->reimbursementEntity->bankAccountNo : '' }}</td>
+				<td data-format="#,##0"></td>
+				<td data-format="#,##0">{{ isset($value->reimbursementEntity->paidAmount) ? $value->reimbursementEntity->paidAmount : '' }}</td>
+				<td>{{ isset($value->reimbursementEntity->approvalRemarks) ? $value->reimbursementEntity->approvalRemarks : '' }}</td> 
+				<td>{{ isset($value->reimbursementEntity->emailRequester) ? $value->reimbursementEntity->emailRequester : '' }}</td> 
 			</tr>
 			@endforeach
 		</tbody>

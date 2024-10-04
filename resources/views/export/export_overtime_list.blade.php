@@ -19,45 +19,53 @@
 	<table style="width: 100%; font-size: 14px;" class="table table-bordered table-hover responsive">
 		<thead>
 			<tr>
-				<th>No</th>
+				<th>Overtime ID</th>
+				<th>Request Date</th>
+				<th>Business Unit</th>
+				<th>Employee Name</th>
+				<th>Division</th>
                 <th>Status</th>
-				<th>Ticket No</th>
-                <th>Name</th>
-				<th>Employee No</th>
+				<th>Start Date</th>
+				<th>Start Time</th>
+				<th>End Date</th>
+				<th>End Time</th>
+				<th>Difference (Hours)</th>
 				<th>Project Name</th>
-				<th>Overtime Date</th>
-                <th>Overtime Hour From</th>
-                <th>Overtime Hour To</th>
-				<th>Total Overtime Hour</th>
-                <th>Overtime Remarks</th>
-                <th>Project Name</th>
+				<th>Location</th>
                 <th>Customer Name</th>
-                <th>Total Paid</th>
+				<th>Remarks</th>
+				<th>Approval Date</th>
+				<th>Paid Remarks</th>
 			</tr>
 		</thead>
 		<tbody>
             <?php $no = 1; ?>
 			@foreach($data as $value)
 			@php
-			$waktuAwal = strtotime($value->overtimeEntity->overtimeHourFrom);
-			$waktuAkhir = strtotime($value->overtimeEntity->overtimeHourTo);
-			$waktuSelisih = $waktuAkhir - $waktuAwal;
+			if (isset($value->overtimeEntity->overtimeHourFrom) && isset($value->overtimeEntity->overtimeHourTo)) {
+				$waktuAwal = strtotime($value->overtimeEntity->overtimeHourFrom);
+				$waktuAkhir = strtotime($value->overtimeEntity->overtimeHourTo);
+				$waktuSelisih = $waktuAkhir - $waktuAwal;
+			}
 			@endphp
 			<tr>
                 <td>{{ $no++ }}</td>
-				<td>{{ $value->overtimeEntity->status}}</td>
-				<td>{{ $value->overtimeEntity->ticketNo }}</td>
-				<td>{{ $value->overtimeEntity->fullnameRequester }}</td>
-				<td>{{ $value->overtimeEntity->employeeNo}}</td>
-				<td>{{ $value->overtimeEntity->projectName}}</td>
-				<td>{{ \Carbon\Carbon::parse($value->overtimeEntity->overtimeDate)->format('Y-m-d') }}</td>
-				<td>{{ \Carbon\Carbon::parse($value->overtimeEntity->overtimeHourFrom)->format('H:i:s')}}</td>
-				<td>{{ \Carbon\Carbon::parse($value->overtimeEntity->overtimeHourTo)->format('H:i:s')}}</td>
-				<td>{{ \Carbon\Carbon::parse($waktuSelisih)->format('H:i:s')}}</td>
-				<td>{{ $value->overtimeEntity->overtimeRemarks}}</td>
-				<td>{{ $value->overtimeEntity->projectName}}</td>
-				<td>{{ $value->overtimeEntity->customerName}}</td>
-				<td></td>
+				<td>{{ isset($value->overtimeEntity->createdDate) ? \Carbon\Carbon::parse($value->overtimeEntity->createdDate)->format('Y-m-d') : ''}}</td>
+				<td>{{ isset($value->overtimeEntity->businessUnit) ? $value->overtimeEntity->businessUnit : ''}}</td>
+				<td>{{ isset($value->overtimeEntity->fullnameRequester) ? $value->overtimeEntity->fullnameRequester : ''}}</td>
+				<td>{{ isset($value->overtimeEntity->businessUnit) ? $value->overtimeEntity->businessUnit : ''}}</td>
+				<td>{{ isset($value->overtimeEntity->status) ? $value->overtimeEntity->status : ''}}</td>
+				<td>{{ isset($value->overtimeEntity->overtimeHourFrom) ? \Carbon\Carbon::parse($value->overtimeEntity->overtimeHourFrom)->format('Y-m-d') : '' }}</td>
+				<td>{{ isset($value->overtimeEntity->overtimeHourFrom) ? \Carbon\Carbon::parse($value->overtimeEntity->overtimeHourFrom)->format('H:i:s') : '' }}</td>
+				<td>{{ isset($value->overtimeEntity->overtimeHourTo) ? \Carbon\Carbon::parse($value->overtimeEntity->overtimeHourTo)->format('Y-m-d') : '' }}</td>
+				<td>{{ isset($value->overtimeEntity->overtimeHourTo) ? \Carbon\Carbon::parse($value->overtimeEntity->overtimeHourTo)->format('H:i:s') : '' }}</td>
+				<td>{{ isset($waktuSelisih) ? \Carbon\Carbon::parse($waktuSelisih)->format('H:i:s') : '' }}</td>
+				<td>{{ isset($value->overtimeEntity->projectName) ? $value->overtimeEntity->projectName : '' }}</td>
+				<td>{{ isset($value->overtimeEntity->locationCode) ? $value->overtimeEntity->locationCode : '' }}</td>
+				<td>{{ isset($value->overtimeEntity->customerName) ? $value->overtimeEntity->customerName : '' }}</td>
+				<td>{{ isset($value->overtimeEntity->overtimeRemarks) ? $value->overtimeEntity->overtimeRemarks : '' }}</td>
+				<td>{{ isset($value->overtimeEntity->approvalDate) ? \Carbon\Carbon::parse($value->overtimeEntity->approvalDate)->format('Y-m-d') : '' }}</td>
+				<td>{{ isset($value->overtimeEntity->approvalRemarks) ? $value->overtimeEntity->approvalRemarks : '' }}</td>
 			</tr>
 			@endforeach
 		</tbody>

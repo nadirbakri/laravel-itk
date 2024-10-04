@@ -52,11 +52,11 @@
 				<td>{{ isset($value->reimbursementEntity->claimFor) ? $value->reimbursementEntity->claimFor : '' }}</td>
 				<td>{{ isset($value->reimbursementEntity->dependentName) ? $value->reimbursementEntity->dependentName : '' }}</td>
 				<td>{{ isset($value->reimbursementEntity->reimbursementRemarks) ? $value->reimbursementEntity->reimbursementRemarks : '' }}</td>
-				<td>{{ isset($value->reimbursementEntity->totalClaimAmount) ? $value->reimbursementEntity->totalClaimAmount : '' }}</td>
-				<td>{{ isset($value->reimbursementEntity->totalClaimAmountPerEmployee) ? $value->reimbursementEntity->totalClaimAmountPerEmployee : '' }}</td>
-				<td>{{ isset($value->reimbursementEntity->bankAccountNo) ? $value->reimbursementEntity->bankAccountNo : '' }}</td>
-				<td></td>
-				<td>{{ isset($value->reimbursementEntity->paidAmount) ? $value->reimbursementEntity->paidAmount : '' }}</td>
+				<td data-format="#,##0">{{ isset($value->reimbursementEntity->totalClaimAmount) ? $value->reimbursementEntity->totalClaimAmount : '' }}</td>
+				<td data-format="#,##0">{{ isset($value->reimbursementEntity->totalClaimAmountPerEmployee) ? $value->reimbursementEntity->totalClaimAmountPerEmployee : '' }}</td>
+				<td data-format="@">{{ isset($value->reimbursementEntity->bankAccountNo) ? $value->reimbursementEntity->bankAccountNo : '' }}</td>
+				<td data-format="#,##0"></td>
+				<td data-format="#,##0">{{ isset($value->reimbursementEntity->paidAmount) ? $value->reimbursementEntity->paidAmount : '' }}</td>
 				<td>{{ isset($value->reimbursementEntity->approvalRemarks) ? $value->reimbursementEntity->approvalRemarks : '' }}</td>
 				<td>{{ isset($value->reimbursementEntity->emailRequester) ? $value->reimbursementEntity->emailRequester : '' }}</td>
 			</tr>

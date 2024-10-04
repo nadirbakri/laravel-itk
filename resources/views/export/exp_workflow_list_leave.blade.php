@@ -24,9 +24,9 @@
 				<th>Employee Number</th>
 				<th>Employee Name</th>
 				<th>Leave Type</th>
-                <th>Leave Time</th>
-                <th>Leave Start</th>
-				<th>Leave End</th>
+                <th>Leave Start Date</th>
+				<th>Leave End Date</th>
+				<th>Leave Time</th>
 				<th>Leave Duration</th>
 				<th>Approve Date</th>
 				<th>Description</th>
@@ -37,16 +37,16 @@
 			@foreach($data as $value)
 			<tr>
                 <td>{{ $no++ }}</td>
-				<td>{{ $value->leaveEntity->status }}</td>
-				<td>{{ $value->leaveEntity->employeeNo }}</td>
-				<td>{{ $value->leaveEntity->fullnameRequester}}</td>
-				<td>{{ $value->leaveEntity->leaveName }}</td>
-				<td>{{ $value->leaveEntity->dayDuration }}</td>
-				<td>{{ date('Y-m-d', strtotime($value->leaveEntity->leaveDateFrom)) }}</td>
-				<td>{{ date('Y-m-d', strtotime($value->leaveEntity->leaveDateTo)) }}</td>
-				<td>{{ $value->leaveEntity->leaveDuration }}</td>
-				<td>{{ date('Y-m-d', strtotime($value->leaveEntity->changedDate)) }}</td>
-				<td>{{ $value->leaveEntity->leaveRemarks }}</td>
+				<td>{{ isset($value->leaveEntity->status) ? $value->leaveEntity->status : '' }}</td>
+				<td>{{ isset($value->leaveEntity->employeeNo) ? $value->leaveEntity->employeeNo : '' }}</td>
+				<td>{{ isset($value->leaveEntity->fullnameRequester) ? $value->leaveEntity->fullnameRequester : '' }}</td>
+				<td>{{ isset($value->leaveEntity->leaveName) ? $value->leaveEntity->leaveName : '' }}</td>
+				<td>{{ isset($value->leaveEntity->dayDuration) ? $value->leaveEntity->dayDuration : '' }}</td>
+				<td>{{ isset($value->leaveEntity->leaveDateFrom) ? date('Y-m-d', strtotime($value->leaveEntity->leaveDateFrom)) : '' }}</td>
+				<td>{{ isset($value->leaveEntity->leaveDateTo) ? date('Y-m-d', strtotime($value->leaveEntity->leaveDateTo)) : '' }}</td>
+				<td>{{ isset($value->leaveEntity->leaveDuration) ? $value->leaveEntity->leaveDuration : '' }}</td>
+				<td>{{ isset($value->leaveEntity->changedDate) ? date('Y-m-d', strtotime($value->leaveEntity->changedDate)) : '' }}</td>
+				<td>{{ isset($value->leaveEntity->leaveRemarks) ? $value->leaveEntity->leaveRemarks : '' }}</td>
 			</tr>
 			@endforeach
 		</tbody>
