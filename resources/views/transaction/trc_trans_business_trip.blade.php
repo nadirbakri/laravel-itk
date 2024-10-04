@@ -972,7 +972,8 @@
                 data: function (params) {
                     return {
                         _token: $('meta[name="csrf-token"]').attr('content'),
-                        search: params.term
+                        search: params.term,
+                        levelType: '1' 
                     };
                 },
                 processResults: function (data) {
