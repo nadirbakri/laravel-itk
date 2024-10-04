@@ -275,10 +275,10 @@ class ExportController extends Controller
             // }
 
             if($arrResult->dataListSet == null){
-                $pdf = PDF::loadView('export.exp_businesstrippdf_list2', ['data' => []])->setPaper('a4', 'portrait')->setOptions(['isPhpEnabled'=> true]);
+                $pdf = PDF::loadView('export.exp_businesstrippdf_list2', ['data' => []])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
                 return $pdf->stream('Business Trip.pdf');
             }else{
-                $pdf = PDF::loadView('export.exp_businesstrippdf_list2', ['data' => $arrResult->dataListSet])->setPaper('a4', 'portrait')->setOptions(['isPhpEnabled'=> true]);
+                $pdf = PDF::loadView('export.exp_businesstrippdf_list2', ['data' => $arrResult->dataListSet])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
                 return $pdf->stream('Business Trip.pdf');
             }
         } else if ($request->travel_type == "TTB"){
@@ -321,10 +321,10 @@ class ExportController extends Controller
             // dd(json_encode($param));
 
             if($arrResult->dataListSet == null){
-                $pdf = PDF::loadView('export.exp_businesstrippdf_list2', ['data' => []])->setPaper('a4', 'portrait')->setOptions(['isPhpEnabled'=> true]);
+                $pdf = PDF::loadView('export.exp_businesstrippdf_list2', ['data' => []])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
                 return $pdf->stream('Business Trip.pdf');
             }else{
-                $pdf = PDF::loadView('export.exp_businesstrippdf_list2', ['data' => $arrResult->dataListSet])->setPaper('a4', 'portrait')->setOptions(['isPhpEnabled'=> true]);
+                $pdf = PDF::loadView('export.exp_businesstrippdf_list2', ['data' => $arrResult->dataListSet])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
                 return $pdf->stream('Business Trip.pdf');
             }
         } else {
@@ -368,10 +368,10 @@ class ExportController extends Controller
             // dd(json_encode($param));
 
             if($arrResult->dataListSet == null){
-                $pdf = PDF::loadView('export.exp_businesstrippdf_list2', ['data' => []])->setPaper('a4', 'portrait')->setOptions(['isPhpEnabled'=> true]);
+                $pdf = PDF::loadView('export.exp_businesstrippdf_list2', ['data' => []])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
                 return $pdf->stream('Business Trip.pdf');
             }else{
-                $pdf = PDF::loadView('export.exp_businesstrippdf_list2', ['data' => $arrResult->dataListSet])->setPaper('a4', 'portrait')->setOptions(['isPhpEnabled'=> true]);
+                $pdf = PDF::loadView('export.exp_businesstrippdf_list2', ['data' => $arrResult->dataListSet])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
                 return $pdf->stream('Business Trip.pdf');
             }
         }

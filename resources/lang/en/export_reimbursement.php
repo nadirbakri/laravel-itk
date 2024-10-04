@@ -18,23 +18,27 @@ return [
     'no' => 'No',
     'reqdate' => 'Request Date',
     'status' => 'Status',
-    'ticket' => 'Ticket No',
-    'rtipe' => 'Reimbursement Type',
+    'ticket' => 'Ticket Number',
+    'rtipe' => 'Claim Type',
     'rdate' => 'Receipt Date',
     'employee' => 'Employee No',
     'employeename' => 'Employee Name',
+    'companycustomer' => 'Company Customer',
+    'division' => 'Division',
     'cname' => 'Customer Name',
     'pname' => 'Project Name',
-    'treq' => 'Total Request',
+    'treq' => 'Total Request (Rp)',
+    'temp' => 'Total Per Employee (Rp)',
     'remarks' => 'Remarks',
     'currency' => 'Currency',
     'tcamount' => 'Total Claim Amount',
     'pamount' => 'Paid Amount',
     'pdate' => 'Payment Date',
     'nrek' => 'Nomor Rekening',
-    'tapprove' => 'Total Approve HRD',
-    'tpaid' => 'Total Paid',
-    'premarks' => 'Paid Remarks'
+    'tapprove' => 'Total Approve HRD (Rp)',
+    'tpaid' => 'Total Paid (Rp)',
+    'premarks' => 'Paid Remarks',
+    'email' => 'Alamat Email'
 ]
 
 ?>
