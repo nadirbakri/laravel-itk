@@ -51,6 +51,8 @@ class UpdateMedical implements ToCollection, WithStartRow
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
+            dd($rows);
+
             foreach ($rows as $row) {
                 $param[] = [
                     "companyCode" => Session::get('companyCode'),
@@ -60,14 +62,14 @@ class UpdateMedical implements ToCollection, WithStartRow
                     "changedBy" => Session::get('userID'),
                     "status" => $row[2],
                     "ticketNo" => $row[3],
-                    "paidAmount" => $row[8],
-                    "approvalRemarks" => $row[9]
+                    "paidAmount" => $row[14],
+                    "approvalRemarks" => $row[15]
                 ];
             }
 
             // var_dump(json_encode($param));
 
-            $response = $client->put(env('API_URL') . '/reimbursementmedical/updatelistticketno',
+            $response = $client->put(env('API_URL') . '/mobile/ReimbursementMedical/UpdateListTicketNo',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {

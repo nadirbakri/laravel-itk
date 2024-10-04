@@ -242,7 +242,7 @@
                     <div class="col-3">
                         <button type="button" class="btn btn-primary" name="btn-upload" id="btn-upload"
                         style="width: 100%;" data-toggle="modal" data-target="#modal_upload">
-                        <i class="fa fa-plus"></i> {{ __('trans_business_trip.btn_upload') }}
+                        <i class="fa fa-upload"></i> {{ __('trans_business_trip.btn_upload') }}
                         </button>
                     </div>
                     <div class="col-3">
@@ -465,32 +465,40 @@
             </div>
         </div>
     </div>
-    {{-- modal upload excel --}}
+
     <div class="div-form">
-        <form id="upload_paid_overtime_form" method="post" enctype="multipart/form-data">
+        <form id="upload_paid_business_trip_form" method="post" enctype="multipart/form-data">
             @csrf
-            <div class="modal fade" id="modal_upload" role="dialog" aria-hidden="true">
+            <div class="modal fade" id="modal_upload">
                 <div class="modal-dialog modal-dialog-centered modal-lg">
                    <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-little">{{ __('trans_business_trip.upaidbusiness') }}</h4>
+                        <h4 class="modal-little">Upload Paid Business Trip</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body table-responsive">
-                        <div class="card">
-                            <div class="col-5">
+                        <div class="row">
+                            <div class="col-12">
                                 <div class="form-group">
-                                    <label for="medical_history form-check-label"><b>{{ __('trans_business_trip.fbusinesstrip') }}</b></label>
-                                        <input type="file" name="file_overtime" id="file_overtime">
-                                    <br> <br>
-                                    <button type="submit" class="btn btn-process" name="btn-process" id="btn-process">
-                                        {{ __('trans_business_trip.btn_upload') }}
-                                    </button>
+                                    <label for="file_business_trip">File Business Trip</label>
+                                    <span style="color: red;">*</span>
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" id="file_business_trip" name="file_business_trip">
+                                        <label class="custom-file-label" for="file_business_trip">Choose Import File</label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary" name="btn-process" id="btn-process" style="width: 100%;">
+                                        Upload
+                                    </button>
+                                </div>
+                            </div>
                     </div>
                    </div>
                 </div>
@@ -817,22 +825,26 @@
         $(this).html(
             '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
         );
-        $("#upload_paid_overtime_form").submit();
+        $("#upload_paid_business_trip_form").submit();
     });
-    
-    if ($("#upload_paid_overtime_form").length > 0) {
-        $("#upload_paid_overtime_form").validate({
+
+    // $('#notification_success').on('hide.bs.modal', function () {
+    //     window.location = "{{ url('transaction/transaction_reimbursement') }}";
+    // });
+
+    if ($("#upload_paid_business_trip_form").length > 0) {
+        $("#upload_paid_business_trip_form").validate({
             submitHandler: function (form) {
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
                 });
-                var myForm = document.getElementById('upload_paid_overtime_form');
+                var myForm = document.getElementById('upload_paid_business_trip_form');
                 var formdata = new FormData(myForm);
                 
                 $.ajax({
-                    url: "{{ url('transaction/update_businesstrip/import') }}",
+                    url: "{{ url('transaction/update_business_trip/import') }}",
                     type: "POST",
                     processData: false,
                     contentType: false,
@@ -840,31 +852,22 @@
                     success: function (response) {
                         if (response[0].status == "true") {
                             $("#btn-process").prop("disabled", false);
-                            $("#btn-process").html(
-                                // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
-                                'Update'
-                            );
+                            $("#btn-process").html('Upload');
+
+                            $('#modal_upload').modal('hide');
                             
                             $('#notification_success').modal('show');
                             $('#message-notification-success').html(response[0]
                                 .message);
-
-                            var claim_date_from = $("#claim_date_from").val();
-                            var claim_date_to = $("#claim_date_to").val();
-                            var direct_superior = $("#direct_superior").val();
-                            var reimbursement_type = $("#reimbursement_type").val();
-                            var business_unit = $("#business_unit").val();
-
-                            $('#loading').show();
-
-                            load_data_business_trip(claim_date_from, claim_date_to, direct_superior, reimbursement_type, business_unit, business_trip_status);
+                            
+                            // setTimeout(function () {
+                            //     window.location =
+                            //         "{{ url('transaction/transaction_reimbursement') }}";
+                            // }, 3000);
                         } else {
                             $("#btn-process").prop("disabled", false);
-                            $("#btn-process").html(
-                                // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
-                                'Update'
-                            );
-    
+                            $("#btn-process").html('Upload');
+
                             $('#notification_error').modal('show');
                             if (response[0].message == null || response[0].message ==
                                 '') {
@@ -878,11 +881,8 @@
                     },
                     error: function (response) {
                         $("#btn-process").prop("disabled", false);
-                        $("#btn-process").html(
-                            // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
-                            'Update'
-                        );
-    
+                        $("#btn-process").html('Upload');
+
                         $('#notification_error').modal('show');
                         $('#message-notification-error').html(response);
                     }
@@ -890,6 +890,11 @@
             }
         })
     }
+
+    $('input[type="file"]').change(function (e) {
+        var fileName = e.target.files[0].name;
+        $('.custom-file-label').html(fileName);
+    });
 
     loadDataBusinessUnit();
     loadDataTravelType();

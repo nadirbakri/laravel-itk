@@ -1452,7 +1452,7 @@ class TransactionController extends Controller
     public function importUpdateReimbursement(Request $request)
     {     
         try{
-            $file = $request->file('file_overtime');
+            $file = $request->file('file_reimbursement');
             $import = new UpdateReimbursement;
             Excel::import($import, $file->getRealPath(), null, \Maatwebsite\Excel\Excel::XLSX);
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
@@ -1467,7 +1467,7 @@ class TransactionController extends Controller
     public function importUpdateBusinesstrip(Request $request)
     {     
         try{
-            $file = $request->file('file_overtime');
+            $file = $request->file('file_business_trip');
             $import = new UpdateBusinessTrip;
             Excel::import($import, $file->getRealPath(), null, \Maatwebsite\Excel\Excel::XLSX);
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
@@ -1482,7 +1482,7 @@ class TransactionController extends Controller
     public function importUpdateTransport(Request $request)
     {     
         try{
-            $file = $request->file('file_overtime');
+            $file = $request->file('file_transport');
             $import = new UpdateTransport;
             Excel::import($import, $file->getRealPath(), null, \Maatwebsite\Excel\Excel::XLSX);
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {

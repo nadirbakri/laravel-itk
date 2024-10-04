@@ -471,7 +471,7 @@
     </div>
 
     <div class="div-form">
-        <form id="upload_paid_overtime_form" method="post" enctype="multipart/form-data">
+        <form id="upload_paid_reimbursement_form" method="post" enctype="multipart/form-data">
             @csrf
             <div class="modal fade" id="modal_upload">
                 <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -486,11 +486,11 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="form-group">
-                                    <label for="file_overtime">File Reimbursement</label>
+                                    <label for="file_reimbursement">File Reimbursement</label>
                                     <span style="color: red;">*</span>
                                     <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="file_overtime" name="file_overtime">
-                                        <label class="custom-file-label" for="file_overtime">Choose Import File</label>
+                                        <input type="file" class="custom-file-input" id="file_reimbursement" name="file_reimbursement">
+                                        <label class="custom-file-label" for="file_reimbursement">Choose Import File</label>
                                     </div>
                                 </div>
                             </div>
@@ -877,22 +877,22 @@
         $(this).html(
             '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
         );
-        $("#upload_paid_overtime_form").submit();
+        $("#upload_paid_reimbursement_form").submit();
     });
 
     // $('#notification_success').on('hide.bs.modal', function () {
     //     window.location = "{{ url('transaction/transaction_reimbursement') }}";
     // });
 
-    if ($("#upload_paid_overtime_form").length > 0) {
-        $("#upload_paid_overtime_form").validate({
+    if ($("#upload_paid_reimbursement_form").length > 0) {
+        $("#upload_paid_reimbursement_form").validate({
             submitHandler: function (form) {
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
                 });
-                var myForm = document.getElementById('upload_paid_overtime_form');
+                var myForm = document.getElementById('upload_paid_reimbursement_form');
                 var formdata = new FormData(myForm);
                 
                 $.ajax({
@@ -904,10 +904,9 @@
                     success: function (response) {
                         if (response[0].status == "true") {
                             $("#btn-process").prop("disabled", false);
-                            $("#btn-process").html(
-                                // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
-                                'Update'
-                            );
+                            $("#btn-process").html('Upload');
+
+                            $('#modal_upload').modal('hide');
                             
                             $('#notification_success').modal('show');
                             $('#message-notification-success').html(response[0]
@@ -919,10 +918,7 @@
                             // }, 3000);
                         } else {
                             $("#btn-process").prop("disabled", false);
-                            $("#btn-process").html(
-                                // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
-                                'Update'
-                            );
+                            $("#btn-process").html('Upload');
 
                             $('#notification_error').modal('show');
                             if (response[0].message == null || response[0].message ==
@@ -937,10 +933,7 @@
                     },
                     error: function (response) {
                         $("#btn-process").prop("disabled", false);
-                        $("#btn-process").html(
-                            // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
-                            'Update'
-                        );
+                        $("#btn-process").html('Upload');
 
                         $('#notification_error').modal('show');
                         $('#message-notification-error').html(response);

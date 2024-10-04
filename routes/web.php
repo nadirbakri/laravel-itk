@@ -827,7 +827,7 @@ Route::post('transaction/update_reimbursement/import', 'TransactionController@im
 Route::post('transaction/update_transport/import', 'TransactionController@importUpdateTransport');
 Route::post('transaction/update_medical/import', 'TransactionController@importUpdateMedical');
 Route::post('transaction/update_overtime/import', 'TransactionController@importUpdateOvertime');
-Route::post('transaction/update_businesstrip/import', 'TransactionController@importUpdateBusinesstrip');
+Route::post('transaction/update_business_trip/import', 'TransactionController@importUpdateBusinesstrip');
 
 /*Route untuk detail Data Medical*/
 Route::get('medical/claim_code/detail_data', 'MedicalController@dataDetailClaimCodeMD');

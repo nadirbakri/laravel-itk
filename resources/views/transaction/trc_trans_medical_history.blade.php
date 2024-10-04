@@ -222,7 +222,7 @@
                     <div class="col-3">
                         <button type="button" class="btn btn-primary" name="btn-upload" id="btn-upload"
                         style="width: 100%;" data-toggle="modal" data-target="#modal_upload">
-                        <i class="fa fa-plus"></i> {{ __('trans_medical.btn_upload') }}
+                        <i class="fa fa-upload"></i> {{ __('trans_medical.btn_upload') }}
                         </button>
                     </div>
                     <div class="col-3">
@@ -446,32 +446,39 @@
         </form>
     </div>
 
-     {{-- modal upload --}}
-     <div class="div-form">
-        <form id="upload_paid_overtime_form" method="post" enctype="multipart/form-data">
+    <div class="div-form">
+        <form id="upload_paid_medical_form" method="post" enctype="multipart/form-data">
             @csrf
             <div class="modal fade" id="modal_upload">
                 <div class="modal-dialog modal-dialog-centered modal-lg">
                    <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-little">{{ __('trans_medical.ovt') }}</h4>
+                        <h4 class="modal-little">Upload Paid Medical</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body table-responsive">
-                        <div class="card">
-                            <div class="col-5">
+                        <div class="row">
+                            <div class="col-12">
                                 <div class="form-group">
-                                    <label for="medical_history form-check-label"><b>{{ __('trans_medical.fovt') }}</b></label>
-                                        <input type="file" name="file_medical" id="file_medical">
-                                    <br> <br>
-                                    <button type="submit" class="btn btn-process" name="btn-process" id="btn-process">
-                                        {{ __('trans_medical.btn_upload') }}
-                                    </button>
+                                    <label for="file_medical">File Medical</label>
+                                    <span style="color: red;">*</span>
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" id="file_medical" name="file_medical">
+                                        <label class="custom-file-label" for="file_medical">Choose Import File</label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary" name="btn-process" id="btn-process" style="width: 100%;">
+                                        Upload
+                                    </button>
+                                </div>
+                            </div>
                     </div>
                    </div>
                 </div>
@@ -593,29 +600,28 @@
             }
         });
     }
-</script>
-<script>
+    
     $("#btn-process").click(function () {
         $(this).prop("disabled", true);
         $(this).html(
             '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
         );
-        $("#upload_paid_overtime_form").submit();
+        $("#upload_paid_medical_form").submit();
     });
-    
-    $('#notification_success').on('hide.bs.modal', function () {
-        window.location = "{{ url('transaction/transaction_overtime') }}";
-    });
-    
-    if ($("#upload_paid_overtime_form").length > 0) {
-        $("#upload_paid_overtime_form").validate({
+
+    // $('#notification_success').on('hide.bs.modal', function () {
+    //     window.location = "{{ url('transaction/transaction_reimbursement') }}";
+    // });
+
+    if ($("#upload_paid_medical_form").length > 0) {
+        $("#upload_paid_medical_form").validate({
             submitHandler: function (form) {
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
                 });
-                var myForm = document.getElementById('upload_paid_overtime_form');
+                var myForm = document.getElementById('upload_paid_medical_form');
                 var formdata = new FormData(myForm);
                 
                 $.ajax({
@@ -627,25 +633,22 @@
                     success: function (response) {
                         if (response[0].status == "true") {
                             $("#btn-process").prop("disabled", false);
-                            $("#btn-process").html(
-                                // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
-                                'Update'
-                            );
+                            $("#btn-process").html('Upload');
+
+                            $('#modal_upload').modal('hide');
                             
                             $('#notification_success').modal('show');
                             $('#message-notification-success').html(response[0]
                                 .message);
+                            
                             // setTimeout(function () {
                             //     window.location =
-                            //         "{{ url('transaction/transaction_medical_history') }}";
+                            //         "{{ url('transaction/transaction_reimbursement') }}";
                             // }, 3000);
                         } else {
                             $("#btn-process").prop("disabled", false);
-                            $("#btn-process").html(
-                                // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
-                                'Update'
-                            );
-    
+                            $("#btn-process").html('Upload');
+
                             $('#notification_error').modal('show');
                             if (response[0].message == null || response[0].message ==
                                 '') {
@@ -659,11 +662,8 @@
                     },
                     error: function (response) {
                         $("#btn-process").prop("disabled", false);
-                        $("#btn-process").html(
-                            // '<i class="fa fa-floppy-o"></i> {{ __("tm_update_absenteeism_data.btn_process") }}'
-                            'Update'
-                        );
-    
+                        $("#btn-process").html('Upload');
+
                         $('#notification_error').modal('show');
                         $('#message-notification-error').html(response);
                     }
@@ -671,8 +671,12 @@
             }
         })
     }
-</script>
-<script type="text/javascript">
+
+    $('input[type="file"]').change(function (e) {
+        var fileName = e.target.files[0].name;
+        $('.custom-file-label').html(fileName);
+    });
+
     var table = null;
     var table2 = null;
     var arrayMedical = [];
@@ -927,10 +931,6 @@
             }
         });
     }
-
-</script>
-
-<script type="text/javascript">
 
     loadDataExportReimbrusement();
     loadDataFirstLastAllReimbursement();

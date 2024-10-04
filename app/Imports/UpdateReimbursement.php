@@ -58,14 +58,14 @@ class UpdateReimbursement implements ToCollection, WithStartRow
                     "sessionUserID" => Session::get('userID'),
                     "languageCode" => App::getLocale(),
                     "changedBy" => Session::get('userID'),
-                    "status" => $row[1],
-                    "ticketNo" => $row[2],
-                    "paidAmount" => $row[9],
-                    "approvalRemarks" => $row[12],
+                    "status" => $row[2],
+                    "ticketNo" => $row[3],
+                    "paidAmount" => $row[14],
+                    "approvalRemarks" => $row[15]
                 ];
             }
 
-            // var_dump(json_encode($param));
+            // dd(json_encode($param));
 
             $response = $client->put(env('API_URL') . '/mobile/TmReimbursement/UpdateListTicketNo',
                 ['body' => json_encode($param)]
