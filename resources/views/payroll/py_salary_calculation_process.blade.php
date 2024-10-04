@@ -145,30 +145,30 @@
                                 <input type="text" class="form-control" id="process_period" name="process_period"
                                     placeholder="{{ __('payroll_salary_calculation_process.label_process_period') }}" readonly>
                         </div>
-                        <input type="hidden" class="form-control" id="process_period_month_hidden" name="process_period_month_hidden">
-                        <input type="hidden" class="form-control" id="process_period_year_hidden" name="process_period_year_hidden">
+                        <input type="hidden" class="form-control" id="process_period_salary_month_hidden" name="process_period_salary_month_hidden">
+                        <input type="hidden" class="form-control" id="process_period_salary_year_hidden" name="process_period_salary_year_hidden">
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-3">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="loan_payment_process" name="loan_payment_process" value="true">
-                            <label for="loan_payment_process">{{ __('payroll_salary_calculation_process.label_loan_payment_process') }}</label>
+                            <input class="form-check-input" type="checkbox" id="loan_payment_process_salary" name="loan_payment_process_salary" value="true">
+                            <label for="loan_payment_process_salary">{{ __('payroll_salary_calculation_process.label_loan_payment_process') }}</label>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-3">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="retroactive_process" name="retroactive_process" value="true">
-                            <label for="retroactive_process">{{ __('payroll_salary_calculation_process.label_retroactive_process') }}</label>
+                            <input class="form-check-input" type="checkbox" id="retroactive_process_salary" name="retroactive_process_salary" value="true">
+                            <label for="retroactive_process_salary">{{ __('payroll_salary_calculation_process.label_retroactive_process') }}</label>
                         </div>
                     </div>
                     <div class="col-3 retroactive" hidden>
                         <div class="form-group">
                             <label
-                                for="retroactive">{{ __('payroll_salary_calculation_process.label_retroactive') }}</label>
-                            <select class="form-control select2" id="retroactive" name="retroactive"></select>
+                                for="retroactive_salary">{{ __('payroll_salary_calculation_process.label_retroactive') }}</label>
+                            <select class="form-control select2" id="retroactive_salary" name="retroactive_salary"></select>
                         </div>
                     </div>
                 </div>
@@ -176,8 +176,8 @@
                     <div class="col-3"></div>
                     <div class="col-3">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="include_probation_period" name="include_probation_period" value="true">
-                            <label for="include_probation_period">{{ __('payroll_salary_calculation_process.label_include_probation_period') }}</label>
+                            <input class="form-check-input" type="checkbox" id="include_probation_period_salary" name="include_probation_period_salary" value="true">
+                            <label for="include_probation_period_salary">{{ __('payroll_salary_calculation_process.label_include_probation_period') }}</label>
                         </div>
                     </div>
                 </div>
@@ -185,8 +185,8 @@
                     <div class="col-3"></div>
                     <div class="col-3">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="include_jamsostek_retroactive" name="include_jamsostek_retroactive" value="true">
-                            <label for="include_jamsostek_retroactive">{{ __('payroll_salary_calculation_process.label_include_jamsostek_retroactive') }}</label>
+                            <input class="form-check-input" type="checkbox" id="include_jamsostek_retroactive_salary" name="include_jamsostek_retroactive_salary" value="true">
+                            <label for="include_jamsostek_retroactive_salary">{{ __('payroll_salary_calculation_process.label_include_jamsostek_retroactive') }}</label>
                         </div>
                     </div>
                 </div>
@@ -201,8 +201,8 @@
                 <div class="row">
                     <div class="col-3">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="range" name="range" value="true">
-                            <label for="range">{{ __('payroll_salary_calculation_process.label_range') }}</label>
+                            <input class="form-check-input" type="checkbox" id="range_salary" name="range_salary" value="true">
+                            <label for="range_salary">{{ __('payroll_salary_calculation_process.label_range') }}</label>
                         </div>
                     </div>
                 </div>
@@ -210,15 +210,15 @@
                     <div class="col-6">
                         <div class="form-group">
                             <label
-                                for="employee_no_from">{{ __('payroll_salary_calculation_process.label_employee_no_from') }}</label>
-                            <select class="form-control select2" id="employee_no_from" name="employee_no_from" disabled></select>
+                                for="employee_no_from_salary">{{ __('payroll_salary_calculation_process.label_employee_no_from') }}</label>
+                            <select class="form-control select2" id="employee_no_from_salary" name="employee_no_from_salary" disabled></select>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group">
                             <label
-                                for="employee_no_to">{{ __('payroll_salary_calculation_process.label_employee_no_to') }}</label>
-                            <select class="form-control select2" id="employee_no_to" name="employee_no_to" disabled></select>
+                                for="employee_no_to_salary">{{ __('payroll_salary_calculation_process.label_employee_no_to') }}</label>
+                            <select class="form-control select2" id="employee_no_to_salary" name="employee_no_to_salary" disabled></select>
                         </div>
                     </div>
                 </div>
@@ -324,12 +324,12 @@
             var month_year = moment(arrData[0].periodYear.toString() + "-" + arrData[0].periodMonth.toString()).format('MMMM' + ' ' + 'YYYY');
             $('#process_period').val(month_year);
 
-            $('#process_period_month_hidden').val((typeof arrData[0].periodMonth !== 'undefined') ? arrData[0].periodMonth : '');
-            $('#process_period_year_hidden').val((typeof arrData[0].periodYear !== 'undefined') ? arrData[0].periodYear : '');
+            $('#process_period_salary_month_hidden').val((typeof arrData[0].periodMonth !== 'undefined') ? arrData[0].periodMonth : '');
+            $('#process_period_salary_year_hidden').val((typeof arrData[0].periodYear !== 'undefined') ? arrData[0].periodYear : '');
         }
 
-        $('#retroactive_process').on('change', function () {
-            if ($('#retroactive_process').is(':checked')) {
+        $('#retroactive_process_salary').on('change', function () {
+            if ($('#retroactive_process_salary').is(':checked')) {
                 $('.retroactive').prop('hidden', false);
                 $('.include_probation_period').prop('hidden', false);
                 $('.include_jamsostek_retroactive').prop('hidden', false);
@@ -340,19 +340,19 @@
             }
         });
 
-        $('#range').on('change', function () {
-            if ($('#range').is(':checked')) {
-                $('#employee_no_from').prop('disabled', false);
-                $('#employee_no_to').prop('disabled', false);
+        $('#range_salary').on('change', function () {
+            if ($('#range_salary').is(':checked')) {
+                $('#employee_no_from_salary').prop('disabled', false);
+                $('#employee_no_to_salary').prop('disabled', false);
             } else {
-                $('#employee_no_from').prop('disabled', true);
-                $('#employee_no_to').prop('disabled', true);
+                $('#employee_no_from_salary').prop('disabled', true);
+                $('#employee_no_to_salary').prop('disabled', true);
             }
         });
 
         loadDataRetroactive();
-        loadDataEmployeeNo('#employee_no_from');
-        loadDataEmployeeNo('#employee_no_to');
+        loadDataEmployeeNo('#employee_no_from_salary');
+        loadDataEmployeeNo('#employee_no_to_salary');
 
         function loadDataRetroactive() {
             var listRetroactive = [
@@ -385,7 +385,7 @@
 
             var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
 
-            $('#retroactive').select2({
+            $('#retroactive_salary').select2({
                 data: listRetroactive,
                 width: '100%',
                 placeholder: 'Choose Retroactive',

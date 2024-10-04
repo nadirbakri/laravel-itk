@@ -145,7 +145,7 @@
                                 <input type="text" class="form-control" id="process_period_month" name="process_period_month"
                                     placeholder="{{ __('payroll_absenteeism_overtime_calculation_process.label_process_period_month') }}" readonly>
                         </div>
-                        <input type="hidden" class="form-control" id="process_period_month_hidden" name="process_period_month_hidden">
+                        <input type="hidden" class="form-control" id="process_period_absenteeism_month_hidden" name="process_period_absenteeism_month_hidden">
                     </div>
                     <div class="col-0.5">
                         <div class="form-group">
@@ -156,7 +156,7 @@
                     <div class="col-3">
                         <div class="form-group">
                             <label>&nbsp;</label>
-                            <input type="number" class="form-control" id="process_period_year" name="process_period_year"
+                            <input type="number" class="form-control" id="process_period_absenteeism_year_hidden" name="process_period_absenteeism_year_hidden"
                                 placeholder="{{ __('payroll_absenteeism_overtime_calculation_process.label_process_period_year') }}" readonly>
                         </div>
                         <input type="text" class="form-control" id="record_function" name="record_function" hidden>
@@ -165,8 +165,8 @@
                 <div class="row">
                     <div class="col-3">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="range_employee_no" name="range_employee_no" value="true">
-                            <label for="range_employee_no">{{ __('payroll_absenteeism_overtime_calculation_process.label_range_employee_no') }}</label>
+                            <input class="form-check-input" type="checkbox" id="range_employee_no_absenteeism" name="range_employee_no_absenteeism" value="true">
+                            <label for="range_employee_no_absenteeism">{{ __('payroll_absenteeism_overtime_calculation_process.label_range_employee_no') }}</label>
                         </div>
                     </div>
                 </div>
@@ -174,15 +174,15 @@
                     <div class="col-3">
                         <div class="form-group">
                             <label
-                                for="employee_no_from">{{ __('payroll_absenteeism_overtime_calculation_process.label_employee_no_from') }}</label>
-                            <select class="form-control select2" id="employee_no_from" name="employee_no_from" disabled></select>
+                                for="employee_no_from_absenteeism">{{ __('payroll_absenteeism_overtime_calculation_process.label_employee_no_from') }}</label>
+                            <select class="form-control select2" id="employee_no_from_absenteeism" name="employee_no_from_absenteeism" disabled></select>
                         </div>
                     </div>
                     <div class="col-3">
                         <div class="form-group">
                             <label
-                                for="employee_no_to">{{ __('payroll_absenteeism_overtime_calculation_process.label_employee_no_to') }}</label>
-                            <select class="form-control select2" id="employee_no_to" name="employee_no_to" disabled></select>
+                                for="employee_no_to_absenteeism">{{ __('payroll_absenteeism_overtime_calculation_process.label_employee_no_to') }}</label>
+                            <select class="form-control select2" id="employee_no_to_absenteeism" name="employee_no_to_absenteeism" disabled></select>
                         </div>
                     </div>
                 </div>
@@ -286,22 +286,22 @@
 
         if (arrData) {
             $('#process_period_month').val(moment('2023-' + arrData[0].periodMonth.toString() + '-01').format('MMMM'));
-            $('#process_period_month_hidden').val((typeof arrData[0].periodMonth !== 'undefined') ? arrData[0].periodMonth : '');
-            $('#process_period_year').val((typeof arrData[0].periodYear !== 'undefined') ? arrData[0].periodYear : '');
+            $('#process_period_absenteeism_month_hidden').val((typeof arrData[0].periodMonth !== 'undefined') ? arrData[0].periodMonth : '');
+            $('#process_period_absenteeism_year_hidden').val((typeof arrData[0].periodYear !== 'undefined') ? arrData[0].periodYear : '');
         }
 
-        $('#range_employee_no').on('change', function () {
-            if ($('#range_employee_no').is(':checked')) {
-                $('#employee_no_from').prop('disabled', false);
-                $('#employee_no_to').prop('disabled', false);
+        $('#range_employee_no_absenteeism').on('change', function () {
+            if ($('#range_employee_no_absenteeism').is(':checked')) {
+                $('#employee_no_from_absenteeism').prop('disabled', false);
+                $('#employee_no_to_absenteeism').prop('disabled', false);
             } else {
-                $('#employee_no_from').prop('disabled', true);
-                $('#employee_no_to').prop('disabled', true);
+                $('#employee_no_from_absenteeism').prop('disabled', true);
+                $('#employee_no_to_absenteeism').prop('disabled', true);
             }
         });
 
-        loadDataEmployeeNo('#employee_no_from');
-        loadDataEmployeeNo('#employee_no_to');
+        loadDataEmployeeNo('#employee_no_from_absenteeism');
+        loadDataEmployeeNo('#employee_no_to_absenteeism');
 
         function loadDataEmployeeNo(field = '') {
             function formatSelect(data) {
