@@ -56,7 +56,7 @@ class WorkflowPermitExport implements FromView, ShouldAutoSize
             // }
             // dd(json_encode($param));
 
-            $response = $client->post(env('API_URL') . '/mobile/TmPermit/getTmPermitDetailList',
+            $response = $client->post(env('API_URL') . '/mobile/TmPermit/getTmPermitDetailListWeb',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {

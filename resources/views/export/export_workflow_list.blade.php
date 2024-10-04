@@ -20,15 +20,18 @@
 		<thead>
 			<tr>
 				<th>No</th>
+				<th>Status</th>
 				<th>Employee Number</th>
 				<th>Employee Name</th>
 				<th>Permit Type</th>
                 <th>Permit Start Date</th>
                 <th>Permit End Date</th>
-                <th>Permit Start Hour</th>
-                <th>Permit End Hour</th>
-				<th>Status</th>
+                <th>Permit Start Time</th>
+                <th>Permit End Time</th>
+				<th>Approve Date</th>
                 <th>Description</th>
+				<th>Customer Name</th>
+				<th>Tanggal Ganti Off</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -36,15 +39,18 @@
 			@foreach($data as $value)
 			<tr>
                 <td>{{ $no++ }}</td>
-				<td>{{ $value->permitEntity->employeeNo }}</td>
-				<td>{{ $value->permitEntity->fullnameRequester }}</td>
-				<td>{{ $value->permitEntity->permitNameList[0] }}</td>
-				<td>{{ date('Y-m-d', strtotime($value->permitEntity->permitDateFrom)) }}</td>
-				<td>{{ date('Y-m-d', strtotime($value->permitEntity->permitDateTo)) }}</td>
-				<td>{{ date('H:i', strtotime($value->permitEntity->permitHourFrom)) }}</td>
-				<td>{{ date('H:i', strtotime($value->permitEntity->permitHourTo)) }}</td>
-				<td>{{ $value->permitEntity->status}}</td>
-				<td>{{ $value->permitEntity->permitRemarks}}</td>
+				<td>{{ isset($value->permitEntity->status) ? $value->permitEntity->status : '' }}</td>
+				<td>{{ isset($value->permitEntity->employeeNo) ? $value->permitEntity->employeeNo : '' }}</td>
+				<td>{{ isset($value->permitEntity->fullnameRequester) ? $value->permitEntity->fullnameRequester : '' }}</td>
+				<td>{{ isset($value->permitEntity->permitCode) ? $value->permitEntity->permitCode : '' }}</td>
+				<td>{{ isset($value->permitEntity->permitDateFrom) ? date('Y-m-d', strtotime($value->permitEntity->permitDateFrom)) : '' }}</td>
+				<td>{{ isset($value->permitEntity->permitDateTo) ? date('Y-m-d', strtotime($value->permitEntity->permitDateTo)) : '' }}</td>
+				<td>{{ isset($value->permitEntity->permitHourFrom) ? date('H:i', strtotime($value->permitEntity->permitHourFrom)) : '' }}</td>
+				<td>{{ isset($value->permitEntity->permitHourTo) ? date('H:i', strtotime($value->permitEntity->permitHourTo)) : '' }}</td>
+				<td>{{ isset($value->permitEntity->approvalDate) ? date('Y-m-d', strtotime($value->permitEntity->approvalDate)) : '' }}</td>
+				<td>{{ isset($value->permitEntity->permitRemarks) ? $value->permitEntity->permitRemarks : '' }}</td>
+				<td>{{ isset($value->permitEntity->customerName) ? $value->permitEntity->customerName : '' }}</td>
+				<td>{{ isset($value->permitEntity->overtimeDate) ? date('Y-m-d', strtotime($value->permitEntity->overtimeDate)) : '' }}</td>
 			</tr>
 			@endforeach
 		</tbody>

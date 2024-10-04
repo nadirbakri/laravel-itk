@@ -239,10 +239,11 @@ class ExportController extends Controller
                     'companyCode' => Session::get('companyCode'),
                     'startDate' => $request->claim_date_from,
                     'endDate' => $request->claim_date_to,
-                    'status' => $request->business_trip_status,
+                    'status' => ($request->business_trip_status == 'ALL') ? '' : $request->business_trip_status,
                     'businessUnit' =>$request->business_unit,
                     'languageCode' => App::getLocale(), 
                     'sessionID' => 0, 
+                    'type' => 'REQUEST',
                     'sessionUserID' => Session::get('userID'),
                     'userID' => Session::get('userID'),
                 ];
@@ -289,20 +290,19 @@ class ExportController extends Controller
                 ]);
 
                 $param = [ 
+                    'companyCode' => Session::get('companyCode'),
                     'startDate' => $request->claim_date_from,
                     'endDate' => $request->claim_date_to,
-                    'companyCode' => Session::get('companyCode'), 
+                    'status' => ($request->business_trip_status == 'ALL') ? '' : $request->business_trip_status,
+                    'businessUnit' => $request->business_unit,
                     'languageCode' => App::getLocale(), 
                     'sessionID' => 0, 
-                    'exportMenu' => true,
-                    'type' => 'SETTLEMENT',
-                    'status' => $request->business_trip_status,
-                    'businessUnit' =>$request->business_unit,
+                    'type' => 'REQUEST',
                     'sessionUserID' => Session::get('userID'),
                     'userID' => Session::get('userID'),
                 ];
 
-                $response = $client->post(env('API_URL') . '/mobile/BusinessTrip/getBusinessTripAndSettlement',
+                $response = $client->post(env('API_URL') . '/mobile/BusinessTrip/getBusinessTripPDF',
                     ['body' => json_encode($param)]
                 );
             } catch (RequestException $e) {
@@ -321,11 +321,11 @@ class ExportController extends Controller
             // dd(json_encode($param));
 
             if($arrResult->dataListSet == null){
-                $pdf = PDF::loadView('export.exp_businesstripsettlementpdf', ['data' => []])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled'=> true]);
-                return $pdf->stream('Business Trip Settlement.pdf');
+                $pdf = PDF::loadView('export.exp_businesstrippdf_list2', ['data' => []])->setPaper('a4', 'portrait')->setOptions(['isPhpEnabled'=> true]);
+                return $pdf->stream('Business Trip.pdf');
             }else{
-                $pdf = PDF::loadView('export.exp_businesstripsettlementpdf', ['data' => $arrResult->dataListSet])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled'=> true]);
-                return $pdf->stream('Business Trip Settlement.pdf');
+                $pdf = PDF::loadView('export.exp_businesstrippdf_list2', ['data' => $arrResult->dataListSet])->setPaper('a4', 'portrait')->setOptions(['isPhpEnabled'=> true]);
+                return $pdf->stream('Business Trip.pdf');
             }
         } else {
             try {
@@ -343,13 +343,13 @@ class ExportController extends Controller
                     'sessionID' => 0, 
                     'exportMenu' => true,
                     'type' => 'ALL',
-                    'status' => $request->business_trip_status,
-                    'businessUnit' =>$request->business_unit,
+                    'status' => ($request->business_trip_status == 'ALL') ? '' : $request->business_trip_status,
+                    'businessUnit' => ($request->business_unit == 'ALL') ? '' : $request->business_unit,
                     'sessionUserID' => Session::get('userID'),
                     'userID' => Session::get('userID'),
                 ];
 
-                $response = $client->post(env('API_URL') . '/mobile/BusinessTrip/getBusinessTripAndSettlement',
+                $response = $client->post(env('API_URL') . '/mobile/BusinessTrip/getBusinessTripPDF',
                     ['body' => json_encode($param)]
                 );
             } catch (RequestException $e) {
@@ -368,10 +368,10 @@ class ExportController extends Controller
             // dd(json_encode($param));
 
             if($arrResult->dataListSet == null){
-                $pdf = PDF::loadView('export.exp_businesstrippdf_list', ['data' => []])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled'=> true]);
+                $pdf = PDF::loadView('export.exp_businesstrippdf_list2', ['data' => []])->setPaper('a4', 'portrait')->setOptions(['isPhpEnabled'=> true]);
                 return $pdf->stream('Business Trip.pdf');
             }else{
-                $pdf = PDF::loadView('export.exp_businesstrippdf_list', ['data' => $arrResult->dataListSet])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled'=> true]);
+                $pdf = PDF::loadView('export.exp_businesstrippdf_list2', ['data' => $arrResult->dataListSet])->setPaper('a4', 'portrait')->setOptions(['isPhpEnabled'=> true]);
                 return $pdf->stream('Business Trip.pdf');
             }
         }
