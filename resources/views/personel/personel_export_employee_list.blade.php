@@ -22,8 +22,8 @@
 				<th>No</th>
 				<th>Employee No</th>
 				<th>Employee Name</th>
-				<th>Tax No</th>
 				<th>ID Card No</th>
+				<th>Tax No</th>
 				<th>Employee Address</th>
                 <th>City</th>
                 <th>Phone No</th>
