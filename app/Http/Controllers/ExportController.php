@@ -203,7 +203,7 @@ class ExportController extends Controller
         } elseif ($request->travel_type == "TTB"){
             return Excel::download(new BusinessTripSeattleExport($request->claim_date_from, $request->claim_date_to,$request->business_unit, $dataLevel, $request->business_trip_status), 'Employee List Business Seattle Trip Report.xlsx');
         }else{
-            return Excel::download(new BusinessTripAllExport($request->claim_date_from, $request->claim_date_to,$request->business_unit, $dataLevel, $request->business_trip_status), 'Employee List Business Seattle Trip Report.xlsx');
+            return Excel::download(new BusinessTripAllExport($request->claim_date_from, $request->claim_date_to,$request->business_unit, $dataLevel, $request->business_trip_status), 'Employee List Business Trip All Report.xlsx');
         }
     
     }

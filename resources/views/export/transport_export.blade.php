@@ -20,22 +20,25 @@
 		<thead>
 			<tr>
 				<th>No</th>
-				<th>Employee Name</th>
 				<th>Request Date</th>
 				<th>Status</th>
 				<th>Ticket Number</th>
 				<th>Claim Type</th>
+				<th>Employee Name</th>
+				<th>Division</th>
+				<th>Receipt Date</th>
                 <th>Company Customer</th>
-                <th>Remarks</th>
-                <th>Start Location</th>
-                <th>End Location</th>
-                <th>Total Request (Rp)</th>
-                <th>Total per Employee (Rp)</th>
-                <th>No Rekening</th>
-                <th>Total Approve HRD (Rp)</th>
-                <th>Paid Remarks (Rp)</th>
-                <th>Parking</th>
-                <th>Toll</th>
+				<th>Remarks</th>
+				<th>Initial Location</th>
+				<th>Destination</th>
+				<th>Total Request (Rp)</th>
+                <th>Total Per Employee (Rp)</th>
+				<th>No Rekening</th>
+				<th>Total Approve HRD (Rp)</th>
+				<th>Total Paid (Rp)</th>
+				<th>Paid Remarks</th>
+				<th>Parking / Toll</th>
+                <th>Alamat Email</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -43,22 +46,25 @@
 			@foreach($data as $value)
 			<tr>
                 <td>{{ $no++ }}</td>
-				<td>{{ $value->transportEntity->fullnameRequester}}</td>
-				<td>{{ \Carbon\Carbon::parse($value->transportEntity->receiptDate)->format('Y-m-d') }}</td>
-				<td>{{ $value->transportEntity->status }}</td>
-				<td>{{ $value->transportEntity->ticketNo }}</td>
-				<td>{{ $value->transportEntity->type }}</td>
-				<td>{{ $value->transportEntity->customerName}}</td>
-				<td>{{ $value->transportEntity->remarks}}</td>
-				<td>{{ $value->transportEntity->startLocation}}</td>
-				<td>{{ $value->transportEntity->endLocation}}</td>
-				<td>{{ $value->transportEntity->totalAmount}}</td>
-				<td></td>
-				<td></td>
-				<td>{{ $value->transportEntity->paidAmount}}</td>
-				<td>{{ $value->transportEntity->paidRemarks}}</td>
-				<td>{{ $value->transportEntity->amountParkir}}</td>
-				<td>{{ $value->transportEntity->amountToll}}</td>
+				<td>{{ isset($value->requestDate) ? \Carbon\Carbon::parse($value->requestDate)->format('Y-m-d') : '' }}</td>
+				<td>{{ isset($value->status) ? $value->status : '' }}</td>
+				<td>{{ isset($value->ticketNo) ? $value->ticketNo : '' }}</td>
+				<td>{{ isset($value->type) ? $value->type : '' }}</td>
+				<td>{{ isset($value->fullName) ? $value->fullName : '' }}</td>
+				<td>{{ isset($value->businessUnit) ? $value->businessUnit : '' }}</td>
+				<td>{{ isset($value->receiptDate) ? \Carbon\Carbon::parse($value->receiptDate)->format('Y-m-d') : '' }}</td>
+				<td>{{ isset($value->customerName) ? $value->customerName : '' }}</td>
+				<td>{{ isset($value->remarks) ? $value->remarks : '' }}</td>
+				<td>{{ isset($value->startLocation) ? $value->startLocation : '' }}</td>
+				<td>{{ isset($value->endLocation) ? $value->endLocation : '' }}</td>
+				<td data-format="#,##0">{{ isset($value->totalAmount) ? $value->totalAmount : '' }}</td>
+				<td data-format="#,##0">{{ isset($value->totalPerEmployee) ? $value->totalPerEmployee : '' }}</td>
+				<td data-format="@">{{ isset($value->noRekening) ? $value->noRekening : '' }}</td>
+				<td data-format="#,##0"></td>
+				<td data-format="#,##0">{{ isset($value->paidAmount) ? $value->paidAmount : '' }}</td>
+				<td>{{ isset($value->approvalRemarks) ? $value->approvalRemarks : '' }}</td>
+				<td data-format="#,##0">{{ isset($value->amountParkir) && isset($value->amountToll) ? $value->amountParkir + $value->amountToll : '' }}</td>
+				<td>{{ isset($value->email) ? $value->email : '' }}</td>
 			</tr>
 			@endforeach
 		</tbody>

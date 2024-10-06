@@ -59,7 +59,7 @@ class TransportExport extends DefaultValueBinder implements WithCustomValueBinde
                 'companyCode' => Session::get('companyCode'), 
                 'languageCode' => App::getLocale(), 
                 'sessionID' => 0, 
-                'exportMenu' => false,
+                'exportMenu' => true,
                 'isWeb' => true,
                 'status' => $this->status,
                 'sessionUserID' => Session::get('userID'),
@@ -68,7 +68,7 @@ class TransportExport extends DefaultValueBinder implements WithCustomValueBinde
                 'userID' => Session::get('userID'),
             ];
 
-            $response = $client->post(env('API_URL') . '/mobile/Transport/getTransportDetailListAll',
+            $response = $client->post(env('API_URL') . '/mobile/Transport/getTransportDetailListAllWeb',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {
@@ -83,6 +83,8 @@ class TransportExport extends DefaultValueBinder implements WithCustomValueBinde
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
+
+        // dd($arrResult->dataListSet);
 
         if($arrResult->dataListSet == null){
             return view('export.transport_export', [

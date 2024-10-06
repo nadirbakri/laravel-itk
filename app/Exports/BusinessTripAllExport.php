@@ -40,6 +40,7 @@ class BusinessTripAllExport implements FromView, ShouldAutoSize
                 'sessionID' => 0, 
                 'exportMenu' => false,
                 'isWeb' => true,
+                "allWaitingPayment" => true,
                 'status' => $this->status,
                 'type' => 'ALL',
                 'businessUnit' =>$this->businessUnit,
@@ -57,7 +58,7 @@ class BusinessTripAllExport implements FromView, ShouldAutoSize
             // }
             // var_dump(json_encode($param));
 
-            $response = $client->post(env('API_URL') . '/mobile/BusinessTrip/getBusinessTripAndSettlement',
+            $response = $client->post(env('API_URL') . '/mobile/BusinessTrip/getExportBST',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {
@@ -73,7 +74,7 @@ class BusinessTripAllExport implements FromView, ShouldAutoSize
 
         $arrResult = json_decode($response->getBody()->getContents());
 
-        // var_dump($arrResult->dataListSet);
+        // dd($arrResult->dataListSet);
 
         if($arrResult->dataListSet == null){
             return view('export.exp_businesstripall_list', [

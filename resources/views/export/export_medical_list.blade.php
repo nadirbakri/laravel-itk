@@ -32,7 +32,7 @@
 				<th>Total Request (Rp)</th>
 				<th>Total Per Employee (Rp)</th>
 				<th>No Rekening</th>
-				<th>Total Approved HRD (Rp)</th>
+				<th>Total Approval HRD (Rp)</th>
 				<th>Total Paid (Rp)</th>
 				<th>Paid Remarks</th>
 				<th>Alamat Email</th>

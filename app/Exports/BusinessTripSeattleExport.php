@@ -40,6 +40,7 @@ class BusinessTripSeattleExport implements FromView, ShouldAutoSize
                 'sessionID' => 0, 
                 'exportMenu' => false,
                 'isWeb' => true,
+                "allWaitingPayment" => true,
                 'status' => $this->status,
                 'type' => 'SETTLEMENT',
                 'businessUnit' =>$this->businessUnit,
@@ -57,7 +58,7 @@ class BusinessTripSeattleExport implements FromView, ShouldAutoSize
             // }
             // var_dump(json_encode($param));
 
-            $response = $client->post(env('API_URL') . '/mobile/BusinessTrip/getBusinessTripAndSettlement',
+            $response = $client->post(env('API_URL') . '/mobile/BusinessTrip/getExportBST',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {

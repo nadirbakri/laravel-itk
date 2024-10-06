@@ -19,11 +19,9 @@
 	<table style="width: 100%; font-size: 14px;" class="table table-bordered table-hover responsive">
 		<thead>
 			<tr>
-				<th>No</th>
-				<th>Status</th>
 				<th>Employee Number</th>
 				<th>Employee Name</th>
-				<th>Permit Type</th>
+				<th>Leave Type</th>
                 <th>Permit Start Date</th>
                 <th>Permit End Date</th>
                 <th>Permit Start Time</th>
@@ -38,9 +36,7 @@
             <?php $no = 1; ?>
 			@foreach($data as $value)
 			<tr>
-                <td>{{ $no++ }}</td>
-				<td>{{ isset($value->permitEntity->status) ? $value->permitEntity->status : '' }}</td>
-				<td>{{ isset($value->permitEntity->employeeNo) ? $value->permitEntity->employeeNo : '' }}</td>
+                <td>{{ isset($value->permitEntity->employeeNo) ? $value->permitEntity->employeeNo : '' }}</td>
 				<td>{{ isset($value->permitEntity->fullnameRequester) ? $value->permitEntity->fullnameRequester : '' }}</td>
 				<td>{{ isset($value->permitEntity->permitCode) ? $value->permitEntity->permitCode : '' }}</td>
 				<td>{{ isset($value->permitEntity->permitDateFrom) ? date('Y-m-d', strtotime($value->permitEntity->permitDateFrom)) : '' }}</td>

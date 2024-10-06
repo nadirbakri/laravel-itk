@@ -20,53 +20,51 @@
 		<thead>
 			<tr>
 				<th>No</th>
-				{{-- <th>Request Date</th> --}}
-                <th>Status</th>
+				<th>Request Date</th>
+				<th>Trip Number</th>
 				<th>Ticket Number</th>
 				<th>Employee Name</th>
-				<th>Customer Name</th>
-                <th>Claim Type</th>
-                {{-- <th>SPPD Type</th> --}}
-                <th>Destination</th>
-                {{-- <th>Customer Name</th> --}}
+				<th>Status</th>
+				<th>Claim Type</th>
+				<th>Start Date</th>
+				<th>End Date</th>
+				<th>Destination</th>
+                <th>Company Customer</th>
 				<th>Project Name</th>
-				{{-- <th>Currency</th> --}}
-				<th>Total Request</th>
-				{{-- <th>Total Per Employee</th>
-				<th>No Rekening</th> --}}
-				<th>Total Approve HRD</th>
-				<th>Total Paid</th>
-				<th>Tujuan</th>
+				<th>Total Request (Rp)</th>
+                <th>Total Per Employee (Rp)</th>
+				<th>No Rekening</th>
+				<th>Total Approve HRD (Rp)</th>
+				<th>Total Paid (Rp)</th>
+				<th>Paid Remarks</th>
+				<th>Alamat Email</th>
 			</tr>
 		</thead>
 		<tbody>
 			<?php $no = 1; ?>
 			@foreach($data as $value)
-				@foreach($value->responseBusinessTrip as $value2)
-				@foreach($value2->travelAdvance as $value3)
 				<tr>
-					{{-- @if($value->responseBusinessTrip =! null) --}}
-					<td>{{ $no++ }}</td>
-					<td>{{ $value2->status }}</td>
-					<td>{{ $value2->ticketNo }}</td>
-					<td>{{ $value2->fullnameRequester }}</td>
-					<td>{{ $value2->customerName }}</td>
-					<td>{{ $value3->typeClaim }}</td>
-					{{-- <td></td> --}}
-					<td>{{ $value2->destination }}</td>
-					{{-- <td>{{ $value2->customerName }}</td> --}}
-					<td>{{ $value2->projectName }}</td>
-					{{-- <td></td> --}}
-					<td>{{ $value2->totalClaimAmount }}</td>
-					<td>{{ $value2->totalClaimAmount }}</td>
-					<td>{{ $value2->total }}</td>
-					{{-- <td></td>
-					{{-- <td></td> --}}
-					<td>{{ $value3->sequence }}</td>
-					<td>{{ $value2->purpose }}</td>
+					<td>{{ $no }}</td>
+					<td>{{ isset($value->requestDate) ? date('Y-m-d', strtotime($value->requestDate)) : '' }}</td>
+					<td>{{ $no }}</td>
+					<td>{{ isset($value->ticketNo) ? $value->ticketNo : '' }}</td>
+					<td>{{ isset($value->fullName) ? $value->fullName : '' }}</td>
+					<td>{{ isset($value->status) ? $value->status : '' }}</td>
+					<td>{{ isset($value->claimType) ? $value->claimType : '' }}</td>
+					<td>{{ isset($value->startDate) ? date('Y-m-d', strtotime($value->startDate)) : '' }}</td>
+					<td>{{ isset($value->endDate) ? date('Y-m-d', strtotime($value->endDate)) : '' }}</td>
+					<td>{{ isset($value->destination) ? $value->destination : '' }}</td>
+					<td>{{ isset($value->customerName) ? $value->customerName : '' }}</td>
+					<td>{{ isset($value->projectName) ? $value->projectName : '' }}</td>
+					<td data-format="#,##0">{{ isset($value->totalRequest) ? $value->totalRequest : '' }}</td>
+					<td data-format="#,##0">{{ isset($value->totalPerEmployee) ? $value->totalPerEmployee : '' }}</td>
+					<td data-format="@">{{ isset($value->noRekening) ? $value->noRekening : '' }}</td>
+					<td data-format="#,##0"></td>
+					<td data-format="#,##0">{{ isset($value->totalPaid) ? $value->totalPaid : '' }}</td>
+					<td>{{ isset($value->paidRemarks) ? $value->paidRemarks : '' }}</td>
+					<td>{{ isset($value->email) ? $value->email : '' }}</td>
 				</tr>
-					@endforeach
-				@endforeach
+				<?php $no++; ?>
 			@endforeach
 		</tbody>
 	</table>

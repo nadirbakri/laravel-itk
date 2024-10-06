@@ -19,8 +19,9 @@
 	<table style="width: 100%; font-size: 14px;" class="table table-bordered table-hover responsive">
 		<thead>
 			<tr>
-				<th>Overtime ID</th>
+				<th>No</th>
 				<th>Request Date</th>
+				<th>Overtime ID</th>
 				<th>Business Unit</th>
 				<th>Employee Name</th>
 				<th>Division</th>
@@ -32,10 +33,10 @@
 				<th>Difference (Hours)</th>
 				<th>Project Name</th>
 				<th>Location</th>
-                <th>Customer Name</th>
+                <th>Customer</th>
 				<th>Remarks</th>
 				<th>Approval Date</th>
-				<th>Paid Remarks</th>
+				<th>Approval Remarks</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -49,8 +50,9 @@
 			}
 			@endphp
 			<tr>
-                <td>{{ $no++ }}</td>
+                <td>{{ $no }}</td>
 				<td>{{ isset($value->overtimeEntity->createdDate) ? \Carbon\Carbon::parse($value->overtimeEntity->createdDate)->format('Y-m-d') : ''}}</td>
+				<td>{{ $no }}</td>
 				<td>{{ isset($value->overtimeEntity->businessUnit) ? $value->overtimeEntity->businessUnit : ''}}</td>
 				<td>{{ isset($value->overtimeEntity->fullnameRequester) ? $value->overtimeEntity->fullnameRequester : ''}}</td>
 				<td>{{ isset($value->overtimeEntity->businessUnit) ? $value->overtimeEntity->businessUnit : ''}}</td>
@@ -67,6 +69,7 @@
 				<td>{{ isset($value->overtimeEntity->approvalDate) ? \Carbon\Carbon::parse($value->overtimeEntity->approvalDate)->format('Y-m-d') : '' }}</td>
 				<td>{{ isset($value->overtimeEntity->approvalRemarks) ? $value->overtimeEntity->approvalRemarks : '' }}</td>
 			</tr>
+			<?php $no++; ?>
 			@endforeach
 		</tbody>
 	</table>
