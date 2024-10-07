@@ -38,7 +38,7 @@ class BusinessTripAllExport implements FromView, ShouldAutoSize
                 'companyCode' => Session::get('companyCode'), 
                 'languageCode' => App::getLocale(), 
                 'sessionID' => 0, 
-                'exportMenu' => false,
+                'exportMenu' => true,
                 'isWeb' => true,
                 "allWaitingPayment" => true,
                 'status' => $this->status,
