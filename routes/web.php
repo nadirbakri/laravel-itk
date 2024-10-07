@@ -808,6 +808,7 @@ Route::get('trans/reimbursement/table', 'TransactionController@tableDetailReimbu
 Route::get('trans/attendance/table', 'TransactionController@tableDetailAttendance');
 Route::get('trans/overtime/table', 'TransactionController@tableDetailOvertime');
 Route::get('trans/businesstrip/table', 'TransactionController@tableDetailBusinesstrip');
+Route::get('trans/businesstrip/attachment', 'TransactionController@tableAttachmentBusinesstrip');
 Route::get('trans/workflow/table', 'TransactionController@tableDetailWorkflow');
 Route::get('trans/update/table', 'TransactionController@tableUpdateTrans');
 Route::get('trans/update_leave/table', 'TransactionController@tableUpdateTransLeave');

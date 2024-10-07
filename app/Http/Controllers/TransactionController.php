@@ -260,7 +260,6 @@ class TransactionController extends Controller
             }
 
             $arrResult = json_decode($response->getBody()->getContents());
-            // dd($arrResult->dataListSet);
 
             if($arrResult->dataListSet == null){
                 // return Datatables::of([])->make(true);
@@ -373,9 +372,69 @@ class TransactionController extends Controller
                 return response()->json([]);
             }else{
                 // return Datatables::of($arrResult->dataListSet[0]->responseBusinessTrip)->make(true);
-                $data = array_merge($arrResult->dataListSet[0]->responseBusinessTrip, $arrResult->dataListSet[0]->responseSettlement);
+                $responseBusinessTrip = array_map(function ($item) {
+                    $item->type = 'Business Trip';
+                    return $item;
+                }, $arrResult->dataListSet[0]->responseBusinessTrip);
+                
+                $responseSettlement = array_map(function ($item) {
+                    $item->type = 'Settlement';
+                    return $item;
+                }, $arrResult->dataListSet[0]->responseSettlement);
+                
+                $data = array_merge($responseBusinessTrip, $responseSettlement);
+                // $data = array_merge($arrResult->dataListSet[0]->responseBusinessTrip, $arrResult->dataListSet[0]->responseSettlement);
                 return response()->json($data);
             }
+        }
+    }
+
+    public function tableAttachmentBusinesstrip(Request $request)
+    {
+        if ($request->type == "Business Trip") {
+            $url = '/mobile/BusinessTrip/gettraveladvancelist';
+        } else {
+            $url = '/mobile/BusinessTrip/getSettlementDetailList';
+        }
+
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . $url,
+                ['body' => json_encode(
+                    [
+                        'ticketNo'=> $request->ticketNo,
+                        'companyCode' => Session::get('companyCode'), 
+                        'languageCode' => strtoupper(App::getLocale()), 
+                        'userID' => Session::get('userID'),
+                        'sessionID' => 0, 
+                        'sessionUserID' => Session::get('userID')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        // dd($arrResult->dataListSet);
+
+        if($arrResult->dataListSet == null){
+            return response()->json([]);
+        }else{
+            return response()->json($arrResult->dataListSet);
         }
     }
 

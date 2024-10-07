@@ -28,6 +28,7 @@ return [
     'division' => 'Divisi',
     'ranking' => 'Level',
     'dbtrip' => 'Detail Perjalanan Bisnis',
+    'dbattachment' => 'Detail Attachment',
     'rdate' => 'Tanggal Pengajuan',
     'redate' => 'Tanggal Penerimaan',
     'label_slip' => 'Slip',
@@ -60,6 +61,7 @@ return [
     'completed_manual' => 'Selesai Manual',
     'approve' => 'Disetujui',
     'reject' => 'Ditolak',
+    'show_attachment' => 'Show Attachment',
 ]
 
 ?>

@@ -489,7 +489,6 @@
 
     const klikdetail = (element) => {
         let data = table.row($(element).parent()).data();
-        console.log(data);
 
         $('#detailPhoto').hide();
         $('#noDetailAtt').hide();

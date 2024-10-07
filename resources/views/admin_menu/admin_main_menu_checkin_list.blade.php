@@ -498,7 +498,6 @@
 
     const klikdetail = (element) => {
         let data = table.row($(element).parent()).data();
-        console.log(data);
 
         if(data != null){
             if(data.checkInPhoto == "" || data.checkInPhoto == null){

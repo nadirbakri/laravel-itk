@@ -116,6 +116,25 @@
             outline: none;
         }
 
+        .preview {
+            width: 100%;
+            height: 100%;
+        }
+
+        .myimage{
+            width: 100%;
+            height: 100%;
+        }
+
+        .imgdiv{
+            height: 150px;
+            overflow: hidden;
+            margin: 1%;
+            padding:0.5%;
+            border:2px solid #ddd;
+            border-radius: 5px;
+        }
+
         #loading {
 			display: none;
 			position: absolute;
@@ -376,6 +395,7 @@
                                     <h5>{{ __('trans_business_trip.treq') }}</h5>
                                 </div>
                                 <div class="col">
+                                    <input id="type_bst" name="type_bst" type="hidden" class="form-control"><span id="type_bst_val"></span>
                                     <input id="c_type" name="c_type" type="hidden" class="form-control"><span id="c_type_val"></span>
                                 </div>
                             </div>
@@ -401,6 +421,12 @@
                                 </div>
                                 <div class="col">
                                     <input id="employee_no" name="employee_no" type="hidden" class="form-control"><span id="employee_no_val"></span>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row" id="divShowAttachment" style="display: none;">
+                                <div class="col-5">
+                                    <button class="btn btn-primary btn-block" id="btn-show-attachment" type="button" data-toggle="modal" data-target="#modal_show_attachment">{{ __('trans_business_trip.show_attachment') }}</button>
                                 </div>
                             </div>
                             <br>
@@ -461,6 +487,27 @@
                         </form>
                     </div>
                 </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="div-form">
+        <div class="modal fade" id="modal_show_attachment" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-little">{{ __('trans_business_trip.dbattachment') }}</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="card">
+                        <div class="card-body" id="divAttachment">
+                            
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -646,6 +693,64 @@
         });
     }
 
+    function isEmpty(obj) {
+        for(var prop in obj) {
+            if(Object.prototype.hasOwnProperty.call(obj, prop)) {
+                return false;
+            }
+        }
+
+        return JSON.stringify(obj) === JSON.stringify({});
+    }
+
+    function load_data_attachment(type, ticketNo){
+        $.ajax({
+            type: 'GET',
+            url: "{{ url('/trans/businesstrip/attachment') }}",
+            data: {
+                'type': type,
+                'ticketNo': ticketNo,
+            }
+        }).then(function (data) {
+            let rows = '';
+            if(data[0].settlementDetail.length !== 0){
+                $.each(data[0].settlementDetail, function (key, val) {
+                    rows += `
+                        <div class="row">
+                            <div class="col-3">
+                                <h5>Claim Date</h5>
+                            </div>
+                            <div class="col-5">
+                                <span>${val.claimDate}</span>
+                            </div>
+                        </div>
+                    `;
+                    if(val.attachment.length !== 0){
+                        rows += `<div class="row">`;
+                        $.each(val.attachment, function (key2, val2) {
+                            if(val2.attachment == "" || val2.attachment == null ){
+                                rows += `
+                                    <div class="col-5">
+                                        <div class="noImgdiv" ><img id="ItemPreview" alt="no image" class="myimage img-rounded" src="<?= asset('pictures/no_image.png') ?>"/></div>
+                                    </div>
+                                `;
+                            }else{
+                                rows += `
+                                    <div class="col-5">
+                                        <div class="imgdiv" ><img id="ItemPreview" alt="in" class="myimage img-rounded" src="data:image/png;base64,${val2.attachment}"/></div>
+                                    </div>
+                                `;
+                            }
+                        });
+                        rows += `</div>`;
+                    }
+                });
+            }
+            $('#divAttachment').html(rows);
+            $('#loading').hide();
+        });
+    }
+
     function load_data_table_business_trip() {
         table = $('#business_trip_table').DataTable({
             processing: true,
@@ -736,7 +841,7 @@
                     targets: 0, 
                     "defaultContent": '',
                     render: function(data, type) {
-                        return type === 'display'? '<button type="button"  onclick="klik(this)" class="btn btn-primary" id="btnaja" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/></svg></button>' : '';
+                        return type === 'display'? '<button type="button" onclick="klik(this)" class="btn btn-primary" id="btnaja" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/></svg></button>' : '';
                              }
                 },
                 {data: 'employeeNo', name: 'employeeNo'},
@@ -760,6 +865,8 @@
         $('#s_date_val').html(moment(data.startDate).format('DD-MMM-YYYY'))
         $('#e_date').val(moment(data.endDate).format('DD-MMM-YYYY'))
         $('#e_date_val').html(moment(data.endDate).format('DD-MMM-YYYY'))
+        $('#type_bst').val(data.type)
+        $('#type_bst_val').html(data.type)
         $('#tiketno').val(data.ticketNo)
         $('#tiketno_val').html(data.ticketNo)
         $('#totalpaid').val(data.paidAmount)
@@ -776,6 +883,11 @@
         $('#type_val').html(data.purpose)
         $('#directsuperior').val(data.directSuperiorID)
         $('#div-totalpaid').show();
+        if(data.type == "Business Trip"){
+            $('#divShowAttachment').hide();
+        }else{
+            $('#divShowAttachment').show();
+        }
 
         if (!data.statusList || data.statusList.length === 0 || data.statusList[0] == null) {
             $('#btn-update').hide();
@@ -1220,6 +1332,17 @@
             templateResult: formatSelect
         });
     }
+
+    $("#btn-show-attachment").on( "click", function(e) {
+        e.preventDefault();
+
+        let type = $("#type_bst").val();
+        let ticketNo = $('#tiketno').val();
+
+        // $('#loading').show();
+
+        load_data_attachment(type, ticketNo);
+    })
 
     $("#btn-update").on( "click", function() {
         let reimbursement_status = $('#reimbursement_status').val();

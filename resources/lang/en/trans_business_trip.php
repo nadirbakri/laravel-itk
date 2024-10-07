@@ -28,6 +28,7 @@ return [
     'division' => 'Division',
     'ranking' => 'Ranking',
     'dbtrip' => 'Detail Business Trip',
+    'dbattachment' => 'Detail Attachment',
     'rdate' => 'Request Date',
     'redate' => 'Receipt Date',
     'approvalremarks' => 'Approval Remarks',
@@ -60,6 +61,7 @@ return [
     'completed_manual' => 'Completed Manual',
     'approve' => 'Approve',
     'reject' => 'Reject',
+    'show_attachment' => 'Show Attachment',
 ]
 
 ?>
