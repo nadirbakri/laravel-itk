@@ -56,7 +56,7 @@
 					<td>{{ isset($value->destination) ? $value->destination : '' }}</td>
 					<td>{{ isset($value->customerName) ? $value->customerName : '' }}</td>
 					<td>{{ isset($value->projectName) ? $value->projectName : '' }}</td>
-					<td data-format="#,##0">{{ isset($value->totalRequest) ? $value->totalRequest : '' }}</td>
+					<td data-format="#,##0">{{ isset($value->totalClaimAmount) ? $value->totalClaimAmount : '' }}</td>
 					<td data-format="#,##0">{{ isset($value->totalPerEmployee) ? $value->totalPerEmployee : '' }}</td>
 					<td data-format="@">{{ isset($value->noRekening) ? $value->noRekening : '' }}</td>
 					<td data-format="#,##0"></td>
