@@ -14,7 +14,7 @@ use PhpOffice\PhpSpreadsheet\Style\Fill;
 use PhpOffice\PhpSpreadsheet\Style\Font;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 
-class ExcelTransferBankBCAExport extends DefaultValueBinder implements WithCustomValueBinder, FromArray, WithStyles, ShouldAutoSize
+class ExcelTransferBankExport extends DefaultValueBinder implements WithCustomValueBinder, FromArray, WithStyles, ShouldAutoSize
 {
     protected $data;
 
@@ -43,7 +43,7 @@ class ExcelTransferBankBCAExport extends DefaultValueBinder implements WithCusto
     public function styles(Worksheet $sheet)
     {
         // Apply styles to the first row
-        $sheet->getStyle('A1:L1')->applyFromArray([
+        $sheet->getStyle('A1:BL1')->applyFromArray([
             'font' => [
                 'bold' => true,
             ],
