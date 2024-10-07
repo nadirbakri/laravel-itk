@@ -36,7 +36,7 @@ class BusinessTripExport implements FromView, ShouldAutoSize
                 'startDate' => $this->claimdateFrom,
                 'endDate' => $this->claimdateTo,
                 'type' => 'REQUEST',
-                'exportMenu' => false,
+                'exportMenu' => true,
                 'isWeb' => true,
                 'status' => $this->status,
                 "allWaitingPayment" => true,

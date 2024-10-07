@@ -36,7 +36,7 @@ class MultipleCheckinExport implements FromView, ShouldAutoSize
                 'endDate' => Carbon::parse($this->claimDateTo)->format('Y-m-d'),
                 'businessUnit' => $this->businessUnit,
                 'employeeNo' => null,
-                'exportMenu' => false,
+                'exportMenu' => true,
                 'isWeb' => true,
                 'companyCode' => Session::get('companyCode'), 
                 'languageCode' => strtoupper(App::getLocale()), 

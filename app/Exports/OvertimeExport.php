@@ -62,7 +62,7 @@ class OvertimeExport extends DefaultValueBinder implements WithCustomValueBinder
                 'userID' => Session::get('userID'),
                 'sessionID' => 0, 
                 'sessionUserID' => Session::get('userID'),
-                'exportMenu' => false,
+                'exportMenu' => true,
                 'isWeb' => true,
                 'status'=> $this->overtime_status
             ];
