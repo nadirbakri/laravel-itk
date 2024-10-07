@@ -28,6 +28,7 @@ use App\Exports\CSVTransferBankBOTExport;
 use App\Exports\CSVTransferBankBTPNExport;
 use App\Exports\CSVTransferBankINAExport;
 use App\Exports\ExcelTransferBankCIMBExport;
+use App\Exports\ExcelTransferBankBCAExport;
 use App\Exports\EBupotPeriodicalTemplateExport;
 use App\Exports\EBupotA1TemplateExport;
 use App\Exports\PensionFundReportExport;
@@ -4607,15 +4608,31 @@ public function dataDetailReportFormatPY(Request $request)
 
         if($arrResult->dataListSet != null){
             if($request->source_bank == 'BCA' || $request->source_bank == 'JAGO'){
-                $fullPath = storage_path('app/');
-                array_map('unlink', glob( "$fullPath*.txt"));
-                $namaFile = $arrResult->dataListSet[0]->namaFile;
-                if(!str_contains($arrResult->dataListSet[0]->namaFile, '.txt')){
-                    $namaFile = $arrResult->dataListSet[0]->namaFile . '.txt';
-                }
-                Storage::put($namaFile, $arrResult->dataListSet[0]->transferBank);
+                if($request->output_file == 'xlsx'){
+                    $array = explode("\r\n", $arrResult->dataListSet[0]->transferBank);
+                    foreach($array as $key => $value){
+                        $arrayTwo = explode(";", $value);
+                        if(count($arrayTwo) > 1){
+                            $array[$key] = $arrayTwo;
+                        }
+                    }
 
-                return Storage::download($namaFile);
+                    $array = array_filter($array, function($value) {
+                        return !empty($value);
+                    });
+
+                    return Excel::download(new ExcelTransferBankBCAExport($array), $arrResult->dataListSet[0]->namaFile);
+                }else{
+                    $fullPath = storage_path('app/');
+                    array_map('unlink', glob( "$fullPath*.txt"));
+                    $namaFile = $arrResult->dataListSet[0]->namaFile;
+                    if(!str_contains($arrResult->dataListSet[0]->namaFile, '.txt')){
+                        $namaFile = $arrResult->dataListSet[0]->namaFile . '.txt';
+                    }
+                    Storage::put($namaFile, $arrResult->dataListSet[0]->transferBank);
+
+                    return Storage::download($namaFile);
+                }
             }else if($request->source_bank == 'MCM'){
                 return Excel::download(new CSVTransferBankMCMExport($arrResult->dataListSet[0]->transferBank), $arrResult->dataListSet[0]->namaFile);
             }else if($request->source_bank == 'BOT'){
