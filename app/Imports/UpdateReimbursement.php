@@ -61,7 +61,7 @@ class UpdateReimbursement implements ToCollection, WithStartRow
                     "status" => $row[2],
                     "ticketNo" => $row[3],
                     "paidAmount" => $row[14],
-                    "approvalRemarks" => $row[15]
+                    "HRDRemarks" => $row[15]
                 ];
             }
 

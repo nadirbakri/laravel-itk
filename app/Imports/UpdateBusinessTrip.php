@@ -61,7 +61,7 @@ class UpdateBusinessTrip implements ToCollection, WithStartRow
                     "status" => $row[5],
                     "ticketNo" => $row[3],
                     "paidAmount" => $row[16],
-                    "approvalRemarks" => $row[17]
+                    "HRDRemarks" => $row[17]
                 ];
             }
 
