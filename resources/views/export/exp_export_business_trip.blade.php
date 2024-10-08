@@ -338,7 +338,7 @@ loadDataFirstLastAllStatus();
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.levelName + '<div>' +
+                        '<div class="col-12">' + data.id + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -363,7 +363,7 @@ loadDataFirstLastAllStatus();
                     }
                 },
                 ajax: {
-                    url: "{{ url('/level/all/api') }}",
+                    url: "{{ url('/level/access/all/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -378,9 +378,9 @@ loadDataFirstLastAllStatus();
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.levelName,
-                                    id: item.levelCode,
-                                    data: item
+                                    text: item,
+                                    id: item,
+                                    data: data
                                 }
                             })
                         };
@@ -396,12 +396,15 @@ loadDataFirstLastAllStatus();
 
             $.ajax({
                 type: 'GET',
-                url: "{{ url('/level/func/api') }}",
+                url: "{{ url('/level/access/func/api') }}",
+                data: {
+                    'levelType' : '1'
+                },
             }).then(function (data) {
-                if (!$('#business_unit').find('option:contains(' + data.levelName + ')').length) {
-                    $('#business_unit').append($('<option>').val(data.levelCode).text(data.levelName));
+                if (!$('#business_unit').find('option:contains(' + data + ')').length) {
+                    $('#business_unit').append($('<option>').val(data).text(data));
                 }
-                $('#business_unit').val(data.levelCode);
+                $('#business_unit').val(data);
                 $('#business_unit').removeClass('loading');
             });
         }

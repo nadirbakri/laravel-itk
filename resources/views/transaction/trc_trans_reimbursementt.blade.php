@@ -415,13 +415,7 @@ loadDataFirstLastAllReimbursmentType();
                     "</option>");
             });
         });
-
-    $.get("{{ url('level/all/api') }}", function (data) {
-            $.each(data, function (k, v) {
-                $('#business_unit').append("<option value=" + v.levelCode + ">" + v.levelName +
-                    "</option>");
-            });
-        });
+        
     $.get("{{ url('status_trans/api') }}", function (data) {
             $.each(data, function (k, v) {
                 $('#status').append("<option value=" + v.variable + ">" + v.value +
@@ -516,7 +510,7 @@ loadDataFirstLastAllReimbursmentType();
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '<div class="col-12">' + data.id + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -541,14 +535,14 @@ loadDataFirstLastAllReimbursmentType();
                     }
                 },
                 ajax: {
-                    url: "{{ url('/level/all/api') }}",
+                    url: "{{ url('/level/access/all/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
                     data: function (params) {
                         return {
                             _token: $('meta[name="csrf-token"]').attr('content'),
-                            search: params.term, 
+                            search: params.term,
                             levelType: '1' 
                         };
                     },
@@ -556,9 +550,9 @@ loadDataFirstLastAllReimbursmentType();
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.levelName,
-                                    id: item.levelCode,
-                                    data: item
+                                    text: item,
+                                    id: item,
+                                    data: data
                                 }
                             })
                         };
@@ -566,6 +560,24 @@ loadDataFirstLastAllReimbursmentType();
                     cache: true,
                 },
                 templateResult: formatSelect
+            });
+        }
+
+        function loadDataFirstLastAllBusinessUnit () {
+            $('#business_unit').addClass('spinner-border');
+
+            $.ajax({
+                type: 'GET',
+                url: "{{ url('/level/access/func/api') }}",
+                data: {
+                    'levelType' : '1'
+                },
+            }).then(function (data) {
+                if (!$('#business_unit').find('option:contains(' + data + ')').length) {
+                    $('#business_unit').append($('<option>').val(data).text(data));
+                }
+                $('#business_unit').val(data);
+                $('#business_unit').removeClass('loading');
             });
         }
 
@@ -583,20 +595,7 @@ loadDataFirstLastAllReimbursmentType();
                 $('#reimbursement_type').removeClass('loading');
             });
         }
-        function loadDataFirstLastAllBusinessUnit () {
-                $('#business_unit').addClass('spinner-border');
-    
-                $.ajax({
-                    type: 'GET',
-                    url: "{{ url('/level/func/api') }}",
-                }).then(function (data) {
-                    if (!$('#business_unit').find('option:contains(' + data.levelName + ')').length) {
-                        $('#business_unit').append($('<option>').val(data.levelCode).text(data.levelName));
-                    }
-                    $('#business_unit').val(data.levelCode);
-                    $('#business_unit').removeClass('loading');
-                });
-            }
+
         function loadDataStatusTransaction(){
             function formatSelect(data) {
                 if (data.loading) {

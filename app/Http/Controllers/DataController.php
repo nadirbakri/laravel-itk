@@ -5088,6 +5088,66 @@ class DataController extends Controller
         return response()->json($level);
 	}
 
+	public function dataLevelAccessAPI(Request $request)
+    {
+    	$search = $request->search;
+
+    	try {
+	    	$client = new Client([
+                'verify' => false,
+	    		'headers' => [ 'Content-Type' => 'application/json',
+	    						'Authorization' => 'Bearer ' . Session::get('token') ]
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/personel/UserAccessLevelView/GetUserAccessLevelList',
+	    		['body' => json_encode(
+	    			[
+	    				'companyCode' => Session::get('companyCode'),
+						'levelType' => $request->levelType,
+						'userId' => Session::get('userID'),
+						"languageCode" => strtoupper(App::getLocale()),
+						"level" => [
+							"additionalProp1" => Session::get('userID'),
+							"additionalProp2" => Session::get('userID'),
+							"additionalProp3" => Session::get('userID')
+						],
+						"sessionID" => 0,
+						"userSessionID" => Session::get('userID'),
+						"sessionUserID" => Session::get('userID'),
+						"logActionUserID" => Session::get('userID'),
+						"logActionUsername" => Session::get('userID')
+	    			]
+	    		)]
+	    	);
+	    } catch (RequestException $e) {
+	    	$response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+	    if($search == ''){
+	    	$level = $arrResult->dataListSet[0]->levelCode;
+	    }else{
+	    	$level = array_filter(
+	    		$arrResult->dataListSet[0]->levelCode,
+	    		function($value) use ($search){
+	    			if(preg_match('/' . $search . '/i', $value)){
+	    				return preg_match('/' . $search . '/i', $value);
+	    			}
+	    		}
+	    	);
+	    }
+
+        return response()->json($level);
+	}
+
 	public function dataLevelDetailAPI(Request $request)
     {
     	$search = $request->search;
@@ -5199,6 +5259,69 @@ class DataController extends Controller
         return response()->json($level);
 	}
 
+	public function dataLevelAccessAllAPI(Request $request)
+    {
+    	$search = $request->search;
+
+    	try {
+	    	$client = new Client([
+                'verify' => false,
+	    		'headers' => [ 'Content-Type' => 'application/json',
+	    						'Authorization' => 'Bearer ' . Session::get('token') ]
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/personel/UserAccessLevelView/GetUserAccessLevelList',
+	    		['body' => json_encode(
+	    			[
+	    				'companyCode' => Session::get('companyCode'),
+						'levelType' => $request->levelType,
+						'userId' => Session::get('userID'),
+						"languageCode" => strtoupper(App::getLocale()),
+						"level" => [
+							"additionalProp1" => Session::get('userID'),
+							"additionalProp2" => Session::get('userID'),
+							"additionalProp3" => Session::get('userID')
+						],
+						"sessionID" => 0,
+						"userSessionID" => Session::get('userID'),
+						"sessionUserID" => Session::get('userID'),
+						"logActionUserID" => Session::get('userID'),
+						"logActionUsername" => Session::get('userID')
+	    			]
+	    		)]
+	    	);
+	    } catch (RequestException $e) {
+	    	$response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+		if($arrResult->dataListSet != null){
+			if($search == ''){
+				$level = array_merge(["ALL"], $arrResult->dataListSet[0]->levelCode);
+			}else{
+				$level = array_merge(["ALL"], $arrResult->dataListSet[0]->levelCode);
+				$level = array_filter(
+					$level,
+					function($value) use ($search){
+						if(preg_match('/' . $search . '/i', $value)){
+							return preg_match('/' . $search . '/i', $value);
+						}
+					}
+				);
+			}
+		}
+
+        return response()->json($level);
+	}
+
 	public function dataLevelFunctionAPI(Request $request)
     {
     	$level[] = (object) [
@@ -5236,7 +5359,56 @@ class DataController extends Controller
 	    $arrResult = json_decode($response->getBody()->getContents());
 
 		if($arrResult->dataListSet !== null){
-			$level = array_merge($level, $arrResult->dataListSet);	
+			$level = array_merge($level, $arrResult->dataListSet[0]->levelCode);	
+		}
+
+        return response()->json($level[0]);
+	}
+
+	public function dataLevelAccessFunctionAPI(Request $request)
+    {
+    	try {
+	    	$client = new Client([
+                'verify' => false,
+	    		'headers' => [ 'Content-Type' => 'application/json',
+	    						'Authorization' => 'Bearer ' . Session::get('token') ]
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/personel/UserAccessLevelView/GetUserAccessLevelList',
+	    		['body' => json_encode(
+	    			[
+	    				'companyCode' => Session::get('companyCode'),
+						'levelType' => $request->levelType,
+						'userId' => Session::get('userID'),
+						"languageCode" => strtoupper(App::getLocale()),
+						"level" => [
+							"additionalProp1" => Session::get('userID'),
+							"additionalProp2" => Session::get('userID'),
+							"additionalProp3" => Session::get('userID')
+						],
+						"sessionID" => 0,
+						"userSessionID" => Session::get('userID'),
+						"sessionUserID" => Session::get('userID'),
+						"logActionUserID" => Session::get('userID'),
+						"logActionUsername" => Session::get('userID')
+	    			]
+	    		)]
+	    	);
+	    } catch (RequestException $e) {
+	    	$response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+		if($arrResult->dataListSet !== null){
+			$level = array_merge(["ALL"], $arrResult->dataListSet[0]->levelCode);	
 		}
 
         return response()->json($level[0]);

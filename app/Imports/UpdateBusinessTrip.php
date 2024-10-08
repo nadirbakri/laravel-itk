@@ -61,11 +61,12 @@ class UpdateBusinessTrip implements ToCollection, WithStartRow
                     "status" => $row[5],
                     "ticketNo" => $row[3],
                     "paidAmount" => $row[16],
-                    "HRDRemarks" => $row[17]
+                    "HRDRemarks" => $row[17],
+                    "type" => (trim($row[6]) == "Business Trip") ? "TTA" : "TTB"
                 ];
             }
 
-            // var_dump(json_encode($param));
+            // dd(json_encode($param));
 
             $response = $client->put(env('API_URL') . '/mobile/BusinessTrip/UpdateListTicketNo',
                 ['body' => json_encode($param)]
