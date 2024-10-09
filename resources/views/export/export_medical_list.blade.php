@@ -29,7 +29,6 @@
 				<th>Dependent Name</th>
 				<th>Remarks</th>
 				<th>Total Request (Rp)</th>
-				<th>Total Per Employee (Rp)</th>
 				<th>No Rekening</th>
 				<th>Total Approval HRD (Rp)</th>
 				<th>Total Paid (Rp)</th>
@@ -53,7 +52,6 @@
 				<td>{{ isset($value->reimbursementEntity->dependentName) ? $value->reimbursementEntity->dependentName : '' }}</td>
 				<td>{{ isset($value->reimbursementEntity->reimbursementRemarks) ? $value->reimbursementEntity->reimbursementRemarks : '' }}</td>
 				<td data-format="#,##0">{{ isset($value->reimbursementEntity->totalClaimAmount) ? $value->reimbursementEntity->totalClaimAmount : '' }}</td>
-				<td data-format="#,##0">{{ isset($value->reimbursementEntity->totalClaimAmountPerEmployee) ? $value->reimbursementEntity->totalClaimAmountPerEmployee : '' }}</td>
 				<td data-format="@">{{ isset($value->reimbursementEntity->bankAccountNo) ? $value->reimbursementEntity->bankAccountNo : '' }}</td>
 				<td data-format="#,##0"></td>
 				<td data-format="#,##0">{{ isset($value->reimbursementEntity->paidAmount) ? $value->reimbursementEntity->paidAmount : '' }}</td>

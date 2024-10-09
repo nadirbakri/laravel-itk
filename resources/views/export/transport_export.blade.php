@@ -31,7 +31,6 @@
 				<th>Initial Location</th>
 				<th>Destination</th>
 				<th>Total Request (Rp)</th>
-                <th>Total Per Employee (Rp)</th>
 				<th>No Rekening</th>
 				<th>Total Approve HRD (Rp)</th>
 				<th>Total Paid (Rp)</th>
@@ -58,7 +57,6 @@
 				<td>{{ isset($value->startLocation) ? $value->startLocation : '' }}</td>
 				<td>{{ isset($value->endLocation) ? $value->endLocation : '' }}</td>
 				<td data-format="#,##0">{{ isset($value->totalAmount) ? $value->totalAmount : '' }}</td>
-				<td data-format="#,##0">{{ isset($value->totalPerEmployee) ? $value->totalPerEmployee : '' }}</td>
 				<td data-format="@">{{ isset($value->noRekening) ? $value->noRekening : '' }}</td>
 				<td data-format="#,##0"></td>
 				<td data-format="#,##0">{{ isset($value->paidAmount) ? $value->paidAmount : '' }}</td>

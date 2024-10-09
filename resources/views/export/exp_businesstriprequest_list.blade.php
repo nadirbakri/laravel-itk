@@ -32,7 +32,6 @@
                 <th>Company Customer</th>
 				<th>Project Name</th>
 				<th>Total Request (Rp)</th>
-                <th>Total Per Employee (Rp)</th>
 				<th>No Rekening</th>
 				<th>Total Approve HRD (Rp)</th>
 				<th>Total Paid (Rp)</th>
@@ -59,7 +58,6 @@
 					<td>{{ isset($value->customerName) ? $value->customerName : '' }}</td>
 					<td>{{ isset($value->projectName) ? $value->projectName : '' }}</td>
 					<td data-format="#,##0">{{ isset($value->totalClaimAmount) ? $value->totalClaimAmount : '' }}</td>
-					<td data-format="#,##0">{{ isset($value->totalPerEmployee) ? $value->totalPerEmployee : '' }}</td>
 					<td data-format="@">{{ isset($value->noRekening) ? $value->noRekening : '' }}</td>
 					<td data-format="#,##0"></td>
 					<td data-format="#,##0">{{ isset($value->totalPaid) ? $value->totalPaid : '' }}</td>

@@ -29,7 +29,6 @@
 				<th>{{ __('export_reimbursement.companycustomer') }}</th>
 				<th>{{ __('export_reimbursement.remarks') }}</th>
 				<th>{{ __('export_reimbursement.treq') }}</th>
-                <th>{{ __('export_reimbursement.temp') }}</th>
                 <th>{{ __('export_reimbursement.nrek') }}</th>
                 <th>{{ __('export_reimbursement.tapprove') }}</th>
                 <th>{{ __('export_reimbursement.tpaid') }}</th>
@@ -53,7 +52,6 @@
 				<td>{{ isset($value->reimbursementEntity->customerName) ? $value->reimbursementEntity->customerName : '' }}</td>
 				<td>{{ isset($value->reimbursementEntity->reimbursementRemarks) ? $value->reimbursementEntity->reimbursementRemarks : '' }}</td>
 				<td data-format="#,##0">{{ isset($value->reimbursementEntity->totalClaimAmount) ? $value->reimbursementEntity->totalClaimAmount : '' }}</td>
-				<td data-format="#,##0">{{ isset($value->reimbursementEntity->totalClaimAmountPerEmployee) ? $value->reimbursementEntity->totalClaimAmountPerEmployee : '' }}</td>
 				<td data-format="@">{{ isset($value->reimbursementEntity->bankAccountNo) ? $value->reimbursementEntity->bankAccountNo : '' }}</td>
 				<td data-format="#,##0"></td>
 				<td data-format="#,##0">{{ isset($value->reimbursementEntity->paidAmount) ? $value->reimbursementEntity->paidAmount : '' }}</td>
