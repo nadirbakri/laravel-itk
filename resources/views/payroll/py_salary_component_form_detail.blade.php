@@ -711,7 +711,7 @@
                 $('#pension_insurance').prop('disabled', false);
                 $('#overtime_alternative_1').prop('disabled', false);
                 $('#overtime_alternative_2').prop('disabled', false);
-            } else if (fieldType == 'T') {
+            } else if (fieldType == 'T' || fieldType == 'N' || fieldType == 'L') {
                 $('#jamsostek').prop('disabled', false);
                 $('#health_insurance').prop('disabled', false);
                 $('#pension_insurance').prop('disabled', false);
@@ -729,7 +729,7 @@
         $('input[name=field_type]').on('change', function () {
             fieldType = $('input[name=field_type]:checked').val();
             displayIn = $('input[name=display_in]:checked').val();
-            if (fieldType == 'T') {
+            if (fieldType == 'T' || fieldType == 'N' || fieldType == 'L') {
                 $('#jamsostek').prop('disabled', false);
                 $('#health_insurance').prop('disabled', false);
                 $('#pension_insurance').prop('disabled', false);
