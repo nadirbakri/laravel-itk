@@ -60,8 +60,8 @@ class UpdateMedical implements ToCollection, WithStartRow
                     "changedBy" => Session::get('userID'),
                     "status" => $row[2],
                     "ticketNo" => $row[3],
-                    "paidAmount" => $row[14],
-                    "HRDRemarks" => $row[15]
+                    "paidAmount" => $row[13],
+                    "hrdRemarks" => $row[14]
                 ];
             }
 
