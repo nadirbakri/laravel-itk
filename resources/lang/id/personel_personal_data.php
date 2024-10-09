@@ -88,6 +88,8 @@ return [
     'label_termination_code' => 'Kode Terminasi',
     'label_special_reason_resign' => 'Alasan Khusus Pengundurkan Diri',
     'label_termination_remarks' => 'Keterangan Terminasi',
+    'label_no_dana_pensiun' => 'No Dana Pensiun',
+    'label_join_date_dana_pensiun' => 'Tanggal Bergabung Dana Pensiun',
     'label_expatriat' => 'Ekspatriat',
     'label_license_no' => 'No Lisensi',
     'label_commisioner' => 'Komisaris',

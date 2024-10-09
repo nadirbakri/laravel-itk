@@ -88,6 +88,8 @@ return [
     'label_termination_code' => 'Termination Code',
     'label_special_reason_resign' => 'Special Reason Resign',
     'label_termination_remarks' => 'Termination Remarks',
+    'label_no_dana_pensiun' => 'Pension Fund Number',
+    'label_join_date_dana_pensiun' => 'Pension Fund Join Date',
     'label_expatriat' => 'Expatriat',
     'label_license_no' => 'License No',
     'label_commisioner' => 'Commisioner',

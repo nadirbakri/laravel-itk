@@ -6112,6 +6112,8 @@ class PersonelController extends Controller
                 "taxStatus" => $request->tax_status_payroll,
                 "taxStatusNextYear" => $request->tax_status_next_year_payroll,
                 "flagExcludePayroll" => isset($request->exclude_payroll_process_payroll) ? (bool) $request->exclude_payroll_process_payroll : false,
+                "danaPensiunNo" => $request->no_dana_pensiun_employment,
+                "danaPensiunJoinDate" => $request->join_date_dana_pensiun_employment,
                 "flagTemp" => "string",
                 "changedNo" => 0,
                 "token" => Session::get('token'),

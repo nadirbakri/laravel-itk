@@ -1040,6 +1040,31 @@
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
+                                    <label
+                                        for="no_dana_pensiun_employment">{{ __('personel_personal_data.label_no_dana_pensiun') }}</label>
+                                    <input type="text" class="form-control" id="no_dana_pensiun_employment"
+                                        name="no_dana_pensiun_employment"
+                                        placeholder="{{ __('personel_personal_data.label_no_dana_pensiun') }}">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label
+                                        for="join_date_dana_pensiun_employment">{{ __('personel_personal_data.label_join_date_dana_pensiun') }}</label>
+                                    <div class='input-group'>
+                                        <input type="text" class="form-control" id="join_date_dana_pensiun_employment"
+                                            name="join_date_dana_pensiun_employment"
+                                            placeholder="{{ __('personel_personal_data.label_join_date_dana_pensiun') }}">
+                                        <div class="input-group-prepend" id="join_date_dana_pensiun_employment_calendar">
+                                            <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
                                     <label for="special_reason_resign_employment">&nbsp;</label>
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox"
@@ -2682,6 +2707,21 @@
             }
         });
 
+        let pickerJoinDateDanaPensiun = $('#join_date_dana_pensiun_employment').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "j-M-y",
+            dateFormat: "Y-m-d",
+            defaultDate: null,
+            onReady: function () {
+                var flatPickrInstance = this;
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings("#join_date_dana_pensiun_employment_calendar").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
+
         // let pickerTerminationDate = $('#termination_date_employment').flatpickr({
         //     altInput: true,
         //     allowInput: true,
@@ -2935,6 +2975,7 @@
             $('#termination_remarks_employment').val("");
             $('#expatriat_employment').prop('checked', false);
             $('#license_no_employment').val("");
+            $('#no_dana_pensiun_employment').val("");
             $('#commisioner_employment').prop('checked', false);
             $('#position_code_employment').val(null).trigger('change');
             $('#ranking_code_employment').val(null).trigger('change');
@@ -3051,6 +3092,7 @@
             $('#fullname_info').val(((typeof arrData[0].fullName !== 'undefined') ? arrData[0].fullName : ''));
             $('#title_info').val(((typeof arrData2[0].title !== 'undefined') ? arrData2[0].title : ''));
             $("#termination_code_employment").val(((typeof arrData2[0].terminationCode !== 'undefined') ? arrData2[0].terminationCode : ''));
+            $("#no_dana_pensiun_employment").val(((typeof arrData2[0].danaPensiunNo !== 'undefined') ? arrData2[0].danaPensiunNo : ''));
             
             $.ajax({
                 type: 'GET',
@@ -3723,6 +3765,7 @@
             pickerContractStartDate.setDate(((typeof arrData2[0].contractStartDate !== 'undefined' && arrData2[0].contractStartDate !== null) ? arrData2[0].contractStartDate : ''));
             pickerContractEndDate.setDate(((typeof arrData2[0].contractEndDate !== 'undefined' && arrData2[0].contractEndDate !== null) ? arrData2[0].contractEndDate : ''));
             pickerEffectivePermanentDate.setDate(((typeof arrData2[0].effectivePermanentDate !== 'undefined' && arrData2[0].effectivePermanentDate !== null) ? arrData2[0].effectivePermanentDate : ''));
+            pickerJoinDateDanaPensiun.setDate(((typeof arrData2[0].danaPensiunJoinDate !== 'undefined' && arrData2[0].danaPensiunJoinDate !== null) ? arrData2[0].danaPensiunJoinDate : ''));
             // pickerTerminationDate.setDate(((typeof arrData2[0].terminationDate !== 'undefined') ? arrData2[0].terminationDate : ''));
             // pickerEffectiveTerminated.setDate(((typeof arrData2[0].effectiveTerminationDate !== 'undefined') ? arrData2[0].effectiveTerminationDate : ''));
             $('#termination_date_employment').val(((typeof arrData2[0].terminationDate !== 'undefined' && arrData2[0].terminationDate !== null) ? moment(arrData2[0].terminationDate).format('YYYY-MM-DD') : ''));
