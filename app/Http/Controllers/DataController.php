@@ -2535,7 +2535,7 @@ class DataController extends Controller
 		Session::put('companyCode', $request->companyCode);
 		Session::put('companyName', $request->companyName);
 		
-		$menuList = Session::get('menuList');
+		$menuList = Session::get('menuListTemp');
 
 		foreach($menuList as $value){
 			if ($value->companyCode != $request->companyCode){
@@ -2545,7 +2545,7 @@ class DataController extends Controller
 			if($value->moduleID == 'UTI'){
 				Session::forget('groupAuthorizeUtilities');
 				Session::put('groupAuthorizeUtilities', $value->groupAuthorizeCode);
-				unset($menuList[$key]);
+				// unset($menuList[$key]);
 			}
 			if($value->moduleID == 'HOME'){
 				Session::forget('groupAuthorizeHome');

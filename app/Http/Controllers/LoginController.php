@@ -69,8 +69,10 @@ class LoginController extends Controller
 
 		if(!isset($arrResult->dataListSet[0]->userAccess) || $arrResult->dataListSet[0]->userAccess == '' || $arrResult->dataListSet[0]->userAccess == null){
 			$menuList = [];
+			$menuListTemp = [];
 		}else{
 			$menuList = $arrResult->dataListSet[0]->userAccess;
+			$menuListTemp = $arrResult->dataListSet[0]->userAccess;
 		}
 
 	    if($arrResult->status == "true"){
@@ -184,6 +186,7 @@ class LoginController extends Controller
 			usort($menuList, function($a, $b) {return strcmp($a->sort, $b->sort);});
 
 			Session::put('menuList', $menuList);
+			Session::put('menuListTemp', $menuListTemp);
 				
 	    	return response()->json(["status" => $arrResult->status, "message" => "/main"]);
 	    }else{
@@ -371,8 +374,10 @@ class LoginController extends Controller
 
 		if(!isset($arrResult->dataListSet[0]->userAccess) || $arrResult->dataListSet[0]->userAccess == '' || $arrResult->dataListSet[0]->userAccess == null){
 			$menuList = [];
+			$menuListTemp = [];
 		}else{
 			$menuList = $arrResult->dataListSet[0]->userAccess;
+			$menuListTemp = $arrResult->dataListSet[0]->userAccess;
 		}
 
 	    if($arrResult->status == "true"){
@@ -486,6 +491,7 @@ class LoginController extends Controller
 			usort($menuList, function($a, $b) {return strcmp($a->sort, $b->sort);});
 
 			Session::put('menuList', $menuList);
+			Session::put('menuListTemp', $menuListTemp);
 
 			return true;
 	    }else{
