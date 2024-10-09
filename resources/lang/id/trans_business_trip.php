@@ -61,7 +61,7 @@ return [
     'completed_manual' => 'Selesai Manual',
     'approve' => 'Disetujui',
     'reject' => 'Ditolak',
-    'show_attachment' => 'Show Attachment',
+    'detail_business_trip' => 'Detail Perjalanan Dinas (Permintaan)',
 ]
 
 ?>

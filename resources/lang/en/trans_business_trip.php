@@ -61,7 +61,7 @@ return [
     'completed_manual' => 'Completed Manual',
     'approve' => 'Approve',
     'reject' => 'Reject',
-    'show_attachment' => 'Show Attachment',
+    'detail_business_trip' => 'Detail Business Trip (Request)',
 ]
 
 ?>

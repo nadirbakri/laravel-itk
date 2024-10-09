@@ -367,6 +367,7 @@ class TransactionController extends Controller
             }
 
             $arrResult = json_decode($response->getBody()->getContents());
+            
             if($arrResult->dataListSet == null){
                 // return Datatables::of([])->make(true);
                 return response()->json([]);

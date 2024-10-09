@@ -116,6 +116,11 @@
             outline: none;
         }
 
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
         .preview {
             width: 100%;
             height: 100%;
@@ -127,7 +132,8 @@
         }
 
         .imgdiv{
-            height: 150px;
+            height: 50px;
+            width: 50px;
             overflow: hidden;
             margin: 1%;
             padding:0.5%;
@@ -395,7 +401,7 @@
                                     <h5>{{ __('trans_business_trip.treq') }}</h5>
                                 </div>
                                 <div class="col">
-                                    <input id="type_bst" name="type_bst" type="hidden" class="form-control"><span id="type_bst_val"></span>
+                                    <input id="type_bst" name="type_bst" type="hidden" class="form-control">
                                     <input id="c_type" name="c_type" type="hidden" class="form-control"><span id="c_type_val"></span>
                                 </div>
                             </div>
@@ -424,9 +430,32 @@
                                 </div>
                             </div>
                             <br>
-                            <div class="row" id="divShowAttachment" style="display: none;">
-                                <div class="col-5">
-                                    <button class="btn btn-primary btn-block" id="btn-show-attachment" type="button" data-toggle="modal" data-target="#modal_show_attachment">{{ __('trans_business_trip.show_attachment') }}</button>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card m-0" style="display: block">
+                                        <a class="collapsed" data-toggle="collapse" href="#detail_business_trip" aria-expanded="true" aria-controls="detail_business_trip">
+                                            <div class="card-header">
+                                                <div class="div-dropdown-title">
+                                                    <span class="dropdown-title-text">{{ __('trans_business_trip.detail_business_trip') }}</span>
+                                                    <img class="dropdown-triangle" src="{{ url('/pictures/triangle.png') }}" alt="Triangle">
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <div id="detail_business_trip" class="collapse m-3">
+                                            <div class="card-block">
+                                                <table id="leave_table" class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th width="30%">Claim Date</th>
+                                                            <th width="70%">Attachment</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="body_detail_business_trip">
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <br>
@@ -703,6 +732,17 @@
         return JSON.stringify(obj) === JSON.stringify({});
     }
 
+    function load_image(dataImage){
+        var image = new Image();
+        image.src = dataImage;
+
+        image.style.maxWidth = "100%";  // Maksimal lebar 90% dari layar/tab
+        image.style.maxHeight = "100%";  // Maksimal tinggi 90% dari layar/tab
+
+        var w = window.open("");
+        w.document.write(image.outerHTML);
+    }
+
     function load_data_attachment(type, ticketNo){
         $.ajax({
             type: 'GET',
@@ -713,40 +753,44 @@
             }
         }).then(function (data) {
             let rows = '';
-            if(data[0].settlementDetail.length !== 0){
+            if(data[0].hasOwnProperty('settlementDetail') && data[0].settlementDetail.length !== 0){
                 $.each(data[0].settlementDetail, function (key, val) {
                     rows += `
-                        <div class="row">
-                            <div class="col-3">
-                                <h5>Claim Date</h5>
-                            </div>
-                            <div class="col-5">
-                                <span>${val.claimDate}</span>
-                            </div>
-                        </div>
+                        <tr>
+                            <td>${moment(val.claimDate).format('YYYY-MM-DD')}</td>
                     `;
                     if(val.attachment.length !== 0){
-                        rows += `<div class="row">`;
+                        rows += `<td>
+                                    <div class="container">`;
                         $.each(val.attachment, function (key2, val2) {
+                            
                             if(val2.attachment == "" || val2.attachment == null ){
                                 rows += `
-                                    <div class="col-5">
-                                        <div class="noImgdiv" ><img id="ItemPreview" alt="no image" class="myimage img-rounded" src="<?= asset('pictures/no_image.png') ?>"/></div>
-                                    </div>
+                                    <a href="javascript:void(0);" onclick="load_image('<?= asset('pictures/no_image.png') ?>')">
+                                        <div class="imgdiv" ><img id="ItemPreview" alt="no image" class="myimage img-rounded" src="<?= asset('pictures/no_image.png') ?>"/></div>
+                                    </a>
                                 `;
                             }else{
                                 rows += `
-                                    <div class="col-5">
+                                    <a href="javascript:void(0);" onclick="load_image('data:image/png;base64,${val2.attachment}')">
                                         <div class="imgdiv" ><img id="ItemPreview" alt="in" class="myimage img-rounded" src="data:image/png;base64,${val2.attachment}"/></div>
-                                    </div>
+                                    </a>
                                 `;
                             }
                         });
-                        rows += `</div>`;
+                        rows += `</div>
+                            </td>`;
                     }
+                    rows += `</tr>`;
                 });
+            }else{
+                rows += `
+                    <tr>
+                        <td colspan="2">No Data Available</td>
+                    </tr>
+                `;
             }
-            $('#divAttachment').html(rows);
+            $('#body_detail_business_trip').html(rows);
             $('#loading').hide();
         });
     }
@@ -861,12 +905,14 @@
     const klikdetail = (element) => {
         let data = table.row($(element).parent()).data();
 
+        $('#detail_business_trip').collapse('hide');
+        load_data_attachment(data.type, data.ticketNo);
+
         $('#s_date').val(moment(data.startDate).format('DD-MMM-YYYY'))
         $('#s_date_val').html(moment(data.startDate).format('DD-MMM-YYYY'))
         $('#e_date').val(moment(data.endDate).format('DD-MMM-YYYY'))
         $('#e_date_val').html(moment(data.endDate).format('DD-MMM-YYYY'))
         $('#type_bst').val(data.type)
-        $('#type_bst_val').html(data.type)
         $('#tiketno').val(data.ticketNo)
         $('#tiketno_val').html(data.ticketNo)
         $('#totalpaid').val(data.paidAmount)
@@ -903,8 +949,6 @@
                     text: value
                 }));
             });
-
-            
 
             var selectedValue = $('#reimbursement_status').val();
             if (selectedValue === 'COMPLETED' || selectedValue === 'PAID') {
@@ -1328,17 +1372,6 @@
             templateResult: formatSelect
         });
     }
-
-    $("#btn-show-attachment").on( "click", function(e) {
-        e.preventDefault();
-
-        let type = $("#type_bst").val();
-        let ticketNo = $('#tiketno').val();
-
-        // $('#loading').show();
-
-        load_data_attachment(type, ticketNo);
-    })
 
     $("#btn-update").on( "click", function() {
         let reimbursement_status = $('#reimbursement_status').val();
