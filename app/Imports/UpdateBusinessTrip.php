@@ -60,8 +60,8 @@ class UpdateBusinessTrip implements ToCollection, WithStartRow
                     "changedBy" => Session::get('userID'),
                     "status" => $row[5],
                     "ticketNo" => $row[3],
-                    "paidAmount" => $row[16],
-                    "hrdRemarks" => $row[17],
+                    "paidAmount" => $row[15],
+                    "hrdRemarks" => $row[16],
                     "type" => (trim($row[6]) == "Business Trip") ? "TTA" : "TTB"
                 ];
             }

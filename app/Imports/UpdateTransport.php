@@ -60,8 +60,8 @@ class UpdateTransport implements ToCollection, WithStartRow
                     "changedBy" => Session::get('userID'),
                     "status" => $row[2],
                     "ticketNo" => $row[3],
-                    "paidAmount" => $row[15],
-                    "hrdRemarks" => $row[16]
+                    "paidAmount" => $row[14],
+                    "hrdRemarks" => $row[15]
                 ];
             }
 
