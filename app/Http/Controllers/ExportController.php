@@ -198,182 +198,56 @@ class ExportController extends Controller
             $dataLevel[] = $request->{'level' . ($i+1)};
         }
 
-        if ($request->travel_type == "TTA"){
-            return Excel::download(new BusinessTripExport($request->claim_date_from, $request->claim_date_to,$request->business_unit, $dataLevel, $request->business_trip_status), 'Employee List Business Advance Trip Report.xlsx');
-        } elseif ($request->travel_type == "TTB"){
-            return Excel::download(new BusinessTripSeattleExport($request->claim_date_from, $request->claim_date_to,$request->business_unit, $dataLevel, $request->business_trip_status), 'Employee List Business Seattle Trip Report.xlsx');
-        }else{
-            return Excel::download(new BusinessTripAllExport($request->claim_date_from, $request->claim_date_to,$request->business_unit, $dataLevel, $request->business_trip_status), 'Employee List Business Trip All Report.xlsx');
-        }
+        return Excel::download(new BusinessTripExport($request->claim_date_from, $request->claim_date_to, $request->business_unit, $dataLevel, $request->business_trip_status, $request->travel_type), 'Employee List Business Trip Report.xlsx');
     
     }
    
     public function printExportBusinessTripPDF(Request $request){
-        if ($request->travel_type == "TTA"){
-            try {
-                $client = new Client([
-                    'verify' => false,
-                    'headers' => [ 'Content-Type' => 'application/json',
-                    'Authorization' => 'Bearer ' . Session::get('token') ]
-                ]);
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
 
-                // $param = [ 
-                //     'startDate' => $request->claim_date_from,
-                //     'endDate' => $request->claim_date_to,
-                //     'companyCode' => Session::get('companyCode'), 
-                //     'languageCode' => App::getLocale(), 
-                //     'sessionID' => 0, 
-                //     'exportMenu' => true,
-                //     'type' => 'REQUEST',
-                //     'status' => $request->business_trip_status,
-                //     'businessUnit' =>$request->business_unit,
-                //     'sessionUserID' => Session::get('userID'),
-                //     'userID' => Session::get('userID'),
-                // ];
+            $param = [ 
+                'startDate' => $request->claim_date_from,
+                'endDate' => $request->claim_date_to,
+                'companyCode' => Session::get('companyCode'), 
+                'languageCode' => App::getLocale(), 
+                'sessionID' => 0, 
+                'exportMenu' => true,
+                'type' => ($request->travel_type == 'ALL') ? null : $request->travel_type,
+                'status' => ($request->business_trip_status == 'ALL') ? null : $request->business_trip_status,
+                'businessUnit' => ($request->business_unit == 'ALL') ? null : $request->business_unit,
+                'sessionUserID' => Session::get('userID'),
+                'userID' => Session::get('userID'),
+            ];
 
-                // $response = $client->post(env('API_URL') . '/mobile/BusinessTrip/getBusinessTripAndSettlement',
-                //     ['body' => json_encode($param)]
-                // );
-
-                $param = [ 
-                    'companyCode' => Session::get('companyCode'),
-                    'startDate' => $request->claim_date_from,
-                    'endDate' => $request->claim_date_to,
-                    'status' => ($request->business_trip_status == 'ALL') ? '' : $request->business_trip_status,
-                    'businessUnit' =>$request->business_unit,
-                    'languageCode' => App::getLocale(), 
-                    'sessionID' => 0, 
-                    'type' => 'REQUEST',
-                    'sessionUserID' => Session::get('userID'),
-                    'userID' => Session::get('userID'),
-                ];
-
-                $response = $client->post(env('API_URL') . '/mobile/BusinessTrip/getBusinessTripPDF',
-                    ['body' => json_encode($param)]
-                );
-            } catch (RequestException $e) {
-                $response = $e->getResponse();
-                if($response->getStatusCode() == 401){
-                    return view('error.login');
-                }else if($response->getStatusCode() == 404){
-                    return view('error.not_found');
-                }else{
-                    return view('error.bad_request');
-                }
-            }
-
-            $arrResult = json_decode($response->getBody()->getContents());
-            
-            // dd($arrResult->dataListSet);
-
-            // if($arrResult->dataListSet == null){
-            //     $pdf = PDF::loadView('export.exp_businesstrippdf_list', ['data' => []])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled'=> true]);
-            //     return $pdf->stream('Business Trip.pdf');
-            // }else{
-            //     $pdf = PDF::loadView('export.exp_businesstrippdf_list', ['data' =>$arrResult->dataListSet])->setPaper('a4', 'landscape')->setOptions(['isPhpEnabled'=> true]);
-            //     return $pdf->stream('Business Trip.pdf');
-            // }
-
-            if($arrResult->dataListSet == null){
-                $pdf = PDF::loadView('export.exp_businesstrippdf_list2', ['data' => []])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
-                return $pdf->stream('Business Trip.pdf');
+            $response = $client->post(env('API_URL') . '/mobile/BusinessTrip/getBusinessTripPDF',
+                ['body' => json_encode($param)]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
             }else{
-                $pdf = PDF::loadView('export.exp_businesstrippdf_list2', ['data' => $arrResult->dataListSet])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
-                return $pdf->stream('Business Trip.pdf');
+                return view('error.bad_request');
             }
-        } else if ($request->travel_type == "TTB"){
-            try {
-                $client = new Client([
-                    'verify' => false,
-                    'headers' => [ 'Content-Type' => 'application/json',
-                    'Authorization' => 'Bearer ' . Session::get('token') ]
-                ]);
+        }
 
-                $param = [ 
-                    'companyCode' => Session::get('companyCode'),
-                    'startDate' => $request->claim_date_from,
-                    'endDate' => $request->claim_date_to,
-                    'status' => ($request->business_trip_status == 'ALL') ? '' : $request->business_trip_status,
-                    'businessUnit' => $request->business_unit,
-                    'languageCode' => App::getLocale(), 
-                    'sessionID' => 0, 
-                    'type' => 'REQUEST',
-                    'sessionUserID' => Session::get('userID'),
-                    'userID' => Session::get('userID'),
-                ];
+        $arrResult = json_decode($response->getBody()->getContents());
 
-                $response = $client->post(env('API_URL') . '/mobile/BusinessTrip/getBusinessTripPDF',
-                    ['body' => json_encode($param)]
-                );
-            } catch (RequestException $e) {
-                $response = $e->getResponse();
-                if($response->getStatusCode() == 401){
-                    return view('error.login');
-                }else if($response->getStatusCode() == 404){
-                    return view('error.not_found');
-                }else{
-                    return view('error.bad_request');
-                }
-            }
+        // dd($arrResult->dataListSet);
 
-            $arrResult = json_decode($response->getBody()->getContents());
-
-            // dd($arrResult->dataListSet);
-
-            if($arrResult->dataListSet == null){
-                $pdf = PDF::loadView('export.exp_businesstrippdf_list2', ['data' => []])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
-                return $pdf->stream('Business Trip.pdf');
-            }else{
-                $pdf = PDF::loadView('export.exp_businesstrippdf_list2', ['data' => $arrResult->dataListSet])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
-                return $pdf->stream('Business Trip.pdf');
-            }
-        } else {
-            try {
-                $client = new Client([
-                    'verify' => false,
-                    'headers' => [ 'Content-Type' => 'application/json',
-                    'Authorization' => 'Bearer ' . Session::get('token') ]
-                ]);
-
-                $param = [ 
-                    'startDate' => $request->claim_date_from,
-                    'endDate' => $request->claim_date_to,
-                    'companyCode' => Session::get('companyCode'), 
-                    'languageCode' => App::getLocale(), 
-                    'sessionID' => 0, 
-                    'exportMenu' => true,
-                    'type' => 'ALL',
-                    'status' => ($request->business_trip_status == 'ALL') ? '' : $request->business_trip_status,
-                    'businessUnit' => ($request->business_unit == 'ALL') ? '' : $request->business_unit,
-                    'sessionUserID' => Session::get('userID'),
-                    'userID' => Session::get('userID'),
-                ];
-
-                $response = $client->post(env('API_URL') . '/mobile/BusinessTrip/getBusinessTripPDF',
-                    ['body' => json_encode($param)]
-                );
-            } catch (RequestException $e) {
-                $response = $e->getResponse();
-                if($response->getStatusCode() == 401){
-                    return view('error.login');
-                }else if($response->getStatusCode() == 404){
-                    return view('error.not_found');
-                }else{
-                    return view('error.bad_request');
-                }
-            }
-
-            $arrResult = json_decode($response->getBody()->getContents());
-
-            // dd($arrResult->dataListSet);
-
-            if($arrResult->dataListSet == null){
-                $pdf = PDF::loadView('export.exp_businesstrippdf_list2', ['data' => []])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
-                return $pdf->stream('Business Trip.pdf');
-            }else{
-                $pdf = PDF::loadView('export.exp_businesstrippdf_list2', ['data' => $arrResult->dataListSet])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
-                return $pdf->stream('Business Trip.pdf');
-            }
+        if($arrResult->dataListSet == null){
+            $pdf = PDF::loadView('export.exp_businesstrippdf_list2', ['data' => []])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
+            return $pdf->stream('Business Trip.pdf');
+        }else{
+            $pdf = PDF::loadView('export.exp_businesstrippdf_list2', ['data' => $arrResult->dataListSet])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
+            return $pdf->stream('Business Trip.pdf');
         }
     }
    

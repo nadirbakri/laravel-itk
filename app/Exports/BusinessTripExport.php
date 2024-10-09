@@ -14,14 +14,14 @@ use App;
 
 class BusinessTripExport implements FromView, ShouldAutoSize
 {
-    public function __construct($claimdateFrom, $claimdateTo,$businessunit,$dataLevel,$status)
+    public function __construct($claimdateFrom, $claimdateTo, $businessunit, $dataLevel, $status, $type)
     {
         $this->claimdateFrom = $claimdateFrom;
         $this->claimdateTo = $claimdateTo;
-        // $this->travelAdvances = $travelAdvances;
-        $this->businessUnit = $businessunit;
+        $this->businessUnit = ($businessunit == 'ALL') ? null : $businessunit;
         $this->dataLevel = $dataLevel;
         $this->status = ($status == 'ALL') ? null : $status;
+        $this->type = ($type == 'ALL') ? null : $type;
     }
     public function view(): View
     {
@@ -35,7 +35,7 @@ class BusinessTripExport implements FromView, ShouldAutoSize
             $param = [ 
                 'startDate' => $this->claimdateFrom,
                 'endDate' => $this->claimdateTo,
-                'type' => 'REQUEST',
+                'type' => $this->type,
                 'exportMenu' => true,
                 'isWeb' => true,
                 'status' => $this->status,
@@ -47,16 +47,6 @@ class BusinessTripExport implements FromView, ShouldAutoSize
                 'sessionID' => 0, 
                 'sessionUserID' => Session::get('userID')
             ];
-
-            // if(!empty($this->permitDateFrom) || !empty($this->permitDateTo)){
-            //     $param['permitDateFrom'] = $this->permitDateFrom;
-            //     $param['permitDateTo'] = $this->permitDateTo;
-            // }
-
-            // if(!empty($this->businessUnit) || !empty($this->businessUnit)){
-            //     $param['businessUnit'] = $this->businessUnit;
-            // }
-            // var_dump(json_encode($param));
 
             $response = $client->post(env('API_URL') . '/mobile/BusinessTrip/getExportBST',
                 ['body' => json_encode($param)]

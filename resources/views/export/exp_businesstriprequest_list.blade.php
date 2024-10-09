@@ -38,6 +38,8 @@
 				<th>Total Paid (Rp)</th>
 				<th>Paid Remarks</th>
 				<th>Alamat Email</th>
+				<th>Division</th>
+				<th>Cost Center</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -56,19 +58,19 @@
 					<td>{{ isset($value->destination) ? $value->destination : '' }}</td>
 					<td>{{ isset($value->customerName) ? $value->customerName : '' }}</td>
 					<td>{{ isset($value->projectName) ? $value->projectName : '' }}</td>
-					<td data-format="#,##0">{{ isset($value->totalRequest) ? $value->totalRequest : '' }}</td>
+					<td data-format="#,##0">{{ isset($value->totalClaimAmount) ? $value->totalClaimAmount : '' }}</td>
 					<td data-format="#,##0">{{ isset($value->totalPerEmployee) ? $value->totalPerEmployee : '' }}</td>
 					<td data-format="@">{{ isset($value->noRekening) ? $value->noRekening : '' }}</td>
 					<td data-format="#,##0"></td>
 					<td data-format="#,##0">{{ isset($value->totalPaid) ? $value->totalPaid : '' }}</td>
 					<td>{{ isset($value->paidRemarks) ? $value->paidRemarks : '' }}</td>
 					<td>{{ isset($value->email) ? $value->email : '' }}</td>
+					<td>{{ isset($value->businessUnit) ? $value->businessUnit : '' }}</td>
+					<td>{{ isset($value->costCenter) ? $value->costCenter : '' }}</td>
 				</tr>
 				<?php $no++; ?>
 			@endforeach
 		</tbody>
 	</table>
-	<div>
-	</div>
 </body>
 </html>
