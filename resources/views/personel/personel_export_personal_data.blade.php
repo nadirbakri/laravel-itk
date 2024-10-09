@@ -214,6 +214,8 @@
 					<td></td>
 					<td data-format="@"></td>
 				@endif
+				<td data-format="@">{{ $value->danaPensiunNo }}</td>
+				<td data-format="@">{{ $value->danaPensiunJoinDate ? date('Y-m-d', strtotime($value->danaPensiunJoinDate)) : '' }}</td>
 				@if(count((array) $value->peMasterLevel) > 0)
 					@foreach($value->peMasterLevel as $value)
                 		<td data-format="@">{{ $value->levelCode }}</td>
