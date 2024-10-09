@@ -25,7 +25,6 @@
 				<th>{{ __('export_reimbursement.ticket') }}</th>
 				<th>{{ __('export_reimbursement.rtipe') }}</th>
 				<th>{{ __('export_reimbursement.employeename') }}</th>
-				<th>{{ __('export_reimbursement.division') }}</th>
                 <th>{{ __('export_reimbursement.rdate') }}</th>
 				<th>{{ __('export_reimbursement.companycustomer') }}</th>
 				<th>{{ __('export_reimbursement.remarks') }}</th>
@@ -36,6 +35,8 @@
                 <th>{{ __('export_reimbursement.tpaid') }}</th>
 				<th>{{ __('export_reimbursement.premarks') }}</th>
 				<th>{{ __('export_reimbursement.email') }}</th>
+				<th>{{ __('export_reimbursement.division') }}</th>
+				<th>{{ __('export_reimbursement.costcenter') }}</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -48,7 +49,6 @@
 				<td>{{ isset($value->reimbursementEntity->ticketNo) ? $value->reimbursementEntity->ticketNo : '' }}</td>
 				<td>{{ isset($value->reimbursementEntity->reimbursementType) ? $value->reimbursementEntity->reimbursementType : '' }}</td>
 				<td>{{ isset($value->reimbursementEntity->fullnameRequester) ? $value->reimbursementEntity->fullnameRequester : '' }}</td>
-				<td>{{ isset($value->reimbursementEntity->businessUnit) ? $value->reimbursementEntity->businessUnit : '' }}</td>
 				<td>{{ isset($value->reimbursementEntity->receiptDate) ? \Carbon\Carbon::parse($value->reimbursementEntity->receiptDate)->format('Y-m-d') : '' }}</td> 
 				<td>{{ isset($value->reimbursementEntity->customerName) ? $value->reimbursementEntity->customerName : '' }}</td>
 				<td>{{ isset($value->reimbursementEntity->reimbursementRemarks) ? $value->reimbursementEntity->reimbursementRemarks : '' }}</td>
@@ -57,8 +57,10 @@
 				<td data-format="@">{{ isset($value->reimbursementEntity->bankAccountNo) ? $value->reimbursementEntity->bankAccountNo : '' }}</td>
 				<td data-format="#,##0"></td>
 				<td data-format="#,##0">{{ isset($value->reimbursementEntity->paidAmount) ? $value->reimbursementEntity->paidAmount : '' }}</td>
-				<td>{{ isset($value->reimbursementEntity->approvalRemarks) ? $value->reimbursementEntity->approvalRemarks : '' }}</td> 
+				<td>{{ isset($value->reimbursementEntity->hrdRemarks) ? $value->reimbursementEntity->hrdRemarks : '' }}</td> 
 				<td>{{ isset($value->reimbursementEntity->emailRequester) ? $value->reimbursementEntity->emailRequester : '' }}</td> 
+				<td>{{ isset($value->reimbursementEntity->businessUnit) ? $value->reimbursementEntity->businessUnit : '' }}</td>
+				<td>{{ isset($value->reimbursementEntity->costCenter) ? $value->reimbursementEntity->costCenter : '' }}</td>
 			</tr>
 			@endforeach
 		</tbody>

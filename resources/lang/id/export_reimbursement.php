@@ -34,7 +34,8 @@ return [
     'nrek' => 'Nomor Rekening',
     'tapprove' => 'Total Persetujuan HRD',
     'tpaid' => 'Total Pembayaran',
-    'premarks' => 'Catatan Pembayaran'
+    'premarks' => 'Catatan Pembayaran',
+    'costcenter' => 'Cost Center',
 ]
 
 ?>

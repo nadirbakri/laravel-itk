@@ -25,7 +25,6 @@
 				<th>Ticket Number</th>
 				<th>Claim Type</th>
 				<th>Employee Name</th>
-				<th>Division</th>
 				<th>Receipt Date</th>
                 <th>Company Customer</th>
 				<th>Remarks</th>
@@ -39,6 +38,8 @@
 				<th>Paid Remarks</th>
 				<th>Parking / Toll</th>
                 <th>Alamat Email</th>
+				<th>Division</th>
+				<th>Cost Center</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -51,7 +52,6 @@
 				<td>{{ isset($value->ticketNo) ? $value->ticketNo : '' }}</td>
 				<td>{{ isset($value->type) ? $value->type : '' }}</td>
 				<td>{{ isset($value->fullName) ? $value->fullName : '' }}</td>
-				<td>{{ isset($value->businessUnit) ? $value->businessUnit : '' }}</td>
 				<td>{{ isset($value->receiptDate) ? \Carbon\Carbon::parse($value->receiptDate)->format('Y-m-d') : '' }}</td>
 				<td>{{ isset($value->customerName) ? $value->customerName : '' }}</td>
 				<td>{{ isset($value->remarks) ? $value->remarks : '' }}</td>
@@ -62,9 +62,11 @@
 				<td data-format="@">{{ isset($value->noRekening) ? $value->noRekening : '' }}</td>
 				<td data-format="#,##0"></td>
 				<td data-format="#,##0">{{ isset($value->paidAmount) ? $value->paidAmount : '' }}</td>
-				<td>{{ isset($value->approvalRemarks) ? $value->approvalRemarks : '' }}</td>
+				<td>{{ isset($value->hrdRemarks) ? $value->hrdRemarks : '' }}</td>
 				<td data-format="#,##0">{{ isset($value->amountParkir) && isset($value->amountToll) ? $value->amountParkir + $value->amountToll : '' }}</td>
 				<td>{{ isset($value->email) ? $value->email : '' }}</td>
+				<td>{{ isset($value->businessUnit) ? $value->businessUnit : '' }}</td>
+				<td>{{ isset($value->costCenter) ? $value->costCenter : '' }}</td>
 			</tr>
 			@endforeach
 		</tbody>

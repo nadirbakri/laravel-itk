@@ -38,7 +38,8 @@ return [
     'tapprove' => 'Total Approve HRD (Rp)',
     'tpaid' => 'Total Paid (Rp)',
     'premarks' => 'Paid Remarks',
-    'email' => 'Alamat Email'
+    'email' => 'Alamat Email',
+    'costcenter' => 'Cost Center',
 ]
 
 ?>
