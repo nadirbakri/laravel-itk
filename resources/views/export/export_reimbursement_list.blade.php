@@ -39,8 +39,16 @@
 			</tr>
 		</thead>
 		<tbody>
-            <?php $no = 1; ?>
+            <?php 
+			$no = 1; 
+			$totalAmount = 0;
+			?>
 			@foreach($data as $value)
+			<?php
+			if(isset($value->reimbursementEntity->totalClaimAmount)){
+				$totalAmount += $value->reimbursementEntity->totalClaimAmount;
+			}
+			?>
 			<tr>
                 <td>{{ $no++ }}</td> 
 				<td>{{ isset($value->reimbursementEntity->createdDate) ? \Carbon\Carbon::parse($value->reimbursementEntity->createdDate)->format('Y-m-d') : '' }}</td>
@@ -61,6 +69,25 @@
 				<td>{{ isset($value->reimbursementEntity->costCenter) ? $value->reimbursementEntity->costCenter : '' }}</td>
 			</tr>
 			@endforeach
+			<tr>
+                <td></td> 
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td> 
+				<td></td>
+				<td></td>
+				<td data-format="#,##0"><b>{{ $totalAmount }}</b></td>
+				<td data-format="@"></td>
+				<td data-format="#,##0"></td>
+				<td data-format="#,##0"></td>
+				<td></td> 
+				<td></td> 
+				<td></td>
+				<td></td>
+			</tr>
 		</tbody>
 	</table>
 </body>

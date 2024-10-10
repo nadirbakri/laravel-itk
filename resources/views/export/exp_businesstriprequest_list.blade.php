@@ -42,8 +42,16 @@
 			</tr>
 		</thead>
 		<tbody>
-			<?php $no = 1; ?>
+			<?php 
+			$no = 1; 
+			$totalAmount = 0;
+			?>
 			@foreach($data as $value)
+				<?php
+				if(isset($value->totalClaimAmount)){
+					$totalAmount += $value->totalClaimAmount;
+				}
+				?>
 				<tr>
 					<td>{{ $no }}</td>
 					<td>{{ isset($value->requestDate) ? date('Y-m-d', strtotime($value->requestDate)) : '' }}</td>
@@ -68,6 +76,28 @@
 				</tr>
 				<?php $no++; ?>
 			@endforeach
+			<tr>
+                <td></td> 
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td> 
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td data-format="#,##0"><b>{{ $totalAmount }}</b></td>
+				<td data-format="@"></td>
+				<td data-format="#,##0"></td>
+				<td data-format="#,##0"></td>
+				<td></td> 
+				<td></td> 
+				<td></td>
+				<td></td>
+			</tr>
 		</tbody>
 	</table>
 </body>

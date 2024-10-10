@@ -42,8 +42,16 @@
 			</tr>
 		</thead>
 		<tbody>
-            <?php $no = 1; ?>
+            <?php 
+			$no = 1; 
+			$totalAmount = 0;
+			?>
 			@foreach($data as $value)
+			<?php
+			if(isset($value->totalAmount)){
+				$totalAmount += $value->totalAmount;
+			}
+			?>
 			<tr>
                 <td>{{ $no++ }}</td>
 				<td>{{ isset($value->requestDate) ? \Carbon\Carbon::parse($value->requestDate)->format('Y-m-d') : '' }}</td>
@@ -67,6 +75,28 @@
 				<td>{{ isset($value->costCenter) ? $value->costCenter : '' }}</td>
 			</tr>
 			@endforeach
+			<tr>
+                <td></td> 
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td> 
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td data-format="#,##0"><b>{{ $totalAmount }}</b></td>
+				<td data-format="@"></td>
+				<td data-format="#,##0"></td>
+				<td data-format="#,##0"></td>
+				<td></td> 
+				<td data-format="#,##0"></td>
+				<td></td> 
+				<td></td>
+				<td></td>
+			</tr>
 		</tbody>
 	</table>
 </body>
