@@ -52,18 +52,20 @@ class UpdateBusinessTrip implements ToCollection, WithStartRow
             ]);
 
             foreach ($rows as $row) {
-                $param[] = [
-                    "companyCode" => Session::get('companyCode'),
-                    "sessionID" => 0,
-                    "sessionUserID" => Session::get('userID'),
-                    "languageCode" => App::getLocale(),
-                    "changedBy" => Session::get('userID'),
-                    "status" => $row[5],
-                    "ticketNo" => $row[3],
-                    "paidAmount" => $row[15],
-                    "hrdRemarks" => $row[16],
-                    "type" => (trim($row[6]) == "Business Trip") ? "TTA" : "TTB"
-                ];
+                if(!empty($row[3])){
+                    $param[] = [
+                        "companyCode" => Session::get('companyCode'),
+                        "sessionID" => 0,
+                        "sessionUserID" => Session::get('userID'),
+                        "languageCode" => App::getLocale(),
+                        "changedBy" => Session::get('userID'),
+                        "status" => $row[5],
+                        "ticketNo" => $row[3],
+                        "paidAmount" => $row[15],
+                        "hrdRemarks" => $row[16],
+                        "type" => (trim($row[6]) == "Business Trip") ? "TTA" : "TTB"
+                    ];
+                }
             }
 
             // dd(json_encode($param));

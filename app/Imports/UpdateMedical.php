@@ -52,17 +52,19 @@ class UpdateMedical implements ToCollection, WithStartRow
             ]);
 
             foreach ($rows as $row) {
-                $param[] = [
-                    "companyCode" => Session::get('companyCode'),
-                    "sessionID" => 0,
-                    "sessionUserID" => Session::get('userID'),
-                    "languageCode" => App::getLocale(),
-                    "changedBy" => Session::get('userID'),
-                    "status" => $row[2],
-                    "ticketNo" => $row[3],
-                    "paidAmount" => $row[12],
-                    "hrdRemarks" => $row[13]
-                ];
+                if(!empty($row[3])){
+                    $param[] = [
+                        "companyCode" => Session::get('companyCode'),
+                        "sessionID" => 0,
+                        "sessionUserID" => Session::get('userID'),
+                        "languageCode" => App::getLocale(),
+                        "changedBy" => Session::get('userID'),
+                        "status" => $row[2],
+                        "ticketNo" => $row[3],
+                        "paidAmount" => $row[12],
+                        "hrdRemarks" => $row[13]
+                    ];
+                }
             }
 
             // var_dump(json_encode($param));
