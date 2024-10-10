@@ -162,7 +162,7 @@ class PeriodicalReportExport extends DefaultValueBinder implements WithCustomVal
             ]);
         }catch (RequestException $e){
             $response = $e->getResponse();
-            // var_dump($response);
+            // dd($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -175,7 +175,7 @@ class PeriodicalReportExport extends DefaultValueBinder implements WithCustomVal
         $arrResult = json_decode($response->getBody()->getContents());
         $arrCompany = json_decode($responseGetCompany->getBody()->getContents());
 
-        // dd($arrResult->dataListSet[0]->detail[0]->field);
+        // dd($arrResult->dataListSet);
 
         // foreach ($arrResult->dataListSet[0]->detail as $key => $dataTable) {
             // var_dump($dataTable->employeeNo);

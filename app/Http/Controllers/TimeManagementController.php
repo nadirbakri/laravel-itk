@@ -297,6 +297,8 @@ class TimeManagementController extends Controller
 
         $arrResult = json_decode($response->getBody()->getContents()); 
 
+        // dd($arrResult->dataListSet);
+
         return view('time_management.tm_reference_time_management', ['data' => $arrResult->dataListSet]);
     }    
 

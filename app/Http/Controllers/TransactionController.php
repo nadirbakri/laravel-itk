@@ -204,7 +204,7 @@ class TransactionController extends Controller
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
-        // var_dump($arrResult->dataListSet);
+        // dd($arrResult->dataListSet);
 
         if($arrResult->dataListSet == null){
             // return Datatables::of([])->make(true);
@@ -594,7 +594,7 @@ class TransactionController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/mobile/TmReimbursement/getReimbursementDetailListAll',
+            $response = $client->post(env('API_URL') . '/mobile/TmReimbursement/getReimbursementDetailListAllWeb',
                 ['body' => json_encode(
                     [
                         'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
@@ -602,11 +602,12 @@ class TransactionController extends Controller
                         'employeeNo'=> $request->employeeNo,
                         'reimbursementType'=> $request->reimbursementType,
                         'businessUnit' => $request->businessUnit,
-                        'reimbursementStatus' => ($request->reimbursementStatus == 'ALL') ? null : $request->reimbursementStatus,
-                        'exportMenu' => false,
+                        'reimbursementStatus' => ($request->reimbursementStatus == "ALL") ? null : $request->reimbursementStatus,
+                        'exportMenu' => true,
                         'isWeb' => true,
                         'companyCode' => Session::get('companyCode'), 
                         'languageCode' => strtoupper(App::getLocale()), 
+                        'userID' => Session::get('userID'),
                         'sessionID' => 0, 
                         'sessionUserID' => Session::get('userID')
                     ]
@@ -624,6 +625,7 @@ class TransactionController extends Controller
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
+        // dd($arrResult->dataListSet);
 
         if($arrResult->dataListSet == null){
             // return Datatables::of([])->make(true);
@@ -827,12 +829,12 @@ class TransactionController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/mobile/Transport/getTransportDetailListAll',
+            $response = $client->post(env('API_URL') . '/mobile/Transport/getTransportDetailListAllWeb',
                 ['body' => json_encode(
                     [
                         'startDate' => $isNull ? null:Carbon::parse($request->startDate)->format('Y-m-d'),
                         'endDate' => $isNullenddate ? null:Carbon::parse($request->endDate)->format('Y-m-d'),
-                        'exportMenu' =>false,
+                        'exportMenu' => true,
                         'isWeb' => true,
                         'processDate'=> $isNullprocessDate ? null:Carbon::parse($request->processDate)->format('Y-m-d'),
                         'type' =>  $request->type,
@@ -859,7 +861,6 @@ class TransactionController extends Controller
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
-        // dd($arrResult->dataListSet);
 
         if($arrResult->dataListSet == null){
             // return Datatables::of([])->make(true);

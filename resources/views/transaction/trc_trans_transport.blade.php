@@ -654,36 +654,36 @@
                         return type === 'display'? '<button type="button" onclick="klikdetail(this)" class="btn btn-info" name="btn-detail" id="btn-detail" style="width: 100%;" data-toggle="modal" data-target="#modal_list_detail"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-justify" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M2 12.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/></svg> {{ __('trans_medical.detail') }} </button>' : '';
                     }
                 },
-                {data: 'transportEntity.receiptDate', name: 'transportEntity.receiptDate', 
+                {data: 'receiptDate', name: 'receiptDate', 
                         render: function (data, type, row) {
                         return moment(data).format('DD-MMM-YYYY');
                     }
                 },
-                {data: 'transportEntity.status', name: 'transportEntity.status'},
-                {data: 'transportEntity.ticketNo', name: 'transportEntity.ticketNo'},
-                {data: 'transportEntity.fullnameRequester', name: 'transportEntity.fullnameRequester'},
-                {data: 'transportEntity.type', name: 'transportEntity.type'},
-                // {data: 'transportEntity.companyCostumer', name: 'companyCostumer'},
-                {data: 'transportEntity.customerName', name: 'transportEntity.customerName'},
-                {data: 'transportEntity.startLocation', name: 'transportEntity.startLocation'},
-                {data: 'transportEntity.endLocation', name: 'transportEntity.endLocation'},
-                {data: 'transportEntity.totalAmount', name: 'transportEntity.totalAmount',
+                {data: 'status', name: 'status'},
+                {data: 'ticketNo', name: 'ticketNo'},
+                {data: 'fullName', name: 'fullName'},
+                {data: 'type', name: 'type'},
+                // {data: 'companyCostumer', name: 'companyCostumer'},
+                {data: 'customerName', name: 'customerName'},
+                {data: 'startLocation', name: 'startLocation'},
+                {data: 'endLocation', name: 'endLocation'},
+                {data: 'totalAmount', name: 'totalAmount',
                     render: function (data, type, row) {
                         return data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
                     }
                 },
-                {data: 'transportEntity.paidAmount', name: 'transportEntity.paidAmount',
+                {data: 'paidAmount', name: 'paidAmount',
                     render: function (data, type, row) {
                         return data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
                     }
                 },
-                {data: 'transportEntity.remarks', name: 'transportEntity.remarks'},
-                {data: 'transportEntity.amountParkir', name: 'transportEntity.amountParkir',
+                {data: 'remarks', name: 'remarks'},
+                {data: 'amountParkir', name: 'amountParkir',
                     render: function (data, type, row) {
                         return data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
                     }
                 },
-                {data: 'transportEntity.amountToll', name: 'transportEntity.amountToll',
+                {data: 'amountToll', name: 'amountToll',
                     render: function (data, type, row) {
                         return data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
                     }
@@ -724,20 +724,20 @@
     })
 
     const klikdetail = (element) => {
-        let data = table.row($(element).parent()).data().transportEntity;
+        let data = table.row($(element).parent()).data();
 
-        $('#reqdate').val(moment(data.createdDate).format('YYYY-MM-DD'))
-        $('#reqdate_val').html(moment(data.createdDate).format('YYYY-MM-DD'))
+        $('#reqdate').val(moment(data.requestDate).format('YYYY-MM-DD'))
+        $('#reqdate_val').html(moment(data.requestDate).format('YYYY-MM-DD'))
         $('#recdate').val(moment(data.receiptDate).format('YYYY-MM-DD'))
         $('#recdate_val').html(moment(data.receiptDate).format('YYYY-MM-DD'))
         $('#tiketno').val(data.ticketNo)
         $('#tiketno_val').html(data.ticketNo)
         $('#status').val(data.status)
         $('#status_val').html(data.status)
-        $('#b_unit').val(data.business_unit)
-        $('#b_unit_val').html(data.business_unit)
+        $('#b_unit').val(data.businessUnit)
+        $('#b_unit_val').html(data.businessUnit)
         $('#employee_no').val(data.employeeNo)
-        $('#employee_no_val').html(data.fullnameRequester + '(' + data.employeeNo + ')')
+        $('#employee_no_val').html(data.fullName + '(' + data.employeeNo + ')')
         $('#c_type').val(data.type)
         $('#c_type_val').html(data.type)
         $('#totalclaim').val(data.totalAmount)
@@ -806,12 +806,12 @@
     })
 
     function updateTransportStatus(reimbursement_status, totalpaid, ticketNo, direct_superior, approvalremarks) {
-        var item = arrayTransport.find(obj => obj.transportEntity && obj.transportEntity.ticketNo === ticketNo);
+        var item = arrayTransport.find(obj => obj && obj.ticketNo === ticketNo);
 
         if (item) {
-            item.transportEntity.status = reimbursement_status;
-            item.transportEntity.paidAmount = totalpaid;
-            item.transportEntity.approvalRemarks = approvalremarks;
+            item.status = reimbursement_status;
+            item.paidAmount = totalpaid;
+            item.approvalRemarks = approvalremarks;
 
             table.clear().rows.add(arrayTransport).draw(false);
         }
