@@ -295,6 +295,7 @@
                                     <tr>
                                         <th>{{ __('trans_business_trip.detail') }}</th>
                                         <th>{{ __('trans_business_trip.tnom') }}</th>
+                                        <th>{{ __('trans_business_trip.type') }}</th>
                                         <th>{{ __('trans_business_trip.name') }}</th>
                                         <th>{{ __('trans_business_trip.cname') }}</th>
                                         <th>{{ __('trans_business_trip.status') }}</th>
@@ -401,7 +402,6 @@
                                     <h5>{{ __('trans_business_trip.treq') }}</h5>
                                 </div>
                                 <div class="col">
-                                    <input id="type_bst" name="type_bst" type="hidden" class="form-control">
                                     <input id="c_type" name="c_type" type="hidden" class="form-control"><span id="c_type_val"></span>
                                 </div>
                             </div>
@@ -414,14 +414,20 @@
                                     <input id="b_unit" name="b_unit" type="hidden" class="form-control"><span id="b_unit_val"></span>
                                 </div>
                                 <div class="col-3">
+                                    <h5>{{ __('trans_business_trip.label_claim_type') }}</h5>
+                                </div>
+                                <div class="col">
+                                    <input id="c_type_bst" name="c_type_bst" type="hidden" class="form-control"><span id="c_type_bst_val"></span>
+                                </div>
+                            </div>
+
+                            <div class="row detailstatus">
+                                <div class="col-3">
                                     <h5>{{ __('trans_business_trip.label_reimbursement_type') }}</h5>
                                 </div>
                                 <div class="col">
                                     <input id="type" name="type" type="hidden" class="form-control"><span id="type_val"></span>
                                 </div>
-                            </div>
-
-                            <div class="row detailstatus">
                                 <div class="col-3">
                                     <h5>{{ __('trans_business_trip.employee') }}</h5>
                                 </div>
@@ -812,8 +818,13 @@
                     orderable: false,
                     targets: 0, 
                     "defaultContent": '',
-                    render: function(data, type) {
-                        return type === 'display'? '<button type="button" onclick="klikdetail(this)" class="btn btn-info" name="btn-detail" id="btn-detail" style="width: 100%;" data-toggle="modal" data-target="#modal_list_detail"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-justify" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M2 12.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/></svg> {{ __('trans_medical.detail') }} </button>' : '';
+                    render: function(data, type, row) {
+                        return type === 'display' ?
+                            (row.claimType == "Business Trip") ?
+                                '<button type="button" onclick="klikdetail(this)" class="btn btn-info" name="btn-detail" id="btn-detail" style="width: 100%;" data-toggle="modal" data-target="#modal_list_detail"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-justify" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M2 12.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/></svg> {{ __('trans_medical.detail') }} </button>' 
+                            :
+                                '<button type="button" onclick="klikdetail(this)" class="btn btn-success" name="btn-detail" id="btn-detail" style="width: 100%;" data-toggle="modal" data-target="#modal_list_detail"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-justify" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M2 12.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/></svg> {{ __('trans_medical.detail') }} </button>'
+                            : '';
                     }
                 },
                 // {data: 'responseBusinessTrip.requestDate', name: 'requestDate', 
@@ -822,13 +833,14 @@
                 //     }
                 // },
                 {data: 'ticketNo', name: 'ticketNo'},
-                {data: 'fullnameRequester', name: 'fullnameRequester'},
+                {data: 'claimType', name: 'claimType'},
+                {data: 'fullName', name: 'fullName'},
                 {data: 'customerName', name: 'customerName'},
                 {data: 'status', name: 'status'},
                 {data: 'destination', name: 'destination'},
                 {data: 'customerName', name: 'customerName'},
                 {data: 'projectName', name: 'projectName'},
-                {data: 'total', name: 'total'},
+                {data: 'paidAmount', name: 'paidAmount'},
                 {data: 'totalClaimAmount', name: 'totalClaimAmount',
                     render: function (data, type, row) {
                         return data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
@@ -906,13 +918,14 @@
         let data = table.row($(element).parent()).data();
 
         $('#detail_business_trip').collapse('hide');
-        load_data_attachment(data.type, data.ticketNo);
+        load_data_attachment(data.claimType, data.ticketNo);
 
         $('#s_date').val(moment(data.startDate).format('DD-MMM-YYYY'))
         $('#s_date_val').html(moment(data.startDate).format('DD-MMM-YYYY'))
         $('#e_date').val(moment(data.endDate).format('DD-MMM-YYYY'))
         $('#e_date_val').html(moment(data.endDate).format('DD-MMM-YYYY'))
-        $('#type_bst').val(data.type)
+        $('#c_type_bst').val(data.claimType)
+        $('#c_type_bst_val').html(data.claimType)
         $('#tiketno').val(data.ticketNo)
         $('#tiketno_val').html(data.ticketNo)
         $('#totalpaid').val(data.paidAmount)
@@ -929,7 +942,7 @@
         $('#type_val').html(data.purpose)
         $('#directsuperior').val(data.directSuperiorID)
         $('#div-totalpaid').show();
-        if(data.type == "Business Trip"){
+        if(data.claimType == "Business Trip"){
             $('#divShowAttachment').hide();
         }else{
             $('#divShowAttachment').show();

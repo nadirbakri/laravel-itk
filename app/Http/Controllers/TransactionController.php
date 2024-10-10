@@ -217,176 +217,56 @@ class TransactionController extends Controller
    
     public function tableDetailBusinesstrip(Request $request)
     {
-        if ($request->reimbursement_type == "TTA"){
-            try {
-                $client = new Client([
-                    'verify' => false,
-                    'headers' => [ 'Content-Type' => 'application/json',
-                    'Authorization' => 'Bearer ' . Session::get('token') ]
-                ]);
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
 
-                $response = $client->post(env('API_URL') . '/mobile/BusinessTrip/getBusinessTripAndSettlement',
-                    ['body' => json_encode(
-                        [
-                            // 'companyCode' => Session::get('companyCode'),
-                            // 'employeeNo' => $request->employeeNo,
-                            // 'logActionUserID' => Session::get('userID'),
-                            // 'logActionUsername' => Session::get('userName'),
-                            'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
-                            'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
-                            'employeeNo'=> $request->employeeNo,
-                            'type'=> "REQUEST",
-                            'businessUnit' => $request->businessUnit,
-                            'status' => ($request->status == 'ALL') ? null : $request->status,
-                            // 'exportMenu' => false,
-                            'isWeb' => true,
-                            'companyCode' => Session::get('companyCode'), 
-                            'languageCode' => strtoupper(App::getLocale()), 
-                            'userID' => Session::get('userID'),
-                            'sessionID' => 0, 
-                            'sessionUserID' => Session::get('userID')
-                        ]
-                    )]
-                );
-            } catch (RequestException $e) {
-                $response = $e->getResponse();
-                if($response->getStatusCode() == 401){
-                    return view('error.login');
-                }else if($response->getStatusCode() == 404){
-                    return view('error.not_found');
-                }else{
-                    return view('error.bad_request');
-                }
-            }
-
-            $arrResult = json_decode($response->getBody()->getContents());
-
-            if($arrResult->dataListSet == null){
-                // return Datatables::of([])->make(true);
-                return response()->json([]);
+            $response = $client->post(env('API_URL') . '/mobile/BusinessTrip/getExportBST',
+                ['body' => json_encode(
+                    [
+                        // 'companyCode' => Session::get('companyCode'),
+                        // 'employeeNo' => $request->employeeNo,
+                        // 'logActionUserID' => Session::get('userID'),
+                        // 'logActionUsername' => Session::get('userName'),
+                        'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
+                        'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
+                        'employeeNo'=> $request->employeeNo,
+                        'type'=> ($request->type == 'ALL') ? null : $request->type,
+                        'businessUnit' => ($request->businessUnit == 'ALL') ? null : $request->businessUnit,
+                        'status'=> ($request->status == 'ALL') ? null : $request->status,
+                        'exportMenu' => false,
+                        'isWeb' => true,
+                        "allWaitingPayment" => false,
+                        'companyCode' => Session::get('companyCode'), 
+                        'languageCode' => strtoupper(App::getLocale()), 
+                        'userID' => Session::get('userID'),
+                        'sessionID' => 0, 
+                        'sessionUserID' => Session::get('userID'),
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            // dd($response);
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
             }else{
-                // return Datatables::of($arrResult->dataListSet[0]->responseBusinessTrip)->make(true);
-                $data = array_merge($arrResult->dataListSet[0]->responseBusinessTrip, $arrResult->dataListSet[0]->responseSettlement);
-                return response()->json($data);
+                return view('error.bad_request');
             }
+        }
 
-        }else if ($request->reimbursement_type == "TTB"){
-            try {
-                $client = new Client([
-                    'verify' => false,
-                    'headers' => [ 'Content-Type' => 'application/json',
-                    'Authorization' => 'Bearer ' . Session::get('token') ]
-                ]);
-
-                $response = $client->post(env('API_URL') . '/mobile/BusinessTrip/getBusinessTripAndSettlement',
-                    ['body' => json_encode(
-                        [
-                            // 'companyCode' => Session::get('companyCode'),
-                            // 'employeeNo' => $request->employeeNo,
-                            // 'logActionUserID' => Session::get('userID'),
-                            // 'logActionUsername' => Session::get('userName'),
-                            'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
-                            'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
-                            'employeeNo'=> $request->employeeNo,
-                            'type'=> "SETTLEMENT",
-                            'businessUnit' => $request->businessUnit,
-                            // 'exportMenu' => false,
-                            'isWeb' => true,
-                            'companyCode' => Session::get('companyCode'), 
-                            'languageCode' => strtoupper(App::getLocale()), 
-                            'userID' => Session::get('userID'),
-                            'sessionID' => 0, 
-                            'sessionUserID' => Session::get('userID'),
-                        ]
-                    )]
-                );
-            } catch (RequestException $e) {
-                $response = $e->getResponse();
-                if($response->getStatusCode() == 401){
-                    return view('error.login');
-                }else if($response->getStatusCode() == 404){
-                    return view('error.not_found');
-                }else{
-                    return view('error.bad_request');
-                }
-            }
-
-            $arrResult = json_decode($response->getBody()->getContents());
-            // var_dump($arrResult->dataListSet);
-
-            if($arrResult->dataListSet == null){
-                // return Datatables::of([])->make(true);
-                return response()->json([]);
-            }else{
-                // return Datatables::of($arrResult->dataListSet[0]->responseBusinessTrip)->make(true);
-                $data = array_merge($arrResult->dataListSet[0]->responseBusinessTrip, $arrResult->dataListSet[0]->responseSettlement);
-                return response()->json($data);
-            }
-
-
+        $arrResult = json_decode($response->getBody()->getContents());
+        
+        if($arrResult->dataListSet == null){
+            // return Datatables::of([])->make(true);
+            return response()->json([]);
         }else{
-            try {
-                $client = new Client([
-                    'verify' => false,
-                    'headers' => [ 'Content-Type' => 'application/json',
-                    'Authorization' => 'Bearer ' . Session::get('token') ]
-                ]);
-
-                $response = $client->post(env('API_URL') . '/mobile/BusinessTrip/getBusinessTripAndSettlement',
-                    ['body' => json_encode(
-                        [
-                            // 'companyCode' => Session::get('companyCode'),
-                            // 'employeeNo' => $request->employeeNo,
-                            // 'logActionUserID' => Session::get('userID'),
-                            // 'logActionUsername' => Session::get('userName'),
-                            'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
-                            'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
-                            'employeeNo'=> $request->employeeNo,
-                            'type'=> "ALL",
-                            'businessUnit' => $request->businessUnit,
-                            'exportMenu' => false,
-                            'isWeb' => true,
-                            'companyCode' => Session::get('companyCode'), 
-                            'languageCode' => strtoupper(App::getLocale()), 
-                            'userID' => Session::get('userID'),
-                            'sessionID' => 0, 
-                            'sessionUserID' => Session::get('userID'),
-                        ]
-                    )]
-                );
-            } catch (RequestException $e) {
-                $response = $e->getResponse();
-                // dd($response);
-                if($response->getStatusCode() == 401){
-                    return view('error.login');
-                }else if($response->getStatusCode() == 404){
-                    return view('error.not_found');
-                }else{
-                    return view('error.bad_request');
-                }
-            }
-
-            $arrResult = json_decode($response->getBody()->getContents());
-            
-            if($arrResult->dataListSet == null){
-                // return Datatables::of([])->make(true);
-                return response()->json([]);
-            }else{
-                // return Datatables::of($arrResult->dataListSet[0]->responseBusinessTrip)->make(true);
-                $responseBusinessTrip = array_map(function ($item) {
-                    $item->type = 'Business Trip';
-                    return $item;
-                }, $arrResult->dataListSet[0]->responseBusinessTrip);
-                
-                $responseSettlement = array_map(function ($item) {
-                    $item->type = 'Settlement';
-                    return $item;
-                }, $arrResult->dataListSet[0]->responseSettlement);
-                
-                $data = array_merge($responseBusinessTrip, $responseSettlement);
-                // $data = array_merge($arrResult->dataListSet[0]->responseBusinessTrip, $arrResult->dataListSet[0]->responseSettlement);
-                return response()->json($data);
-            }
+            return response()->json($arrResult->dataListSet);
         }
     }
 
