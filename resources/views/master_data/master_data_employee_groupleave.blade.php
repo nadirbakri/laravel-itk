@@ -214,7 +214,7 @@
                 <div class="row">
                     <div class="col-2">
                         <div class="form-group">
-                            <label for="reimbursement_type form-check-label"><b>{{ __('data_employee_groupleave.formgroupname3') }}</b></label>
+                            <label for="reimbursement_type form-check-label"><b>{{ __('data_employee_groupleave.formgroupname4') }}</b></label>
                         </div>
                     </div>
                 </div>
@@ -227,7 +227,7 @@
                                 <th>#</th>
                                 <th>Group ID</th>
                                 <th>Group Name</th>
-                                <th>Delegate Group</th>
+                                <!-- <th>Delegate Group</th> -->
                             </tr>
                         </thead>
                         <tbody>
@@ -235,7 +235,7 @@
                                 <td id="ceklis" name="ceklis"></td>
                                 <td id="group_id" name="group_id"></td>
                                 <td id="group_name" name="group_name"></td>
-                                <td id="delegate_name" name="delegate_name"></td>
+                                <!-- <td id="delegate_name" name="delegate_name"></td> -->
                             </tr>
                         </tbody>
                     </table>
@@ -876,7 +876,7 @@
             }); 
         } 
     const klikemail = (element) => {
-        var count = table5.data().count();
+        // var count = table5.data().count();
         var groupid = $(element).parent().siblings('.sorting_1').text();
         let groupname = $(element).parent().siblings('td').eq(1).text();
         // console.log(appCode);
