@@ -354,7 +354,7 @@
     </div>
     <div class="div-form">
         <div class="modal fade" id="modal_list_detail" role="dialog" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-dialog modal-dialog-centered modal-xl">
                 <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-little">{{ __('trans_business_trip.dbtrip') }}</h4>
@@ -364,7 +364,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="card">
-                        <div class="card-body">
+                        <div class="card-body pl-0 pr-0">
                         <form id="payroll_calculation_detail_modal_form" method="post">
                             @csrf
                             <div class="row detailstatus">
@@ -449,11 +449,17 @@
                                         </a>
                                         <div id="detail_business_trip" class="collapse m-3">
                                             <div class="card-block">
-                                                <table id="leave_table" class="table table-bordered">
+                                                <table id="leave_table" class="table table-bordered" style="font-size: 10px;">
                                                     <thead>
                                                         <tr>
-                                                            <th width="30%">Claim Date</th>
-                                                            <th width="70%">Attachment</th>
+                                                            <th>Claim Date</th>
+                                                            <th>Cost Type</th>
+                                                            <th>Description</th>
+                                                            <th>Currency</th>
+                                                            <th>Exchange Rate</th>
+                                                            <th>Amount</th>
+                                                            <th>Total</th>
+                                                            <th>Attachment</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody id="body_detail_business_trip">
@@ -522,27 +528,6 @@
                         </form>
                     </div>
                 </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="div-form">
-        <div class="modal fade" id="modal_show_attachment" role="dialog" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-lg">
-                <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-little">{{ __('trans_business_trip.dbattachment') }}</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="card">
-                        <div class="card-body" id="divAttachment">
-                            
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -761,38 +746,65 @@
             let rows = '';
             if(data[0].hasOwnProperty('settlementDetail') && data[0].settlementDetail.length !== 0){
                 $.each(data[0].settlementDetail, function (key, val) {
+                    if(val.detail.length !== 0){
+                        let isFirstRow = true;
+                        $.each(val.detail, function (key2, val2) {
+                            rows += `
+                                <tr>
+                                    <td>${moment(val.claimDate).format('YYYY-MM-DD')}</td>
+                                    <td>${val2.typeClaim}</td>
+                                    <td>${val2.remarks ? val2.remarks : ''}</td>
+                                    <td>${val2.currency}</td>
+                                    <td>${val2.exchangeRate.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+                                    <td>0</td>
+                                    <td>${val2.totalClaim.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>`;
+
+                            if (isFirstRow) {
+                                rows += `<td rowspan="${val.detail.length}">
+                                    <div class="container pr-0 pl-0">`;
+                                $.each(val.attachment, function (key3, val3) {
+                                    if(val3.attachment == "" || val3.attachment == null ){
+                                        rows += `
+                                            <a href="javascript:void(0);" onclick="load_image('<?= asset('pictures/no_image.png') ?>')">
+                                                <div class="imgdiv" ><img id="ItemPreview" alt="no image" class="myimage img-rounded" src="<?= asset('pictures/no_image.png') ?>"/></div>
+                                            </a>
+                                        `;
+                                    }else{
+                                        rows += `
+                                            <a href="javascript:void(0);" onclick="load_image('data:image/png;base64,${val3.attachment}')">
+                                                <div class="imgdiv" ><img id="ItemPreview" alt="in" class="myimage img-rounded" src="data:image/png;base64,${val3.attachment}"/></div>
+                                            </a>
+                                        `;
+                                    }
+                                });
+                                isFirstRow = false;
+                            }
+                            rows += `</div>
+                                </td>
+                                </tr>
+                            `;
+                        });
+                    }
+                });
+            }else if(data[0].hasOwnProperty('travelAdvance') && data[0].travelAdvance.length !== 0){
+                $.each(data[0].travelAdvance, function (key, val) {
                     rows += `
                         <tr>
-                            <td>${moment(val.claimDate).format('YYYY-MM-DD')}</td>
+                            <td>${moment(val.createdDate).format('YYYY-MM-DD')}</td>
+                            <td>${val.typeClaim}</td>
+                            <td>${val.remarks}</td>
+                            <td>${val.currency}</td>
+                            <td>${val.exchangeRate.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+                            <td>${val.claimPerDay.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+                            <td>${val.totalClaimPerDay.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td> 
+                            <td></td>
+                        </tr>
                     `;
-                    if(val.attachment.length !== 0){
-                        rows += `<td>
-                                    <div class="container">`;
-                        $.each(val.attachment, function (key2, val2) {
-                            
-                            if(val2.attachment == "" || val2.attachment == null ){
-                                rows += `
-                                    <a href="javascript:void(0);" onclick="load_image('<?= asset('pictures/no_image.png') ?>')">
-                                        <div class="imgdiv" ><img id="ItemPreview" alt="no image" class="myimage img-rounded" src="<?= asset('pictures/no_image.png') ?>"/></div>
-                                    </a>
-                                `;
-                            }else{
-                                rows += `
-                                    <a href="javascript:void(0);" onclick="load_image('data:image/png;base64,${val2.attachment}')">
-                                        <div class="imgdiv" ><img id="ItemPreview" alt="in" class="myimage img-rounded" src="data:image/png;base64,${val2.attachment}"/></div>
-                                    </a>
-                                `;
-                            }
-                        });
-                        rows += `</div>
-                            </td>`;
-                    }
-                    rows += `</tr>`;
                 });
             }else{
                 rows += `
                     <tr>
-                        <td colspan="2">No Data Available</td>
+                        <td class="text-center" colspan="8">No Data Available</td>
                     </tr>
                 `;
             }
@@ -918,6 +930,7 @@
         let data = table.row($(element).parent()).data();
 
         $('#detail_business_trip').collapse('hide');
+        $('#body_detail_business_trip').html('');
         load_data_attachment(data.claimType, data.ticketNo);
 
         $('#s_date').val(moment(data.startDate).format('DD-MMM-YYYY'))
