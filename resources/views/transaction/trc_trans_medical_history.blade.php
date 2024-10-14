@@ -336,14 +336,14 @@
                                         <h5>{{ __('trans_medical.rdate') }}</h5>
                                     </div>
                                     <div class="col">
-                                        <input id="reqdate" name="reqdate" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from" disabled>
+                                        <input id="reqdate" name="reqdate" style="border: none" style="outline: none" type="hidden" class="form-control"><span id="reqdate_val"></span>
                                         <input id="directsuperior" name="directsuperior" type="hidden" class="form-control">
                                     </div>
                                     <div class="col-3">
                                         <h5>{{ __('trans_medical.redate') }}</h5>
                                     </div>
                                     <div class="col">
-                                        <input id="recdate" name="recdate" style="border: none" style="outline: none"  type="text" class="form-control" id="claim_date_from" name="claim_date_from" disabled>
+                                        <input id="recdate" name="recdate" style="border: none" style="outline: none"  type="hidden" class="form-control"><span id="recdate_val"></span>
                                     </div>
                                 </div>
 
@@ -352,13 +352,13 @@
                                         <h5>{{ __('trans_medical.tnumber') }}</h5>
                                     </div>
                                     <div class="col">
-                                        <input id="tiketno" name="tiketno" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from" disabled>
+                                        <input id="tiketno" name="tiketno" style="border: none" style="outline: none" type="hidden" class="form-control"><span id="tiketno_val"></span>
                                     </div>
                                     <div class="col-3">
                                         <h5>{{ __('trans_medical.status') }}</h5>
                                     </div>
                                     <div class="col">
-                                        <input id="status" name="status" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from" disabled>
+                                        <input id="status" name="status" style="border: none" style="outline: none" type="hidden" class="form-control"><span id="status_val"></span>
                                     </div>
                                 </div>
 
@@ -367,13 +367,13 @@
                                         <h5>{{ __('trans_medical.label_business_unit') }}</h5>
                                     </div>
                                     <div class="col">
-                                        <input id="b_unit" name="b_unit" style="border: none" style="outline: none"  type="text" class="form-control" id="claim_date_from" name="claim_date_from" disabled>
+                                        <input id="b_unit" name="b_unit" style="border: none" style="outline: none"  type="hidden" class="form-control"><span id="b_unit_val"></span>
                                     </div>
                                     <div class="col-3">
                                         <h5>{{ __('trans_medical.label_reimbursement_type') }}</h5>
                                     </div>
                                     <div class="col">
-                                        <input id="c_type" name="c_type" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from" disabled>
+                                        <input id="c_type" name="c_type" style="border: none" style="outline: none" type="hidden" class="form-control"><span id="c_type_val"></span>
                                     </div>
                                 </div>
 
@@ -382,13 +382,13 @@
                                         <h5>{{ __('trans_medical.ename') }}</h5>
                                     </div>
                                     <div class="col">
-                                        <input id="employee_no" name="employee_no" style="border: none" style="outline: none" type="text" class="form-control" id="claim_date_from" name="claim_date_from" disabled>
+                                        <input id="employee_no" name="employee_no" style="border: none" style="outline: none" type="hidden" class="form-control"><span id="employee_no_val"></span>
                                     </div>
                                     <div class="col-3">
                                         <h5>{{ __('trans_medical.pname') }}</h5>
                                     </div>
                                     <div class="col">
-                                        <input style="border: none" style="outline: none" type="text" class="form-control" id="project_name" name="project_name" disabled>
+                                        <input style="border: none" style="outline: none" type="hidden" class="form-control" id="project_name" name="project_name"><span id="project_name_val"></span>
                                     </div>
                                 </div>
                             
@@ -397,13 +397,13 @@
                                         <h5>{{ __('trans_medical.treq') }}</h5>
                                     </div>
                                     <div class="col">
-                                        <input id="totalclaim" name="totalclaim" style="border: none" style="outline: none" type="text" class="form-control" disabled>
+                                        <input id="totalclaim" name="totalclaim" style="border: none" style="outline: none" type="hidden" class="form-control"><span id="totalclaim_val"></span>
                                     </div>
                                     <div class="col-3">
                                         <h5>{{ __('trans_medical.dname') }}</h5>
                                     </div>
                                     <div class="col">
-                                        <input style="border: none" style="outline: none" type="text" class="form-control" id="dependent" name="dependent" disabled>
+                                        <input style="border: none" style="outline: none" type="hidden" class="form-control" id="dependent" name="dependent"><span id="dependent_val"></span>
                                     </div>
                                 </div>
                                 <br>
@@ -751,7 +751,7 @@
                         return data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
                     }
                 },
-                {data: 'reimbursementEntity.approvalRemarks', name: 'reimbursementEntity.approvalRemarks'
+                {data: 'reimbursementEntity.hrdRemarks', name: 'reimbursementEntity.hrdRemarks'
                 },
                 {data: 'reimbursementEntity.paidAmount', name: 'reimbursementEntity.paidAmount',
                     render: function (data, type, row) {
@@ -791,19 +791,34 @@
     const klikdetail = (element) => {
         let data = table.row($(element).parent()).data().reimbursementEntity;
 
-        $('#reqdate').val(data.createdDate)
-        $('#recdate').val(data.receiptDate)
+        $('#reqdate').val(moment(data.createdDate).format('DD-MMM-YYYY'))
+        $('#reqdate_val').html(moment(data.createdDate).format('DD-MMM-YYYY'))
+        $('#recdate').val(moment(data.receiptDate).format('DD-MMM-YYYY'))
+        $('#recdate_val').html(moment(data.receiptDate).format('DD-MMM-YYYY'))
         $('#tiketno').val(data.ticketNo)
+        $('#tiketno_val').html(data.ticketNo)
         $('#status').val(data.reimbursementStatus)
+        $('#status_val').html(data.reimbursementStatus)
         $('#b_unit').val(data.businessUnit)
+        $('#b_unit_val').html(data.businessUnit)
         $('#employee_no').val(data.employeeNo)
-        $('#c_type').val(data.medicalType1 + ' (' + data.medicalType2 + ')')
+        $('#employee_no_val').html(data.employeeNo)
+        if(data.medicalType1 == null){
+            $('#c_type').val()
+            $('#c_type_val').html()
+        }else{
+            $('#c_type').val(data.medicalType1)
+            $('#c_type_val').html(data.medicalType1 + ' (' + data.medicalType2 + ')')
+        }
         $('#totalclaim').val(data.totalClaimAmount)
+        $('#totalclaim_val').html(data.totalClaimAmount)
         $('#project_name').val(data.projectName)
+        $('#project_name_val').html(data.projectName)
 
         $('#approvalremarks').val(data.approvalRemarks)
         $('#totalpaid').val(data.paidAmount)
         $('#directsuperior').val(data.directSuperiorID)
+        $('#directsuperior_val').html(data.directSuperiorID)
     }
 
     $('#btn-list').click(()=> {

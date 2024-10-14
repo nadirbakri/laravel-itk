@@ -172,7 +172,7 @@ class TransactionController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/mobile/reimbursementmedical/getreimbursementhistoryall',
+            $response = $client->post(env('API_URL') . '/mobile/ReimbursementMedical/getReimbursementDetailListAllWeb',
                 ['body' => json_encode(
                     [
                         'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
@@ -183,6 +183,7 @@ class TransactionController extends Controller
                         'reimbursementStatus' => ($request->status == 'ALL') ? null : $request->status,
                         'exportMenu' => false,
                         'isWeb' => true,
+                        'onlyHeader' => true,
                         'companyCode' => Session::get('companyCode'), 
                         'languageCode' => strtoupper(App::getLocale()), 
                         'userID' => Session::get('userID'),
