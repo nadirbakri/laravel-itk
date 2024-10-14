@@ -149,7 +149,7 @@
                             <table id="report_format_detail_table" class="table hover">
                                 <thead>
                                     <tr>
-                                        <th></th>
+                                        <!-- <th></th> -->
                                         <th></th>
                                         <th>{{ __('payroll_report_format.label_column_no') }}</th>
                                         <th>{{ __('payroll_report_format.label_table_name') }}</th>
@@ -794,7 +794,7 @@
                 "paging": false,
                 "sDom": 'lrtip',
                 'sPaginationType': 'full_numbers',
-                "order": [[ 2, "asc" ]],
+                // "order": [[ 2, "asc" ]],
                 columns: [
                     {
                         orderable: false,
@@ -805,15 +805,15 @@
                                 '<input class="chk-select" type="checkbox">' : '';
                         }
                     },
-                    {
-                        orderable: false,
-                        className: 'reorder',
-                        "defaultContent": '',
-                        render: function (data, type) {
-                            return type === 'display' ?
-                                '<i class="fa fa-th"></i>' : '';
-                        }
-                    },
+                    // {
+                    //     orderable: false,
+                    //     className: 'reorder',
+                    //     "defaultContent": '',
+                    //     render: function (data, type) {
+                    //         return type === 'display' ?
+                    //             '<i class="fa fa-th"></i>' : '';
+                    //     }
+                    // },
                     {   
                         data: 'columnNo',
                         name: 'columnNo',
@@ -873,30 +873,30 @@
                         }
                     },
                 ],
-                rowReorder: {
-                    dataSrc: 'columnNo',
-                    selector: 'tr'
-                },
+                // rowReorder: {
+                //     dataSrc: 'columnNo',
+                //     selector: 'tr'
+                // },
                 select: {
                     style: 'single',
                     selector: 'td:first-child'
                 }
             });
 
-            table1.on('row-reorder', function (e, diff, edit) {
-                diff.forEach(function (reorder) {
-                    arrayReportFormatDetail[reorder.newData].columnNo = reorder.newData + 1;
-                });
+            // table1.on('row-reorder', function (e, diff, edit) {
+            //     diff.forEach(function (reorder) {
+            //         arrayReportFormatDetail[reorder.newData].columnNo = reorder.newData + 1;
+            //     });
 
-                arrayReportFormatDetail.sort(function(a, b) {
-                    return a.columnNo - b.columnNo;
-                });
+            //     arrayReportFormatDetail.sort(function(a, b) {
+            //         return a.columnNo - b.columnNo;
+            //     });
 
-                // $('#report_format_detail_table').DataTable().destroy();
-                // load_table_report_format_detail();
+            //     // $('#report_format_detail_table').DataTable().destroy();
+            //     // load_table_report_format_detail();
 
-                table1.rows().invalidate().draw(false);
-            });
+            //     table1.rows().invalidate().draw(false);
+            // });
         }
 
         $('#report_format_detail_table tbody').on('click', 'input[type="checkbox"]', function(e){
