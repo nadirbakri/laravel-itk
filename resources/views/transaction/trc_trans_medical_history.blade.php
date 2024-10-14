@@ -1180,7 +1180,7 @@
                 processResults: function (data) {
                     if(companyCode == 'ITK' || companyCode == 'III'){
                         var filteredData = data.filter(function (item) {
-                            var allowedStatuses = ["NEW", "APPROVED", "CANCELED", "PARTIAL_APPROVED", "REJECTED"];
+                            var allowedStatuses = ["NEW", "APPROVED", "CANCELED", "PARTIAL APPROVED", "REJECTED"];
                             return allowedStatuses.includes(item.value);
                         });
                     }else{
