@@ -5407,10 +5407,12 @@ class DataController extends Controller
 			return "ALL";
 	    }
 
+		$level = ["ALL"];
+
 	    $arrResult = json_decode($response->getBody()->getContents());
 
 		if($arrResult->dataListSet !== null){
-			$level = array_merge(["ALL"], $arrResult->dataListSet[0]->levelCode);	
+			$level = array_merge($level, $arrResult->dataListSet[0]->levelCode);	
 		}
 
         return response()->json($level[0]);
