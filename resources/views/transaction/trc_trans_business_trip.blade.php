@@ -1214,7 +1214,7 @@
 
             if (data.id) {
                 var $result2 = $('<div class="row">' + 
-                    '<div class="col-6">' + data.data.value + '<div>' +
+                    '<div class="col-12">' + data.data.value + '<div>' +
                     '</div>');
 
                 return $result2;
@@ -1274,7 +1274,7 @@
 
             if (data.id) {
                 var $result2 = $('<div class="row">' + 
-                    '<div class="col-6">' + data.data.value + '<div>' +
+                    '<div class="col-12">' + data.data.value + '<div>' +
                     '</div>');
 
                 return $result2;
@@ -1367,7 +1367,7 @@
 
             if (data.id) {
                 var $result2 = $('<div class="row">' + 
-                    '<div class="col-6">' + data.data.value + '<div>' +
+                    '<div class="col-12">' + data.data.value + '<div>' +
                     '</div>');
 
                 return $result2;
@@ -1405,12 +1405,13 @@
         let ticketNo = $('#tiketno').val();
         let direct_superior = $("#directsuperior").val();
         let approvalremarks = $("#approvalremarks").val();
+        let claim_type = $('#c_type_bst').val();
 
-        update_data_approval_businesstrip(reimbursement_status, totalpaid, ticketNo, direct_superior, approvalremarks)
+        update_data_approval_businesstrip(reimbursement_status, claim_type, totalpaid, ticketNo, direct_superior, approvalremarks)
     })
 
-    function updateBusinessTripStatus(reimbursement_status, totalpaid, ticketNo, direct_superior, approvalremarks) {
-        var item = arrayBusinessTrip.find(obj => obj.ticketNo === ticketNo);
+    function updateBusinessTripStatus(reimbursement_status, claim_type, totalpaid, ticketNo, direct_superior, approvalremarks) {
+        var item = arrayBusinessTrip.find(obj => obj.ticketNo === ticketNo && obj.claimType === claim_type);
 
         if (item) {
             item.status = reimbursement_status;
@@ -1421,7 +1422,7 @@
         }
     }
 
-    function update_data_approval_businesstrip(reimbursement_status, totalpaid, ticketNo, direct_superior, approvalremarks){
+    function update_data_approval_businesstrip(reimbursement_status, claim_type, totalpaid, ticketNo, direct_superior, approvalremarks){
         $.ajax({
             url: "{{ url('trans/update_approvalbusinesstrip/table') }}",
             type: "get",
