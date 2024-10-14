@@ -1070,7 +1070,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '<div class="col-12">' + data.data.value + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -1236,7 +1236,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '<div class="col-12">' + data.data.value + '<div>' +
                         '</div>');
 
                     return $result2;
