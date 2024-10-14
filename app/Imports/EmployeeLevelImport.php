@@ -85,28 +85,29 @@ class EmployeeLevelImport implements ToCollection, SkipsEmptyRows, WithStartRow,
                 return $this->arrResult;
             }
 
+            $peMasterLevel = [];
+
             $rows->filter(function ($row) {
-                return !empty($row[1]);
-            })->each(function ($row) use (&$param, &$levelType) {
-                $peMasterLevel = [] ;
+                return !empty($row[0]);
+            })->each(function ($row) use (&$param, &$levelType, &$peMasterLevel) {
                 foreach ($levelType as $type) {
                     $peMasterLevel[] = [
-                        "companyCode" => (!is_null($row[0]) && $row[0] != "NULL") ? strval($row[0]) : null,
                         'levelType' => (!is_null($type['levelType']) && $type['levelType'] != "NULL") ? strval($type['levelType']) : null,
                         'levelCode' => (!is_null($row[$type['index']]) && $row[$type['index']] != "NULL") ? strval($row[$type['index']]) : null,
-                        "employeeNo" => (!is_null($row[1]) && $row[1] != "NULL") ? strval($row[1]) : null
+                        "employeeNo" => (!is_null($row[0]) && $row[1] != "NULL") ? strval($row[0]) : null
                     ];
                 }
-                $param[] = [
-                    "companyCode" => (!is_null($row[0]) && $row[0] != "NULL") ? trim(strval($row[0])) : null,
-                    "languageCode" => App::getLocale(),
-                    "sessionID" => 0,
-                    "sessionUserID" => Session::get('userID'),
-                    'logActionUserID' => Session::get('userID'),
-                    'logActionUsername' => Session::get('userName'),
-                    'levelData' => $peMasterLevel
-                ];
             });
+
+            $param = [
+                "companyCode" => Session::get('companyCode'),
+                "languageCode" => App::getLocale(),
+                "sessionID" => 0,
+                "sessionUserID" => Session::get('userID'),
+                'logActionUserID' => Session::get('userID'),
+                'logActionUsername' => Session::get('userName'),
+                'levelData' => $peMasterLevel
+            ];
 
             // Storage::put('debug_data.txt', json_encode($param));
             // dd(json_encode($param));
