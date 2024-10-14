@@ -125,6 +125,22 @@
                 <div class="row">
                     <div class="col-3">
                         <div class="form-group">
+                            <label for="report_name">{{ __('payroll_pension_fund_report.label_report_name') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-5">
+                        <div class="form-group">
+                            <select class="form-control select2" id="report_name" name="report_name">
+                                <option value="DANA_PENSIUN">Dana Pensiun Report</option>
+                                <option value="DATA_PESERTA">Data Pendaftaran Peserta Report</option>
+                                <option value="PERUBAHAN_UPAH">Perubahan Upah Dana Pensiun Report</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-3">
+                        <div class="form-group">
                             <label for="period">{{ __('payroll_pension_fund_report.label_period') }}</label>
                         </div>
                     </div>
@@ -168,58 +184,105 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-5">
-                        <div class="form-group">
-                            <label for="denda_bulan">{{ __('payroll_pension_fund_report.label_denda_bulan') }}</label>
+                <div id="row_pendaftaran_peserta" style="display: none;">
+                    <div class="row">
+                        <div class="col-3">
+                            <div class="form-group">
+                                <label for="is_new form-check-label">{{ __('payroll_pension_fund_report.label_tipe_peserta') }}</label>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-3">
-                        <input type="text" class="form-control" id="denda_bulan" name="denda_bulan">
+                        <div class="col-3">
+                            <div class="form-check">
+                                <input type="radio" id="is_new_true" name="is_new" value="true" checked>
+                                <label for="is_new_true">{{ __('payroll_pension_fund_report.label_peserta_baru') }}</label>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="form-check">
+                                <input type="radio" id="is_new_false" name="is_new" value="false">
+                                <label for="is_new_false">{{ __('payroll_pension_fund_report.label_peserta_keluar') }}</label>
+                            </div>
+                        </div>
                     </div>
                 </div>
-
-                <div class="row">
-                    <div class="col-5">
-                        <div class="form-group">
-                            <label for="kelebihan_bayar">{{ __('payroll_pension_fund_report.label_kelebihan_bayar') }}</label>
+                <div id="row_perubahan_upah" style="display: none;">
+                    <div class="row">
+                        <div class="col-3">
+                            <div class="form-group">
+                                <label for="group_authorized_code">{{ __('payroll_pension_fund_report.label_group_authorized_code') }}</label>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-3">
-                        <input type="text" class="form-control" id="kelebihan_bayar" name="kelebihan_bayar">
+                        <div class="col-4">
+                            <div class="form-group">
+                                <select class="form-control select2" id="group_authorized_code_from" name="group_authorized_code_from"></select>
+                            </div>
+                        </div>
+                        <div class="col-0.5">
+                            <div class="form-group">
+                                <label for="group_authorized_code_to">{{ __('payroll_pension_fund_report.label_to') }}</label>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <select class="form-control select2" id="group_authorized_code_to" name="group_authorized_code_to"></select>
+                            </div>
+                        </div>
                     </div>
                 </div>
-
-                <div class="row">
-                    <div class="col-5">
-                        <div class="form-group">
-                            <label for="kurang_bayar">{{ __('payroll_pension_fund_report.label_kurang_bayar') }}</label>
+                <div id="row_dana_pensiun">
+                    <div class="row">
+                        <div class="col-5">
+                            <div class="form-group">
+                                <label for="denda_bulan">{{ __('payroll_pension_fund_report.label_denda_bulan') }}</label>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <input type="text" class="form-control" id="denda_bulan" name="denda_bulan">
                         </div>
                     </div>
-                    <div class="col-3">
-                        <input type="text" class="form-control" id="kurang_bayar" name="kurang_bayar">
-                    </div>
-                </div>
 
-                <div class="row">
-                    <div class="col-5">
-                        <div class="form-group">
-                            <label for="pengurangan_iuran">{{ __('payroll_pension_fund_report.label_pengurangan_iuran') }} <small>{{ __('payroll_pension_fund_report.label_pengurangan_iuran_small') }}</small></label>
+                    <div class="row">
+                        <div class="col-5">
+                            <div class="form-group">
+                                <label for="kelebihan_bayar">{{ __('payroll_pension_fund_report.label_kelebihan_bayar') }}</label>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <input type="text" class="form-control" id="kelebihan_bayar" name="kelebihan_bayar">
                         </div>
                     </div>
-                    <div class="col-3">
-                        <input type="text" class="form-control" id="pengurangan_iuran" name="pengurangan_iuran">
-                    </div>
-                </div>
 
-                <div class="row">
-                    <div class="col-5">
-                        <div class="form-group">
-                            <label for="materai">{{ __('payroll_pension_fund_report.label_materai') }}</label>
+                    <div class="row">
+                        <div class="col-5">
+                            <div class="form-group">
+                                <label for="kurang_bayar">{{ __('payroll_pension_fund_report.label_kurang_bayar') }}</label>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <input type="text" class="form-control" id="kurang_bayar" name="kurang_bayar">
                         </div>
                     </div>
-                    <div class="col-3">
-                        <input type="text" class="form-control" id="materai" name="materai">
+
+                    <div class="row">
+                        <div class="col-5">
+                            <div class="form-group">
+                                <label for="pengurangan_iuran">{{ __('payroll_pension_fund_report.label_pengurangan_iuran') }} <small>{{ __('payroll_pension_fund_report.label_pengurangan_iuran_small') }}</small></label>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <input type="text" class="form-control" id="pengurangan_iuran" name="pengurangan_iuran">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-5">
+                            <div class="form-group">
+                                <label for="materai">{{ __('payroll_pension_fund_report.label_materai') }}</label>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <input type="text" class="form-control" id="materai" name="materai">
+                        </div>
                     </div>
                 </div>
                 <!-- BUTTON -->
@@ -316,7 +379,31 @@
             pickerPeriod.setDate(moment(arrData[0].periodYear.toString() + "-" + arrData[0].periodMonth.toString().padStart(2,0) + "-01").format('YYYY-MM-DD'));
         }
 
+        $('#report_name').select2();
+
+        $('#report_name').on("select2:select, change", function (e) {
+            var data = $('#report_name').select2('data');
+            if(data[0].id == "DATA_PESERTA"){
+                $('#row_pendaftaran_peserta').show();
+                $('#row_dana_pensiun').hide();
+                $('#row_perubahan_upah').hide();
+            }else if(data[0].id == "DANA_PENSIUN"){
+                $('#row_pendaftaran_peserta').hide();
+                $('#row_dana_pensiun').show();
+                $('#row_perubahan_upah').hide();
+            }else if(data[0].id == "PERUBAHAN_UPAH"){
+                $('#row_pendaftaran_peserta').hide();
+                $('#row_dana_pensiun').hide();
+                $('#row_perubahan_upah').show();
+            }
+        });
+
         loadDataGroupDepartment();
+        loadDataGroupAuthorized('#group_authorized_code_from');
+        loadDataGroupAuthorized('#group_authorized_code_to');
+
+        loadDataFirstLastGroupAuthorized('#group_authorized_code_from', 'First');
+        loadDataFirstLastGroupAuthorized('#group_authorized_code_to', 'Last');
 
         function htmlDecode(value) {
     	    return $("<textarea/>").html(value).text();
@@ -409,6 +496,95 @@
                     cache: true,
                 },
                 templateResult: formatSelect
+            });
+        }
+
+        function loadDataGroupAuthorized(field = ''){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' +
+                        '<div class="col-6">' + data.data.groupAuthorizeCode + '</div>' +
+                        '<div class="col-6">' + data.data.groupAuthorizeDesc + '</div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var headerIsAppend = false;
+            $(field).on('select2:open', function (e) {
+                if (!headerIsAppend) {
+                    html = '<div class="row">' +
+                        '<div class="col-6"><b>Group Authorized Code</b></div>' +
+                        '<div class="col-6"><b>Description</b></div>' +
+                        '</div>';
+                    $('.select2-search--dropdown').append(html);
+                    headerIsAppend = true;
+                }
+            });
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            var $authorizedCode = $(field).select2({
+                width: '100%',
+                placeholder: 'Choose Authorized Code',
+                allowClear: true,
+                // tags: true,
+                closeOnSelect: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: "{{ url('/group_authorize/api') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term,
+                            module: 'PY',
+                            isRange: false
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.groupAuthorizeDesc,
+                                    id: item.groupAuthorizeCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataFirstLastGroupAuthorized(field = '', func = ''){
+            $.ajax({
+                type: 'GET',
+                url: "{{ url('/group_authorize/func/api') }}",
+                data: {
+                    'func': func,
+                    'module': 'PY'
+                }
+            }).then(function (data) {
+                var $newOption = $("<option selected='selected'></option>").val(data.groupAuthorizeCode).text(
+                    data.groupAuthorizeDesc);
+                $(field).append($newOption).trigger('change');
             });
         }
 

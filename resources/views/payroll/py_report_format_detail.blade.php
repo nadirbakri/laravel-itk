@@ -8,8 +8,9 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" rel="stylesheet">
-    <link href="https://cdn.datatables.net/select/1.3.3/css/select.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/select/1.7.0/css/select.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/rowreorder/1.5.0/css/rowReorder.dataTables.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/flatpickr.min.css') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
     <!-- <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet"> -->
@@ -148,6 +149,7 @@
                             <table id="report_format_detail_table" class="table hover">
                                 <thead>
                                     <tr>
+                                        <th></th>
                                         <th></th>
                                         <th>{{ __('payroll_report_format.label_column_no') }}</th>
                                         <th>{{ __('payroll_report_format.label_table_name') }}</th>
@@ -648,9 +650,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/select/1.3.3/js/dataTables.select.min.js"></script>
 <script src="https://cdn.datatables.net/plug-ins/1.10.24/pagination/ellipses.js"></script>
+<script src="https://cdn.datatables.net/rowreorder/1.5.0/js/dataTables.rowReorder.js"></script>
+<script src="https://cdn.datatables.net/rowreorder/1.5.0/js/rowReorder.dataTables.js"></script>
 <script src="{{ asset('js/jquery.redirect.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
@@ -790,6 +794,7 @@
                 "paging": false,
                 "sDom": 'lrtip',
                 'sPaginationType': 'full_numbers',
+                "order": [[ 2, "asc" ]],
                 columns: [
                     {
                         orderable: false,
@@ -798,6 +803,15 @@
                         render: function (data, type) {
                             return type === 'display' ?
                                 '<input class="chk-select" type="checkbox">' : '';
+                        }
+                    },
+                    {
+                        orderable: false,
+                        className: 'reorder',
+                        "defaultContent": '',
+                        render: function (data, type) {
+                            return type === 'display' ?
+                                '<i class="fa fa-th"></i>' : '';
                         }
                     },
                     {   
@@ -859,10 +873,29 @@
                         }
                     },
                 ],
+                rowReorder: {
+                    dataSrc: 'columnNo',
+                    selector: 'tr'
+                },
                 select: {
-                    style: 'multi',
+                    style: 'single',
                     selector: 'td:first-child'
                 }
+            });
+
+            table1.on('row-reorder', function (e, diff, edit) {
+                diff.forEach(function (reorder) {
+                    arrayReportFormatDetail[reorder.newData].columnNo = reorder.newData + 1;
+                });
+
+                arrayReportFormatDetail.sort(function(a, b) {
+                    return a.columnNo - b.columnNo;
+                });
+
+                // $('#report_format_detail_table').DataTable().destroy();
+                // load_table_report_format_detail();
+
+                table1.rows().invalidate().draw(false);
             });
         }
 

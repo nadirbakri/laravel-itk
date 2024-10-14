@@ -27,6 +27,8 @@ use App\Exports\ExcelTransferBankExport;
 use App\Exports\EBupotPeriodicalTemplateExport;
 use App\Exports\EBupotA1TemplateExport;
 use App\Exports\PensionFundReportExport;
+use App\Exports\DataPesertaPensionFundReportExport;
+use App\Exports\PerubahanUpahPensionFundReportExport;
 use App\Exports\CBIReportExport;
 use App\Http\Controllers\Redirect;
 use Illuminate\Support\Facades\Crypt;
@@ -8762,17 +8764,42 @@ public function dataDetailReportFormatPY(Request $request)
     }
 
     public function printPensionFundReportPayrollExcel(Request $request){
-        return Excel::download(new PensionFundReportExport(
-            $request->period,
-            $request->group_department,
-            $request->print_date, 
-            $request->denda_bulan, 
-            $request->kelebihan_bayar, 
-            $request->kurang_bayar, 
-            $request->pengurangan_iuran, 
-            $request->materai), 
-            'Pension Fund Report.xlsx'
-        );
+        if($request->report_name == "DANA_PENSIUN"){
+            return Excel::download(new PensionFundReportExport(
+                $request->period,
+                $request->group_department,
+                $request->print_date, 
+                $request->denda_bulan, 
+                $request->kelebihan_bayar, 
+                $request->kurang_bayar, 
+                $request->pengurangan_iuran, 
+                $request->materai), 
+                'Laporan Dana Pensiun.xlsx'
+            );
+        }else if($request->report_name == "DATA_PESERTA"){
+            $isNew = ($request->is_new === "true") ? true : false;
+            if($isNew){
+                $filename = 'Laporan Data Pendaftaran Peserta Baru Dana Pensiun.xlsx';
+            }else{
+                $filename = 'Laporan Data Pendaftaran Peserta Keluar Dana Pensiun.xlsx';
+            }
+            return Excel::download(new DataPesertaPensionFundReportExport(
+                $request->period,
+                $request->group_department,
+                $request->print_date,
+                $isNew), 
+                $filename
+            );
+        }else if($request->report_name == "PERUBAHAN_UPAH"){
+            return Excel::download(new PerubahanUpahPensionFundReportExport(
+                $request->period,
+                $request->group_department,
+                $request->print_date,
+                $request->group_authorized_code_from, 
+                $request->group_authorized_code_to), 
+                'Laporan Perubahan Upah Dana Pensiun.xlsx'
+            );
+        }
     }
 
     public function printCBIReportPayrollExcel(Request $request){
