@@ -40,7 +40,7 @@
 			</tr>
 		</thead>
 		<tbody>
-            <?php $no = 0; ?>
+            <?php $no = 1; ?>
 			@foreach($data as $value)
 			<tr>
                 <td>{{ $no++ }}</td>
