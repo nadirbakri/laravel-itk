@@ -369,6 +369,14 @@
                             @csrf
                             <div class="row detailstatus">
                                 <div class="col-3">
+                                    <h5>{{ __('trans_business_trip.employeename') }}</h5>
+                                </div>
+                                <div class="col-9">
+                                <input id="employeename" name="employeename" type="hidden" class="form-control"><span id="employeename_val"></span>
+                                </div>
+                            </div>
+                            <div class="row detailstatus">
+                                <div class="col-3">
                                     <h5>{{ __('trans_business_trip.status') }}</h5>
                                 </div>
                                 <div class="col-9">
@@ -944,6 +952,8 @@
         $('#totalpaid').val(data.paidAmount)
         $('#status').val(data.status)
         $('#status_val').html(data.status)
+        $('#employeename').val(data.fullName)
+        $('#employeename_val').html(data.fullName)
         $('#b_unit').val(data.businessUnit)
         $('#b_unit_val').html(data.businessUnit)
         $('#employee_no').val(data.employeeNo)

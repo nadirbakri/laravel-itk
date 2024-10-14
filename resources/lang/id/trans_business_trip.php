@@ -16,6 +16,7 @@ return [
     'btn_list' => 'Daftar',
     'btn_search' => 'Cari',
     'employee' => 'ID Karyawan',
+    'employeename' => 'Nama Karyawan',
     'detail' => 'Detail',
     'tnom' => 'Nomor Tiket',
     'type' => 'Type',
