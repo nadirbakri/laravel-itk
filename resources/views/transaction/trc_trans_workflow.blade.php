@@ -677,6 +677,7 @@
 <script>
     var table = null;
     var table2 = null;
+    var companyCode = "{{ Session::get('companyCode') }}";
     var arrayPermit = [];
     var arrayLeave = [];
 
@@ -1110,8 +1111,6 @@
             }
         });
     }
-</script>
-<script type="text/javascript">
 
     loadDataBusinessUnit();
     loadDataWorkflowType();
@@ -1321,10 +1320,17 @@
                         };
                     },
                     processResults: function (data) {
-                        var filteredData = data.filter(function (item) {
-                            var allowedStatuses = ["NEW", "APPROVED", "CANCELED", "PARTIAL APPROVED", "REJECTED"];
-                            return allowedStatuses.includes(item.value);
-                        });
+                        if(companyCode == 'ITK' || companyCode == 'III'){
+                            var filteredData = data.filter(function (item) {
+                                var allowedStatuses = ["NEW", "APPROVED", "CANCELED", "PARTIAL_APPROVED", "REJECTED"];
+                                return allowedStatuses.includes(item.value);
+                            });
+                        }else{
+                            var filteredData = data.filter(function (item) {
+                                var allowedStatuses = ["NEW", "APPROVED", "CANCELED", "PARTIAL APPROVED", "REJECTED"];
+                                return allowedStatuses.includes(item.value);
+                            });
+                        }
 
                         filteredData.unshift({ value: "ALL" });
 

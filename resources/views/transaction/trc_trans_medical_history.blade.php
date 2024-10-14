@@ -679,6 +679,7 @@
 
     var table = null;
     var table2 = null;
+    var companyCode = "{{ Session::get('companyCode') }}";
     var arrayMedical = [];
 
     function load_data_medical_history(claim_date_from, claim_date_to, direct_superior, reimbursement_type, business_unit, medical_status){
@@ -1177,10 +1178,17 @@
                     };
                 },
                 processResults: function (data) {
-                    var filteredData = data.filter(function (item) {
+                    if(companyCode == 'ITK' || companyCode == 'III'){
+                        var filteredData = data.filter(function (item) {
+                            var allowedStatuses = ["NEW", "APPROVED", "CANCELED", "PARTIAL_APPROVED", "REJECTED"];
+                            return allowedStatuses.includes(item.value);
+                        });
+                    }else{
+                        var filteredData = data.filter(function (item) {
                             var allowedStatuses = ["NEW", "APPROVED", "CANCELED", "PARTIAL APPROVED", "REJECTED"];
                             return allowedStatuses.includes(item.value);
                         });
+                    }
 
                     filteredData.unshift({ value: "ALL" });
 

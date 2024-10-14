@@ -609,6 +609,7 @@
 <script type="text/javascript">
     var table = null;
     var table2 = null;
+    var companyCode = "{{ Session::get('companyCode') }}";
     var arrayTransport = [];
 
     function load_data_transport(claim_date_from, claim_date_to, direct_superior, reimbursement_type, business_unit, processed_date, transport_status){
@@ -1180,10 +1181,17 @@
                     };
                 },
                 processResults: function (data) {
-                    var filteredData = data.filter(function (item) {
-                        var allowedStatuses = ["NEW", "APPROVED", "CANCELED", "PARTIAL APPROVED", "REJECTED"];
-                        return allowedStatuses.includes(item.value);
-                    });
+                    if(companyCode == 'ITK' || companyCode == 'III'){
+                        var filteredData = data.filter(function (item) {
+                            var allowedStatuses = ["NEW", "APPROVED", "CANCELED", "PARTIAL_APPROVED", "REJECTED", "PAID"];
+                            return allowedStatuses.includes(item.value);
+                        });
+                    }else{
+                        var filteredData = data.filter(function (item) {
+                            var allowedStatuses = ["NEW", "APPROVED", "CANCELED", "PARTIAL APPROVED", "REJECTED"];
+                            return allowedStatuses.includes(item.value);
+                        });
+                    }
 
                     filteredData.unshift({ value: "ALL" });
 
