@@ -284,7 +284,7 @@
                                         <th>{{ __('trans_reimbursement.treq') }}</th>
                                         <th>{{ __('trans_reimbursement.premarks') }}</th>
                                         <th>{{ __('trans_reimbursement.tpaid') }}</th>
-                                        <th>{{ __('trans_reimbursement.preview') }}</th>
+                                        {{-- <th>{{ __('trans_reimbursement.preview') }}</th> --}}
                                     </tr>
                                 </thead>
                             </table>
@@ -743,13 +743,13 @@
                         return data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
                     }
                 },
-                {
-                    orderable: false,
-                    "defaultContent": '',
-                    render: function(data, type) {
-                        return '<button type="button" title="Preview" class="btn btn-info btn-circle" id="btn-preview" data-toggle="modal" data-target="#modal_preview_file" onclick="klikpreview(this)"><i class="fa fa-file-photo-o"></i></button>';
-                    }
-                },
+                // {
+                //     orderable: false,
+                //     "defaultContent": '',
+                //     render: function(data, type) {
+                //         return '<button type="button" title="Preview" class="btn btn-info btn-circle" id="btn-preview" data-toggle="modal" data-target="#modal_preview_file" onclick="klikpreview(this)"><i class="fa fa-file-photo-o"></i></button>';
+                //     }
+                // },
             ]
         });
 
