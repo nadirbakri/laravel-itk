@@ -119,13 +119,15 @@
         }
 
         .myimage{
-            width: 100%;
-            height: 100%;
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 4px;
         }
 
         .imgdiv{
             overflow: hidden;
-            margin: 1%;
+            margin: 0;
             padding:0.5%;
             border:2px solid #ddd;
             border-radius: 5px;
@@ -459,6 +461,16 @@
                                         <input id="approvalremarks" name="approvalremarks"  type="text" class="form-control">
                                     </div>
                                 </div>
+                                <div class="row approve">
+                                    <div class="col-12">
+                                        <h5>Attachment</h5>
+                                    </div>
+                                </div>
+                                <div class="row approve">
+                                    <div class="col-12">
+                                        <div id="attachment" class="row"></div>
+                                    </div>
+                                </div>
                                 <hr>
                                 <button class="btn btn-primary btn-block" id="btn-update" type="button">Update</button>
                             </div>
@@ -773,6 +785,7 @@
             load_data_reimbursement(claim_date_from, claim_date_to,direct_superior, reimbursement_type, business_unit, reimbursement_status);
     })
     const klikdetail = (element) => {
+        console.log(table.row($(element).parent()).data())
         let data = table.row($(element).parent()).data().reimbursementEntity;
 
         $('#reqdate').val(moment(data.createdDate).format('YYYY-MM-DD'))
@@ -799,6 +812,8 @@
         $('#totalpaid').val(data.paidAmount)
         $('#directsuperior').val(data.directSuperiorID)
         $('#reimbursement_status').val(data.reimbursementStatus).trigger('change')
+
+        attachmentPreview(data)
     }
 
     function preview(img) {
@@ -826,6 +841,74 @@
         {
             $('#previewPhoto').append('<div>No Data Available.</div>');
         }
+    }
+
+    const attachmentPreview = (data) => {
+        $('#attachment').empty();
+        $('#attachment').addClass('spinner-border');
+
+        $.ajax({
+            type: 'GET',
+            url: "{{ url('/trans/reimbursement/attachment') }}",
+            data: {
+                'employeeNo' : data.employeeNo,
+                'receiptDate' : data.receiptDate,
+                'ticketNo' : data.ticketNo,
+            },
+            success: function (response) {
+                $('#attachment').removeClass('spinner-border');
+                const attachmentEntity = response.attachmentEntity
+
+                if (attachmentEntity.length) {
+                    for (let i = 0; i < attachmentEntity.length; i++) {
+                        const data = attachmentEntity[i];
+
+                        $('#attachment').append(`
+                            <div class="col-2">
+                                <a href="javascript:void(0);" onclick="load_image('data:image/png;base64,${data.reimbursementAttachment64}')">
+                                    <img id="${i + 1}" class="myimage img-rounded img-fluid" src="data:image/png;base64,${data.reimbursementAttachment64}" alt="${i}"/>
+                                </a>
+                            </div>`
+                        );
+                    }
+                }
+            },
+            error: function(xhr, status, error) {
+                $('#attachment').removeClass('spinner-border');
+                console.error('AJAX error:', status, error);
+            }
+        })
+    }
+
+    function load_image(dataImage){
+        var image = new Image();
+        image.src = dataImage;
+
+        var w = window.open("");
+        w.document.write(`
+        <html>
+            <head>
+                <style>
+                    body, html {
+                        margin: 0;
+                        height: 100%;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        background-color: #000;
+                    }
+                    img {
+                        max-width: 100%;
+                        max-height: 100%;
+                    }
+                </style>
+            </head>
+            <body>
+                <img src="${dataImage}" />
+            </body>
+        </html>
+        `);
+        w.document.close()
     }
 
     $('#btn-list').click(()=> {
