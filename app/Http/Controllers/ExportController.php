@@ -242,11 +242,14 @@ class ExportController extends Controller
 
         // dd($arrResult->dataListSet);
 
-        if($arrResult->dataListSet == null){
-            $pdf = PDF::loadView('export.exp_businesstrippdf_list2', ['data' => []])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
+        $data = $arrResult->dataListSet;
+
+        if($request->travel_type === 'TTB') {
+            $pdf = PDF::loadView('export.exp_businesstrippdf_list3', ['data' => $data == null ? [] : $data])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
             return $pdf->stream('Business Trip.pdf');
-        }else{
-            $pdf = PDF::loadView('export.exp_businesstrippdf_list2', ['data' => $arrResult->dataListSet])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
+        }
+        else {
+            $pdf = PDF::loadView('export.exp_businesstrippdf_list2', ['data' => $data == null ? [] : $data])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
             return $pdf->stream('Business Trip.pdf');
         }
     }

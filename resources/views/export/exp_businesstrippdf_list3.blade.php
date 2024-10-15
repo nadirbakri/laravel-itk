@@ -20,6 +20,25 @@
             padding: 0 !important;
             font-family: Arial, Helvetica, sans-serif;
         }
+        .table_detail{
+			border-collapse:collapse;
+            table-layout: auto;
+		}
+        .table_detail td{
+            margin: 0;
+			border:1px solid #000;
+            padding:4px;
+            font-size: 14px;
+            text-align: left
+		}
+		.table_detail th{
+            margin: 0;
+			border:1px solid #000;
+            padding:4px;
+            font-size: 14px;
+            /* font-weight: normal; */
+            text-align: center
+		}
 
         .page_break { page-break-before: always; }
 	</style>
@@ -30,7 +49,7 @@
         <table style="width:100%; padding-left:1%; padding-right:1%;">
             <tr>
                 <td width="50%" style="font-size: 18px; font-weight: 700; text-align: left;">{{ $item->companyName }}</td>
-                <td width='50%' style="font-size: 14px; text-align: right;">Date : {{ date('d-M-Y', strtotime($item->createdDate)) }} | Assesment : {{ $item->levelCode }}</td>
+                <td width='50%' style="font-size: 14px; text-align: right;">Date : {{ date('d-M-Y', strtotime($item->createdDate)) }} | Assesment : {{ $item->costCenterCode }}</td>
             </tr>
             <tr>
                 <td colspan="2"><hr style="margin-top: 10px; margin-bottom: 10px;" /></td>
@@ -38,7 +57,7 @@
         </table>
         <table style="width:100%; padding-left:1%; padding-right:1%;">
             <tr>
-                <td colspan="3" style="font-size: 18px; font-weight: 700; text-align: center;">TRAVEL ADVANCE PAYMENT REQUEST</td>
+                <td colspan="3" style="font-size: 18px; font-weight: 700; text-align: center;">CALCULATION OF TRAVEL SETTLEMENT</td>
             </tr>
             <br>
             <tr>
@@ -64,7 +83,7 @@
             <tr>
                 <td width='20%' style="font-size: 14px; text-align: left; padding-bottom: 5px;"><span>Division</span></td>
                 <td width='3%' style="font-size: 14px; text-align: left; padding-bottom: 5px;"><span>:</span></td>
-                <td width='77%' style="font-size: 14px; text-align: left; padding-bottom: 5px;"><span>{{ $item->levelCode }}</span></td>
+                <td width='77%' style="font-size: 14px; text-align: left; padding-bottom: 5px;"><span>{{ $item->costCenterCode }}</span></td>
             </tr>
             <tr>
                 <td width='20%' style="font-size: 14px; text-align: left; padding-bottom: 5px;"><span>Destination</span></td>
@@ -100,65 +119,73 @@
                 <td colspan="3"><hr style="margin-top: 10px; margin-bottom: 10px;" /></td>
             </tr>
         </table>
-        <table style="width:100%; padding-left:1%; padding-right:1%;">
+        <table style="width:100%; padding-left:1%; padding-right:1%;" class="table_detail">
             <tr>
-                <td colspan="3" style="font-size: 18px; font-weight: 700; text-align: left; padding-bottom: 5px;">ESTIMATED EXPENSES</td>
+                <td colspan="8" style="border: none; font-size: 18px; font-weight: 700; text-align: left; padding-bottom: 5px;">SETTLEMENT EXPENSES</td>
             </tr>
             <br>
-            <tr>
-                <td width='20%' style="font-size: 14px; text-align: left; padding-bottom: 5px;"><span>Currency</span></td>
-                <td width='3%' style="font-size: 14px; text-align: left; padding-bottom: 5px;"><span>:</span></td>
-                <td width='77%' style="font-size: 14px; text-align: left; padding-bottom: 5px;"><span>{{ $item->currency }}</span></td>
-            </tr>
-            @foreach($item->claimList as $claim)
-                @if($claim->claimName == 'Other')
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Date</th>
+                    <th>Cost Type</th>
+                    <th>Description</th>
+                    <th>Currency</th>
+                    <th>Exchange Rate</th>
+                    <th>Amount</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+			    <?php $no = 1; ?>
+                @foreach($item->claimList as $claim)
                     <tr>
-                        <td width='20%' style="font-size: 14px; text-align: left; padding-bottom: 5px;">
-                            <span>{{ $claim->claimName }}</span>
-                        </td>
-                        <td width='3%' style="font-size: 14px; text-align: left; padding-bottom: 5px;"><span>:</span></td>
-                        @if($claim->claimPerDay !== $claim->totalClaimPerDay)
-                            <td width='77%' style="font-size: 14px; text-align: left; padding-bottom: 5px;">
-                                <span>Rp. {{ number_format($claim->totalClaimPerDay, 0, '.', ',') }} ( IDR {{ number_format($claim->claimPerDay, 0, '.', ',') }} / IDR {{ number_format($claim->totalClaimPerDay, 0, '.', ',') }} )</span>
-                            </td>
-                        @else
-                            <td width='77%' style="font-size: 14px; text-align: left; padding-bottom: 5px;">
-                                <span>Rp. {{ number_format($claim->totalClaimPerDay, 0, '.', ',') }}</span>
-                            </td>
-                        @endif
+                        <td style="text-align: center">{{ $no++ }}</td>
+                        {{-- <td>{{ $claim->date }}</td>
+                        <td>{{ $claim->costType }}</td>
+                        <td>{{ $claim->description }}</td>
+                        <td>{{ $claim->currency }}</td>
+                        <td>{{ $claim->exchangeRate }}</td>
+                        <td>{{ $claim->amount }}</td>
+                        <td>Rp. {{ number_format($item->total, 0, '.', ',') }}</td> --}}
+                        <td>01-07-2024</td>
+                        <td>Transport</td>
+                        <td>Travel</td>
+                        <td>IDR</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>Rp. 100,000</td>
                     </tr>
-                    <tr>
-                        <td width='20%' style="font-size: 14px; text-align: left; padding-bottom: 5px;">
-                            <span>{{ $claim->claimName }} Remarks</span>
-                        </td>
-                        <td width='3%' style="font-size: 14px; text-align: left; padding-bottom: 5px;"><span>:</span></td>
-                        <td width='77%' style="font-size: 14px; text-align: left; padding-bottom: 5px;">
-                            <span>{{ $claim->remarksType }}</span>
-                        </td>
-                    </tr>
-                @else
-                    <tr>
-                        <td width='20%' style="font-size: 14px; text-align: left; padding-bottom: 5px;">
-                            <span>{{ $claim->claimName }}</span>
-                        </td>
-                        <td width='3%' style="font-size: 14px; text-align: left; padding-bottom: 5px;"><span>:</span></td>
-                        @if($claim->claimPerDay !== $claim->totalClaimPerDay)
-                            <td width='77%' style="font-size: 14px; text-align: left; padding-bottom: 5px;">
-                                <span>Rp. {{ number_format($claim->totalClaimPerDay, 0, '.', ',') }} ( IDR {{ number_format($claim->claimPerDay, 0, '.', ',') }} / IDR {{ number_format($claim->totalClaimPerDay, 0, '.', ',') }} )</span>
-                            </td>
-                        @else
-                            <td width='77%' style="font-size: 14px; text-align: left; padding-bottom: 5px;">
-                                <span>Rp. {{ number_format($claim->totalClaimPerDay, 0, '.', ',') }}</span>
-                            </td>
-                        @endif
-                    </tr>
-                @endif
-            @endforeach
-            <tr>
-                <td width='20%' style="font-size: 14px; font-weight: 700; text-align: left; padding-bottom: 5px;"><span>TOTAL</span></td>
-                <td width='3%' style="font-size: 14px; text-align: left; padding-bottom: 5px;"><span>:</span></td>
-                <td width='77%' style="font-size: 14px; text-align: left; padding-bottom: 5px;"><span>Rp. {{ number_format($item->totalClaimAmount, 0, '.', ',') }}</span></td>
-            </tr>
+                @endforeach
+            </tbody>
+            {{-- <tfoot>
+                <tr>
+                    <td colspan="7" style="font-size: 14px; text-align: right;">TOTAL SETTLEMENT</td>
+                    <td>Rp. {{ number_format($item->totalSettlement, 0, '.', ',') }}</td>
+                </tr>
+                <tr>
+                    <td colspan="7" style="font-size: 14px; text-align: right;">TOTAL REQUEST</td>
+                    <td>Rp. {{ number_format($item->totalRequest, 0, '.', ',') }}</td>
+                </tr>
+                <tr>
+                    <td colspan="7" style="font-size: 14px; text-align: right;">DIFFERENCE</td>
+                    <td>Rp. {{ number_format($item->difference, 0, '.', ',') }}</td>
+                </tr>
+            </tfoot> --}}
+            <tfoot>
+                <tr>
+                    <td colspan="7" style="font-size: 14px; text-align: right; border: none">TOTAL SETTLEMENT</td>
+                    <td>Rp. 500,000</td>
+                </tr>
+                <tr>
+                    <td colspan="7" style="font-size: 14px; text-align: right; border: none">TOTAL REQUEST</td>
+                    <td>Rp. 700,000</td>
+                </tr>
+                <tr>
+                    <td colspan="7" style="font-size: 14px; text-align: right; border: none">DIFFERENCE</td>
+                    <td>Rp. 200,000</td>
+                </tr>
+            </tfoot>
         </table>
         @if($index != array_key_last($data))
 		<div class="page_break"></div>
