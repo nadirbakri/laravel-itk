@@ -244,10 +244,10 @@ class ExportController extends Controller
 
         if($arrResult->dataListSet == null){
             $pdf = PDF::loadView('export.exp_businesstrippdf_list2', ['data' => []])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
-            return $pdf->stream('BST-' . $request->business_unit . date('Y-m-d') . '.pdf');
+            return $pdf->stream('BST-' . $request->business_unit . '-' . date('Y-m-d') . '.pdf');
         }else{
             $pdf = PDF::loadView('export.exp_businesstrippdf_list2', ['data' => $arrResult->dataListSet])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
-            return $pdf->stream('BST-' . $request->business_unit . date('Y-m-d') . '.pdf');
+            return $pdf->stream('BST-' . $request->business_unit . '-' . date('Y-m-d') . '.pdf');
         }
     }
    
