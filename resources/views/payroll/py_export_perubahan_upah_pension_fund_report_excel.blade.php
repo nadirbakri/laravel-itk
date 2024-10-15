@@ -34,7 +34,7 @@
         <table>
             <thead>
                 <tr>
-                    <th colspan="3" style="font-size: 15px;"><b>DANA PENDAFTARAN PESERTA {{ ($isNew) ? "BARU" : "KELUAR" }} DANA PENSIUN</b></th>
+                    <th colspan="3" style="font-size: 15px;"><b>DATA PERUBAHAN UPAH PESERTA DANA PENSIUN</b></th>
                 </tr>
             </thead>
         </table>
@@ -45,7 +45,7 @@
                 <td colspan="5">:&nbsp;&nbsp;<b>PT. {{ $data[0]->companyName }}</b></td>
             </tr>
             <tr>
-                <td colspan="2">Keluar Mulai (Bulan / Tahun)</td>
+                <td colspan="2">Periode</td>
                 <td colspan="5">:&nbsp;&nbsp;<b>{{ $data[0]->period }}</b></td>
             </tr>
         </table>
@@ -59,8 +59,9 @@
                     <th rowspan="2" style="width: 200px; vertical-align: center; text-align: center; border:1px solid #000;"><b>Nama Lengkap Peserta</b></th>
                     <th rowspan="2" style="width: 200px; vertical-align: center; text-align: center; border:1px solid #000;"><b>Tgl Lahir</b></th>
                     <th rowspan="2" style="width: 200px; vertical-align: center; text-align: center; border:1px solid #000;"><b>L/P</b></th>
-                    <th rowspan="2" style="width: 200px; vertical-align: center; text-align: center; border:1px solid #000;"><b>Upah Pokok</b></th>
-                    <th rowspan="2" style="width: 200px; vertical-align: center; text-align: center; border:1px solid #000;"><b>Keterangan</b></th>
+                    <th rowspan="2" style="width: 200px; vertical-align: center; text-align: center; border:1px solid #000;"><b>Upah Lama</b></th>
+                    <th rowspan="2" style="width: 200px; vertical-align: center; text-align: center; border:1px solid #000;"><b>Upah Baru</b></th>
+                    <th rowspan="2" style="width: 200px; vertical-align: center; text-align: center; border:1px solid #000;"><b>Selisih</b></th>
                 </tr>
                 <tr>
                     <th style="vertical-align: center; text-align: center; border:1px solid #000;"><b>(Diisi bila sudah memiliki)</b></th>
@@ -68,27 +69,26 @@
             </thead>
             <tbody>
                 <?php 
-                $no = 1; 
-                $totalUpah = 0;
+                $no = 1;
                 ?>
                 @foreach($data[0]->employeeData as $value)
-                <?php
-                $totalUpah += $value->upahPokok;
-                ?>
                 <tr>
                     <td style="border:1px solid #000; ">{{ $no++ }}</td>
                     <td style="border:1px solid #000; ">{{ $value->employeeNo }}</td>
-                    <td style="border:1px solid #000; ">{{ $value->danaPensiunNo }}</td>
+                    <td style="border:1px solid #000; ">{{ $value->nomorPeserta }}</td>
                     <td style="border:1px solid #000; ">{{ $value->employeeName }}</td>
                     <td style="border:1px solid #000; ">{{ date('Y-m-d', strtotime($value->birthDate)) }}</td>
                     <td style="border:1px solid #000; ">{{ $value->gender }}</td>
-                    <td data-format="#,##0" style="text-align: right; border:1px solid #000; ">{{ $value->upahPokok }}</td>
-                    <td style="border:1px solid #000; ">{{ $value->keterangan }}</td>
+                    <td data-format="#,##0" style="text-align: right; border:1px solid #000; ">{{ $value->upahLama }}</td>
+                    <td data-format="#,##0" style="text-align: right; border:1px solid #000; ">{{ $value->upahBaru }}</td>
+                    <td data-format="#,##0" style="text-align: right; border:1px solid #000; ">{{ $value->selisih }}</td>
                 </tr>
                 @endforeach
                 <tr>
                     <td colspan="6" style="border:1px solid #000; text-align: left;"><b>Total</b></td>
-                    <td data-format="#,##0" style="text-align: right; border:1px solid #000;">{{ $totalUpah }}</td>
+                    <td data-format="#,##0" style="text-align: right; border:1px solid #000;">{{ $data[0]->totalUpahLama }}</td>
+                    <td data-format="#,##0" style="text-align: right; border:1px solid #000;">{{ $data[0]->totalUpahBaru }}</td>
+                    <td data-format="#,##0" style="text-align: right; border:1px solid #000;">{{ $data[0]->totalSelisih }}</td>
                 </tr>
             </tbody>
         </table>

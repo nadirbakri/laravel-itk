@@ -90,11 +90,11 @@ class PerubahanUpahPensionFundReportExport extends DefaultValueBinder implements
         // dd($arrResult->dataListSet);
 
         if($arrResult->dataListSet == null){
-            return view('payroll.py_export_pension_fund_report_excel', [
+            return view('payroll.py_export_perubahan_upah_pension_fund_report_excel', [
                 'data' => [], 'period' => $this->period, 'printDate' => $this->printDate, 'dendaBulan' => ((!empty($this->dendaBulan)) ? (int) $this->dendaBulan : 0), 'kelebihanBayar' => ((!empty($this->kelebihanBayar)) ? (int) $this->kelebihanBayar : 0), 'kurangBayar' => ((!empty($this->kurangBayar)) ? (int) $this->kurangBayar : 0), 'penguranganIuran' => ((!empty($this->penguranganIuran)) ? (int) $this->penguranganIuran : 0), 'materai' => ((!empty($this->materai)) ? (int) $this->materai : 0)
             ]);
         }else{
-            return view('payroll.py_export_pension_fund_report_excel', [
+            return view('payroll.py_export_perubahan_upah_pension_fund_report_excel', [
                 'data' => $arrResult->dataListSet, 'period' => $this->period, 'printDate' => $this->printDate, 'dendaBulan' => ((!empty($this->dendaBulan)) ? (int) $this->dendaBulan : 0), 'kelebihanBayar' => ((!empty($this->kelebihanBayar)) ? (int) $this->kelebihanBayar : 0), 'kurangBayar' => ((!empty($this->kurangBayar)) ? (int) $this->kurangBayar : 0), 'penguranganIuran' => ((!empty($this->penguranganIuran)) ? (int) $this->penguranganIuran : 0), 'materai' => ((!empty($this->materai)) ? (int) $this->materai : 0)
             ]); 
         }
