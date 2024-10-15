@@ -2351,47 +2351,24 @@ class UtilitiesController extends Controller
                 $arrLevel[] = $key;
             }
 
-            if($request->record_function_level == 'New'){
-                $response = $client->post(env('API_URL') . '/personel/User/Level',
-                    ['body' => json_encode(
-                        [
-                            'companyCode' => Session::get('companyCode'),
-                            'userID' => $request->user_id_level,
-                            'levelType' => [[
-                                'levelType' => (int) $request->level_type_val,
-                                'levelAuthorize' => $arrLevel,
-                            ]],
-                            "changedDate" => date("Y-m-d\TH:i:s"),
-                            "changedBy" => Session::get('userID'),
-                            'sessionUserID' => Session::get('userID'),
-                            'logActionUserID' => Session::get('userID'),
-                            'logActionUsername' => Session::get('userName'),
-                            "languageCode" => App::getLocale()
-                        ]
-                    )]
-                );
-            }else{
-                $response = $client->put(env('API_URL') . '/personel/User/UpdateLevel',
-                    ['body' => json_encode(
-                        [
-                            'companyCode' => Session::get('companyCode'),
-                            'userID' => $request->user_id_level,
-                            'levelType' => [[
-                                'levelType' => (int) $request->level_type_val,
-                                'levelAuthorize' => $arrLevel,
-                            ]],
-                            "changedDate" => date("Y-m-d\TH:i:s"),
-                            "changedBy" => Session::get('userID'),
-                            'sessionUserID' => Session::get('userID'),
-                            'logActionUserID' => Session::get('userID'),
-                            'logActionUsername' => Session::get('userName'),
-                            "languageCode" => App::getLocale()
-                        ]
-                    )]
-                );
-            }
-
-
+            $response = $client->put(env('API_URL') . '/personel/User/UpdateLevel',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'userID' => $request->user_id_level,
+                        'levelType' => [[
+                            'levelType' => (int) $request->level_type_val,
+                            'levelAuthorize' => $arrLevel,
+                        ]],
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        'sessionUserID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        "languageCode" => App::getLocale()
+                    ]
+                )]
+            );
         } catch (RequestException $e) {
             $response = $e->getResponse();
             if($response->getStatusCode() == 401){

@@ -484,7 +484,7 @@ class TransactionController extends Controller
                         'reimbursementType'=> $request->reimbursementType,
                         'businessUnit' => $request->businessUnit,
                         'reimbursementStatus' => ($request->reimbursementStatus == "ALL") ? null : $request->reimbursementStatus,
-                        'exportMenu' => true,
+                        'exportMenu' => false,
                         'isWeb' => true,
                         'companyCode' => Session::get('companyCode'), 
                         'languageCode' => strtoupper(App::getLocale()), 
@@ -714,7 +714,7 @@ class TransactionController extends Controller
                     [
                         'startDate' => $isNull ? null:Carbon::parse($request->startDate)->format('Y-m-d'),
                         'endDate' => $isNullenddate ? null:Carbon::parse($request->endDate)->format('Y-m-d'),
-                        'exportMenu' => true,
+                        'exportMenu' => false,
                         'isWeb' => true,
                         'processDate'=> $isNullprocessDate ? null:Carbon::parse($request->processDate)->format('Y-m-d'),
                         'type' =>  $request->type,
