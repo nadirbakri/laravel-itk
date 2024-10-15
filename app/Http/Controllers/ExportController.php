@@ -129,9 +129,9 @@ class ExportController extends Controller
 
 
         if ($request->workflow_type === "ER") {
-            return Excel::download(new WorkflowPermitExport($request->claim_date_from, $request->claim_date_to, $request->business_unit, $dataLevel, $request->workflow_status), 'PERMIT-' . $request->business_unit . date('Y-m-d') . '.xlsx');
+            return Excel::download(new WorkflowPermitExport($request->claim_date_from, $request->claim_date_to, $request->business_unit, $dataLevel, $request->workflow_status), 'PERMIT-' . $request->business_unit . '-' . date('Y-m-d') . '.xlsx');
         } else {
-            return Excel::download(new WorkflowLeaveExport($request->claim_date_from, $request->claim_date_to, $request->business_unit, $dataLevel, $request->workflow_status), 'LEAVE-' . $request->business_unit . date('Y-m-d') . '.xlsx');
+            return Excel::download(new WorkflowLeaveExport($request->claim_date_from, $request->claim_date_to, $request->business_unit, $dataLevel, $request->workflow_status), 'LEAVE-' . $request->business_unit . '-' . date('Y-m-d') . '.xlsx');
         }
     }
     
@@ -146,7 +146,7 @@ class ExportController extends Controller
             $dataLevel[] = $request->{'level' . ($i+1)};
         }
 
-        return Excel::download(new MedicalExport($request->claim_date_from, $request->claim_date_to, $request->business_unit, $request->reimbursement_type, $dataLevel, $request->medical_status), 'MED-' . $request->business_unit . date('Y-m-d') . '.xlsx');
+        return Excel::download(new MedicalExport($request->claim_date_from, $request->claim_date_to, $request->business_unit, $request->reimbursement_type, $dataLevel, $request->medical_status), 'MED-' . $request->business_unit . '-' . date('Y-m-d') . '.xlsx');
     
     }
    
@@ -159,7 +159,7 @@ class ExportController extends Controller
             $dataLevel[] = $request->{'level' . ($i+1)};
         }
 
-        return Excel::download(new ReimbursementExport($request->claim_date_from, $request->claim_date_to, $request->reimbursement_type, $request->business_unit,  $dataLevel, $request->reimbursement_status), 'REIM-' . $request->business_unit . date('Y-m-d') . '.xlsx');
+        return Excel::download(new ReimbursementExport($request->claim_date_from, $request->claim_date_to, $request->reimbursement_type, $request->business_unit,  $dataLevel, $request->reimbursement_status), 'REIM-' . $request->business_unit . '-' . date('Y-m-d') . '.xlsx');
     
     }
    
@@ -172,7 +172,7 @@ class ExportController extends Controller
             $dataLevel[] = $request->{'level' . ($i+1)};
         }
 
-        return Excel::download(new TransportExport($request->claim_date_from, $request->claim_date_to, $request->reimbursement_type, $request->business_unit, $dataLevel, $request->transport_status), 'TRANS-' . $request->business_unit . date('Y-m-d') . '.xlsx');
+        return Excel::download(new TransportExport($request->claim_date_from, $request->claim_date_to, $request->reimbursement_type, $request->business_unit, $dataLevel, $request->transport_status), 'TRANS-' . $request->business_unit . '-' . date('Y-m-d') . '.xlsx');
     
     }
     
@@ -185,7 +185,7 @@ class ExportController extends Controller
             $dataLevel[] = $request->{'level' . ($i+1)};
         }
 
-        return Excel::download(new OvertimeExport($request->claim_date_from, $request->claim_date_to, $request->reimbursement_type, $request->business_unit, $dataLevel, $request->overtime_status), 'OVT-' . $request->business_unit . date('Y-m-d') . '.xlsx');
+        return Excel::download(new OvertimeExport($request->claim_date_from, $request->claim_date_to, $request->reimbursement_type, $request->business_unit, $dataLevel, $request->overtime_status), 'OVT-' . $request->business_unit . '-' . date('Y-m-d') . '.xlsx');
     
     }
     
@@ -198,7 +198,7 @@ class ExportController extends Controller
             $dataLevel[] = $request->{'level' . ($i+1)};
         }
 
-        return Excel::download(new BusinessTripExport($request->claim_date_from, $request->claim_date_to, $request->business_unit, $dataLevel, $request->business_trip_status, $request->travel_type), 'BST-' . $request->business_unit . date('Y-m-d') . '.xlsx');
+        return Excel::download(new BusinessTripExport($request->claim_date_from, $request->claim_date_to, $request->business_unit, $dataLevel, $request->business_trip_status, $request->travel_type), 'BST-' . $request->business_unit . '-' . date('Y-m-d') . '.xlsx');
     
     }
    
@@ -244,10 +244,10 @@ class ExportController extends Controller
 
         if($arrResult->dataListSet == null){
             $pdf = PDF::loadView('export.exp_businesstrippdf_list2', ['data' => []])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
-            return $pdf->stream('BST-' . $request->business_unit . date('Y-m-d') . '.pdf');
+            return $pdf->stream('BST-' . $request->business_unit . '-' . date('Y-m-d') . '.pdf');
         }else{
             $pdf = PDF::loadView('export.exp_businesstrippdf_list2', ['data' => $arrResult->dataListSet])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
-            return $pdf->stream('BST-' . $request->business_unit . date('Y-m-d') . '.pdf');
+            return $pdf->stream('BST-' . $request->business_unit . '-' . date('Y-m-d') . '.pdf');
         }
     }
    
