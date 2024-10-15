@@ -16,6 +16,7 @@ return [
     'btn_search' => 'Search',
     'btn_list' => 'List',
     'employee' => 'Employee ID',
+    'employeename' => 'Employee Name',
     'detail' => 'Detail',
     'tnom' => 'Ticket Number',
     'type' => 'Type',

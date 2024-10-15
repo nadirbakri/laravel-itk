@@ -620,14 +620,18 @@
                 $('#modal_source_bank_bca').modal('show');
             }
 
-            if(data[0].data.companyCode == "NMDI" || data[0].data.companyCode == "CITROEN"){
+            if(data[0].data.companyCode == "NMDI"){
                 if(data[0].data.bankCode.indexOf("GIC") !== -1){
                     loadDataSelectLevel('#level1', 1, "GIC");
                 }else if(data[0].data.bankCode.indexOf("IEI") !== -1){
                     loadDataSelectLevel('#level1', 1, "IEI");
+                }else if(data[0].data.bankCode.indexOf("CITROEN") !== -1){
+                    loadDataSelectLevel('#level1', 1, "CITROEN");
                 }else{
                     loadDataSelectLevel('#level1', 1, "NMDI");
                 }
+            }else if(data[0].data.companyCode == "CITROEN"){
+                loadDataSelectLevel('#level1', 1, "CITROEN");
             }
         });
 
@@ -684,7 +688,6 @@
                     'levelCode': value
                 }
             }).then(function (data) {
-                console.log(data);
                 if (!$(field).find('option:contains(' + data.levelName + ')').length) {
                     $(field).append($('<option>').val(data.levelCode).text(data.levelName));
                 }

@@ -655,6 +655,7 @@
 </script>
 <script type="text/javascript">
     var lastImg = 1;
+    var companyCode = "{{ Session::get('companyCode') }}";
     var table = null;
     var table2 = null;
     var arrayReimbursement = [];
@@ -1026,9 +1027,6 @@
             }
         });
     }
-</script>
-
-<script type="text/javascript">
 
     loadDataExportReimbrusement();
     loadDataFirstLastAllReimbursement();
@@ -1072,7 +1070,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '<div class="col-12">' + data.data.value + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -1238,7 +1236,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '<div class="col-12">' + data.data.value + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -1274,10 +1272,17 @@
                         };
                     },
                     processResults: function (data) {
-                        var filteredData = data.filter(function (item) {
-                            var allowedStatuses = ["NEW", "APPROVED", "CANCELED", "PARTIAL APPROVED", "REJECTED"];
-                            return allowedStatuses.includes(item.value);
-                        });
+                        if(companyCode == 'ITK' || companyCode == 'III'){
+                            var filteredData = data.filter(function (item) {
+                                var allowedStatuses = ["NEW", "APPROVED", "CANCELED", "PARTIAL APPROVED", "REJECTED", "PAID"];
+                                return allowedStatuses.includes(item.value);
+                            });
+                        }else{
+                            var filteredData = data.filter(function (item) {
+                                var allowedStatuses = ["NEW", "APPROVED", "CANCELED", "PARTIAL APPROVED", "REJECTED"];
+                                return allowedStatuses.includes(item.value);
+                            });
+                        }
 
                         filteredData.unshift({ value: "ALL" });
 

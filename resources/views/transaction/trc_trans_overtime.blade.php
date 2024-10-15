@@ -628,6 +628,7 @@
 <script type="text/javascript">
     var table = null;
     var table2 = null;
+    var companyCode = "{{ Session::get('companyCode') }}";
     var arrayOvertime = [];
 
     function load_data_overtime(claim_date_from, claim_date_to, business_unit, direct_superior, reimbursement_type, status){
@@ -917,8 +918,6 @@
              
     }
 
-</script>
-<script>
     $("#btn-process").click(function () {
            $(this).prop("disabled", true);
            $(this).html(
@@ -995,8 +994,6 @@
                }
            })
        }
-</script>
-<script type="text/javascript">
 
     loadDataExportOvertime();
     loadDataFirstLastAllOvertime();
@@ -1039,7 +1036,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '<div class="col-12">' + data.data.value + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -1179,7 +1176,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-6">' + data.data.value + '<div>' +
+                        '<div class="col-12">' + data.data.value + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -1215,10 +1212,17 @@
                         };
                     },
                     processResults: function (data) {
-                        var filteredData = data.filter(function (item) {
-                            var allowedStatuses = ["NEW", "APPROVED", "CANCELED", "PARTIAL APPROVED", "REJECTED"];
-                            return allowedStatuses.includes(item.value);
-                        });
+                        if(companyCode == 'ITK' || companyCode == 'III'){
+                            var filteredData = data.filter(function (item) {
+                                var allowedStatuses = ["NEW", "APPROVED", "CANCELED", "PARTIAL APPROVED", "REJECTED"];
+                                return allowedStatuses.includes(item.value);
+                            });
+                        }else{
+                            var filteredData = data.filter(function (item) {
+                                var allowedStatuses = ["NEW", "APPROVED", "CANCELED", "PARTIAL APPROVED", "REJECTED"];
+                                return allowedStatuses.includes(item.value);
+                            });
+                        }
 
                         filteredData.unshift({ value: "ALL" });
 
