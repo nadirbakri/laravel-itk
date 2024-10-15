@@ -180,7 +180,7 @@ class TransactionController extends Controller
                         'employeeNo'=> $request->employeeNo,
                         'medicalType1'=> $request->medicalType1,
                         'businessUnit' => $request->businessUnit,
-                        'reimbursementStatus' => ($request->status == 'ALL') ? null : $request->status,
+                        'status' => ($request->status == 'ALL') ? null : $request->status,
                         'exportMenu' => false,
                         'isWeb' => true,
                         'onlyHeader' => true,
