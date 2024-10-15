@@ -398,7 +398,7 @@
         function load_table_user() {
             table = $('#user_data_table').DataTable({
                 "sDom": 'lrtip',
-                'sPaginationType': 'full_numbers'
+                'paging':false
             });
         }
 

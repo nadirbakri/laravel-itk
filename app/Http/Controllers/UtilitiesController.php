@@ -2001,8 +2001,6 @@ class UtilitiesController extends Controller
                         ];
                     }
 
-                    // dd(json_encode($param));
-
                     $response2 = $client->put(env('API_URL') . '/personel/GroupUserAccessDetail',
                         ['body' => json_encode($param)]
                     );
