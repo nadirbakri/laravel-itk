@@ -152,6 +152,17 @@
 			z-index: 9999;
 		}
 
+        #loading2 {
+			display: none;
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(255, 255, 255, 0.8);
+			z-index: 9999;
+		}
+
 		.spinner {
             position: absolute;
 			margin-left: 45%;
@@ -168,6 +179,57 @@
         @keyframes spin {
 		to { transform: rotate(360deg); }
 		}
+
+        #modalImage {
+            max-width: 100%;
+            max-height: 500px;
+            object-fit: contain;  /* Agar gambar tidak terdistorsi */
+        }
+
+        .modal {
+            overflow-y:auto;
+        }
+
+        .modal-body {
+            position: relative;
+        }
+
+        /* Common styles for both left and right buttons */
+        .slide-button {
+            position: absolute;
+            top: 50%;
+            padding: 10px;
+            font-size: 24px;
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+            color: white;
+            cursor: pointer;
+            border: none;
+            z-index: 1000;
+            transform: translateY(-50%);
+            text-decoration: none;
+        }
+
+        /* Left button */
+        .left-btn {
+            left: 0;
+        }
+
+        /* Right button */
+        .right-btn {
+            right: 0;
+        }
+
+        .slide-button:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white; /* Keep the color white on hover */
+            text-decoration: none; /* Prevent underline on hover */
+        }
+
+        .slide-button:link,
+        .slide-button:visited {
+            color: white; /* Ensure the color stays white */
+            text-decoration: none; /* No underline */
+        }
     </style>
 </head>
 
@@ -372,7 +434,7 @@
                                     <h5>{{ __('trans_business_trip.employeename') }}</h5>
                                 </div>
                                 <div class="col-9">
-                                <input id="employeename" name="employeename" type="hidden" class="form-control"><span id="employeename_val"></span>
+                                    <input id="employeename" name="employeename" type="hidden" class="form-control"><span id="employeename_val"></span>
                                 </div>
                             </div>
                             <div class="row detailstatus">
@@ -380,7 +442,7 @@
                                     <h5>{{ __('trans_business_trip.status') }}</h5>
                                 </div>
                                 <div class="col-9">
-                                <input id="status" name="status" type="hidden" class="form-control"><span id="status_val"></span>
+                                    <input id="status" name="status" type="hidden" class="form-control"><span id="status_val"></span>
                                 </div>
                             </div>
                             <div class="row detailstatus">
@@ -445,9 +507,12 @@
                             </div>
                             <br>
                             <div class="row">
+                                <div id="loading2">
+                                    <div class="spinner"></div>
+                                </div>
                                 <div class="col-12">
                                     <div class="card m-0" style="display: block">
-                                        <a class="collapsed" data-toggle="collapse" href="#detail_business_trip" aria-expanded="true" aria-controls="detail_business_trip">
+                                        <a id="collapseLink" class="collapsed" data-toggle="collapse" href="#detail_business_trip" aria-expanded="true" aria-controls="detail_business_trip">
                                             <div class="card-header">
                                                 <div class="div-dropdown-title">
                                                     <span class="dropdown-title-text">{{ __('trans_business_trip.detail_business_trip') }}</span>
@@ -470,8 +535,7 @@
                                                             <th>Attachment</th>
                                                         </tr>
                                                     </thead>
-                                                    <tbody id="body_detail_business_trip">
-                                                    </tbody>
+                                                    <tbody id="body_detail_business_trip"></tbody>
                                                 </table>
                                             </div>
                                         </div>
@@ -633,6 +697,29 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal untuk menampilkan gambar -->
+    <div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="imageModalLabel">Image Preview</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-center">
+                    <a href="javascript:void(0);" id="modalImageLink">
+                        <img id="modalImage" class="img-fluid" src="" alt="Image Preview" style="max-width: 100%; max-height: 500px;">
+                    </a>
+
+                    <!-- Next and Previous buttons -->
+                    <a href="javascript:void(0);" id="prevButton" class="slide-button left-btn">&#10094;</a>  <!-- &#10094; is the HTML code for "<" -->
+                    <a href="javascript:void(0);" id="nextButton" class="slide-button right-btn">&#10095;</a> <!-- &#10095; is the HTML code for ">" -->
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 <script>
     $(document).ready( function () {
@@ -659,6 +746,8 @@
     var table = null;
     var table2 = null;
     var arrayBusinessTrip = [];
+    let currentIndex = 0;
+    let currentAttachments = [];
 
     function savePreviousURL() {
         if(!sessionStorage.getItem('previousURL')){
@@ -701,6 +790,23 @@
         });
     }
 
+    $('#collapseLink').on('click', function(e) {
+        if ($('#loading2').is(':visible')) {
+            e.preventDefault();
+            return false;
+        }
+    });
+
+    function showLoading() {
+        $('#loading2').show();
+        $('#collapseLink').addClass('disabled');
+    }
+
+    function hideLoading() {
+        $('#loading2').hide();
+        $('#collapseLink').removeClass('disabled');
+    }
+
     function load_data_business_trip(claim_date_from, claim_date_to, direct_superior, reimbursement_type, business_unit, business_trip_status){
         $.ajax({
             type: 'GET',
@@ -731,18 +837,44 @@
         return JSON.stringify(obj) === JSON.stringify({});
     }
 
-    function load_image(dataImage){
-        var image = new Image();
-        image.src = dataImage;
-
-        image.style.maxWidth = "100%";  // Maksimal lebar 90% dari layar/tab
-        image.style.maxHeight = "100%";  // Maksimal tinggi 90% dari layar/tab
-
+    function load_image_new_tab(image) {
         var w = window.open("");
-        w.document.write(image.outerHTML);
+        w.document.write('<img src="' + image + '" style="max-width: 100%; max-height: 100%;">');
     }
 
+    // Fungsi untuk menampilkan gambar di modal
+    function load_image(attachments, index) {
+        currentAttachments = attachments;  // Simpan array attachments
+        currentIndex = index;  // Simpan index gambar yang sedang ditampilkan
+        
+        // Set gambar di modal sesuai index
+        $('#modalImage').attr('src', attachments[index]);
+        $('#modalImageLink').attr('onclick', `load_image_new_tab('${attachments[index]}')`);
+
+        // Tampilkan modal
+        $('#imageModal').modal('show');
+    }
+
+    // Event listener untuk tombol Previous
+    $('#prevButton').on('click', function() {
+        if (currentIndex > 0) {
+            currentIndex--;
+            $('#modalImage').attr('src', currentAttachments[currentIndex]);  // Tampilkan gambar sebelumnya
+            $('#modalImageLink').attr('onclick', `load_image_new_tab('${currentAttachments[currentIndex]}')`);
+        }
+    });
+
+    // Event listener untuk tombol Next
+    $('#nextButton').on('click', function() {
+        if (currentIndex < currentAttachments.length - 1) {
+            currentIndex++;
+            $('#modalImage').attr('src', currentAttachments[currentIndex]);  // Tampilkan gambar berikutnya
+            $('#modalImageLink').attr('onclick', `load_image_new_tab('${currentAttachments[currentIndex]}')`);
+        }
+    });
+
     function load_data_attachment(type, ticketNo){
+        showLoading();
         $.ajax({
             type: 'GET',
             url: "{{ url('/trans/businesstrip/attachment') }}",
@@ -752,6 +884,8 @@
             }
         }).then(function (data) {
             let rows = '';
+            let attachmentArray = [];
+
             if(data[0].hasOwnProperty('settlementDetail') && data[0].settlementDetail.length !== 0){
                 $.each(data[0].settlementDetail, function (key, val) {
                     if(val.detail.length !== 0){
@@ -767,24 +901,35 @@
                                     <td>0</td>
                                     <td>${val2.totalClaim.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>`;
 
+                            $.each(val.attachment, function (key3, val3) {
+                                
+                            });
+
                             if (isFirstRow) {
+                                
+
                                 rows += `<td rowspan="${val.detail.length}">
-                                    <div class="container pr-0 pl-0">`;
+                                            <div class="container pr-0 pl-0">`;
+
                                 $.each(val.attachment, function (key3, val3) {
-                                    if(val3.attachment == "" || val3.attachment == null ){
-                                        rows += `
-                                            <a href="javascript:void(0);" onclick="load_image('<?= asset('pictures/no_image.png') ?>')">
-                                                <div class="imgdiv" ><img id="ItemPreview" alt="no image" class="myimage img-rounded" src="<?= asset('pictures/no_image.png') ?>"/></div>
-                                            </a>
-                                        `;
-                                    }else{
-                                        rows += `
-                                            <a href="javascript:void(0);" onclick="load_image('data:image/png;base64,${val3.attachment}')">
-                                                <div class="imgdiv" ><img id="ItemPreview" alt="in" class="myimage img-rounded" src="data:image/png;base64,${val3.attachment}"/></div>
-                                            </a>
-                                        `;
+                                    let imageSrc = "";
+                                    if (val3.attachment == "" || val3.attachment == null) {
+                                        attachmentArray.push("<?= asset('pictures/no_image.png') ?>");
+                                        imageSrc = "<?= asset('pictures/no_image.png') ?>";
+                                    } else {
+                                        attachmentArray.push("data:image/png;base64," + val3.attachment);
+                                        imageSrc = "data:image/png;base64," + val3.attachment;
                                     }
+                                    
+                                    rows += `
+                                        <a href="javascript:void(0);" class="attachment-link" data-index="${key3}">
+                                            <div class="imgdiv">
+                                                <img id="ItemPreview" alt="image" class="myimage img-rounded" src="${imageSrc}"/>
+                                            </div>
+                                        </a>`;
                                 });
+
+                                rows += `</div></td></tr>`;
                                 isFirstRow = false;
                             }
                             rows += `</div>
@@ -794,6 +939,8 @@
                         });
                     }
                 });
+
+                window.attachmentData = attachmentArray;
             }else if(data[0].hasOwnProperty('travelAdvance') && data[0].travelAdvance.length !== 0){
                 $.each(data[0].travelAdvance, function (key, val) {
                     rows += `
@@ -817,9 +964,14 @@
                 `;
             }
             $('#body_detail_business_trip').html(rows);
-            $('#loading').hide();
+            hideLoading()
         });
     }
+
+    $(document).on('click', '.attachment-link', function() {
+        let index = $(this).data('index');
+        load_image(window.attachmentData, index);
+    });
 
     function load_data_table_business_trip() {
         table = $('#business_trip_table').DataTable({
