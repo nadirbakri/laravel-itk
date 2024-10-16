@@ -59,7 +59,7 @@
             <tr>
                 <th style="display:flex; text-align:center; align-items:center; border:1px solid #000; padding:4px; background-color: #97d7f7;">No</th>
                 @foreach($data[0]->detail[0]->field as $key => $dataTable)
-                    @if(!is_string($dataTable->value))
+                    @if(!empty($dataTable->value) && !is_string($dataTable->value))
                         <?php
                         $total[$dataTable->field] = 0;
                         ?>
@@ -83,20 +83,20 @@
                         $alignment = "right";
                     }
                     ?>
-                    @if(!is_string($dataTable2->value) && $dataTable2->dataFormat == "#,##0")
+                    @if(!empty($dataTable2->value) && !is_string($dataTable2->value) && $dataTable2->dataFormat == "#,##0")
                         <?php
                         $total[$dataTable2->field] += $dataTable2->value;
                         ?>
                         <td data-format="{{ $dataTable2->dataFormat }}" style="text-align:{{ $alignment }}; border:1px solid #000;">{{ $dataTable2->value }}</td>
-                    @elseif(!is_string($dataTable2->value) && $dataTable2->dataFormat == "#,##0.00")
+                    @elseif(!empty($dataTable2->value) && !is_string($dataTable2->value) && $dataTable2->dataFormat == "#,##0.00")
                         <?php
                         $total[$dataTable2->field] += $dataTable2->value;
                         ?>
                         <td data-format="{{ $dataTable2->dataFormat }}" style="text-align:right; border:1px solid #000;">{{ $dataTable2->value }}</td>
                     
-                    @elseif($dataTable2->dataFormat == "dd/MM/YYYY")
+                    @elseif(!empty($dataTable2->value) && $dataTable2->dataFormat == "dd/MM/YYYY")
                         <td style="text-align:{{ $alignment }}; border:1px solid #000;">{{ date('d/m/Y', strtotime($dataTable2->value)) }}</td>
-                    @elseif($dataTable2->dataFormat == "dd MM YYYY")
+                    @elseif(!empty($dataTable2->value) && $dataTable2->dataFormat == "dd MM YYYY")
                         <td style="text-align:{{ $alignment }}; border:1px solid #000;">{{ date('d m Y', strtotime($dataTable2->value)) }}</td>
                     @else
                         <td style="text-align:{{ $alignment }}; border:1px solid #000;">{{ $dataTable2->value }}</td>
@@ -119,9 +119,9 @@
                     }
                     ?>
                     @if($loop->iteration > 2)
-                        @if(!is_string($dataTable3->value) && $dataTable3->dataFormat == "#,##0")
+                        @if(!empty($dataTable3->value) && !is_string($dataTable3->value) && $dataTable3->dataFormat == "#,##0")
                             <td style="text-align:{{ $alignment }}; border:1px solid #000;">{{ number_format($total[$dataTable3->field], 0, ',', '.') }}</td>
-                        @elseif(!is_string($dataTable3->value) && $dataTable3->dataFormat == "#,##0.00")
+                        @elseif(!empty($dataTable3->value) && !is_string($dataTable3->value) && $dataTable3->dataFormat == "#,##0.00")
                             <td style="text-align:{{ $alignment }}; border:1px solid #000;">{{ number_format($total[$dataTable3->field], 2, ',', '.') }}</td>
                         @else
                             <td style="text-align:{{ $alignment }}; border:1px solid #000;">-</td>
