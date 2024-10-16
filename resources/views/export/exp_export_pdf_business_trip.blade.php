@@ -587,14 +587,17 @@ loadDataFirstLastAllStatus();
                                 '<i class="fa fa-download"></i> {{ __("export_pdf_business_trip.btn_export") }}'
                             );
                             var disposition = xhr.getResponseHeader('content-disposition');
-                            var filename = 'audit_trail.xlsx'; // Nilai default jika tidak ditemukan
-                            if (disposition && disposition.indexOf('attachment') !== -1) {
-                                var matches = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/.exec(disposition);
-                                if (matches != null && matches[1]) {
-                                    // Mengambil nama file dari matches
-                                    filename = matches[1].replace(/['"]/g, ''); // Hapus tanda kutip jika ada
-                                }
-                            }
+                            // var filename = 'audit_trail.xlsx'; // Nilai default jika tidak ditemukan
+                            // if (disposition && disposition.indexOf('attachment') !== -1) {
+                            //     var matches = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/.exec(disposition);
+                            //     if (matches != null && matches[1]) {
+                            //         // Mengambil nama file dari matches
+                            //         filename = matches[1].replace(/['"]/g, ''); // Hapus tanda kutip jika ada
+                            //     }
+                            // }
+
+                            var matches = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/.exec(disposition);
+                            var filename = matches && matches[1] ? matches[1].replace(/['"]/g, '') : 'audit_trail.xlsx';
 
                             // The actual download
                             var blob = new Blob([result], {
