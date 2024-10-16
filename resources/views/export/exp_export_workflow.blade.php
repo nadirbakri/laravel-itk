@@ -573,7 +573,7 @@ loadDataFirstLastAllStatus();
                             );
                             var disposition = xhr.getResponseHeader(
                                 'content-disposition');
-                            var filename = 'audit_trail.xlsx'; // Nilai default jika tidak ditemukan
+                            var filename = 'noname_file.xlsx'; // Nilai default jika tidak ditemukan
                             if (disposition && disposition.indexOf('attachment') !== -1) {
                                 var matches = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/.exec(disposition);
                                 if (matches != null && matches[1]) {

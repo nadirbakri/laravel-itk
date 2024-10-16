@@ -1402,7 +1402,7 @@
                                 if(clicked == "DOWNLOAD_XLS"){
                                     var disposition = xhr.getResponseHeader('content-disposition');
                                     var matches = /"([^"]*)"/.exec(disposition);
-                                    var filename = (matches != null && matches[1] ? matches[1] : 'audit_trail.xlsx');
+                                    var filename = (matches != null && matches[1] ? matches[1] : 'noname_file.xlsx');
 
                                     var blob = new Blob([result], {
                                         type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
@@ -1453,7 +1453,7 @@
                                 if(clicked == "DOWNLOAD_PDF"){
                                     var disposition = xhr.getResponseHeader('content-disposition');
                                     var matches = /"([^"]*)"/.exec(disposition);
-                                    var filename = (matches != null && matches[1] ? matches[1] : 'audit_trail.xlsx');
+                                    var filename = (matches != null && matches[1] ? matches[1] : 'noname_file.xlsx');
 
                                     var blob = new Blob([result], {
                                         type: 'application/pdf'
@@ -1473,7 +1473,7 @@
                                 else if(clicked == "PREVIEW"){
                                     var disposition = xhr.getResponseHeader('content-disposition');
                                     var matches = /"([^"]*)"/.exec(disposition);
-                                    var filename = (matches != null && matches[1] ? matches[1] : 'audit_trail.xlsx');
+                                    var filename = (matches != null && matches[1] ? matches[1] : 'noname_file.xlsx');
 
                                     var blob = new Blob([result], {
                                         type: 'application/pdf'

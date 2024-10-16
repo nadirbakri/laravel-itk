@@ -300,7 +300,7 @@
                             'content-disposition');
                         var matches = /"([^"]*)"/.exec(disposition);
                         var filename = (matches != null && matches[1] ? matches[1].replace(/['"]/g, '') :
-                            'audit_trail.csv');
+                            'noname_file.csv');
 
                         // The actual download
                         var blob = new Blob([result], {

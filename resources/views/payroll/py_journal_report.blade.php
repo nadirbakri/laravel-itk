@@ -477,7 +477,7 @@
                                 if(clicked == "DOWNLOAD_XLS"){
                                     var disposition = xhr.getResponseHeader('content-disposition');
                                     var matches = /"([^"]*)"/.exec(disposition);
-                                    var filename = (matches != null && matches[1] ? matches[1] : 'audit_trail.xlsx');
+                                    var filename = (matches != null && matches[1] ? matches[1] : 'noname_file.xlsx');
 
                                     var blob = new Blob([result], {
                                         type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
@@ -528,7 +528,7 @@
                                     'content-disposition');
                                 var matches = /"([^"]*)"/.exec(disposition);
                                 var filename = (matches != null && matches[1] ? matches[1] :
-                                    'audit_trail.xlsx');
+                                    'noname_file.xlsx');
 
                                 // The actual download
                                 var blob = new Blob([result], {
