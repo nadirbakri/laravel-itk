@@ -885,6 +885,8 @@
         }).then(function (data) {
             let rows = '';
             let attachmentArray = [];
+            currentIndex = 0;
+            currentAttachments = [];
 
             if(data[0].hasOwnProperty('settlementDetail') && data[0].settlementDetail.length !== 0){
                 $.each(data[0].settlementDetail, function (key, val) {
@@ -901,13 +903,7 @@
                                     <td>0</td>
                                     <td>${val2.totalClaim.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>`;
 
-                            $.each(val.attachment, function (key3, val3) {
-                                
-                            });
-
                             if (isFirstRow) {
-                                
-
                                 rows += `<td rowspan="${val.detail.length}">
                                             <div class="container pr-0 pl-0">`;
 

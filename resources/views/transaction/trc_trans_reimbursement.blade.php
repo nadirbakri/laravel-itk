@@ -160,6 +160,57 @@
         @keyframes spin {
 		to { transform: rotate(360deg); }
 		}
+
+        #modalImage {
+            max-width: 100%;
+            max-height: 500px;
+            object-fit: contain;  /* Agar gambar tidak terdistorsi */
+        }
+
+        .modal {
+            overflow-y:auto;
+        }
+
+        .modal-body {
+            position: relative;
+        }
+
+        /* Common styles for both left and right buttons */
+        .slide-button {
+            position: absolute;
+            top: 50%;
+            padding: 10px;
+            font-size: 24px;
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+            color: white;
+            cursor: pointer;
+            border: none;
+            z-index: 1000;
+            transform: translateY(-50%);
+            text-decoration: none;
+        }
+
+        /* Left button */
+        .left-btn {
+            left: 0;
+        }
+
+        /* Right button */
+        .right-btn {
+            right: 0;
+        }
+
+        .slide-button:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white; /* Keep the color white on hover */
+            text-decoration: none; /* Prevent underline on hover */
+        }
+
+        .slide-button:link,
+        .slide-button:visited {
+            color: white; /* Ensure the color stays white */
+            text-decoration: none; /* No underline */
+        }
     </style>
 </head>
 
@@ -428,6 +479,17 @@
                                         <input id="employee_name" name="employee_name" type="hidden" class="form-control"><span id="employee_name_val"></span>
                                     </div>
                                 </div>
+
+                                <div class="row approve">
+                                    <div class="col-12">
+                                        <h5>Attachment</h5>
+                                    </div>
+                                </div>
+                                <div class="row approve">
+                                    <div class="col-12">
+                                        <div id="attachment" class="row"></div>
+                                    </div>
+                                </div>
                             
                                 <!-- <div class="row detailstatus">
                                     
@@ -459,16 +521,6 @@
                                     </div>
                                     <div class="col-5">
                                         <input id="approvalremarks" name="approvalremarks"  type="text" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="row approve">
-                                    <div class="col-12">
-                                        <h5>Attachment</h5>
-                                    </div>
-                                </div>
-                                <div class="row approve">
-                                    <div class="col-12">
-                                        <div id="attachment" class="row"></div>
                                     </div>
                                 </div>
                                 <hr>
@@ -601,6 +653,29 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal untuk menampilkan gambar -->
+    <div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="imageModalLabel">Image Preview</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-center">
+                    <a href="javascript:void(0);" id="modalImageLink">
+                        <img id="modalImage" class="img-fluid" src="" alt="Image Preview" style="max-width: 100%; max-height: 500px;">
+                    </a>
+
+                    <!-- Next and Previous buttons -->
+                    <a href="javascript:void(0);" id="prevButton" class="slide-button left-btn">&#10094;</a>  <!-- &#10094; is the HTML code for "<" -->
+                    <a href="javascript:void(0);" id="nextButton" class="slide-button right-btn">&#10095;</a> <!-- &#10095; is the HTML code for ">" -->
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
@@ -671,6 +746,8 @@
     var table = null;
     var table2 = null;
     var arrayReimbursement = [];
+    let currentIndex = 0;
+    let currentAttachments = [];
 
     function load_data_reimbursement(claim_date_from, claim_date_to, direct_superior, reimbursement_type, business_unit, reimbursement_status){
         $.ajax({
@@ -846,6 +923,9 @@
     const attachmentPreview = (data) => {
         $('#attachment').empty();
         $('#attachment').addClass('spinner-border');
+        let attachmentArray = [];
+        currentIndex = 0;
+        currentAttachments = [];
 
         $.ajax({
             type: 'GET',
@@ -857,15 +937,17 @@
             },
             success: function (response) {
                 $('#attachment').removeClass('spinner-border');
-                const attachmentEntity = response.attachmentEntity
+                const attachmentEntity = response.attachmentEntity;
 
                 if (attachmentEntity.length) {
                     for (let i = 0; i < attachmentEntity.length; i++) {
                         const data = attachmentEntity[i];
+                        attachmentArray.push("data:image/png;base64," + data.reimbursementAttachment64);
 
                         $('#attachment').append(`
                             <div class="col-2">
                                 <a href="javascript:void(0);" onclick="load_image('data:image/png;base64,${data.reimbursementAttachment64}')">
+                                <a href="javascript:void(0);" class="attachment-link" data-index="${i}">
                                     <img id="${i + 1}" class="myimage img-rounded img-fluid" src="data:image/png;base64,${data.reimbursementAttachment64}" alt="${i}"/>
                                 </a>
                             </div>`
@@ -878,9 +960,47 @@
                 console.error('AJAX error:', status, error);
             }
         })
+
+        window.attachmentData = attachmentArray;
     }
 
-    function load_image(dataImage){
+    $(document).on('click', '.attachment-link', function() {
+        let index = $(this).data('index');
+        load_image(window.attachmentData, index);
+    });
+
+    // Fungsi untuk menampilkan gambar di modal
+    function load_image(attachments, index) {
+        currentAttachments = attachments;  // Simpan array attachments
+        currentIndex = index;  // Simpan index gambar yang sedang ditampilkan
+        
+        // Set gambar di modal sesuai index
+        $('#modalImage').attr('src', attachments[index]);
+        $('#modalImageLink').attr('onclick', `load_image_new_tab('${attachments[index]}')`);
+
+        // Tampilkan modal
+        $('#imageModal').modal('show');
+    }
+
+    // Event listener untuk tombol Previous
+    $('#prevButton').on('click', function() {
+        if (currentIndex > 0) {
+            currentIndex--;
+            $('#modalImage').attr('src', currentAttachments[currentIndex]);  // Tampilkan gambar sebelumnya
+            $('#modalImageLink').attr('onclick', `load_image_new_tab('${currentAttachments[currentIndex]}')`);
+        }
+    });
+
+    // Event listener untuk tombol Next
+    $('#nextButton').on('click', function() {
+        if (currentIndex < currentAttachments.length - 1) {
+            currentIndex++;
+            $('#modalImage').attr('src', currentAttachments[currentIndex]);  // Tampilkan gambar berikutnya
+            $('#modalImageLink').attr('onclick', `load_image_new_tab('${currentAttachments[currentIndex]}')`);
+        }
+    });
+
+    function load_image_new_tab(dataImage){
         var image = new Image();
         image.src = dataImage;
 
