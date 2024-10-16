@@ -351,7 +351,7 @@
                             'content-disposition');
                         var matches = /"([^"]*)"/.exec(disposition);
                         var filename = (matches != null && matches[1] ? matches[1] :
-                            'audit_trail.xlsx');
+                            'noname_file.xlsx');
                     
                         // The actual download
                         var blob = new Blob([result], {
@@ -415,7 +415,7 @@
                             'content-disposition');
                         var matches = /"([^"]*)"/.exec(disposition);
                         var filename = (matches != null && matches[1] ? matches[1] :
-                            'audit_trail.xlsx');
+                            'noname_file.xlsx');
                     
                         // The actual download
                         var blob = new Blob([result], {
