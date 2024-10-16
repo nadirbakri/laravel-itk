@@ -85,6 +85,10 @@ class TransactionController extends Controller
         return view('transaction.trc_trans_transport');
     }
 
+    public function pageTransactionMedicalList(){
+        return view('transaction.trc_trans_medical_list');
+    }
+
     public function pageTransactionMedicalHistory(){
         return view('transaction.trc_trans_medical_history');
     }

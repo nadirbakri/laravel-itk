@@ -1010,6 +1010,7 @@ Route::get('transaction/transaction_reimbursement', 'TransactionController@pageT
 Route::get('transaction/transaction_mass_leave', 'TransactionController@pageTransactionMassLeave');
 Route::get('transaction/transaction_workflow', 'TransactionController@pageTransactionWorkflow');
 Route::get('transaction/transaction_transport', 'TransactionController@pageTransactionTransport');
+Route::get('transaction/transaction_medical_list', 'TransactionController@pageTransactionMedicalList');
 Route::get('transaction/transaction_medical_history', 'TransactionController@pageTransactionMedicalHistory');
 Route::get('transaction/transaction_attendance', 'TransactionController@pageTransactionAttendance');
 Route::get('transaction/transaction_business_trip', 'TransactionController@pageTransactionBusinessTrip');
