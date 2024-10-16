@@ -492,7 +492,7 @@
                         <div class="card">
                             <div class="col-5">
                                 <div class="form-group">
-                                    <label for="medical_history form-check-label"><b>{{ __('trans_overtime.fovt') }}</b></label>
+                                    <label for="file_overtime form-check-label"><b>{{ __('trans_overtime.fovt') }}</b></label>
                                         <input type="file" name="file_overtime" id="file_overtime">
                                     <br> <br>
                                     <button type="submit" class="btn btn-process" name="btn-process" id="btn-process">

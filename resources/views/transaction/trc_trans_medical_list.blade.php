@@ -141,6 +141,57 @@
         @keyframes spin {
 		to { transform: rotate(360deg); }
 		}
+
+        #modalImage {
+            max-width: 100%;
+            max-height: 500px;
+            object-fit: contain;  /* Agar gambar tidak terdistorsi */
+        }
+
+        .modal {
+            overflow-y:auto;
+        }
+
+        .modal-body {
+            position: relative;
+        }
+
+        /* Common styles for both left and right buttons */
+        .slide-button {
+            position: absolute;
+            top: 50%;
+            padding: 10px;
+            font-size: 24px;
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+            color: white;
+            cursor: pointer;
+            border: none;
+            z-index: 1000;
+            transform: translateY(-50%);
+            text-decoration: none;
+        }
+
+        /* Left button */
+        .left-btn {
+            left: 0;
+        }
+
+        /* Right button */
+        .right-btn {
+            right: 0;
+        }
+
+        .slide-button:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white; /* Keep the color white on hover */
+            text-decoration: none; /* Prevent underline on hover */
+        }
+
+        .slide-button:link,
+        .slide-button:visited {
+            color: white; /* Ensure the color stays white */
+            text-decoration: none; /* No underline */
+        }
     </style>
 </head>
 
@@ -317,7 +368,7 @@
     </div>
 
     <div class="div-form">
-        <form id="update_approval_medical_history_form" method="post">
+        <form id="update_approval_medical_list_form" method="post">
             @csrf
             <div class="modal fade" id="modal_list_detail">
                 <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -404,6 +455,16 @@
                                     </div>
                                     <div class="col">
                                         <input style="border: none" style="outline: none" type="hidden" class="form-control" id="dependent" name="dependent"><span id="dependent_val"></span>
+                                    </div>
+                                </div>
+                                <div class="row approve">
+                                    <div class="col-12">
+                                        <h5>Attachment</h5>
+                                    </div>
+                                </div>
+                                <div class="row approve">
+                                    <div class="col-12">
+                                        <div id="attachment" class="row"></div>
                                     </div>
                                 </div>
                                 <br>
@@ -533,6 +594,28 @@
                     <div class="div-title-notification">
                         <span id="message-notification-success"></span>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal untuk menampilkan gambar -->
+    <div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="imageModalLabel">Image Preview</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-center">
+                    <a href="javascript:void(0);" id="modalImageLink">
+                        <img id="modalImage" class="img-fluid" src="" alt="Image Preview" style="max-width: 100%; max-height: 500px;">
+                    </a>
+
+                    <!-- Next and Previous buttons -->
+                    <a href="javascript:void(0);" id="prevButton" class="slide-button left-btn">&#10094;</a>  <!-- &#10094; is the HTML code for "<" -->
+                    <a href="javascript:void(0);" id="nextButton" class="slide-button right-btn">&#10095;</a> <!-- &#10095; is the HTML code for ">" -->
                 </div>
             </div>
         </div>
@@ -681,11 +764,13 @@
     var table2 = null;
     var companyCode = "{{ Session::get('companyCode') }}";
     var arrayMedical = [];
+    let currentIndex = 0;
+    let currentAttachments = [];
 
-    function load_data_medical_history(claim_date_from, claim_date_to, direct_superior, reimbursement_type, business_unit, medical_status){
+    function load_data_medical_list(claim_date_from, claim_date_to, direct_superior, reimbursement_type, business_unit, medical_status){
         $.ajax({
             type: 'GET',
-            url: "{{ url('/trans/medical_history/table') }}",
+            url: "{{ url('/trans/medical_list/table') }}",
             data: {
                 'startDate': claim_date_from,
                 'endDate': claim_date_to,
@@ -697,12 +782,12 @@
         }).then(function (data) {
             arrayMedical = data;
             $('#medical_table').DataTable().destroy();
-            load_data_table_medical_history();
+            load_data_table_medical_list();
             $('#loading').hide();
         });
     }
     
-    function load_data_table_medical_history() {
+    function load_data_table_medical_list() {
         table = $('#medical_table').DataTable({
             processing: true,
             // serverSide: true,
@@ -785,7 +870,7 @@
 
         $('#loading').show();
 
-        load_data_medical_history(claim_date_from, claim_date_to, direct_superior, reimbursement_type, business_unit, medical_status);
+        load_data_medical_list(claim_date_from, claim_date_to, direct_superior, reimbursement_type, business_unit, medical_status);
     })
 
     const klikdetail = (element) => {
@@ -819,6 +904,146 @@
         $('#totalpaid').val(data.paidAmount)
         $('#directsuperior').val(data.directSuperiorID)
         $('#directsuperior_val').html(data.directSuperiorID)
+
+        attachmentPreview(data)
+    }
+
+    function preview(img) {
+        document.getElementById(0).src = img.src;
+        lastImg = img.id;
+    }
+
+    const klikpreview = (element) => {
+        let data = table.row($(element).parent()).data().attachmentEntity;
+
+        $('#detailPhoto').empty();
+        $('#previewPhoto').empty();	
+        
+        if(data[0] != "")
+        {
+            for(var i =0; i < data.length ; i++)
+            {
+                $('#detailPhoto').append('<div class="imgdiv col-2" ><img id="'+(i+1)+'" class="myimage img-rounded" src="data:image/png;base64,'+ data[i].reimbursementAttachment64 +'" onclick="preview(this)" alt="'+i+'"/></div>');					
+            }
+            
+            $('#previewPhoto').append('<img id="0" class="preview" src="" alt="preview" />');
+            document.getElementById(0).src = document.getElementById(lastImg).src;
+        }
+        else
+        {
+            $('#previewPhoto').append('<div>No Data Available.</div>');
+        }
+    }
+
+    const attachmentPreview = (data) => {
+        $('#attachment').empty();
+        $('#attachment').addClass('spinner-border');
+        let attachmentArray = [];
+        currentIndex = 0;
+        currentAttachments = [];
+
+        $.ajax({
+            type: 'GET',
+            url: "{{ url('/trans/medical_list/attachment') }}",
+            data: {
+                'employeeNo' : data.employeeNo,
+                'receiptDate' : data.receiptDate,
+                'ticketNo' : data.ticketNo,
+            },
+            success: function (response) {
+                $('#attachment').removeClass('spinner-border');
+                const attachmentEntity = response.attachmentEntity;
+
+                if (attachmentEntity.length) {
+                    for (let i = 0; i < attachmentEntity.length; i++) {
+                        const data = attachmentEntity[i];
+                        attachmentArray.push("data:image/png;base64," + data.reimbursementMedicalAttachment64);
+
+                        $('#attachment').append(`
+                            <div class="col-2">
+                                <a href="javascript:void(0);" onclick="load_image('data:image/png;base64,${data.reimbursementMedicalAttachment64}')">
+                                <a href="javascript:void(0);" class="attachment-link" data-index="${i}">
+                                    <img id="${i + 1}" class="myimage img-rounded img-fluid" src="data:image/png;base64,${data.reimbursementMedicalAttachment64}" alt="${i}"/>
+                                </a>
+                            </div>`
+                        );
+                    }
+                }
+            },
+            error: function(xhr, status, error) {
+                $('#attachment').removeClass('spinner-border');
+                console.error('AJAX error:', status, error);
+            }
+        })
+
+        window.attachmentData = attachmentArray;
+    }
+
+    $(document).on('click', '.attachment-link', function() {
+        let index = $(this).data('index');
+        load_image(window.attachmentData, index);
+    });
+
+    // Fungsi untuk menampilkan gambar di modal
+    function load_image(attachments, index) {
+        currentAttachments = attachments;  // Simpan array attachments
+        currentIndex = index;  // Simpan index gambar yang sedang ditampilkan
+        
+        // Set gambar di modal sesuai index
+        $('#modalImage').attr('src', attachments[index]);
+        $('#modalImageLink').attr('onclick', `load_image_new_tab('${attachments[index]}')`);
+
+        // Tampilkan modal
+        $('#imageModal').modal('show');
+    }
+
+    // Event listener untuk tombol Previous
+    $('#prevButton').on('click', function() {
+        if (currentIndex > 0) {
+            currentIndex--;
+            $('#modalImage').attr('src', currentAttachments[currentIndex]);  // Tampilkan gambar sebelumnya
+            $('#modalImageLink').attr('onclick', `load_image_new_tab('${currentAttachments[currentIndex]}')`);
+        }
+    });
+
+    // Event listener untuk tombol Next
+    $('#nextButton').on('click', function() {
+        if (currentIndex < currentAttachments.length - 1) {
+            currentIndex++;
+            $('#modalImage').attr('src', currentAttachments[currentIndex]);  // Tampilkan gambar berikutnya
+            $('#modalImageLink').attr('onclick', `load_image_new_tab('${currentAttachments[currentIndex]}')`);
+        }
+    });
+
+    function load_image_new_tab(dataImage){
+        var image = new Image();
+        image.src = dataImage;
+
+        var w = window.open("");
+        w.document.write(`
+        <html>
+            <head>
+                <style>
+                    body, html {
+                        margin: 0;
+                        height: 100%;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        background-color: #000;
+                    }
+                    img {
+                        max-width: 100%;
+                        max-height: 100%;
+                    }
+                </style>
+            </head>
+            <body>
+                <img src="${dataImage}" />
+            </body>
+        </html>
+        `);
+        w.document.close()
     }
 
     $('#btn-list').click(()=> {

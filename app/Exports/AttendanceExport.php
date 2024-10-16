@@ -43,14 +43,10 @@ class AttendanceExport implements FromView, ShouldAutoSize
                 'sessionUserID' => Session::get('userID'),
             ];
 
-
-            // dd(json_encode($param));
-
             $response = $client->post(env('API_URL') . '/mobile/TmAbsence/GetTmAbsence',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {
-            // dd($response);
             $response = $e->getResponse();
             if($response->getStatusCode() == 401){
                 return view('error.login');

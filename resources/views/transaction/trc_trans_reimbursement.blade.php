@@ -862,7 +862,6 @@
             load_data_reimbursement(claim_date_from, claim_date_to,direct_superior, reimbursement_type, business_unit, reimbursement_status);
     })
     const klikdetail = (element) => {
-        console.log(table.row($(element).parent()).data())
         let data = table.row($(element).parent()).data().reimbursementEntity;
 
         $('#reqdate').val(moment(data.createdDate).format('YYYY-MM-DD'))
