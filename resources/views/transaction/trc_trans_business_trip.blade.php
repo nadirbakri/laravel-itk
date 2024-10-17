@@ -886,6 +886,7 @@
             let rows = '';
             let attachmentArray = [];
             currentIndex = 0;
+            attachmentIndex = 0;
             currentAttachments = [];
 
             if(data[0].hasOwnProperty('settlementDetail') && data[0].settlementDetail.length !== 0){
@@ -918,11 +919,13 @@
                                     }
                                     
                                     rows += `
-                                        <a href="javascript:void(0);" class="attachment-link" data-index="${key3}">
+                                        <a href="javascript:void(0);" class="attachment-link" data-index="${attachmentIndex}">
                                             <div class="imgdiv">
                                                 <img id="ItemPreview" alt="image" class="myimage img-rounded" src="${imageSrc}"/>
                                             </div>
                                         </a>`;
+
+                                    attachmentIndex++;
                                 });
 
                                 rows += `</div></td></tr>`;
@@ -966,6 +969,7 @@
 
     $(document).on('click', '.attachment-link', function() {
         let index = $(this).data('index');
+        console.log(index);
         load_image(window.attachmentData, index);
     });
 
