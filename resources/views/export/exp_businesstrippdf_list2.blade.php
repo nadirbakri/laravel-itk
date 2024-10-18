@@ -206,7 +206,10 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php $no = 1; ?>
+                        <?php 
+                            $no = 1;
+                            $totalSettlementSum = 0; 
+                        ?>
                         @foreach($item->claimList as $claim)
                             <tr>
                                 <td style="text-align: center">{{ $no++ }}</td>
@@ -218,21 +221,23 @@
                                 <td>{{ $claim->amountInForex }}</td>
                                 <td>Rp. {{ number_format($claim->totalSettlement, 0, '.', ',') }}</td>
                             </tr>
+                            <?php
+                                $totalSettlementSum += $claim->totalSettlement;
+                            ?>
                         @endforeach
                     </tbody>
                     <tfoot>
                         <tr>
                             <td colspan="7" style="font-size: 14px; text-align: right; border: none">TOTAL SETTLEMENT</td>
-                            <td>Rp. {{ number_format($item->totalClaimAmount, 0, '.', ',') }}</td>
+                            <td>Rp. {{ number_format($totalSettlementSum, 0, '.', ',') }}</td>
                         </tr>
                         <tr>
                             <td colspan="7" style="font-size: 14px; text-align: right; border: none">TOTAL REQUEST</td>
-                            <td>Rp. {{ number_format($item->totalDifferentAmount, 0, '.', ',') }}</td>
+                            <td>Rp. {{ number_format($item->totalClaimAmount, 0, '.', ',') }}</td>
                         </tr>
                         <tr>
                             <td colspan="7" style="font-size: 14px; text-align: right; border: none">DIFFERENCE</td>
-                            {{-- <td>Rp. {{ number_format($item->difference, 0, '.', ',') }}</td> --}}
-                            <td>Rp. 200,000</td>
+                            <td>Rp. {{ number_format($item->totalDifferentAmount, 0, '.', ',') }}</td>
                         </tr>
                     </tfoot>
                 </table>
