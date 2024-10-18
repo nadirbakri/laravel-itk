@@ -11,6 +11,7 @@ return [
     'label_transport_status' => 'Transport Status',
     'label_transport_type' => 'Transport Type',
     'label_bu' => 'Business Unit',
+    'detail_transport' => 'Detail Transport',
     'btn_upload' => 'Upload',
     'btn_list' => 'List',
     'btn_search' => 'Search',
@@ -44,6 +45,14 @@ return [
     'upaid' => 'Upload Paid Transport',
     'ftransport' => 'File Transport',
     'update' => 'Update',
+    'destination' => 'Destination',
+    'start_location' => 'Start Location',
+    'end_location' => 'End Location',
+    'range_distance' => 'Range Destination (km)',
+    'amount_parking' => 'Amount Parking (Rp.)',
+    'amount_toll' => 'Amount Toll (Rp.)',
+    'amount_gas' => 'Amount Gas (Rp.)',
+    'amount_destination' => 'Amount Destination (Rp.)',
 
     'btn_preview' => 'Preview',
     'alert_success' => 'Success !'

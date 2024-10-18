@@ -11,6 +11,7 @@ return [
     'label_transport_type' => 'Tipe Kendaraan',
     'label_transport_status' => 'Transport Status',
     'label_bu' => 'Business Unit',
+    'detail_transport' => 'Detail Transport',
     'btn_upload' => 'Unggah',
     'btn_search' => 'Cari',
     'label_slip' => 'Slip',
@@ -48,6 +49,15 @@ return [
     'upaid' => 'Unggah File Transportasi',
     'ftransport' => 'Berkas Transportasi',
     'update' => 'Memperbaharui',
+
+    'destination' => 'Destinasi',
+    'start_location' => 'Lokasi Awal',
+    'end_location' => 'Lokasi Akhir',
+    'range_distance' => 'Jarak Destinasi (km)',
+    'amount_parking' => 'Biaya Parkir (Rp.)',
+    'amount_toll' => 'Biaya Tol (Rp.)',
+    'amount_gas' => 'Biaya BBM (Rp.)',
+    'amount_destination' => 'Biaya Destinasi (Rp.)',
 
 ]
 

@@ -449,19 +449,104 @@
                                 <input id="employee_no" name="employee_no" type="hidden" class="form-control" readonly><span id="employee_no_val"></span>
                             </div>
                             <div class="col-3">
-                                <h5>{{ __('trans_transport.pname') }}</h5>
-                            </div>
-                            <div class="col-3">
-                                <input type="hidden" class="form-control" id="project_name" name="project_name" readonly><span id="project_name_val"></span>
-                            </div>
-                        </div>
-                    
-                        <div class="row detailstatus">
-                            <div class="col-3">
                                 <h5>{{ __('trans_transport.treq') }}</h5>
                             </div>
                             <div class="col-3">
                                 <input type="hidden" id="totalclaim" name="totalclaim" class="form-control" readonly><span id="totalclaim_val"></span>
+                            </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card m-0" style="display: block; font-size: 11px;">
+                                    <a id="collapseLink" class="collapsed" data-toggle="collapse" href="#detail_transport" aria-expanded="true" aria-controls="detail_transport">
+                                        <div class="card-header">
+                                            <div class="div-dropdown-title">
+                                                <span class="dropdown-title-text">{{ __('trans_transport.detail_transport') }}</span>
+                                                <img class="dropdown-triangle" src="{{ url('/pictures/triangle.png') }}" alt="Triangle">
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <div id="detail_transport" class="collapse m-3">
+                                        <div class="row detailstatus">
+                                            <div class="col-4">
+                                                <b style="font-size: 13px;">{{ __('trans_transport.destination') }}</b>
+                                            </div>
+                                            <div class="col-8">
+                                                <a id="destination" target="_blank">Maps</a>
+                                            </div>
+                                        </div>
+                                        <div class="row detailstatus">
+                                            <div class="col-4">
+                                                <b style="font-size: 13px;">{{ __('trans_transport.start_location') }}</b>
+                                            </div>
+                                            <div class="col-8">
+                                                <input type="hidden" id="start_location" name="start_location" class="form-control" readonly><span id="start_location_val"></span>
+                                            </div>
+                                        </div>
+                                        <div class="row detailstatus">
+                                            <div class="col-4">
+                                                <b style="font-size: 13px;">{{ __('trans_transport.end_location') }}</b>
+                                            </div>
+                                            <div class="col-8">
+                                                <input type="hidden" id="end_location" name="end_location" class="form-control" readonly><span id="end_location_val"></span>
+                                            </div>
+                                        </div>
+                                        <div class="row detailstatus">
+                                            <div class="col-4">
+                                                <b style="font-size: 13px;">{{ __('trans_transport.range_distance') }}</b>
+                                            </div>
+                                            <div class="col-8">
+                                                <input type="hidden" id="distance" name="distance" class="form-control" readonly><span id="distance_val"></span>
+                                            </div>
+                                        </div>
+                                        <div class="row detailstatus">
+                                            <div class="col-4">
+                                                <b style="font-size: 13px;">{{ __('trans_transport.amount_parking') }}</b>
+                                            </div>
+                                            <div class="col-8">
+                                                <input type="hidden" id="amount_parking" name="amount_parking" class="form-control" readonly><span id="amount_parking_val"></span>
+                                            </div>
+                                        </div>
+                                        <div class="row detailstatus">
+                                            <div class="col-4">
+                                                <b style="font-size: 13px;">{{ __('trans_transport.amount_toll') }}</b>
+                                            </div>
+                                            <div class="col-8">
+                                                <input type="hidden" id="amount_toll" name="amount_toll" class="form-control" readonly><span id="amount_toll_val"></span>
+                                            </div>
+                                        </div>
+                                        <div class="row detailstatus">
+                                            <div class="col-4">
+                                                <b style="font-size: 13px;">{{ __('trans_transport.amount_gas') }}</b>
+                                            </div>
+                                            <div class="col-8">
+                                                <input type="hidden" id="amount_gas" name="amount_gas" class="form-control" readonly><span id="amount_gas_val"></span>
+                                            </div>
+                                        </div>
+                                        <div class="row detailstatus">
+                                            <div class="col-4">
+                                                <b style="font-size: 13px;">{{ __('trans_transport.amount_destination') }}</b>
+                                            </div>
+                                            <div class="col-8">
+                                                <input type="hidden" id="amount_destination" name="amount_destination" class="form-control" readonly><span id="amount_destination_val"></span>
+                                            </div>
+                                        </div>
+                                        <div class="card-block">
+                                            <table id="leave_table" class="table table-bordered" style="font-size: 11px;">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Customer Name</th>
+                                                        <th>Project Name</th>
+                                                        <th>Place Name</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="body_detail_transport"></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -837,6 +922,29 @@
         $('#project_name').val(data.projectName)
         $('#project_name_val').html(data.projectName)
         $('#directsuperior').val(data.directSuperiorID)
+        $('#destination').attr('href', "http://www.google.com/maps/dir/?api=1&origin" + data.latitudeStart + "," + data.longitudeStart + "&destination=" + data.latitudeEnd + "," + data.longitudeEnd);
+        $('#start_location').val(data.startLocation)
+        $('#start_location_val').html(data.startLocation)
+        $('#end_location').val(data.endLocation)
+        $('#end_location_val').html(data.endLocation)
+        $('#distance').val(data.totalDistance)
+        $('#distance_val').html(data.totalDistance)
+        $('#amount_parking').val(data.amountParkir)
+        $('#amount_parking_val').html(data.amountParkir.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."))
+        $('#amount_toll').val(data.amountToll)
+        $('#amount_toll_val').html(data.amountToll.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."))
+        $('#amount_gas').val(data.amountGas)
+        $('#amount_gas_val').html(data.amountGas.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."))
+        $('#amount_destination').val(data.totalAmount)
+        $('#amount_destination_val').html(data.totalAmount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."))
+
+        $('#body_detail_transport').html(
+            `<tr>
+                <td>${data.customerName ? data.customerName : ''}</td>
+                <td>${data.projectName ? data.projectName : ''}</td>
+                <td>${data.endLocation ? data.endLocation : ''}</td>
+            </tr>`
+        );
 
         attachmentPreview(data)
     }
