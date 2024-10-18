@@ -163,11 +163,12 @@
                     </div>
                     <div class="col-5">
                         <div class="input-group">
-                            <input type="text" class="form-control" id="year" name="year"
+                            <select class="form-control select2" id="year" name="year"></select>
+                            {{-- <input type="text" class="form-control" id="year" name="year"
                                 placeholder="{{ __('trans_medical_history.label_year') }}">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="year_calendar"><span class="fa fa-calendar"></span></span>
-                            </div>
+                            </div> --}}
                         </div>
                         <input type="text" class="form-control" id="year_hidden" name="year_hidden" hidden>
                     </div>
@@ -385,38 +386,17 @@
     $(function () {
         initDatePicker();
     });
+    
+    var prevYear = moment(moment().subtract(5, 'years')).format('YYYY');
+    var defaultYear = moment().format('YYYY');
 
-    function initDatePicker() {
-        $('.input-group input').flatpickr({
-            altInput: true,
-            allowInput: true,
-            altFormat: "Y", // Display the year in the input field
-            dateFormat: "Y", // Only allow the year format
-            plugins: [
-                new monthSelectPlugin({
-                    shorthand: true, //defaults to false
-                    dateFormat: "Y-m-01", //defaults to "F Y"
-                    altFormat: "F Y", //defaults to "F Y"
-                })
-            ],
-            onReady: function () {
-                var flatPickrInstance = this;
-                var $flatPickrInput = $(flatPickrInstance.element);
-                $flatPickrInput.siblings(".input-group-prepend").click(function () {
-                    flatPickrInstance.toggle();
-                });
-                // instance.currentYearElement.type = "number";
-                // instance.currentYearElement.step = "1";
-            },
-            // onOpen: function (selectedDates, dateStr, instance) {
-            //     instance.currentMonthElement.style.display = "none";
-            //     instance.currentYearElement.focus();
-            // },
-            // onClose: function (selectedDates, dateStr, instance) {
-            //     instance.currentMonthElement.style.display = "";
-            // },
-            // disableMobile: true 
+    for (var i = prevYear; i <= defaultYear; i++){
+        var option = $("<option/>", {
+            value: i,
+            text: i
         });
+        $('#year').append(option);
+        $('#year').val(defaultYear);
     }
 
     var table = null;
@@ -429,7 +409,7 @@
             type: 'GET',
             url: "{{ url('/trans/medical_history/table') }}",
             data: {
-                'year': year,
+                'year': `${year}-01-01`,
                 'employeeNo' : employee_no
             }
         }).then(function (data) {
