@@ -804,6 +804,7 @@ Route::get('medical/claim_transaction/table', 'MedicalController@tableClaimTrans
 Route::get('transaction/list/table', 'TransactionController@tableDetailTransactionList');
 Route::get('trans/medical_list/table', 'TransactionController@tableDetailTransactionMedical');
 Route::get('trans/medical_list/attachment', 'TransactionController@dataDetailTransactionMedical');
+Route::get('trans/medical_history/table', 'TransactionController@tableDetailTransactionMedicalHistory');
 Route::get('trans/transport/table', 'TransactionController@tableDetailTransport');
 Route::get('trans/transport/attachment', 'TransactionController@dataDetailTransactionTransport');
 Route::get('trans/reimbursement/table', 'TransactionController@tableDetailReimbursement');

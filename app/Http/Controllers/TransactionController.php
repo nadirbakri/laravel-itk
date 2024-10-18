@@ -264,6 +264,52 @@ class TransactionController extends Controller
 
         return response()->json($data);
     }
+
+    public function tableDetailTransactionMedicalHistory(Request $request)
+    {
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/mobile/ReimbursementMedical/getReimbursementHistoryAll',
+                ['body' => json_encode(
+                    [
+                        'startDate' => Carbon::parse($request->year)->format('Y-m-d'),
+                        'employeeNo'=> $request->employeeNo,
+                        'companyCode' => Session::get('companyCode'), 
+                        'languageCode' => strtoupper(App::getLocale()), 
+                        'userID' => Session::get('userID'),
+                        'sessionID' => 0, 
+                        'sessionUserID' => Session::get('userID'),
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            // dd($response);
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+        // dd($arrResult->dataListSet);
+
+        if($arrResult->dataListSet == null){
+            // return Datatables::of([])->make(true);
+            return response()->json([]);
+        }else{
+            // return Datatables::of($arrResult->dataListSet)->make(true);
+            return response()->json($arrResult->dataListSet);
+        }
+    }
    
     public function tableDetailBusinesstrip(Request $request)
     {

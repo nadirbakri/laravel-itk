@@ -1,0 +1,30 @@
+<?php
+    return [ 
+        'judul' => 'Riwayat Kesehatan',
+        'list' => 'Riwayat Kesehatan',
+        'label_year' => 'Tahun',
+        'label_employee_no' => 'No Karyawan',
+        'luser' => 'Daftar Pengguna',
+        'employeeid' => 'ID Karyawan',
+        'name' => 'Nama',
+        'div' => 'Divisi',
+        'rank' => 'Level',
+        'list_table' => 'DAFTAR RIWAYAT MEDIS',
+        'rdate' => 'Request Date',
+        'tnumber' => 'Ticket Number',
+        'bunit' => 'Business Unit',
+        'enom' => 'Employee Number',
+        'ename' => 'Employee Name',
+        'status' => 'Status',
+        'redate' => 'Receipt Date',
+        'treq' => 'Total Request',
+        'tpaid' => 'Total Paid',
+        'prem' => 'Paid Remarks',
+        'tmedical' => 'Total Medis',
+        'pbalance' => 'Saldo Plafon',
+
+        'btn_search' => 'Cari',
+        'btn_list' => 'Daftar',
+        'alert_success' => 'Sukses !',
+    ]
+?>

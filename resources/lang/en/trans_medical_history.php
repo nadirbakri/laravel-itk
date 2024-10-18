@@ -1,0 +1,30 @@
+<?php
+    return [ 
+        'judul' => 'Medical History',
+        'list' => 'Medical History',
+        'label_year' => 'Year',
+        'label_employee_no' => 'Employee No',
+        'luser' => 'List User',
+        'employeeid' => 'Employee ID',
+        'name' => 'Full Name',
+        'div' => 'Division',
+        'rank' => 'Ranking',
+        'list_table' => 'MEDICAL HISTORY LIST',
+        'rdate' => 'Request Date',
+        'tnumber' => 'Ticket Number',
+        'bunit' => 'Business Unit',
+        'enom' => 'Employee Number',
+        'ename' => 'Employee Name',
+        'status' => 'Status',
+        'redate' => 'Receipt Date',
+        'treq' => 'Total Request',
+        'tpaid' => 'Total Paid',
+        'prem' => 'Paid Remarks',
+        'tmedical' => 'Total Medical',
+        'pbalance' => 'Plafon Balance',
+
+        'btn_search' => 'Search',
+        'btn_list' => 'List',
+        'alert_success' => 'Success !',
+    ]
+?>
