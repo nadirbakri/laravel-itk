@@ -213,7 +213,7 @@
                         @foreach($item->claimList as $claim)
                             <tr>
                                 <td style="text-align: center">{{ $no++ }}</td>
-                                <td>{{ $claim->date }}</td>
+                                <td>{{ date('d-m-Y', strtotime($claim->date)) }}</td>
                                 <td>{{ $claim->costType }}</td>
                                 <td>{{ $claim->description }}</td>
                                 <td>{{ $claim->currency }}</td>
