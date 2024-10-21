@@ -228,10 +228,10 @@
                                 </thead>
                                 <tfoot>
                                     <tr>
-                                        <td colspan="5" style="text-align: right;"><strong>{{ __('trans_medical_history.tmedical') }} :</strong></td>
-                                        <td id="total_medical"></td>
-                                        <td colspan="2" style="text-align: right;"><strong>{{ __('trans_medical_history.pbalance') }} :</strong></td>
-                                        <td id="plafon_balance"></td>
+                                        <td style="text-align: left;"><strong>{{ __('trans_medical_history.tmedical') }} :</strong></td>
+                                        <td colspan="2" id="total_medical"></td>
+                                        <td style="text-align: left;"><strong>{{ __('trans_medical_history.pbalance') }} :</strong></td>
+                                        <td colspan="5" id="plafon_balance"></td>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -469,8 +469,8 @@
                 },
             ],
             footerCallback: function (row, data, start, end, display) {
-                var plafonBalance = data.length > 0 ? data[0].balance : 0;
-                var totalMedical = data.length > 0 ? data[0].totalClaim : 0;
+                var plafonBalance = data.length > 0 ? data[0].balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") : 0;
+                var totalMedical = data.length > 0 ? data[0].totalClaim.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") : 0;
                 $('#total_medical').html(totalMedical);
                 $('#plafon_balance').html(plafonBalance);
             }

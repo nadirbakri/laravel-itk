@@ -217,6 +217,7 @@ class ExportController extends Controller
                 'languageCode' => App::getLocale(), 
                 'sessionID' => 0, 
                 'exportMenu' => true,
+                'allWaitingPayment' => false,
                 'type' => ($request->travel_type == 'ALL') ? null : $request->travel_type,
                 'status' => ($request->business_trip_status == 'ALL') ? null : $request->business_trip_status,
                 'businessUnit' => ($request->business_unit == 'ALL') ? null : $request->business_unit,

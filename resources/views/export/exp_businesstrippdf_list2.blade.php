@@ -233,7 +233,7 @@
                         </tr>
                         <tr>
                             <td colspan="7" style="font-size: 14px; text-align: right; border: none">TOTAL REQUEST</td>
-                            <td>Rp. {{ number_format($item->totalClaimAmount, 0, '.', ',') }}</td>
+                            <td>Rp. {{ number_format($item->totalRequest, 0, '.', ',') }}</td>
                         </tr>
                         <tr>
                             <td colspan="7" style="font-size: 14px; text-align: right; border: none">DIFFERENCE</td>

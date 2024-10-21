@@ -66,10 +66,12 @@
         $total = [];
         ?>
         <table style="width: 100%;" class="table table-bordered table-hover responsive table_detail">
-            <thead>
+            <thead style="font-weight: bold">
                 <tr>
-                    <th style="display:flex; text-align:center; align-items:center; border:1px solid #000; padding:4px; background-color: #97d7f7;">No</th>
                     @foreach($data[0]->detail[0]->field as $key => $dataTable)
+                        @if($loop->first)
+                            <th style="display:flex; text-align:center; align-items:center; border:1px solid #000; padding:4px; background-color: #97d7f7; font-size:{{ $dataTable->fontSize }}px !important; font-weight: bold;">No</th>
+                        @endif
                         @if(!is_string($dataTable->value))
                             <?php
                             $totalKey = $dataTable->field . '_' . $key;
@@ -81,15 +83,17 @@
                             $total[$totalKey] = '';
                             ?>
                         @endif
-                        <th style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7;">{{ $dataTable->tableName }}</th>
+                        <th style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7; font-size:{{ $dataTable->fontSize }}px !important; font-weight: bold;">{{ $dataTable->tableName }}</th>
                     @endforeach
                 </tr>
             </thead>
             <tbody>
                 @foreach($data[0]->detail as $key => $dataTable)
                 <tr>
-                    <td style="text-align:center; vertical-align:middle; border:1px solid #000;">{{ $key+1 }}</td>
                     @foreach($dataTable->field as $key2 => $dataTable2)
+                        @if($loop->first)
+                            <td style="text-align:center; vertical-align:middle; border:1px solid #000; font-size:{{ $dataTable2->fontSize }}px !important;">{{ $key+1 }}</td>
+                        @endif
                         <?php
                         $alignment = "center";
                         if($dataTable2->alignment == 1){
@@ -107,7 +111,7 @@
                                 $total[$totalKey] += $dataTable2->value;
                             }
                             ?>
-                            <td data-format="{{ $dataTable2->dataFormat }}" style="text-align:{{ $alignment }}; border:1px solid #000;">{{ $dataTable2->value }}</td>
+                            <td data-format="{{ $dataTable2->dataFormat }}" style="text-align:{{ $alignment }}; border:1px solid #000; font-size:{{ $dataTable2->fontSize }}px !important;">{{ $dataTable2->value }}</td>
                         @elseif(!is_string($dataTable2->value) && $dataTable2->dataFormat == "#,##0.00")
                             <?php
                             if(!empty($dataTable2->value)){
@@ -115,27 +119,29 @@
                                 $total[$totalKey] += $dataTable2->value;
                             }
                             ?>
-                            <td data-format="{{ $dataTable2->dataFormat }}" style="text-align:{{ $alignment }}; border:1px solid #000;">{{ $dataTable2->value }}</td>
+                            <td data-format="{{ $dataTable2->dataFormat }}" style="text-align:{{ $alignment }}; border:1px solid #000; font-size:{{ $dataTable2->fontSize }}px !important;">{{ $dataTable2->value }}</td>
                         
                         @elseif($dataTable2->dataFormat == "dd/MM/yyyy")
-                            <td style="text-align:{{ $alignment }}; border:1px solid #000;">{{ date('d/m/Y', strtotime($dataTable2->value)) }}</td>
+                            <td style="text-align:{{ $alignment }}; border:1px solid #000; font-size:{{ $dataTable2->fontSize }}px !important;">{{ date('d/m/Y', strtotime($dataTable2->value)) }}</td>
                         @elseif($dataTable2->dataFormat == "dd MM yyyy")
-                            <td style="text-align:{{ $alignment }}; border:1px solid #000;">{{ date('d m Y', strtotime($dataTable2->value)) }}</td>
+                            <td style="text-align:{{ $alignment }}; border:1px solid #000; font-size:{{ $dataTable2->fontSize }}px !important;">{{ date('d m Y', strtotime($dataTable2->value)) }}</td>
                         @else
-                            <td data-format="@" style="text-align:{{ $alignment }}; border:1px solid #000;">{{ $dataTable2->value }}</td>
+                            <td data-format="@" style="text-align:{{ $alignment }}; border:1px solid #000; font-size:{{ $dataTable2->fontSize }}px !important;">{{ $dataTable2->value }}</td>
                         @endif
                     @endforeach
                 </tr>
                 @endforeach
                 @if($grand_total)
                 <tr>
-                    <td colspan="3" style="background-color: yellow; text-align:center; border:1px solid #000;">Grand Total</td>
                     @foreach(array_slice($data[0]->detail[0]->field, 2) as $key3 => $dataTable3)
+                        @if($loop->first)
+                            <td colspan="3" style="background-color: yellow; text-align:center; border:1px solid #000; font-size:{{ $dataTable3->fontSize }}px !important; font-weight: bold;">Grand Total</td>
+                        @endif
                         <?php
                             $totalKey = $dataTable3->field . '_' . ($key3 + 2);
                         ?>
                         @if(!is_string($total[$totalKey]))
-                            <td data-format="#,##0" style="text-align:right; border:1px solid #000;">{{ $total[$totalKey] }}</td>
+                            <td data-format="#,##0" style="text-align:right; border:1px solid #000; font-size:{{ $dataTable3->fontSize }}px !important;">{{ $total[$totalKey] }}</td>
                         @else
                             <td data-format="@" style="text-align:right; border:1px solid #000;">&nbsp;</td>
                         @endif
@@ -206,9 +212,11 @@
             <table style="width: 100%;" class="table table-bordered table-hover responsive table_detail">
                 <thead>
                     <tr>
-                        <th style="text-align:center; align-items:center; border:1px solid #000; padding:4px; background-color: #97d7f7;">No</th>
                         @if(!empty($dataTable->data[0]->field))
                             @foreach($dataTable->data[0]->field as $key_data => $dataRow)
+                                @if($loop->first)
+                                    <th style="text-align:center; align-items:center; border:1px solid #000; padding:4px; background-color: #97d7f7; font-size:{{ $dataRow->fontSize }}px !important; font-weight: bold;">No</th>
+                                @endif
                                 @if(!is_string($dataRow->value))
                                     <?php
                                         $totalKey = $dataRow->field . '_' . $key_data;
@@ -225,17 +233,18 @@
                                         }
                                     ?>
                                 @endif
-                                <th style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7;">{{ $dataRow->tableName }}</th>
+                                <th style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7; font-size:{{ $dataRow->fontSize }}px !important; font-weight: bold;">{{ $dataRow->tableName }}</th>
                             @endforeach
                         @endif
                     </tr>
                 </thead>
                 <tbody>
+                    <?php $fontSize = 0 ?>
                     @foreach($dataTable->data as $key => $dataRow)
                     <tr>
-                        <td style="text-align:center; vertical-align:middle; border:1px solid #000;">{{ $key+1 }}</td>
                         @foreach($dataRow->field as $key2 => $dataRow2)
                             <?php
+                                $fontSize = $dataRow2->fontSize;
                                 $alignment = "center";
                                 if($dataRow2->alignment == 1){
                                     $alignment = "left";
@@ -245,6 +254,9 @@
                                     $alignment = "right";
                                 }
                             ?>
+                            @if($loop->first)
+                                <td style="text-align:center; vertical-align:middle; border:1px solid #000; font-size:{{ $fontSize }}px !important;">{{ $key+1 }}</td>
+                            @endif
                             @if(!is_string($dataRow2->value) && $dataRow2->dataFormat == "#,##0")
                                 <?php
                                     if(!empty($dataRow2->value)){
@@ -253,7 +265,7 @@
                                         $totalBranch[$branch] += $total[$branch][$totalKey];
                                     }
                                 ?>
-                                <td data-format="{{ $dataRow2->dataFormat }}" style="text-align:{{ $alignment }}; border:1px solid #000;">{{ $dataRow2->value }}</td>
+                                <td data-format="{{ $dataRow2->dataFormat }}" style="text-align:{{ $alignment }}; border:1px solid #000; font-size:{{ $fontSize }}px !important;">{{ $dataRow2->value }}</td>
                             @elseif(!is_string($dataRow2->value) && $dataRow2->dataFormat == "#,##0.00")
                                 <?php
                                     if(!empty($dataRow2->value)){
@@ -262,21 +274,23 @@
                                         $totalBranch[$branch] += $total[$branch][$totalKey];
                                     }
                                 ?>
-                                <td data-format="{{ $dataRow2->dataFormat }}" style="text-align:{{ $alignment }}; border:1px solid #000;">{{ $dataRow2->value }}</td>
+                                <td data-format="{{ $dataRow2->dataFormat }}" style="text-align:{{ $alignment }}; border:1px solid #000; font-size:{{ $fontSize }}px !important;">{{ $dataRow2->value }}</td>
                             @elseif($dataRow2->dataFormat == "dd/MM/yyyy")
-                                <td style="text-align:{{ $alignment }}; border:1px solid #000;">{{ date('d/m/Y', strtotime($dataRow2->value)) }}</td>
+                                <td style="text-align:{{ $alignment }}; border:1px solid #000; font-size:{{ $fontSize }}px !important;">{{ date('d/m/Y', strtotime($dataRow2->value)) }}</td>
                             @elseif($dataRow2->dataFormat == "dd MM yyyy")
-                                <td style="text-align:{{ $alignment }}; border:1px solid #000;">{{ date('d m Y', strtotime($dataRow2->value)) }}</td>
+                                <td style="text-align:{{ $alignment }}; border:1px solid #000; font-size:{{ $fontSize }}px !important;">{{ date('d m Y', strtotime($dataRow2->value)) }}</td>
                             @else
-                                <td data-format="@" style="text-align:{{ $alignment }}; border:1px solid #000;">{{ $dataRow2->value }}</td>
+                                <td data-format="@" style="text-align:{{ $alignment }}; border:1px solid #000; font-size:{{ $fontSize }}px !important;">{{ $dataRow2->value }}</td>
                             @endif
                         @endforeach
                     </tr>
                     @endforeach
                     @if($grand_total)
                         <tr>
-                            <td style="background-color: yellow; text-align:center; border:1px solid #000;">Total per Cost Center </td>
                             @foreach($total[$branch] as $key => $totalValue)
+                                @if($loop->first)
+                                    <td style="background-color: yellow; text-align:center; border:1px solid #000; font-size:{{ $fontSize }}px !important; font-weight: bold;">Total per Cost Center</td>
+                                @endif
                                 <?php
                                     if(!is_string($totalValue)) {
                                         $totalCost = $totalValue;
@@ -285,9 +299,9 @@
                                     }
                                 ?>
                                 @if($key == 'EmployeeNo_0')
-                                <td data-format="#,##0" style="text-align:left; border:1px solid #000;">{{ $totalCost }}</td>
+                                <td data-format="#,##0" style="text-align:right; border:1px solid #000; font-size:{{ $fontSize }}px !important;">{{ $totalCost }}</td>
                                 @else
-                                <td data-format="#,##0" style="text-align:right; border:1px solid #000;">{{ $totalCost }}</td>
+                                <td data-format="#,##0" style="text-align:right; border:1px solid #000; font-size:{{ $fontSize }}px !important;">{{ $totalCost }}</td>
                                 @endif
                             @endforeach
                         </tr>
@@ -344,18 +358,20 @@
             <table style="width: 100%;" class="table table-bordered table-hover responsive table_detail">
                 <thead>
                     <tr>
-                        <th style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7;">No</th>
-                        <th style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7;">Cost Center</th>
-                        <th style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7;">Jumlah</th>
                         @if(!empty($dataTable->data[0]->field))
                             @foreach($dataTable->data[0]->field as $key_data => $dataRow)
+                                @if($loop->first)
+                                    <th style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7; font-size: {{ $dataRow->fontSize }}px !important; font-weight: bold;">No</th>
+                                    <th style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7; font-size: {{ $dataRow->fontSize }}px !important; font-weight: bold;">Cost Center</th>
+                                    <th style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7; font-size: {{ $dataRow->fontSize }}px !important; font-weight: bold;">Jumlah</th>
+                                @endif
                                 @if(!is_string($dataRow->value))
                                     <?php
                                         $total[$dataTable->data[0]->companyName][$key_data] = 0;
                                         $totalCompany[$dataTable->data[0]->companyName] = 0;
                                     ?>
                                 @endif
-                                <th style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7;">{{ $dataRow->tableName }}</th>
+                                <th style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7; font-size:{{ $dataRow->fontSize }}px !important; font-weight: bold;">{{ $dataRow->tableName }}</th>
                             @endforeach
                         @endif
                     </tr>
@@ -363,9 +379,9 @@
                 <tbody>
                     @foreach($dataTable->data as $key => $dataRow)  
                     <tr>
-                        <td style="text-align:center; vertical-align:middle; border:1px solid #000;">{{ $key+1 }}</td>
-                        <td style="text-align:center; vertical-align:middle; border:1px solid #000;">{{ $dataRow->levelCode }}</td>
-                        <td style="text-align:center; vertical-align:middle; border:1px solid #000;">{{ $dataRow->total }}</td>
+                        <td style="text-align:center; vertical-align:middle; border:1px solid #000; font-size: {{ $dataRow->fontSize }}px !important;">{{ $key+1 }}</td>
+                        <td style="text-align:center; vertical-align:middle; border:1px solid #000; font-size: {{ $dataRow->fontSize }}px !important;">{{ $dataRow->levelCode }}</td>
+                        <td style="text-align:center; vertical-align:middle; border:1px solid #000; font-size: {{ $dataRow->fontSize }}px !important;">{{ $dataRow->total }}</td>
                         <?php $totalJumlah += $dataRow->total; ?>
                         @foreach($dataRow->field as $key2 => $dataRow2)
                             <?php
@@ -385,7 +401,7 @@
                                         $totalCompany[$dataRow->companyName] += $total[$dataRow->companyName][$key2];
                                     }
                                 ?>
-                                <td data-format="{{ $dataRow2->dataFormat }}" style="text-align:{{ $alignment }}; border:1px solid #000;">{{ $dataRow2->value }}</td>
+                                <td data-format="{{ $dataRow2->dataFormat }}" style="text-align:{{ $alignment }}; border:1px solid #000; font-size: {{ $dataRow2->fontSize }}px !important;">{{ $dataRow2->value }}</td>
                             @elseif(!is_string($dataRow2->value) && $dataRow2->dataFormat == "#,##0.00")
                                 <?php
                                     if(!empty($dataRow2->value)){
@@ -393,13 +409,13 @@
                                         $totalCompany[$dataRow->companyName] += $total[$dataRow->companyName][$key2];
                                     }
                                 ?>
-                                <td data-format="{{ $dataRow2->dataFormat }}" style="text-align:{{ $alignment }}; border:1px solid #000;">{{ $dataRow2->value }}</td>
+                                <td data-format="{{ $dataRow2->dataFormat }}" style="text-align:{{ $alignment }}; border:1px solid #000; font-size: {{ $dataRow2->fontSize }}px !important;">{{ $dataRow2->value }}</td>
                             @elseif($dataRow2->dataFormat == "dd/MM/yyyy")
-                                <td style="text-align:{{ $alignment }}; border:1px solid #000;">{{ date('d/m/Y', strtotime($dataRow2->value)) }}</td>
+                                <td style="text-align:{{ $alignment }}; border:1px solid #000; font-size: {{ $dataRow2->fontSize }}px !important;">{{ date('d/m/Y', strtotime($dataRow2->value)) }}</td>
                             @elseif($dataRow2->dataFormat == "dd MM yyyy")
-                                <td style="text-align:{{ $alignment }}; border:1px solid #000;">{{ date('d m Y', strtotime($dataRow2->value)) }}</td>
+                                <td style="text-align:{{ $alignment }}; border:1px solid #000; font-size: {{ $dataRow2->fontSize }}px !important;">{{ date('d m Y', strtotime($dataRow2->value)) }}</td>
                             @else
-                                <td data-format="@" style="text-align:{{ $alignment }}; border:1px solid #000;">{{ $dataRow2->value }}</td>
+                                <td data-format="@" style="text-align:{{ $alignment }}; border:1px solid #000; font-size: {{ $dataRow2->fontSize }}px !important;">{{ $dataRow2->value }}</td>
                             @endif
                         @endforeach
                     </tr>
