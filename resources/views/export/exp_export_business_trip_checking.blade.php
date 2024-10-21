@@ -162,6 +162,22 @@
                 <div class="row">
                     <div class="col-3">
                         <div class="form-group">
+                            <label for="status">{{ __('export_business_trip_checking.label_status') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <select class="form-control select2" id="status" name="status">
+                                <option value="SETTLEMENT CHECKING">SETTLEMENT CHECKING</option>
+                                <option value="WAITING_VERIFICATION">WAITING VERIFICATION</option>
+                                <option value="WAITING UPLOAD SLIP">WAITING UPLOAD SLIP</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-3">
+                        <div class="form-group">
                             <label for="user_id">{{ __('export_business_trip_checking.label_user_id') }}</label>
                         </div>
                     </div>
@@ -175,7 +191,7 @@
                 <!-- BUTTON -->
                 <div class="row">
                     <div class="col-3">
-                        <button class="btn btn-primary" name="btn-preview" id="btn-preview" value="preview" style="width: 100%;">
+                        <button class="btn btn-primary" name="btn-export" id="btn-export" value="preview" style="width: 100%;">
                             <i class="fa fa-download"></i> {{ __('export_business_trip_checking.btn_export') }}
                         </button>
                     </div>
@@ -281,7 +297,7 @@
 
 loadDataTravelType();
 loadDataBusinessUnit();
-loadDataStatus();
+// loadDataStatus();
 loadDataFirstLastAllBusinessUnit();
 
         $.get("{{ url('travel_type/api') }}", function (data) {
@@ -523,7 +539,7 @@ loadDataFirstLastAllBusinessUnit();
             });
         }
 
-        $("#btn-preview").click(function () {
+        $("#btn-export").click(function () {
             $(this).prop("disabled", true);
             $(this).html(
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
@@ -547,8 +563,8 @@ loadDataFirstLastAllBusinessUnit();
                         type: "POST",
                         data: $('#export_business_trip_checking_form').serialize(),
                         success: function (result, status, xhr) {
-                            $("#btn-preview").prop("disabled", false);
-                            $("#btn-preview").html(
+                            $("#btn-export").prop("disabled", false);
+                            $("#btn-export").html(
                                 '<i class="fa fa-print"></i> {{ __("personel_employee_list.btn_print") }}'
                             );
                             var disposition = xhr.getResponseHeader(
@@ -576,8 +592,8 @@ loadDataFirstLastAllBusinessUnit();
                             document.body.removeChild(link);
                         },
                         error: function (response) {
-                            $("#btn-preview").prop("disabled", false);
-                            $("#btn-preview").html(
+                            $("#btn-export").prop("disabled", false);
+                            $("#btn-export").html(
                                 '<i class="fa fa-print"></i> {{ __("personel_employee_list.btn_print") }}'
                             );
                             $('#notification_error').modal('show');

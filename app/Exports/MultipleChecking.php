@@ -15,11 +15,12 @@ use App;
 
 class MultipleChecking implements FromView, ShouldAutoSize
 {
-    public function __construct($claimDateFrom, $claimDateTo, $businessUnit,$userID, $dataLevel)
+    public function __construct($claimDateFrom, $claimDateTo, $businessUnit, $status, $userID, $dataLevel)
     {
         $this->claimDateFrom = $claimDateFrom;
         $this->claimDateTo = $claimDateTo;
         $this->businessUnit = $businessUnit;
+        $this->status = $status;
         $this->userID = $userID;
         $this->dataLevel = $dataLevel;
     }
@@ -35,29 +36,32 @@ class MultipleChecking implements FromView, ShouldAutoSize
             $param = [ 
                 'startDate' => Carbon::parse($this->claimDateFrom)->format('Y-m-d'),
                 'endDate' => Carbon::parse($this->claimDateTo)->format('Y-m-d'),
-                'businessUnit'=> $this->businessUnit,
-                'userID'=> $this->userID,
-                'exportMenu'=> true,
+                'businessUnit' => $this->businessUnit === 'ALL' ? null : $this->businessUnit,
+                'status' => $this->status === 'ALL' ? null : $this->status,
+                'type' => 'TTB',
+                // 'userID'=> $this->userID,
+                'exportMenu'=> false,
                 'isWeb' => true,
+                'allWaitingPayment' => false,
                 'companyCode' => Session::get('companyCode'), 
                 'languageCode' => App::getLocale(), 
                 'sessionID' => 0, 
                 'sessionUserID' => Session::get('userID'),
+                'userID'=> Session::get('userID'),
             ];
-            // dd(Carbon::parse($this->claimDateFrom)->format('Y-m-d'));
-            // if(!empty($this->permitDateFrom) || !empty($this->permitDateTo)){
-            //     $param['permitDateFrom'] = $this->permitDateFrom;
-            //     $param['permitDateTo'] = $this->permitDateTo;
-            // }
+            
+            // dd(json_encode($param));
 
-            // if(!empty($this->businessUnit) || !empty($this->businessUnit)){
-            //     $param['businessUnit'] = $this->businessUnit;
-            // }
-            // var_dump(json_encode($param));
-
-            $response = $client->post(env('API_URL') . '/mobile/MultipleCheckIn/getMultipleCheckIn',
-                ['body' => json_encode($param)]
-            );
+            if ($this->status == 'SETTLEMENT CHECKING'){
+                $response = $client->post(env('API_URL') . '/mobile/BusinessTrip/getBusinessTripPDF',
+                    ['body' => json_encode($param)]
+                );
+            }
+            else if ($this->status == 'WAITING_VERIFICATION'){
+                $response = $client->post(env('API_URL') . '/mobile/BusinessTrip/getExportBST',
+                    ['body' => json_encode($param)]
+                );
+            }
         } catch (RequestException $e) {
             // dd($response);
             $response = $e->getResponse();
@@ -73,12 +77,19 @@ class MultipleChecking implements FromView, ShouldAutoSize
         $arrResult = json_decode($response->getBody()->getContents());
         // var_dump($arrResult->dataListSet);
 
+        $data = $arrResult->dataListSet;
 
-        if($arrResult->dataListSet == null){
-            return view('export.export_businesstrip_checking_list', [
-                'data' => []
+        if ($this->status == 'SETTLEMENT CHECKING'){
+            return view('export.export_businesstrip_checking_list_settlement', [
+                'data' => $data ? $data : []
             ]);
-        }else{
+        }
+        else if ($this->status == 'WAITING_VERIFICATION'){
+            return view('export.exp_businesstriprequest_list', [
+                'data' => $data ? $data : []
+            ]);
+        }
+        else {
             return view('export.export_businesstrip_checking_list', [
                 'data' => $arrResult->dataListSet
             ]);

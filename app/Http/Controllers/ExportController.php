@@ -264,7 +264,7 @@ class ExportController extends Controller
             $dataLevel[] = $request->{'level' . ($i+1)};
         }
 
-        return Excel::download(new MultipleChecking($request->claim_date_from, $request->claim_date_to, $request->business_unit, $request->user_id, $dataLevel), 'Multiple Checking.xlsx');
+        return Excel::download(new MultipleChecking($request->claim_date_from, $request->claim_date_to, $request->business_unit, $request->status, $request->user_id, $dataLevel), 'BST Checking-' . $request->business_unit . '-' . date('Y-m-d') . '.xlsx');
 
     }
     
