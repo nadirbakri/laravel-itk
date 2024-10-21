@@ -216,14 +216,18 @@ class ExportController extends Controller
                 'companyCode' => Session::get('companyCode'), 
                 'languageCode' => App::getLocale(), 
                 'sessionID' => 0, 
-                'exportMenu' => true,
+                'employeeNo' => null,
+                'exportMenu' => false,
                 'allWaitingPayment' => false,
                 'type' => ($request->travel_type == 'ALL') ? null : $request->travel_type,
                 'status' => ($request->business_trip_status == 'ALL') ? null : $request->business_trip_status,
                 'businessUnit' => ($request->business_unit == 'ALL') ? null : $request->business_unit,
+                'isWeb' => true,
                 'sessionUserID' => Session::get('userID'),
                 'userID' => Session::get('userID'),
             ];
+
+            // dd(json_encode($param));
 
             $response = $client->post(env('API_URL') . '/mobile/BusinessTrip/getBusinessTripPDF',
                 ['body' => json_encode($param)]
