@@ -170,7 +170,6 @@
                             <select class="form-control select2" id="status" name="status">
                                 <option value="SETTLEMENT CHECKING">SETTLEMENT CHECKING</option>
                                 <option value="WAITING_VERIFICATION">WAITING VERIFICATION</option>
-                                <option value="WAITING UPLOAD SLIP">WAITING UPLOAD SLIP</option>
                             </select>
                         </div>
                     </div>

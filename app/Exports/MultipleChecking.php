@@ -52,16 +52,19 @@ class MultipleChecking implements FromView, ShouldAutoSize
             
             // dd(json_encode($param));
 
-            if ($this->status == 'SETTLEMENT CHECKING'){
-                $response = $client->post(env('API_URL') . '/mobile/BusinessTrip/getBusinessTripPDF',
-                    ['body' => json_encode($param)]
-                );
-            }
-            else if ($this->status == 'WAITING_VERIFICATION'){
-                $response = $client->post(env('API_URL') . '/mobile/BusinessTrip/getExportBST',
-                    ['body' => json_encode($param)]
-                );
-            }
+            // if ($this->status == 'SETTLEMENT CHECKING'){
+            //     $response = $client->post(env('API_URL') . '/mobile/BusinessTrip/getBusinessTripPDF',
+            //         ['body' => json_encode($param)]
+            //     );
+            // }
+            // else if ($this->status == 'WAITING_VERIFICATION'){
+            //     $response = $client->post(env('API_URL') . '/mobile/BusinessTrip/getExportBST',
+            //         ['body' => json_encode($param)]
+            //     );
+            // }
+            $response = $client->post(env('API_URL') . '/mobile/BusinessTrip/getBusinessTripPDF',
+                ['body' => json_encode($param)]
+            );
         } catch (RequestException $e) {
             // dd($response);
             $response = $e->getResponse();
@@ -79,20 +82,24 @@ class MultipleChecking implements FromView, ShouldAutoSize
 
         $data = $arrResult->dataListSet;
 
-        if ($this->status == 'SETTLEMENT CHECKING'){
-            return view('export.export_businesstrip_checking_list_settlement', [
-                'data' => $data ? $data : []
-            ]);
-        }
-        else if ($this->status == 'WAITING_VERIFICATION'){
-            return view('export.exp_businesstriprequest_list', [
-                'data' => $data ? $data : []
-            ]);
-        }
-        else {
-            return view('export.export_businesstrip_checking_list', [
-                'data' => $arrResult->dataListSet
-            ]);
-        }
+        return view('export.export_businesstrip_checking_list_settlement', [
+            'data' => $data ? $data : []
+        ]);
+
+        // if ($this->status == 'SETTLEMENT CHECKING'){
+        //     return view('export.export_businesstrip_checking_list_settlement', [
+        //         'data' => $data ? $data : []
+        //     ]);
+        // }
+        // else if ($this->status == 'WAITING_VERIFICATION'){
+        //     return view('export.exp_businesstriprequest_list', [
+        //         'data' => $data ? $data : []
+        //     ]);
+        // }
+        // else {
+        //     return view('export.export_businesstrip_checking_list', [
+        //         'data' => $arrResult->dataListSet
+        //     ]);
+        // }
     }
 }
