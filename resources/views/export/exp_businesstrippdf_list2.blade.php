@@ -97,6 +97,11 @@
                     <td width='77%' style="font-size: 14px; text-align: left; padding-bottom: 5px;"><span>{{ $item->destination }}</span></td>
                 </tr>
                 <tr>
+                    <td width='20%' style="font-size: 14px; text-align: left; padding-bottom: 5px;"><span>Category</span></td>
+                    <td width='3%' style="font-size: 14px; text-align: left; padding-bottom: 5px;"><span>:</span></td>
+                    <td width='77%' style="font-size: 14px; text-align: left; padding-bottom: 5px;"><span>{{ $item->kategoriKedinasan }}</span></td>
+                </tr>
+                <tr>
                     <td width='20%' style="font-size: 14px; text-align: left; padding-bottom: 5px;"><span>Travel Period</span></td>
                     <td width='3%' style="font-size: 14px; text-align: left; padding-bottom: 5px;"><span>:</span></td>
                     <td width='77%' style="font-size: 14px; text-align: left; padding-bottom: 5px;"><span>{{ date('d-m-Y', strtotime($item->startDate)) }} until {{ date('d-m-Y', strtotime($item->endDate)) }}</span></td>
@@ -131,29 +136,40 @@
                     <tr>
                         <td colspan="3" style="font-size: 18px; font-weight: 700; text-align: left; padding-bottom: 5px;">ESTIMATED EXPENSES</td>
                     </tr>
-                    <br>
-                    <tr>
-                        <td width='20%' style="font-size: 14px; text-align: left; padding-bottom: 5px;"><span>Currency</span></td>
-                        <td width='3%' style="font-size: 14px; text-align: left; padding-bottom: 5px;"><span>:</span></td>
-                        <td width='77%' style="font-size: 14px; text-align: left; padding-bottom: 5px;"><span>{{ $item->currency }}</span></td>
-                    </tr>
+                    <br>                    
                     @foreach($item->claimList as $claim)
-                        @if($claim->claimName == 'Other')
+                        @if($loop->first)
                             <tr>
-                                <td width='20%' style="font-size: 14px; text-align: left; padding-bottom: 5px;">
-                                    <span>{{ $claim->claimName }}</span>
-                                </td>
+                                <td width='20%' style="font-size: 14px; text-align: left; padding-bottom: 5px;"><span>Currency</span></td>
                                 <td width='3%' style="font-size: 14px; text-align: left; padding-bottom: 5px;"><span>:</span></td>
-                                @if($claim->claimPerDay !== $claim->totalClaimPerDay)
-                                    <td width='77%' style="font-size: 14px; text-align: left; padding-bottom: 5px;">
-                                        <span>Rp. {{ number_format($claim->totalClaimPerDay, 0, '.', ',') }} ( IDR {{ number_format($claim->claimPerDay, 0, '.', ',') }} / IDR {{ number_format($claim->totalClaimPerDay, 0, '.', ',') }} )</span>
-                                    </td>
-                                @else
-                                    <td width='77%' style="font-size: 14px; text-align: left; padding-bottom: 5px;">
-                                        <span>Rp. {{ number_format($claim->totalClaimPerDay, 0, '.', ',') }}</span>
-                                    </td>
-                                @endif
+                                <td width='77%' style="font-size: 14px; text-align: left; padding-bottom: 5px;"><span>{{ $claim->currency }}</span></td>
                             </tr>
+                            <tr>
+                                <td width='20%' style="font-size: 14px; text-align: left; padding-bottom: 5px;"><span>Exchange Rate</span></td>
+                                <td width='3%' style="font-size: 14px; text-align: left; padding-bottom: 5px;"><span>:</span></td>
+                                <td width='77%' style="font-size: 14px; text-align: left; padding-bottom: 5px;"><span>{{ number_format($claim->exchangeRate, 0, '.', ',') }}</span></td>
+                            </tr>
+                        @endif
+                        <tr>
+                            <td width='20%' style="font-size: 14px; text-align: left; padding-bottom: 5px;">
+                                <span>{{ $claim->claimName }}</span>
+                            </td>
+                            <td width='3%' style="font-size: 14px; text-align: left; padding-bottom: 5px;"><span>:</span></td>
+                            @if($claim->claimPerDay !== $claim->totalClaimPerDay)
+                                <td width='77%' style="font-size: 14px; text-align: left; padding-bottom: 5px;">
+                                    @if($item->kategoriDestinasi === 'Abroad')
+                                        <span>Rp. {{ number_format($claim->totalClaimPerDay, 0, '.', ',') }} ( {{ $claim->currency }} {{ number_format($claim->amountInForex, 0, '.', ',') }} / {{ $claim->currency }} {{ number_format($claim->totalAmountInForex, 0, '.', ',') }} )</span>
+                                    @else
+                                        <span>Rp. {{ number_format($claim->totalClaimPerDay, 0, '.', ',') }} ( {{ $claim->currency }} {{ number_format($claim->claimPerDay, 0, '.', ',') }} / {{ $claim->currency }} {{ number_format($claim->totalClaimPerDay, 0, '.', ',') }} )</span>
+                                    @endif
+                                </td>
+                            @else
+                                <td width='77%' style="font-size: 14px; text-align: left; padding-bottom: 5px;">
+                                    <span>Rp. {{ number_format($claim->totalClaimPerDay, 0, '.', ',') }}</span>
+                                </td>
+                            @endif
+                        </tr>
+                        @if($claim->claimName == 'Other')
                             <tr>
                                 <td width='20%' style="font-size: 14px; text-align: left; padding-bottom: 5px;">
                                     <span>{{ $claim->claimName }} Remarks</span>
@@ -162,22 +178,6 @@
                                 <td width='77%' style="font-size: 14px; text-align: left; padding-bottom: 5px;">
                                     <span>{{ $claim->remarksType }}</span>
                                 </td>
-                            </tr>
-                        @else
-                            <tr>
-                                <td width='20%' style="font-size: 14px; text-align: left; padding-bottom: 5px;">
-                                    <span>{{ $claim->claimName }}</span>
-                                </td>
-                                <td width='3%' style="font-size: 14px; text-align: left; padding-bottom: 5px;"><span>:</span></td>
-                                @if($claim->claimPerDay !== $claim->totalClaimPerDay)
-                                    <td width='77%' style="font-size: 14px; text-align: left; padding-bottom: 5px;">
-                                        <span>Rp. {{ number_format($claim->totalClaimPerDay, 0, '.', ',') }} ( IDR {{ number_format($claim->claimPerDay, 0, '.', ',') }} / IDR {{ number_format($claim->totalClaimPerDay, 0, '.', ',') }} )</span>
-                                    </td>
-                                @else
-                                    <td width='77%' style="font-size: 14px; text-align: left; padding-bottom: 5px;">
-                                        <span>Rp. {{ number_format($claim->totalClaimPerDay, 0, '.', ',') }}</span>
-                                    </td>
-                                @endif
                             </tr>
                         @endif
                     @endforeach

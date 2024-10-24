@@ -424,18 +424,20 @@ class TransactionController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/mobile/TmOvertime/GetOvertimeDetailList',
+            $response = $client->post(env('API_URL') . '/mobile/TmOvertime/GetOvertimeDetailListWeb',
                 ['body' => json_encode(
                     [
                         'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
                         'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
                         'businessUnit' => $request->businessUnit,
                         'employeeNo'=> $request->employeeNo,
-                        'status' => $request->status,
+                        'status' => $request->status === 'ALL' ? null : $request->status,
                         // 'type' => $request->type,
+                        'exportMenu' => true,
                         'isWeb' => true,
                         'companyCode' => Session::get('companyCode'), 
                         'languageCode' => strtoupper(App::getLocale()), 
+                        'userID' => Session::get('userID'),
                         'sessionID' => 0, 
                         'sessionUserID' => Session::get('userID'),
                     ]
