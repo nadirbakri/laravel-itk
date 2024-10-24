@@ -930,7 +930,7 @@
         $('#project_name').val(data.projectName)
         $('#project_name_val').html(data.projectName)
         $('#directsuperior').val(data.directSuperiorID)
-        $('#destination').attr('href', "http://www.google.com/maps/dir/?api=1&origin" + data.latitudeStart + "," + data.longitudeStart + "&destination=" + data.latitudeEnd + "," + data.longitudeEnd);
+        $('#destination').attr('href', "http://www.google.com/maps/dir/?api=1&origin=" + data.latitudeStart + "," + data.longitudeStart + "&destination=" + data.latitudeEnd + "," + data.longitudeEnd);
         $('#start_location').val(data.startLocation)
         $('#start_location_val').html(data.startLocation)
         $('#end_location').val(data.endLocation)
