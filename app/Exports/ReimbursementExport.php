@@ -60,7 +60,7 @@ class ReimbursementExport extends DefaultValueBinder implements WithCustomValueB
                         'endDate' => Carbon::parse($this->claimDateTo)->format('Y-m-d'),
                         'reimbursementType' => $this->reimbursementType,
                         'businessUnit'=> $this->businessUnit,
-                        'exportMenu' => true,
+                        'exportMenu' => false,
                         'isWeb' => true,
                         'reimbursementStatus' => $this->status,
                         'companyCode' => Session::get('companyCode'), 
