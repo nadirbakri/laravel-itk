@@ -533,6 +533,14 @@
                                                 <input type="hidden" id="amount_destination" name="amount_destination" class="form-control" readonly><span id="amount_destination_val"></span>
                                             </div>
                                         </div>
+                                        <div class="row detailstatus">
+                                            <div class="col-4">
+                                                <b style="font-size: 13px;">{{ __('trans_transport.total_amount') }}</b>
+                                            </div>
+                                            <div class="col-8">
+                                                <input type="hidden" id="total_amount" name="total_amount" class="form-control" readonly><span id="total_amount_val"></span>
+                                            </div>
+                                        </div>
                                         <div class="card-block">
                                             <table id="leave_table" class="table table-bordered" style="font-size: 11px;">
                                                 <thead>
@@ -935,8 +943,10 @@
         $('#amount_toll_val').html(data.amountToll.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."))
         $('#amount_gas').val(data.amountGas)
         $('#amount_gas_val').html(data.amountGas.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."))
-        $('#amount_destination').val(data.totalAmount)
-        $('#amount_destination_val').html(data.totalAmount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."))
+        $('#amount_destination').val(data.amountDistance)
+        $('#amount_destination_val').html(data.amountDistance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."))
+        $('#total_amount').val(data.totalAmount)
+        $('#total_amount_val').html(data.totalAmount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."))
 
         $('#body_detail_transport').html(
             `<tr>

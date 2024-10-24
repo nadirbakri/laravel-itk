@@ -58,6 +58,7 @@ return [
     'amount_toll' => 'Biaya Tol (Rp.)',
     'amount_gas' => 'Biaya BBM (Rp.)',
     'amount_destination' => 'Biaya Destinasi (Rp.)',
+    'total_amount' => 'Total Biaya (Rp.)',
 
 ]
 

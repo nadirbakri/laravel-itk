@@ -53,6 +53,7 @@ return [
     'amount_toll' => 'Amount Toll (Rp.)',
     'amount_gas' => 'Amount Gas (Rp.)',
     'amount_destination' => 'Amount Destination (Rp.)',
+    'total_amount' => 'Total Amount (Rp.)',
 
     'btn_preview' => 'Preview',
     'alert_success' => 'Success !'
