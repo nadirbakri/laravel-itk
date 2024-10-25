@@ -764,7 +764,8 @@ Route::post('payroll/spt_pph_report/print/excel', 'PayrollController@printSPTPPH
 Route::post('payroll/monthly_jamsostek_report/print', 'PayrollController@printMonthlyJamsostekReportPayroll');
 Route::post('payroll/monthly_jamsostek_report/print/excel', 'PayrollController@printMonthlyJamsostekReportPayrollExcel');
 Route::post('payroll/pension_fund_report/print/excel', 'PayrollController@printPensionFundReportPayrollExcel');
-Route::post('payroll/cbi_report/print/excel', 'PayrollController@printCBIReportPayrollExcel');
+Route::post('payroll/cbi_report_monthly/print/excel', 'PayrollController@printCBIReportMonthlyPayrollExcel');
+Route::post('payroll/cbi_report_yearly/print/excel', 'PayrollController@printCBIReportYearlyPayrollExcel');
 
 /* Route Untuk Menu Medical */
 Route::get('medical', 'MedicalController@pageMedical')->name('medical');
