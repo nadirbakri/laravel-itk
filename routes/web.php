@@ -810,6 +810,7 @@ Route::get('trans/transport/attachment', 'TransactionController@dataDetailTransa
 Route::get('trans/reimbursement/table', 'TransactionController@tableDetailReimbursement');
 Route::get('trans/reimbursement/attachment', 'TransactionController@dataDetailTransactionReimbursement');
 Route::get('trans/attendance/table', 'TransactionController@tableDetailAttendance');
+Route::get('trans/attendance/attachment', 'TransactionController@dataDetailTransactionAttendance');
 Route::get('trans/overtime/table', 'TransactionController@tableDetailOvertime');
 Route::get('trans/businesstrip/table', 'TransactionController@tableDetailBusinesstrip');
 Route::get('trans/businesstrip/attachment', 'TransactionController@tableAttachmentBusinesstrip');

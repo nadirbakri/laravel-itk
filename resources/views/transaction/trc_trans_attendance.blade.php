@@ -616,17 +616,33 @@
             $('#addressOut').html((data.addressOut != null) ? data.addressOut : '-');
             $('#mapsOut').attr('href', "http://www.google.com/maps/place/" + data.latitudeOut + "," + data.longitudeOut);
 
-            if(data.photoCheckIn == "" || data.photoCheckIn == null){
-                $('#photoIn').html('<div class="noImgdiv" ><img id="ItemPreview" alt="no image" class="myimage img-rounded" src="<?= asset('pictures/no_image.png') ?>"/></div>');
-            }else{
-                $('#photoIn').html('<div class="imgdiv" ><img id="ItemPreview" alt="in" class="myimage img-rounded" src="data:image/png;base64,'+ data.photoCheckIn +'"/></div>');
-            }
-            
-            if(data.photoCheckOut == "" || data.photoCheckOut == null ){
-                $('#photoOut').html('<div class="noImgdiv" ><img id="ItemPreview" alt="no image" class="myimage img-rounded" src="<?= asset('pictures/no_image.png') ?>"/></div>');
-            }else{
-                $('#photoOut').html('<div class="imgdiv" ><img id="ItemPreview" alt="in" class="myimage img-rounded" src="data:image/png;base64,'+ data.photoCheckOut +'"/></div>');
-            }	
+            $.ajax({
+            type: 'GET',
+            url: "{{ url('/trans/attendance/attachment') }}",
+            data: {
+                'seqNo' : data.seqNo,
+                'employeeNo' : data.employeeNo,
+            },
+                success: function (response) {
+                    if (response) {
+                        if(response.photoCheckIn == "" || response.photoCheckIn == null){
+                            $('#photoIn').html('<div class="noImgdiv" ><img id="ItemPreview" alt="no image" class="myimage img-rounded" src="<?= asset('pictures/no_image.png') ?>"/></div>');
+                        }else{
+                            $('#photoIn').html('<div class="imgdiv" ><img id="ItemPreview" alt="in" class="myimage img-rounded" src="data:image/png;base64,'+ response.photoCheckIn +'"/></div>');
+                        }
+                        
+                        if(response.photoCheckOut == "" || response.photoCheckOut == null ){
+                            $('#photoOut').html('<div class="noImgdiv" ><img id="ItemPreview" alt="no image" class="myimage img-rounded" src="<?= asset('pictures/no_image.png') ?>"/></div>');
+                        }else{
+                            $('#photoOut').html('<div class="imgdiv" ><img id="ItemPreview" alt="in" class="myimage img-rounded" src="data:image/png;base64,'+ response.photoCheckOut +'"/></div>');
+                        }	
+                    }
+                },
+                error: function(xhr, status, error) {
+                    $('#attachment').removeClass('spinner-border');
+                    console.error('AJAX error:', status, error);
+                }
+            })
 
         }else{
             $('#noDetailAtt').show();

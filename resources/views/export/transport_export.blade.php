@@ -36,6 +36,7 @@
 				<th>Total Paid (Rp)</th>
 				<th>Paid Remarks</th>
 				<th>Parking / Toll</th>
+				<th>Amount Destination (Rp)</th>
                 <th>Alamat Email</th>
 				<th>Division</th>
 				<th>Cost Center</th>
@@ -70,6 +71,7 @@
 				<td data-format="#,##0">{{ isset($value->paidAmount) ? $value->paidAmount : '' }}</td>
 				<td>{{ isset($value->hrdRemarks) ? $value->hrdRemarks : '' }}</td>
 				<td data-format="#,##0">{{ isset($value->amountParkir) && isset($value->amountToll) ? $value->amountParkir + $value->amountToll : '' }}</td>
+				<td data-format="#,##0">{{ isset($value->amountDistance) ? $value->amountDistance : '' }}</td>
 				<td>{{ isset($value->email) ? $value->email : '' }}</td>
 				<td>{{ isset($value->businessUnit) ? $value->businessUnit : '' }}</td>
 				<td>{{ isset($value->costCenter) ? $value->costCenter : '' }}</td>

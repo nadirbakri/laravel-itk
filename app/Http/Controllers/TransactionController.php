@@ -1491,7 +1491,7 @@ class TransactionController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/mobile/TmAbsence/GetTmAbsence',
+            $response = $client->post(env('API_URL') . '/mobile/TmAbsence/GetExportTmAbsence',
                 ['body' => json_encode(
                     [
                         // 'companyCode' => Session::get('companyCode'),
@@ -1503,6 +1503,7 @@ class TransactionController extends Controller
                         'languageCode' => strtoupper(App::getLocale()), 
                         'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
                         'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
+                        'isWeb' => true,
                         'userID' => Session::get('userID'),
                         'sessionID' => 0, 
                         'sessionUserID' => Session::get('userID')
@@ -1530,6 +1531,53 @@ class TransactionController extends Controller
             // return Datatables::of($arrResult->dataListSet)->make(true);
             return response()->json($arrResult->dataListSet);
         }
+    }
+
+    public function dataDetailTransactionAttendance(Request $request)
+    {
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/mobile/TmAbsence/getTmAbsence',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'seqNo' => $request->seqNo,
+                        'employeeNo'=> $request->employeeNo,
+                        'isWeb'=> true,
+                        'languageCode' => strtoupper(App::getLocale()), 
+                        'userID' => Session::get('userID'),
+                        'sessionID' => 0, 
+                        'sessionUserID' => Session::get('userID'),
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        // dd($arrResult->dataListSet);
+        
+        if($arrResult->dataListSet == null){
+            $data = [];
+        }else{
+            $data = $arrResult->dataListSet[0];
+        }
+
+        return response()->json($data);
     }
 
     public function tableDetailMassLeave(Request $request)
