@@ -1568,23 +1568,36 @@
         let direct_superior = $("#directsuperior").val();
         let approvalremarks = $("#approvalremarks").val();
         let claim_type = $('#c_type_bst').val();
+        let business_trip_status = $("#business_trip_status").val();
 
-        update_data_approval_businesstrip(reimbursement_status, claim_type, totalpaid, ticketNo, direct_superior, approvalremarks)
+        update_data_approval_businesstrip(business_trip_status, reimbursement_status, claim_type, totalpaid, ticketNo, direct_superior, approvalremarks)
     })
 
-    function updateBusinessTripStatus(reimbursement_status, claim_type, totalpaid, ticketNo, direct_superior, approvalremarks) {
-        var item = arrayBusinessTrip.find(obj => obj.ticketNo === ticketNo && obj.claimType === claim_type);
+    function updateBusinessTripStatus(business_trip_status, reimbursement_status, claim_type, totalpaid, ticketNo, direct_superior, approvalremarks) {
+        var itemIndex = arrayBusinessTrip.findIndex(obj => obj.ticketNo === ticketNo && obj.claimType === claim_type);
 
-        if (item) {
-            item.status = reimbursement_status;
-            item.paidAmount = totalpaid;
-            item.approvalRemarks = approvalremarks;
+        if (itemIndex !== -1) {
+            var item = arrayBusinessTrip[itemIndex];
+
+            if (business_trip_status === "ALL") {
+                item.status = reimbursement_status;
+                item.paidAmount = totalpaid;
+                item.approvalRemarks = approvalremarks;
+            } else {
+                if (reimbursement_status === business_trip_status) {
+                    item.status = reimbursement_status;
+                    item.paidAmount = totalpaid;
+                    item.approvalRemarks = approvalremarks;
+                } else {
+                    arrayBusinessTrip.splice(itemIndex, 1);
+                }
+            }
 
             table.clear().rows.add(arrayBusinessTrip).draw(false);
         }
     }
 
-    function update_data_approval_businesstrip(reimbursement_status, claim_type, totalpaid, ticketNo, direct_superior, approvalremarks){
+    function update_data_approval_businesstrip(business_trip_status, reimbursement_status, claim_type, totalpaid, ticketNo, direct_superior, approvalremarks){
         $.ajax({
             url: "{{ url('trans/update_approvalbusinesstrip/table') }}",
             type: "get",
@@ -1609,7 +1622,7 @@
                     $('#message-notification-success').html(response
                         .message);
 
-                    updateBusinessTripStatus(reimbursement_status, totalpaid, ticketNo, direct_superior, approvalremarks);
+                    updateBusinessTripStatus(business_trip_status, reimbursement_status, claim_type, totalpaid, ticketNo, direct_superior, approvalremarks);
 
                 } else{
                     $("#btn-update").prop("disabled", false);

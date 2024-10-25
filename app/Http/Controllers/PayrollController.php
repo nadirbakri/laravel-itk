@@ -29,7 +29,8 @@ use App\Exports\EBupotA1TemplateExport;
 use App\Exports\PensionFundReportExport;
 use App\Exports\DataPesertaPensionFundReportExport;
 use App\Exports\PerubahanUpahPensionFundReportExport;
-use App\Exports\CBIReportExport;
+use App\Exports\CBIReportMonthlyExport;
+use App\Exports\CBIReportYearlyExport;
 use App\Http\Controllers\Redirect;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Contracts\Encryption\DecryptException;
@@ -8802,18 +8803,39 @@ public function dataDetailReportFormatPY(Request $request)
         }
     }
 
-    public function printCBIReportPayrollExcel(Request $request){
+    public function printCBIReportMonthlyPayrollExcel(Request $request){
         if($request->report_type == 'MEDICAL_REIMBURSEMENT_LIMIT'){
             $filename = 'Medical Reimbursement Limit.xlsx';
         }else if($request->report_type == 'UNUSED_LEAVE'){
             $filename = 'Unused Leave.xlsx';
+        }else if($request->report_type == 'MEDICAL_FACILITY_USED'){
+            $filename = 'Medical Facility Used.xlsx';
         }else{
-            $filename = 'CBI Report.xlsx';
+            $filename = 'CBI Report Monthly.xlsx';
         }
         
-        return Excel::download(new CBIReportExport(
+        return Excel::download(new CBIReportMonthlyExport(
             $request->period,
-            $request->report_type), 
+            $request->report_type,
+            $request->claim_type), 
+            $filename
+        );
+    }
+
+    public function printCBIReportYearlyPayrollExcel(Request $request){
+        if($request->report_type == 'SALARY_SUMMARY'){
+            $filename = 'Salary Summary.xlsx';
+        }else if($request->report_type == 'YEARLY_RECAP_JAMSOSTEK_REPORT'){
+            $filename = 'Yearly Recap Jamsostek Report.xlsx';
+        }else if($request->report_type == 'YEARLY_RECAP_REPORT'){
+            $filename = 'Yearly Recap Report.xlsx';
+        }else{
+            $filename = 'CBI Report Yearly.xlsx';
+        }
+        
+        return Excel::download(new CBIReportYearlyExport(
+            $request->period_yearly,
+            $request->report_type_yearly), 
             $filename
         );
     }

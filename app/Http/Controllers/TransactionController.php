@@ -1286,7 +1286,6 @@ class TransactionController extends Controller
                     "paidAmount" => $value['checkPaid']
                 ];
             }
-            
 
             $response = $client->put(env('API_URL') . '/mobile/BusinessTrip/UpdateListTicketNo',
                 ['body' => json_encode($param)]

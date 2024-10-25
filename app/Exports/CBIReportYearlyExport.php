@@ -17,7 +17,7 @@ use Validator;
 use Session;
 use App;
 
-class CBIReportExport extends DefaultValueBinder implements WithCustomValueBinder, FromView, WithEvents, ShouldAutoSize
+class CBIReportYearlyExport extends DefaultValueBinder implements WithCustomValueBinder, FromView, WithEvents, ShouldAutoSize
 {
     public function __construct($period, $reportType)
     {
@@ -46,10 +46,9 @@ class CBIReportExport extends DefaultValueBinder implements WithCustomValueBinde
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            if($this->reportType == 'MEDICAL_REIMBURSEMENT_LIMIT'){
+            if($this->reportType == 'SALARY_SUMMARY'){
                 $param = [
                     'companyCode' => Session::get('companyCode'),
-                    "periodYear" => (int) date('Y', strtotime($this->period)),
                     "languageCode" => App::getLocale(),
                     "sessionID" => 0,
                     "sessionUserID" => Session::get('userID'),
@@ -58,14 +57,13 @@ class CBIReportExport extends DefaultValueBinder implements WithCustomValueBinde
                 ];
     
                 // dd(json_encode($param));
-                $response = $client->post(env('API_URL').'/payroll/getLimitReport', [
+                $response = $client->post(env('API_URL').'/payroll/monthlySummaryReport', [
                     'body' => json_encode($param)
                 ]);
-            }else if($this->reportType == 'UNUSED_LEAVE'){
+            }else if($this->reportType == 'YEARLY_RECAP_JAMSOSTEK_REPORT'){
                 $param = [
                     'companyCode' => Session::get('companyCode'),
                     "periodYear" => (int) date('Y', strtotime($this->period)),
-                    "periodMonth" => (int) date('m', strtotime($this->period)),
                     "languageCode" => App::getLocale(),
                     "sessionID" => 0,
                     "sessionUserID" => Session::get('userID'),
@@ -74,13 +72,28 @@ class CBIReportExport extends DefaultValueBinder implements WithCustomValueBinde
                 ];
     
                 // dd(json_encode($param));
-                $response = $client->post(env('API_URL').'/payroll/getUnusedLeave', [
+                $response = $client->post(env('API_URL').'/payroll/yearlyRecapJamsostekReport', [
+                    'body' => json_encode($param)
+                ]);
+            }else if($this->reportType == 'YEARLY_RECAP_REPORT'){
+                $param = [
+                    'companyCode' => Session::get('companyCode'),
+                    "periodYear" => (int) date('Y', strtotime($this->period)),
+                    "languageCode" => App::getLocale(),
+                    "sessionID" => 0,
+                    "sessionUserID" => Session::get('userID'),
+                    "logActionUsername" => Session::get('userName'),
+                    "logActionUserID" => Session::get('userID')
+                ];
+    
+                // dd(json_encode($param));
+                $response = $client->post(env('API_URL').'/payroll/yearlyRecapReport', [
                     'body' => json_encode($param)
                 ]);
             }
         }catch (RequestException $e){
             $response = $e->getResponse();
-            // var_dump($response);
+            // dd($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -92,26 +105,34 @@ class CBIReportExport extends DefaultValueBinder implements WithCustomValueBinde
 
         $arrResult = json_decode($response->getBody()->getContents());
 
-        // dd($arrResult->dataListSet);
+        // dd($arrResult->dataListSet[0]->employeeData[0]->employeeSalaryData);
 
         if($arrResult->dataListSet == null){
-            if($this->reportType == 'MEDICAL_REIMBURSEMENT_LIMIT'){
-                return view('payroll.py_export_cbi_medical_reimbursement_limit_report_excel', [
+            if($this->reportType == 'SALARY_SUMMARY'){
+                return view('payroll.py_export_cbi_salary_summary_report_excel', [
                     'data' => []
                 ]);
-            }else if($this->reportType == 'UNUSED_LEAVE'){
-                return view('payroll.py_export_cbi_unused_leave_report_excel', [
+            }else if($this->reportType == 'YEARLY_RECAP_JAMSOSTEK_REPORT'){
+                return view('payroll.py_export_cbi_yearly_recap_jamsostek_report_excel', [
+                    'data' => []
+                ]);
+            }else if($this->reportType == 'YEARLY_RECAP_REPORT'){
+                return view('payroll.py_export_cbi_yearly_recap_report_excel', [
                     'data' => []
                 ]);
             }
             
         }else{
-            if($this->reportType == 'MEDICAL_REIMBURSEMENT_LIMIT'){
-                return view('payroll.py_export_cbi_medical_reimbursement_limit_report_excel', [
+            if($this->reportType == 'SALARY_SUMMARY'){
+                return view('payroll.py_export_cbi_salary_summary_report_excel', [
                     'data' => $arrResult->dataListSet
                 ]);
-            }else if($this->reportType == 'UNUSED_LEAVE'){
-                return view('payroll.py_export_cbi_unused_leave_report_excel', [
+            }else if($this->reportType == 'YEARLY_RECAP_JAMSOSTEK_REPORT'){
+                return view('payroll.py_export_cbi_yearly_recap_jamsostek_report_excel', [
+                    'data' => $arrResult->dataListSet
+                ]);
+            }else if($this->reportType == 'YEARLY_RECAP_REPORT'){
+                return view('payroll.py_export_cbi_yearly_recap_report_excel', [
                     'data' => $arrResult->dataListSet
                 ]);
             }

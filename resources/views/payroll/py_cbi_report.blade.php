@@ -190,6 +190,17 @@
         .font-label {
             font-size: 12px !important;
         }
+
+        .select2-container .select2-selection--single .select2-selection__rendered {
+            padding-top: 0;
+            padding-bottom: 1%;
+            padding-left: 3%;
+        }
+        .select2-container--default
+        .select2-selection--single
+        .select2-selection__arrow {
+            top: 0.5vh;
+        }
     </style>
 </head>
 
@@ -206,15 +217,18 @@
                 <div class="center-ul">
                     <ul class="nav nav-pills mb-4" id="myTab" role="tablist">
                         <li class="nav-item" style="margin-left:0;">
-                            <a class="nav-link active" id="cbi-report-tab" data-toggle="tab" href="#cbi_report" role="tab" aria-controls="cbi_report">{{ __('payroll_cbi_report.judul') }}</a>
+                            <a class="nav-link active" id="report-monthly-tab" data-toggle="tab" href="#report_monthly" role="tab" aria-controls="report_monthly">{{ __('payroll_cbi_report.tab_1') }}</a>
+                        </li>
+                        <li class="nav-item" style="margin-left:0;">
+                            <a class="nav-link" id="report-yearly-tab" data-toggle="tab" href="#report_yearly" role="tab" aria-controls="report_yearly">{{ __('payroll_cbi_report.tab_2') }}</a>
                         </li>
                     </ul>
                 </div>
                 <div class="tab-content" id="myTabContent">
-                    <div class="tab-pane fade show active" id="cbi_report" role="tabpanel" aria-labelledby="cbi-report-tab">
+                    <div class="tab-pane fade show active" id="report_monthly" role="tabpanel" aria-labelledby="report-monthly-tab">
                         <div class="row">
                             <div class="offset-md-2 col-12 col-md-8 box">
-                                <form id="cbi_report_form" method="post">
+                                <form id="report_monthly_form" method="post">
                                     @csrf
                                     <div class="row">
                                         <div class="col-6">
@@ -223,6 +237,7 @@
                                                 <select class="form-control select2 form-control-sm" id="report_type" name="report_type">
                                                     <option value="MEDICAL_REIMBURSEMENT_LIMIT">{{ __('payroll_cbi_report.label_medical_reimbursement_limit') }}</option>
                                                     <option value="UNUSED_LEAVE">{{ __('payroll_cbi_report.label_unused_leave') }}</option>
+                                                    <option value="MEDICAL_FACILITY_USED">{{ __('payroll_cbi_report.label_medical_facility_used') }}</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -237,6 +252,14 @@
                                             <input type="hidden" class="form-control" id="period_hidden" name="period_hidden">
                                         </div>
                                     </div>
+                                    <div class="row" id="div_claim_type" style="display: none;">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label for="claim_type" class="font-label">{{ __('payroll_cbi_report.label_claim_type') }}</label>
+                                                <select class="form-control select2 form-control-sm" id="claim_type" name="claim_type"></select>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="row mt-2">
                                         <div class="col-6">
                                             <button class="btn btn-primary btn-sm" name="btn-download" id="btn-download" style="width:100%;">
@@ -246,6 +269,49 @@
                                         <div class="col-6">
                                             <a class="btn btn-outline-primary btn-sm" href="{{ route('payroll', ['moduleID' => 'PY']) }}" target="iframe_dashboard"
                                                 name="btn-cancel" id="btn-cancel" style="width: 100%;">
+                                                <i class="fa fa-times-circle"></i> {{ __('payroll_cbi_report.btn_cancel') }}
+                                            </a>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="report_yearly" role="tabpanel" aria-labelledby="report-yearly-tab">
+                        <div class="row">
+                            <div class="offset-md-2 col-12 col-md-8 box">
+                                <form id="report_yearly_form" method="post">
+                                    @csrf
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label class="font-label" for="report_type_yearly">{{ __('payroll_cbi_report.label_report_type') }}</label>
+                                                <select class="form-control select2 form-control-sm" id="report_type_yearly" name="report_type_yearly">
+                                                    <option value="SALARY_SUMMARY">{{ __('payroll_cbi_report.label_salary_summary') }}</option>
+                                                    <option value="YEARLY_RECAP_JAMSOSTEK_REPORT">{{ __('payroll_cbi_report.label_yearly_recap_jamsostek_report') }}</option>
+                                                    <option value="YEARLY_RECAP_REPORT">{{ __('payroll_cbi_report.label_yearly_recap_report') }}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" id="div_period_yearly" style="display: none;">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label class="font-label" for="period_yearly">{{ __('payroll_cbi_report.label_period') }}</label>
+                                                <select class="form-control form-control-sm" id="period_yearly" name="period_yearly"></select>
+                                                <input type="hidden" id="period_yearly_det" name="period_yearly_det">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-2">
+                                        <div class="col-6">
+                                            <button class="btn btn-primary btn-sm" name="btn-download-yearly" id="btn-download-yearly" style="width:100%;">
+                                                <i class="fa fa-download"></i> {{ __('payroll_cbi_report.btn_download') }}
+                                            </button>
+                                        </div>
+                                        <div class="col-6">
+                                            <a class="btn btn-outline-primary btn-sm" href="{{ route('payroll', ['moduleID' => 'PY']) }}" target="iframe_dashboard"
+                                                name="btn-cancel-yearly" id="btn-cancel-yearly" style="width: 100%;">
                                                 <i class="fa fa-times-circle"></i> {{ __('payroll_cbi_report.btn_cancel') }}
                                             </a>
                                         </div>
@@ -364,6 +430,115 @@
 
         if (arrData) {
             pickerPeriod.setDate(moment(arrData[0].periodYear.toString() + "-" + arrData[0].periodMonth.toString().padStart(2,0) + "-01").format('YYYY-MM-DD'));
+            
+            for (var i = (arrData[0].periodYear - 5); i <= arrData[0].periodYear; i++){
+                var option = $('<option/>').val(i).text(i);
+    
+                if (i == arrData[0].periodYear) {
+                    option.attr('selected', 'selected');
+                    $('#period_yearly_det').val(i);
+                }
+                
+                $('#period_yearly').append(option);
+            }
+        }
+
+        loadDataClaimType();
+        loadDataFirstLastAllClaimType();
+
+        $('#report_type').change(function(){
+            if($(this).val() == "MEDICAL_FACILITY_USED"){
+                $('#div_claim_type').show();
+            }else{
+                $('#div_claim_type').hide();
+            }
+        });
+
+        $('#report_type_yearly').change(function(){
+            if($(this).val() == "SALARY_SUMMARY"){
+                $('#div_period_yearly').hide();
+            }else{
+                $('#div_period_yearly').show();
+            }
+        });
+
+        $('#period_yearly').change(function(){
+            $('#period_yearly_det').val($(this).val());
+        });
+
+        function loadDataClaimType(){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' + 
+                        '<div class="col-12">' + data.data.value + '<div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+            
+            $('#claim_type').select2({
+                width: '100%',
+                placeholder: 'Choose Claim Type',
+                allowClear: true,
+                // multiple: true,
+                // tags: true,
+                closeOnSelect: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: "{{ url('/reimbursement_type/medical/api') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: $('meta[name="csrf-token"]').attr('content'),
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.value,
+                                    id: item.comGenCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataFirstLastAllClaimType () {
+            $('#claim_type').addClass('spinner-border');
+
+            $.ajax({
+                type: 'GET',
+                url: "{{ url('/reimbursement_type/medical/all/api') }}",
+            }).then(function (data) {
+                if (!$('#claim_type').find('option:contains(' + data.value + ')').length) {
+                    $('#claim_type').append($('<option>').val(data.comGenCode).text(data.value));
+                }
+                $('#claim_type').val(data.comGenCode);
+                $('#claim_type').removeClass('loading');
+            });
         }
 
         $('#btn-download').click(function (){
@@ -372,11 +547,20 @@
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
 
-            $('#cbi_report_form').submit();
+            $('#report_monthly_form').submit();
         });
 
-        if($('#cbi_report_form').length > 0){
-            $('#cbi_report_form').validate({
+        $('#btn-download-yearly').click(function (){
+            $(this).prop("disabled", true);
+            $(this).html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+
+            $('#report_yearly_form').submit();
+        });
+
+        if($('#report_monthly_form').length > 0){
+            $('#report_monthly_form').validate({
                 rules: {
                     period: {
                         required: true,
@@ -419,9 +603,9 @@
                         xhrFields: {
                             responseType: 'blob',
                         },
-                        url: "{{ url('payroll/cbi_report/print/excel') }}",
+                        url: "{{ url('payroll/cbi_report_monthly/print/excel') }}",
                         type: "POST",
-                        data: $('#cbi_report_form').serialize(),
+                        data: $('#report_monthly_form').serialize(),
                         success: function(result, status, xhr){
                             $('#btn-download').prop("disabled", false);
                             $("#btn-download").html(
@@ -448,6 +632,84 @@
                         error: function(response){
                             $('#btn-download').prop("disabled", false);
                             $("#btn-download").html(
+                                '<i class="fa fa-download"></i> {{ __("payroll_cbi_report.btn_download") }}'
+                            );
+                            
+                            $('#notification_error').modal('show');
+                            $('#message-notification-error').html(response);
+                        }
+                    });
+                }
+            })
+        }
+
+        if($('#report_yearly_form').length > 0){
+            $('#report_yearly_form').validate({
+                rules: {
+                    report_type_yearly: {
+                        required: true,
+                    },
+                },
+                messages: {
+                    report_type_yearly: {
+                        required: "{{ __('personel_employee_list.field_required') }}",
+                    },
+                },
+                highlight: function (element) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function (element) {
+                    $(element).removeClass('is-invalid');
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                    $('#btn-download-yearly').prop("disabled", false);
+                    $('#btn-download-yearly').html(
+                        '<i class="fa fa-download"></i> {{ __("payroll_cbi_report.btn_download") }}'
+                    );
+
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').append(error);
+                },
+                submitHandler: function(form){
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    $.ajax({
+                        xhrFields: {
+                            responseType: 'blob',
+                        },
+                        url: "{{ url('payroll/cbi_report_yearly/print/excel') }}",
+                        type: "POST",
+                        data: $('#report_yearly_form').serialize(),
+                        success: function(result, status, xhr){
+                            $('#btn-download-yearly').prop("disabled", false);
+                            $("#btn-download-yearly").html(
+                                '<i class="fa fa-download"></i> {{ __("payroll_cbi_report.btn_download") }}'
+                            );
+                            
+                            var disposition = xhr.getResponseHeader('content-disposition');
+                            var matches = /"([^"]*)"/.exec(disposition);
+                            var filename = (matches != null && matches[1] ? matches[1] : 'noname_file.xlsx');
+
+                            var blob = new Blob([result], {
+                                type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                            });
+
+                            var link = document.createElement('a');
+                            link.href = window.URL.createObjectURL(blob);
+                            link.download = filename;
+                            
+                            document.body.appendChild(link);
+
+                            link.click();
+                            document.body.removeChild(link);
+                        },
+                        error: function(response){
+                            $('#btn-download-yearly').prop("disabled", false);
+                            $("#btn-download-yearly").html(
                                 '<i class="fa fa-download"></i> {{ __("payroll_cbi_report.btn_download") }}'
                             );
                             
