@@ -105,7 +105,7 @@ class CBIReportYearlyExport extends DefaultValueBinder implements WithCustomValu
 
         $arrResult = json_decode($response->getBody()->getContents());
 
-        // dd($arrResult->dataListSet[0]->employeeData[0]->employeeSalaryData);
+        // dd($arrResult->dataListSet);
 
         if($arrResult->dataListSet == null){
             if($this->reportType == 'SALARY_SUMMARY'){
