@@ -35,6 +35,8 @@ use App\Http\Controllers\Redirect;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Contracts\Encryption\DecryptException;
 
+// use App\Jobs\ProcessExportCBIReportMonthly;
+// use App\Jobs\ProcessExportCBIReportYearly;
 
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
@@ -4610,6 +4612,8 @@ public function dataDetailReportFormatPY(Request $request)
                 foreach($array as $key => $value){
                     if($request->source_bank == 'PERMATA'){
                         $arrayTwo = explode(",", $value);
+                    }else if($request->source_bank == 'BCA' && $request->transfer_type == "2"){
+                        $arrayTwo = explode("|", $value);
                     }else{
                         $arrayTwo = explode(";", $value);
                     }
@@ -4622,7 +4626,12 @@ public function dataDetailReportFormatPY(Request $request)
                     return !empty($value);
                 });
 
-                return Excel::download(new ExcelTransferBankExport($array), $arrResult->dataListSet[0]->namaFile);
+                $namaFile = $arrResult->dataListSet[0]->namaFile;
+                if(!str_contains($arrResult->dataListSet[0]->namaFile, '.xlsx')){
+                    $namaFile = $arrResult->dataListSet[0]->namaFile . '.xlsx';
+                }
+
+                return Excel::download(new ExcelTransferBankExport($array), $namaFile);
             }else if($request->output_file == 'txt'){
                 $fullPath = storage_path('app/');
                 array_map('unlink', glob( "$fullPath*.txt"));
@@ -8820,6 +8829,10 @@ public function dataDetailReportFormatPY(Request $request)
             $request->claim_type), 
             $filename
         );
+        // $processJobs = new ProcessExportCBIReportMonthly($request->report_type, $request->period, $request->claim_type);
+        // $this->dispatch($processJobs);
+
+        // return response()->json(['status' => "true", 'message' => 'Download is in Progress']);
     }
 
     public function printCBIReportYearlyPayrollExcel(Request $request){
@@ -8838,6 +8851,10 @@ public function dataDetailReportFormatPY(Request $request)
             $request->report_type_yearly), 
             $filename
         );
+        // $processJobs = new ProcessExportCBIReportYearly($request->report_type_yearly, $request->period_yearly);
+        // $this->dispatch($processJobs);
+
+        // return response()->json(['status' => "true", 'message' => 'Download is in Progress']);
     }
 
 }
