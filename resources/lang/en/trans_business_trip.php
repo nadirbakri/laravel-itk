@@ -12,6 +12,7 @@ return [
     'label_reimbursement_type' => 'Reimbursement Type',
     'label_claim_type' => 'Claim Type',
     'label_bu' => 'Business Unit',
+    'label_attachment_slip' => 'Attachment Slip',
     'btn_upload' => 'Upload',
     'btn_search' => 'Search',
     'btn_list' => 'List',

@@ -505,6 +505,16 @@
                                     <input id="employee_no" name="employee_no" type="hidden" class="form-control"><span id="employee_no_val"></span>
                                 </div>
                             </div>
+
+                            <div class="row detailstatus">
+                                <div class="col-3">
+                                    <h5>{{ __('trans_business_trip.label_attachment_slip') }}</h5>
+                                </div>
+                                <div class="col-9">
+                                    <div id="attachment-slip" class="row"></div>
+                                </div>
+                            </div>
+
                             <br>
                             <div class="row">
                                 <div id="loading2">
@@ -874,6 +884,7 @@
     });
 
     function load_data_attachment(type, ticketNo){
+        $('#attachment-slip').empty();
         showLoading();
         $.ajax({
             type: 'GET',
@@ -885,9 +896,24 @@
         }).then(function (data) {
             let rows = '';
             let attachmentArray = [];
+            let attachmentSlipArray = [];
             currentIndex = 0;
             attachmentIndex = 0;
             currentAttachments = [];
+
+            if(data[0].attachmentSlip !== null){
+                attachmentSlipArray.push("data:image/png;base64," + data[0].attachmentSlip);
+                $('#attachment-slip').append(`
+                    <div class="col-2">
+                        <a href="javascript:void(0);" onclick="load_image('data:image/png;base64,${data[0].attachmentSlip}')">
+                        <a href="javascript:void(0);" class="attachment-slip-link" data-index="0">
+                            <img id="slip-1" class="myimage img-rounded img-fluid" src="data:image/png;base64,${data[0].attachmentSlip}" alt="0"/>
+                        </a>
+                    </div>`
+                );
+
+                window.attachmentSlipData = attachmentSlipArray;
+            }
 
             if(data[0].hasOwnProperty('settlementDetail') && data[0].settlementDetail.length !== 0){
                 $.each(data[0].settlementDetail, function (key, val) {
@@ -969,8 +995,12 @@
 
     $(document).on('click', '.attachment-link', function() {
         let index = $(this).data('index');
-        console.log(index);
         load_image(window.attachmentData, index);
+    });
+
+    $(document).on('click', '.attachment-slip-link', function() {
+        let index = $(this).data('index');
+        load_image(window.attachmentSlipData, index);
     });
 
     function load_data_table_business_trip() {

@@ -12,6 +12,7 @@ return [
     'label_reimbursement_type' => 'Tipe Klaim',
     'label_bu' => 'Unit Bisnis',
     'label_claim_type' => 'Tipe Klaim',
+    'label_attachment_slip' => 'Lampiran Slip',
     'btn_upload' => 'Unggah',
     'btn_list' => 'Daftar',
     'btn_search' => 'Cari',
