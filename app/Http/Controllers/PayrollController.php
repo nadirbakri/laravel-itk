@@ -4645,7 +4645,11 @@ public function dataDetailReportFormatPY(Request $request)
             }else if($request->output_file == 'csv'){
                 $array = explode("\r\n", $arrResult->dataListSet[0]->transferBank);
                 foreach($array as $key => $value){
-                    $arrayTwo = explode(",", $value);
+                    if($request->source_bank == 'BCA' && $request->transfer_type == "2"){
+                        $arrayTwo = explode("|", $value);
+                    }else{
+                        $arrayTwo = explode(",", $value);
+                    }
                     if(count($arrayTwo) > 1){
                         $array[$key] = $arrayTwo;
                     }
