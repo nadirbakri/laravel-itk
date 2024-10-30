@@ -142,7 +142,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form id="import_absent_code_form" method="post">
+                    <form id="import_absent_code_form" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="col-12">
@@ -207,11 +207,14 @@
 </body>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/select/1.3.3/js/dataTables.select.min.js"></script>
 <script src="https://cdn.datatables.net/plug-ins/1.10.24/pagination/ellipses.js"></script>
 <script src="{{ asset('js/jquery.redirect.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/additional-methods.js"></script>
 
 <script type="text/javascript">
     function savePreviousURL() {
@@ -256,6 +259,11 @@
         load_data_table_absent_code();
 
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+        $('input[type="file"]').change(function (e) {
+            var fileName = e.target.files[0].name;
+            $('.custom-file-label').html(fileName);
+        });
 
         function load_data_table_absent_code() {
             table = $('#absent_code_table').DataTable({
@@ -402,70 +410,70 @@
         });
 
         $("#toolbar-template").on('click', function() {
-            var data = table.rows('.selected').data();
-            if(data.count() > 0){
-                $(this).prop("disabled", true);
-                $(this).html(
-                    '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
-                );
+            $(this).prop("disabled", true);
+            $(this).html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" style="margin: 0;"></span>'+
+                '<span style="padding-left: 0.5rem;">Loading...</span>'
+            );
 
-                $.ajax({
-                    xhrFields: {
-                        responseType: 'blob',
-                    },
-                    url: "{{ url('payroll/absent_code/template') }}",
-                    type: "POST",
-                    processData: false,
-                    contentType: false,
-                    data: { 
-                        'absentCode' : data[0].absentCode, 
-                        'description' : data[0].description,
-                        'absentType' : data[0].absentType },
-                    success: function (result, status, xhr) {
-                        $("#toolbar-template").prop("disabled", false);
-                        $("#toolbar-template").html(
-                            '<span class="no-image">Download Template</span>'
-                        );
-                        var disposition = xhr.getResponseHeader(
-                            'content-disposition');
-                        var matches = /"([^"]*)"/.exec(disposition);
-                        var filename = (matches != null && matches[1] ? matches[1] :
-                            'noname_file.xlsx');
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                xhrFields: {
+                    responseType: 'blob',
+                },
+                url: "{{ url('time_management/absent_code/template') }}",
+                type: "POST",
+                processData: false,
+                contentType: false,
+                success: function (result, status, xhr) {
+                    $("#toolbar-template").prop("disabled", false);
+                    $("#toolbar-template").html(
+                        '<span class="no-image">Download Template</span>'
+                    );
+                    var disposition = xhr.getResponseHeader(
+                        'content-disposition');
+                    var matches = /"([^"]*)"/.exec(disposition);
+                    var filename = (matches != null && matches[1] ? matches[1] :
+                        'noname_file.xlsx');
 
-                        // The actual download
-                        var blob = new Blob([result], {
-                            type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-                        });
-                        var link = document.createElement('a');
-                        link.href = window.URL.createObjectURL(blob);
-                        link.download = filename;
+                    // The actual download
+                    var blob = new Blob([result], {
+                        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                    });
+                    var link = document.createElement('a');
+                    link.href = window.URL.createObjectURL(blob);
+                    link.download = filename;
 
-                        document.body.appendChild(link);
+                    document.body.appendChild(link);
 
-                        link.click();
-                        document.body.removeChild(link);
-                    },
-                    error: function (response) {
-                        $("#toolbar-template").prop("disabled", false);
-                        $("#toolbar-template").html(
-                            '<span class="no-image">Download Template</span>'
-                        );
-                        $('#notification_error').modal('show');
-                        $('#message-notification-error').html(response);
-                    }
-                });
-            }else{
-                $('#notification_error').modal('show');
-                $('#message-notification-error').html('No Data Selected');
-            }
+                    link.click();
+                    document.body.removeChild(link);
+                },
+                error: function (response) {
+                    $("#toolbar-template").prop("disabled", false);
+                    $("#toolbar-template").html(
+                        '<span class="no-image">Download Template</span>'
+                    );
+                    $('#notification_error').modal('show');
+                    $('#message-notification-error').html(response);
+                }
+            });
         });
 
-        $("#btn-import").on('click', function() {
+        $("#btn-import").on('click', function () {
             $(this).prop("disabled", true);
             $(this).html(
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
+
+            $('#import_absent_code_form').submit();
+        });
             
+        if ($("#import_absent_code_form").length > 0) {
             $("#import_absent_code_form").validate({
                 rules: {
                     import_file: {
@@ -505,8 +513,10 @@
                     var myform = document.getElementById("import_absent_code_form");
                     data = new FormData(myform);
 
+                    console.log(data);
+
                     $.ajax({
-                        url: "{{ url('payroll/absent_code/import') }}",
+                        url: "{{ url('time_management/absent_code/import') }}",
                         type: "POST",
                         processData: false,
                         contentType: false,
@@ -552,7 +562,7 @@
                     });
                 }
             })
-        });
+        }
 
         $('#absent_code_table tbody').on('click', 'tr td:not(:first-child)', function () {
             var data = table.row(this).data();

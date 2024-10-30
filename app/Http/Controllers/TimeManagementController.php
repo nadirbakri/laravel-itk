@@ -16,12 +16,14 @@ use App\Exports\TimeRecordingProcessFormTemplateExport;
 use App\Exports\ChangeDataShiftTemplateExcel;
 use App\Exports\PeMasterLeaveExport;
 use App\Exports\PlafonExport;
+use App\Exports\AbsentCodeTemplateExport;
 
 use App\Imports\UpdateAbsenteeismDataImport;
 use App\Imports\ChangeDataShiftImport;
 use App\Imports\TimeRecordingImport;
 use App\Imports\PeMasterLeaveImport;
 use App\Imports\PlafonImport;
+use App\Imports\AbsentCodeImport;
 
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
@@ -1472,6 +1474,31 @@ class TimeManagementController extends Controller
     public function templateTimeRecordingProcessFormTM()
     {
         return Excel::download(new TimeRecordingProcessFormTemplateExport, 'Template Time Recording Process Form.xlsx');
+    }
+
+    public function templateAbsentCodeTM()
+    {
+        return Excel::download(new AbsentCodeTemplateExport, 'Template Absent Code.xlsx');
+    }
+
+    public function importAbsentCode(Request $request)
+    {
+        try{
+            $file = $request->file('import_file');
+            $import = new AbsentCodeImport;
+            Excel::import($import, $file->getRealPath(), null, \Maatwebsite\Excel\Excel::XLSX);
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            $failures = $e->failures();
+            $objError = (object) ['status' => false, 'message' => $failures[0]->errors()[0]];
+            return array(0 => $objError);
+        }
+
+        if(empty($import->getArrResult())){
+            $objError = (object) ['status' => false, 'message' => "The Uploaded File Doesn't Match The Template"];
+            return array(0 => $objError);
+        }else{
+            return $import->getArrResult();
+        }
     }
 
     public function importChangeDataShift(Request $request)
