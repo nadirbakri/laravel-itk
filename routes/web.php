@@ -64,6 +64,9 @@ Route::get('calendar/event', 'DashboardController@getEventCalendar');
 Route::get('active_employee', 'DashboardController@getActiveEmployee');
 Route::get('getOvertime', 'DashboardController@getOvertime');
 Route::get('getPayroll', 'DashboardController@getPayroll');
+// Route::get('/get-report-filename', 'DashboardController@getReportFilename');
+// Route::get('/download-report/{filename}', 'DashboardController@downloadReport');
+// Route::get('/clear-report-filename', 'DashboardController@clearReportFilename');
 
 /* Route Untuk Menu Personel */
 Route::get('personnel', 'PersonelController@pagePersonelMain')->name('personnel');
@@ -553,6 +556,8 @@ Route::post('time_management/export_import_leave/export', 'TimeManagementControl
 Route::post('time_management/export_import_plafon/import', 'TimeManagementController@importExportImportPlafon');
 Route::post('time_management/export_import_plafon/export', 'TimeManagementController@exportExportImportPlafon');
 Route::post('time_management/time_recording_process_form/download', 'TimeManagementController@templateTimeRecordingProcessFormTM');
+Route::post('time_management/absent_code/template', 'TimeManagementController@templateAbsentCodeTM');
+Route::post('time_management/absent_code/import', 'TimeManagementController@importAbsentCode');
 
 /* Route Untuk Menu Payroll */
 Route::get('payroll', 'PayrollController@pagePayroll')->name('payroll');
