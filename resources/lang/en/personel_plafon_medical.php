@@ -1,0 +1,33 @@
+<?php
+
+return [
+
+    /*
+    |--------------------------------------------------------------------------
+    | Personel - Plafon Page Language Lines
+    |--------------------------------------------------------------------------
+    |
+    | Pengaturan Halaman Personel - Plafon Menggunakan Locale Bahasa Inggris. Akses di file
+    | personel_plafon.blade.php
+    |
+    */
+
+    'judul' => 'Plafon Medical Page',
+    'list' => 'Personnel Menu List',
+    'list_detail' => 'Plafon Medical List',
+    'label_code' => 'Plafon Code',
+    'label_year' => 'Plafon Year',
+    'label_type' => 'Plafon Type',
+    'label_status' => 'Plafon Status',
+    'label_flag_is_duty' => 'Is Duty',
+    'label_nominal' => 'Nominal',
+    'label_ranking_code' => 'Ranking Code',
+    'year_required' => 'Plafon is Required',
+    'type_required' => 'Type is Required',
+    'status_required' => 'Status is Required',
+    'nominal_required' => 'Nominal is Required',
+    'ranking_code_required' => 'Ranking Code is Required',
+    'btn_save' => 'Save',
+    'btn_cancel' => 'Cancel',
+    'alert_success' => 'Success !'
+];

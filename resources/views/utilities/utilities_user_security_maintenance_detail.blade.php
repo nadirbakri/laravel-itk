@@ -193,6 +193,9 @@
                                 <option value="sa">Super Admin</option>
                                 <option value="admin">Admin</option>
                                 <option value="employee">Employee</option>
+                                <option value="hr">HR</option>
+                                <option value="acc">Accounting</option>
+                                <option value="fnc">Finance</option>
                             </select>
                         </div>
                     </div>
