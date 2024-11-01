@@ -134,6 +134,7 @@
                                 <option value="DANA_PENSIUN">Dana Pensiun Report</option>
                                 <option value="DATA_PESERTA">Data Pendaftaran Peserta Report</option>
                                 <option value="PERUBAHAN_UPAH">Perubahan Upah Dana Pensiun Report</option>
+                                <option value="DATA_PESERTA_AKTIF">Data Peserta Aktif Report</option>
                             </select>
                         </div>
                     </div>
@@ -395,6 +396,10 @@
                 $('#row_pendaftaran_peserta').hide();
                 $('#row_dana_pensiun').hide();
                 $('#row_perubahan_upah').show();
+            }else if(data[0].id == "DATA_PESERTA_AKTIF"){
+                $('#row_pendaftaran_peserta').hide();
+                $('#row_dana_pensiun').hide();
+                $('#row_perubahan_upah').hide();
             }
         });
 

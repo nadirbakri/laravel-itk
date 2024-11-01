@@ -29,6 +29,7 @@ use App\Exports\EBupotA1TemplateExport;
 use App\Exports\PensionFundReportExport;
 use App\Exports\DataPesertaPensionFundReportExport;
 use App\Exports\PerubahanUpahPensionFundReportExport;
+use App\Exports\DataPesertaAktifPensionFundReportExport;
 use App\Exports\CBIReportMonthlyExport;
 use App\Exports\CBIReportYearlyExport;
 use App\Http\Controllers\Redirect;
@@ -8812,6 +8813,13 @@ public function dataDetailReportFormatPY(Request $request)
                 $request->group_authorized_code_from, 
                 $request->group_authorized_code_to), 
                 'Laporan Perubahan Upah Dana Pensiun.xlsx'
+            );
+        }else if($request->report_name == "DATA_PESERTA_AKTIF"){
+            return Excel::download(new DataPesertaAktifPensionFundReportExport(
+                $request->period,
+                $request->group_department,
+                $request->print_date), 
+                'Laporan Data Peserta Aktif Dana Pensiun.xlsx'
             );
         }
     }
