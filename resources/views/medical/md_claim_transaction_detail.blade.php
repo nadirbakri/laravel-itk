@@ -310,7 +310,7 @@
         let claimDate = $('#claim_date').flatpickr({
             altInput: true,
             allowInput: true,
-            altFormat: "j-M-y",
+            altFormat: "d-M-Y",
             dateFormat: "Y-m-d",
             defaultDate: "today",
             onReady: function () {
@@ -325,7 +325,7 @@
         let receiptDate = $('#receipt_date').flatpickr({
             altInput: true,
             allowInput: true,
-            altFormat: "j-M-y",
+            altFormat: "d-M-Y",
             dateFormat: "Y-m-d",
             defaultDate: "today",
             onReady: function () {

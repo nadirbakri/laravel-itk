@@ -368,7 +368,7 @@
         let periodClaimFrom = $('#period_claim_from').flatpickr({
             altInput: true,
             allowInput: true,
-            altFormat: "j-M-y",
+            altFormat: "d-M-Y",
             dateFormat: "Y-m-d",
             defaultDate: "today",
             onReady: function () {
@@ -383,7 +383,7 @@
         let periodClaimTo = $('#period_claim_to').flatpickr({
             altInput: true,
             allowInput: true,
-            altFormat: "j-M-y",
+            altFormat: "d-M-Y",
             dateFormat: "Y-m-d",
             defaultDate: "today",
             onReady: function () {

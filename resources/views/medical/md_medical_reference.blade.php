@@ -544,7 +544,7 @@
         let pickrProcessPeriod = $('#processing_period').flatpickr({
             altInput: true,
             allowInput: true,
-            altFormat: "j-M-y",
+            altFormat: "d-M-Y",
             dateFormat: "Y-m-d",
             defaultDate: "today",
             plugins: [
@@ -566,7 +566,7 @@
         let pickerLastTransactionDate = $('#last_transaction_date_for_process_payroll').flatpickr({
             altInput: true,
             allowInput: true,
-            altFormat: "j-M-y",
+            altFormat: "d-M-Y",
             dateFormat: "Y-m-d",
             defaultDate: "today",
             onReady: function () {
@@ -581,7 +581,7 @@
         let pickerInsurancePeriodFrom = $('#insurance_period_from').flatpickr({
             altInput: true,
             allowInput: true,
-            altFormat: "j-M-y",
+            altFormat: "d-M-Y",
             dateFormat: "Y-m-d",
             defaultDate: "today",
             onReady: function () {
@@ -596,7 +596,7 @@
         let pickerInsurancePeriodTo = $('#insurance_period_to').flatpickr({
             altInput: true,
             allowInput: true,
-            altFormat: "j-M-y",
+            altFormat: "d-M-Y",
             dateFormat: "Y-m-d",
             defaultDate: "today",
             onReady: function () {

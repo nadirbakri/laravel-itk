@@ -427,7 +427,7 @@
         let pickerLoanDate = $('#loan_date').flatpickr({
             altInput: true,
             allowInput: true,
-            altFormat: "j-M-y",
+            altFormat: "d-M-Y",
             dateFormat: "Y-m-d",
             defaultDate: "today",
             onReady: function () {
@@ -442,7 +442,7 @@
         let pickerFirstPaymentDate = $('#first_payment_date').flatpickr({
             altInput: true,
             allowInput: true,
-            altFormat: "j-M-y",
+            altFormat: "d-M-Y",
             dateFormat: "Y-m-d",
             defaultDate: "today",
             onReady: function () {
@@ -457,7 +457,7 @@
         let pickerPaidOn = $('#paid_on').flatpickr({
             altInput: true,
             allowInput: true,
-            altFormat: "j-M-y",
+            altFormat: "d-M-Y",
             dateFormat: "Y-m-d",
             defaultDate: "today",
             onReady: function () {
@@ -472,7 +472,7 @@
         let pickerPaymentDate = $('#payment_date_table').flatpickr({
             altInput: true,
             allowInput: true,
-            altFormat: "j-M-y",
+            altFormat: "d-M-Y",
             dateFormat: "Y-m-d",
             defaultDate: "today",
             onReady: function () {
@@ -488,7 +488,7 @@
             return $(field).flatpickr({
                 altInput: true,
                 allowInput: true,
-                altFormat: "j-M-y",
+                altFormat: "d-M-Y",
                 dateFormat: "Y-m-d",
                 defaultDate: "today",
                 onReady: function () {
@@ -1095,7 +1095,7 @@
                         let pickerPaymentDate = $('#payment_date_table' + i).flatpickr({
                             altInput: true,
                             allowInput: true,
-                            altFormat: "j-M-y",
+                            altFormat: "d-M-Y",
                             dateFormat: "Y-m-d",
                             defaultDate: "today",
                             onReady: function () {
@@ -1316,7 +1316,7 @@
                     let pickerPaymentDate = $('#payment_date_table' + k).flatpickr({
                         altInput: true,
                         allowInput: true,
-                        altFormat: "j-M-y",
+                        altFormat: "d-M-Y",
                         dateFormat: "Y-m-d",
                         defaultDate: "today",
                         onReady: function () {

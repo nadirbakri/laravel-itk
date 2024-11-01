@@ -1171,7 +1171,7 @@
         // $('.input-group input').flatpickr({
         //     altInput: true,
         //     allowInput: true,
-        //     altFormat: "j-M-y",
+        //     altFormat: "d-M-Y",
         //     dateFormat: "Y-m-d",
         //     defaultDate: "today",
         //     onReady: function () {
@@ -1195,7 +1195,7 @@
         $('#organization_start_date').flatpickr({
             altInput: true,
             allowInput: true,
-            altFormat: "j-M-y",
+            altFormat: "d-M-Y",
             dateFormat: "Y-m-d",
             defaultDate: "today",
             onReady: function () {
@@ -1210,7 +1210,7 @@
         $('#organization_end_date').flatpickr({
             altInput: true,
             allowInput: true,
-            altFormat: "j-M-y",
+            altFormat: "d-M-Y",
             dateFormat: "Y-m-d",
             defaultDate: "today",
             onReady: function () {
@@ -1246,7 +1246,7 @@
         $('.input-group #graduate_year').flatpickr({
             altInput: true,
             allowInput: true,
-            altFormat: "j-M-y",
+            altFormat: "d-M-Y",
             dateFormat: "Y-m-d",
             defaultDate: "today",
             plugins: [

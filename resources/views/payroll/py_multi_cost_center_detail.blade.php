@@ -260,7 +260,7 @@
         let pickerMonthYear = $('#month_year').flatpickr({
             altInput: true,
             allowInput: true,
-            altFormat: "j-M-y",
+            altFormat: "d-M-Y",
             dateFormat: "Y-m-d",
             defaultDate: "today",
             plugins: [
@@ -364,7 +364,7 @@
             let pickerMonthYear = $('#month_year').flatpickr({
                 altInput: true,
                 allowInput: true,
-                altFormat: "j-M-y",
+                altFormat: "d-M-Y",
                 dateFormat: "Y-m-d",
                 defaultDate: "today",
                 plugins: [

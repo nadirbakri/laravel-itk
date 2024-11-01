@@ -937,7 +937,7 @@
         // let pickerAttachmentDate = $('#attachment_date').flatpickr({
         //     altInput: true,
         //     allowInput: true,
-        //     altFormat: "j-M-y",
+        //     altFormat: "d-M-Y",
         //     dateFormat: "Y-m-d",
         //     defaultDate: "today",
         //     onReady: function () {
@@ -952,7 +952,7 @@
         let pickerPeriodStartDate = $('#period_start_date_new').flatpickr({
             altInput: true,
             allowInput: true,
-            altFormat: "j-M-y",
+            altFormat: "d-M-Y",
             dateFormat: "Y-m-d",
             defaultDate: "today",
             onReady: function () {
@@ -967,7 +967,7 @@
         let pickerStartDate = $('#start_date_new').flatpickr({
             altInput: true,
             allowInput: true,
-            altFormat: "j-M-y",
+            altFormat: "d-M-Y",
             dateFormat: "Y-m-d",
             defaultDate: "today",
             onReady: function () {
@@ -982,7 +982,7 @@
         let pickerInitialDate = $('#initial_date_current').flatpickr({
             altInput: true,
             allowInput: true,
-            altFormat: "j-M-y",
+            altFormat: "d-M-Y",
             dateFormat: "Y-m-d",
             defaultDate: "today",
             onReady: function () {
@@ -997,7 +997,7 @@
         let pickerContractStartDateCurrent = $('#contract_start_date_current').flatpickr({
             altInput: true,
             allowInput: true,
-            altFormat: "j-M-y",
+            altFormat: "d-M-Y",
             dateFormat: "Y-m-d",
             defaultDate: "today",
             onReady: function () {
@@ -1012,7 +1012,7 @@
         let pickerContractEndDateCurrent = $('#contract_end_date_current').flatpickr({
             altInput: true,
             allowInput: true,
-            altFormat: "j-M-y",
+            altFormat: "d-M-Y",
             dateFormat: "Y-m-d",
             defaultDate: "today",
             onReady: function () {
@@ -1027,7 +1027,7 @@
         let pickerContractStartDateNew = $('#contract_start_date_new').flatpickr({
             altInput: true,
             allowInput: true,
-            altFormat: "j-M-y",
+            altFormat: "d-M-Y",
             dateFormat: "Y-m-d",
             defaultDate: "today",
             onReady: function () {
@@ -1042,7 +1042,7 @@
         let pickerContractEndDateNew = $('#contract_end_date_new').flatpickr({
             altInput: true,
             allowInput: true,
-            altFormat: "j-M-y",
+            altFormat: "d-M-Y",
             dateFormat: "Y-m-d",
             defaultDate: "today",
             onReady: function () {
@@ -1057,7 +1057,7 @@
         let pickerEffectivePermanentDate = $('#effective_permanent_date_new').flatpickr({
             altInput: true,
             allowInput: true,
-            altFormat: "j-M-y",
+            altFormat: "d-M-Y",
             dateFormat: "Y-m-d",
             defaultDate: "today",
             onReady: function () {
@@ -1072,7 +1072,7 @@
         let pickerTerminationDateCurrent = $('#termination_date_current').flatpickr({
             altInput: true,
             allowInput: true,
-            altFormat: "j-M-y",
+            altFormat: "d-M-Y",
             dateFormat: "Y-m-d",
             onReady: function () {
                 var flatPickrInstance = this;
@@ -1086,7 +1086,7 @@
         let pickerEffectiveTerminationDateCurrent = $('#effective_termination_date_current').flatpickr({
             altInput: true,
             allowInput: true,
-            altFormat: "j-M-y",
+            altFormat: "d-M-Y",
             dateFormat: "Y-m-d",
             onReady: function () {
                 var flatPickrInstance = this;
@@ -1100,7 +1100,7 @@
         let pickerTerminationDate = $('#termination_date_new').flatpickr({
             altInput: true,
             allowInput: true,
-            altFormat: "j-M-y",
+            altFormat: "d-M-Y",
             dateFormat: "Y-m-d",
             // defaultDate: "today",
             onReady: function () {
@@ -1115,7 +1115,7 @@
         let pickerEffectiveTerminationDate = $('#effective_termination_date_new').flatpickr({
             altInput: true,
             allowInput: true,
-            altFormat: "j-M-y",
+            altFormat: "d-M-Y",
             dateFormat: "Y-m-d",
             // defaultDate: "today",
             onReady: function () {

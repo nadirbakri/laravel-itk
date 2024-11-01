@@ -389,7 +389,7 @@
         $('.input-group input').flatpickr({
             altInput: true,
             allowInput: true,
-            altFormat: "j-M-y",
+            altFormat: "d-M-Y",
             dateFormat: "Y-m-d",
             onReady: function () {
                 var flatPickrInstance = this;

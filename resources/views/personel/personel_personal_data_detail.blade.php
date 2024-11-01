@@ -2366,7 +2366,7 @@
         $('#start_date_employment_data').flatpickr({
             altInput: true,
             allowInput: true,
-            altFormat: "j-M-y",
+            altFormat: "d-M-Y",
             dateFormat: "Y-m-d",
             defaultDate: null,
             onReady: function () {
@@ -2383,7 +2383,7 @@
         $('#end_date_employment_data').flatpickr({
             altInput: true,
             allowInput: true,
-            altFormat: "j-M-y",
+            altFormat: "d-M-Y",
             dateFormat: "Y-m-d",
             defaultDate: null,
             onReady: function () {
@@ -2400,7 +2400,7 @@
         $('#birth_date_family_dependent_data').flatpickr({
             altInput: true,
             allowInput: true,
-            altFormat: "j-M-y",
+            altFormat: "d-M-Y",
             dateFormat: "Y-m-d",
             defaultDate: null,
             onReady: function () {
@@ -2442,7 +2442,7 @@
         let pickerBirthDate = $('#birth_date_info').flatpickr({
             altInput: true,
             allowInput: true,
-            altFormat: "j-M-y",
+            altFormat: "d-M-Y",
             dateFormat: "Y-m-d",
             defaultDate: null,
             onReady: function () {
@@ -2457,7 +2457,7 @@
         let pickerPassportDate = $('#passport_date_info').flatpickr({
             altInput: true,
             allowInput: true,
-            altFormat: "j-M-y",
+            altFormat: "d-M-Y",
             dateFormat: "Y-m-d",
             defaultDate: null,
             onReady: function () {
@@ -2472,7 +2472,7 @@
         let pickerTaxRegisteredDateInfo = $('#tax_registered_date_info').flatpickr({
             altInput: true,
             allowInput: true,
-            altFormat: "j-M-y",
+            altFormat: "d-M-Y",
             dateFormat: "Y-m-d",
             defaultDate: null,
             onReady: function () {
@@ -2487,7 +2487,7 @@
         // let pickerTaxRegisteredDatePayroll = $('#tax_registered_date_payroll').flatpickr({
         //     altInput: true,
         //     allowInput: true,
-        //     altFormat: "j-M-y",
+        //     altFormat: "d-M-Y",
         //     dateFormat: "Y-m-d",
         //     defaultDate: null,
         //     onReady: function () {
@@ -2502,7 +2502,7 @@
         let pickerTaxExpiryDateInfo = $('#tax_expiry_date_info').flatpickr({
             altInput: true,
             allowInput: true,
-            altFormat: "j-M-y",
+            altFormat: "d-M-Y",
             dateFormat: "Y-m-d",
             defaultDate: null,
             onReady: function () {
@@ -2517,7 +2517,7 @@
         // let pickerTaxExpiryDatePayroll = $('#tax_expiry_date_payroll').flatpickr({
         //     altInput: true,
         //     allowInput: true,
-        //     altFormat: "j-M-y",
+        //     altFormat: "d-M-Y",
         //     dateFormat: "Y-m-d",
         //     defaultDate: null,
         //     onReady: function () {
@@ -2532,7 +2532,7 @@
         let pickerDrivingLicenseCarDate = $('#driving_license_car_date_info').flatpickr({
             altInput: true,
             allowInput: true,
-            altFormat: "j-M-y",
+            altFormat: "d-M-Y",
             dateFormat: "Y-m-d",
             defaultDate: null,
             onReady: function () {
@@ -2547,7 +2547,7 @@
         let pickerDrivingLicenseCarExpiryDate = $('#driving_license_car_expiry_date_info').flatpickr({
             altInput: true,
             allowInput: true,
-            altFormat: "j-M-y",
+            altFormat: "d-M-Y",
             dateFormat: "Y-m-d",
             defaultDate: null,
             onReady: function () {
@@ -2562,7 +2562,7 @@
         let pickerDrivingLicenseMotorcycleDate = $('#driving_license_motorcycle_date_info').flatpickr({
             altInput: true,
             allowInput: true,
-            altFormat: "j-M-y",
+            altFormat: "d-M-Y",
             dateFormat: "Y-m-d",
             defaultDate: null,
             onReady: function () {
@@ -2577,7 +2577,7 @@
         let pickerDrivingLicenseMotorcycleExpiryDate = $('#driving_license_motorcycle_expiry_date_info').flatpickr({
             altInput: true,
             allowInput: true,
-            altFormat: "j-M-y",
+            altFormat: "d-M-Y",
             dateFormat: "Y-m-d",
             defaultDate: null,
             onReady: function () {
@@ -2592,7 +2592,7 @@
         let pickerOriginJoinDate = $('#origin_join_date_employment').flatpickr({
             altInput: true,
             allowInput: true,
-            altFormat: "j-M-y",
+            altFormat: "d-M-Y",
             dateFormat: "Y-m-d",
             defaultDate: null,
             onReady: function () {
@@ -2607,7 +2607,7 @@
         let pickerJoinDate = $('#joining_date_employment').flatpickr({
             altInput: true,
             allowInput: true,
-            altFormat: "j-M-y",
+            altFormat: "d-M-Y",
             dateFormat: "Y-m-d",
             defaultDate: null,
             onReady: function () {
@@ -2622,7 +2622,7 @@
         let pickerJoiningDateBPJSTenagaKerja = $('#joining_date_tenaga_kerja').flatpickr({
             altInput: true,
             allowInput: true,
-            altFormat: "j-M-y",
+            altFormat: "d-M-Y",
             dateFormat: "Y-m-d",
             defaultDate: null,
             onReady: function () {
@@ -2637,7 +2637,7 @@
         let pickerJoiningDateBPJSKesehatan = $('#joining_date_kesehatan').flatpickr({
             altInput: true,
             allowInput: true,
-            altFormat: "j-M-y",
+            altFormat: "d-M-Y",
             dateFormat: "Y-m-d",
             defaultDate: null,
             onReady: function () {
@@ -2652,7 +2652,7 @@
         let pickerProbationEndDate = $('#probation_end_date_employment').flatpickr({
             altInput: true,
             allowInput: true,
-            altFormat: "j-M-y",
+            altFormat: "d-M-Y",
             dateFormat: "Y-m-d",
             defaultDate: null,
             onReady: function () {
@@ -2667,7 +2667,7 @@
         let pickerContractStartDate = $('#contract_start_date_employment').flatpickr({
             altInput: true,
             allowInput: true,
-            altFormat: "j-M-y",
+            altFormat: "d-M-Y",
             dateFormat: "Y-m-d",
             defaultDate: null,
             onReady: function () {
@@ -2682,7 +2682,7 @@
         let pickerContractEndDate = $('#contract_end_date_employment').flatpickr({
             altInput: true,
             allowInput: true,
-            altFormat: "j-M-y",
+            altFormat: "d-M-Y",
             dateFormat: "Y-m-d",
             defaultDate: null,
             onReady: function () {
@@ -2697,7 +2697,7 @@
         let pickerEffectivePermanentDate = $('#effective_permanent_date_employment').flatpickr({
             altInput: true,
             allowInput: true,
-            altFormat: "j-M-y",
+            altFormat: "d-M-Y",
             dateFormat: "Y-m-d",
             defaultDate: null,
             onReady: function () {
@@ -2712,7 +2712,7 @@
         let pickerJoinDateDanaPensiun = $('#join_date_dana_pensiun_employment').flatpickr({
             altInput: true,
             allowInput: true,
-            altFormat: "j-M-y",
+            altFormat: "d-M-Y",
             dateFormat: "Y-m-d",
             defaultDate: null,
             onReady: function () {
@@ -2727,7 +2727,7 @@
         // let pickerTerminationDate = $('#termination_date_employment').flatpickr({
         //     altInput: true,
         //     allowInput: true,
-        //     altFormat: "j-M-y",
+        //     altFormat: "d-M-Y",
         //     dateFormat: "Y-m-d",
         //     defaultDate: null,
         //     onReady: function () {
@@ -2742,7 +2742,7 @@
         // let pickerEffectiveTerminated = $('#effective_terminated_employment').flatpickr({
         //     altInput: true,
         //     allowInput: true,
-        //     altFormat: "j-M-y",
+        //     altFormat: "d-M-Y",
         //     dateFormat: "Y-m-d",
         //     defaultDate: null,
         //     onReady: function () {
@@ -2757,7 +2757,7 @@
         let pickerExpatriatStartDate = $('#start_date_employment').flatpickr({
             altInput: true,
             allowInput: true,
-            altFormat: "j-M-y",
+            altFormat: "d-M-Y",
             dateFormat: "Y-m-d",
             defaultDate: null,
             onReady: function () {
@@ -2772,7 +2772,7 @@
         let pickerExpatriatEndDate = $('#end_date_employment').flatpickr({
             altInput: true,
             allowInput: true,
-            altFormat: "j-M-y",
+            altFormat: "d-M-Y",
             dateFormat: "Y-m-d",
             defaultDate: null,
             onReady: function () {
@@ -2787,7 +2787,7 @@
         let pickerPaymentPeriodStartDateBPJSTenagaKerja = $('#payment_period_start_date_tenaga_kerja').flatpickr({
             altInput: true,
             allowInput: true,
-            altFormat: "j-M-y",
+            altFormat: "d-M-Y",
             dateFormat: "Y-m-d",
             defaultDate: null,
             onReady: function () {
@@ -2802,7 +2802,7 @@
         let pickerPaymentPeriodStartDateBPJSKesehatan = $('#payment_period_start_date_kesehatan').flatpickr({
             altInput: true,
             allowInput: true,
-            altFormat: "j-M-y",
+            altFormat: "d-M-Y",
             dateFormat: "Y-m-d",
             defaultDate: null,
             onReady: function () {
@@ -2817,7 +2817,7 @@
         let pickerInsuranceDate = $('#insurance_date_insurance').flatpickr({
             altInput: true,
             allowInput: true,
-            altFormat: "j-M-y",
+            altFormat: "d-M-Y",
             dateFormat: "Y-m-d",
             defaultDate: null,
             onReady: function () {

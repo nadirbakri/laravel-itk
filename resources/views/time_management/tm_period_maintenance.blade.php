@@ -455,7 +455,7 @@
         let pickerAbsenteeismDateFrom = $('#absenteeism_from').flatpickr({
             altInput: true,
             allowInput: true,
-            altFormat: "j-M-y",
+            altFormat: "d-M-Y",
             dateFormat: "Y-m-d",
             onReady: function () {
                 var flatPickrInstance = this;
@@ -470,7 +470,7 @@
         let pickerAbsenteeismDateTo = $('#absenteeism_to').flatpickr({
             altInput: true,
             allowInput: true,
-            altFormat: "j-M-y",
+            altFormat: "d-M-Y",
             dateFormat: "Y-m-d",
             onReady: function () {
                 var flatPickrInstance = this;
@@ -485,7 +485,7 @@
         let pickerOvertimeDateFrom = $('#overtime_from').flatpickr({
             altInput: true,
             allowInput: true,
-            altFormat: "j-M-y",
+            altFormat: "d-M-Y",
             dateFormat: "Y-m-d",
             onReady: function () {
                 var flatPickrInstance = this;
@@ -500,7 +500,7 @@
         let pickerOvertimeDateTo = $('#overtime_to').flatpickr({
             altInput: true,
             allowInput: true,
-            altFormat: "j-M-y",
+            altFormat: "d-M-Y",
             dateFormat: "Y-m-d",
             onReady: function () {
                 var flatPickrInstance = this;
@@ -515,7 +515,7 @@
         let pickerSalaryDateFrom = $('#salary_from').flatpickr({
             altInput: true,
             allowInput: true,
-            altFormat: "j-M-y",
+            altFormat: "d-M-Y",
             dateFormat: "Y-m-d",
             onReady: function () {
                 var flatPickrInstance = this;
@@ -530,7 +530,7 @@
         let pickerSalaryDateTo = $('#salary_to').flatpickr({
             altInput: true,
             allowInput: true,
-            altFormat: "j-M-y",
+            altFormat: "d-M-Y",
             dateFormat: "Y-m-d",
             onReady: function () {
                 var flatPickrInstance = this;
