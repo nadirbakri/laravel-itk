@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>{{ __('personel_plafon_medical.judul') }}</title>
+    <title>{{ __('personel_plafon_transport.judul') }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -78,16 +78,16 @@
         <div class="div-title">
             <a href="{{ url()->previous() }}" target="iframe_dashboard">
                 <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
-                <span class="title-text">{{ __('personel_plafon_medical.list_detail') }}</span>
+                <span class="title-text">{{ __('personel_plafon_transport.list_detail') }}</span>
             </a>
         </div>
         <div class="div-form">
-            <form id="plafon_form" method="post">
+            <form id="plafon_transport_form" method="post">
                 @csrf
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="year">{{ __('personel_plafon_medical.label_year') }}</label>
+                            <label for="year">{{ __('personel_plafon_transport.label_year') }}</label>
                             <span class="required">*</span>
                             <select class="form-control select2" id="year" name="year"></select>
                         </div>
@@ -95,42 +95,42 @@
                     </div>
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="type">{{ __('personel_plafon_medical.label_type') }}</label>
+                            <label for="type">{{ __('personel_plafon_transport.label_type') }}</label>
                             <span class="required">*</span>
                             <input type="text" class="form-control" id="type" name="type"
-                                placeholder="{{ __('personel_plafon_medical.label_type') }}" disabled>
+                                placeholder="{{ __('personel_plafon_transport.label_type') }}" disabled>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="code">{{ __('personel_plafon_medical.label_code') }}</label>
+                            <label for="code">{{ __('personel_plafon_transport.label_code') }}</label>
                             <span class="required">*</span>
-                            <select class="form-control select2" id="code" name="code" placeholder="{{ __('tm_shift_master_code.label_code') }}"></select>
+                            <select class="form-control select2" id="code" name="code" placeholder="{{ __('personel_plafon_transport.label_code') }}"></select>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="status">{{ __('personel_plafon_medical.label_status') }}</label>
+                            <label for="status">{{ __('personel_plafon_transport.label_status') }}</label>
                             <span class="required">*</span>
-                            <input type="text" class="form-control" id="status" name="status"
-                                placeholder="{{ __('personel_plafon_medical.label_status') }}">
+                            <select class="form-control select2" id="status" name="status" placeholder="{{ __('personel_plafon_transport.label_status') }}"></select>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="nominal">{{ __('personel_plafon_medical.label_nominal') }}</label>
+                            <label for="nominal">{{ __('personel_plafon_transport.label_nominal') }}</label>
                             <span class="required">*</span>
                             <input type="number" class="form-control" id="nominal" name="nominal"
-                                placeholder="{{ __('personel_plafon_medical.label_nominal') }}">
+                                placeholder="{{ __('personel_plafon_transport.label_nominal') }}">
+                            <input type="hidden" id="nominal_hidden" name="nominal_hidden">
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="ranking_code">{{ __('personel_plafon_medical.label_ranking_code') }}</label>
+                            <label for="ranking_code">{{ __('personel_plafon_transport.label_ranking_code') }}</label>
                             <span class="required">*</span>
                             <select class="form-control select2" id="ranking_code" name="ranking_code"></select>
                         </div>
@@ -140,13 +140,13 @@
                     <div class="col-3">
                         <button type="submit" class="btn btn-primary" name="btn-save" id="btn-save"
                             style="width: 100%;">
-                            <i class="fa fa-floppy-o"></i> {{ __('personel_plafon_medical.btn_save') }}
+                            <i class="fa fa-floppy-o"></i> {{ __('personel_plafon_transport.btn_save') }}
                         </button>
                     </div>
                     <div class="col-3">
-                        <a class="btn btn-outline-primary" href="{{ url('personnel/plafon_medical') }}" target="iframe_dashboard"
+                        <a class="btn btn-outline-primary" href="{{ url('personnel/plafon_transport') }}" target="iframe_dashboard"
                             name="btn-cancel" id="btn-cancel" style="width: 100%;">
-                            <i class="fa fa-times-circle"></i> {{ __('personel_plafon_medical.btn_cancel') }}
+                            <i class="fa fa-times-circle"></i> {{ __('personel_plafon_transport.btn_cancel') }}
                         </a>
                     </div>
                 </div>
@@ -179,7 +179,7 @@
                 <div class="modal-body">
                     <div class="div-title-notification">
                         <img src="{{ url('/pictures/checklist-green-confirm-password.svg') }}" alt="Password">
-                        <span class="title-text-notification">{{ __('personel_plafon_medical.alert_success') }}</span>
+                        <span class="title-text-notification">{{ __('personel_plafon_transport.alert_success') }}</span>
                     </div>
                     <div class="div-title-notification">
                         <span id="message-notification-success"></span>
@@ -242,25 +242,35 @@
 
         $('#code').select2();
 
+        // $('#nominal').on('input', function () {
+        //     let rawValue = $(this).val().replace(/\D/g, '');
+        //     let formattedValue = Number(rawValue).toLocaleString('de-DE');
+        //     console.log(rawValue)
+        //     console.log(formattedValue)
+
+        //     $(this).val(formattedValue);
+        //     $('#nominal_hidden').val(rawValue); 
+        // });
+
         if (func == 'new') {
             $('#record_function').val("New");
-            $('#type').val('Medical');
+            $('#type').val('Transport');
             $('#code').val(null).trigger('change');
             $('#status').val("");
             $('#nominal').val("");
             $('#ranking_code').val(null).trigger('change');
         } else if (func == 'edit') {
             $('#record_function').val("Edit");
-            $('#year').val(arrData[0].plafonYear).trigger('change');
+            $('#year').val(arrData[0].plafonYear);
             $('#type').val(arrData[0].category);
             $('#code').val(arrData[0].plafonCode).trigger('change');
-            $('#status').val(arrData[0].status);
+            $('#status').val(arrData[0].status).trigger('change');
             $('#nominal').val(arrData[0].plafonAmount);
             $('#ranking_code').val(arrData[0].rankCode).trigger('change');
 
             $.ajax({
                 type: 'GET',
-                url: "{{ url('/plafon_medical/func/api') }}",
+                url: "{{ url('/plafon_transport/func/api') }}",
                 data: {
                     code: arrData[0].plafonCode
                 }
@@ -269,6 +279,26 @@
                 $('#code').append(option).trigger('change');
 
                 $('#code').trigger({
+                    type: 'select2:select',
+                    params: {
+                        id: data[0].code,
+                        text: data[0].value,
+                        data: data[0]
+                    }
+                });
+            });
+
+            $.ajax({
+                type: 'GET',
+                url: "{{ url('/travel_advance/func/api') }}",
+                data: {
+                    code: arrData[0].status
+                }
+            }).then(function (data) {
+                var option = new Option(data[0].value, data[0].code, true, true);
+                $('#status').append(option).trigger('change');
+
+                $('#status').trigger({
                     type: 'select2:select',
                     params: {
                         id: data[0].code,
@@ -304,6 +334,7 @@
         }
 
         loadDataPlafonCode();
+        loadDataStatus();
         loadDataRankingCode();
 
         function loadDataPlafonCode() {
@@ -336,7 +367,64 @@
                     }
                 },
                 ajax: {
-                    url: "{{ url('/plafon_medical/api') }}",
+                    url: "{{ url('/plafon_transport/api') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.value,
+                                    id: item.code,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataStatus() {
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' +
+                        '<div class="col-12">' + data.data.value + '</div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $('#status').select2({
+                width: '100%',
+                placeholder: 'Choose Plafon Status',
+                allowClear: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: "{{ url('/travel_advance/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -434,7 +522,7 @@
         }
 
         $('#notification_success').on('hide.bs.modal', function () {
-            window.location = "{{ url('personnel/plafon_medical') }}";
+            window.location = "{{ url('personnel/plafon_transport') }}";
         })
 
         $("#btn-save").click(function () {
@@ -442,11 +530,11 @@
             $(this).html(
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
-            $("#plafon_form").submit();
+            $("#plafon_transport_form").submit();
         });
 
-        if ($("#plafon_form").length > 0) {
-            $("#plafon_form").validate({
+        if ($("#plafon_transport_form").length > 0) {
+            $("#plafon_transport_form").validate({
                 rules: {
                     year: {
                         required: true,
@@ -469,22 +557,22 @@
                 },
                 messages: {
                     year: {
-                        required: "{{ __('personel_plafon_medical.year_required') }}",
+                        required: "{{ __('personel_plafon_transport.year_required') }}",
                     },
                     type: {
-                        required: "{{ __('personel_plafon_medical.type_required') }}",
+                        required: "{{ __('personel_plafon_transport.type_required') }}",
                     },
                     code: {
-                        required: "{{ __('personel_plafon_medical.code_required') }}",
+                        required: "{{ __('personel_plafon_transport.code_required') }}",
                     },
                     status: {
-                        required: "{{ __('personel_plafon_medical.status_required') }}",
+                        required: "{{ __('personel_plafon_transport.status_required') }}",
                     },
                     nominal: {
-                        required: "{{ __('personel_plafon_medical.nominal_required') }}",
+                        required: "{{ __('personel_plafon_transport.nominal_required') }}",
                     },
                     ranking_code: {
-                        required: "{{ __('personel_plafon_medical.ranking_code_required') }}",
+                        required: "{{ __('personel_plafon_transport.ranking_code_required') }}",
                     },
                 },
                 highlight: function (element) {
@@ -497,7 +585,7 @@
                 errorPlacement: function (error, element) {
                     $("#btn-save").prop("disabled", false);
                     $("#btn-save").html(
-                        '<i class="fa fa-floppy-o"></i> {{ __("personel_plafon_medical.btn_save") }}'
+                        '<i class="fa fa-floppy-o"></i> {{ __("personel_plafon_transport.btn_save") }}'
                     );
                     error.addClass('invalid-feedback');
                     element.closest('.form-group').append(error);
@@ -509,26 +597,26 @@
                         }
                     });
                     $.ajax({
-                        url: "{{ url('personnel/plafon_medical/proses') }}",
+                        url: "{{ url('personnel/plafon_transport/proses') }}",
                         type: "POST",
-                        data: $('#plafon_form').serialize(),
+                        data: $('#plafon_transport_form').serialize(),
                         success: function (response) {
                             if (response.status == "true") {
                                 $("#btn-save").prop("disabled", false);
                                 $("#btn-save").html(
-                                    '<i class="fa fa-floppy-o"></i> {{ __("personel_plafon_medical.btn_save") }}'
+                                    '<i class="fa fa-floppy-o"></i> {{ __("personel_plafon_transport.btn_save") }}'
                                 );
                                 $('#notification_success').modal('show');
                                 $('#message-notification-success').html(response
                                     .message);
                                 setTimeout(function () {
                                     window.location =
-                                        "{{ url('personnel/plafon_medical') }}";
+                                        "{{ url('personnel/plafon_transport') }}";
                                 }, 3000);
                             } else {
                                 $("#btn-save").prop("disabled", false);
                                 $("#btn-save").html(
-                                    '<i class="fa fa-floppy-o"></i> {{ __("personel_plafon_medical.btn_save") }}'
+                                    '<i class="fa fa-floppy-o"></i> {{ __("personel_plafon_transport.btn_save") }}'
                                 );
                                 $('#notification_error').modal('show');
                                 if (response.message == null || response.message ==
@@ -544,7 +632,7 @@
                         error: function (response) {
                             $("#btn-save").prop("disabled", false);
                             $("#btn-save").html(
-                                '<i class="fa fa-floppy-o"></i> {{ __("personel_plafon_medical.btn_save") }}'
+                                '<i class="fa fa-floppy-o"></i> {{ __("personel_plafon_transport.btn_save") }}'
                             );
                             $('#notification_error').modal('show');
                             $('#message-notification-error').html(response);

@@ -272,7 +272,7 @@
         } else if (func == 'edit') {
             $('#record_function').val("Edit");
             $('#year').val(arrData[0].plafonYear).trigger('change');
-            $('#type').val(arrData[0].category).trigger('change');
+            $('#type').val(arrData[0].category);
             $('#code').val(arrData[0].plafonCode).trigger('change');
             $('#status').val(arrData[0].status).trigger('change');
             $('#nominal').val(arrData[0].plafonAmount);

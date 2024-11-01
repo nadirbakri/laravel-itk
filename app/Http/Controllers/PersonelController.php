@@ -3876,6 +3876,47 @@ class PersonelController extends Controller
         return view('personel.personel_plafon_business_trip_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
     }
 
+    public function dataDetailPlafonTransportPersonel(Request $request)
+    {
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/personel/PePlafon/getAllPlafon',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'plafonYear' => $request->plafonYear,
+                        'plafonCode' => $request->plafonCode,
+                        'rankCode' => $request->rankCode,
+                        'category' => $request->category,
+                        'plafonAmount' => (int) $request->plafonAmount,
+                        'status' => $request->status,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());  
+
+        return view('personel.personel_plafon_transport_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
+    }
+
     public function dataDetailFormatReportPersonel(Request $request)
     {
 
@@ -11574,6 +11615,59 @@ class PersonelController extends Controller
                 'category' => 'BUSINESSTRIP',
                 'status' => $request->status,
                 'isDuty' => isset($request->flag_is_duty) ? (bool) $request->flag_is_duty : false,
+                'sessionUserID' => Session::get('userID'),
+                'sessionID' => 0,
+                'logActionUserID' => Session::get('userID'),
+                'logActionUsername' => Session::get('userName'),
+                "languageCode" => App::getLocale()
+            ];
+
+            if($request->record_function == 'New'){
+                $response = $client->post(env('API_URL') . '/personel/PePlafon/InsertPePlafon',
+                    ['body' => json_encode($param)]
+                );
+            }else{
+                $response = $client->put(env('API_URL') . '/personel/PePlafon/UpdatePePlafon',
+                    ['body' => json_encode($param)]
+                );
+            }
+
+
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function prosesPlafonTransportPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $param = [
+                'companyCode' => Session::get('companyCode'),
+                'plafonCode' => $request->code,
+                'plafonYear' => $request->year,
+                'plafonAmount' => (int) $request->nominal,
+                'rankCode' => $request->ranking_code,
+                'category' => 'TRANSPORT',
+                'status' => $request->status,
+                'isDuty' => false,
                 'sessionUserID' => Session::get('userID'),
                 'sessionID' => 0,
                 'logActionUserID' => Session::get('userID'),
