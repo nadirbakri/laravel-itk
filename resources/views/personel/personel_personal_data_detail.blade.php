@@ -2437,6 +2437,8 @@
     }
     
     $(document).ready(function () {
+        $.fn.modal.Constructor.prototype._enforceFocus = function() {};
+        
         let pickerBirthDate = $('#birth_date_info').flatpickr({
             altInput: true,
             allowInput: true,
@@ -4450,8 +4452,8 @@
         });
 
         $('#select').focus(function (event) {
-                var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
-                $searchfield.prop('disabled', true);
+            var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
+            $searchfield.prop('disabled', true);
         });
 
         $('#select').click(function (event) {
@@ -4602,6 +4604,7 @@
                 width: '100%',
                 placeholder: 'Choose Birth Place',
                 allowClear: true,
+                // dropdownParent: $('#modal_add_family_dependent_data .modal-content'),
                 // multiple: true,
                 // tags: true,
                 closeOnSelect: true,
