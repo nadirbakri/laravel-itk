@@ -13,6 +13,7 @@ return [
     'label_bu' => 'Unit Bisnis',
     'label_claim_type' => 'Tipe Klaim',
     'label_attachment_slip' => 'Lampiran Slip',
+    'label_destination' => 'Tujuan',
     'btn_upload' => 'Unggah',
     'btn_list' => 'Daftar',
     'btn_search' => 'Cari',

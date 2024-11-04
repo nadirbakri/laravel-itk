@@ -13,6 +13,7 @@ return [
     'label_claim_type' => 'Claim Type',
     'label_bu' => 'Business Unit',
     'label_attachment_slip' => 'Attachment Slip',
+    'label_destination' => 'Destination',
     'btn_upload' => 'Upload',
     'btn_search' => 'Search',
     'btn_list' => 'List',

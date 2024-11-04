@@ -1186,6 +1186,9 @@ class TransactionController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
+            // return response()->json(['status' => "true", 'message' => "Test"]);
+            // dd('Test');
+
             $response = $client->put(env('API_URL') . '/mobile/BusinessTrip/UpdateByAdmin',
                 ['body' => json_encode(
                     [
@@ -1286,6 +1289,9 @@ class TransactionController extends Controller
                     "paidAmount" => $value['checkPaid']
                 ];
             }
+
+            // return response()->json(['status' => "true", 'message' => "Test"]);
+            // dd('Test');
 
             $response = $client->put(env('API_URL') . '/mobile/BusinessTrip/UpdateListTicketNo',
                 ['body' => json_encode($param)]

@@ -451,6 +451,7 @@
                                 </div>
                                 <div class="col">
                                     <input id="s_date" name="s_date" type="hidden" class="form-control"><span id="s_date_val"></span>
+                                    <input id="total_diff_amount" name="total_diff_amount" type="hidden" class="form-control">
                                 </div>
                                 <div class="col-3">
                                     <h5>{{ __('trans_business_trip.label_claim_date_end') }}</h5>
@@ -503,6 +504,15 @@
                                 </div>
                                 <div class="col">
                                     <input id="employee_no" name="employee_no" type="hidden" class="form-control"><span id="employee_no_val"></span>
+                                </div>
+                            </div>
+
+                            <div class="row detailstatus">
+                                <div class="col-3">
+                                    <h5>{{ __('trans_business_trip.label_destination') }}</h5>
+                                </div>
+                                <div class="col">
+                                    <input id="destination" name="destination" type="hidden" class="form-control"><span id="destination_val"></span>
                                 </div>
                             </div>
 
@@ -901,7 +911,9 @@
             attachmentIndex = 0;
             currentAttachments = [];
 
-            if(data[0].attachmentSlip !== null){
+            $('#total_diff_amount').val(data[0].totalDifferentAmount);
+
+            if(data[0].attachmentSlip != null){
                 attachmentSlipArray.push("data:image/png;base64," + data[0].attachmentSlip);
                 $('#attachment-slip').append(`
                     <div class="col-2">
@@ -1145,6 +1157,8 @@
         $('#approvalremarks').val(data.approvalRemarks)
         $('#type').val(data.purpose)
         $('#type_val').html(data.purpose)
+        $('#destination').val(data.destination)
+        $('#destination_val').html(data.destination)
         $('#directsuperior').val(data.directSuperiorID)
         $('#div-totalpaid').show();
         if(data.claimType == "Business Trip"){
@@ -1599,35 +1613,50 @@
         let approvalremarks = $("#approvalremarks").val();
         let claim_type = $('#c_type_bst').val();
         let business_trip_status = $("#business_trip_status").val();
+        let total_diff_amount = $('#total_diff_amount').val();
 
-        update_data_approval_businesstrip(business_trip_status, reimbursement_status, claim_type, totalpaid, ticketNo, direct_superior, approvalremarks)
+        update_data_approval_businesstrip(business_trip_status, reimbursement_status, claim_type, total_diff_amount, totalpaid, ticketNo, direct_superior, approvalremarks)
     })
 
-    function updateBusinessTripStatus(business_trip_status, reimbursement_status, claim_type, totalpaid, ticketNo, direct_superior, approvalremarks) {
-        var itemIndex = arrayBusinessTrip.findIndex(obj => obj.ticketNo === ticketNo && obj.claimType === claim_type);
+    function updateBusinessTripStatus(business_trip_status, reimbursement_status, claim_type, total_diff_amount, totalpaid, ticketNo, direct_superior, approvalremarks) {
+        const filteredItems = arrayBusinessTrip.filter(item => item.ticketNo === ticketNo);
+        
+        var statusBST = reimbursement_status;
 
-        if (itemIndex !== -1) {
-            var item = arrayBusinessTrip[itemIndex];
+        if(reimbursement_status == "APPROVED BY HR") {
+            if(total_diff_amount == 0) {
+                statusBST = "SETTLEMENT CHECKING";
+            } else if(total_diff_amount < 0) {
+                statusBST = "SETTLEMENT WAITING PAYMENT";
+            } else if(total_diff_amount > 0) {
+                statusBST = "WAITING_UPLOAD_SLIP";
+            }
+        } else if(reimbursement_status == "REJECTED BY HR") {
+            statusBST = "REJECTED";
+        }
 
+        filteredItems.forEach(item => {
             if (business_trip_status === "ALL") {
-                item.status = reimbursement_status;
+                item.status = statusBST;
                 item.paidAmount = totalpaid;
                 item.approvalRemarks = approvalremarks;
             } else {
                 if (reimbursement_status === business_trip_status) {
-                    item.status = reimbursement_status;
+                    item.status = statusBST;
                     item.paidAmount = totalpaid;
                     item.approvalRemarks = approvalremarks;
                 } else {
-                    arrayBusinessTrip.splice(itemIndex, 1);
+                    item.toBeDeleted = true;
                 }
             }
+        });
 
-            table.clear().rows.add(arrayBusinessTrip).draw(false);
-        }
+        arrayBusinessTrip = arrayBusinessTrip.filter(item => !item.toBeDeleted);
+
+        table.clear().rows.add(arrayBusinessTrip).draw(false);
     }
 
-    function update_data_approval_businesstrip(business_trip_status, reimbursement_status, claim_type, totalpaid, ticketNo, direct_superior, approvalremarks){
+    function update_data_approval_businesstrip(business_trip_status, reimbursement_status, claim_type, total_diff_amount, totalpaid, ticketNo, direct_superior, approvalremarks){
         $.ajax({
             url: "{{ url('trans/update_approvalbusinesstrip/table') }}",
             type: "get",
@@ -1652,7 +1681,7 @@
                     $('#message-notification-success').html(response
                         .message);
 
-                    updateBusinessTripStatus(business_trip_status, reimbursement_status, claim_type, totalpaid, ticketNo, direct_superior, approvalremarks);
+                    updateBusinessTripStatus(business_trip_status, reimbursement_status, claim_type, total_diff_amount, totalpaid, ticketNo, direct_superior, approvalremarks);
 
                 } else{
                     $("#btn-update").prop("disabled", false);
