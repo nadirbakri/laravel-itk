@@ -44,7 +44,7 @@
 				<table style="width: 100%;">
 					<tr>
 						<td>
-							<img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/pictures/logo_skyworx.png'))) }}" style="margin-left: 100px; width: 85px; height: 65px" alt="Logo">
+							<img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/pictures/logo_skyworx.png'))) }}" style="margin-left: 50px; width: 165px; height: 65px" alt="Logo">
 						</td>
 					</tr>
 				</table>

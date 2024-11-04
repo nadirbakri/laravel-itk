@@ -43,7 +43,7 @@
 				<table style="width: 100%;">
 					<tr>
 						<td>
-							<img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/pictures/logo_skyworx.png'))) }}" style="margin-left: 100px; width: 105px; height: 85px" alt="Logo">
+							<img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/pictures/logo_skyworx.png'))) }}" style="margin-left: 100px; width: 185px; height: 85px" alt="Logo">
 						</td>
 					</tr>
 				</table>
