@@ -2823,6 +2823,7 @@ class UtilitiesController extends Controller
                             "changedBy" => Session::get('userID'),
                             'userID' => Session::get('userID'),
                             'sessionID' => 0,
+                            'sessionUserID' => Session::get('userID'),
                             'logActionUserID' => Session::get('userID'),
                             'logActionUsername' => Session::get('userName'),
                             "languageCode" => strtoupper(App::getLocale())
@@ -2841,6 +2842,7 @@ class UtilitiesController extends Controller
                             "changedBy" => Session::get('userID'),
                             'userID' => Session::get('userID'),
                             'sessionID' => 0,
+                            'sessionUserID' => Session::get('userID'),
                             'logActionUserID' => Session::get('userID'),
                             'logActionUsername' => Session::get('userName'),
                             "languageCode" => strtoupper(App::getLocale())
@@ -2848,8 +2850,6 @@ class UtilitiesController extends Controller
                     )]
                 );
             }
-
-
         } catch (RequestException $e) {
             $response = $e->getResponse();
             if($response->getStatusCode() == 401){
@@ -2891,6 +2891,7 @@ class UtilitiesController extends Controller
                             "changedBy" => Session::get('userID'),
                             'userID' => Session::get('userID'),
                             'sessionID' => 0,
+                            'sessionUserID' => Session::get('userID'),
                             'logActionUserID' => Session::get('userID'),
                             'logActionUsername' => Session::get('userName'),
                             "languageCode" => strtoupper(App::getLocale())
@@ -2909,6 +2910,7 @@ class UtilitiesController extends Controller
                             "changedBy" => Session::get('userID'),
                             'userID' => Session::get('userID'),
                             'sessionID' => 0,
+                            'sessionUserID' => Session::get('userID'),
                             'logActionUserID' => Session::get('userID'),
                             'logActionUsername' => Session::get('userName'),
                             "languageCode" => strtoupper(App::getLocale())
