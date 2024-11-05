@@ -2891,20 +2891,20 @@
             $('#photo_employee').val('');
 
             //Tab Info
-            $.ajax({
-                url: "{{ url('personel_data_detail/auto_employee_no/check') }}",
-                type: "GET",
-                data: {
-                    'url': '/personel/PeMaster/getPeMasterGrid'
-                },
-                success: function (response) {
-                    $('#employee_no_info').val(response);
-                },
-                error: function (response) {
-                    $('#notification_error').modal('show');
-                    $('#message-notification-error').html(response);
-                }
-            });
+            // $.ajax({
+            //     url: "{{ url('personel_data_detail/auto_employee_no/check') }}",
+            //     type: "GET",
+            //     data: {
+            //         'url': '/personel/PeMaster/getPeMasterGrid'
+            //     },
+            //     success: function (response) {
+            //         $('#employee_no_info').val(response);
+            //     },
+            //     error: function (response) {
+            //         $('#notification_error').modal('show');
+            //         $('#message-notification-error').html(response);
+            //     }
+            // });
             $('#fullname_info').val("");
             $('#title_info').val("");
             $('#birth_place_info').val(null).trigger('change');
