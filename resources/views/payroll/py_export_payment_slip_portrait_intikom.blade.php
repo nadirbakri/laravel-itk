@@ -206,7 +206,7 @@
 	</table>
 	<table class="table" style="width:100%; font-size: 12px; padding-left:1%; padding-right:1%; border-collapse: collapse; font-family: 'Arial Alternates', sans-serif;">
 		<tr>
-			<td width="70%" colspan="3">{{ empty($value->bankName) ? "BANK CENTRAL ASIA" : strtouuper($value->bankName) }}</td>
+			<td width="70%" colspan="3">{{ empty($value->bankName) ? "BANK CENTRAL ASIA" : strtoupper($value->bankName) }}</td>
 			<td width="30%">Jakarta, {{ date('d/m/Y', strtotime($transfer_date)) }}</td>
 		</tr>
 		<tr>
