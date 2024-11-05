@@ -12,22 +12,22 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
 	<style type="text/css">
 		@font-face {
-            font-family: 'ArialAlternates';
+            font-family: 'Arial Alternates';
             font-style: normal;
             font-weight: normal;
-            src: url({{ storage_path('fonts/arial.ttf') }}) format('truetype');
+            src: url('fonts/arial.ttf') format('truetype');
         }
 
 		@font-face {
-            font-family: 'ArialCustomBold';
+            font-family: 'Arial Bold';
             font-style: normal;
-            font-weight: 700;
-            src: url({{ storage_path('fonts/arialbold.ttf') }}) format('truetype');
+            font-weight: normal;
+            src: url('fonts/arialbold.ttf') format('truetype');
         }
 
 		* { box-sizing: border-box; }
 		html {
-			margin: 5%;
+			margin: 2%;
 		}
 		.table_detail td{
 			border:1px solid #000;
@@ -57,48 +57,56 @@
 </head>
 <body>
 	@foreach($data as $key => $value)
-    <table class="table" style="width:100%; padding-left:3%; padding-right:3%; padding-bottom:1%; font-family: 'ArialCustomBold', sans-serif;">
+    <table style="width:100%; font-size: 13px; padding-left:1%; padding-right:1%; font-family: 'Arial Bold', sans-serif;">
 		<tr>
-			<td style="padding: 0; margin: 0; text-align:left; font-size: 14px;">
-				{{ strtoupper($value->namaPerusahaan) }}
+			@if($display_logo == "1")
+			<td width="7%" rowspan="2" style="text-align:right;">
+				<table style="width: 100%;">
+					<tr>
+						<td>
+							<img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/pictures/logo_intikom_bulat.png'))) }}" style="width: 65px; height: 65px" alt="Logo">
+						</td>
+					</tr>
+				</table>
 			</td>
+			<td width="42%" rowspan="2">&nbsp;</td>
+			@else
+			<td width="7%" rowspan="2" style="text-align:right;">&nbsp;</td>
+			<td width="42%" rowspan="2">&nbsp;</td>
+			@endif
+			<td width="20%"><b>PT. INTIKOM BERLIAN MUSTIKA</b></td>
 		</tr>
 		<tr>
-			<td style="padding: 0; margin: 0; text-align:left; font-size: 14px;">
-				@if($slip_code == 'Salary')
-                BUKTI PENERIMAAN GAJI
-                @elseif($slip_code == 'Bonus')
-                BUKTI PENERIMAAN BONUS
-                @elseif($slip_code == 'THR')
-                BUKTI PENERIMAAN THR
-                @endif
-			</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<th colspan="3">SLIP {{ strtoupper($slip_code) }}</th>
+		</tr>
+		<tr>
+			<th colspan="3">{{ $periode }}</th>
 		</tr>
 	</table>
-	<table class="table" style="width:100%; font-size: 12px; padding-left:3%; padding-right:3%; border-collapse: collapse; font-family: 'ArialCustomBold', sans-serif; border-bottom: 1px solid black;">
+	<table class="table" style="width:100%; font-size: 12px; padding-left:1%; padding-right:1%; border-collapse: collapse; font-family: 'Arial Alternates', sans-serif;">
         <tr>
-			<td width="15%" style="padding-left: 10px;">BULAN</td>
+			<td width="15%" style="padding-left: 10px;">NIK / Name</td>
 			<td width="1%">:</td>
-			<td width="34%" style="padding-left: 10px;">{{ $value->payrollCutOff }}</td>
-			<td width="15%" style="padding-left: 10px;">Kode Wilayah</td>
+			<td width="44%" style="padding-left: 10px;">{{ $value->employeeNo }} / {{ $value->employeeName }}</td>
+			<td width="10%" style="padding-left: 10px;">Email</td>
 			<td width="1%">:</td>
-			<td width="34%" style="padding-left: 10px;">{{ $value->level2 }}</td>
+			<td width="29%" style="padding-left: 10px;">{{ $value->email }}</td>
 		</tr>
 		<tr>
-			<td width="15%" style="padding-left: 10px;">NIK/Status Pjk</td>
+			<td width="15%" style="padding-left: 10px;">Dept</td>
 			<td width="1%">:</td>
-			<td width="34%" style="padding-left: 10px;">{{ $value->employeeNo }} / {{ $value->ptkp }}</td>
-			<td width="15%" style="padding-left: 10px;">Kode Lokasi</td>
+			<td width="44%" style="padding-left: 10px;">{{ $value->departemen }}</td>
+			<td width="10%" style="padding-left: 10px;">NPWP</td>
 			<td width="1%">:</td>
-			<td width="34%" style="padding-left: 10px;">{{ $value->level3 }}</td>
+			<td width="29%" style="padding-left: 10px;">{{ $value->npwp }}</td>
 		</tr>
 		<tr>
-			<td width="15%" style="padding-left: 10px;">Nama</td>
+			<td width="15%" style="padding-left: 10px;">PTKP / Position</td>
 			<td width="1%" style="">:</td>
-			<td width="34%" style="padding-left: 10px;">{{ $value->employeeName }}</td>
-			<td width="15%" style="padding-left: 10px;">Kode Toko</td>
-			<td width="1%" style="">:</td>
-			<td width="34%" style="padding-left: 10px;">{{ $value->level5 }}</td>
+			<td width="44%" colspan="4" style="padding-left: 10px;">{{ $value->taxStatus }} / {{ $value->rank }}</td>
 		</tr>
 	</table>
 	<?php
@@ -107,124 +115,116 @@
 	$totalDataIncome = 0;
 	$totalDataDeduction = 0;
 	?>
-	<table class="table" style="width:100%; font-size: 12px; padding-left:3%; padding-right:3%; border-collapse: collapse; font-family: 'Arial Alternates', sans-serif;">
-        <tr>
-            <td colspan="2">&nbsp;</td>
-        </tr>
+	<table class="table" style="width:100%; font-size: 12px; padding-left:1%; padding-right:1%; border-collapse: collapse; font-family: 'Arial Alternates', sans-serif;">
     	<tr>
-        	<td style="width:55%; vertical-align: top; padding-right: 50px;">
+        	<td style="width:50%; vertical-align: top; border-top: 1px solid black; border-bottom: 1px solid black; border-right: 1px solid black;">
 				<table style="width:100%; padding-bottom: 1%; border-collapse: collapse;">
-                    <tr>
-                        <td colspan="4">PENDAPATAN&nbsp;&nbsp;&nbsp;&nbsp;:</td>
-                    </tr>
+					<tr>
+						<td colspan="3" style="padding-left: 2%; border-bottom: 1px solid black;"><b>INCOME&nbsp;&nbsp;&nbsp;:</b></td>
+					</tr>
 					@foreach($value->a as $key2 => $value2)
 						<?php
 							$totalIncome += (float) $value2->columnValue;
 						?>
+						@if($value2->columnValue > 0)
 						<?php
 							$totalDataIncome++;
 						?>
 						<tr>
-							<td width="25%" style="padding-left: 20px;">{{ $value2->columnLabel }}</td>
-                            <td width="1%">:</td>
-							<td width="8%">Rp.</td>
-							<td width="8%" style="text-align:right;">{{ number_format((float) $value2->columnValue, 0, ',', '.')}}</td>
+							<td width="55%">{{ $value2->columnLabel }}</td>
+							<td width="3%">IDR</td>
+							<td width="42%" style="text-align:right; padding-right: 10px;">{{ number_format((float) $value2->columnValue, 0, ',', '.')}}</td>
 						</tr>
+						@endif
 					@endforeach
-                    <tr>
-                        <td width="25%" style="padding-left: 20px;">Total Pendapatan</td>
-                        <td width="1%">:</td>
-                        <td width="8%" style="border-top: 1px solid black;">Rp.</td>
-                        <td width="8%" style="text-align:right; border-top: 1px solid black;">{{ number_format((float) $totalIncome, 0, ',', '.')}}</td>
-                    </tr>
+					@if($totalDataIncome < 20)
+						@for($i = 0; $i <= (20 - $totalDataIncome); $i++)
+						<tr>
+							<td colspan="3">&nbsp;</td>
+						</tr>
+						@endfor
+					@endif
 				</table>
 			</td>
-			<td style="width:45%; vertical-align: top; padding-right: 10px;">
+			<td style="width:50%; vertical-align: top; border-top: 1px solid black; border-bottom: 1px solid black; border-left: 1px solid black; ">
 				<table style="width:100%; border-collapse: collapse;">
-                    <tr>
-                        <td colspan="4">POTONGAN&nbsp;&nbsp;&nbsp;&nbsp;:</td>
-                    </tr>
+					<tr>
+						<td colspan="3" style="padding-left: 2%; border-bottom: 1px solid black;"><b>DEDUCTION&nbsp;&nbsp;&nbsp;:</b></td>
+					</tr>
 					@foreach($value->d as $key2 => $value2)
 						<?php
 							$totalDeduction += (float) $value2->columnValue;
 						?>
+						@if($value2->columnValue > 0)
 						<?php
 							$totalDataDeduction++;
 						?>
 						<tr>
-							<td width="17%" style="padding-left: 20px;">{{ $value2->columnLabel }}</td>
-                            <td width="1%">:</td>
-							<td width="5%">Rp.</td>
-							<td width="8%" style="text-align:right;">{{ number_format((float) $value2->columnValue, 0, ',', '.')}}</td>
+							<td width="55%" style="padding-left: 10px;">{{ $value2->columnLabel }}</td>
+							<td width="3%">IDR</td>
+							<td width="42%" style="text-align:right;">{{ number_format((float) $value2->columnValue, 0, ',', '.')}}</td>
 						</tr>
+						@endif
 					@endforeach
-					<tr>
-                        <td width="17%" style="padding-left: 20px;">Total Potongan</td>
-                        <td width="1%">:</td>
-                        <td width="5%" style="border-top: 1px solid black;">Rp.</td>
-                        <td width="8%" style="text-align:right; border-top: 1px solid black;">{{ number_format((float) $totalDeduction, 0, ',', '.')}}</td>
-                    </tr>
-                    <tr>
-                        <td colspan="4">&nbsp;</td>
-                    </tr>
-                    <tr>
-                        <td width="17%" style="padding-left: 20px;">Total Diterima</td>
-                        <td width="1%">:</td>
-                        <td width="5%">Rp.</td>
-                        <td width="8%" style="text-align:right;">{{ number_format(($value->takeHomePaySalary + $value->takeHomePayBonus + $value->takeHomePayTHR), 0, ',', '.')}}</td>
-                    </tr>
+					@if($totalDataDeduction < 20)
+						@for($i = 0; $i <= (20 - $totalDataDeduction); $i++)
+						<tr>
+							<td colspan="3">&nbsp;</td>
+						</tr>
+						@endfor
+					@endif
 				</table>
 			</td>
 		</tr>
 	</table>
-	<table class="table" style="width:100%; font-size: 12px; padding-left:3%; padding-right:3%; border-collapse: collapse; font-family: 'Arial Alternates', sans-serif;">
-        <tr>
-            <td colspan="2">&nbsp;</td>
-        </tr>
+	<table class="table" style="width:100%; font-size: 12px; padding-left:1%; padding-right:1%; border-collapse: collapse; font-family: 'Arial Alternates', sans-serif;">
     	<tr>
-        	<td style="width:55%; vertical-align: top; padding-right: 50px;">
+        	<td style="width:50%; vertical-align: top; border-bottom: 1px solid black;">
 				<table style="width:100%; padding-bottom: 1%; border-collapse: collapse;">
-                    <tr>
-                        <td colspan="4">&nbsp;</td>
-                    </tr>
+					<tr>
+						<td width="55%">Total Salary Allowance</td>
+						<td width="3%">IDR</td>
+						<td width="42%" style="text-align: right; padding-right: 10px;">{{ number_format($totalIncome, 0, ',', '.')}}</td>
+					</tr>
+					<tr>
+						<td width="55%">Take Home Pay</td>
+						<td width="3%">IDR</td>
+						<td width="42%" style="text-align: right; padding-right: 10px;">{{ number_format($totalIncome - $totalDeduction, 0, ',', '.')}}</td>
+					</tr>
 				</table>
 			</td>
-			<td style="width:45%; vertical-align: top; padding-right: 10px;">
+			<td style="width:50%; vertical-align: top; border-bottom: 1px solid black;">
 				<table style="width:100%; border-collapse: collapse;">
-                    <tr>
-                        <td colspan="4" style="padding-left: 20px;">Jakarta, {{ date('d') }} {{ $periode }}</td>
-                    </tr>
-                    <tr>
-                        <td colspan="4" style="padding-left: 20px;">Yang Menerima</td>
-                    </tr>
-                    <tr>
-                        <td colspan="4">&nbsp;</td>
-                    </tr>
-                    <tr>
-                        <td colspan="4">&nbsp;</td>
-                    </tr>
-                    <tr>
-                        <td colspan="4">&nbsp;</td>
-                    </tr>
-                    <tr>
-                        <td colspan="4" style="padding-left: 20px;">(&nbsp;&nbsp;&nbsp;&nbsp; {{ $value->employeeName }} &nbsp;&nbsp;&nbsp;&nbsp;)</td>
-                    </tr>
+					<tr>
+						<td width="55%" style="padding-left: 10px;">Total Deduction</td>
+						<td width="3%">IDR</td>
+						<td width="42%" style="text-align: right;">{{ number_format($totalDeduction, 0, ',', '.')}}</td>
+					</tr>
 				</table>
 			</td>
 		</tr>
 	</table>
-	<div class="div-footer" style="font-family: 'Arial Alternates', sans-serif;">
-		<table class="table" style="width:100%; font-size: 12px; padding-left:3%; padding-right:3%; border-collapse: collapse; font-family: 'ArialCustomBold', sans-serif; border-top: 1px solid black;">
-			<tr>
-				<td width="5%" style="padding-left: 10px;">No ID</td>
-				<td width="1%">:</td>
-				<td width="34%" style="padding-left: 5px;">{{ $value->nik }}</td>
-				<td width="5%" style="padding-left: 10px;">Email</td>
-				<td width="1%">:</td>
-				<td width="34%" style="padding-left: 5px;">{{ $value->email }}</td>
-			</tr>
-		</table>
-	</div>
+	<table class="table" style="width:100%; font-size: 12px; padding-left:1%; padding-right:1%; border-collapse: collapse; font-family: 'Arial Alternates', sans-serif;">
+		<tr>
+			<td width="70%" colspan="3">{{ empty($value->bankName) ? "BANK CENTRAL ASIA" : strtouuper($value->bankName) }}</td>
+			<td width="30%">Jakarta, {{ date('d/m/Y', strtotime($transfer_date)) }}</td>
+		</tr>
+		<tr>
+			<td width="10%">Acc No.</td>
+			<td width="3%">:</td>
+			<td width="70%" colspan="2" style="padding-left: 7px;">{{ $value->noRekening }}</td>
+		</tr>
+		<tr>
+			<td width="10%">Ben. Name</td>
+			<td width="3%">:</td>
+			<td width="70%" colspan="2" style="padding-left: 7px;">{{ $value->beneficiaryName }}</td>
+		</tr>
+		<tr>
+			<td width="70%" colspan="4">
+				Disclaimer : This document was issued electronically and is therefore valid without signature
+			</td>
+		</tr>
+	</table>
 
     @if($key != array_key_last($data))
 		<div class="page_break"></div>
