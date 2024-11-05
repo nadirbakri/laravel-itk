@@ -25,6 +25,7 @@ use App\Imports\PeMasterLeaveImport;
 use App\Imports\PlafonImport;
 use App\Imports\AbsentCodeImport;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
@@ -2399,20 +2400,105 @@ class TimeManagementController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         try{
             $file = $request->file('file_location');
-            $import = new TimeRecordingImport($request->automatic);
-            Excel::import($import, $file->getRealPath(), null, \Maatwebsite\Excel\Excel::XLSX);
+            $extension = $file->getClientOriginalExtension();
+
+            if ($extension === 'xlsx' || $extension === 'xls') {
+                $import = new TimeRecordingImport($request->automatic);
+                Excel::import($import, $file->getRealPath(), null, \Maatwebsite\Excel\Excel::XLSX);
+
+                if(empty($import->getArrResult())){
+                    $objError = (object) ['status' => false, 'message' => "The Uploaded File Doesn't Match The Template"];
+                    return array(0 => $objError);
+                }else{
+                    // dd($import->getArrResult());
+                    return $import->getArrResult();
+                }
+            } else if ($extension === 'txt') {
+                $fileContent = file($file->getRealPath());
+                $result = [];
+
+                foreach ($fileContent as $line) {
+                    $employeeNo = trim(substr($line, 0, 7));
+                    $tanggal = trim(substr($line, 8, 10));
+                    $strTanggal = str_replace('/', '-', $tanggal);
+                    $date = date('Y-m-d', strtotime($strTanggal)); // Format tanggal
+                    $time = trim(substr($line, 19, 5)); // Waktu
+                    $status = trim(substr($line, 25)); // Status
+                    
+                    // Key untuk menentukan karyawan dan tanggal yang sama
+                    $key = $employeeNo . '_' . $date;
+                
+                    if ($status === 'C/In') {
+                        // Jika C/In, tambahkan entri baru atau perbarui entry yang sudah ada
+                        $result[$key] = [
+                            'employeeNo' => $employeeNo,
+                            'absentDateIn' => $date,
+                            'timeIn' => $date . 'T' . $time . ':00',
+                            'absentDateOut' => null, // Sementara kosong, diisi ketika C/Out ditemukan
+                            'timeOut' => null, // Sementara kosong, diisi ketika C/Out ditemukan
+                        ];
+                    } elseif ($status === 'C/Out' && isset($result[$key])) {
+                        // Jika C/Out, tambahkan waktu keluar pada entry yang sesuai
+                        $result[$key]['absentDateOut'] = $date;
+                        $result[$key]['timeOut'] = $date . 'T' . $time . ':00';
+                    }
+                }
+                
+                // Hapus key dan reindex array jika diperlukan
+                $result = array_values($result);
+
+                $client = new Client([
+                    'verify' => false,
+                    'headers' => [ 'Content-Type' => 'application/json',
+                    'Authorization' => 'Bearer ' . Session::get('token') ]
+                ]);
+
+                foreach ($result as $row) {
+                    $param[] = [
+                        "employeeNo" => isset($row['employeeNo']) ? $row['employeeNo'] : null,
+                        "absentDateIn" => isset($row['absentDateIn']) ? $row['absentDateIn'] : null,
+                        "absentDateOut" => isset($row['absentDateOut']) ? $row['absentDateOut'] : null,
+                        "timeIn" => isset($row['timeIn']) ? $row['timeIn'] : null,
+                        "timeOut" => isset($row['timeOut']) ? $row['timeOut'] : null,
+                        "shiftCode" => null,
+                    ];
+                }
+
+                $response = $client->post(env('API_URL') . '/mobile/TempAbsentMachine/InsertTempAbsentMachine',
+                    ['body' => json_encode(
+                        [
+                            'companyCode' => Session::get('companyCode'),
+                            'fileLocation' => null,
+                            'automaticInOut' => isset($this->automatic) ? (bool) $this->automatic : false,
+                            'file64' => null,
+                            'data' => $param,
+                            "changedNo" => 0,
+                            "createdDate" => date("Y-m-d\TH:i:s"),
+                            "createdBy" => Session::get('userID'),
+                            "changedDate" => date("Y-m-d\TH:i:s"),
+                            "changedBy" => Session::get('userID'),
+                            "languageCode" => App::getLocale(),
+                            'sessionID' => 0,
+                            'sessionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName'),
+                            'logActionUserID' => Session::get('userID')
+                        ])
+                    ]
+                );
+            } else {
+                $objError = (object) ['status' => false, 'message' => "Unsupported file format"];
+                return array(0 => $objError);
+            }
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             $failures = $e->failures();
             $objError = (object) ['status' => false, 'message' => $failures[0]->errors()[0]];
             return array(0 => $objError);
-        }
-
-        if(empty($import->getArrResult())){
-            $objError = (object) ['status' => false, 'message' => "The Uploaded File Doesn't Match The Template"];
+        } catch (RequestException $e) {
+            $objError = (object) ['status' => false, 'message' => 'Something Went Wrong'];
             return array(0 => $objError);
-        }else{
-            // dd($import->getArrResult());
-            return $import->getArrResult();
+        } catch (\Exception $e) {
+            $objError = (object) ['status' => false, 'message' => $e->getMessage()];
+            return array(0 => $objError);
         }
     }
 

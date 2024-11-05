@@ -89,25 +89,6 @@ class TimeRecordingImport implements ToCollection, SkipsEmptyRows, WithStartRow
                 ];
             }
 
-            // dd(json_encode(
-            //     [
-            //         'companyCode' => Session::get('companyCode'),
-            //         'fileLocation' => null,
-            //         'automaticInOut' => isset($this->automatic) ? (bool) $this->automatic : false,
-            //         'file64' => null,
-            //         'data' => $param,
-            //         "changedNo" => 0,
-            //         "createdDate" => date("Y-m-d\TH:i:s"),
-            //         "createdBy" => Session::get('userID'),
-            //         "changedDate" => date("Y-m-d\TH:i:s"),
-            //         "changedBy" => Session::get('userID'),
-            //         "languageCode" => App::getLocale(),
-            //         'sessionID' => 0,
-            //         'sessionUserID' => Session::get('userID'),
-            //         'logActionUsername' => Session::get('userName'),
-            //         'logActionUserID' => Session::get('userID')
-            //     ]));
-
             $response = $client->post(env('API_URL') . '/mobile/TempAbsentMachine/InsertTempAbsentMachine',
                 ['body' => json_encode(
                     [
