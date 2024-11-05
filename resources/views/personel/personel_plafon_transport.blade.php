@@ -84,6 +84,22 @@
                 <img src="{{ url('/icons/functionbar/functionbar-edit-white.svg') }}" class="functionbar-hover" alt="Edit">
                 <span>Edit</span>
             </a>
+            <a href="javascript:void(0)" id="toolbar-import" style="width: 9%" onclick="document.getElementById('import').click()">
+                <input type="file" class="custom-file-input" name="import" id="import" hidden onchange="handleFileUpload(this)">
+                <img src="{{ url('/icons/functionbar/functionbar-import-blue.svg') }}" alt="Import">
+                <img src="{{ url('/icons/functionbar/functionbar-import-white.svg') }}" class="functionbar-hover" alt="Import">
+                <span>Import</span>
+            </a>
+            <a href="javascript:void(0)" id="toolbar-export" style="width: 9%">
+                <img src="{{ url('/icons/functionbar/functionbar-export-blue.svg') }}" alt="Export">
+                <img src="{{ url('/icons/functionbar/functionbar-export-white.svg') }}" class="functionbar-hover" alt="Export">
+                <span>Export</span>
+            </a>
+            <a href="javascript:void(0)" id="toolbar-download-template" style="width: 17%">
+                <img src="{{ url('/icons/functionbar/functionbar-download-blue.svg') }}" alt="Download Template">
+                <img src="{{ url('/icons/functionbar/functionbar-download-white.svg') }}" class="functionbar-hover" alt="Download Template">
+                <span>Download Template</span>
+            </a>
             <a href="javascript:void(0)" style="display: none;" id="toolbar-save">
                 <img src="{{ url('/icons/functionbar/functionbar-save-blue.svg') }}" alt="Save">
                 <img src="{{ url('/icons/functionbar/functionbar-save-white.svg') }}" class="functionbar-hover" alt="Save">
@@ -192,6 +208,84 @@
     window.onload = function() {
         savePreviousURL();
     }
+
+    function handleFileUpload(input) {
+        const file = input.files[0];
+        const allowedExtensions = /(\.xls|\.xlsx|\.xml)$/i;
+        
+        if (file) {
+            if (!allowedExtensions.exec(file.name)) {
+                $('#notification_error').modal('show');
+                $('#message-notification-error').html('Upload file in .xls, .xlsx, or .xml');
+
+                input.value = '';
+                return false;
+            }
+            else {
+                const formData = new FormData();
+                formData.append('file', file);
+                formData.append('type', 'TRANSPORT');
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
+                $.ajax({
+                    url: "{{ url('personnel/plafon/import') }}",
+                    type: "POST",
+                    processData: false,
+                    contentType: false,
+                    data: formData,
+                    success: function (response) {
+                        // if (response.status == "true") {
+                        if (response[0].status == "true") {
+                            $("#toolbar-import").prop("disabled", false);
+                            $("#toolbar-import").html(
+                                '<a href="javascript:void(0)" id="toolbar-import" style="width: 17%"><img src="{{ url('/icons/functionbar/functionbar-import-blue.svg') }}" alt="Import"><img src="{{ url('/icons/functionbar/functionbar-import-white.svg') }}" class="functionbar-hover" alt="Import"><span>Import</span></a>'
+                            );
+                            $('#notification_success').modal('show');
+                            // $('#message-notification-success').html(response
+                            //     .message);
+                            $('#message-notification-success').html(response[0]
+                                .message);
+                            // setTimeout(function () {
+                            //     window.location =
+                            //         "{{ url('personnel/plafon_medical') }}";
+                            // }, 3000);
+                        } else {
+                            $("#toolbar-import").prop("disabled", false);
+                            $("#toolbar-import").html(
+                                '<a href="javascript:void(0)" id="toolbar-import" style="width: 17%"><img src="{{ url('/icons/functionbar/functionbar-import-blue.svg') }}" alt="Import"><img src="{{ url('/icons/functionbar/functionbar-import-white.svg') }}" class="functionbar-hover" alt="Import"><span>Import</span></a>'
+                            );
+                            $('#notification_error').modal('show');
+                            // if (response.message == null || response.message ==
+                            //     '') {
+                            if (response[0].message == null || response[0].message ==
+                                '') {
+                                $('#message-notification-error').html(
+                                    "{{ __('login.error') }}");
+                            } else {
+                                // $('#message-notification-error').html(response
+                                //     .message);
+                                $('#message-notification-error').html(response[0]
+                                    .message);
+                            }
+                        }
+                    },
+                    error: function (response) {
+                        $("#toolbar-import").prop("disabled", false);
+                        $("#toolbar-import").html(
+                            '<a href="javascript:void(0)" id="toolbar-import" style="width: 17%"><img src="{{ url('/icons/functionbar/functionbar-import-blue.svg') }}" alt="Import"><img src="{{ url('/icons/functionbar/functionbar-import-white.svg') }}" class="functionbar-hover" alt="Import"><span>Import</span></a>'
+                        );
+                        $('#notification_error').modal('show');
+                        $('#message-notification-error').html(response);
+                    }
+                });
+            }
+        }
+    }
     
   $(document).ready(function() {
     //addClass = disabled first;
@@ -210,6 +304,119 @@
                     .draw();
             }
         } );
+    });
+
+    $("#toolbar-export").click(function () {
+        $(this).prop("disabled", true);
+        $(this).html(
+            '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+        );
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            xhrFields: {
+                responseType: 'blob',
+            },
+            url: "{{ url('personnel/plafon/export') }}",
+            type: "POST",
+            data: {
+                type: 'TRANSPORT'
+            },
+            success: function (result, status, xhr) {
+                $("#toolbar-export").prop("disabled", false);
+                $("#toolbar-export").html(
+                    '<a href="javascript:void(0)" id="toolbar-export" style="width: 17%"><img src="{{ url('/icons/functionbar/functionbar-export-blue.svg') }}" alt="Export"><img src="{{ url('/icons/functionbar/functionbar-export-white.svg') }}" class="functionbar-hover" alt="Export"><span>Export</span></a>'
+                );
+                
+                var disposition = xhr.getResponseHeader(
+                    'content-disposition');
+                var matches = /"([^"]*)"/.exec(disposition);
+                var filename = (matches != null && matches[1] ? matches[1] :
+                    'noname_file.xlsx');
+            
+                // The actual download
+                var blob = new Blob([result], {
+                    type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                });
+
+                var link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = filename;
+
+                document.body.appendChild(link);
+
+                link.click();
+                document.body.removeChild(link);
+            },
+            error: function (response) {
+                $("#toolbar-export").prop("disabled", false);
+                $("#toolbar-export").html(
+                    '<a href="javascript:void(0)" id="toolbar-export" style="width: 17%"><img src="{{ url('/icons/functionbar/functionbar-export-blue.svg') }}" alt="Export"><img src="{{ url('/icons/functionbar/functionbar-export-white.svg') }}" class="functionbar-hover" alt="Export"><span>Export</span></a>'
+                );
+                $('#notification_error').modal('show');
+                $('#message-notification-error').html(response);
+            }
+        });
+    });
+
+    $("#toolbar-download-template").click(function () {
+        $(this).prop("disabled", true);
+        $(this).html(
+            '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+        );
+        
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            xhrFields: {
+                responseType: 'blob',
+            },
+            url: "{{ url('personnel/export_plafon/download') }}",
+            type: "POST",
+            data: {
+                type: 'TRANSPORT'
+            },
+            success: function (result, status, xhr) {
+                $("#toolbar-download-template").prop("disabled", false);
+                $("#toolbar-download-template").html(
+                    '<a href="javascript:void(0)" id="toolbar-download-template" style="width: 17%"><img src="{{ url('/icons/functionbar/functionbar-download-blue.svg') }}" alt="Download Template"><img src="{{ url('/icons/functionbar/functionbar-download-white.svg') }}" class="functionbar-hover" alt="Download Template"><span>Download Template</span></a>'
+                );
+                
+                var disposition = xhr.getResponseHeader(
+                    'content-disposition');
+                var matches = /"([^"]*)"/.exec(disposition);
+                var filename = (matches != null && matches[1] ? matches[1] :
+                    'noname_file.xlsx');
+            
+                // The actual download
+                var blob = new Blob([result], {
+                    type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                });
+
+                var link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = filename;
+
+                document.body.appendChild(link);
+
+                link.click();
+                document.body.removeChild(link);
+            },
+            error: function (response) {
+                $("#toolbar-download-template").prop("disabled", false);
+                $("#toolbar-download-template").html(
+                    '<a href="javascript:void(0)" id="toolbar-download-template" style="width: 17%"><img src="{{ url('/icons/functionbar/functionbar-download-blue.svg') }}" alt="Download Template"><img src="{{ url('/icons/functionbar/functionbar-download-white.svg') }}" class="functionbar-hover" alt="Download Template"><span>Download Template</span></a>'
+                );
+                $('#notification_error').modal('show');
+                $('#message-notification-error').html(response);
+            }
+        });
     });
     
     var table = $('#plafon_table').DataTable({
@@ -267,7 +474,11 @@
     });
 
     $('#notification_success').on('hide.bs.modal', function () {
-        window.location = "{{ url('personnel/plafon_medical') }}";
+        window.location = "{{ url('personnel/plafon_transport') }}";
+    })
+
+    $('#notification_error').on('hide.bs.modal', function () {
+        window.location = "{{ url('personnel/plafon_transport') }}";
     })
 
     $("#toolbar-new").on('click', function() {

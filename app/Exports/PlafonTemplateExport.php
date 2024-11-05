@@ -4,17 +4,16 @@ namespace App\Exports;
 
 use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 
-class PlafonExport implements WithMultipleSheets
+class PlafonTemplateExport implements WithMultipleSheets
 {
-    public function __construct($type, $fileName)
+    public function __construct($type)
     {
         $this->type = $type;
-        $this->fileName = $fileName;
     }
 
     public function sheets(): array
     {
-        $sheets[] = new PlafonSheet($this->type, $this->fileName);
+        $sheets[] = new TemplatePlafonTemplateSheet($this->type);
         $sheets[] = new TemplatePlafonInfoTemplateSheet($this->type);
 
         return $sheets;
