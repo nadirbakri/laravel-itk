@@ -1188,7 +1188,6 @@ class UtilitiesController extends Controller
             $response = $client->post(env('API_URL') . '/personel/User/getUserDetail',
                 ['body' => json_encode(
                     [
-                        'companyCode' => Session::get('companyCode'),
                         'userID' => $request->userID,
                         'logActionUserID' => Session::get('userID'),
                         'logActionUsername' => Session::get('userName')
