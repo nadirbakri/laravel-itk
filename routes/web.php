@@ -437,6 +437,9 @@ Route::post('personnel/import_master_data/import', 'PersonelController@importMas
 Route::post('personnel/export_loan_whitelist/download', 'PersonelController@downloadExportLoanWhitelistPersonel');
 Route::post('personnel/import_employee_level/download_template', 'PersonelController@downloadTemplateEmployeeLevelPersonel');
 Route::post('personnel/import_employee_level/import', 'PersonelController@importEmployeeLevelPersonel');
+Route::post('personnel/plafon/import', 'PersonelController@importPlafonPersonel');
+Route::post('personnel/plafon/export', 'PersonelController@exportPlafonPersonel');
+Route::post('personnel/export_plafon/download', 'PersonelController@downloadTemplatePlafonPersonel');
 
 /* Route Untuk Menu Time Management */
 Route::get('time_management', 'TimeManagementController@pageTimeManagement')->name('time_management');

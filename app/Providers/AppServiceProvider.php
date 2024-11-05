@@ -11,11 +11,11 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
-    {
-        //
-        $this->app['request']->server->set('HTTPS', true);
-    }
+    // public function register()
+    // {
+    //     //
+    //     $this->app['request']->server->set('HTTPS', true);
+    // }
 
     /**
      * Bootstrap any application services.

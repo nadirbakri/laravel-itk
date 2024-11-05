@@ -16,6 +16,8 @@ use App\Exports\PersonalDataTemplateExport;
 use App\Exports\PersonalDataPartialTemplateExport;
 use App\Exports\MasterDataTemplateExport;
 use App\Exports\EmployeeLevelTemplateExport;
+use App\Exports\PlafonExport;
+use App\Exports\PlafonTemplateExport;
 
 use App\Imports\PersonalDataSheetImport;
 use App\Imports\PersonalDataImport;
@@ -36,6 +38,7 @@ use App\Imports\JournalTemplateDataImport;
 use App\Imports\PersonalDataUpdateImport;
 use App\Imports\PersonalDataPartialUpdateImport;
 use App\Imports\EmployeeLevelImport;
+use App\Imports\PlafonImport;
 
 use App\Jobs\ProcessImportMasterDataPersonel;
 use App\Jobs\ProcessImportPersonalDataPersonel;
@@ -12108,5 +12111,65 @@ class PersonelController extends Controller
         }else{
             return response()->json(['status' => 0, 'message' =>  'Data are Empty'], 400);
         }
+    }
+
+    public function importPlafonPersonel(Request $request)
+    {
+        $file = $request->file;
+        // $base64File = base64_encode(file_get_contents($file->getRealPath()));
+        // $processJobs = new ProcessImportPersonalDataPersonel($base64File);
+        // $this->dispatch($processJobs);
+
+        // return response()->json(['status' => "true", 'message' => 'Import Personal Data is in Progress']);
+
+        try{
+            $import = new PlafonImport($request->type);
+            Excel::import($import, $file->getRealPath(), null, \Maatwebsite\Excel\Excel::XLSX);
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            $failures = $e->failures();
+            $objError = (object) ['status' => false, 'message' => $failures[0]->errors()[0]];
+            return array(0 => $objError);
+        }
+
+        if(empty($import->getArrResult())){
+            $objError = (object) ['status' => false, 'message' => "The Uploaded File Doesn't Match The Template"];
+            return array(0 => $objError);
+        }else{
+            return $import->getArrResult();
+        }
+    }
+
+    public function exportPlafonPersonel(Request $request)
+    {
+        $type = $request->type;
+
+        if ($type === 'MEDICAL') {
+            $fileName = 'Medical';
+        }
+        else if ($type === 'BUSINESSTRIP') {
+            $fileName = 'Business Trip';
+        }
+        else {
+            $fileName = 'Transport';
+        }
+
+        return Excel::download(new PlafonExport($type, $fileName), "Plafon {$fileName}.xlsx");
+    }
+
+    public function downloadTemplatePlafonPersonel(Request $request)
+    {
+        $type = $request->type;
+
+        if ($type === 'MEDICAL') {
+            $fileName = 'Medical';
+        }
+        else if ($type === 'BUSINESSTRIP') {
+            $fileName = 'Business Trip';
+        }
+        else {
+            $fileName = 'Transport';
+        }
+
+        return Excel::download(new PlafonTemplateExport($type), "Template Personnel Plafon {$fileName}.xlsx");
     }
 }
