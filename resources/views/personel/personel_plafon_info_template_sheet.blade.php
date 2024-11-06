@@ -17,11 +17,13 @@
 <body>
 	@if(!empty($data))
 	<table style="width: 100%; font-size: 14px;" class="table table-bordered table-hover responsive">
-		<tbody>
+		<thead>
 			<tr>
-				<th>Plafon Code</th>
-				<th>Plafon Description</th>
+				<th style="font-weight: bold">Plafon Code</th>
+				<th style="font-weight: bold">Plafon Description</th>
 			</tr>
+		</thead>
+		<tbody>
 			@foreach($data as $value)
 			<tr>
 				<td>{{ $value->code }}</td>
@@ -33,11 +35,13 @@
 	@endif
 	@if(!empty($data_status))
 	<table style="width: 100%; font-size: 14px;" class="table table-bordered table-hover responsive">
-		<tbody>
+		<thead>
 			<tr>
-				<th>Plafon Status Code</th>
-				<th>Plafon Status Description</th>
+				<th style="font-weight: bold">Plafon Status Code</th>
+				<th style="font-weight: bold">Plafon Status Description</th>
 			</tr>
+		</thead>
+		<tbody>
 			@foreach($data_status as $value)
 			<tr>
 				<td>{{ $value->code }}</td>

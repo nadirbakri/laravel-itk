@@ -28,7 +28,7 @@ class TemplatePlafonInfoTemplateSheet implements FromView, WithTitle, ShouldAuto
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $arrResult2 = [];
+            $arrResult2 = (object) ['dataListSet' => []];
 
             $param = [
                 "companyCode" => Session::get("companyCode"),
@@ -49,14 +49,13 @@ class TemplatePlafonInfoTemplateSheet implements FromView, WithTitle, ShouldAuto
             $response = $client->post(env('API_URL') . '/personel/referencemobile/getreferencemobile',
 				['body' => json_encode($param)]);
 
-            if ($this->type === 'TRANSPORT') {
+            if ($this->type === 'BUSINESSTRIP' || $this->type === 'TRANSPORT') {
                 $response_status = $client->post(env('API_URL') . '/personel/referencemobile/getreferencemobile',
 				    ['body' => json_encode($param2)]);
                 $arrResult2 = json_decode($response_status->getBody()->getContents());
             }
 
             $arrResult = json_decode($response->getBody()->getContents());
-
 
         } catch (RequestException $e) {
             $response = $e->getResponse();
