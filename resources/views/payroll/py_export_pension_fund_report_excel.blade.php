@@ -187,6 +187,7 @@
         <br>
         <?php
         $totalSeluruh = $data[0]->iuran + $dendaBulan - $kelebihanBayar + $kurangBayar - $penguranganIuran + $materai;
+        $lebihKurangBayar = $kelebihanBayar + $kurangBayar;
         ?>
         <table>
             <tr>
@@ -208,27 +209,20 @@
             </tr>
             <tr>
                 <td style="text-align: left;">C.</td>
-                <td colspan="4" style="text-align: left;">Kelebihan Bayar</td>
+                <td colspan="4" style="text-align: left;">Kelebihan / Kekurangan Bayar</td>
                 <td style="text-align: right;">=</td>
                 <td style="text-align: left;">Rp</td>
-                <td data-format="#,##0" colspan="4" style="text-align: right;">{{ (!empty($kelebihanBayar) || $kelebihanBayar != 0) ? $kelebihanBayar : '-' }}</td>
+                <td data-format="#,##0" colspan="4" style="text-align: right;">{{ (!empty($lebihKurangBayar) || $lebihKurangBayar != 0) ? $lebihKurangBayar : '-' }}</td>
             </tr>
             <tr>
                 <td style="text-align: left;">D.</td>
-                <td colspan="4" style="text-align: left;">Kurang Bayar</td>
-                <td style="text-align: right;">=</td>
-                <td style="text-align: left;">Rp</td>
-                <td data-format="#,##0" colspan="4" style="text-align: right;">{{ (!empty($kurangBayar) || $kurangBayar != 0) ? $kurangBayar : '-' }}</td>
-            </tr>
-            <tr>
-                <td style="text-align: left;">E.</td>
                 <td colspan="4" style="text-align: left;">Pengurangan Iuran karena Pengunduran diri Karyawan<br>(Kepesertaan Kurang dari 3 tahun)</td>
                 <td style="text-align: right;">=</td>
                 <td style="text-align: left;">Rp</td>
                 <td data-format="#,##0" colspan="4" style="text-align: right;">{{ (!empty($penguranganIuran) || $penguranganIuran != 0) ? $penguranganIuran : '-' }}</td>
             </tr>
             <tr>
-                <td style="text-align: left;">F.</td>
+                <td style="text-align: left;">E.</td>
                 <td colspan="4" style="text-align: left;">Materai</td>
                 <td style="text-align: right;">=</td>
                 <td style="text-align: left; border-bottom: 2px solid #000;">Rp</td>
