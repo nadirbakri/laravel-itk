@@ -379,9 +379,9 @@
                 <tbody>
                     @foreach($dataTable->data as $key => $dataRow)  
                     <tr>
-                        <td style="text-align:center; vertical-align:middle; border:1px solid #000; font-size: {{ $dataRow->fontSize }}px !important;">{{ $key+1 }}</td>
-                        <td style="text-align:center; vertical-align:middle; border:1px solid #000; font-size: {{ $dataRow->fontSize }}px !important;">{{ $dataRow->levelCode }}</td>
-                        <td style="text-align:center; vertical-align:middle; border:1px solid #000; font-size: {{ $dataRow->fontSize }}px !important;">{{ $dataRow->total }}</td>
+                        <td style="text-align:center; vertical-align:middle; border:1px solid #000; font-size: {{ $dataRow->field[0]->fontSize }}px !important;">{{ $key+1 }}</td>
+                        <td style="text-align:center; vertical-align:middle; border:1px solid #000; font-size: {{ $dataRow->field[0]->fontSize }}px !important;">{{ $dataRow->levelCode }}</td>
+                        <td style="text-align:center; vertical-align:middle; border:1px solid #000; font-size: {{ $dataRow->field[0]->fontSize }}px !important;">{{ $dataRow->total }}</td>
                         <?php $totalJumlah += $dataRow->total; ?>
                         @foreach($dataRow->field as $key2 => $dataRow2)
                             <?php
