@@ -52,7 +52,7 @@
     <table class="table" style="width:100%; padding-left:2%; padding-right:2%; padding-bottom:1%;">
 		<tr>
             <td>
-                <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/pictures/logo_digima.png'))) }}" style="width: 105px; height: 85px" alt="Logo">
+                <!-- <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/pictures/logo_digima.png'))) }}" style="width: 105px; height: 85px" alt="Logo"> -->
             </td>
 		</tr>
 	</table>
@@ -63,7 +63,7 @@
             <td><b>SLIP GAJI - {{ strtoupper($periode) }}</b></td>
 		</tr>
 	</table>
-	<table class="table" style="width:100%; font-size: 11px; padding-left:2%; padding-right:1%; border-collapse: collapse; font-family: 'Arial Alternates', sans-serif;">
+	<table class="table" style="width:100%; font-size: 12px; padding-left:2%; padding-right:1%; border-collapse: collapse; font-family: 'Arial Alternates', sans-serif;">
 		<tr>
 			<td width="15%">Nama</td>
 			<td width="1%">:</td>
@@ -94,7 +94,7 @@
             <td><b>RINCIAN GAJI</b></td>
 		</tr>
 	</table>
-	<table class="table" style="width:100%; font-size: 11px; padding-left:2%; padding-right:2%; border-collapse: collapse; font-family: 'Arial Alternates', sans-serif;">
+	<table class="table" style="width:100%; font-size: 12px; padding-left:2%; padding-right:2%; border-collapse: collapse; font-family: 'Arial Alternates', sans-serif;">
         @foreach($value->a as $key2 => $value2)
             <?php
                 $totalIncome += (float) $value2->columnValue;
@@ -112,7 +112,7 @@
             </tr>
         @endforeach
 	</table>
-    <table class="table" style="width:100%; font-size: 13px; padding-left:1.5%; padding-right:2%; padding-bottom:1%; font-family: 'Arial Bold', sans-serif;">
+    <table class="table" style="width:100%; font-size: 12px; padding-left:1.5%; padding-right:2%; padding-bottom:1%; font-family: 'Arial Bold', sans-serif;">
         <tr>
             <td style="width: 5%; text-align: left; padding-top: 0.4%; padding-left: 3%;">&nbsp;</td>
             <td style="width: 5%; text-align: left; padding-top: 0.4%; padding-left: 3%;">&nbsp;</td>
@@ -121,7 +121,7 @@
             <td style="width: 59%; text-align: left; padding-top: 0.4%; padding-right: 17%;">{{ number_format((float) $totalIncome, 0, ',', '.')}}</td>
         </tr>
 	</table>
-    <table class="table" style="width:100%; font-size: 11px; padding-left:2%; padding-right:2%; border-collapse: collapse; font-family: 'Arial Alternates', sans-serif;">
+    <table class="table" style="width:100%; font-size: 12px; padding-left:2%; padding-right:2%; border-collapse: collapse; font-family: 'Arial Alternates', sans-serif;">
         @foreach($value->d as $key2 => $value2)
             <?php
                 $totalDeduction += (float) $value2->columnValue;
@@ -139,7 +139,7 @@
             </tr>
         @endforeach
 	</table>
-    <table class="table" style="width:100%; font-size: 13px; padding-left:1.5%; padding-right:2%; padding-bottom:1%; font-family: 'Arial Bold', sans-serif;">
+    <table class="table" style="width:100%; font-size: 12px; padding-left:1.5%; padding-right:2%; padding-bottom:1%; font-family: 'Arial Bold', sans-serif;">
         <tr>
             <td style="width: 5%; text-align: left; padding-top: 0.4%; padding-left: 3%;">&nbsp;</td>
             <td style="width: 5%; text-align: left; padding-top: 0.4%; padding-left: 3%;">&nbsp;</td>
@@ -148,7 +148,7 @@
             <td style="width: 59%; text-align: left; padding-top: 0.4%; padding-right: 17%;">{{ number_format((float) $totalDeduction, 0, ',', '.')}}</td>
         </tr>
 	</table>
-    <table class="table" style="width:100%; font-size: 13px; padding-left:1.5%; padding-right:2%; padding-bottom:1%; font-family: 'Arial Bold', sans-serif;">
+    <table class="table" style="width:100%; font-size: 12px; padding-left:1.5%; padding-right:2%; padding-bottom:1%; font-family: 'Arial Bold', sans-serif;">
         <tr>
             <td style="width: 5%; text-align: left; padding-top: 0.4%; padding-left: 3%;">&nbsp;</td>
             <td style="width: 5%; text-align: left; padding-top: 0.4%; padding-left: 3%;">&nbsp;</td>

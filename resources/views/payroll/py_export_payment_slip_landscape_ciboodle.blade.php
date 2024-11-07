@@ -56,7 +56,7 @@
 			@if($display_logo == "1")
             <td width="50%" rowspan="4">&nbsp;</td>
             <td width="30%" rowspan="4" style="text-align:right;">
-				<img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/pictures/logo_digima.png'))) }}" style="width: 175px; height: 85px" alt="Logo">
+				<!-- <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/pictures/logo_digima.png'))) }}" style="width: 175px; height: 85px" alt="Logo"> -->
 				<!-- <table style="width: 100%;">
 					<tr>
 						<td>
@@ -77,35 +77,35 @@
 		<tr>
 			<td width="13%">Employee Name</td>
 			<td width="1%" style="text-align:center;">:</td>
-			<td width="30%">{{ $value->payrollCutOff }}</td>
+			<td width="30%">{{ $value->employeeName }}</td>
 			<td width="9%">Bank</td>
 			<td width="1%" style="text-align:center;">:</td>
-			<td width="18%">{{ $value->grade }}</td>
+			<td width="18%">{{ $value->bankName }}</td>
 			<td width="9%">Month</td>
 			<td width="1%" style="text-align:center;">:</td>
-			<td width="15%">{{ $value->grade }}</td>
+			<td width="15%">{{ $value->slipPeriod }}</td>
 		</tr>
 		<tr>
 			<td width="13%">Departement</td>
 			<td width="1%" style="text-align:center;">:</td>
-			<td width="30%">{{ $value->payrollCutOff }}</td>
+			<td width="30%">{{ $value->departemen }}</td>
 			<td width="9%">Account No</td>
 			<td width="1%" style="text-align:center;">:</td>
-			<td width="18%">{{ $value->grade }}</td>
+			<td width="18%">{{ $value->noRekening }}</td>
 			<td width="9%">NPWP</td>
 			<td width="1%" style="text-align:center;">:</td>
-			<td width="15%">{{ $value->grade }}</td>
+			<td width="15%">{{ $value->npwp }}</td>
 		</tr>
 		<tr>
 			<td width="13%">Employee ID Oracle</td>
 			<td width="1%" style="text-align:center;">:</td>
-			<td width="30%">{{ $value->payrollCutOff }}</td>
+			<td width="30%">{{ $value->employeeNo }}</td>
 			<td width="9%">ID Card No</td>
 			<td width="1%" style="text-align:center;">:</td>
-			<td width="18%">{{ $value->grade }}</td>
+			<td width="18%">{{ $value->nik }}</td>
 			<td width="9%">Status Tax</td>
 			<td width="1%" style="text-align:center;">:</td>
-			<td width="15%">{{ $value->grade }}</td>
+			<td width="15%">{{ $value->taxStatus }}</td>
 		</tr>
 		<tr>
 			<td colspan="9" style="border-bottom: 1px solid black;">&nbsp;</td>
