@@ -188,6 +188,20 @@
                     </div>
                 </div>
                 <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="slip_date_mobile">{{ __('tm_reference_time_management.label_slip_date_mobile') }}</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="slip_date_mobile" name="slip_date_mobile"
+                                    placeholder="{{ __('tm_reference_time_management.label_slip_date_mobile') }}">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="slip_date_mobile_calendar"><span class="fa fa-calendar"></span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col-3">
                         <div class="form-group">
                             <h5
@@ -841,6 +855,21 @@
         var arrData = @json($data);
         var arrayMinutesRounded = [];
 
+        let pickerslipMobileDate = $('#slip_date_mobile').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "d-M-Y",
+            dateFormat: "Y-m-d",
+            defaultDate: "today",
+            onReady: function () {
+                var flatPickrInstance = this;
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings("#slip_date_mobile_calendar").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
+
         let deduction1_from = $('#deduction1_from').flatpickr({
             enableTime: true,
             noCalendar: true,
@@ -969,10 +998,12 @@
             return $("<textarea/>").html(value).text();
         }
 
+        console.log(arrData);
         if (arrData) {
             $('#processing_period_month').val(((typeof arrData[0].periodMonth !== 'undefined') ? arrData[0].periodMonth : ''));
             $('#processing_period_year').val(((typeof arrData[0].periodYear !== 'undefined') ? arrData[0].periodYear : ''));
             $('#period_status').val(((typeof arrData[0].statusPeriod !== 'undefined') ? arrData[0].statusPeriod : ''));
+            pickerslipMobileDate.setDate(((typeof arrData[0].slipDateMobile !== 'undefined') ? arrData[0].slipDateMobile : ''));
             $.ajax({
                 type: 'GET',
                 url: "{{ url('/process_status/detail/api') }}",

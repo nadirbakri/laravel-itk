@@ -2608,6 +2608,7 @@ class TimeManagementController extends Controller
                 'noTimeOutCode' => isset($arrData['not_clock_out']) ? $arrData['not_clock_out'] : null,
                 'noTimeInEarlybackCode' => isset($arrData['not_clock_in_early_back']) ? $arrData['not_clock_in_early_back'] : null,
                 'lateNoTimeOutCode' => isset($arrData['not_clock_out_late']) ? $arrData['not_clock_out_late'] : null,
+                'slipDateMobile' =>  isset($arrData['slip_date_mobile']) ? $arrData['slip_date_mobile'] : null,
                 "changedNo" => 0,
                 "createdDate" => date("Y-m-d\TH:i:s"),
                 "createdBy" => Session::get('userID'),

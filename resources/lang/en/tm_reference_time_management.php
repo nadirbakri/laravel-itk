@@ -19,6 +19,7 @@ return [
     'label_template_preparation_process' => 'Template Preparation Process:',
     'label_by_shift' => 'By Shift',
     'label_blank' => 'Blank',
+    'label_slip_date_mobile' => 'Slip Date Mobile',
     'label_attendance' => 'Attendance',
     'label_flag_absent_mobile' => 'Absent Mobile',
     'label_not_clock_in' => 'Not Clock In',

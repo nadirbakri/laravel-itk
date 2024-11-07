@@ -19,6 +19,7 @@ return [
     'label_template_preparation_process' => 'Proses Persiapan Template:',
     'label_by_shift' => 'Dengan Shift',
     'label_blank' => 'Kosong',
+    'label_slip_date_mobile' => 'Tanggal Slip Mobile',
     'label_attendance' => 'Kehadiran',
     'label_flag_absent_mobile' => 'Absent via Mobile',
     'label_not_clock_in' => 'Tidak Masuk',
