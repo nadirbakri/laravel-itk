@@ -178,17 +178,17 @@ class PeriodicalReportExport extends DefaultValueBinder implements WithCustomVal
         // dd($arrResult->dataListSet);
 
         // foreach ($arrResult->dataListSet[0]->detail as $key => $dataTable) {
-            // var_dump($dataTable->employeeNo);
-            // var_dump(count($dataTable->field));
-            // foreach ($dataTable->field as $key2 => $dataTable2) {
-            //     if (!is_string($dataTable2->value) && $dataTable2->dataFormat == "#,##0") {
-            //         $totalKey = $dataTable2->field . '_' . $key2;
-            //         $total[$totalKey] += $dataTable2->value;
-            //     } else if (!is_string($dataTable2->value) && $dataTable2->dataFormat == "#,##0.00") {
-            //         $totalKey = $dataTable2->field . '_' . $key2;
-            //         $total[$totalKey] += $dataTable2->value;
-            //     }
-            // }
+        //     var_dump($dataTable->employeeNo);
+        //     var_dump(count($dataTable->field));
+        //     foreach ($dataTable->field as $key2 => $dataTable2) {
+        //         if (!is_string($dataTable2->value) && $dataTable2->dataFormat == "#,##0") {
+        //             $totalKey = $dataTable2->field . '_' . $key2;
+        //             $total[$totalKey] += $dataTable2->value;
+        //         } else if (!is_string($dataTable2->value) && $dataTable2->dataFormat == "#,##0.00") {
+        //             $totalKey = $dataTable2->field . '_' . $key2;
+        //             $total[$totalKey] += $dataTable2->value;
+        //         }
+        //     }
         // }
         // exit;
 
@@ -199,9 +199,9 @@ class PeriodicalReportExport extends DefaultValueBinder implements WithCustomVal
         //     foreach ($detail->data as $key => $value) {
         //         // Loop melalui array 'field'
         //         foreach ($value->field as $fieldKey => $field) {
-        //             if ($field->field === 'Tunj_Transportasi') {
+        //             if ($field->field === 'SewaRumah') {
         //                 // Simpan indeks array yang ditemukan
-        //                 $indexes[] = $fieldKey;
+        //                 $indexes[$value->employeeNo] = $fieldKey;
         //             }
         //         }
         //     }
@@ -232,6 +232,7 @@ class PeriodicalReportExport extends DefaultValueBinder implements WithCustomVal
 
         // Storage::put('debug_data.txt', json_encode($arrResult->dataListSet));
         // dd(implode(', ', $indexes));
+        // dd($indexes);
         // dd($this->reportNameDetail);
         // exit;
 

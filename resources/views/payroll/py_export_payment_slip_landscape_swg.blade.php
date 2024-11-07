@@ -61,14 +61,14 @@
     @endif
     <table class="table" style="width:100%; font-size: 13px; padding-left:1.5%; padding-right:2%; padding-bottom:1%; font-family: 'Arial Bold', sans-serif;">
 		<tr>
-            <td><b>SLIP GAJI - JUNI 2024</b></td>
+            <td><b>SLIP GAJI - {{ strtoupper($periode) }}</b></td>
 		</tr>
 	</table>
 	<table class="table" style="width:100%; font-size: 11px; padding-left:2%; padding-right:1%; border-collapse: collapse; font-family: 'Arial Alternates', sans-serif;">
 		<tr>
 			<td width="15%">Nama</td>
 			<td width="1%">:</td>
-			<td width="34%">{{ str_pad(($key+1), 2, '0', STR_PAD_LEFT) }}</td>
+			<td width="34%">{{ $value->employeeName }}</td>
 			<td width="15%">NIK</td>
 			<td width="1%">:</td>
 			<td width="34%" colspan="2">{{ $value->employeeNo }}</td>
@@ -76,10 +76,10 @@
 		<tr>
 			<td width="15%">Jabatan</td>
 			<td width="1%">:</td>
-			<td width="34%">{{ $first_day }} {{ $last_day }}</td>
+			<td width="34%">{{ $value->jabatan }}</td>
 			<td width="15%">NPWP</td>
 			<td width="1%">:</td>
-			<td width="34%">{{ $value->employeeName }}</td>
+			<td width="34%">{{ $value->npwp }}</td>
 		</tr>
         <tr>
 			<td colspan="6" style="border-bottom: 0.5px solid black;">&nbsp;</td>

@@ -29,6 +29,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
+use Illuminate\Support\Facades\Storage;
 use Validator;
 use Session;
 use App;
@@ -2464,6 +2465,26 @@ class TimeManagementController extends Controller
                     ];
                 }
 
+                // Storage::put('debug_data.txt', json_encode(
+                //     [
+                //         'companyCode' => Session::get('companyCode'),
+                //         'fileLocation' => null,
+                //         'automaticInOut' => isset($this->automatic) ? (bool) $this->automatic : false,
+                //         'file64' => null,
+                //         'data' => $param,
+                //         "changedNo" => 0,
+                //         "createdDate" => date("Y-m-d\TH:i:s"),
+                //         "createdBy" => Session::get('userID'),
+                //         "changedDate" => date("Y-m-d\TH:i:s"),
+                //         "changedBy" => Session::get('userID'),
+                //         "languageCode" => App::getLocale(),
+                //         'sessionID' => 0,
+                //         'sessionUserID' => Session::get('userID'),
+                //         'logActionUsername' => Session::get('userName'),
+                //         'logActionUserID' => Session::get('userID')
+                //     ]));
+                // dd();
+
                 $response = $client->post(env('API_URL') . '/mobile/TempAbsentMachine/InsertTempAbsentMachine',
                     ['body' => json_encode(
                         [
@@ -2494,6 +2515,8 @@ class TimeManagementController extends Controller
             $objError = (object) ['status' => false, 'message' => $failures[0]->errors()[0]];
             return array(0 => $objError);
         } catch (RequestException $e) {
+            $response = $e->getResponse();
+            // dd($response);
             $objError = (object) ['status' => false, 'message' => 'Something Went Wrong'];
             return array(0 => $objError);
         } catch (\Exception $e) {
