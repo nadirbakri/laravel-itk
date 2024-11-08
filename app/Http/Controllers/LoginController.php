@@ -96,13 +96,17 @@ class LoginController extends Controller
 				if($value->moduleID == 'UTI'){
 					Session::put('haveUtilities', true);
 					Session::put('moduleUtilities', $value->moduleID);
-					Session::put('groupAuthorizeUtilities', $value->groupAuthorizeCode);
+					if($value->companyCode == $arrResult->dataListSet[0]->companyCode){
+						Session::put('groupAuthorizeUtilities', $value->groupAuthorizeCode);
+					}
 					unset($menuList[$key]);
 				}
 				if($value->moduleID == 'HOME'){
 					Session::put('haveHome', true);
 					Session::put('moduleHome', $value->moduleID);
-					Session::put('groupAuthorizeHome', $value->groupAuthorizeCode);
+					if($value->companyCode == $arrResult->dataListSet[0]->companyCode){
+						Session::put('groupAuthorizeHome', $value->groupAuthorizeCode);
+					}
 					$value->{"moduleName"} = 'HOME';
 					$value->{"sort"} = 1;
 					$value->{"icon"} = 'home.svg';
@@ -111,7 +115,9 @@ class LoginController extends Controller
 				}
 				if($value->moduleID == 'TM'){
 					Session::put('moduleTimeManagement', $value->moduleID);
-					Session::put('groupAuthorizeTimeManagement', $value->groupAuthorizeCode);
+					if($value->companyCode == $arrResult->dataListSet[0]->companyCode){
+						Session::put('groupAuthorizeTimeManagement', $value->groupAuthorizeCode);
+					}
 					$value->{"moduleName"} = 'TIME MANAGEMENT';
 					$value->{"sort"} = 3;
 					$value->{"icon"} = 'time_management.svg';
@@ -120,7 +126,9 @@ class LoginController extends Controller
 				}
 				if($value->moduleID == 'PE'){
 					Session::put('modulePersonnel', $value->moduleID);
-					Session::put('groupAuthorizePersonnel', $value->groupAuthorizeCode);
+					if($value->companyCode == $arrResult->dataListSet[0]->companyCode){
+						Session::put('groupAuthorizePersonnel', $value->groupAuthorizeCode);
+					}
 					$value->{"moduleName"} = 'PERSONNEL';
 					$value->{"sort"} = 2;
 					$value->{"icon"} = 'personel.svg';
@@ -129,7 +137,9 @@ class LoginController extends Controller
 				}
 				if($value->moduleID == 'PY'){
 					Session::put('modulePayroll', $value->moduleID);
-					Session::put('groupAuthorizePayroll', $value->groupAuthorizeCode);
+					if($value->companyCode == $arrResult->dataListSet[0]->companyCode){
+						Session::put('groupAuthorizePayroll', $value->groupAuthorizeCode);
+					}
 					$value->{"moduleName"} = 'PAYROLL';
 					$value->{"sort"} = 4;
 					$value->{"icon"} = 'payroll.svg';
@@ -138,7 +148,9 @@ class LoginController extends Controller
 				}
 				if($value->moduleID == 'MD'){
 					Session::put('moduleMedical', $value->moduleID);
-					Session::put('groupAuthorizeMedical', $value->groupAuthorizeCode);
+					if($value->companyCode == $arrResult->dataListSet[0]->companyCode){
+						Session::put('groupAuthorizeMedical', $value->groupAuthorizeCode);
+					}
 					$value->{"moduleName"} = 'MEDICAL';
 					$value->{"sort"} = 6;
 					$value->{"icon"} = 'medical.svg';
@@ -147,7 +159,9 @@ class LoginController extends Controller
 				}
 				if($value->moduleID == 'REP'){
 					Session::put('moduleReport', $value->moduleID);
-					Session::put('groupAuthorizeReport', $value->groupAuthorizeCode);
+					if($value->companyCode == $arrResult->dataListSet[0]->companyCode){
+						Session::put('groupAuthorizeReport', $value->groupAuthorizeCode);
+					}
 					$value->{"moduleName"} = 'REPORT';
 					$value->{"sort"} = 5;
 					$value->{"icon"} = 'report.svg';
@@ -156,7 +170,9 @@ class LoginController extends Controller
 				}
 				if($value->moduleID == 'RPT'){
 					Session::put('moduleExport', $value->moduleID);
-					Session::put('groupAuthorizeExport', $value->groupAuthorizeCode);
+					if($value->companyCode == $arrResult->dataListSet[0]->companyCode){
+						Session::put('groupAuthorizeExport', $value->groupAuthorizeCode);
+					}
 					$value->{"moduleName"} = 'EXPORT REPORT';
 					$value->{"sort"} = 7;
 					$value->{"icon"} = 'export-data.svg';
@@ -165,7 +181,9 @@ class LoginController extends Controller
 				}
 				if($value->moduleID == 'TRX'){
 					Session::put('moduleTransaction', $value->moduleID);
-					Session::put('groupAuthorizeTransaction', $value->groupAuthorizeCode);
+					if($value->companyCode == $arrResult->dataListSet[0]->companyCode){
+						Session::put('groupAuthorizeTransaction', $value->groupAuthorizeCode);
+					}
 					$value->{"moduleName"} = 'TRANSACTION';
 					$value->{"sort"} = 8;
 					$value->{"icon"} = 'transaction-data.svg';
@@ -174,7 +192,9 @@ class LoginController extends Controller
 				}
 				if($value->moduleID == 'MOB'){
 					Session::put('moduleMasterData', $value->moduleID);
-					Session::put('groupAuthorizeMasterData', $value->groupAuthorizeCode);
+					if($value->companyCode == $arrResult->dataListSet[0]->companyCode){
+						Session::put('groupAuthorizeMasterData', $value->groupAuthorizeCode);
+					}
 					$value->{"moduleName"} = 'MOBILE MASTER DATA';
 					$value->{"sort"} = 9;
 					$value->{"icon"} = 'master-data.svg';
