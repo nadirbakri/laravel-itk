@@ -232,20 +232,19 @@
                 data: {
                     'levelType': "{{ isset($data[0]->levelType) ? $data[0]->levelType : '' }}"
                 }
-            }).then(function (data) {
-                $("#level_type_text").val(data.levelType);
-                var option = $('<option/>', {
-                    id: data.levelType,
-                    title: data.levelDescription,
-                    text: data.levelType
-                });
-                $("#level_type").append(option).attr('data-alias', 'yourvalue').trigger('change');
+            }).then(function (response) {
+                $("#level_type_text").val(response.levelType);
+                
+                var option = new Option(response.levelType, response.levelType, true, true);
+                $(option).attr('title', response.levelDescription);
+                $('#level_type').append(option).trigger('change');
+
                 $("#level_type").trigger({
                     type: 'select2:select',
                     params: {
-                        id: data.levelType,
-                        text: data.levelType,
-                        data: data
+                        id: response.levelType,
+                        text: response.levelType,
+                        data: response
                     }
                 });
             });
