@@ -837,12 +837,12 @@ class TimeManagementController extends Controller
                     'absenDateFrom' => $arrResult_tm->dataListSet[0]->absenteeismStart,
                     'absenDateTo' => $arrResult_tm->dataListSet[0]->absenteeismEnd,
                     'userID' => Session::get('userID'),
-                    'logActionUserID' => Session::get('userID'),
+                    'logActionUserID' => Session::get('userID'),    
                     'logActionUsername' => Session::get('userName')
                 ];
             }
 
-            // var_dump(json_encode($param));
+            // dd(json_encode($param));
             
             $response = $client->post(env('API_URL') . '/mobile/TmAbsentEmployee/getTmAbsentEmployeeDataEntry',
                 ['body' => json_encode($param)]

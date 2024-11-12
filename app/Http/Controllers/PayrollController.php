@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Imports\PayrollDataImport;
 use App\Imports\PayrollBonusTHRDataImport;
+use App\Imports\SalaryComponentImport;
 use App\Exports\TemplatePayrollDataTemplateSheet;
 use App\Exports\TemplatePayrollDataBonusTHRTemplateSheet;
 use App\Exports\SeveranceReportExcel;
@@ -32,6 +33,7 @@ use App\Exports\PerubahanUpahPensionFundReportExport;
 use App\Exports\DataPesertaAktifPensionFundReportExport;
 use App\Exports\CBIReportMonthlyExport;
 use App\Exports\CBIReportYearlyExport;
+use App\Exports\SalaryComponentTemplateExport;
 use App\Http\Controllers\Redirect;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Contracts\Encryption\DecryptException;
@@ -8891,6 +8893,37 @@ public function dataDetailReportFormatPY(Request $request)
         // $this->dispatch($processJobs);
 
         // return response()->json(['status' => "true", 'message' => 'Download is in Progress']);
+    }
+
+    public function importSalaryComponentDataPayroll(Request $request)
+    {
+        $file = $request->file;
+        // $base64File = base64_encode(file_get_contents($file->getRealPath()));
+        // $processJobs = new ProcessImportPersonalDataPersonel($base64File);
+        // $this->dispatch($processJobs);
+
+        // return response()->json(['status' => "true", 'message' => 'Import Personal Data is in Progress']);
+
+        try{
+            $import = new SalaryComponentImport();
+            Excel::import($import, $file->getRealPath(), null, \Maatwebsite\Excel\Excel::XLSX);
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            $failures = $e->failures();
+            $objError = (object) ['status' => false, 'message' => $failures[0]->errors()[0]];
+            return array(0 => $objError);
+        }
+
+        if(empty($import->getArrResult())){
+            $objError = (object) ['status' => false, 'message' => "The Uploaded File Doesn't Match The Template"];
+            return array(0 => $objError);
+        }else{
+            return $import->getArrResult();
+        }
+    }
+
+    public function downloadTemplateSalaryComponentDataPayroll(Request $request)
+    {
+        return Excel::download(new SalaryComponentTemplateExport(), "Template Salary Component Data.xlsx");
     }
 
 }

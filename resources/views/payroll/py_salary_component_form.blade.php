@@ -87,6 +87,17 @@
                 <img src="{{ url('/icons/functionbar/functionbar-edit-white.svg') }}" class="functionbar-hover" alt="Edit">
                 <span>Edit</span>
             </a>
+            <a href="javascript:void(0)" id="toolbar-import" style="width: 9%" onclick="triggerFileInput()">
+                <input type="file" class="custom-file-input" name="import" id="import" hidden onchange="handleFileUpload(this)">
+                <img src="{{ url('/icons/functionbar/functionbar-import-blue.svg') }}" alt="Import">
+                <img src="{{ url('/icons/functionbar/functionbar-import-white.svg') }}" class="functionbar-hover" alt="Import">
+                <span>Import</span>
+            </a>
+            <a href="javascript:void(0)" id="toolbar-download-template" style="width: 17%">
+                <img src="{{ url('/icons/functionbar/functionbar-download-blue.svg') }}" alt="Download Template">
+                <img src="{{ url('/icons/functionbar/functionbar-download-white.svg') }}" class="functionbar-hover" alt="Download Template">
+                <span>Download Template</span>
+            </a>
             <a href="javascript:void(0)" style="display: none;" id="toolbar-save">
                 <img src="{{ url('/icons/functionbar/functionbar-save-blue.svg') }}" alt="Save">
                 <img src="{{ url('/icons/functionbar/functionbar-save-white.svg') }}" class="functionbar-hover" alt="Save">
@@ -212,6 +223,93 @@
 
     window.onload = function() {
         savePreviousURL();
+    }
+
+    function triggerFileInput() {
+        const importInput = document.getElementById('import');
+        if (importInput) {
+            importInput.click();
+        } else {
+            console.error("File input element not found.");
+        }
+    }
+
+    function handleFileUpload(input) {
+        const file = input.files[0];
+        const allowedExtensions = /(\.xls|\.xlsx|\.xml)$/i;
+        
+        if (file) {
+            if (!allowedExtensions.exec(file.name)) {
+                $('#notification_error').modal('show');
+                $('#message-notification-error').html('Upload file in .xls, .xlsx, or .xml');
+
+                input.value = '';
+                return false;
+            }
+            else {
+                const formData = new FormData();
+                formData.append('file', file);
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
+                $.ajax({
+                    url: "{{ url('payroll/salary_component_data/import') }}",
+                    type: "POST",
+                    processData: false,
+                    contentType: false,
+                    data: formData,
+                    success: function (response) {
+                        // if (response.status == "true") {
+                        if (response[0].status == "true") {
+                            $("#toolbar-import").prop("disabled", false);
+                            $("#toolbar-import").html(
+                                '<a href="javascript:void(0)" id="toolbar-import" style="width: 17%"><img src="{{ url('/icons/functionbar/functionbar-import-blue.svg') }}" alt="Import"><img src="{{ url('/icons/functionbar/functionbar-import-white.svg') }}" class="functionbar-hover" alt="Import"><span>Import</span></a>'
+                            );
+                            input.value = "";
+                            $('#notification_success').modal('show');
+                            // $('#message-notification-success').html(response
+                            //     .message);
+                            $('#message-notification-success').html(response[0]
+                                .message);
+                            // setTimeout(function () {
+                            //     window.location =
+                            //         "{{ url('personnel/plafon_medical') }}";
+                            // }, 3000);
+                        } else {
+                            $("#toolbar-import").prop("disabled", false);
+                            $("#toolbar-import").html(
+                                '<a href="javascript:void(0)" id="toolbar-import" style="width: 17%"><img src="{{ url('/icons/functionbar/functionbar-import-blue.svg') }}" alt="Import"><img src="{{ url('/icons/functionbar/functionbar-import-white.svg') }}" class="functionbar-hover" alt="Import"><span>Import</span></a>'
+                            );
+                            $('#notification_error').modal('show');
+                            // if (response.message == null || response.message ==
+                            //     '') {
+                            if (response[0].message == null || response[0].message ==
+                                '') {
+                                $('#message-notification-error').html(
+                                    "{{ __('login.error') }}");
+                            } else {
+                                // $('#message-notification-error').html(response
+                                //     .message);
+                                $('#message-notification-error').html(response[0]
+                                    .message);
+                            }
+                        }
+                    },
+                    error: function (response) {
+                        $("#toolbar-import").prop("disabled", false);
+                        $("#toolbar-import").html(
+                            '<a href="javascript:void(0)" id="toolbar-import" style="width: 17%"><img src="{{ url('/icons/functionbar/functionbar-import-blue.svg') }}" alt="Import"><img src="{{ url('/icons/functionbar/functionbar-import-white.svg') }}" class="functionbar-hover" alt="Import"><span>Import</span></a>'
+                        );
+                        $('#notification_error').modal('show');
+                        $('#message-notification-error').html(response);
+                    }
+                });
+            }
+        }
     }
     
     $(document).ready(function () {
@@ -377,6 +475,61 @@
                 'func' : 'edit' 
             }, 
             "GET", "iframe_dashboard");
+        });
+
+        $("#toolbar-download-template").click(function () {
+            $(this).prop("disabled", true);
+            $(this).html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" style="margin: 0;"></span>'+
+                '<span style="padding-left: 0.5rem;">Loading...</span>'
+            );
+            
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                xhrFields: {
+                    responseType: 'blob',
+                },
+                url: "{{ url('payroll/salary_component_data/download_template') }}",
+                type: "POST",
+                success: function (result, status, xhr) {
+                    $("#toolbar-download-template").prop("disabled", false);
+                    $("#toolbar-download-template").html(
+                        '<a href="javascript:void(0)" id="toolbar-download-template" style="width: 17%"><img src="{{ url('/icons/functionbar/functionbar-download-blue.svg') }}" alt="Download Template"><img src="{{ url('/icons/functionbar/functionbar-download-white.svg') }}" class="functionbar-hover" alt="Download Template"><span>Download Template</span></a>'
+                    );
+                    
+                    var disposition = xhr.getResponseHeader(
+                        'content-disposition');
+                    var matches = /"([^"]*)"/.exec(disposition);
+                    var filename = (matches != null && matches[1] ? matches[1] :
+                        'noname_file.xlsx');
+                
+                    // The actual download
+                    var blob = new Blob([result], {
+                        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                    });
+
+                    var link = document.createElement('a');
+                    link.href = window.URL.createObjectURL(blob);
+                    link.download = filename;
+
+                    document.body.appendChild(link);
+
+                    link.click();
+                    document.body.removeChild(link);
+                },
+                error: function (response) {
+                    $("#toolbar-download-template").prop("disabled", false);
+                    $("#toolbar-download-template").html(
+                        '<a href="javascript:void(0)" id="toolbar-download-template" style="width: 17%"><img src="{{ url('/icons/functionbar/functionbar-download-blue.svg') }}" alt="Download Template"><img src="{{ url('/icons/functionbar/functionbar-download-white.svg') }}" class="functionbar-hover" alt="Download Template"><span>Download Template</span></a>'
+                    );
+                    $('#notification_error').modal('show');
+                    $('#message-notification-error').html(response);
+                }
+            });
         });
     })
 </script>

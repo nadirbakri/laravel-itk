@@ -583,8 +583,12 @@
                             //     var newOptionFinger = new Option(v.absentCodeDescription, v.absentCode, true, true);
                             //     $('#finger_absent_code' + (k+1)).append(newOptionFinger).trigger('change');
                             // }
-                            if(v.absentCode2 != null && v.absentCode2Description != null){
-                                var newOptionAbsent = new Option(v.absentCode2Description, v.absentCode2, true, true);
+                            // if(v.absentCode2 != null && v.absentCode2Description != null){
+                            //     var newOptionAbsent = new Option(v.absentCode2Description, v.absentCode2, true, true);
+                            //     $('#absent_code' + (k+1)).append(newOptionAbsent).trigger('change');
+                            // }
+                            if(v.absentCode != null && v.absentCodeDescription != null){
+                                var newOptionAbsent = new Option(v.absentCodeDescription, v.absentCode, true, true);
                                 $('#absent_code' + (k+1)).append(newOptionAbsent).trigger('change');
                             }
                             // if(v.positionCode != null && v.positionName != null){
