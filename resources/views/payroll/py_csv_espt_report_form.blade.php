@@ -146,6 +146,28 @@
                         </div>
                     </div>
                 </div>
+                @if(Session::get('companyCode') == 'CBI')
+                <div class="row">
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label for="excel">{{ __('payroll_csv_espt_report_form.label_format_file') }}</label>
+                            <div class="form-check">
+                                <input type="radio" id="excel" name="format_file" value="excel" checked>
+                                <label for="excel">{{ __('payroll_csv_espt_report_form.label_excel') }}</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label for="csv">&nbsp;</label>
+                            <div class="form-check">
+                                <input type="radio" id="csv" name="format_file" value="csv">
+                                <label for="csv">{{ __('payroll_csv_espt_report_form.label_csv') }}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endif
                 <div class="row">
                     <div class="col-4">
                         <div class="form-group">

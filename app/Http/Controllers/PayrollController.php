@@ -4609,7 +4609,7 @@ public function dataDetailReportFormatPY(Request $request)
         // dd($arrResult->dataListSet);
         // exit;
 
-        if($arrResult->dataListSet != null){
+        if($arrResult->dataListSet != null && !empty($arrResult->dataListSet[0]->transferBank)){
             if($request->output_file == 'xlsx'){
                 $array = explode("\r\n", $arrResult->dataListSet[0]->transferBank);
                 foreach($array as $key => $value){
@@ -8170,44 +8170,141 @@ public function dataDetailReportFormatPY(Request $request)
     }
 
     public function printCSVESPTReportFormPayrollExcel(Request $request){
-        $namaFile = "EsptMasa.xlsx";
-        if($request->format == "periodical"){
-            $namaFile = "EsptMasa" . date('n', strtotime($request->period)) . date('Y', strtotime($request->period)) . "-" . $request->rectification . "-" . $request->npwp_group . ".xlsx";
-            return Excel::download(new EBupotPeriodicalTemplateExport(
-                $request->format, 
-                $request->period,
-                $request->rectification,
-                $request->npwp_group,
-                $request->print_date,
-                $request->group_authorized_code_from,
-                $request->group_authorized_code_to), 
-                $namaFile
-            );
-        }else if($request->format == "annual"){
-            $namaFile = "EsptA1" . date('Y', strtotime($request->period)) . "-" . $request->rectification . "-" . $request->npwp_group . ".xlsx";
-            return Excel::download(new EBupotA1TemplateExport(
-                $request->format, 
-                $request->period,
-                $request->rectification,
-                $request->npwp_group,
-                $request->print_date,
-                $request->group_authorized_code_from,
-                $request->group_authorized_code_to), 
-                $namaFile
-            );
-        }else if($request->format == "final"){
-            $namaFile = "EsptFinal-" . date('n', strtotime($request->period)) . date('Y', strtotime($request->period)) . "-" . $request->rectification . "-" . $request->npwp_group . ".xlsx";
+        if(Session::get('companyCode') == 'CBI' && $request->format_file == 'csv'){
+            return $this->printCSVESPTReportCBIPayrollExcel($request);
+        }else{
+            $namaFile = "EsptMasa.xlsx";
+            if($request->format == "periodical"){
+                $namaFile = "EsptMasa" . date('n', strtotime($request->period)) . date('Y', strtotime($request->period)) . "-" . $request->rectification . "-" . $request->npwp_group . ".xlsx";
+                return Excel::download(new EBupotPeriodicalTemplateExport(
+                    $request->format, 
+                    $request->period,
+                    $request->rectification,
+                    $request->npwp_group,
+                    $request->print_date,
+                    $request->group_authorized_code_from,
+                    $request->group_authorized_code_to), 
+                    $namaFile
+                );
+            }else if($request->format == "annual"){
+                $namaFile = "EsptA1" . date('Y', strtotime($request->period)) . "-" . $request->rectification . "-" . $request->npwp_group . ".xlsx";
+                return Excel::download(new EBupotA1TemplateExport(
+                    $request->format, 
+                    $request->period,
+                    $request->rectification,
+                    $request->npwp_group,
+                    $request->print_date,
+                    $request->group_authorized_code_from,
+                    $request->group_authorized_code_to), 
+                    $namaFile
+                );
+            }else if($request->format == "final"){
+                $namaFile = "EsptFinal-" . date('n', strtotime($request->period)) . date('Y', strtotime($request->period)) . "-" . $request->rectification . "-" . $request->npwp_group . ".xlsx";
+            }
+            // return Excel::download(new CSVESPTReportFormExport(
+            //     $request->format, 
+            //     $request->period,
+            //     $request->rectification,
+            //     $request->npwp_group,
+            //     $request->print_date,
+            //     $request->group_authorized_code_from,
+            //     $request->group_authorized_code_to), 
+            //     $namaFile
+            // );
         }
-        // return Excel::download(new CSVESPTReportFormExport(
-        //     $request->format, 
-        //     $request->period,
-        //     $request->rectification,
-        //     $request->npwp_group,
-        //     $request->print_date,
-        //     $request->group_authorized_code_from,
-        //     $request->group_authorized_code_to), 
-        //     $namaFile
-        // );
+    }
+
+    public function printCSVESPTReportCBIPayrollExcel($request){
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $param = [
+                'companyCode' => Session::get('companyCode'),
+                'periodMonth' => (int) date('n', strtotime($request->period)),
+                'periodYear' => (int) date('Y', strtotime($request->period)),
+                'groupNPWPCode' => $request->npwp_group,
+                'printDate' => $request->print_date,
+                'statusPeriod' => "1",
+                "languageCode" => App::getLocale(),
+                "sessionID" => 0,
+                "sessionUserID" => Session::get('userID')
+            ];
+
+            // if(!empty($request->group_authorized_code_from) || !empty($request->group_authorized_code_to)){
+            //     $param['groupAuthorizeCodeFrom'] = (int) $request->group_authorized_code_from;
+            //     $param['groupAuthorizeCodeTo'] = (int) $request->group_authorized_code_to;
+            // }
+
+            // dd(json_encode($param));
+
+            if($request->format == 'periodical'){
+                $url = "/payroll/getEBupotCBI";
+            }else if($request->format == 'annual'){
+                $url = "/payroll/getEBupotCBIA1";
+            }else if($request->format == 'final'){
+                $url = "/payroll/getEBupotCBIFinal";
+            }
+
+            $response = $client->post(env('API_URL') . $url, [
+                'body' => json_encode($param)
+            ]);
+
+            $arrResult = json_decode($response->getBody()->getContents());
+
+            // dd($arrResult->dataListSet);
+
+            if($arrResult->dataListSet != null && !empty($arrResult->dataListSet[0]->csV_Format_PPH21)){
+                $array = explode("\r\n", $arrResult->dataListSet[0]->csV_Format_PPH21);
+                foreach($array as $key => $value){
+                    $arrayTwo = explode(";", $value);
+                    if(count($arrayTwo) > 1){
+                        $array[$key] = $arrayTwo;
+                    }
+                }
+
+                $array = array_filter($array, function($value) {
+                    return !empty($value);
+                });
+
+                $csvHeader = $array[0];
+
+                $tempFile = fopen('php://temp', 'w+');
+
+                foreach ($array as $row) {
+                    $row = array_pad($row, count($csvHeader), '');
+
+                    fputcsv($tempFile, $row);
+                }
+
+                rewind($tempFile);
+                $csvContent = str_replace('"', '', stream_get_contents($tempFile));
+                
+                fclose($tempFile);
+
+                return Response::make($csvContent, 200, [
+                    'Content-Type' => 'text/csv',
+                    'Content-Disposition' => 'attachment; filename="' . $arrResult->dataListSet[0]->fileName . '"',
+                ]);
+            }else{
+                return Response::make("", 200, [
+                    'Content-Type' => 'text/csv',
+                    'Content-Disposition' => 'attachment; filename="' . $arrResult->dataListSet[0]->fileName . '"',
+                ]);
+            }
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
     }
 
     public function printBonusTHRReportPayroll(Request $request){
