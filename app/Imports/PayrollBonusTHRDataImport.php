@@ -48,14 +48,15 @@ class PayrollBonusTHRDataImport implements ToCollection, SkipsEmptyRows, WithSta
             Validator::make($rows->toArray(), [
                 '*.0' => 'required|not_in:NULL',
                 '*.2' => 'required|not_in:NULL',
-                '*.3' => 'required|not_in:NULL'
+                '*.3' => 'required|not_in:NULL|date_format:Y-m-d'
             ], [
                 '*.0.required' => 'Employee No is Required',
                 '*.0.not_in' => 'Employee No cannot be Null',
                 '*.2.required' => 'Flag Type is Required',
                 '*.2.not_in' => 'Flag Type cannot be Null',
                 '*.3.required' => 'Process Date is Required',
-                '*.3.not_in' => 'Process Date cannot be Null'
+                '*.3.not_in' => 'Process Date cannot be Null',
+                '*.3.date_format' => 'Date Format Must Be (2020-01-31). Make Sure to Change Column Format to Text, not Date'
             ])->validate();
 
             foreach ($rows as $row) {
@@ -65,7 +66,7 @@ class PayrollBonusTHRDataImport implements ToCollection, SkipsEmptyRows, WithSta
                     "columnA" => (!is_null($row[0]) && $row[0] != "NULL") ? strval($row[0]) : null,
                     "columnB" => (!is_null($row[1]) && $row[1] != "NULL") ? strval($row[1]) : null,
                     "columnC" => (!is_null($row[2]) && $row[2] != "NULL") ? strval($row[2]) : null,
-                    "columnD" => (!is_null($row[3]) && $row[3] != "NULL") ? $this->transformDate($row[3]) : null,
+                    "columnD" => (!is_null($row[3]) && $row[3] != "NULL") ? date("Y-m-d", strtotime($row[3])) : null,
                     "columnE" => (!is_null($row[4]) && $row[4] != "NULL") ? floatval($row[4]) : 0,
                     "columnF" => (!is_null($row[5]) && $row[5] != "NULL") ? floatval($row[5]) : 0,
                     "columnG" => (!is_null($row[6]) && $row[6] != "NULL") ? strval($row[6]) : null,
@@ -81,6 +82,8 @@ class PayrollBonusTHRDataImport implements ToCollection, SkipsEmptyRows, WithSta
                     "logActionUsername" => Session::get('userName')
                 ];
             }
+
+            // dd(json_encode($param));
 
             $response = $client->put(env('API_URL') . '/payroll/UpdateBonusTHR',
                 ['body' => json_encode($param)]

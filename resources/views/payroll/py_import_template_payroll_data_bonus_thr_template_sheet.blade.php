@@ -22,7 +22,7 @@
                     <th>Employee No</th>
                     <th>Employee Name</th>
                     <th>Type (B/T)</th>
-                    <th>Process Date</th>
+                    <th data-format="@">Process Date (YYYY-MM-DD)</th>
                     <th>Amount</th>
                     <th>Service Month</th>
                     <th>Performance Result</th>
