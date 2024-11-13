@@ -59,7 +59,7 @@
             <tr>
                 <th style="display:flex; text-align:center; align-items:center; border:1px solid #000; padding:4px; background-color: #97d7f7;">No</th>
                 @foreach($data[0]->detail[0]->field as $key => $dataTable)
-                    @if(!empty($dataTable->value) && !is_string($dataTable->value))
+                    @if(!is_string($dataTable->value) && ($dataTable->dataFormat == "#,##0" || $dataTable->dataFormat == "#,##0.00"))
                         <?php
                         $total[$dataTable->field] = 0;
                         ?>

@@ -154,8 +154,23 @@ class PeriodicalReportExport implements FromView, ShouldAutoSize
         $arrResult = json_decode($response->getBody()->getContents());
         $arrCompany = json_decode($responseGetCompany->getBody()->getContents());
 
-        // dd($arrResult->dataListSet);
+        // dd($arrResult->dataListSet[0]->detail[0]->field);
         // exit;
+
+        // $indexes = [];
+
+        // Loop melalui array 'detail'
+        // foreach ($arrResult->dataListSet[0]->detail as $detailKey => $detail) {
+        //     foreach ($detail->field as $fieldKey => $field) {
+        //         if ($field->field === 'Overtime') {
+        //             // Simpan indeks array yang ditemukan
+        //             $indexes[$detail->employeeNo] = $fieldKey;
+        //         }
+        //     }
+        // }
+
+        // dd(implode(', ', $indexes));
+        // dd($indexes);
 
         if($arrResult->dataListSet == null){
             return view('payroll.py_export_periodical_report_excel', [
