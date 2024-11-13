@@ -100,6 +100,92 @@
                     </div>
                 </div>
                 <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="include_birth_date"
+                                    name="include_birth_date" value="false">
+                                <label class="form-check-label"
+                                    for="include_birth_date">{{ __('personel_employee_list.label_include_birth_date') }}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="birth_date_from">{{ __('personel_employee_list.label_birth_date_from') }}</label>
+                            <div class='input-group'>
+                                <input type="text" class="form-control" id="birth_date_from" name="birth_date_from"
+                                    placeholder="{{ __('personel_employee_list.label_birth_date_from') }}" disabled>
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="birth_date_to">{{ __('personel_employee_list.label_birth_date_to') }}</label>
+                            <div class='input-group'>
+                                <input type="text" class="form-control" id="birth_date_to" name="birth_date_to"
+                                    placeholder="{{ __('personel_employee_list.label_birth_date_to') }}" disabled>
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="include_age"
+                                    name="include_age" value="true">
+                                <label class="form-check-label"
+                                    for="include_age">{{ __('personel_employee_list.label_include_age') }}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="age_from">{{ __('personel_employee_list.label_age_from') }}</label>
+                            <input type="number" class="form-control" id="age_from" name="age_from"
+                                placeholder="{{ __('personel_employee_list.label_age_from') }}" disabled>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="age_to">{{ __('personel_employee_list.label_age_to') }}</label>
+                            <input type="number" class="form-control" id="age_to" name="age_to"
+                                placeholder="{{ __('personel_employee_list.label_age_to') }}" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="include_gender"
+                                    name="include_gender" value="false">
+                                <label class="form-check-label"
+                                    for="include_gender">{{ __('personel_employee_list.label_include_gender') }}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="gender">{{ __('personel_employee_list.label_gender') }}</label>
+                            <select class="form-control select2" id="gender" name="gender" disabled></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col-2">
                         <div class="form-group">
                             <label
@@ -219,10 +305,11 @@
     }
     
     $(function () {
+        initMonthPicker();
         initDatePicker();
     });
 
-    function initDatePicker() {
+    function initMonthPicker() {
         $('.input-group input').flatpickr({
             altInput: true,
             allowInput: true,
@@ -236,6 +323,23 @@
                     altFormat: "F Y", //defaults to "F Y"
                 })
             ],
+            onReady: function () {
+                var flatPickrInstance = this;
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
+    }
+
+    function initDatePicker() {
+        $('#birth_date_from, #birth_date_to').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "d-M-Y",
+            dateFormat: "Y-m-d",
+            defaultDate: "today",
             onReady: function () {
                 var flatPickrInstance = this;
                 var $flatPickrInput = $(flatPickrInstance.element);
@@ -298,6 +402,7 @@
 
         loadDataEmployeeNo('#employee_no_from');
         loadDataEmployeeNo('#employee_no_to');
+        loadDataGender();
         loadDataGroupAuthorize('#group_authorize_from');
         loadDataGroupAuthorize('#group_authorize_to');
         loadDataPositionCode();
@@ -342,6 +447,44 @@
 
         $('select').on('select2:close', function (e) {
             $('.header-select').remove();
+        });
+
+        $('#include_birth_date').on('click', function () {
+            if ($('#birth_date_from')[0]._flatpickr) {
+                $('#birth_date_from')[0]._flatpickr.destroy();
+            }
+            if ($('#birth_date_to')[0]._flatpickr) {
+                $('#birth_date_to')[0]._flatpickr.destroy();
+            }
+
+            if ($(this).is(':checked')) {
+                $('#birth_date_from').prop('disabled', false);
+                $('#birth_date_to').prop('disabled', false);
+            } else {
+                $('#birth_date_from').prop('disabled', true);
+                $('#birth_date_to').prop('disabled', true);
+            }
+
+            initDatePicker('#birth_date_from');
+            initDatePicker('#birth_date_to');
+        });
+
+        $('#include_age').on('click', function () {
+            if ($(this).is(':checked')) {
+                $('#age_from').prop('disabled', false);
+                $('#age_to').prop('disabled', false);
+            } else {
+                $('#age_from').prop('disabled', true);
+                $('#age_to').prop('disabled', true);
+            }
+        });
+
+        $('#include_gender').on('click', function () {
+            if ($(this).is(':checked')) {
+                $('#gender').prop('disabled', false);
+            } else {
+                $('#gender').prop('disabled', true);
+            }
         });
 
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
@@ -490,6 +633,64 @@
                                 return {
                                     text: item.fullName,
                                     id: item.employeeNo,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataGender(){
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' + 
+                        '<div class="col-12">' + data.data.value + '<div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $('#gender').select2({
+                width: '100%',
+                placeholder: 'Choose Gender',
+                allowClear: true,
+                closeOnSelect: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: "{{ url('/gender/api') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.comGenCode,
+                                    id: item.comGenCode,
                                     data: item
                                 }
                             })

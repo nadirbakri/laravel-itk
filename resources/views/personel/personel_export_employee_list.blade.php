@@ -30,6 +30,7 @@
                 <th>Zip Code</th>
                 <th>Gender</th>
                 <th>Birth Date</th>
+                <th>Age</th>
                 <th>Religion</th>
                 <th>Join Date</th>
                 <th>Marital Status</th>
@@ -54,6 +55,7 @@
                 <td>{{ $value->homeZIpCode }}</td>
                 <td>{{ $value->gender }}</td>
                 <td>{{ date('Y-m-d', strtotime($value->birthDate)) }}</td>
+                <td>{{ $value->age }}</td>
                 <td>{{ $value->religion }}</td>
                 <td>{{ date('Y-m-d', strtotime($value->joinDate)) }}</td>
                 <td>{{ $value->maritalStatus }}</td>

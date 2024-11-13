@@ -21,12 +21,17 @@ use App;
 
 class EmployeeListExport extends DefaultValueBinder implements WithCustomValueBinder, FromView, ShouldAutoSize
 {
-    public function __construct($employeeNoFrom, $employeeNoTo, $period, $includeResign, $inputType, $groupAuthorizeFrom, $groupAuthorizeTo, $position, $ranking, $location, $dataLevel)
+    public function __construct($employeeNoFrom, $employeeNoTo, $period, $includeResign, $birthDateFrom, $birthDateTo, $ageFrom, $ageTo, $gender, $inputType, $groupAuthorizeFrom, $groupAuthorizeTo, $position, $ranking, $location, $dataLevel)
     {
         $this->employeeNoFrom = $employeeNoFrom;
         $this->employeeNoTo = $employeeNoTo;
         $this->period = $period;
         $this->includeResign = $includeResign;
+        $this->birthDateFrom = $birthDateFrom;
+        $this->birthDateTo = $birthDateTo;
+        $this->ageFrom = $ageFrom;
+        $this->ageTo = $ageTo;
+        $this->gender = $gender;
         $this->inputType = $inputType;
         $this->groupAuthorizeFrom = $groupAuthorizeFrom;
         $this->groupAuthorizeTo = $groupAuthorizeTo;
@@ -63,7 +68,12 @@ class EmployeeListExport extends DefaultValueBinder implements WithCustomValueBi
                 'userID' => Session::get('userID'),
                 'sessionID' => 0, 
                 'sessionUserID' => Session::get('userID'),
-                'includeResign' => $this->includeResign
+                'includeResign' => $this->includeResign,
+                'birthDateFrom' => $this->birthDateFrom,
+                'birthDateTo' => $this->birthDateTo,
+                'ageFrom' => $this->ageFrom,
+                'ageTo' => $this->ageTo,
+                'gender' => $this->gender,
             ];
 
             if(!empty($this->employeeNoFrom) || !empty($this->employeeNoTo)){
