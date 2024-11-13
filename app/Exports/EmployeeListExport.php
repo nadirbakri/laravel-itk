@@ -73,7 +73,7 @@ class EmployeeListExport extends DefaultValueBinder implements WithCustomValueBi
                 'birthDateTo' => $this->birthDateTo,
                 'ageFrom' => $this->ageFrom,
                 'ageTo' => $this->ageTo,
-                'gender' => $this->gender,
+                'genderCode' => $this->gender,
             ];
 
             if(!empty($this->employeeNoFrom) || !empty($this->employeeNoTo)){
