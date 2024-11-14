@@ -175,66 +175,23 @@ class PeriodicalReportExport extends DefaultValueBinder implements WithCustomVal
         $arrResult = json_decode($response->getBody()->getContents());
         $arrCompany = json_decode($responseGetCompany->getBody()->getContents());
 
-        // dd($arrResult->dataListSet);
-
-        // foreach ($arrResult->dataListSet[0]->detail as $key => $dataTable) {
-        //     var_dump($dataTable->employeeNo);
-        //     var_dump(count($dataTable->field));
-        //     foreach ($dataTable->field as $key2 => $dataTable2) {
-        //         if (!is_string($dataTable2->value) && $dataTable2->dataFormat == "#,##0") {
-        //             $totalKey = $dataTable2->field . '_' . $key2;
-        //             $total[$totalKey] += $dataTable2->value;
-        //         } else if (!is_string($dataTable2->value) && $dataTable2->dataFormat == "#,##0.00") {
-        //             $totalKey = $dataTable2->field . '_' . $key2;
-        //             $total[$totalKey] += $dataTable2->value;
-        //         }
-        //     }
-        // }
+        // dd($arrResult->dataListSet[0]->detail[0]->field);
         // exit;
 
         // $indexes = [];
 
         // Loop melalui array 'detail'
-        // foreach ($arrResult->dataListSet[0]->departementGroup as $detailKey => $detail) {
-        //     foreach ($detail->data as $key => $value) {
-        //         // Loop melalui array 'field'
-        //         foreach ($value->field as $fieldKey => $field) {
-        //             if ($field->field === 'SewaRumah') {
-        //                 // Simpan indeks array yang ditemukan
-        //                 $indexes[$value->employeeNo] = $fieldKey;
-        //             }
+        // foreach ($arrResult->dataListSet[0]->detail as $detailKey => $detail) {
+        //     foreach ($detail->field as $fieldKey => $field) {
+        //         if ($field->field === 'Overtime') {
+        //             // Simpan indeks array yang ditemukan
+        //             $indexes[$detail->employeeNo] = $fieldKey;
         //         }
         //     }
         // }
 
-        // Check Total
-        // foreach ($arrResult->dataListSet[0]->detail[0]->field as $key => $dataTable) {
-        //     if(!empty($dataTable->value) && !is_string($dataTable->value)){
-        //         $totalKey = $dataTable->field . '_' . $key;
-        //         $total[$totalKey] = 0;
-        //     }else{
-        //         $totalKey = $dataTable->field . '_' . $key;
-        //         $total[$totalKey] = '';
-        //     }
-        // }
-
-        // foreach ($arrResult->dataListSet[0]->detail as $key => $dataTable) {
-        //     foreach ($dataTable->field as $key2 => $dataTable2) {
-        //         if (!empty($dataTable2->value) && !is_string($dataTable2->value) && $dataTable2->dataFormat == "#,##0") {
-        //             $totalKey = $dataTable2->field . '_' . $key2;
-        //             $total[$totalKey] += $dataTable2->value;
-        //         } else if (!empty($dataTable2->value) && !is_string($dataTable2->value) && $dataTable2->dataFormat == "#,##0.00") {
-        //             $totalKey = $dataTable2->field . '_' . $key2;
-        //             $total[$totalKey] += $dataTable2->value;
-        //         }
-        //     }
-        // }
-
-        // Storage::put('debug_data.txt', json_encode($arrResult->dataListSet));
         // dd(implode(', ', $indexes));
         // dd($indexes);
-        // dd($this->reportNameDetail);
-        // exit;
 
         if($arrResult->dataListSet == null){
             return view('payroll.py_export_periodical_report_excel', [

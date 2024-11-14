@@ -2748,13 +2748,13 @@ class TimeManagementController extends Controller
                     'actualDateIn' => isset($request->actual_date_in[$key]) ? $request->actual_date_in[$key] . "T" . $request->actual_time_in[$key] : null,
                     'actualDateOut' => isset($request->actual_date_out[$key]) ? $request->actual_date_out[$key] . "T" . $request->actual_time_out[$key] : null,
                     'totalActualHour' => isset($request->total_actual_hour[$key]) ? $request->absent_date[$key] . "T" . $request->total_actual_hour[$key] : null,
-                    'absentCode' => null,
+                    'absentCode' => isset($request->absent_code[$key]) ? $request->absent_code[$key] : null,
                     'hourAbsent' => null,
                     'descriptionAbsent' => null,
                     // 'absentCode' => isset($request->finger_absent_code[$key]) ? $request->finger_absent_code[$key] : null,
                     // 'hourAbsent' => isset($request->finger_absent_hour[$key]) ? $request->absent_date[$key] . "T" . $request->finger_absent_hour[$key] : null,
                     // 'descriptionAbsent' => isset($request->finger_absent_description[$key]) ? $request->finger_absent_description[$key] : null,
-                    'absentCode2' => isset($request->absent_code[$key]) ? $request->absent_code[$key] : null,
+                    'absentCode2' => null,
                     'hourAbsent2' => isset($request->absent_hour[$key]) ? $request->absent_date[$key] . "T" . $request->absent_hour[$key] : null,
                     'descriptionAbsent2' => isset($request->absent_hour[$key]) ? $request->absent_hour[$key] : null,
                     'absentCode3' => null,
@@ -2790,7 +2790,7 @@ class TimeManagementController extends Controller
                 ];
             }
 
-            // var_dump(json_encode($param));
+            // dd(json_encode($param));
 
             $response = $client->put(env('API_URL') . '/mobile/TmAbsentEmployee/BulkUpdateTmAbsentEmployee',
                 ['body' => json_encode($param)]
