@@ -119,10 +119,14 @@
                     }
                     ?>
                     @if($loop->iteration > 2)
-                        @if(!empty($dataTable3->value) && !is_string($dataTable3->value) && $dataTable3->dataFormat == "#,##0")
-                            <td style="text-align:{{ $alignment }}; border:1px solid #000;">{{ number_format($total[$dataTable3->field], 0, ',', '.') }}</td>
-                        @elseif(!empty($dataTable3->value) && !is_string($dataTable3->value) && $dataTable3->dataFormat == "#,##0.00")
-                            <td style="text-align:{{ $alignment }}; border:1px solid #000;">{{ number_format($total[$dataTable3->field], 2, ',', '.') }}</td>
+                        @if(!empty($total[$dataTable3->field]))
+                            @if(!is_string($dataTable3->value) && $dataTable3->dataFormat == "#,##0")
+                                <td style="text-align:{{ $alignment }}; border:1px solid #000;">{{ number_format($total[$dataTable3->field], 0, ',', '.') }}</td>
+                            @elseif(!is_string($dataTable3->value) && $dataTable3->dataFormat == "#,##0.00")
+                                <td style="text-align:{{ $alignment }}; border:1px solid #000;">{{ number_format($total[$dataTable3->field], 2, ',', '.') }}</td>
+                            @else
+                                <td style="text-align:{{ $alignment }}; border:1px solid #000;">-</td>
+                            @endif
                         @else
                             <td style="text-align:{{ $alignment }}; border:1px solid #000;">-</td>
                         @endif
