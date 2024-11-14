@@ -324,8 +324,9 @@
                                             <th>{{ __('trans_transport.sloc') }}</th>
                                             <th>{{ __('trans_transport.eloc') }}</th>
                                             <th>{{ __('trans_transport.treq') }}</th>
-                                            <th>{{ __('trans_transport.tpaid') }}</th>
                                             <th>{{ __('trans_transport.remarks') }}</th>
+                                            <th>{{ __('trans_transport.tpaid') }}</th>
+                                            <th>{{ __('trans_transport.premarks') }}</th>
                                             <th>{{ __('trans_transport.parking') }}</th>
                                             <th>{{ __('trans_transport.tol') }}</th>
                                     </tr>
@@ -854,12 +855,13 @@
                         return data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
                     }
                 },
+                {data: 'remarks', name: 'remarks'},
                 {data: 'paidAmount', name: 'paidAmount',
                     render: function (data, type, row) {
                         return data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
                     }
                 },
-                {data: 'remarks', name: 'remarks'},
+                {data: 'hrdRemarks', name: 'hrdRemarks'},
                 {data: 'amountParkir', name: 'amountParkir',
                     render: function (data, type, row) {
                         return data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");

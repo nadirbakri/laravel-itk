@@ -28,6 +28,7 @@ return [
     'treq' => 'Total Request',
     'tpaid' => 'Total Paid',
     'remarks' => 'Remarks',
+    'premarks' => 'Paid Remarks',
     'parking' => 'Parking',
     'tol' => 'Toll',
     'luser' => 'List User',

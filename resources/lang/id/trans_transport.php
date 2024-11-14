@@ -29,6 +29,7 @@ return [
     'treq' => 'Total Pengajuan',
     'tpaid' => 'Total Dibayar',
     'remarks' => 'Catatan',
+    'premarks' => 'Catatan Dibayar',
     'parking' => 'Parkir',
     'tol' => 'Toll',
     'luser' => 'Daftar Pengguna',
