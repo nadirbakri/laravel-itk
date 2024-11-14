@@ -261,21 +261,21 @@ class PeriodicalReportExport extends DefaultValueBinder implements WithCustomVal
                 foreach ($arrResult->dataListSet[0]->departementGroup as $key => $dept) {
                     $totalEmployee = count($dept->data);
                     foreach ($dept->data as $key => $value) {
-                        foreach ($value->field as $v) {
+                        foreach ($value->field as $k => $v) {
                             if ($v->tableName === 'Company') {
                                 $branch = $v->value;
                                 if (!isset($total[$branch])) {
                                     $total[$branch] = [];
                                 }
                             }
-                            if (!empty($v->value) && !is_string($v->value)) {
-                                $total[$branch][$v->field] = (isset($total[$branch][$v->field]) && !empty($total[$branch][$v->field])) ? $total[$branch][$v->field] + $v->value : $v->value;
+                            if (!is_string($v->value)) {
+                                $total[$branch][$v->field . '_' . $k] = (isset($total[$branch][$v->field . '_' . $k])) ? $total[$branch][$v->field . '_' . $k] + $v->value : $v->value;
                             }else{
                                 if($v->field == 'EmployeeNo'){
-                                    $total[$branch][$v->field] = (isset($total[$branch][$v->field]) && !empty($total[$branch][$v->field])) ? $total[$branch][$v->field] + $totalEmployee : $totalEmployee;
+                                    $total[$branch][$v->field . '_' . $k] = (isset($total[$branch][$v->field . '_' . $k])) ? $total[$branch][$v->field . '_' . $k] + $totalEmployee : $totalEmployee;
                                     $totalEmployee = 0;
                                 }else{
-                                    $total[$branch][$v->field] = '';
+                                    $total[$branch][$v->field . '_' . $k] = '';
                                 }
                             }
                         }

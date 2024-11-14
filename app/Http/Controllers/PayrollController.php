@@ -8785,7 +8785,7 @@ public function dataDetailReportFormatPY(Request $request)
                 foreach ($arrResult->dataListSet[0]->departementGroup as $key => $dept) {
                     $totalEmployee = count($dept->data);
                     foreach ($dept->data as $key => $value) {
-                        foreach ($value->field as $v) {
+                        foreach ($value->field as $k => $v) {
                             if ($v->tableName === 'Company') {
                                 $branch = $v->value;
                                 if (!isset($total[$branch])) {
@@ -8793,13 +8793,13 @@ public function dataDetailReportFormatPY(Request $request)
                                 }
                             }
                             if (!is_string($v->value)) {
-                                $total[$branch][$v->field] = isset($total[$branch][$v->field]) ? $total[$branch][$v->field] + $v->value : $v->value;
+                                $total[$branch][$v->field . '_' . $k] = isset($total[$branch][$v->field . '_' . $k]) ? $total[$branch][$v->field . '_' . $k] + $v->value : $v->value;
                             }else{
                                 if($v->field == 'EmployeeNo'){
-                                    $total[$branch][$v->field] = isset($total[$branch][$v->field]) ? $total[$branch][$v->field] + $totalEmployee : $totalEmployee;
+                                    $total[$branch][$v->field . '_' . $k] = isset($total[$branch][$v->field . '_' . $k]) ? $total[$branch][$v->field . '_' . $k] + $totalEmployee : $totalEmployee;
                                     $totalEmployee = 0;
                                 }else{
-                                    $total[$branch][$v->field] = '';
+                                    $total[$branch][$v->field . '_' . $k] = '';
                                 }
                             }
                         }
