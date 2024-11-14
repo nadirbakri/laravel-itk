@@ -6604,7 +6604,8 @@
                         return {
                             _token: CSRF_TOKEN,
                             search: params.term,
-                            isRange: false
+                            isRange: false,
+                            isModule: false
                         };
                     },
                     processResults: function (data) {

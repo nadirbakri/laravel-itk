@@ -547,7 +547,8 @@
                             _token: CSRF_TOKEN,
                             search: params.term,
                             module: 'PE',
-                            isRange: false
+                            isRange: false,
+                            isModule: false
                         };
                     },
                     processResults: function (data) {

@@ -844,7 +844,8 @@
                             _token: CSRF_TOKEN,
                             search: params.term,
                             module: 'MD',
-                            isRange: false
+                            isRange: false,
+                            isModule: false
                         };
                     },
                     processResults: function (data) {

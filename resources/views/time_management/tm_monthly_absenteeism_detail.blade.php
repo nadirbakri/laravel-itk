@@ -769,7 +769,8 @@
                             _token: CSRF_TOKEN,
                             search: params.term,
                             module: 'TM',
-                            isRange: false
+                            isRange: false,
+                            isModule: false
                         };
                     },
                     processResults: function (data) {

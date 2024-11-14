@@ -1499,7 +1499,8 @@
                         return {
                             _token: CSRF_TOKEN,
                             search: params.term,
-                            isRange: true
+                            isRange: true,
+                            isModule: true
                         };
                     },
                     processResults: function (data) {

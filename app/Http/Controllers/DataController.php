@@ -2817,7 +2817,7 @@ class DataController extends Controller
 				'isRange' => (bool) $request->isRange
 			];
 
-			if(isset($request->isRange) && $request->isRange == true){
+			if(isset($request->isRange) && $request->isRange == true && $request->isModule == false){
 				$param['groupAuthorizeCode'] = Session::get('groupAuthorizeUtilities');
 			}
 
