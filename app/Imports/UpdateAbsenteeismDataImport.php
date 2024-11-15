@@ -56,9 +56,9 @@ class UpdateAbsenteeismDataImport implements ToCollection, SkipsEmptyRows, WithS
             ]);
 
             Validator::make($rows->toArray(), [
-                '*.1' => 'date_format:m/d/Y',
-                '*.3' => 'date_format:H:i',
-                '*.4' => 'date_format:H:i'
+                '*.1' => 'nullable|date_format:m/d/Y',
+                '*.3' => 'nullable|date_format:H:i',
+                '*.4' => 'nullable|date_format:H:i'
             ], [
                 '*.1.date_format' => 'Date Format Must Be (01/31/2000)',
                 '*.3.date_format' => 'Hour & Minute In Format Must Be (07:01). Make Sure to Change Column Format to Text, not Time',

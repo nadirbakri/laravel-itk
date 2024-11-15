@@ -4613,7 +4613,7 @@ public function dataDetailReportFormatPY(Request $request)
             if($request->output_file == 'xlsx'){
                 $array = explode("\r\n", $arrResult->dataListSet[0]->transferBank);
                 foreach($array as $key => $value){
-                    if($request->source_bank == 'PERMATA'){
+                    if($request->source_bank == 'PERMATA' || $request->source_bank == 'MCM'){
                         $arrayTwo = explode(",", $value);
                     }else if($request->source_bank == 'BCA' && $request->transfer_type == "2"){
                         $arrayTwo = explode("|", $value);
