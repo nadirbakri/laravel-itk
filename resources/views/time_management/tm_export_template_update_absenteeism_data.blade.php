@@ -18,11 +18,12 @@
 <table style="width: 100%; font-size: 14px;" class="table table-bordered table-hover responsive">
     <thead>
         <tr>
-            <th>EmployeeNo</th>
+            <th>Employee No</th>
             <th>Absent Date</th>
             <th>Absent Code</th>
             <th>Hour and Minute In (HH:MM)</th>
             <th>Hour and Minute Out (HH:MM)</th>
+            <th>Description Absent</th>
             <th>Day Type</th>
             <th>Shift Code</th>
             <th>Cost Center Code</th>

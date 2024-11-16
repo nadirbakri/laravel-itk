@@ -128,14 +128,15 @@
                         <p>{{ __('tm_update_absenteeism_data.label_column_c') }}</p>
                         <p>{{ __('tm_update_absenteeism_data.label_column_d') }}</p>
                         <p>{{ __('tm_update_absenteeism_data.label_column_e') }}</p>
+                        <p>{{ __('tm_update_absenteeism_data.label_column_f') }}</p>
                     </div>
                     <div class="col-3">
                         <br/>
-                        <p>{{ __('tm_update_absenteeism_data.label_column_f') }}</p>
                         <p>{{ __('tm_update_absenteeism_data.label_column_g') }}</p>
                         <p>{{ __('tm_update_absenteeism_data.label_column_h') }}</p>
                         <p>{{ __('tm_update_absenteeism_data.label_column_i') }}</p>
                         <p>{{ __('tm_update_absenteeism_data.label_column_j') }}</p>
+                        <p>{{ __('tm_update_absenteeism_data.label_column_k') }}</p>
                     </div>
                 </div>
             </form>
