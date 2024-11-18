@@ -55,12 +55,18 @@ class UpdateAbsenteeismDataImport implements ToCollection, SkipsEmptyRows, WithS
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            Validator::make($rows->toArray(), [
+            $rows = array_map(function ($row) {
+                return array_map(function ($value) {
+                    return preg_replace('/\s+/u', '', $value); // Hapus semua spasi dan karakter whitespace
+                }, $row);
+            }, $rows->toArray());
+
+            Validator::make($rows, [
                 '*.1' => 'nullable|date_format:Y-m-d',
                 '*.3' => 'nullable|date_format:H:i',
                 '*.4' => 'nullable|date_format:H:i'
             ], [
-                '*.1.date_format' => 'Date Format Must Be (2000-01-31). Make Sure to Change Column Format to Text, not Date',
+                '*.1.date_format' => 'Date Format Must Be (2020-01-31). Make Sure to Change Column Format to Text, not Date',
                 '*.3.date_format' => 'Hour & Minute In Format Must Be (07:01). Make Sure to Change Column Format to Text, not Time',
                 '*.4.date_format' => 'Hour & Minute Out Format Must Be (07:01). Make Sure to Change Column Format to Text, not Time'
             ])->validate();
@@ -104,7 +110,7 @@ class UpdateAbsenteeismDataImport implements ToCollection, SkipsEmptyRows, WithS
             return $this->arrResult;
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            // var_dump($response);
+            // dd($response);
             $this->arrResult[]['message'] = $response;
             if($response->getStatusCode() == 401){
                 return view('error.login');
