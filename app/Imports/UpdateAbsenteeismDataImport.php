@@ -55,10 +55,19 @@ class UpdateAbsenteeismDataImport implements ToCollection, SkipsEmptyRows, WithS
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
+            // $rows = array_map(function ($row) {
+            //     return array_map(function ($value) {
+            //         return preg_replace('/\s+/u', '', $value); // Hapus semua spasi dan karakter whitespace
+            //     }, $row);
+            // }, $rows->toArray());
+
             $rows = array_map(function ($row) {
-                return array_map(function ($value) {
-                    return preg_replace('/\s+/u', '', $value); // Hapus semua spasi dan karakter whitespace
-                }, $row);
+                foreach ([1, 3, 4] as $index) { 
+                    if (isset($row[$index])) {
+                        $row[$index] = preg_replace('/\s+/u', '', $row[$index]); // Hapus semua spasi
+                    }
+                }
+                return $row;
             }, $rows->toArray());
 
             Validator::make($rows, [
@@ -77,14 +86,14 @@ class UpdateAbsenteeismDataImport implements ToCollection, SkipsEmptyRows, WithS
                     "employeeNo" => isset($row[0]) ? (string) $row[0] : null,
                     "absentDate" => isset($row[1]) ? date("Y-m-d\TH:i:s", strtotime($row[1])) : null,
                     "absentCode" => isset($row[2]) ? (string) $row[2] : null,
-                    "actualDateIn" => isset($row[3]) ? date("Y-m-d\TH:i:s", strtotime($row[1] . " " . $row[3])) : null,
-                    "actualDateOut" => isset($row[4]) ? date("Y-m-d\TH:i:s", strtotime($row[1] . " " . $row[4])) : null,
+                    "actualDateIn" => !empty($row[3]) ? date("Y-m-d\TH:i:s", strtotime($row[1] . " " . $row[3])) : null,
+                    "actualDateOut" => !empty($row[4]) ? date("Y-m-d\TH:i:s", strtotime($row[1] . " " . $row[4])) : null,
                     "descriptionAbsent" => isset($row[5]) ? $row[5] : null,
                     "day" => isset($row[6]) ? $row[6] : null,
                     "shiftCode" => isset($row[7]) ? (string) $row[7] : null,
                     "costCenterCode" => isset($row[8]) ? (string) $row[8] : null,
                     "ovtCode" => isset($row[9]) ? (string) $row[9] : null,
-                    "hourOvt" => isset($row[10]) ? date("Y-m-d\TH:i:s", strtotime($row[1] . " " . $row[10])) : null,
+                    "hourOvt" => !empty($row[10]) ? date("Y-m-d\TH:i:s", strtotime($row[1] . " " . $row[10])) : null,
                     "changedNo" => 0,
                     "createdDate" => date("Y-m-d\TH:i:s"),
                     "createdBy" => Session::get('userID'),
@@ -98,7 +107,7 @@ class UpdateAbsenteeismDataImport implements ToCollection, SkipsEmptyRows, WithS
                 ];
             }
 
-            // dd(json_encode($param));
+            dd(json_encode($param));
 
             $response = $client->put(env('API_URL') . '/mobile/TmAbsentEmployee/UploadAbsentEmployee',
                 ['body' => json_encode($param)]
