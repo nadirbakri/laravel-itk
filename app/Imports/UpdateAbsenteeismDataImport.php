@@ -107,7 +107,7 @@ class UpdateAbsenteeismDataImport implements ToCollection, SkipsEmptyRows, WithS
                 ];
             }
 
-            dd(json_encode($param));
+            // dd(json_encode($param));
 
             $response = $client->put(env('API_URL') . '/mobile/TmAbsentEmployee/UploadAbsentEmployee',
                 ['body' => json_encode($param)]
