@@ -309,7 +309,7 @@
                                         @if($company == 'NMDI' || $company == 'CITROEN')
                                         Total per Cost Center
                                         @else
-                                        Total per Division
+                                        Total {{ $branch }}
                                         @endif
                                     </td>
                                 @endif
@@ -350,6 +350,25 @@
             </table>
         @else
             <table style="width: 100%; marginY: 2" class="table table-bordered table-hover responsive table_detail">
+                <thead>
+                    <tr>
+                    @for($i = 0; $i < count($data[0]->departementGroup); $i++)
+                        <?php
+                            $dataTable = $data[0]->departementGroup[$i];
+                            $branch = null;
+                        ?>
+                        @if(!empty($dataTable->data[0]->field))
+                            @foreach($dataTable->data[0]->field as $key_data => $dataRow)
+                                @if($loop->first)
+                                    <th style="text-align:center; align-items:center; border:1px solid #000; padding:4px; background-color: #97d7f7; font-size:{{ $dataRow->fontSize }}px !important; font-weight: bold;">No</th>
+                                @endif
+                                <th style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7; font-size:{{ $dataRow->fontSize }}px !important; font-weight: bold;">{{ $dataRow->tableName }}</th>
+                            @endforeach
+                            @break
+                        @endif
+                    @endfor
+                    </tr>
+                </thead>
                 <tbody>
                     <tr>
                         <th style="background-color: yellow; text-align:center; border:1px solid #000;">Grand Total</th>
