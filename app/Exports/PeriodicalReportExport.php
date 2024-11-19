@@ -20,7 +20,7 @@ use App;
 
 class PeriodicalReportExport extends DefaultValueBinder implements WithCustomValueBinder, FromView, WithEvents, ShouldAutoSize
 {
-    public function __construct($reportName, $grandTotal, $employeeNoFrom, $employeeNoTo, $period, $costCenterCodeFrom, $costCenterCodeTo, $groupDepartment, $multiCostCenter, $reportStatus, $reportType, $groupAuthorizedCodeFrom, $groupAuthorizedCodeTo, $displayLine, $printSignature, $position, $ranking, $location, $dataLevel, $reportNameDetail)
+    public function __construct($reportName, $grandTotal, $employeeNoFrom, $employeeNoTo, $period, $costCenterCodeFrom, $costCenterCodeTo, $groupDepartment, $multiCostCenter, $reportStatus, $reportType, $groupAuthorizedCodeFrom, $groupAuthorizedCodeTo, $displayLine, $printSignature, $position, $ranking, $location, $group, $dataLevel, $reportNameDetail)
     {
         $this->reportName = $reportName;
         $this->grandTotal = $grandTotal;
@@ -40,6 +40,7 @@ class PeriodicalReportExport extends DefaultValueBinder implements WithCustomVal
         $this->position = $position;
         $this->ranking = $ranking;
         $this->location = $location;
+        $this->group = $group;
         $this->dataLevel = $dataLevel;
         $this->reportNameDetail = $reportNameDetail;
     }
@@ -134,13 +135,26 @@ class PeriodicalReportExport extends DefaultValueBinder implements WithCustomVal
                 $param['ranking'] = $data_ranking;
             }
 
+            if(!empty($this->group) && !is_null($this->group[0])){
+                foreach($this->group as $value){
+                    $data_group[] = [
+                        'groupCode' => $value
+                    ];
+                }
+                $param['group'] = $data_group;
+            }
+
             if(!empty($this->dataLevel) && !is_null($this->dataLevel[0])){
                 foreach($this->dataLevel as $key => $value){
                     $data_level_detail = [];
-                    foreach($this->dataLevel[$key] as $value2){
-                        $data_level_detail[] = [
-                            'levelCode' => $value2
-                        ];
+                    if(empty($this->dataLevel[$key])){
+                        $data_level_detail[] = ['levelCode' => ''];
+                    }else{
+                        foreach($this->dataLevel[$key] as $value2){
+                            $data_level_detail[] = [
+                                'levelCode' => $value2
+                            ];
+                        }
                     }
                     $data_level[] = [
                         "companyCode" => Session::get('companyCode'),
@@ -276,6 +290,38 @@ class PeriodicalReportExport extends DefaultValueBinder implements WithCustomVal
                                     $totalEmployee = 0;
                                 }else{
                                     $total[$branch][$v->field . '_' . $k] = '';
+                                }
+                            }
+                        }
+                    }
+                }
+            }else if(Session::get('companyCode') == 'SWG' || Session::get('companyCode') == 'XSYS' || Session::get('companyCode') == 'GRC'){
+                if(isset($arrResult->dataListSet[0]->detail)){
+                    usort($arrResult->dataListSet[0]->detail, function ($a, $b) {
+                        return (int) $a->employeeNo - (int) $b->employeeNo;
+                    });
+                }
+
+                if(isset($arrResult->dataListSet[0]->summary)){
+                    usort($arrResult->dataListSet[0]->summary, function ($a, $b) {
+                        return (int) $a->employeeNo - (int) $b->employeeNo;
+                    });
+                }
+
+                $total = [];
+                
+                foreach ($arrResult->dataListSet[0]->departementGroup as $key => $dept) {
+                    $totalEmployee = count($dept->data);
+                    foreach ($dept->data as $key => $value) {
+                        foreach ($value->field as $k => $v) {
+                            if (($v->value !== NULL) && !is_string($v->value)) {
+                                $total[$v->field . '_' . $k] = (isset($total[$v->field . '_' . $k])) ? $total[$v->field . '_' . $k] + $v->value : $v->value;
+                            }else{
+                                if($v->field == 'EmployeeNo'){
+                                    $total[$v->field . '_' . $k] = (isset($total[$v->field . '_' . $k])) ? $total[$v->field . '_' . $k] + $totalEmployee : $totalEmployee;
+                                    $totalEmployee = 0;
+                                }else{
+                                    $total[$v->field . '_' . $k] = '';
                                 }
                             }
                         }

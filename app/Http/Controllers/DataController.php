@@ -5801,6 +5801,108 @@ class DataController extends Controller
         return response()->json($group);
 	}
 
+	public function dataGroupFunctionAPI(Request $request)
+    {
+    	$group[] = (object) [
+    		'groupCode' => 'ALL',
+    		'groupName' => 'ALL'
+		];
+
+    	try {
+	    	$client = new Client([
+                'verify' => false,
+	    		'headers' => [ 'Content-Type' => 'application/json',
+	    						'Authorization' => 'Bearer ' . Session::get('token') ]
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/personel/Group/getGroup',
+	    		['body' => json_encode(
+	    			[
+	    				'recordStatus' => 'A',
+	    				'companyCode' => Session::get('companyCode')
+	    			]
+	    		)]
+	    	);
+	    } catch (RequestException $e) {
+	    	$response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+		if($arrResult->dataListSet !== null){
+			$group = array_merge($group, $arrResult->dataListSet);	
+		}
+
+        return response()->json($group[0]);
+	}
+
+	public function dataGroupAllAPI(Request $request)
+    {
+    	$search = $request->search;
+
+		$group[] = (object) [
+    		'groupCode' => 'ALL',
+    		'groupName' => 'ALL'
+    	];
+
+		// var_dump($location);
+
+    	try {
+	    	$client = new Client([
+                'verify' => false,
+	    		'headers' => [ 'Content-Type' => 'application/json',
+	    						'Authorization' => 'Bearer ' . Session::get('token') ]
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/personel/Group/getGroup',
+	    		['body' => json_encode(
+	    			[
+	    				'recordStatus' => 'A',
+	    				'companyCode' => Session::get('companyCode')
+	    			]
+	    		)]
+	    	);
+	    } catch (RequestException $e) {
+	    	$response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+		if($arrResult->dataListSet !== null){
+			if($search == ''){
+				$group = array_merge($group, $arrResult->dataListSet);
+			}else{
+				$group = array_merge($group, $arrResult->dataListSet);
+				$group = array_filter(
+					$group,
+					function($value) use ($search){
+						if(preg_match('/' . $search . '/i', $value->groupName)){
+							return preg_match('/' . $search . '/i', $value->groupName);
+						}else if(preg_match('/' . $search . '/i', $value->groupCode)){
+							return preg_match('/' . $search . '/i', $value->groupCode);
+						}
+					}
+				);
+			}
+		}
+
+        return response()->json($group);
+	}
+
 	public function dataNatureofWorkAPI(Request $request)
     {
     	$search = $request->search;
@@ -10851,7 +10953,7 @@ class DataController extends Controller
 			}else{
 				return view('error.bad_request');
 			}
-		}
+	}
 		
 		$arrResult = json_decode($response->getBody()->getContents());
 		

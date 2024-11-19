@@ -31,6 +31,7 @@ return [
     'label_position' => 'Position',
     'label_ranking' => 'Ranking',
     'label_location' => 'Location',
+    'label_group' => 'Group',
     'btn_preview' => 'Preview',
     'btn_send_to' => 'Send To',
     'alert_success' => 'Success !'

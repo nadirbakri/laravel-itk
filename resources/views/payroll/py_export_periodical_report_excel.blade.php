@@ -159,6 +159,9 @@
 
             $total = [];
             $totalEmployee = 0;
+        ?>
+        @if($company == 'NMDI' || $company == 'CITROEN')
+        <?php
             $level = $data[0]->departementGroup[0]->data[0]->companyName;
         ?>
         <table style='width: 100%'>
@@ -183,32 +186,45 @@
                 <td>{{ $level }}</td>
             </tr>
         </table>
+        @endif
         @for($i = 0; $i < count($data[0]->departementGroup); $i++)
             <?php
                 $dataTable = $data[0]->departementGroup[$i];
                 $branch = null;
             ?>
             @if(!empty($dataTable->data))
-            <table>
-                <?php
-                    $totalEmployee += count($dataTable->data);
-                    foreach($dataTable->data as $key => $dataRow) {
-                        foreach($dataRow->field as $key2 => $dataRow2) {
-                            if($dataRow2->tableName === 'Company') {
-                                $branch = $dataRow2->value;
+                @if($company == 'NMDI' || $company == 'CITROEN')
+                <table>
+                    <?php
+                        $totalEmployee += count($dataTable->data);
+                        foreach($dataTable->data as $key => $dataRow) {
+                            foreach($dataRow->field as $key2 => $dataRow2) {
+                                if($dataRow2->tableName === 'Company') {
+                                    $branch = $dataRow2->value;
+                                }
                             }
                         }
-                    }
-                ?>
-                <tr>
-                    <td>Branch :</td>
-                    <td>{{ $level }}</td>
-                </tr>
-                <tr>
-                    <td>Cost Center :</td>
-                    <td>{{ $dataTable->departement }}</td>
-                </tr>
-            </table>
+                    ?>
+                    <tr>
+                        <td>Branch :</td>
+                        <td>{{ $level }}</td>
+                    </tr>
+                    <tr>
+                        <td>Cost Center :</td>
+                        <td>{{ $dataTable->departement }}</td>
+                    </tr>
+                </table>
+                @else
+                <table>
+                    <?php
+                        $totalEmployee += count($dataTable->data);
+                        $branch = $dataTable->departement;
+                    ?>
+                    <tr>
+                        <th>{{ $dataTable->departement }}</th>
+                    </tr>
+                </table>
+                @endif
             <table style="width: 100%;" class="table table-bordered table-hover responsive table_detail">
                 <thead>
                     <tr>
@@ -289,7 +305,13 @@
                         <tr>
                             @foreach($total[$branch] as $key => $totalValue)
                                 @if($loop->first)
-                                    <td style="background-color: yellow; text-align:center; border:1px solid #000; font-size:{{ $fontSize }}px !important; font-weight: bold;">Total per Cost Center</td>
+                                    <td style="background-color: yellow; text-align:center; border:1px solid #000; font-size:{{ $fontSize }}px !important; font-weight: bold;">
+                                        @if($company == 'NMDI' || $company == 'CITROEN')
+                                        Total per Cost Center
+                                        @else
+                                        Total per Division
+                                        @endif
+                                    </td>
                                 @endif
                                 <?php
                                     if(!is_string($totalValue)) {
@@ -315,8 +337,23 @@
             <table style="width: 100%; marginY: 2" class="table table-bordered table-hover responsive table_detail">
                 <tbody>
                     <tr>
-                        <td style="background-color: yellow; text-align:center; border:1px solid #000;">Total per Company</td>
+                        <th style="background-color: yellow; text-align:center; border:1px solid #000;">Total per Company</th>
                         @foreach($grandTotal[$branch] as $key_total => $periodicalTotal)
+                            @if($key_total == 'EmployeeNo')
+                            <td data-format="#,##0" style="text-align:left; border:1px solid #000;">{{ $periodicalTotal }}</td>
+                            @else
+                            <td data-format="#,##0" style="text-align:right; border:1px solid #000;">{{ $periodicalTotal }}</td>
+                            @endif
+                        @endforeach
+                    </tr>
+                </tbody>
+            </table>
+        @else
+            <table style="width: 100%; marginY: 2" class="table table-bordered table-hover responsive table_detail">
+                <tbody>
+                    <tr>
+                        <th style="background-color: yellow; text-align:center; border:1px solid #000;">Grand Total</th>
+                        @foreach($grandTotal as $key_total => $periodicalTotal)
                             @if($key_total == 'EmployeeNo')
                             <td data-format="#,##0" style="text-align:left; border:1px solid #000;">{{ $periodicalTotal }}</td>
                             @else

@@ -8715,6 +8715,15 @@ public function dataDetailReportFormatPY(Request $request)
                 }
                 $param['ranking'] = $data_ranking;
             }
+            
+            if(!empty($request->group) && !is_null($request->group[0])){
+                foreach($request->group as $value){
+                    $data_group[] = [
+                        'groupCode' => $value
+                    ];
+                }
+                $param['group'] = $data_group;
+            }
 
             if(!empty($dataLevel) && !is_null($dataLevel[0])){
                 foreach($dataLevel as $key => $value){
@@ -8805,6 +8814,38 @@ public function dataDetailReportFormatPY(Request $request)
                         }
                     }
                 }
+            }else if(Session::get('companyCode') == 'SWG' || Session::get('companyCode') == 'XSYS' || Session::get('companyCode') == 'GRC'){
+                if(isset($arrResult->dataListSet[0]->detail)){
+                    usort($arrResult->dataListSet[0]->detail, function ($a, $b) {
+                        return (int) $a->employeeNo - (int) $b->employeeNo;
+                    });
+                }
+
+                if(isset($arrResult->dataListSet[0]->summary)){
+                    usort($arrResult->dataListSet[0]->summary, function ($a, $b) {
+                        return (int) $a->employeeNo - (int) $b->employeeNo;
+                    });
+                }
+
+                $total = [];
+                
+                foreach ($arrResult->dataListSet[0]->departementGroup as $key => $dept) {
+                    $totalEmployee = count($dept->data);
+                    foreach ($dept->data as $key => $value) {
+                        foreach ($value->field as $k => $v) {
+                            if (($v->value !== NULL) && !is_string($v->value)) {
+                                $total[$v->field . '_' . $k] = (isset($total[$v->field . '_' . $k])) ? $total[$v->field . '_' . $k] + $v->value : $v->value;
+                            }else{
+                                if($v->field == 'EmployeeNo'){
+                                    $total[$v->field . '_' . $k] = (isset($total[$v->field . '_' . $k])) ? $total[$v->field . '_' . $k] + $totalEmployee : $totalEmployee;
+                                    $totalEmployee = 0;
+                                }else{
+                                    $total[$v->field . '_' . $k] = '';
+                                }
+                            }
+                        }
+                    }
+                }
             }
             // dd($total);
 
@@ -8839,6 +8880,7 @@ public function dataDetailReportFormatPY(Request $request)
             $request->position, 
             $request->ranking,
             $request->location,
+            $request->group,
             $dataLevel,
             $request->report_name_detail), 
             $request->report_name_detail . '.xlsx'

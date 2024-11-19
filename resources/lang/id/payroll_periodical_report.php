@@ -23,6 +23,7 @@ return [
     'label_position' => 'Posisi',
     'label_ranking' => 'Ranking',
     'label_location' => 'Lokasi',
+    'label_group' => 'Grup',
     'btn_preview' => 'Pratinjau',
     'btn_send_to' => 'Kirim Ke',
     'alert_success' => 'Sukses !'

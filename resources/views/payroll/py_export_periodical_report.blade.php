@@ -148,7 +148,10 @@
 
             $total = [];
             $totalEmployee = 0;
-            $level = $data[0]->departementGroup[0]->data[0]->companyName
+        ?>
+        @if($company == 'NMDI' || $company == 'CITROEN')
+        <?php
+            $level = $data[0]->departementGroup[0]->data[0]->companyName;
         ?>
         <table style='width: 100%; font-size: 8px'>
             <tr>
@@ -177,33 +180,46 @@
                 <td><h1 style="font-weight: normal;">{{ $level }}</h1></td>
             </tr>
         </table>
+        @endif
         @for($i = 0; $i < count($data[0]->departementGroup); $i++)
             <?php
                 $dataTable = $data[0]->departementGroup[$i];
                 $branch = null;
             ?>
             @if(!empty($dataTable->data))
-            <table style="font-size: 8px">
-                <?php
-                    foreach($dataTable->data as $key => $dataRow) {
-                        foreach($dataRow->field as $key2 => $dataRow2) {
-                            if($dataRow2->tableName === 'Company') {
-                                $branch = $dataRow2->value;
+                @if($company == 'NMDI' || $company == 'CITROEN')
+                <table style="font-size: 8px">
+                    <?php
+                        foreach($dataTable->data as $key => $dataRow) {
+                            foreach($dataRow->field as $key2 => $dataRow2) {
+                                if($dataRow2->tableName === 'Company') {
+                                    $branch = $dataRow2->value;
+                                }
                             }
                         }
-                    }
-                ?>
-                <tr>
-                    <td><h1 style="font-weight: normal;">Branch</h1></td>
-                    <td><h1 style="font-weight: normal;">:</h1></td>
-                    <td><h1 style="font-weight: normal;">{{ $level }}</h1></td>
-                </tr>
-                <tr>
-                    <td><h1 style="font-weight: normal;">Cost Center</h1></td>
-                    <td><h1 style="font-weight: normal;">:</h1></td>
-                    <td><h1 style="font-weight: normal;">{{ $dataTable->departement }}</h1></td>
-                </tr>
-            </table>
+                    ?>
+                    <tr>
+                        <td><h1 style="font-weight: normal;">Branch</h1></td>
+                        <td><h1 style="font-weight: normal;">:</h1></td>
+                        <td><h1 style="font-weight: normal;">{{ $level }}</h1></td>
+                    </tr>
+                    <tr>
+                        <td><h1 style="font-weight: normal;">Cost Center</h1></td>
+                        <td><h1 style="font-weight: normal;">:</h1></td>
+                        <td><h1 style="font-weight: normal;">{{ $dataTable->departement }}</h1></td>
+                    </tr>
+                </table>
+                @else
+                <table>
+                    <?php
+                        $totalEmployee += count($dataTable->data);
+                        $branch = $dataTable->departement;
+                    ?>
+                    <tr>
+                        <td><h1 style="font-weight: normal;">{{ $dataTable->departement }}</h1></td>
+                    </tr>
+                </table>
+                @endif
             <table style="width: 100%;" class="table table-bordered table-hover responsive table_detail">
                 <thead>
                     <tr>
@@ -281,7 +297,13 @@
                         <tr>
                             @foreach($total[$branch] as $key => $totalValue)
                                 @if($loop->first)
-                                    <td style="background-color: yellow; text-align:center; border:1px solid #000; font-size:{{ $fontSize }}px !important; font-weight: bold;">Total per Cost Center</td>
+                                    <td style="background-color: yellow; text-align:center; border:1px solid #000; font-size:{{ $fontSize }}px !important; font-weight: bold;">
+                                        @if($company == 'NMDI' || $company == 'CITROEN')
+                                        Total per Cost Center
+                                        @else
+                                        Total per Division
+                                        @endif
+                                    </td>
                                 @endif
                                 <?php
                                     if(!is_string($totalValue)) {
@@ -307,8 +329,27 @@
             <table style="width: 100%; marginY: 2" class="table table-bordered table-hover responsive table_detail">
                 <tbody>
                     <tr>
-                        <td style="background-color: yellow; text-align:center; border:1px solid #000;">Total per Company</td>
+                        <th style="background-color: yellow; text-align:center; border:1px solid #000;">Total per Company</th>
                         @foreach($grandTotal[$branch] as $key_total => $periodicalTotal)
+                            @if(!is_string($periodicalTotal))
+                                @if($key_total == 'EmployeeNo')
+                                    <td style="text-align:left; border:1px solid #000;">{{ number_format($periodicalTotal, 0, ',', '.') }}</td>
+                                @else
+                                    <td style="text-align:right; border:1px solid #000;">{{ number_format($periodicalTotal, 0, ',', '.') }}</td>
+                                @endif
+                            @else
+                                <td style="text-align:right; border:1px solid #000;">&nbsp;</td>
+                            @endif
+                        @endforeach
+                    </tr>
+                </tbody>
+            </table>
+        @else
+            <table style="width: 100%; marginY: 2" class="table table-bordered table-hover responsive table_detail">
+                <tbody>
+                    <tr>
+                        <th style="background-color: yellow; text-align:center; border:1px solid #000;">Grand Total</th>
+                        @foreach($grandTotal as $key_total => $periodicalTotal)
                             @if(!is_string($periodicalTotal))
                                 @if($key_total == 'EmployeeNo')
                                     <td style="text-align:left; border:1px solid #000;">{{ number_format($periodicalTotal, 0, ',', '.') }}</td>

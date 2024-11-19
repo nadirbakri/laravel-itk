@@ -346,7 +346,6 @@
                         </div>
                     </div>
                 </div>
-                @if($companyCode == 'NMDI' || $companyCode == 'CITROEN')
                 <div class="row">
                     <div class="col-2">
                         <div class="form-group">
@@ -359,21 +358,21 @@
                                 multiple="multiple"></select>
                         </div>
                     </div>
-                </div>
-                @else
-                <div class="row" id="div-level">
                     <div class="col-2">
                         <div class="form-group">
-                            <label for="location form-check-label">{{ __('payroll_periodical_report.label_location') }}</label>
+                            <label for="group form-check-label">{{ __('payroll_periodical_report.label_group') }}</label>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
-                            <select class="form-control select2" id="location" name="location[]"
+                            <select class="form-control select2" id="group" name="group[]"
                                 multiple="multiple"></select>
                         </div>
-                        <input type="hidden" class="form-control" id="level_format" name="level_format">
                     </div>
+                </div>
+                @if($companyCode != 'NMDI' && $companyCode != 'CITROEN')
+                <div class="row" id="div-level">
+                    <input type="hidden" class="form-control" id="level_format" name="level_format">
                 </div>
                 @endif
                 <!-- BUTTON -->
@@ -524,10 +523,12 @@
         loadDataPositionCode();
         loadDataLocationCode();
         loadDataRankingCode();
+        loadDataGroupCode();
 
         loadDataFirstLastAllPosition();
         loadDataFirstLastAllLocation();
         loadDataFirstLastAllRanking();
+        loadDataFirstLastAllGroup();
 
         $.ajax({
             url: "{{ url('personnel/report/level/check') }}",
@@ -971,6 +972,18 @@
             });
         }
 
+        function loadDataFirstLastAllGroup() {
+            $.ajax({
+                type: 'GET',
+                url: "{{ url('/group/func/api') }}",
+            }).then(function (data) {
+                if (!$('#group').find('option:contains(' + data.groupName + ')').length) {
+                    $('#group').append($('<option>').val(data.groupCode).text(data.groupName));
+                }
+                $('#group').val(data.groupCode);
+            });
+        }
+
         function loadDataFirstLastAllLevel(field = '', levelType = '') {
             $.ajax({
                 type: 'GET',
@@ -1187,6 +1200,76 @@
                                 return {
                                     text: item.rankingName,
                                     id: item.rankingCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataGroupCode() {
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' +
+                        '<div class="col-6">' + data.data.groupCode + '</div>' +
+                        '<div class="col-6">' + data.data.groupName + '</div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var headerIsAppend = false;
+            $('#group').on('select2:open', function (e) {
+                if (!headerIsAppend) {
+                    html = '<div class="row">' +
+                        '<div class="col-6"><b>Group Code</b></div>' +
+                        '<div class="col-6"><b>Group Name</b></div>' +
+                        '</div>';
+                    $('.select2-search--dropdown').append(html);
+                    headerIsAppend = true;
+                }
+            });
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $('#group').select2({
+                width: '100%',
+                placeholder: 'Choose Group',
+                allowClear: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: "{{ url('/group/all/api') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.groupName,
+                                    id: item.groupCode,
                                     data: item
                                 }
                             })
