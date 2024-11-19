@@ -16,9 +16,9 @@
     
     <style type="text/css">
         .div-payroll {
-            max-width: 97%;
+            max-width: 100%;
             margin: auto;
-            margin-top: 1%;
+            /* margin-top: 1%; */
         }
 
         .div-profile {

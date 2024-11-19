@@ -10,12 +10,12 @@
 	<link href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/select/1.3.3/css/select.dataTables.min.css" rel="stylesheet">
     <!-- <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet"> -->
-	<link rel="stylesheet" href="{{ asset('css/time_management_detail.css') }}">
+	<link rel="stylesheet" href="{{ asset('css/payroll_detail_data.css') }}">
 	<style type="text/css">
 		.div-payroll {
-			max-width: 97%;
+			max-width: 100%;
 			margin: auto;
-			margin-top: 1%;
+			/* margin-top: 1%; */
 		}
         .modal-header-notification-error {
             border-bottom:1px solid #eee;

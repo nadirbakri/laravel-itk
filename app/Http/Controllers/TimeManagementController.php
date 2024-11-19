@@ -226,6 +226,11 @@ class TimeManagementController extends Controller
         return view ('time_management.tm_export_import_leave');
     }
 
+    public function pageLeaveProcess()
+    {
+        return view ('time_management.tm_leave_process');
+    }
+
     public function pageExportImportPlafon()
     {
         return view ('time_management.tm_export_import_plafon');
@@ -2795,6 +2800,43 @@ class TimeManagementController extends Controller
 
             $response = $client->put(env('API_URL') . '/mobile/TmAbsentEmployee/BulkUpdateTmAbsentEmployee',
                 ['body' => json_encode($param)]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function prosesLeaveProcessTM(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->put(env('API_URL') . '/mobile/TmAbsentCode/ProcessLeave',
+                ['body' => json_encode(
+                    [
+                        "companyCode" => Session::get('companyCode'),
+                        "languageCode" => strtoupper(App::getLocale()),
+                        "changedNo" => 0,
+                        "createdBy" => Session::get('userID'),
+                        "changedBy" => Session::get('userID')
+                    ]
+                )]
             );
         } catch (RequestException $e) {
             $response = $e->getResponse();

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>{{ __('payroll_monthly_system_closing.judul') }}</title>
+	<title>{{ __('tm_leave_process.judul') }}</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon"/>
 	<meta name="csrf-token" content="{{ csrf_token() }}">
@@ -64,34 +64,29 @@
 <body>
 	<div class="div-payroll">
         <div class="div-title">
-			<a href="{{ route('payroll', ['moduleID' => 'PY']) }}" target="iframe_dashboard">
+			<a href="{{ route('time_management', ['moduleID' => 'TM']) }}" target="iframe_dashboard">
 				<img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
-				<span class="title-text">{{ __('payroll_monthly_system_closing.list') }}</span>
+				<span class="title-text">{{ __('tm_leave_process.list') }}</span>
 			</a>
 		</div>
         <div class="div-form">
-            <form id="monthly_closing_process_form" method="post">
+            <form id="leave_process_form" method="post">
                 @csrf
                 <div class="row">
                     <div class="col-4">
                         <div class="form-group">
-                            <label for="period_process">{{ __('payroll_monthly_system_closing.label_period_process') }}</label>
-                            <div class="input-group month">
-                                <input type="text" class="form-control" id="period_process" name="period_process"
-                                    placeholder="{{ __('payroll_monthly_system_closing.label_period_process') }}" readonly>
-                                <div class="input-group-prepend" id="month-calendar">
-                                    <span class="input-group-text"><span class="fa fa-calendar"></span></span>
-                                </div>
-                                <input type="text" class="form-control" id="period_month" name="period_month" hidden>
-                                <input type="text" class="form-control" id="period_year" name="period_year" hidden>
+                            <label for="company">{{ __('tm_leave_process.label_company') }}</label>
+                            <input type="text" class="form-control" id="company" name="company"
+                                placeholder="{{ __('tm_leave_process.label_company') }}" 
+                                value="{{ Session::get('companyCode') }}" readonly>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-3">
-                        <button type="submit" class="btn btn-process" name="btn-process" id="btn-process">
-                            <i class="fa fa-play-circle-o"></i> {{ __('tm_update_shift_by_date.btn_process') }}
+                        <button type="button" class="btn btn-process" name="btn-process" id="btn-process">
+                            <i class="fa fa-play-circle-o"></i> {{ __('tm_leave_process.btn_process') }}
                         </button>
                     </div>
                 </div>
@@ -124,7 +119,7 @@
                 <div class="modal-body">
                     <div class="div-title-notification">
                         <img src="{{ url('/pictures/checklist-green-confirm-password.svg') }}" alt="Password">
-                        <span class="title-text-notification">{{ __('payroll_monthly_system_closing.alert_success') }}</span>
+                        <span class="title-text-notification">{{ __('tm_leave_process.alert_success') }}</span>
                     </div>
                     <div class="div-title-notification">
                         <span id="message-notification-success"></span>
@@ -168,31 +163,16 @@
     }
     
     $(document).ready(function () {
-
-        $.ajax({
-            url: "{{ url('/time_management/period/data/detail') }}",
-            type: "GET",
-            success: function (response) {
-                isData = Object.keys(response).length;
-                if (isData !== 0) {                    
-                    $('#period_month').val((typeof response[0].periodMonth !== 'undefined') ? response[0].periodMonth : '');
-                    $('#period_year').val((typeof response[0].periodYear !== 'undefined') ? response[0].periodYear : '');
-                }
-                var month_year = moment(response[0].periodYear.toString() + "-" + response[0].periodMonth.toString()).format('MMMM' + ' ' + 'YYYY');
-                $('#period_process').val(month_year);
-            }
-        });
-
         $("#btn-process").click(function () {
             $(this).prop("disabled", true);
             $(this).html(
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
-            $("#monthly_closing_process_form").submit();
+            $("#leave_process_form").submit();
         });
 
-        if ($("#monthly_closing_process_form").length > 0) {
-            $("#monthly_closing_process_form").validate({
+        if ($("#leave_process_form").length > 0) {
+            $("#leave_process_form").validate({
                 submitHandler: function (form) {
                     $.ajaxSetup({
                         headers: {
@@ -201,14 +181,14 @@
                     });
 
                     $.ajax({
-                        url: "{{ url('payroll/monthly_system_closing/proses') }}",
+                        url: "{{ url('time_management/leave_process/proses') }}",
                         type: "POST",
-                        data: $('#monthly_closing_process_form').serialize(),
+                        data: $('#leave_process_form').serialize(),
                         success: function (response) {
                             if (response.status == "true") {
                                 $("#btn-process").prop("disabled", false);
                                 $("#btn-process").html(
-                                    '<i class="fa fa-play-circle-o"></i> {{ __("payroll_monthly_payroll_closing_process.btn_process") }}'
+                                    '<i class="fa fa-play-circle-o"></i> {{ __("tm_leave_process.btn_process") }}'
                                 );
                                 
                                 $('#notification_success').modal('show');
@@ -221,7 +201,7 @@
                             } else {
                                 $("#btn-process").prop("disabled", false);
                                 $("#btn-process").html(
-                                    '<i class="fa fa-play-circle-o"></i> {{ __("payroll_monthly_payroll_closing_process.btn_process") }}'
+                                    '<i class="fa fa-play-circle-o"></i> {{ __("tm_leave_process.btn_process") }}'
                                 );
 
                                 $('#notification_error').modal('show');
@@ -238,7 +218,7 @@
                         error: function (response) {
                             $("#btn-process").prop("disabled", false);
                             $("#btn-process").html(
-                                '<i class="fa fa-play-circle-o"></i> {{ __("payroll_monthly_payroll_closing_process.btn_process") }}'
+                                '<i class="fa fa-play-circle-o"></i> {{ __("tm_leave_process.btn_process") }}'
                             );
 
                             $('#notification_error').modal('show');

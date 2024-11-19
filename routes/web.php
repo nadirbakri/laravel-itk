@@ -472,6 +472,7 @@ Route::get('time_management/unpaid_leave_report', 'TimeManagementController@page
 Route::get('time_management/detail_absenteeism_report', 'TimeManagementController@pageDetailAbsenteeismReport');
 Route::get('time_management/detail_rate_overtime_report', 'TimeManagementController@pageDetailRateOvertimeReport');
 Route::get('time_management/detail_absenteeism_reason_report', 'TimeManagementController@pageDetailAbsenteeismReasonReport');
+Route::get('time_management/leave_process', 'TimeManagementController@pageLeaveProcess');
 
 /* Route untuk Tabel Time Management */
 Route::get('time_management/input_balance_leave/table', 'TimeManagementController@tableInputBalanceLeave');
@@ -515,6 +516,7 @@ Route::post('time_management/reference_time_management/detail/proses', 'TimeMana
 Route::post('time_management/absenteeism_data_entry_by_employee_no/proses', 'TimeManagementController@prosesAbsenteeismDataEntryByEmployeeNoTM');
 Route::post('time_management/absenteeism_data_entry_by_date/proses', 'TimeManagementController@prosesAbsenteeismDataEntryByDateTM');
 Route::post('time_management/update_absenteeism_process/proses', 'TimeManagementController@prosesUpdateAbsenteeismProcessTM');
+Route::post('time_management/leave_process/proses', 'TimeManagementController@prosesLeaveProcessTM');
 
 /* Route untuk remove Time Managemnet */
 Route::get('time_management/time_recording_process_form/remove', 'TimeManagementController@removeTimeRecordingProcessFormTM');
@@ -1277,6 +1279,8 @@ Route::get('grade/func/api', 'DataController@dataGradeFunctionAPI');
 Route::get('grade/detail/api', 'DataController@dataGradeDetailAPI');
 Route::get('group/api', 'DataController@dataGroupAPI');
 Route::get('group/detail/api', 'DataController@dataGroupDetailAPI');
+Route::get('group/func/api', 'DataController@dataGroupFunctionAPI');
+Route::get('group/all/api', 'DataController@dataGroupAllAPI');
 Route::get('nature_of_work/api', 'DataController@dataNatureofWorkAPI');
 Route::get('nature_of_work/detail/api', 'DataController@dataNatureofWorkDetailAPI');
 Route::get('free_format_field/api', 'DataController@dataFreeFormatFieldAPI');
