@@ -460,12 +460,12 @@
                 },
                 success: function (response) {
                     if(!isEmpty(response)){
-                        $.each(response, function(k, v) {    
+                        $.each(response, function(k, v) {
                             table.row.add([
                                 '<input type="hidden" class="form-control employee_no_table" name="employee_no_table[]" id="employee_no_table" value="'+ data[0].id +'"><input type="text" class="form-control absent_date" name="absent_date[]" id="absent_date" value="'+ ((typeof v.absentDate !== 'undefined' && v.absentDate !== null) ? moment(v.absentDate).format('YYYY-MM-DD') : '') +'" readonly>',
                                 '<input type="text" class="form-control seq_no" name="seq_no[]" id="seq_no" value="'+ ((typeof v.seqNo !== 'undefined' && v.seqNo !== null) ? v.seqNo : '') +'" readonly>',
-                                '<select class="form-control select2 select_day" name="day[]" id="day'+ (k+1) +'" disabled></select>',
-                                '<select class="form-control select2 select_shift_code" name="shift_code[]" id="shift_code'+ (k+1) +'" disabled></select>',
+                                '<select class="form-control select2 select_day" name="day[]" id="day'+ (k+1) +'" data-no="'+ (k+1) +'" disabled></select><input type="hidden" class="form-control" name="day_det[]" id="day_det'+ (k+1) +'">',
+                                '<select class="form-control select2 select_shift_code" name="shift_code[]" id="shift_code'+ (k+1) +'" data-no="'+ (k+1) +'" disabled></select><input type="hidden" class="form-control" name="shift_code_det[]" id="shift_code_det'+ (k+1) +'">',
                                 // '<select class="form-control select2 select_cost_center_code" name="cost_center_code[]" id="cost_center_code'+ (k+1) +'" disabled></select>',
                                 '<div class="input-group">' +
                                     '<input type="text" class="form-control actual_date_in" id="actual_date_in'+ (k+1) +'" name="actual_date_in[]" disabled>' +  
@@ -482,7 +482,7 @@
                                 '</div>',
                                 '<input type="text" class="form-control actual_time_out" name="actual_time_out[]" id="actual_time_out'+ (k+1) +'" data-no="'+ (k+1) +'" disabled>',
                                 '<input type="text" class="form-control total_actual_hour" name="total_actual_hour[]" id="total_actual_hour" readonly>',
-                                '<select class="form-control select2 select_overtime_code" name="overtime_code[]" id="overtime_code'+ (k+1) +'" disabled></select>',
+                                '<select class="form-control select2 select_overtime_code" name="overtime_code[]" id="overtime_code'+ (k+1) +'" data-no="'+ (k+1) +'" disabled></select><input type="hidden" class="form-control" name="overtime_code_det[]" id="overtime_code_det'+ (k+1) +'">',
                                 '<input type="text" class="form-control overtime_before" name="overtime_before[]" id="overtime_before" readonly>',
                                 '<input type="text" class="form-control overtime_start" name="overtime_start[]" id="overtime_start" readonly>',
                                 '<input type="text" class="form-control overtime_finish" name="overtime_finish[]" id="overtime_finish" readonly>',
@@ -490,7 +490,7 @@
                                 '<input type="text" class="form-control overtime_convert" name="overtime_convert[]" id="overtime_convert" value="'+ ((typeof v.hourOvtCvt !== 'undefined' && v.hourOvtCvt !== null) ? v.hourOvtCvt : '') +'" readonly>',
                                 '<input type="text" class="form-control overtime_bot" name="overtime_bot[]" id="overtime_bot" readonly>',
                                 '<input type="text" class="form-control overtime_description" name="overtime_description[]" id="overtime_description" value="'+ ((typeof v.descriptionOvt !== 'undefined' && v.descriptionOvt !== null) ? v.descriptionOvt : '') +'" readonly>',
-                                '<select class="form-control select2 select_absent_code" name="absent_code[]" id="absent_code'+ (k+1) +'" disabled></select>',
+                                '<select class="form-control select2 select_absent_code" name="absent_code[]" id="absent_code'+ (k+1) +'" data-no="'+ (k+1) +'" disabled></select><input type="hidden" class="form-control" name="absent_code_det[]" id="absent_code_det'+ (k+1) +'">',
                                 '<input type="text" class="form-control absent_hour" name="absent_hour[]" id="absent_hour" readonly>',
                                 '<input type="text" class="form-control absent_description" name="absent_description[]" id="absent_description" value="'+ ((typeof v.descriptionAbsent !== 'undefined' && v.descriptionAbsent !== null) ? v.descriptionAbsent : '') +'" readonly>',
                                 '<input type="text" class="form-control normal_hour_in" name="normal_hour_in[]" id="normal_hour_in" readonly>',
@@ -561,15 +561,37 @@
                             $('#total_actual_hour'+noTmp).val(diff);
                         });
 
+                        $('.select_day').on('change', function () {
+                            var noTmp = $(this).data('no');
+                            $('#day_det'+noTmp).val($(this).val());
+                        });
+
+                        $('.select_shift_code').on('change', function () {
+                            var noTmp = $(this).data('no');
+                            $('#shift_code_det'+noTmp).val($(this).val());
+                        });
+
+                        $('.select_overtime_code').on('change', function () {
+                            var noTmp = $(this).data('no');
+                            $('#overtime_code_det'+noTmp).val($(this).val());
+                        });
+
+                        $('.select_absent_code').on('change', function () {
+                            var noTmp = $(this).data('no');
+                            $('#absent_code_det'+noTmp).val($(this).val());
+                        });
+
                         $.each(response, function(k, v) {
                             // console.log($('#day' + (k+1)).find("option[value='" + v.day + "']").length);
                             if(v.day != null && v.dayName != null){
                                 var newOptionDay = new Option(v.dayName, v.day, true, true);
                                 $('#day' + (k+1)).append(newOptionDay).trigger('change');
+                                $('#day_det' + (k+1)).val(v.day);
                             }
                             if(v.shiftCode != null && v.shiftName != null){
                                 var newOptionShift = new Option(v.shiftName, v.shiftCode, true, true);
                                 $('#shift_code' + (k+1)).append(newOptionShift).trigger('change');
+                                $('#shift_code_det' + (k+1)).val(v.shiftCode);
                             }
                             // if(v.costCenterCode != null && v.costCenterDescription != null){
                             //     var newOptionCostCenter = new Option(v.costCenterDescription, v.costCenterCode, true, true);
@@ -578,6 +600,7 @@
                             if(v.ovtCode != null && v.ovtDescription != null){
                                 var newOptionOvertime = new Option(v.ovtDescription, v.ovtCode, true, true);
                                 $('#overtime_code' + (k+1)).append(newOptionOvertime).trigger('change');
+                                $('#overtime_code_det' + (k+1)).val(v.ovtCode);
                             }
                             // if(v.absentCode != null && v.absentCodeDescription != null){
                             //     var newOptionFinger = new Option(v.absentCodeDescription, v.absentCode, true, true);
@@ -590,6 +613,7 @@
                             if(v.absentCode != null && v.absentCodeDescription != null){
                                 var newOptionAbsent = new Option(v.absentCodeDescription, v.absentCode, true, true);
                                 $('#absent_code' + (k+1)).append(newOptionAbsent).trigger('change');
+                                $('#absent_code_det' + (k+1)).val(v.absentCode);
                             }
                             // if(v.positionCode != null && v.positionName != null){
                             //     var newOptionPosition = new Option(v.positionName, v.positionCode, true, true);

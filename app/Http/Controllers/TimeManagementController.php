@@ -2732,8 +2732,6 @@ class TimeManagementController extends Controller
             // parse_str($request->data[0], $values);
 
             // $data = urldecode();
-
-            // var_dump($values);
             
             foreach($request->absent_date as $key => $value){
                 // $key = 0;
@@ -2743,18 +2741,18 @@ class TimeManagementController extends Controller
                     'employeeNo' => isset($request->employee_no_table[$key]) ? $request->employee_no_table[$key] : null,
                     'absentDate' => isset($request->absent_date[$key]) ? $request->absent_date[$key] : null,
                     'seqNo' => isset($request->seq_no[$key]) ? (int) $request->seq_no[$key] : null,
-                    'day' => isset($request->day[$key]) ? $request->day[$key] : null,
-                    'shiftCode' => isset($request->shift_code[$key]) ? $request->shift_code[$key] : null,
+                    'day' => isset($request->day_det[$key]) ? $request->day_det[$key] : null,
+                    'shiftCode' => isset($request->shift_code_det[$key]) ? $request->shift_code_det[$key] : null,
                     'actualDateIn' => isset($request->actual_date_in[$key]) ? $request->actual_date_in[$key] . "T" . $request->actual_time_in[$key] : null,
                     'actualDateOut' => isset($request->actual_date_out[$key]) ? $request->actual_date_out[$key] . "T" . $request->actual_time_out[$key] : null,
                     'totalActualHour' => isset($request->total_actual_hour[$key]) ? $request->absent_date[$key] . "T" . $request->total_actual_hour[$key] : null,
-                    'absentCode' => isset($request->absent_code[$key]) ? $request->absent_code[$key] : null,
-                    'hourAbsent' => null,
+                    // 'absentCode' => isset($request->absent_code[$key]) ? $request->absent_code[$key] : null,
+                    // 'hourAbsent' => null,
                     // 'descriptionAbsent' => null,
                     // 'absentCode' => isset($request->finger_absent_code[$key]) ? $request->finger_absent_code[$key] : null,
                     // 'hourAbsent' => isset($request->finger_absent_hour[$key]) ? $request->absent_date[$key] . "T" . $request->finger_absent_hour[$key] : null,
                     // 'descriptionAbsent' => isset($request->finger_absent_description[$key]) ? $request->finger_absent_description[$key] : null,
-                    'absentCode' => isset($request->absent_code[$key]) ? $request->absent_code[$key] : null,
+                    'absentCode' => isset($request->absent_code_det[$key]) ? $request->absent_code_det[$key] : null,
                     'hourAbsent' => isset($request->absent_hour[$key]) ? $request->absent_date[$key] . "T" . $request->absent_hour[$key] : null,
                     'descriptionAbsent' => isset($request->absent_description[$key]) ? $request->absent_description[$key] : null,
                     // 'absentCode2' => null,
@@ -2763,7 +2761,7 @@ class TimeManagementController extends Controller
                     'absentCode3' => null,
                     'hourAbsent3' => null,
                     'descriptionAbsent3' => null,
-                    'ovtCode' => isset($request->overtime_code[$key]) ? $request->overtime_code[$key] : null,
+                    'ovtCode' => isset($request->overtime_code_det[$key]) ? $request->overtime_code_det[$key] : null,
                     'ovtBeforeIn' => isset($request->overtime_before[$key]) ? $request->absent_date[$key] . "T" . $request->overtime_before[$key] : null,
                     'ovtIn' => isset($request->overtime_start[$key]) ? $request->absent_date[$key] . "T" . $request->overtime_start[$key] : null,
                     'ovtOut' => isset($request->overtime_finish[$key]) ? $request->absent_date[$key] . "T" . $request->overtime_finish[$key] : null,
