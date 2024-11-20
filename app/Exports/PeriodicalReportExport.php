@@ -144,7 +144,7 @@ class PeriodicalReportExport extends DefaultValueBinder implements WithCustomVal
                 $param['group'] = $data_group;
             }
 
-            if(!empty($this->dataLevel) && !is_null($this->dataLevel[0])){
+            if(!empty($this->dataLevel)){
                 foreach($this->dataLevel as $key => $value){
                     $data_level_detail = [];
                     if(empty($this->dataLevel[$key])){

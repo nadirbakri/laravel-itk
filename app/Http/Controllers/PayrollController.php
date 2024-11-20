@@ -2059,6 +2059,8 @@ class PayrollController extends Controller
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
+
+        // dd($arrResult->dataListSet);    
         
         if($arrResult->dataListSet == null){
             $data = [];
@@ -8725,13 +8727,17 @@ public function dataDetailReportFormatPY(Request $request)
                 $param['group'] = $data_group;
             }
 
-            if(!empty($dataLevel) && !is_null($dataLevel[0])){
+            if(!empty($dataLevel)){
                 foreach($dataLevel as $key => $value){
                     $data_level_detail = [];
-                    foreach($dataLevel[$key] as $value2){
-                        $data_level_detail[] = [
-                            'levelCode' => $value2
-                        ];
+                    if(empty($dataLevel[$key])){
+                        $data_level_detail[] = ['levelCode' => ''];
+                    }else{
+                        foreach($dataLevel[$key] as $value2){
+                            $data_level_detail[] = [
+                                'levelCode' => $value2
+                            ];
+                        }
                     }
                     $data_level[] = [
                         "companyCode" => Session::get('companyCode'),
