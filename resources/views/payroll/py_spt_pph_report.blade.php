@@ -391,7 +391,7 @@
             }
         });
 
-        $('#period_year').prop('disabled', true);
+        // $('#period_year').prop('disabled', true);
 
         $('#period_month').change(function(){
             $('#period_month_det').val($(this).val());
@@ -403,7 +403,7 @@
 
         $('input[type=radio][name=report_format]').change(function() {
             if (this.value == 'periodical') {
-                $('#period_year').prop('disabled', true);
+                $('#period_year').prop('disabled', false);
                 $('#period_month').prop('disabled', false);
             }else if(this.value == 'annual'){
                 $('#period_year').prop('disabled', false);
