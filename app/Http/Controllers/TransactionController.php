@@ -476,7 +476,7 @@ class TransactionController extends Controller
                     'Authorization' => 'Bearer ' . Session::get('token') ]
                 ]);
     
-                $response = $client->post(env('API_URL') . '/mobile/TmPermit/getTmPermitDetailList',
+                $response = $client->post(env('API_URL') . '/mobile/TmPermit/getTmPermitDetailListWeb',
                     ['body' => json_encode(
                         [
                             'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
@@ -822,28 +822,6 @@ class TransactionController extends Controller
     public function tableDetailTransport(Request $request)
     {
         try {
-            $dt = Carbon::now()->format('Y-m-d');
-            // startdate
-            $startdate=Carbon::parse($request->startDate)->format('Y-m-d');
-            $isNull = false;
-            if ($dt == $startdate ){
-                $isNull = true;
-            }
-
-            // enddate
-            $enddate=Carbon::parse($request->endDate)->format('Y-m-d');
-            $isNullenddate = false;
-            if ($dt == $enddate){
-                $isNullenddate = true;
-            }
-
-            // processdate
-            $processdate=Carbon::parse($request->processDate)->format('Y-m-d');
-            $isNullprocessDate = false;
-            if ($dt == $processdate){
-                $isNullprocessDate = true;
-            }
-
             $client = new Client([
                 'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
@@ -853,11 +831,11 @@ class TransactionController extends Controller
             $response = $client->post(env('API_URL') . '/mobile/Transport/getTransportDetailListAllWeb',
                 ['body' => json_encode(
                     [
-                        'startDate' => $isNull ? null:Carbon::parse($request->startDate)->format('Y-m-d'),
-                        'endDate' => $isNullenddate ? null:Carbon::parse($request->endDate)->format('Y-m-d'),
+                        'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
+                        'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
                         'exportMenu' => false,
                         'isWeb' => true,
-                        'processDate'=> $isNullprocessDate ? null:Carbon::parse($request->processDate)->format('Y-m-d'),
+                        'processDate'=> Carbon::parse($request->processDate)->format('Y-m-d'),
                         'type' =>  $request->type,
                         'businessUnit'=> $request->businessUnit,
                         'employeeNo'=> $request->employeeNo,
