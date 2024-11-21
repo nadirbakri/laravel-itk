@@ -325,25 +325,27 @@
             @endif
         @endfor
         <br>
-        @if($grand_total && $level1[0] !== "ALL")
+        @if($grand_total && isset($level1[0]))
+            @if($level1[0] !== "ALL")
             <table style="width: 100%; marginY: 2" class="table table-bordered table-hover responsive table_detail">
                 <tbody>
                     <tr>
-                        <th style="background-color: yellow; text-align:center; border:1px solid #000;">Total per Company</th>
+                        <th style="background-color: yellow; text-align:center; border:1px solid #000; font-size:{{ $fontSize }}px !important;">Total per Company</th>
                         @foreach($grandTotal[$branch] as $key_total => $periodicalTotal)
                             @if(!is_string($periodicalTotal))
                                 @if($key_total == 'EmployeeNo')
-                                    <td style="text-align:left; border:1px solid #000;">{{ number_format($periodicalTotal, 0, ',', '.') }}</td>
+                                    <td style="text-align:left; border:1px solid #000; font-size:{{ $fontSize }}px !important;">{{ number_format($periodicalTotal, 0, ',', '.') }}</td>
                                 @else
-                                    <td style="text-align:right; border:1px solid #000;">{{ number_format($periodicalTotal, 0, ',', '.') }}</td>
+                                    <td style="text-align:right; border:1px solid #000; font-size:{{ $fontSize }}px !important;">{{ number_format($periodicalTotal, 0, ',', '.') }}</td>
                                 @endif
                             @else
-                                <td style="text-align:right; border:1px solid #000;">&nbsp;</td>
+                                <td style="text-align:right; border:1px solid #000; font-size:{{ $fontSize }}px !important;">&nbsp;</td>
                             @endif
                         @endforeach
                     </tr>
                 </tbody>
             </table>
+            @endif
         @else
             <table style="width: 100%; marginY: 2" class="table table-bordered table-hover responsive table_detail">
                 <thead>
@@ -371,12 +373,12 @@
                         @foreach($grandTotal as $key_total => $periodicalTotal)
                             @if(!is_string($periodicalTotal))
                                 @if($key_total == 'EmployeeNo')
-                                    <td style="text-align:left; border:1px solid #000;">{{ number_format($periodicalTotal, 0, ',', '.') }}</td>
+                                    <td style="text-align:left; border:1px solid #000; font-size:{{ $fontSize }}px !important;">{{ number_format($periodicalTotal, 0, ',', '.') }}</td>
                                 @else
-                                    <td style="text-align:right; border:1px solid #000;">{{ number_format($periodicalTotal, 0, ',', '.') }}</td>
+                                    <td style="text-align:right; border:1px solid #000; font-size:{{ $fontSize }}px !important;">{{ number_format($periodicalTotal, 0, ',', '.') }}</td>
                                 @endif
                             @else
-                                <td style="text-align:right; border:1px solid #000;">&nbsp;</td>
+                                <td style="text-align:right; border:1px solid #000; font-size:{{ $fontSize }}px !important;">&nbsp;</td>
                             @endif
                         @endforeach
                     </tr>
