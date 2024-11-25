@@ -219,7 +219,7 @@
 						<td style="width: 40%; text-align: right; padding-top: 0.4%; padding-right: 17%;">{{ number_format((float) $value->sickleave, 0, ',', '.')}}</td>
 					</tr>
 					<tr>
-						<td style="width: 59%; text-align: left; padding-top: 0.4%; padding-left: 3.5%;">Work days</td>
+						<td style="width: 59%; text-align: left; padding-top: 0.4%; padding-left: 3.5%;">Work days ({{ date('d M', strtotime($value->absenteeismStart)) . " to " . date('d M', strtotime($value->absenteeismEnd)) }})</td>
 						<td style="width: 1%; text-align: left; padding-top: 0.4%;">:</td>
 						<td style="width: 40%; text-align: right; padding-top: 0.4%; padding-right: 17%;">{{ number_format((float) $value->attendance, 0, ',', '.')}}</td>
 					</tr>

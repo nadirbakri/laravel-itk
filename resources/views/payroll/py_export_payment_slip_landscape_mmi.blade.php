@@ -82,36 +82,36 @@
 	<br><br>
 	<table style="width:100%; padding-left:2%; padding-right:2%; border-collapse: collapse; font-family: 'Arial Alternates', sans-serif;">
 		<tr>
-			<td width="18%">NAME / ID</td>
+			<td width="22%">NAME / ID</td>
 			<td width="2%" style="text-align:center;">:</td>
-			<td width="34%">{{ $value->employeeName }} / {{ $value->employeeNo }}</td>
+			<td width="30%">{{ $value->employeeName }} / {{ $value->employeeNo }}</td>
 			<td width="19%">Gol</td>
 			<td width="2%" style="text-align:center;">:</td>
-			<td width="32%">{{ $value->golongan }}</td>
+			<td width="31%">{{ $value->golongan }}</td>
 		</tr>
 		<tr>
-			<td width="18%">Position</td>
+			<td width="22%">Position</td>
 			<td width="2%" style="text-align:center;">:</td>
-			<td width="34%">{{ $value->position }}</td>
+			<td width="30%">{{ $value->position }}</td>
 			<td width="19%">PTKP</td>
 			<td width="2%" style="text-align:center;">:</td>
-			<td width="32%">{{ $value->taxStatus }}</td>
+			<td width="31%">{{ $value->taxStatus }}</td>
 		</tr>
 		<tr>
-			<td width="18%">Dept.</td>
+			<td width="22%">Dept.</td>
 			<td width="2%" style="text-align:center;">:</td>
-			<td width="34%">{{ $value->departemen }}</td>
+			<td width="30%">{{ $value->departemen }}</td>
 			<td width="19%">NPWP</td>
 			<td width="2%" style="text-align:center;">:</td>
-			<td width="32%">{{ $value->npwp }}</td>
+			<td width="31%">{{ $value->npwp }}</td>
 		</tr>
 		<tr>
-			<td width="18%">Location</td>
+			<td width="22%">Location</td>
 			<td width="2%" style="text-align:center;">:</td>
-			<td width="34%">{{ $value->location }}</td>
+			<td width="30%">{{ $value->location }}</td>
 			<td width="19%">Email</td>
 			<td width="2%" style="text-align:center;">:</td>
-			<td width="32%">{{ $value->email }}</td>
+			<td width="31%">{{ $value->email }}</td>
 		</tr>
 	</table>
 	<br><br>
@@ -122,7 +122,7 @@
 	<table class="no-page-break" style="width:100%; padding-left:1%; padding-right:2%; border-collapse: collapse; font-family: 'Arial Alternates', sans-serif;">
 		<tr>
 			<th style="width: 48%; text-align: left; padding-left: 2.5%; padding-top: 0.4%;">INCOME</th>
-			<th style="width: 52%; text-align: left; padding-left: 6%; padding-top: 0.4%;">DEDUCTION</th>
+			<th style="width: 52%; text-align: left; padding-left: 6.5%; padding-top: 0.4%;">DEDUCTION</th>
 		</tr>
 		
 	</table>
@@ -206,24 +206,24 @@
         	<td style="width:30%; vertical-align: top;">
 				<table style="width:100%; padding-bottom: 1%; border-collapse: collapse;">
 					<tr>
-						<td style="width: 59%; text-align: left; padding-top: 0.4%; padding-left: 3%;">Leave Balance (days)</td>
+						<td style="width: 69%; text-align: left; padding-top: 0.4%; padding-left: 3%;">Leave Balance (days)</td>
 						<td style="width: 1%; text-align: left; padding-top: 0.4%;">:</td>
-						<td style="width: 40%; text-align: right; padding-top: 0.4%; padding-right: 17%;">{{ number_format((float) $value->leaveBalance, 0, ',', '.')}}</td>
+						<td style="width: 30%; text-align: right; padding-top: 0.4%; padding-right: 17%;">{{ number_format((float) $value->leaveBalance, 0, ',', '.')}}</td>
 					</tr>
 					<tr>
-						<td style="width: 59%; text-align: left; padding-top: 0.4%; padding-left: 3%;">Taken Balance (days)</td>
+						<td style="width: 69%; text-align: left; padding-top: 0.4%; padding-left: 3%;">Taken Balance (days)</td>
 						<td style="width: 1%; text-align: left; padding-top: 0.4%;">:</td>
-						<td style="width: 40%; text-align: right; padding-top: 0.4%; padding-right: 17%;">{{ number_format((float) $value->takenLeave, 0, ',', '.')}}</td>
+						<td style="width: 30%; text-align: right; padding-top: 0.4%; padding-right: 17%;">{{ number_format((float) $value->takenLeave, 0, ',', '.')}}</td>
 					</tr>
 					<tr>
-						<td style="width: 59%; text-align: left; padding-top: 0.4%; padding-left: 3%;">Sick Balance (days)</td>
+						<td style="width: 69%; text-align: left; padding-top: 0.4%; padding-left: 3%;">Sick Balance (days)</td>
 						<td style="width: 1%; text-align: left; padding-top: 0.4%;">:</td>
-						<td style="width: 40%; text-align: right; padding-top: 0.4%; padding-right: 17%;">{{ number_format((float) $value->sickleave, 0, ',', '.')}}</td>
+						<td style="width: 30%; text-align: right; padding-top: 0.4%; padding-right: 17%;">{{ number_format((float) $value->sickleave, 0, ',', '.')}}</td>
 					</tr>
 					<tr>
-						<td style="width: 59%; text-align: left; padding-top: 0.4%; padding-left: 3%;">Work days</td>
+						<td style="width: 69%; text-align: left; padding-top: 0.4%; padding-left: 3%;">Work days ({{ date('d M', strtotime($value->absenteeismStart)) . " to " . date('d M', strtotime($value->absenteeismEnd)) }})</td>
 						<td style="width: 1%; text-align: left; padding-top: 0.4%;">:</td>
-						<td style="width: 40%; text-align: right; padding-top: 0.4%; padding-right: 17%;">{{ number_format((float) $value->attendance, 0, ',', '.')}}</td>
+						<td style="width: 30%; text-align: right; padding-top: 0.4%; padding-right: 17%;">{{ number_format((float) $value->attendance, 0, ',', '.')}}</td>
 					</tr>
 				</table>
 			</td>
