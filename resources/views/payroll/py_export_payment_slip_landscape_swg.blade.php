@@ -115,6 +115,11 @@
                             <td style="width: 39%; text-align: left; padding-top: 0.4%; padding-right: 17%;">{{ number_format((float) $value2->columnValue, 0, ',', '.')}}</td>
                         </tr>
                     @endforeach
+                    @foreach($value->d as $key2 => $value2)
+                        <?php
+                            $totalDeduction += (float) $value2->columnValue;
+                        ?>
+                    @endforeach
                 </table>    
                 <table style="width:100%; font-size: 12px; padding-right:2%; padding-bottom:1%; font-family: 'Arial Bold', sans-serif;">
                     <tr>
@@ -138,9 +143,6 @@
 			<td style="width:50%; vertical-align: top;">
 				<table style="width:100%; font-size: 12px; border-collapse: collapse; font-family: 'Arial Alternates', sans-serif;">
                     @foreach($value->d as $key2 => $value2)
-                        <?php
-                            $totalDeduction += (float) $value2->columnValue;
-                        ?>
                         <tr>
                             <td style="width: 5%; text-align: left; padding-top: 0.4%; padding-left: 3%;">&nbsp;</td>
                             @if($loop->first)
