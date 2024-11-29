@@ -74,8 +74,8 @@
 	<div class="div-personel">
         <div class="div-navbar sticky-navbar">
             <a href="javascript:void(0)" id="toolbar-cancel-termination" style="width: 16%">
-                <img src="{{ url('/icons/functionbar/functionbar-remove-blue.svg') }}" alt="Cancel Termination">
-                <img src="{{ url('/icons/functionbar/functionbar-remove-white.svg') }}" class="functionbar-hover" alt="Cancel Termination">
+                <img src="{{ url('/icons/functionbar/functionbar-x-blue.svg') }}" alt="Cancel Termination">
+                <img src="{{ url('/icons/functionbar/functionbar-x-white.svg') }}" class="functionbar-hover" alt="Cancel Termination">
                 <span>Cancel Termination</span>
             </a>
         </div>
@@ -263,7 +263,7 @@
                 success: function (response) {
                     $("#toolbar-cancel-termination").prop("disabled", false);
                     $("#toolbar-cancel-termination").html(
-                        '<a href="javascript:void(0)" id="toolbar-cancel-termination" style="width: 17%"><img src="{{ url('/icons/functionbar/functionbar-remove-blue.svg') }}" alt="Cancel Termination"><img src="{{ url('/icons/functionbar/functionbar-remove-white.svg') }}" class="functionbar-hover" alt="Cancel Termination"><span>Cancel Termination</span></a>'
+                        '<a href="javascript:void(0)" id="toolbar-cancel-termination" style="width: 17%"><img src="{{ url('/icons/functionbar/functionbar-x-blue.svg') }}" alt="Cancel Termination"><img src="{{ url('/icons/functionbar/functionbar-x-white.svg') }}" class="functionbar-hover" alt="Cancel Termination"><span>Cancel Termination</span></a>'
                     );
 
                     if (response.status == "true") {
@@ -288,7 +288,7 @@
                 error: function (response) {
                     $("#toolbar-cancel-termination").prop("disabled", false);
                     $("#toolbar-cancel-termination").html(
-                        '<a href="javascript:void(0)" id="toolbar-cancel-termination" style="width: 17%"><img src="{{ url('/icons/functionbar/functionbar-remove-blue.svg') }}" alt="Cancel Termination"><img src="{{ url('/icons/functionbar/functionbar-remove-white.svg') }}" class="functionbar-hover" alt="Cancel Termination"><span>Cancel Termination</span></a>'
+                        '<a href="javascript:void(0)" id="toolbar-cancel-termination" style="width: 17%"><img src="{{ url('/icons/functionbar/functionbar-x-blue.svg') }}" alt="Cancel Termination"><img src="{{ url('/icons/functionbar/functionbar-x-white.svg') }}" class="functionbar-hover" alt="Cancel Termination"><span>Cancel Termination</span></a>'
                     );
                     $('#notification_error').modal('show');
                     $('#message-notification-error').html(response);
