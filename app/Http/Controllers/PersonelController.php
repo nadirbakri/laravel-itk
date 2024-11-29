@@ -569,6 +569,11 @@ class PersonelController extends Controller
         return view('personel.personel_employee_turn_over_report');
     }
 
+    public function pageEmployeeTerminationPersonel()
+    {
+        return view('personel.personel_employee_termination');
+    }
+
     public function tablePersonalDataPersonel(Request $request)
     {
         try {
@@ -5073,6 +5078,48 @@ class PersonelController extends Controller
             }else{
                 return Datatables::of($arrResult->dataListSet)->make(true);
             }
+        }
+    }
+
+    public function tableEmployeeTerminationPersonel(Request $request)
+    {
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/personel/MutationEmployee/listkaryawanresign',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'userID' => Session::get('userID'),
+                        'sessionID' => 0,
+                        'sessionUserID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        'languageCode' => App::getLocale()
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
         }
     }
 
@@ -11689,6 +11736,49 @@ class PersonelController extends Controller
             }
 
 
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function prosesEmployeeTerminationPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            foreach($request->data as $key => $value){
+                $param[] = [
+                    'companyCode' => Session::get('companyCode'),
+                    'employeeNo' => $value['employeeNo'],
+                    'sessionUserID' => Session::get('userID'),
+                    'sessionID' => 0,
+                    'logActionUserID' => Session::get('userID'),
+                    'logActionUsername' => Session::get('userName'),
+                    "languageCode" => App::getLocale()
+                ];
+            }
+
+            // dd($param);
+
+            $response = $client->post(env('API_URL') . '/personel/MutationEmployee/deletetermination',
+                ['body' => json_encode($param)]
+            );
         } catch (RequestException $e) {
             $response = $e->getResponse();
             if($response->getStatusCode() == 401){

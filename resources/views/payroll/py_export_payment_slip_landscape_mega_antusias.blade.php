@@ -173,6 +173,14 @@
                         <td width="5%">Rp.</td>
                         <td width="8%" style="text-align:right;">{{ number_format(($value->takeHomePaySalary + $value->takeHomePayBonus + $value->takeHomePayTHR), 0, ',', '.')}}</td>
                     </tr>
+					@foreach($value->b as $key3 => $value3)
+						<tr>
+							<td width="17%" style="padding-left: 20px;">{{ $value3->columnLabel }}</td>
+                            <td width="1%">:</td>
+							<td width="5%">Rp.</td>
+							<td width="8%" style="text-align:right;">{{ number_format((float) $value3->columnValue, 0, ',', '.')}}</td>
+						</tr>
+					@endforeach
 				</table>
 			</td>
 		</tr>

@@ -153,6 +153,7 @@ Route::get('personnel/employee_notice_report', 'PersonelController@pageEmployeeN
 Route::get('personnel/evaluation_report', 'PersonelController@pageEvaluationReportPersonel');
 Route::get('personnel/employee_skill_report', 'PersonelController@pageEmployeeSkillReportPersonel');
 Route::get('personnel/employee_turn_over_report', 'PersonelController@pageEmployeeTurnOverReportPersonel');
+Route::get('personnel/employee_termination', 'PersonelController@pageEmployeeTerminationPersonel');
 
 Route::get('personnel/personal_data/table', 'PersonelController@tablePersonalDataPersonel');
 Route::get('personnel/performance/table', 'PersonelController@tablePerformancePersonel');
@@ -219,6 +220,7 @@ Route::get('personnel/plafon_business_trip/table', 'PersonelController@tablePlaf
 Route::get('personnel/plafon_transport/table', 'PersonelController@tablePlafonTransportPersonel');
 Route::get('personnel/format_report/table', 'PersonelController@tableFormatReportPersonel');
 Route::get('personnel/relation_code/table', 'PersonelController@tableRelationCodePersonel');
+Route::get('personnel/employee_termination/table', 'PersonelController@tableEmployeeTerminationPersonel');
 
 Route::get('personnel/personal_data/detail_data', 'PersonelController@dataDetailPersonalDataPersonel');
 Route::get('personnel/performance/detail_data', 'PersonelController@dataDetailPerformancePersonel');
@@ -394,6 +396,7 @@ Route::post('personnel/loan_whitelist/proses', 'PersonelController@prosesLoanWhi
 Route::post('personnel/plafon_medical/proses', 'PersonelController@prosesPlafonMedicalPersonel');
 Route::post('personnel/plafon_business_trip/proses', 'PersonelController@prosesPlafonBusinessTripPersonel');
 Route::post('personnel/plafon_transport/proses', 'PersonelController@prosesPlafonTransportPersonel');
+Route::post('personnel/employee_termination/proses', 'PersonelController@prosesEmployeeTerminationPersonel');
 
 Route::get('personnel/final_performance_result/remove', 'PersonelController@removeFinalPerformanceResultPersonel');
 Route::get('personnel/evaluation_form/evaluated_aspect/remove', 'PersonelController@removeEvaluationFormEvaluatedAspectPersonel');
