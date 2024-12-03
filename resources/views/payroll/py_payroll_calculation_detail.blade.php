@@ -199,6 +199,7 @@
                                             <option value="PrSalaryMaster">PrSalaryMaster</option>
                                             <option value="PrSalaryActual">PrSalaryActual</option>
                                             <option value="PrYearly">PrYearly</option>
+                                            <option value="PeMasterLeave">PeMasterLeave</option>
                                         </select>
                                     </div>
                                 </div>
