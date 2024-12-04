@@ -12,68 +12,110 @@
 			margin-bottom: 25px;
 			margin-top: 25px;
 		}
+
+		.table_detail{
+			border-collapse:collapse;
+            table-layout: auto;
+		}
+        .table_detail td{
+            margin: 0;
+			border:1px solid #000;
+            padding:4px;
+            font-size: 14px;
+            text-align: left
+		}
+		.table_detail th{
+            margin: 0;
+			border:1px solid #000;
+            padding:4px;
+            font-size: 14px;
+            /* font-weight: normal; */
+            text-align: center
+		}
 	</style>
 </head>
 
 <body>
-	<table style="width: 100%; font-size: 14px;" >
-		<thead>
+    @if(count($data) > 0)
+		<table style="width: 100%; font-size: 14px;">
 			<tr>
-				<th rowspan="{{ (!empty($data_detail)) ? 2 : 1 }}">No</th>
-				<th rowspan="{{ (!empty($data_detail)) ? 2 : 1 }}">Employee No</th>
-				<th rowspan="{{ (!empty($data_detail)) ? 2 : 1 }}">Employee Name</th>
-				<th rowspan="{{ (!empty($data_detail)) ? 2 : 1 }}">Month</th>
-                <th rowspan="{{ (!empty($data_detail)) ? 2 : 1 }}">Total Working Days</th>
-                <th rowspan="{{ (!empty($data_detail)) ? 2 : 1 }}">Total Attendance</th>
-                @if(!empty($data_detail))
-				    <th colspan="{{ count($data_detail) }}">Attendance</th>
-                @endif
-                <th rowspan="{{ (!empty($data_detail)) ? 2 : 1 }}">Until {{ date('h:i', strtotime($hourFrom)) }}</th>
-                <th rowspan="{{ (!empty($data_detail)) ? 2 : 1 }}">{{ date('h:i', strtotime($hourFrom)) }} To {{ date('h:i', strtotime($hourTo)) }}</th>
-                <th rowspan="{{ (!empty($data_detail)) ? 2 : 1 }}">After {{ date('h:i', strtotime($hourTo)) }}</th>
+				<td style="font-weight: bold;">{{ $data[0]->{'Company Name'} }}</td>
 			</tr>
-            @if(!empty($data_detail))
 			<tr>
-                @foreach($data_detail as $value)
-                    @if($changeHeader)
-                        <th>{{ $value->headerName }}</th>
-                    @else
-                        <th>{{ $value->description }}</th>
-                    @endif
-                @endforeach
+				@php
+					$keyCount = 3;
+					foreach($data[0] as $key => $value) {
+						if($key !== 'Full Name' && $key !== 'CompanyCode' && $key !== 'Company Name' && $key !== 'EmployeeNo') {
+							$keyCount++;
+						}
+					}
+				@endphp
+				<td colspan={{ $keyCount }} style="font-weight: bold; text-align: center">LAPORAN KEHADIRAN KERJA KARYAWAN</td>
 			</tr>
-            @endif
-		</thead>
-		<tbody>
-            <?php $no = 1; ?>
-			@foreach($data as $value)
-			<tr>
-                <td rowspan="{{ count($value->workingData) }}">{{ $no++ }}</td>
-				<td rowspan="{{ count($value->workingData) }}">{{ $value->employeeNo }}</td>
-				<td rowspan="{{ count($value->workingData) }}">{{ $value->fullName }}</td>
-				@foreach($value->workingData as $key2 => $value2)
-					@if($key2 !== array_key_first($value->workingData))
+				@foreach($dataLevel as $index => $item)
 					<tr>
-					@endif
-					<td>{{ $value2->month }}</td>
-					<td>{{ $value2->totalWorkDays }}</td>
-					<td>{{ $value2->totalAttendance }}</td>
-					@if(!empty($data_detail))
-						@foreach($data_detail as $value3)
-							@foreach($value2->attendance as $value4)
-								@if($value4->absentCode == $value3->absentCode)
-									<td>{{ $value4->count }}</td>
+						<td>
+							Level {{ $item['levelType'] }} :
+							@foreach($item['levelCode'] as $code)
+								@if($code === 'ALL')
+									{{ $code }}
+									@break
+								@else
+									{{ $code }},
 								@endif
 							@endforeach
-						@endforeach
-					@endif
-					<td>{{ $value2->until }}</td>
-					<td>{{ $value2->to }}</td>
-					<td>{{ $value2->after }}</td>
+						</td>
+					</tr>
 				@endforeach
+			<tr>
+				<td>Periode : {{ date('d M Y', strtotime($absentDateFrom)) }} s/d {{ date('d M Y', strtotime($absentDateTo)) }}</td>
 			</tr>
-			@endforeach
-		</tbody>
-	</table>
+		</table>
+		<table style="width:100%;" class="table_detail">
+			<thead>
+				<tr>
+					<th style="text-align: center; font-weight: bold;">No</th>
+					<th style="text-align: center; font-weight: bold;">Employee No</th>
+					<th style="text-align: center; font-weight: bold;">Full Name</th>
+					@foreach($data[0] as $key => $value)
+						@if($key !== 'Full Name' && $key !== 'CompanyCode' && $key !== 'Company Name' && $key !== 'EmployeeNo')
+							<th style="text-align: center; font-weight: bold;">{{ ucwords(str_replace('_', ' ', $key)) }}</th>
+						@endif
+					@endforeach
+				</tr>
+			</thead>
+			<tbody>
+				<?php 
+					$no = 1;
+					$totals = [];
+					foreach($data[0] as $key => $value) {
+						if ($key !== 'Full Name' && $key !== 'CompanyCode' && $key !== 'Company Name' && $key !== 'EmployeeNo') {
+							$totals[$key] = 0;
+						}
+					}
+				?>
+				@foreach($data as $index => $row)
+					<tr>
+						<td style="text-align: center">{{ $no++ }}</td>
+						<td>{{ $row->EmployeeNo }}</td>
+						<td>{{ $row->{'Full Name'} }}</td>
+						@foreach($row as $key => $value)
+							@if($key !== 'Full Name' && $key !== 'CompanyCode' && $key !== 'Company Name' && $key !== 'EmployeeNo')
+								<td style="text-align: center;">{{ $value }}</td>
+								<?php $totals[$key] += $value; ?>
+							@endif
+						@endforeach
+					</tr>
+				@endforeach
+
+				<tr>
+					<td colspan="3" style="text-align: center; font-weight: bold;">Total</td>
+					@foreach($totals as $key => $total)
+						<td style="text-align: center; font-weight: bold;">{{ $total }}</td>
+					@endforeach
+				</tr>
+			</tbody>
+		</table>
+	@endif
 </body>
 </html>

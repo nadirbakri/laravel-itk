@@ -46,60 +46,60 @@ class MonthlyAbsenteeismDetailExport implements FromView, ShouldAutoSize
                 'languageCode' => App::getLocale(), 
                 'sessionID' => 0, 
                 'sessionUserID' => Session::get('userID'),
-                'incResign' => $this->includeResign,
-                'changeHeader' => $this->changeHeader
+                // 'incResign' => $this->includeResign,
+                // 'changeHeader' => $this->changeHeader
             ];
 
-            if(!empty($this->employeeNoFrom) || !empty($this->employeeNoTo)){
-                $param['employeeNoFrom'] = $this->employeeNoFrom;
-                $param['employeeNoTo'] = $this->employeeNoTo;
-            }
+            // if(!empty($this->employeeNoFrom) || !empty($this->employeeNoTo)){
+            //     $param['employeeNoFrom'] = $this->employeeNoFrom;
+            //     $param['employeeNoTo'] = $this->employeeNoTo;
+            // }
 
             if(!empty($this->absentMonthFrom) || !empty($this->absentMonthFrom)){
-                $param['absentMonthFrom'] = $this->absentMonthFrom;
-                $param['absentMonthTo'] = $this->absentMonthTo;
+                $param['absentDateFrom'] = $this->absentMonthFrom;
+                $param['absentDateTo'] = $this->absentMonthTo;
             }
 
-            if(!empty($this->dataDetail) && !is_null($this->dataDetail[0])){
-                foreach($this->dataDetail as $key => $value){
-                    $data_detail[] = $value->absentCode;
-                }
-                $param['absenCode'] = $data_detail;
-            }else{
-                $this->dataDetail = null;
-                $param['dataDetail'] = null;
-            }
+            // if(!empty($this->dataDetail) && !is_null($this->dataDetail[0])){
+            //     foreach($this->dataDetail as $key => $value){
+            //         $data_detail[] = $value->absentCode;
+            //     }
+            //     $param['absenCode'] = $data_detail;
+            // }else{
+            //     $this->dataDetail = null;
+            //     $param['dataDetail'] = null;
+            // }
 
-            if(!empty($this->hourOut) || !empty($this->hourOut)){
-                $param['hourOut'] = date('Y-m-d') . "T" . $this->hourOut;
-                $param['hourOutTo'] = date('Y-m-d') . "T" . $this->hourTo;
-            }
+            // if(!empty($this->hourOut) || !empty($this->hourOut)){
+            //     $param['hourOut'] = date('Y-m-d') . "T" . $this->hourOut;
+            //     $param['hourOutTo'] = date('Y-m-d') . "T" . $this->hourTo;
+            // }
 
-            if(!empty($this->groupAuthorizeFrom) || !empty($this->groupAuthorizeTo)){
-                $param['groupAuthorizeFrom'] = (int) $this->groupAuthorizeFrom;
-                $param['groupAuthorizeTo'] = (int) $this->groupAuthorizeTo;
-            }
+            // if(!empty($this->groupAuthorizeFrom) || !empty($this->groupAuthorizeTo)){
+            //     $param['groupAuthorizeFrom'] = (int) $this->groupAuthorizeFrom;
+            //     $param['groupAuthorizeTo'] = (int) $this->groupAuthorizeTo;
+            // }
 
-            if(!empty($this->position) && !is_null($this->position[0])){
-                foreach($this->position as $value){
-                    $data_position[] = $value;
-                }
-                $param['position'] = $data_position;
-            }
+            // if(!empty($this->position) && !is_null($this->position[0])){
+            //     foreach($this->position as $value){
+            //         $data_position[] = $value;
+            //     }
+            //     $param['position'] = $data_position;
+            // }
 
-            if(!empty($this->location) && !is_null($this->location[0])){
-                foreach($this->location as $value){
-                    $data_location[] = $value;
-                }
-                $param['location'] = $data_location;
-            }
+            // if(!empty($this->location) && !is_null($this->location[0])){
+            //     foreach($this->location as $value){
+            //         $data_location[] = $value;
+            //     }
+            //     $param['location'] = $data_location;
+            // }
 
-            if(!empty($this->ranking) && !is_null($this->ranking[0])){
-                foreach($this->ranking as $value){
-                    $data_ranking[] = $value;
-                }
-                $param['ranking'] = $data_ranking;
-            }
+            // if(!empty($this->ranking) && !is_null($this->ranking[0])){
+            //     foreach($this->ranking as $value){
+            //         $data_ranking[] = $value;
+            //     }
+            //     $param['ranking'] = $data_ranking;
+            // }
 
             if(!empty($this->dataLevel) && !is_null($this->dataLevel[0])){
                 foreach($this->dataLevel as $key => $value){
@@ -115,7 +115,7 @@ class MonthlyAbsenteeismDetailExport implements FromView, ShouldAutoSize
                 $param['levelMaster'] = $data_level;
             }
 
-            // var_dump(json_encode($param));
+            // dd(json_encode($param));
 
             // var_dump($param['levelMaster']);
 
@@ -140,11 +140,11 @@ class MonthlyAbsenteeismDetailExport implements FromView, ShouldAutoSize
 
         if($arrResult->dataListSet == null){
             return view('time_management.tm_export_monthly_absenteeism_detail', [
-                'data' => [], 'data_detail' => $this->dataDetail, 'changeHeader' => $this->changeHeader, 'hourFrom' => $this->hourOut, 'hourTo' => $this->hourTo 
+                'data' => [], 'data_detail' => $this->dataDetail, 'changeHeader' => $this->changeHeader, 'hourFrom' => $this->hourOut, 'hourTo' => $this->hourTo, 'absentDateFrom' => $this->absentMonthFrom, 'absentDateTo' => $this->absentMonthTo, 'dataLevel' => $data_level
             ]);
         }else{
             return view('time_management.tm_export_monthly_absenteeism_detail', [
-                'data' => $arrResult->dataListSet, 'data_detail' => $this->dataDetail, 'changeHeader' => $this->changeHeader, 'hourFrom' => $this->hourOut, 'hourTo' => $this->hourTo
+                'data' => $arrResult->dataListSet, 'data_detail' => $this->dataDetail, 'changeHeader' => $this->changeHeader, 'hourFrom' => $this->hourOut, 'hourTo' => $this->hourTo, 'absentDateFrom' => $this->absentMonthFrom, 'absentDateTo' => $this->absentMonthTo, 'dataLevel' => $data_level
             ]);
         }
     }
