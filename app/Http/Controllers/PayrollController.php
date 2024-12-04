@@ -7169,7 +7169,8 @@ public function dataDetailReportFormatPY(Request $request)
                     'last_day' => $lastDayOfPreviousMonth,
                     'period' => date('d-M-Y', strtotime($data->period)),
                     'periode' => tgl_indo(date('Y-m-d', strtotime($data->period))),
-                    'transfer_date' => date('d-M-Y', strtotime($data->print_date))
+                    'transfer_date' => date('d-M-Y', strtotime($data->print_date)),
+                    'companyCode' => $data->companyCode
                 ])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
                 // if($data->mobile){
                 //     return $pdf->stream('Payment Slip.pdf');
@@ -7187,7 +7188,8 @@ public function dataDetailReportFormatPY(Request $request)
                     'last_day' => $lastDayOfPreviousMonth,
                     'period' => date('d-M-Y', strtotime($data->period)),
                     'periode' => tgl_indo(date('Y-m-d', strtotime($data->period))),
-                    'transfer_date' => date('d-M-Y', strtotime($data->print_date))
+                    'transfer_date' => date('d-M-Y', strtotime($data->print_date)),
+                    'companyCode' => $data->companyCode
                 ])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
                 // if($data->mobile){
                 //     return $pdf->stream('Payment Slip.pdf');
@@ -7207,7 +7209,8 @@ public function dataDetailReportFormatPY(Request $request)
                     'last_day' => $lastDayOfPreviousMonth,
                     'period' => date('d-M-Y', strtotime($data->period)),
                     'periode' => tgl_indo(date('Y-m-d', strtotime($data->period))),
-                    'transfer_date' => date('d-M-Y', strtotime($data->print_date))
+                    'transfer_date' => date('d-M-Y', strtotime($data->print_date)),
+                    'companyCode' => $data->companyCode
                 ])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
                 // if($data->mobile){
                 //     return $pdf->stream('Payment Slip.pdf');
@@ -7225,7 +7228,8 @@ public function dataDetailReportFormatPY(Request $request)
                     'last_day' => $lastDayOfPreviousMonth,
                     'period' => date('d-M-Y', strtotime($data->period)),
                     'periode' => tgl_indo(date('Y-m-d', strtotime($data->period))),
-                    'transfer_date' => date('d-M-Y', strtotime($data->print_date))
+                    'transfer_date' => date('d-M-Y', strtotime($data->print_date)),
+                    'companyCode' => $data->companyCode
                 ])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
                 // if($data->mobile){
                 //     return $pdf->stream('Payment Slip.pdf');
@@ -7441,7 +7445,8 @@ public function dataDetailReportFormatPY(Request $request)
                     'last_day' => $lastDayOfPreviousMonth,
                     'period' => date('d-M-Y', strtotime($request->period)),
                     'periode' => tgl_indo(date('Y-m-d', strtotime($request->period))),
-                    'transfer_date' => date('d-M-Y', strtotime($request->print_date))
+                    'transfer_date' => date('d-M-Y', strtotime($request->print_date)),
+                    'companyCode' => $companyCode
                 ])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
                 if($request->mobile){
                     $pdf->setEncryption(Session::get('userID'), Session::get('userID'), array('print', 'copy'));
@@ -7460,7 +7465,8 @@ public function dataDetailReportFormatPY(Request $request)
                     'last_day' => $lastDayOfPreviousMonth,
                     'period' => date('d-M-Y', strtotime($request->period)),
                     'periode' => tgl_indo(date('Y-m-d', strtotime($request->period))),
-                    'transfer_date' => date('d-M-Y', strtotime($request->print_date))
+                    'transfer_date' => date('d-M-Y', strtotime($request->print_date)),
+                    'companyCode' => $companyCode
                 ])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
                 if($request->mobile){
                     $pdf->setEncryption(Session::get('userID'), Session::get('userID'), array('print', 'copy'));
@@ -7482,7 +7488,8 @@ public function dataDetailReportFormatPY(Request $request)
                     'last_day' => $lastDayOfPreviousMonth,
                     'period' => date('d-M-Y', strtotime($request->period)),
                     'periode' => tgl_indo(date('Y-m-d', strtotime($request->period))),
-                    'transfer_date' => date('d-M-Y', strtotime($request->print_date))
+                    'transfer_date' => date('d-M-Y', strtotime($request->print_date)),
+                    'companyCode' => $companyCode
                 ])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
                 if($request->mobile){
                     $pdf->setEncryption(Session::get('userID'), Session::get('userID'), array('print', 'copy'));
@@ -7501,7 +7508,8 @@ public function dataDetailReportFormatPY(Request $request)
                     'last_day' => $lastDayOfPreviousMonth,
                     'period' => date('d-M-Y', strtotime($request->period)),
                     'periode' => tgl_indo(date('Y-m-d', strtotime($request->period))),
-                    'transfer_date' => date('d-M-Y', strtotime($request->print_date))
+                    'transfer_date' => date('d-M-Y', strtotime($request->print_date)),
+                    'companyCode' => $companyCode
                 ])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
                 if($request->mobile){
                     $pdf->setEncryption(Session::get('userID'), Session::get('userID'), array('print', 'copy'));

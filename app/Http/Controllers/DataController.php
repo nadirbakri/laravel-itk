@@ -1143,6 +1143,7 @@ class DataController extends Controller
 	    	$response = $client->post(env('API_URL') . '/personel/ZipCode/getZipCode',
 	    		['body' => json_encode(
 	    			[
+						'recordStatus' => 'A',
 	    				'companyCode' => Session::get('companyCode')
 	    			]
 	    		)]
@@ -1190,6 +1191,7 @@ class DataController extends Controller
 	    	$response = $client->post(env('API_URL') . '/personel/ZipCode/getZipCode',
 	    		['body' => json_encode(
 	    			[
+						'recordStatus' => 'A',
 	    				'companyCode' => Session::get('companyCode'),
 	    				'zipCode' => $request->homeZipCode
 	    			]
@@ -1199,6 +1201,7 @@ class DataController extends Controller
 			$response2 = $client->post(env('API_URL') . '/personel/ZipCode/getZipCode',
 	    		['body' => json_encode(
 	    			[
+						'recordStatus' => 'A',
 	    				'companyCode' => Session::get('companyCode'),
 	    				'zipCode' => $request->otherZipCode
 	    			]
@@ -1208,6 +1211,7 @@ class DataController extends Controller
 			$response3 = $client->post(env('API_URL') . '/personel/ZipCode/getZipCode',
 	    		['body' => json_encode(
 	    			[
+						'recordStatus' => 'A',
 	    				'companyCode' => Session::get('companyCode'),
 	    				'zipCode' => $request->workZipCode
 	    			]
@@ -1217,6 +1221,7 @@ class DataController extends Controller
 			$response4 = $client->post(env('API_URL') . '/personel/ZipCode/getZipCode',
 	    		['body' => json_encode(
 	    			[
+						'recordStatus' => 'A',
 	    				'companyCode' => Session::get('companyCode'),
 	    				'zipCode' => $request->correspondenceZipCode
 	    			]
@@ -1226,6 +1231,7 @@ class DataController extends Controller
 			$response5 = $client->post(env('API_URL') . '/personel/ZipCode/getZipCode',
 	    		['body' => json_encode(
 	    			[
+						'recordStatus' => 'A',
 	    				'companyCode' => Session::get('companyCode'),
 	    				'zipCode' => $request->homeDistrictCode
 	    			]
@@ -1235,6 +1241,7 @@ class DataController extends Controller
 			$response6 = $client->post(env('API_URL') . '/personel/ZipCode/getZipCode',
 	    		['body' => json_encode(
 	    			[
+						'recordStatus' => 'A',
 	    				'companyCode' => Session::get('companyCode'),
 	    				'zipCode' => $request->otherDistrictCode
 	    			]
@@ -1244,6 +1251,7 @@ class DataController extends Controller
 			$response7 = $client->post(env('API_URL') . '/personel/ZipCode/getZipCode',
 	    		['body' => json_encode(
 	    			[
+						'recordStatus' => 'A',
 	    				'companyCode' => Session::get('companyCode'),
 	    				'zipCode' => $request->homeSubDistrictCode
 	    			]
@@ -1253,6 +1261,7 @@ class DataController extends Controller
 			$response8 = $client->post(env('API_URL') . '/personel/ZipCode/getZipCode',
 	    		['body' => json_encode(
 	    			[
+						'recordStatus' => 'A',
 	    				'companyCode' => Session::get('companyCode'),
 	    				'zipCode' => $request->otherSubDistrictCode
 	    			]
@@ -1306,6 +1315,7 @@ class DataController extends Controller
 	    	$response = $client->post(env('API_URL') . '/personel/ZipCode/getZipCode',
 	    		['body' => json_encode(
 	    			[
+						'recordStatus' => 'A',
 	    				'companyCode' => Session::get('companyCode')
 	    			]
 	    		)]
@@ -1413,6 +1423,7 @@ class DataController extends Controller
 	    	$response = $client->post(env('API_URL') . '/personel/ZipCode/getZipCode',
 	    		['body' => json_encode(
 	    			[
+						'recordStatus' => 'A',
 	    				'companyCode' => Session::get('companyCode')
 	    			]
 	    		)]
@@ -1471,6 +1482,7 @@ class DataController extends Controller
 	    	$response = $client->post(env('API_URL') . '/mobile/TmWorkPattern/getTmWorkPatternService',
 	    		['body' => json_encode(
 	    			[
+						'recordStatus' => 'A',
 	    				'companyCode' => Session::get('companyCode')
 	    			]
 	    		)]
@@ -1517,6 +1529,7 @@ class DataController extends Controller
 	    	$response = $client->post(env('API_URL') . '/mobile/TmWorkPattern/getTmWorkPatternService',
 	    		['body' => json_encode(
 	    			[
+						'recordStatus' => 'A',
 	    				'companyCode' => Session::get('companyCode'),
 	    				'patternCode' => $request->workPatternCode
 	    			]
@@ -1557,6 +1570,7 @@ class DataController extends Controller
 	    	$response = $client->post(env('API_URL') . '/personel/CompanyBank/getCompanyBank',
 	    		['body' => json_encode(
 	    			[
+						'recordStatus' => 'A',
 	    				'companyCode' => Session::get('companyCode')
 	    			]
 	    		)]
@@ -1608,6 +1622,7 @@ class DataController extends Controller
 	    	$response = $client->post(env('API_URL') . '/personel/CompanyBank/getCompanyBank',
 	    		['body' => json_encode(
 	    			[
+						'recordStatus' => 'A',
 	    				'companyCode' => Session::get('companyCode'),
 	    				'bankCode' => $request->companyBankCode1
 	    			]
@@ -1617,6 +1632,7 @@ class DataController extends Controller
 			$response2 = $client->post(env('API_URL') . '/personel/CompanyBank/getCompanyBank',
 	    		['body' => json_encode(
 	    			[
+						'recordStatus' => 'A',
 	    				'companyCode' => Session::get('companyCode'),
 	    				'bankCode' => $request->companyBankCode2
 	    			]
@@ -1626,6 +1642,7 @@ class DataController extends Controller
 			$response3 = $client->post(env('API_URL') . '/personel/CompanyBank/getCompanyBank',
 	    		['body' => json_encode(
 	    			[
+						'recordStatus' => 'A',
 	    				'companyCode' => Session::get('companyCode'),
 	    				'bankCode' => $request->companyBankCode3
 	    			]
@@ -1671,6 +1688,7 @@ class DataController extends Controller
 	    	$response = $client->post(env('API_URL') . '/personel/GmBank/getGmBank',
 	    		['body' => json_encode(
 	    			[
+						'recordStatus' => 'A',
 	    				'companyCode' => Session::get('companyCode')
 	    			]
 	    		)]
@@ -1720,6 +1738,7 @@ class DataController extends Controller
 	    	$response = $client->post(env('API_URL') . '/personel/GmBank/getGmBank',
 	    		['body' => json_encode(
 	    			[
+						'recordStatus' => 'A',
 	    				'companyCode' => Session::get('companyCode'),
 	    				'bankCode' => $request->employeeBankCode1
 	    			]
@@ -1729,6 +1748,7 @@ class DataController extends Controller
 			$response2 = $client->post(env('API_URL') . '/personel/GmBank/getGmBank',
 	    		['body' => json_encode(
 	    			[
+						'recordStatus' => 'A',
 	    				'companyCode' => Session::get('companyCode'),
 	    				'bankCode' => $request->employeeBankCode2
 	    			]
@@ -1738,6 +1758,7 @@ class DataController extends Controller
 			$response3 = $client->post(env('API_URL') . '/personel/GmBank/getGmBank',
 	    		['body' => json_encode(
 	    			[
+						'recordStatus' => 'A',
 	    				'companyCode' => Session::get('companyCode'),
 	    				'bankCode' => $request->employeeBankCode3
 	    			]
@@ -1786,7 +1807,6 @@ class DataController extends Controller
 	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
-	    				'recordStatus' => 'A',
 						'variable' => 'Religion_',
 	    				// 'companyCode' => Session::get('companyCode'),
 						'languageCode' => strtoupper(App::getLocale())
@@ -1883,7 +1903,6 @@ class DataController extends Controller
 	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
 	    		['body' => json_encode(
 	    			[
-	    				'recordStatus' => 'A',
 						'variable' => 'Religion_',
 	    				// 'companyCode' => Session::get('companyCode'),
 						'languageCode' => strtoupper(App::getLocale())
@@ -3011,6 +3030,7 @@ class DataController extends Controller
 	    	$response = $client->post(env('API_URL') . '/personel/GroupAuthorize/getGroupAuthorize',
 	    		['body' => json_encode(
 	    			[
+						'recordStatus' => 'A',
 	    				'companyCode' => Session::get('companyCode'),
 	    				'groupAuthorizeCode' => (int) $request->groupAuthorizeCode,
 						'isRange' => false
@@ -5825,6 +5845,7 @@ class DataController extends Controller
 	    	);
 	    } catch (RequestException $e) {
 	    	$response = $e->getResponse();
+			dd($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -6621,6 +6642,7 @@ class DataController extends Controller
 	    	$response = $client->post(env('API_URL') . '/personel/NPWP/getNPWP',
 	    		['body' => json_encode(
 	    			[
+						'recordStatus' => 'A',
 	    				'companyCode' => Session::get('companyCode'),
 	    				'npwpCode' => $request->npwpCode
 	    			]
@@ -11184,6 +11206,7 @@ class DataController extends Controller
 			$response = $client->post(env('API_URL') . '/personel/Location/getLocation',
 				['body' => json_encode(
 					[
+						'recordStatus' => 'A',
 						'companyCode' => Session::get('companyCode')
 					]
 					)]
@@ -11230,6 +11253,7 @@ class DataController extends Controller
 			$response = $client->post(env('API_URL') . '/personel/Location/getLocation',
 				['body' => json_encode(
 					[
+						'recordStatus' => 'A',
 						'companyCode' => Session::get('companyCode'),
 						'locationCode' => $request->locationCode
 					]
