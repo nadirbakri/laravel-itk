@@ -78,10 +78,10 @@
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="absent_month_from">{{ __('tm_monthly_absenteeism_detail.label_absent_month_from') }}</label>
+                            <label for="absent_date_from">{{ __('tm_monthly_absenteeism_detail.label_absent_date_from') }}</label>
                             <div class='input-group'>
-                                <input type="text" class="form-control input-month" id="absent_month_from" name="absent_month_from"
-                                    placeholder="{{ __('tm_monthly_absenteeism_detail.label_absent_month_from') }}">
+                                <input type="text" class="form-control input-day" id="absent_date_from" name="absent_date_from"
+                                    placeholder="{{ __('tm_monthly_absenteeism_detail.label_absent_date_from') }}">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><span class="fa fa-calendar"></span></span>
                                 </div>
@@ -90,10 +90,10 @@
                     </div>
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="absent_month_to">{{ __('tm_monthly_absenteeism_detail.label_absent_month_to') }}</label>
+                            <label for="absent_date_to">{{ __('tm_monthly_absenteeism_detail.label_absent_date_to') }}</label>
                             <div class='input-group'>
-                                <input type="text" class="form-control input-month" id="absent_month_to" name="absent_month_to"
-                                    placeholder="{{ __('tm_monthly_absenteeism_detail.label_absent_month_to') }}">
+                                <input type="text" class="form-control input-day" id="absent_date_to" name="absent_date_to"
+                                    placeholder="{{ __('tm_monthly_absenteeism_detail.label_absent_date_to') }}">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><span class="fa fa-calendar"></span></span>
                                 </div>
@@ -125,7 +125,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                {{-- <div class="row">
                     <div class="col-8">
                         <div class="div-table">
                             <table id="monthly_absenteeism_detail_table" class="table hover" style="width: 100%">
@@ -140,8 +140,8 @@
                             </table>
                         </div>
                     </div>
-                </div>
-                <div class="row">
+                </div> --}}
+                {{-- <div class="row">
                     <div class="col-3">
                         <button type="button" class="btn btn-primary" name="btn-add-absent-code" id="btn-add-absent-code"
                             style="width: 100%;" data-toggle="modal" data-target="#modal_add_absent_code">
@@ -154,7 +154,7 @@
                             <i class="fa fa-times"></i> {{ __('tm_monthly_absenteeism_detail.btn_remove') }}
                         </button>
                     </div>
-                </div>
+                </div> --}}
                 <div class="row">
                     <div class="col-2">
                         <div class="form-group">
@@ -221,11 +221,27 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-3">
+                    {{-- <div class="col-3">
                         <button type="button" class="btn btn-primary" name="btn-print-data" id="btn-print-data"
                             style="width: 100%;">
                             <i class="fa fa-print"></i> {{ __('tm_monthly_absenteeism_detail.btn_print') }}
                         </button>
+                    </div> --}}
+                    <div class="col-3">
+                        <button class="btn btn-primary" name="btn-preview" id="btn-preview" value="preview" style="width: 100%;">
+                            <i class="fa fa-eye"></i> {{ __('payroll_periodical_report.btn_preview') }}
+                        </button>
+                    </div>
+                    <div class="col-3" id="send-to-report">
+                        <div class="dropdown">
+                            <button style="width: 100%;" class="btn btn-primary dropdown-toggle" id="btn-send-to" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-print"></i> {{ __('tm_monthly_absenteeism_detail.btn_send_to') }}
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="#" id="send-to-pdf">PDF</a>
+                                <a class="dropdown-item" href="#" id="send-to-xls">Excel</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </form>
@@ -341,19 +357,12 @@
     });
 
     function initDatePicker() {
-        $('.input-month').flatpickr({
+        $('.input-day').flatpickr({
             altInput: true,
             allowInput: true,
             altFormat: "d-M-Y",
             dateFormat: "Y-m-d",
             defaultDate: "today",
-            plugins: [
-                new monthSelectPlugin({
-                    shorthand: true, //defaults to false
-                    dateFormat: "Y-m-01", //defaults to "F Y"
-                    altFormat: "F Y", //defaults to "F Y"
-                })
-            ],
             onReady: function () {
                 var flatPickrInstance = this;
                 var $flatPickrInput = $(flatPickrInstance.element);
@@ -387,8 +396,14 @@
             url: "{{ url('personnel/report/level/check') }}",
             type: "GET",
             success: function (response) {
-                $('#level_format').val(response.data[0].levelFormat);
-                for (var i = 1; i <= response.data[0].levelFormat; i++) {
+                let levelFormat = response.data[0].levelFormat;
+
+                let updatedLevelFormat = 0;
+                $('#level_format').val(updatedLevelFormat);
+
+                const previousValues = {};
+
+                for (var i = 1; i <= levelFormat; i++) {
                     $('#div-level').append(
                         '<div class="col-6">' +
                         '<div class="form-group">' +
@@ -399,8 +414,25 @@
                         '</div></div>'
                     );
 
+                    previousValues[`level${i}`] = null;
+
                     loadDataLevelCode('#level' + i, i);
-                    loadDataFirstLastAllLevel('#level' + i, i);
+                    // loadDataFirstLastAllLevel('#level' + i, i);
+
+                    $(`#level${i}`).on('change', function () {
+                        const currentValues = $(this).val();
+                        const previous = previousValues[`level${i}`];
+
+                        if ((!previous || previous.length === 0) && currentValues && currentValues.length > 0) {
+                            updatedLevelFormat++;
+                        }
+                        else if (previous && previous.length > 0 && (!currentValues || currentValues.length === 0)) {
+                            updatedLevelFormat--;
+                        }
+
+                        previousValues[`level${i}`] = currentValues;
+                        $('#level_format').val(updatedLevelFormat);
+                    });
                 }
             },
             error: function (response) {
@@ -409,52 +441,52 @@
             }
         });
 
-        load_table_monthly_absenteeism_detail();
+        // load_table_monthly_absenteeism_detail();
 
-        function load_table_monthly_absenteeism_detail() {
-            table = $('#monthly_absenteeism_detail_table').DataTable( {
-                processing: true,
-                data: arrayabsentCode,
+        // function load_table_monthly_absenteeism_detail() {
+        //     table = $('#monthly_absenteeism_detail_table').DataTable( {
+        //         processing: true,
+        //         data: arrayabsentCode,
 
-                "sDom": 'lrtip',
-                'sPaginationType': 'full_numbers',
-                "order": [
-                    [1, "asc"]
-                ],
-                columns: [{
-                        orderable: false,
-                        targets: 0,
-                        "defaultContent": '',
-                        render: function (data, type) {
-                            return type === 'display' ?
-                                '<input class="chk-select" type="checkbox">' : '';
-                        }
-                    },
-                    {   
-                        data: 'no',
-                        name: 'no',
-                        render: function (data, type, row, meta) {
-                            return meta.row + meta.settings._iDisplayStart + 1;
-                        }
-                    },
-                    {   
-                        data: 'absentCode',
-                        name: 'absentCode'
-                    },
-                    {
-                        data: 'description',
-                        name: 'description'
-                    },
-                    {   
-                        data: 'headerName',
-                        name: 'headerName'
-                    }],
-                    select: {
-                        style: 'multi',
-                        selector: 'td:first-child'
-                    }
-            });
-        }
+        //         "sDom": 'lrtip',
+        //         'sPaginationType': 'full_numbers',
+        //         "order": [
+        //             [1, "asc"]
+        //         ],
+        //         columns: [{
+        //                 orderable: false,
+        //                 targets: 0,
+        //                 "defaultContent": '',
+        //                 render: function (data, type) {
+        //                     return type === 'display' ?
+        //                         '<input class="chk-select" type="checkbox">' : '';
+        //                 }
+        //             },
+        //             {   
+        //                 data: 'no',
+        //                 name: 'no',
+        //                 render: function (data, type, row, meta) {
+        //                     return meta.row + meta.settings._iDisplayStart + 1;
+        //                 }
+        //             },
+        //             {   
+        //                 data: 'absentCode',
+        //                 name: 'absentCode'
+        //             },
+        //             {
+        //                 data: 'description',
+        //                 name: 'description'
+        //             },
+        //             {   
+        //                 data: 'headerName',
+        //                 name: 'headerName'
+        //             }],
+        //             select: {
+        //                 style: 'multi',
+        //                 selector: 'td:first-child'
+        //             }
+        //     });
+        // }
 
         $('#monthly_absenteeism_detail_table tbody').on('click', 'input[type="checkbox"]', function(e){
             var $row = $(this).closest('tr');
@@ -1185,12 +1217,43 @@
             //$("#field_name_form").submit();
         });
 
-        $("#btn-print-data").click(function () {
+        // $("#btn-print-data").click(function () {
+        //     $(this).prop("disabled", true);
+        //     $(this).html(
+        //         '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+        //     );
+        //     $("#monthly_absenteeism_detail_form").submit();
+        // });
+
+        let clicked = ''
+
+        $('#send-to-pdf').click(function (){
+            $("#btn-send-to").prop("disabled", true);
+            $("#btn-send-to").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+            clicked = "DOWNLOAD_PDF";
+
+            $('#monthly_absenteeism_detail_form').submit();
+        });
+
+        $('#send-to-xls').click(function (){
+            $("#btn-send-to").prop("disabled", true);
+            $("#btn-send-to").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+            clicked = "DOWNLOAD_XLS";
+
+            $('#monthly_absenteeism_detail_form').submit();
+        });
+
+        $('#btn-preview').click(function (){
             $(this).prop("disabled", true);
             $(this).html(
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
-            $("#monthly_absenteeism_detail_form").submit();
+            clicked = "PREVIEW";
+            $('#monthly_absenteeism_detail_form').submit();
         });
 
         if ($("#monthly_absenteeism_detail_form").length > 0) {
@@ -1202,26 +1265,38 @@
                     employee_no_to: {
                         required: true,
                     },
-                    group_authorize_from: {
+                    absent_date_from: {
                         required: true,
                     },
-                    group_authorize_to: {
+                    absent_date_to: {
                         required: true,
                     },
+                    // group_authorize_from: {
+                    //     required: true,
+                    // },
+                    // group_authorize_to: {
+                    //     required: true,
+                    // },
                 },
                 messages: {
                     employee_no_from: {
-                        required: "{{ __('personel_employee_list.field_required') }}",
+                        required: "{{ __('tm_monthly_absenteeism_detail.employee_no_from_required') }}",
                     },
                     employee_no_to: {
-                        required: "{{ __('personel_employee_list.field_required') }}",
+                        required: "{{ __('tm_monthly_absenteeism_detail.employee_no_to_required') }}",
                     },
-                    group_authorize_from: {
-                        required: "{{ __('personel_employee_list.field_required') }}",
+                    absent_date_from: {
+                        required: "{{ __('tm_monthly_absenteeism_detail.absent_date_from_required') }}",
                     },
-                    group_authorize_to: {
-                        required: "{{ __('personel_employee_list.field_required') }}",
+                    absent_date_to: {
+                        required: "{{ __('tm_monthly_absenteeism_detail.absent_date_to_required') }}",
                     },
+                    // group_authorize_from: {
+                    //     required: "{{ __('tm_monthly_absenteeism_detail.field_required') }}",
+                    // },
+                    // group_authorize_to: {
+                    //     required: "{{ __('tm_monthly_absenteeism_detail.field_required') }}",
+                    // },
                 },
                 highlight: function (element) {
                     $(element).addClass('is-invalid');
@@ -1231,16 +1306,21 @@
                 },
                 errorElement: 'span',
                 errorPlacement: function (error, element) {
-                    $("#btn-print-data").prop("disabled", false);
-                    $("#btn-print-data").html(
-                        '<i class="fa fa-floppy-o"></i> {{ __("personel_employee_list.btn_print") }}'
+                    $('#btn-send-to-report').prop("disabled", false);
+                    $("#btn-send-to-report").html(
+                        '<i class="fa fa-print"></i> {{ __("payroll_periodical_report.btn_send_to") }}'
+                    );
+
+                    $('#btn-preview').prop("disabled", false);
+                    $("#btn-preview").html(
+                        '<i class="fa fa-eye"></i> {{ __("payroll_periodical_report.btn_preview") }}'
                     );
 
                     error.addClass('invalid-feedback');
                     element.closest('.form-group').append(error);
                 },
                 submitHandler: function (form) {
-                    var arrData = table.rows().data().toArray();
+                    // var arrData = table.rows().data().toArray();
                     
                     $.ajaxSetup({
                         headers: {
@@ -1248,47 +1328,127 @@
                         }
                     });
 
-                    $.ajax({
-                        xhrFields: {
-                            responseType: 'blob',
-                        },
-                        url: "{{ url('time_management/monthly_absenteeism_detail/print') }}",
-                        type: "POST",
-                        data: { 'field' : $('#monthly_absenteeism_detail_form').serialize(), 'field_name' : JSON.stringify(arrData) },
-                        success: function (result, status, xhr) {
-                            $("#btn-print-data").prop("disabled", false);
-                            $("#btn-print-data").html(
-                                '<i class="fa fa-print"></i> {{ __("tm_monthly_absenteeism_detail.btn_print") }}'
-                            );
+                    console.log(clicked)
 
-                            var disposition = xhr.getResponseHeader(
-                                'content-disposition');
-                            var matches = /"([^"]*)"/.exec(disposition);
-                            var filename = (matches != null && matches[1] ? matches[1] :
-                                'noname_file.xlsx');
+                    if (clicked=="DOWNLOAD_XLS"){
+                        $.ajax({
+                            xhrFields: {
+                                responseType: 'blob',
+                            },
+                            url: "{{ url('time_management/monthly_absenteeism_detail/excel/print') }}",
+                            type: "POST",
+                            data: { 
+                                'field' : $('#monthly_absenteeism_detail_form').serialize(), 
+                                // 'field_name' : JSON.stringify(arrData) 
+                            },
+                            success: function (result, status, xhr) {
+                                $('#btn-send-to').prop("disabled", false);
+                                $("#btn-send-to").html(
+                                    '<i class="fa fa-print"></i> {{ __("tm_monthly_absenteeism_detail.btn_send_to") }}'
+                                );
 
-                            // The actual download
-                            var blob = new Blob([result], {
-                                type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-                            });
-                            var link = document.createElement('a');
-                            link.href = window.URL.createObjectURL(blob);
-                            link.download = filename;
+                                var disposition = xhr.getResponseHeader(
+                                    'content-disposition');
+                                var matches = /"([^"]*)"/.exec(disposition);
+                                var filename = (matches != null && matches[1] ? matches[1] :
+                                    'noname_file.xlsx');
 
-                            document.body.appendChild(link);
+                                // The actual download
+                                var blob = new Blob([result], {
+                                    type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                                });
+                                var link = document.createElement('a');
+                                link.href = window.URL.createObjectURL(blob);
+                                link.download = filename;
 
-                            link.click();
-                            document.body.removeChild(link);
-                        },
-                        error: function (response) {
-                            $("#btn-print-data").prop("disabled", false);
-                            $("#btn-print-data").html(
-                                '<i class="fa fa-print"></i> {{ __("tm_monthly_absenteeism_detail.btn_print") }}'
-                            );
-                            $('#notification_error').modal('show');
-                            $('#message-notification-error').html(response);
-                        }
-                    });
+                                document.body.appendChild(link);
+
+                                link.click();
+                                document.body.removeChild(link);
+                            },
+                            error: function (response) {
+                                $('#btn-send-to').prop("disabled", false);
+                                $("#btn-send-to").html(
+                                    '<i class="fa fa-print"></i> {{ __("tm_monthly_absenteeism_detail.btn_send_to") }}'
+                                );
+                                $('#notification_error').modal('show');
+                                $('#message-notification-error').html(response);
+                            }
+                        });
+                    }
+                    else
+                    {
+                        $.ajax({
+                            xhrFields: {
+                                responseType: 'blob',
+                            },
+                            url: "{{ url('time_management/monthly_absenteeism_detail/print') }}",
+                            type: "POST",
+                            data: $('#monthly_absenteeism_detail_form').serialize(),
+                            success: function(result, status, xhr){
+                                $('#btn-send-to').prop("disabled", false);
+                                $("#btn-send-to").html(
+                                    '<i class="fa fa-print"></i> {{ __("tm_monthly_absenteeism_detail.btn_send_to") }}'
+                                );
+
+                                $('#btn-preview').prop("disabled", false);
+                                $("#btn-preview").html(
+                                    '<i class="fa fa-eye"></i> {{ __("tm_monthly_absenteeism_detail.btn_preview") }}'
+                                );
+                                
+                                if(clicked == "DOWNLOAD_PDF"){
+                                    var disposition = xhr.getResponseHeader('content-disposition');
+                                    var matches = /"([^"]*)"/.exec(disposition);
+                                    var filename = (matches != null && matches[1] ? matches[1] : 'noname_file.xlsx');
+
+                                    var blob = new Blob([result], {
+                                        type: 'application/pdf'
+                                    });
+
+                                    var link = document.createElement('a');
+                                    link.href = window.URL.createObjectURL(blob);
+                                    link.download = filename;
+                                    
+                                    document.body.appendChild(link);
+
+                                    link.click();
+                                    document.body.removeChild(link);
+
+                                    clicked = "";
+                                }
+                                else if(clicked == "PREVIEW"){
+                                    var disposition = xhr.getResponseHeader('content-disposition');
+                                    var matches = /"([^"]*)"/.exec(disposition);
+                                    var filename = (matches != null && matches[1] ? matches[1] : 'noname_file.xlsx');
+
+                                    var blob = new Blob([result], {
+                                        type: 'application/pdf'
+                                    });
+
+                                    var link = document.createElement('a');
+                                    const url = URL.createObjectURL(blob);
+                                    link.href = window.open(url, "_blank");
+
+                                    document.body.appendChild(link);
+                                    document.body.removeChild(link);
+
+                                    clicked = "";
+                                }
+                            },
+                            error: function(response){
+                                $('#btn-send-to').prop("disabled", false);
+                                $('#btn-send-to').html(
+                                    '<i class="fa fa-print"></i> {{ __("tm_monthly_absenteeism_detail.btn_send_to") }}'
+                                );
+                                $('#btn-preview').prop("disabled", false);
+                                $('#btn-preview').html(
+                                    '<i class="fa fa-eye"></i> {{ __("tm_monthly_absenteeism_detail.btn_preview") }}'
+                                );
+                                $('#notification_error').modal('show');
+                                $('#message-notification-error').html(response);
+                            }
+                        });
+                    }
                 }
             })
         }

@@ -17,8 +17,8 @@ return [
     'list' => 'Time Management Menu List',
     'label_employee_no_from' => 'Employee No From',
     'label_employee_no_to' => 'Employee No To',
-    'label_absent_month_from' => 'Absent Month From',
-    'label_absent_month_to' => 'Absent Month To',
+    'label_absent_date_from' => 'Absent Date From',
+    'label_absent_date_to' => 'Absent Date To',
     'label_include_resign' => 'Include Resign',
     'label_change_header' => 'Change Header',
     'btn_add' => 'Add',
@@ -31,6 +31,8 @@ return [
     'label_ranking' => 'Ranking',
     'label_location' => 'Location',
     'btn_print' => 'Print',
+    'btn_preview' => 'Preview',
+    'btn_send_to' => 'Send To',
     'btn_save' => 'Save',
     'btn_cancel' => 'Cancel',
     'label_absent_code' => 'Absent Code',
@@ -39,7 +41,7 @@ return [
     'absent_code_required' => 'Absent Code Required',
     'employee_no_from_required' => 'Employee No From Required',
     'employee_no_to_required' => 'Employee No To Required',
-    'absent_month_from_required' => 'Absent Month From Required',
-    'absent_month_to_required' => 'Absent Month To Required'
+    'absent_date_from_required' => 'Absent Date From Required',
+    'absent_date_to_required' => 'Absent Date To Required'
 
 ];

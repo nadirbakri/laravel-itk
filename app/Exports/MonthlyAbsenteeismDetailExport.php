@@ -13,15 +13,14 @@ use App;
 
 class MonthlyAbsenteeismDetailExport implements FromView, ShouldAutoSize
 {
-    public function __construct($employeeNoFrom, $employeeNoTo, $absentMonthFrom, $absentMonthTo, $includeResign, $changeHeader, $dataDetail, $hourOut, $hourTo, $groupAuthorizeFrom, $groupAuthorizeTo, $position, $ranking, $location, $dataLevel)
+    public function __construct($employeeNoFrom, $employeeNoTo, $absentDateFrom, $absentDateTo, $includeResign, $changeHeader, $hourOut, $hourTo, $groupAuthorizeFrom, $groupAuthorizeTo, $position, $ranking, $location, $dataLevel)
     {
         $this->employeeNoFrom = $employeeNoFrom;
         $this->employeeNoTo = $employeeNoTo;
-        $this->absentMonthFrom = $absentMonthFrom;
-        $this->absentMonthTo = $absentMonthTo;
+        $this->absentDateFrom = $absentDateFrom;
+        $this->absentDateTo = $absentDateTo;
         $this->includeResign = $includeResign;
         $this->changeHeader = $changeHeader;
-        $this->dataDetail = $dataDetail;
         $this->hourOut = $hourOut;
         $this->hourTo = $hourTo;
         $this->groupAuthorizeFrom = $groupAuthorizeFrom;
@@ -55,9 +54,9 @@ class MonthlyAbsenteeismDetailExport implements FromView, ShouldAutoSize
             //     $param['employeeNoTo'] = $this->employeeNoTo;
             // }
 
-            if(!empty($this->absentMonthFrom) || !empty($this->absentMonthFrom)){
-                $param['absentDateFrom'] = $this->absentMonthFrom;
-                $param['absentDateTo'] = $this->absentMonthTo;
+            if(!empty($this->absentDateFrom) || !empty($this->absentDateFrom)){
+                $param['absentDateFrom'] = $this->absentDateFrom;
+                $param['absentDateTo'] = $this->absentDateTo;
             }
 
             // if(!empty($this->dataDetail) && !is_null($this->dataDetail[0])){
@@ -140,11 +139,11 @@ class MonthlyAbsenteeismDetailExport implements FromView, ShouldAutoSize
 
         if($arrResult->dataListSet == null){
             return view('time_management.tm_export_monthly_absenteeism_detail', [
-                'data' => [], 'data_detail' => $this->dataDetail, 'changeHeader' => $this->changeHeader, 'hourFrom' => $this->hourOut, 'hourTo' => $this->hourTo, 'absentDateFrom' => $this->absentMonthFrom, 'absentDateTo' => $this->absentMonthTo, 'dataLevel' => $data_level
+                'data' => [], 'changeHeader' => $this->changeHeader, 'hourFrom' => $this->hourOut, 'hourTo' => $this->hourTo, 'absentDateFrom' => $this->absentDateFrom, 'absentDateTo' => $this->absentDateTo, 'dataLevel' => $data_level
             ]);
         }else{
             return view('time_management.tm_export_monthly_absenteeism_detail', [
-                'data' => $arrResult->dataListSet, 'data_detail' => $this->dataDetail, 'changeHeader' => $this->changeHeader, 'hourFrom' => $this->hourOut, 'hourTo' => $this->hourTo, 'absentDateFrom' => $this->absentMonthFrom, 'absentDateTo' => $this->absentMonthTo, 'dataLevel' => $data_level
+                'data' => $arrResult->dataListSet, 'changeHeader' => $this->changeHeader, 'hourFrom' => $this->hourOut, 'hourTo' => $this->hourTo, 'absentDateFrom' => $this->absentDateFrom, 'absentDateTo' => $this->absentDateTo, 'dataLevel' => $data_level
             ]);
         }
     }

@@ -1425,13 +1425,19 @@ class TimeManagementController extends Controller
         $dataLevel = [];
 
         parse_str($request->field, $arrData);
-        $arrData2 = json_decode($request->field_name);
+        // $arrData2 = json_decode($request->field_name);
 
-        for($i = 0; $i < $arrData['level_format']; $i++){
-            $dataLevel[] = $arrData['level' . ($i+1)];
+        // dd($arrData);
+
+        if (intval($arrData['level_format']) > 0) {
+            for($i = 0; $i < $arrData['level_format']; $i++){
+                $dataLevel[] = $arrData['level' . ($i+1)];
+            }
         }
 
-        return Excel::download(new MonthlyAbsenteeismDetailExport($arrData['employee_no_from'], $arrData['employee_no_to'], $arrData['absent_month_from'], $arrData['absent_month_to'], isset($arrData['include_resign']) ? (bool) $arrData['include_resign'] : false, isset($arrData['change_header']) ? (bool) $arrData['change_header'] : false, $arrData2, $arrData['hour_out'], $arrData['hour_to'], $arrData['group_authorize_from'], $arrData['group_authorize_to'], $arrData['position'], $arrData['ranking'], $arrData['location'], $dataLevel), 'Monthly Absenteeism Detail.xlsx');
+        // dd($dataLevel);
+
+        return Excel::download(new MonthlyAbsenteeismDetailExport($arrData['employee_no_from'], $arrData['employee_no_to'], $arrData['absent_date_from'], $arrData['absent_date_to'], isset($arrData['include_resign']) ? (bool) $arrData['include_resign'] : false, isset($arrData['change_header']) ? (bool) $arrData['change_header'] : false, $arrData['hour_out'], $arrData['hour_to'], $arrData['group_authorize_from'], $arrData['group_authorize_to'], $arrData['position'], $arrData['ranking'], $arrData['location'], $dataLevel), 'Monthly Absenteeism Detail.xlsx');
     }
 
     public function printAbsenteeismOvertimeReport(Request $request)
