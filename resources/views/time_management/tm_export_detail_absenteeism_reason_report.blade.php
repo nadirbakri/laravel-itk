@@ -29,23 +29,23 @@
     @if(count($data) > 0)
 		<table style="width: 100%; font-size: 14px;">
 			<tr>
-				<td style="font-weight: bold;">{{ $data[0]->companyCode }}</td>
+				<td style="font-weight: bold;">{{ $data[0]->companyName }}</td>
 			</tr>
 			<tr>
-				<td colspan='9' style="font-weight: bold; text-align: center">DETAIL ABSENTEEISM REASON REPORT</td>
+				<td colspan='8' style="font-weight: bold; text-align: center">DETAIL ABSENTEEISM REASON REPORT</td>
 			</tr>
 		</table>
 		<table style="width: 100%; font-size: 14px;" class="table table-bordered table-hover responsive table_detail">
 			<thead>
 				<tr>
-					<th style="font-weight: bold">Seq</th>
-					<th style="font-weight: bold">Employee No</th>
-					<th style="font-weight: bold">Full Name</th>
-					<th style="font-weight: bold">Absent Date</th>
-					<th style="font-weight: bold">Absent Type</th>
-					{{-- <th style="font-weight: bold">Absent Name</th> --}}
-					<th style="font-weight: bold">Day</th>
-					<th style="font-weight: bold">Hour</th>
+					<th style="text-align: center; font-weight: bold; border:1px solid #000">Seq</th>
+					<th style="text-align: center; font-weight: bold; border:1px solid #000">Employee No</th>
+					<th style="text-align: center; font-weight: bold; border:1px solid #000">Full Name</th>
+					<th style="text-align: center; font-weight: bold; border:1px solid #000">Absent Date</th>
+					<th style="text-align: center; font-weight: bold; border:1px solid #000">Absent Type</th>
+					<th style="text-align: center; font-weight: bold; border:1px solid #000">Absent Name</th>
+					<th style="text-align: center; font-weight: bold; border:1px solid #000">Day</th>
+					<th style="text-align: center; font-weight: bold; border:1px solid #000">Hour</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -68,16 +68,14 @@
 									$totalMinutes += (int)$minutes;
 								?>
 								<tr>
-									@if ($index === 0)
-										<td rowspan="{{ $rowspan }}" style="text-align: center; vertical-align: middle">{{ $no++ }}</td>
-										<td rowspan="{{ $rowspan }}" style="text-align: center; vertical-align: middle">{{ $value->employeeNo }}</td>
-										<td rowspan="{{ $rowspan }}" style="text-align: center; vertical-align: middle">{{ $value->fullName }}</td>
-									@endif
-									<td>{{ date('Y-m-d',strtotime($listDetail->absentDate)) }}</td>
-									<td>{{ $list->absentCode }}</td>
-									{{-- <td>{{ $value->description || null }}</td> --}}
-									<td>{{ $listDetail->day }}</td>
-									<td>{{ $listDetail->hour }}</td>
+									<td style="text-align: center; vertical-align: middle; border:1px solid #000">{{ $no++ }}</td>
+									<td style="text-align: center; vertical-align: middle; border:1px solid #000">{{ $value->employeeNo }}</td>
+									<td style="text-align: center; vertical-align: middle; border:1px solid #000">{{ $value->fullName }}</td>
+									<td style="text-align: center; border:1px solid #000">{{ date('Y-m-d',strtotime($listDetail->absentDate)) }}</td>
+									<td style="text-align: center; border:1px solid #000">{{ $list->absentCode }}</td>
+									<td style="text-align: center; border:1px solid #000">{{ $listDetail->description }}</td>
+									<td style="text-align: right; border:1px solid #000">{{ $listDetail->day }}</td>
+									<td style="text-align: right; border:1px solid #000">{{ $listDetail->hour }}</td>
 								</tr>
 							@endforeach
 
@@ -88,9 +86,9 @@
 								$formattedTotalHours = sprintf('%02d:%02d', $totalHours, $totalMinutes);
 							?>
 							<tr>
-								<td colspan="5" style="text-align: right; font-weight: bold">Total</td>
-								<td style="font-weight: bold">{{ $totalDays }}</td>
-								<td style="font-weight: bold">{{ $formattedTotalHours }}</td>
+								<td colspan="6" style="text-align: right; font-weight: bold; border:1px solid #000">Total</td>
+								<td style="text-align: right; font-weight: bold; border:1px solid #000">{{ $totalDays }}</td>
+								<td style="text-align: right; font-weight: bold; border:1px solid #000">{{ $formattedTotalHours }}</td>
 							</tr>
 						@endif
 					@endforeach

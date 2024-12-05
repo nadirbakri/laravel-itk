@@ -33,6 +33,8 @@ return [
     'label_ranking' => 'Peringkat',
     'label_location' => 'Lokasi',
     'btn_print' => 'Cetak',
+    'btn_preview' => 'Pratinjau',
+    'btn_send_to' => 'Kirim Ke',
     'employee_no_from_required' => 'Dari No Karyawan Harus Diisi',
     'employee_no_to_required' => 'Sampai No Karyawan Harus Diisi',
     'absent_date_from_required' => 'Dari Hari Kehadiran Harus Diisi',

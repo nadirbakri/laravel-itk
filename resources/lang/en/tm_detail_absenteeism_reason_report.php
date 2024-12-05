@@ -33,6 +33,8 @@ return [
     'label_ranking' => 'Ranking',
     'label_location' => 'Location',
     'btn_print' => 'Print',
+    'btn_preview' => 'Preview',
+    'btn_send_to' => 'Send To',
     'employee_no_from_required' => 'Employee No From Required',
     'employee_no_to_required' => 'Employee No To Required',
     'absent_date_from_required' => 'Absent Date From Required',

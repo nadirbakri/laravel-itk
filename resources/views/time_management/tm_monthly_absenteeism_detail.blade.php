@@ -155,7 +155,7 @@
                         </button>
                     </div>
                 </div> --}}
-                <div class="row">
+                {{-- <div class="row">
                     <div class="col-2">
                         <div class="form-group">
                             <label for="hour_out">{{ __('tm_monthly_absenteeism_detail.label_hour_out') }}</label>
@@ -174,7 +174,7 @@
                             <input type="text" class="form-control input-hour" id="hour_to" name="hour_to">
                         </div>
                     </div>
-                </div>
+                </div> --}}
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
@@ -229,10 +229,10 @@
                     </div> --}}
                     <div class="col-3">
                         <button class="btn btn-primary" name="btn-preview" id="btn-preview" value="preview" style="width: 100%;">
-                            <i class="fa fa-eye"></i> {{ __('payroll_periodical_report.btn_preview') }}
+                            <i class="fa fa-eye"></i> {{ __('tm_monthly_absenteeism_detail.btn_preview') }}
                         </button>
                     </div>
-                    <div class="col-3" id="send-to-report">
+                    <div class="col-3" id="btn-send-to-report">
                         <div class="dropdown">
                             <button style="width: 100%;" class="btn btn-primary dropdown-toggle" id="btn-send-to" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fa fa-print"></i> {{ __('tm_monthly_absenteeism_detail.btn_send_to') }}
@@ -414,25 +414,28 @@
                         '</div></div>'
                     );
 
+                    $('#level' + i).select2();
+
                     previousValues[`level${i}`] = null;
 
                     loadDataLevelCode('#level' + i, i);
                     // loadDataFirstLastAllLevel('#level' + i, i);
 
-                    $(`#level${i}`).on('change', function () {
-                        const currentValues = $(this).val();
-                        const previous = previousValues[`level${i}`];
+                    ((index) => {
+                        $(`#level${index}`).on('change', function () {
+                            const currentValues = $(this).val();
+                            const previous = previousValues[`level${index}`];
 
-                        if ((!previous || previous.length === 0) && currentValues && currentValues.length > 0) {
-                            updatedLevelFormat++;
-                        }
-                        else if (previous && previous.length > 0 && (!currentValues || currentValues.length === 0)) {
-                            updatedLevelFormat--;
-                        }
+                            if ((!previous || previous.length === 0) && currentValues && currentValues.length > 0) {
+                                updatedLevelFormat++;
+                            } else if (previous && previous.length > 0 && (!currentValues || currentValues.length === 0)) {
+                                updatedLevelFormat--;
+                            }
 
-                        previousValues[`level${i}`] = currentValues;
-                        $('#level_format').val(updatedLevelFormat);
-                    });
+                            previousValues[`level${index}`] = currentValues;
+                            $('#level_format').val(updatedLevelFormat);
+                        });
+                    })(i);
                 }
             },
             error: function (response) {
@@ -1306,14 +1309,14 @@
                 },
                 errorElement: 'span',
                 errorPlacement: function (error, element) {
-                    $('#btn-send-to-report').prop("disabled", false);
-                    $("#btn-send-to-report").html(
-                        '<i class="fa fa-print"></i> {{ __("payroll_periodical_report.btn_send_to") }}'
+                    $('#btn-send-to ').prop("disabled", false);
+                    $("#btn-send-to ").html(
+                        '<i class="fa fa-print"></i> {{ __("tm_monthly_absenteeism_detail.btn_send_to") }}'
                     );
 
                     $('#btn-preview').prop("disabled", false);
                     $("#btn-preview").html(
-                        '<i class="fa fa-eye"></i> {{ __("payroll_periodical_report.btn_preview") }}'
+                        '<i class="fa fa-eye"></i> {{ __("tm_monthly_absenteeism_detail.btn_preview") }}'
                     );
 
                     error.addClass('invalid-feedback');
@@ -1374,8 +1377,7 @@
                             }
                         });
                     }
-                    else
-                    {
+                    else {
                         $.ajax({
                             xhrFields: {
                                 responseType: 'blob',

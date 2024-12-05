@@ -24,12 +24,12 @@
             font-size: 14px;
             text-align: left
 		}
-		.table_detail th{
+		.table_detail thead tr th{
             margin: 0;
 			border:1px solid #000;
             padding:4px;
             font-size: 14px;
-            /* font-weight: normal; */
+            background-color:#97d7f7;
             text-align: center
 		}
 	</style>

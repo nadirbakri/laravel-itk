@@ -205,11 +205,27 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-3">
+                    {{-- <div class="col-3">
                         <button type="submit" class="btn btn-primary" name="btn-print-data" id="btn-print-data"
                             style="width: 100%;">
                             <i class="fa fa-print"></i> {{ __('tm_detail_absenteeism_reason_report.btn_print') }}
                         </button>
+                    </div> --}}
+                    <div class="col-3">
+                        <button class="btn btn-primary" name="btn-preview" id="btn-preview" value="preview" style="width: 100%;">
+                            <i class="fa fa-eye"></i> {{ __('tm_detail_absenteeism_reason_report.btn_preview') }}
+                        </button>
+                    </div>
+                    <div class="col-3" id="btn-send-to-report">
+                        <div class="dropdown">
+                            <button style="width: 100%;" class="btn btn-primary dropdown-toggle" id="btn-send-to" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-print"></i> {{ __('tm_detail_absenteeism_reason_report.btn_send_to') }}
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="#" id="send-to-pdf">PDF</a>
+                                <a class="dropdown-item" href="#" id="send-to-xls">Excel</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </form>
@@ -331,20 +347,21 @@
                     loadDataLevelCode('#level' + i, i);
                     // loadDataFirstLastAllLevel('#level' + i, i);
 
-                    $(`#level${i}`).on('change', function () {
-                        const currentValues = $(this).val();
-                        const previous = previousValues[`level${i}`];
+                    ((index) => {
+                        $(`#level${index}`).on('change', function () {
+                            const currentValues = $(this).val();
+                            const previous = previousValues[`level${index}`];
 
-                        if ((!previous || previous.length === 0) && currentValues && currentValues.length > 0) {
-                            updatedLevelFormat++;
-                        }
-                        else if (previous && previous.length > 0 && (!currentValues || currentValues.length === 0)) {
-                            updatedLevelFormat--;
-                        }
+                            if ((!previous || previous.length === 0) && currentValues && currentValues.length > 0) {
+                                updatedLevelFormat++;
+                            } else if (previous && previous.length > 0 && (!currentValues || currentValues.length === 0)) {
+                                updatedLevelFormat--;
+                            }
 
-                        previousValues[`level${i}`] = currentValues;
-                        $('#level_format').val(updatedLevelFormat);
-                    });
+                            previousValues[`level${index}`] = currentValues;
+                            $('#level_format').val(updatedLevelFormat);
+                        });
+                    })(i);
                 }
             },
             error: function (response) {
@@ -1109,13 +1126,44 @@
             });
         }
 
-        $("#btn-print-data").click(function () {
+        // $("#btn-print-data").click(function () {
+        //     $(this).prop("disabled", true);
+        //     $(this).html(
+        //         '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+        //     );
+
+        //     $("#tm_detail_absenteeism_reason_report_form").submit();
+        // });
+
+        let clicked = ''
+
+        $('#send-to-pdf').click(function (){
+            $("#btn-send-to").prop("disabled", true);
+            $("#btn-send-to").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+            clicked = "DOWNLOAD_PDF";
+
+            $('#tm_detail_absenteeism_reason_report_form').submit();
+        });
+
+        $('#send-to-xls').click(function (){
+            $("#btn-send-to").prop("disabled", true);
+            $("#btn-send-to").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+            clicked = "DOWNLOAD_XLS";
+
+            $('#tm_detail_absenteeism_reason_report_form').submit();
+        });
+
+        $('#btn-preview').click(function (){
             $(this).prop("disabled", true);
             $(this).html(
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
-
-            $("#tm_detail_absenteeism_reason_report_form").submit();
+            clicked = "PREVIEW";
+            $('#tm_detail_absenteeism_reason_report_form').submit();
         });
 
         if ($("#tm_detail_absenteeism_reason_report_form").length > 0) {
@@ -1162,9 +1210,14 @@
                 },
                 errorElement: 'span',
                 errorPlacement: function (error, element) {
-                    $("#btn-print-data").prop("disabled", false);
-                    $("#btn-print-data").html(
-                        '<i class="fa fa-floppy-o"></i> {{ __("tm_detail_absenteeism_reason_report.btn_print") }}'
+                    $('#btn-send-to').prop("disabled", false);
+                    $("#btn-send-to").html(
+                        '<i class="fa fa-print"></i> {{ __("tm_detail_absenteeism_reason_report.btn_send_to") }}'
+                    );
+
+                    $('#btn-preview').prop("disabled", false);
+                    $("#btn-preview").html(
+                        '<i class="fa fa-eye"></i> {{ __("tm_detail_absenteeism_reason_report.btn_preview") }}'
                     );
 
                     error.addClass('invalid-feedback');
@@ -1178,47 +1231,138 @@
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         }
                     });
-                    $.ajax({
-                        xhrFields: {
-                            responseType: 'blob',
-                        },
-                        url: "{{ url('time_management/detail_absenteeism_reason_report/print') }}",
-                        type: "POST",
-                        data: { 'field' : $('#tm_detail_absenteeism_reason_report_form').serialize(), 'field_name' : JSON.stringify(arrData) },
-                        success: function (result, status, xhr) {
-                            $("#btn-print-data").prop("disabled", false);
-                            $("#btn-print-data").html(
-                                '<i class="fa fa-print"></i> {{ __("tm_detail_absenteeism_reason_report.btn_print") }}'
-                            );
 
-                            var disposition = xhr.getResponseHeader(
-                                'content-disposition');
-                            var matches = /"([^"]*)"/.exec(disposition);
-                            var filename = (matches != null && matches[1] ? matches[1] :
-                                'noname_file.xlsx');
+                    if (clicked=="DOWNLOAD_XLS"){
+                        $.ajax({
+                            xhrFields: {
+                                responseType: 'blob',
+                            },
+                            url: "{{ url('time_management/detail_absenteeism_reason_report/excel/print') }}",
+                            type: "POST",
+                            data: { 
+                                'field' : $('#tm_detail_absenteeism_reason_report_form').serialize(), 
+                                'field_name' : JSON.stringify(arrData) 
+                            },
+                            success: function (result, status, xhr) {
+                                $('#btn-send-to').prop("disabled", false);
+                                $("#btn-send-to").html(
+                                    '<i class="fa fa-print"></i> {{ __("tm_detail_absenteeism_reason_report.btn_send_to") }}'
+                                );
 
-                            // The actual download
-                            var blob = new Blob([result], {
-                                type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-                            });
-                            var link = document.createElement('a');
-                            link.href = window.URL.createObjectURL(blob);
-                            link.download = filename;
+                                $('#btn-preview').prop("disabled", false);
+                                $("#btn-preview").html(
+                                    '<i class="fa fa-eye"></i> {{ __("tm_detail_absenteeism_reason_report.btn_preview") }}'
+                                );
 
-                            document.body.appendChild(link);
+                                var disposition = xhr.getResponseHeader(
+                                    'content-disposition');
+                                var matches = /"([^"]*)"/.exec(disposition);
+                                var filename = (matches != null && matches[1] ? matches[1] :
+                                    'noname_file.xlsx');
 
-                            link.click();
-                            document.body.removeChild(link);
-                        },
-                        error: function (response) {
-                            $("#btn-print-data").prop("disabled", false);
-                            $("#btn-print-data").html(
-                                '<i class="fa fa-print"></i> {{ __("tm_detail_absenteeism_reason_report.btn_print") }}'
-                            );
-                            $('#notification_error').modal('show');
-                            $('#message-notification-error').html(response);
-                        }
-                    });
+                                // The actual download
+                                var blob = new Blob([result], {
+                                    type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                                });
+                                var link = document.createElement('a');
+                                link.href = window.URL.createObjectURL(blob);
+                                link.download = filename;
+
+                                document.body.appendChild(link);
+
+                                link.click();
+                                document.body.removeChild(link);
+                            },
+                            error: function (response) {
+                                $('#btn-send-to').prop("disabled", false);
+                                $("#btn-send-to").html(
+                                    '<i class="fa fa-print"></i> {{ __("tm_detail_absenteeism_reason_report.btn_send_to") }}'
+                                );
+
+                                $('#btn-preview').prop("disabled", false);
+                                $("#btn-preview").html(
+                                    '<i class="fa fa-eye"></i> {{ __("tm_detail_absenteeism_reason_report.btn_preview") }}'
+                                );
+                                $('#notification_error').modal('show');
+                                $('#message-notification-error').html(response);
+                            }
+                        });
+                    }
+                    else {
+                        $.ajax({
+                            xhrFields: {
+                                responseType: 'blob',
+                            },
+                            url: "{{ url('time_management/detail_absenteeism_reason_report/print') }}",
+                            type: "POST",
+                            data: { 
+                                'field' : $('#tm_detail_absenteeism_reason_report_form').serialize(), 
+                                'field_name' : JSON.stringify(arrData) 
+                            },
+                            success: function(result, status, xhr){
+                                $('#btn-send-to').prop("disabled", false);
+                                $("#btn-send-to").html(
+                                    '<i class="fa fa-print"></i> {{ __("tm_detail_absenteeism_reason_report.btn_send_to") }}'
+                                );
+
+                                $('#btn-preview').prop("disabled", false);
+                                $("#btn-preview").html(
+                                    '<i class="fa fa-eye"></i> {{ __("tm_detail_absenteeism_reason_report.btn_preview") }}'
+                                );
+                                
+                                if(clicked == "DOWNLOAD_PDF"){
+                                    var disposition = xhr.getResponseHeader('content-disposition');
+                                    var matches = /"([^"]*)"/.exec(disposition);
+                                    var filename = (matches != null && matches[1] ? matches[1] : 'noname_file.xlsx');
+
+                                    var blob = new Blob([result], {
+                                        type: 'application/pdf'
+                                    });
+
+                                    var link = document.createElement('a');
+                                    link.href = window.URL.createObjectURL(blob);
+                                    link.download = filename;
+                                    
+                                    document.body.appendChild(link);
+
+                                    link.click();
+                                    document.body.removeChild(link);
+
+                                    clicked = "";
+                                }
+                                else if(clicked == "PREVIEW"){
+                                    var disposition = xhr.getResponseHeader('content-disposition');
+                                    var matches = /"([^"]*)"/.exec(disposition);
+                                    var filename = (matches != null && matches[1] ? matches[1] : 'noname_file.xlsx');
+
+                                    var blob = new Blob([result], {
+                                        type: 'application/pdf'
+                                    });
+
+                                    var link = document.createElement('a');
+                                    const url = URL.createObjectURL(blob);
+                                    link.href = window.open(url, "_blank");
+
+                                    document.body.appendChild(link);
+                                    document.body.removeChild(link);
+
+                                    clicked = "";
+                                }
+                            },
+                            error: function(response){
+                                $('#btn-send-to').prop("disabled", false);
+                                $('#btn-send-to').html(
+                                    '<i class="fa fa-print"></i> {{ __("tm_detail_absenteeism_reason_report.btn_send_to") }}'
+                                );
+                                $('#btn-preview').prop("disabled", false);
+                                $('#btn-preview').html(
+                                    '<i class="fa fa-eye"></i> {{ __("tm_detail_absenteeism_reason_report.btn_preview") }}'
+                                );
+                                $('#notification_error').modal('show');
+                                $('#message-notification-error').html(response);
+                            }
+                        });
+                    }
                 }
             })
         }

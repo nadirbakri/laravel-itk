@@ -13,7 +13,7 @@ use App;
 
 class MonthlyAbsenteeismDetailExport implements FromView, ShouldAutoSize
 {
-    public function __construct($employeeNoFrom, $employeeNoTo, $absentDateFrom, $absentDateTo, $includeResign, $changeHeader, $hourOut, $hourTo, $groupAuthorizeFrom, $groupAuthorizeTo, $position, $ranking, $location, $dataLevel)
+    public function __construct($employeeNoFrom, $employeeNoTo, $absentDateFrom, $absentDateTo, $includeResign, $changeHeader, $groupAuthorizeFrom, $groupAuthorizeTo, $position, $ranking, $location, $dataLevel)
     {
         $this->employeeNoFrom = $employeeNoFrom;
         $this->employeeNoTo = $employeeNoTo;
@@ -21,8 +21,6 @@ class MonthlyAbsenteeismDetailExport implements FromView, ShouldAutoSize
         $this->absentDateTo = $absentDateTo;
         $this->includeResign = $includeResign;
         $this->changeHeader = $changeHeader;
-        $this->hourOut = $hourOut;
-        $this->hourTo = $hourTo;
         $this->groupAuthorizeFrom = $groupAuthorizeFrom;
         $this->groupAuthorizeTo = $groupAuthorizeTo;
         $this->position = $position;
@@ -139,11 +137,11 @@ class MonthlyAbsenteeismDetailExport implements FromView, ShouldAutoSize
 
         if($arrResult->dataListSet == null){
             return view('time_management.tm_export_monthly_absenteeism_detail', [
-                'data' => [], 'changeHeader' => $this->changeHeader, 'hourFrom' => $this->hourOut, 'hourTo' => $this->hourTo, 'absentDateFrom' => $this->absentDateFrom, 'absentDateTo' => $this->absentDateTo, 'dataLevel' => $data_level
+                'data' => [], 'changeHeader' => $this->changeHeader, 'absentDateFrom' => $this->absentDateFrom, 'absentDateTo' => $this->absentDateTo, 'dataLevel' => $data_level
             ]);
         }else{
             return view('time_management.tm_export_monthly_absenteeism_detail', [
-                'data' => $arrResult->dataListSet, 'changeHeader' => $this->changeHeader, 'hourFrom' => $this->hourOut, 'hourTo' => $this->hourTo, 'absentDateFrom' => $this->absentDateFrom, 'absentDateTo' => $this->absentDateTo, 'dataLevel' => $data_level
+                'data' => $arrResult->dataListSet, 'changeHeader' => $this->changeHeader, 'absentDateFrom' => $this->absentDateFrom, 'absentDateTo' => $this->absentDateTo, 'dataLevel' => $data_level
             ]);
         }
     }

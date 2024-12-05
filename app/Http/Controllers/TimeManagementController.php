@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+ini_set('memory_limit', '4096M');
+set_time_limit(0);
+
 use App\Exports\UnpaidLeaveReportExport;
 use App\Exports\PostponeLeaveReportExport;
 use App\Exports\MonthlyLeaveReportExport;
@@ -36,6 +39,7 @@ use App;
 use File;
 use DataTables;
 use Excel;
+use PDF;
 
 class TimeManagementController extends Controller
 {
@@ -1405,6 +1409,84 @@ class TimeManagementController extends Controller
         return Excel::download(new DetailAbsenteeismReasonReportExport($arrData['employee_no_from'],$arrData['employee_no_to'], $arrData['absent_date_from'], $arrData['absent_date_to'], $arrData['group_authorize_from'], $arrData['group_authorize_to'], isset($arrData['include_resign']) ? (bool) $arrData['include_resign'] : false, $arrData['position'], $arrData['ranking'], $arrData['location'], $dataLevel, $arrData2), 'Detail Absenteeism Reason Report.xlsx');    
     }
 
+    public function printDetailAbsenteeismReasonReportPDF(Request $request){
+        try{
+            $dataLevel = [];
+
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $dataLevel = [];
+
+            parse_str($request->field, $arrData);
+            $arrData2 = json_decode($request->field_name);
+
+            if (intval($arrData['level_format']) > 0) {
+                for($i = 0; $i < $arrData['level_format']; $i++){
+                    $dataLevel[] = $arrData['level' . ($i+1)];
+                }
+            }
+
+            $param = [
+                'companyCode' => Session::get('companyCode'), 
+                'absentDateFrom' => $arrData['absent_date_from'],
+                'absentDateTo' => $arrData['absent_date_to'],
+                'languageID' => App::getLocale(), 
+                'sessionID' => 0, 
+                'sessionUserID' => Session::get('userID')
+            ];
+
+            if(!empty($dataLevel) && !is_null($dataLevel[0])){
+                foreach($dataLevel as $key => $value){
+                    $data_level_detail = [];
+                    foreach($dataLevel[$key] as $value2){
+                        $data_level_detail[] = $value2;
+                    }
+                    $data_level[] = [
+                        "levelType" => (string) ($key + 1),
+                        "levelCode" => $data_level_detail
+                    ];
+                }
+                $param['levelMaster'] = $data_level;
+            }
+
+            // dd($arrData2);
+
+            if(!empty($arrData2) && !is_null($arrData2[0])){
+                foreach($arrData2 as $key => $value){
+                    $data_field[] = $value->absentCode;
+                }
+                $param['absenCode'] = $data_field;
+            }
+
+            // dd(json_encode($param));
+
+            $response = $client->post(env('API_URL').'/mobile/MonthlyAbsenteeismDetailReport/getdailyabsenteeismdetailreasonreport', [
+                'body' => json_encode($param)
+            ]);            
+        } catch (RequestException $e){
+            $response = $e->getResponse();
+            // dd($response);
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        // dd($arrResult->dataListSet);
+
+        $pdf = PDF::loadView('time_management.tm_export_detail_absenteeism_reason_report', ['data' => $arrResult->dataListSet ? $arrResult->dataListSet : []])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
+        return $pdf->stream('Detail Absenteeism Reason Report.pdf');
+    }
+
     public function printDetailRateOvertimeReport(Request $request)
     {
         $dataLevel = [];
@@ -1427,8 +1509,6 @@ class TimeManagementController extends Controller
         parse_str($request->field, $arrData);
         // $arrData2 = json_decode($request->field_name);
 
-        // dd($arrData);
-
         if (intval($arrData['level_format']) > 0) {
             for($i = 0; $i < $arrData['level_format']; $i++){
                 $dataLevel[] = $arrData['level' . ($i+1)];
@@ -1437,7 +1517,73 @@ class TimeManagementController extends Controller
 
         // dd($dataLevel);
 
-        return Excel::download(new MonthlyAbsenteeismDetailExport($arrData['employee_no_from'], $arrData['employee_no_to'], $arrData['absent_date_from'], $arrData['absent_date_to'], isset($arrData['include_resign']) ? (bool) $arrData['include_resign'] : false, isset($arrData['change_header']) ? (bool) $arrData['change_header'] : false, $arrData['hour_out'], $arrData['hour_to'], $arrData['group_authorize_from'], $arrData['group_authorize_to'], $arrData['position'], $arrData['ranking'], $arrData['location'], $dataLevel), 'Monthly Absenteeism Detail.xlsx');
+        return Excel::download(new MonthlyAbsenteeismDetailExport($arrData['employee_no_from'], $arrData['employee_no_to'], $arrData['absent_date_from'], $arrData['absent_date_to'], isset($arrData['include_resign']) ? (bool) $arrData['include_resign'] : false, isset($arrData['change_header']) ? (bool) $arrData['change_header'] : false, $arrData['group_authorize_from'], $arrData['group_authorize_to'], $arrData['position'], $arrData['ranking'], $arrData['location'], $dataLevel), 'Monthly Absenteeism Detail.xlsx');
+    }
+
+    public function printMonthlyAbsenteeismDetailPDF(Request $request){
+        try{
+            $dataLevel = [];
+
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $dataLevel = [];
+
+            if (intval($request['level_format']) > 0) {
+                for($i = 0; $i < $request['level_format']; $i++){
+                    $dataLevel[] = $request['level' . ($i+1)];
+                }
+            }
+
+            $param = [
+                'companyCode' => Session::get('companyCode'), 
+                'absentDateFrom' => $request->absent_date_from,
+                'absentDateTo' => $request->absent_date_to,
+                'languageID' => App::getLocale(), 
+                'sessionID' => 0, 
+                'sessionUserID' => Session::get('userID')
+            ];
+
+            if(!empty($dataLevel) && !is_null($dataLevel[0])){
+                foreach($dataLevel as $key => $value){
+                    $data_level_detail = [];
+                    foreach($dataLevel[$key] as $value2){
+                        $data_level_detail[] = $value2;
+                    }
+                    $data_level[] = [
+                        "levelType" => (string) ($key + 1),
+                        "levelCode" => $data_level_detail
+                    ];
+                }
+                $param['levelMaster'] = $data_level;
+            }
+
+            // dd(json_encode($param));
+
+            $response = $client->post(env('API_URL').'/mobile/monthlyabsenteeismdetailreport/getmonthlyabsenteeismdetailreport', [
+                'body' => json_encode($param)
+            ]);            
+        } catch (RequestException $e){
+            $response = $e->getResponse();
+            // dd($response);
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        // dd($arrResult->dataListSet);
+
+        $pdf = PDF::loadView('time_management.tm_export_monthly_absenteeism_detail', ['data' => $arrResult->dataListSet ? $arrResult->dataListSet : [], 'absentDateFrom' => $param['absentDateFrom'], 'absentDateTo' => $param['absentDateTo'], 'dataLevel' => $data_level])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
+        return $pdf->stream('Monthly Absenteeism Detail.pdf');
     }
 
     public function printAbsenteeismOvertimeReport(Request $request)
