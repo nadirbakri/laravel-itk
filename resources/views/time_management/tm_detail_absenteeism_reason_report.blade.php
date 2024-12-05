@@ -162,7 +162,7 @@
                     <div class="col-6">
                         <div class="form-group">
                             <label for="selected_absent_code">* Selected Items</label>
-                            <textarea class="form-control" id="selected_absent_code" rows="15"></textarea>
+                            <textarea class="form-control" id="selected_absent_code" name="selected_absent_code" rows="15"></textarea>
                         </div>
                     </div>
                 </div>
@@ -305,7 +305,13 @@
             url: "{{ url('personnel/report/level/check') }}",
             type: "GET",
             success: function (response) {
-                $('#level_format').val(response.data[0].levelFormat);
+                let levelFormat = response.data[0].levelFormat;
+
+                let updatedLevelFormat = 0;
+                $('#level_format').val(updatedLevelFormat);
+
+                const previousValues = {};
+                
                 for (var i = 1; i <= response.data[0].levelFormat; i++) {
                     $('#div-level').append(
                         '<div class="col-6">' +
@@ -318,7 +324,27 @@
                     );
 
                     loadDataLevelCode('#level' + i, i);
-                    loadDataFirstLastAllLevel('#level' + i, i);
+                    // loadDataFirstLastAllLevel('#level' + i, i);
+
+                    previousValues[`level${i}`] = null;
+
+                    loadDataLevelCode('#level' + i, i);
+                    // loadDataFirstLastAllLevel('#level' + i, i);
+
+                    $(`#level${i}`).on('change', function () {
+                        const currentValues = $(this).val();
+                        const previous = previousValues[`level${i}`];
+
+                        if ((!previous || previous.length === 0) && currentValues && currentValues.length > 0) {
+                            updatedLevelFormat++;
+                        }
+                        else if (previous && previous.length > 0 && (!currentValues || currentValues.length === 0)) {
+                            updatedLevelFormat--;
+                        }
+
+                        previousValues[`level${i}`] = currentValues;
+                        $('#level_format').val(updatedLevelFormat);
+                    });
                 }
             },
             error: function (response) {
@@ -477,9 +503,12 @@
                 }
             } else  {
                 $row.addClass('selected');
-                data.push(data2);
+                if (!data.some(obj => obj.absentCode === data2.absentCode)) { 
+                    data.push(data2);
+                }
                 var all = $('#all_absent_code').get(0);
                 var selection = $('#selection_absent_code').get(0);
+
                 if(selection && selection.checked && ('checked' in selection) && ($('.chk-select:checked').length == $('.chk-select').length)){
                     all.checked = true;
                     selection.checked = false;
@@ -1098,25 +1127,31 @@
                     employee_no_to: {
                         required: true,
                     },
-                    group_authorize_from: {
+                    absent_date_from: {
                         required: true,
                     },
-                    group_authorize_to: {
+                    absent_date_to: {
                         required: true,
                     },
+                    selected_absent_code: {
+                        required: true
+                    }
                 },
                 messages: {
                     employee_no_from: {
-                        required: "{{ __('personel_employee_list.field_required') }}",
+                        required: "{{ __('tm_detail_absenteeism_reason_report.employee_no_from_required') }}",
                     },
                     employee_no_to: {
-                        required: "{{ __('personel_employee_list.field_required') }}",
+                        required: "{{ __('tm_detail_absenteeism_reason_report.employee_no_to_required') }}",
                     },
-                    group_authorize_from: {
-                        required: "{{ __('personel_employee_list.field_required') }}",
+                    absent_date_from: {
+                        required: "{{ __('tm_detail_absenteeism_reason_report.absent_date_from_required') }}",
                     },
-                    group_authorize_to: {
-                        required: "{{ __('personel_employee_list.field_required') }}",
+                    absent_date_to: {
+                        required: "{{ __('tm_detail_absenteeism_reason_report.absent_date_to_required') }}",
+                    },
+                    selected_absent_code: {
+                        required: "{{ __('tm_detail_absenteeism_reason_report.absent_code_required') }}",
                     },
                 },
                 highlight: function (element) {
@@ -1129,7 +1164,7 @@
                 errorPlacement: function (error, element) {
                     $("#btn-print-data").prop("disabled", false);
                     $("#btn-print-data").html(
-                        '<i class="fa fa-floppy-o"></i> {{ __("personel_employee_list.btn_print") }}'
+                        '<i class="fa fa-floppy-o"></i> {{ __("tm_detail_absenteeism_reason_report.btn_print") }}'
                     );
 
                     error.addClass('invalid-feedback');

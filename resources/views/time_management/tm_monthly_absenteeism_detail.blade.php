@@ -1328,8 +1328,6 @@
                         }
                     });
 
-                    console.log(clicked)
-
                     if (clicked=="DOWNLOAD_XLS"){
                         $.ajax({
                             xhrFields: {

@@ -74,12 +74,12 @@
 		<table style="width:100%;" class="table_detail">
 			<thead>
 				<tr>
-					<th style="text-align: center; font-weight: bold;">No</th>
-					<th style="text-align: center; font-weight: bold;">Employee No</th>
-					<th style="text-align: center; font-weight: bold;">Full Name</th>
+					<th style="text-align: center; font-weight: bold; border:1px solid #000">No</th>
+					<th style="text-align: center; font-weight: bold; border:1px solid #000">Employee No</th>
+					<th style="text-align: center; font-weight: bold; border:1px solid #000">Full Name</th>
 					@foreach($data[0] as $key => $value)
 						@if($key !== 'Full Name' && $key !== 'CompanyCode' && $key !== 'Company Name' && $key !== 'EmployeeNo')
-							<th style="text-align: center; font-weight: bold;">{{ ucwords(str_replace('_', ' ', $key)) }}</th>
+							<th style="text-align: center; font-weight: bold; border:1px solid #000">{{ ucwords(str_replace('_', ' ', $key)) }}</th>
 						@endif
 					@endforeach
 				</tr>
@@ -96,12 +96,12 @@
 				?>
 				@foreach($data as $index => $row)
 					<tr>
-						<td style="text-align: center">{{ $no++ }}</td>
-						<td>{{ $row->EmployeeNo }}</td>
-						<td>{{ $row->{'Full Name'} }}</td>
+						<td style="text-align: center; border:1px solid #000">{{ $no++ }}</td>
+						<td style="border:1px solid #000">{{ $row->EmployeeNo }}</td>
+						<td style="border:1px solid #000">{{ $row->{'Full Name'} }}</td>
 						@foreach($row as $key => $value)
 							@if($key !== 'Full Name' && $key !== 'CompanyCode' && $key !== 'Company Name' && $key !== 'EmployeeNo')
-								<td style="text-align: center;">{{ $value }}</td>
+								<td style="text-align: center; border:1px solid #000">{{ $value }}</td>
 								<?php $totals[$key] += $value; ?>
 							@endif
 						@endforeach
@@ -109,9 +109,9 @@
 				@endforeach
 
 				<tr>
-					<td colspan="3" style="text-align: center; font-weight: bold;">Total</td>
+					<td colspan="3" style="text-align: center; font-weight: bold; border:1px solid #000">Total</td>
 					@foreach($totals as $key => $total)
-						<td style="text-align: center; font-weight: bold;">{{ $total }}</td>
+						<td style="text-align: center; font-weight: bold; border:1px solid #000">{{ $total }}</td>
 					@endforeach
 				</tr>
 			</tbody>
