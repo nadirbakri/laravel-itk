@@ -55,7 +55,7 @@
             <td style="width:70%; vertical-align: top;">
                 <table style="width:100%; margin-top: 2%; border-collapse: collapse; font-family: 'Arial Bold', sans-serif;">
                     <tr>
-                        <th style="text-align: left; font-size: 18px; padding-bottom: 4px;">SLIP GAJI</th>
+                        <th style="text-align: left; font-size: 14px; padding-bottom: 4px;">SLIP GAJI</th>
                     </tr>
                 </table>
             </td>
@@ -65,15 +65,15 @@
                         <td style="text-align:right;">
                             @if($display_logo == "1")
 								@if($companyCode == 'IPN' || $companyCode == 'IPNJT')
-									<img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/pictures/logo_ipn.jpg'))) }}" style="margin-left: 100px; width: 205px; height: 55px; margin-bottom: 5%;" alt="Logo">
+									<img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/pictures/logo_ipn.jpg'))) }}" style="margin-left: 100px; width: 185px; height: 45px; margin-bottom: 5%;" alt="Logo">
 								@elseif($companyCode == 'IGT')
-									<img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/pictures/logo_igt.jpg'))) }}" style="margin-left: 100px; width: 95px; height: 105px" alt="Logo">
+									<img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/pictures/logo_igt.jpg'))) }}" style="margin-left: 100px; width: 75px; height: 85px" alt="Logo">
 								@elseif($companyCode == 'IVT')
-									<img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/pictures/logo_ivt.jpg'))) }}" style="margin-left: 100px; width: 195px; height: 55px; margin-bottom: 5%;" alt="Logo">
+									<img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/pictures/logo_ivt.jpg'))) }}" style="margin-left: 100px; width: 175px; height: 45px; margin-bottom: 5%;" alt="Logo">
 								@elseif($companyCode == 'UPM')
-									<img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/pictures/logo_upm.jpg'))) }}" style="margin-left: 100px; width: 90px; height: 90px" alt="Logo">
+									<img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/pictures/logo_upm.jpg'))) }}" style="margin-left: 100px; width: 75px; height: 75px" alt="Logo">
 								@else
-									<img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/pictures/logo_ipn.jpg'))) }}" style="margin-left: 100px; width: 205px; height: 55px; margin-bottom: 5%;" alt="Logo">
+									<img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/pictures/logo_ipn.jpg'))) }}" style="margin-left: 100px; width: 185px; height: 45px; margin-bottom: 5%;" alt="Logo">
 								@endif
                             @endif
 						</td>
@@ -82,9 +82,9 @@
             </td>
         </tr>
     </table>
-	<table style="width:95%; margin-left: 20px; margin-right: 20px; border-collapse: collapse; font-family: 'Arial Alternates', sans-serif;">
+	<table style="width:95%; margin-left: 20px; font-size: 10px; margin-right: 20px; border-collapse: collapse; font-family: 'Arial Alternates', sans-serif;">
 		<tr>
-			<td colspan="7" style="font-size: 15px;">{{ $value->namaPerusahaan }}</td>
+			<td colspan="7" style="font-size: 13px;">{{ $value->namaPerusahaan }}</td>
 		</tr>
         <tr>
 			<td width="10%">NO. URUT</td>
@@ -138,18 +138,18 @@
 	?>
 	<table class="no-page-break" style="width: 95%; margin-left: 20px; margin-right: 20px; border-collapse: collapse; font-family: 'Arial Alternates', sans-serif;">
 		<tr>
-			<th style="width: 33%; font-size: 14px; text-align: left; vertical-align: middle; padding: 10px 0; border-top: 1px solid #000;">
+			<th style="width: 33%; font-size: 12px; text-align: left; vertical-align: middle; padding: 10px 0; border-top: 1px solid #000;">
 				I. Allowance (Pendapatan)
 			</th>
-			<th style="width: 33%; font-size: 14px; text-align: left; vertical-align: middle; padding: 10px 0; border-top: 1px solid #000;">
+			<th style="width: 33%; font-size: 12px; text-align: left; vertical-align: middle; padding: 10px 0; border-top: 1px solid #000;">
 				III. Deduction (Potongan Karyawan)
 			</th>
-			<th style="width: 33%; font-size: 14px; text-align: left; vertical-align: middle; padding: 10px 0; border-top: 1px solid #000;">
+			<th style="width: 33%; font-size: 12px; text-align: left; vertical-align: middle; padding: 10px 0; border-top: 1px solid #000;">
 				IV. Company (Beban Perusahaan)
 			</th>
 		</tr>
 	</table>
-	<table class="table no-page-break" style="width:95%; margin-left: 20px; margin-right: 20px; font-size: 14px; padding-top: 0.7%; border-collapse: collapse; font-family: 'Arial Alternates', sans-serif;">
+	<table class="table no-page-break" style="width:95%; margin-left: 20px; margin-right: 20px; font-size: 10px; padding-top: 0.7%; border-collapse: collapse; font-family: 'Arial Alternates', sans-serif;">
     	<tr>
         	<td style="width:33%; vertical-align: top;">
 				<table style="width:100%; padding-bottom: 1%; border-collapse: collapse;">
@@ -168,7 +168,7 @@
 				<br>
 				<table style="width:100%; padding-bottom: 1%; border-collapse: collapse;">
 					<tr>
-						<th colspan="2" style="width: 70%; font-size: 14px; text-align: left; padding-top: 0.4%;">II. Benefit (Tunjangan Lain)</th>
+						<th colspan="2" style="width: 70%; font-size: 12px; text-align: left; padding-top: 0.4%;">II. Benefit (Tunjangan Lain)</th>
 					</tr>
 					<tr>
 						<th colspan="2">&nbsp;</th>
@@ -219,7 +219,7 @@
 		</tr>
 	</table>
 	<br>
-	<table class="table no-page-break" style="width:95%; margin-left: 20px; margin-right: 20px; font-size: 14px; border-collapse: collapse; font-family: 'Arial Alternates', sans-serif;">
+	<table class="table no-page-break" style="width:95%; margin-left: 20px; margin-right: 20px; font-size: 10px; border-collapse: collapse; font-family: 'Arial Alternates', sans-serif;">
     	<tr>
         	<td style="width:33%; vertical-align: top;">
 				<table style="width:100%; padding-bottom: 0.5%; border-collapse: collapse;">
