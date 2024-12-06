@@ -4668,6 +4668,14 @@ public function dataDetailReportFormatPY(Request $request)
 
                 $tempFile = fopen('php://temp', 'w+');
 
+                if(in_array(Session::get('companyCode'), ['IPN', 'IPNJT', 'UPM', 'IGT', 'IVT'])){
+                    $array = array_map(function ($row) {
+                        return array_map(function ($value) {
+                            return str_replace('"', '&quot;', $value);
+                        }, $row);
+                    }, $array);
+                }
+
                 foreach ($array as $row) {
                     $row = array_pad($row, count($csvHeader), '');
 
@@ -4675,7 +4683,12 @@ public function dataDetailReportFormatPY(Request $request)
                 }
 
                 rewind($tempFile);
+                
                 $csvContent = str_replace('"', '', stream_get_contents($tempFile));
+
+                if(in_array(Session::get('companyCode'), ['IPN', 'IPNJT', 'UPM', 'IGT', 'IVT'])){
+                    $csvContent = str_replace('&quot;', '"', $csvContent);
+                }
                 
                 fclose($tempFile);
 
