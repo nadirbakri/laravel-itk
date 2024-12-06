@@ -150,9 +150,17 @@
             $totalEmployee = 0;
         ?>
         @if($company == 'NMDI' || $company == 'CITROEN')
-        <?php
-            $level = $data[0]->departementGroup[0]->data[0]->companyName;
-        ?>
+        @for($i = 0; $i < count($data[0]->departementGroup); $i++)
+            <?php
+                $dataTable = $data[0]->departementGroup[$i];
+            ?>
+            @if(!empty($dataTable->data))
+            <?php
+                $level = $data[0]->departementGroup[$i]->data[0]->companyName;
+            ?>
+            @break;
+            @endif
+        @endfor
         <table style='width: 100%; font-size: 8px'>
             <tr>
                 <td style='width: 8%'><h1 style="font-weight: normal;">Pay Cycle</h1></td>
@@ -220,108 +228,108 @@
                     </tr>
                 </table>
                 @endif
-            <table style="width: 100%;" class="table table-bordered table-hover responsive table_detail">
-                <thead>
-                    <tr>
-                        @if(!empty($dataTable->data[0]->field))
-                            @foreach($dataTable->data[0]->field as $key_data => $dataRow)
-                                @if($loop->first)
-                                    <th style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7; font-size:{{ $dataRow->fontSize }}px !important;">No</th>
-                                @endif
-                                @if(!is_string($dataRow->value))
-                                    <?php
-                                        $totalKey = $dataRow->field . '_' . $key_data;
-                                        $total[$branch][$totalKey] = 0;
-                                    ?>
-                                @else
-                                    <?php
-                                        $totalKey = $dataRow->field . '_' . $key_data;
-                                        if($totalKey == 'EmployeeNo_0'){
-                                            $total[$branch][$totalKey] = count($dataTable->data);
-                                        }else{
-                                            $total[$branch][$totalKey] = '';
-                                        }
-                                    ?>
-                                @endif
-                                <th style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7; font-size:{{ $dataRow->fontSize }}px !important;">{{ $dataRow->tableName }}</th>
-                            @endforeach
-                        @endif
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php $fontSize = 0 ?>
-                    @foreach($dataTable->data as $key => $dataRow)
-                    <tr>
-                        @foreach($dataRow->field as $key2 => $dataRow2)
-                            <?php
-                                $fontSize = $dataRow2->fontSize;
-                                $alignment = "center";
-                                if($dataRow2->alignment == 1){
-                                    $alignment = "left";
-                                }else if($dataRow2->alignment == 2){
-                                    $alignment = "center";
-                                }else if($dataRow2->alignment == 3){
-                                    $alignment = "right";
-                                }
-                            ?>
-                            @if($loop->first)
-                                <td style="text-align:center; vertical-align:middle; border:1px solid #000; font-size:{{ $fontSize }}px !important;">{{ $key+1 }}</td>
-                            @endif
-                            @if(!is_string($dataRow2->value) && $dataRow2->dataFormat == "#,##0")
-                                <?php
-                                if(!empty($dataRow2->value)){
-                                    $totalKey = $dataRow2->field . '_' . $key2;
-                                    $total[$branch][$totalKey] += $dataRow2->value;
-                                }
-                                ?>
-                                <td style="text-align:{{ $alignment }}; border:1px solid #000; font-size:{{ $fontSize }}px !important;">{{ empty($dataRow2->value) ? number_format(0, 0, '.', ',') : number_format($dataRow2->value, 0, '.', ',') }}</td>
-                            @elseif(!is_string($dataRow2->value) && $dataRow2->dataFormat == "#,##0.00")
-                                <?php
-                                if(!empty($dataRow2->value)){
-                                    $totalKey = $dataRow2->field . '_' . $key2;
-                                    $total[$branch][$totalKey] += $dataRow2->value;
-                                }
-                                ?>
-                                <td style="text-align:{{ $alignment }}; border:1px solid #000; font-size:{{ $fontSize }}px !important;">{{ empty($dataRow2->value) ? number_format(0, 2, '.', ',') : number_format($dataRow2->value, 2, '.', ',') }}</td>
-                            @elseif($dataRow2->dataFormat == "dd/MM/yyyy")
-                                <td style="text-align:{{ $alignment }}; border:1px solid #000; font-size:{{ $fontSize }}px !important;">{{ empty($dataRow2->value) ? "" : date('d/m/Y', strtotime($dataRow2->value)) }}</td>
-                            @elseif($dataRow2->dataFormat == "dd MM yyyy")
-                                <td style="text-align:{{ $alignment }}; border:1px solid #000; font-size:{{ $fontSize }}px !important;">{{ empty($dataRow2->value) ? "" : date('d m Y', strtotime($dataRow2->value)) }}</td>
-                            @else
-                                <td style="text-align:{{ $alignment }}; border:1px solid #000; font-size:{{ $fontSize }}px !important;">{{ empty($dataRow2->value) ? "" : $dataRow2->value }}</td>
-                            @endif
-                        @endforeach
-                    </tr>
-                    @endforeach
-                    @if($grand_total)
+                <table style="width: 100%;" class="table table-bordered table-hover responsive table_detail">
+                    <thead>
                         <tr>
-                            @foreach($total[$branch] as $key => $totalValue)
-                                @if($loop->first)
-                                    <td style="background-color: yellow; text-align:center; border:1px solid #000; font-size:{{ $fontSize }}px !important; font-weight: bold;">
-                                        @if($company == 'NMDI' || $company == 'CITROEN')
-                                        Total per Cost Center
-                                        @else
-                                        Total {{ $branch }}
-                                        @endif
-                                    </td>
-                                @endif
+                            @if(!empty($dataTable->data[0]->field))
+                                @foreach($dataTable->data[0]->field as $key_data => $dataRow)
+                                    @if($loop->first)
+                                        <th style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7; font-size:{{ $dataRow->fontSize }}px !important;">No</th>
+                                    @endif
+                                    @if(!is_string($dataRow->value))
+                                        <?php
+                                            $totalKey = $dataRow->field . '_' . $key_data;
+                                            $total[$branch][$totalKey] = 0;
+                                        ?>
+                                    @else
+                                        <?php
+                                            $totalKey = $dataRow->field . '_' . $key_data;
+                                            if($totalKey == 'EmployeeNo_0'){
+                                                $total[$branch][$totalKey] = count($dataTable->data);
+                                            }else{
+                                                $total[$branch][$totalKey] = '';
+                                            }
+                                        ?>
+                                    @endif
+                                    <th style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7; font-size:{{ $dataRow->fontSize }}px !important;">{{ $dataRow->tableName }}</th>
+                                @endforeach
+                            @endif
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php $fontSize = 0 ?>
+                        @foreach($dataTable->data as $key => $dataRow)
+                        <tr>
+                            @foreach($dataRow->field as $key2 => $dataRow2)
                                 <?php
-                                    if(!is_string($totalValue)) {
-                                        $totalCost = number_format($totalValue, 0, ',', '.');
-                                    } else {
-                                        $totalCost = '';
+                                    $fontSize = $dataRow2->fontSize;
+                                    $alignment = "center";
+                                    if($dataRow2->alignment == 1){
+                                        $alignment = "left";
+                                    }else if($dataRow2->alignment == 2){
+                                        $alignment = "center";
+                                    }else if($dataRow2->alignment == 3){
+                                        $alignment = "right";
                                     }
                                 ?>
-                                @if($key == 'EmployeeNo_0')
-                                <td style="text-align:right; border:1px solid #000; font-size:{{ $fontSize }}px !important;">{{ $totalCost }}</td>
+                                @if($loop->first)
+                                    <td style="text-align:center; vertical-align:middle; border:1px solid #000; font-size:{{ $fontSize }}px !important;">{{ $key+1 }}</td>
+                                @endif
+                                @if(!is_string($dataRow2->value) && $dataRow2->dataFormat == "#,##0")
+                                    <?php
+                                    if(!empty($dataRow2->value)){
+                                        $totalKey = $dataRow2->field . '_' . $key2;
+                                        $total[$branch][$totalKey] += $dataRow2->value;
+                                    }
+                                    ?>
+                                    <td style="text-align:{{ $alignment }}; border:1px solid #000; font-size:{{ $fontSize }}px !important;">{{ empty($dataRow2->value) ? number_format(0, 0, '.', ',') : number_format($dataRow2->value, 0, '.', ',') }}</td>
+                                @elseif(!is_string($dataRow2->value) && $dataRow2->dataFormat == "#,##0.00")
+                                    <?php
+                                    if(!empty($dataRow2->value)){
+                                        $totalKey = $dataRow2->field . '_' . $key2;
+                                        $total[$branch][$totalKey] += $dataRow2->value;
+                                    }
+                                    ?>
+                                    <td style="text-align:{{ $alignment }}; border:1px solid #000; font-size:{{ $fontSize }}px !important;">{{ empty($dataRow2->value) ? number_format(0, 2, '.', ',') : number_format($dataRow2->value, 2, '.', ',') }}</td>
+                                @elseif($dataRow2->dataFormat == "dd/MM/yyyy")
+                                    <td style="text-align:{{ $alignment }}; border:1px solid #000; font-size:{{ $fontSize }}px !important;">{{ empty($dataRow2->value) ? "" : date('d/m/Y', strtotime($dataRow2->value)) }}</td>
+                                @elseif($dataRow2->dataFormat == "dd MM yyyy")
+                                    <td style="text-align:{{ $alignment }}; border:1px solid #000; font-size:{{ $fontSize }}px !important;">{{ empty($dataRow2->value) ? "" : date('d m Y', strtotime($dataRow2->value)) }}</td>
                                 @else
-                                <td style="text-align:right; border:1px solid #000; font-size:{{ $fontSize }}px !important;">{{ $totalCost }}</td>
+                                    <td style="text-align:{{ $alignment }}; border:1px solid #000; font-size:{{ $fontSize }}px !important;">{{ empty($dataRow2->value) ? "" : $dataRow2->value }}</td>
                                 @endif
                             @endforeach
                         </tr>
-                    @endif
-                </tbody>
-            </table>
+                        @endforeach
+                        @if($grand_total)
+                            <tr>
+                                @foreach($total[$branch] as $key => $totalValue)
+                                    @if($loop->first)
+                                        <td style="background-color: yellow; text-align:center; border:1px solid #000; font-size:{{ $fontSize }}px !important; font-weight: bold;">
+                                            @if($company == 'NMDI' || $company == 'CITROEN')
+                                            Total per Cost Center
+                                            @else
+                                            Total {{ $branch }}
+                                            @endif
+                                        </td>
+                                    @endif
+                                    <?php
+                                        if(!is_string($totalValue)) {
+                                            $totalCost = number_format($totalValue, 0, ',', '.');
+                                        } else {
+                                            $totalCost = '';
+                                        }
+                                    ?>
+                                    @if($key == 'EmployeeNo_0')
+                                    <td style="text-align:right; border:1px solid #000; font-size:{{ $fontSize }}px !important;">{{ $totalCost }}</td>
+                                    @else
+                                    <td style="text-align:right; border:1px solid #000; font-size:{{ $fontSize }}px !important;">{{ $totalCost }}</td>
+                                    @endif
+                                @endforeach
+                            </tr>
+                        @endif
+                    </tbody>
+                </table>
             @endif
         @endfor
         <br>
