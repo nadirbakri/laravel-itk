@@ -351,6 +351,7 @@
             </table>
             @endif
         @else
+            @if($company == 'SWG' || $company == 'XSYS' || $company == 'GRC')
             <table style="width: 100%; marginY: 2" class="table table-bordered table-hover responsive table_detail">
                 <thead>
                     <tr>
@@ -384,6 +385,7 @@
                     </tr>
                 </tbody>
             </table>
+            @endif
         @endif
     @elseif(count($data) > 0 && (count($data[0]->summary) > 0))
         @foreach($data[0]->summary as $no => $dataTable)            
