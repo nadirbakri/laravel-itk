@@ -18,6 +18,7 @@ return [
     'label_bank_code' => 'Kode Bank',
     'label_account_no' => 'No Rekening',
     'label_description' => 'Deskripsi',
+    'label_transfer_code' => 'Kode Transfer',
     'bank_code_required' => 'Kode Bank Harus Diisi',
     'account_no_required' => 'No Rekening Harus Diisi',
     'btn_save' => 'Simpan',

@@ -612,7 +612,7 @@
         $('#source_bank').on("select2:select", function (e) {
             var data = $('#source_bank').select2('data');
             $('#account_number').val(data[0].data.accountNo);
-            $('#transfer_code').val(data[0].data.description);
+            $('#transfer_code').val(data[0].data.transferCode);
             loadDataOutputFile(data[0].data.bankCode);
             $('#transfer_type_label').html('');
 

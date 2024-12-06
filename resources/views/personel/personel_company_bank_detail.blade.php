@@ -113,6 +113,13 @@
                                 placeholder="{{ __('personel_company_bank.label_description') }}">
                         </div>
                     </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="transfer_code">{{ __('personel_company_bank.label_transfer_code') }}</label>
+                            <input type="text" class="form-control" id="transfer_code" name="transfer_code"
+                                placeholder="{{ __('personel_company_bank.label_transfer_code') }}">
+                        </div>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-3">
@@ -207,6 +214,7 @@
             $('#bank_code').val("");
             $('#account_no').val("");
             $('#description').val("");
+            $('#transfer_code').val("");
             $('#bank_code').prop('readonly', false);
             // $('#account_no').prop('readonly', false);
         } else if (func == 'edit') {
@@ -216,6 +224,8 @@
             $('#account_no').val(htmlDecode("{{ isset($data[0]->accountNo) ? $data[0]->accountNo : '' }}"));
             $('#description').val(htmlDecode(
                 "{{ isset($data[0]->description) ? $data[0]->description : '' }}"));
+            $('#transfer_code').val(htmlDecode(
+                "{{ isset($data[0]->transferCode) ? $data[0]->transferCode : '' }}"));
             $('#bank_code').prop('readonly', true);
             // $('#account_no').prop('readonly', true);
         }

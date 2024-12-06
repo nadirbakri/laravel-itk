@@ -120,6 +120,7 @@
 						<th>Bank Code</th>
 						<th>Account No</th>
                         <th>Description</th>
+                        <th>Transfer Code</th>
 						<th>Record Status</th>
 					</tr>
 				</thead>
@@ -233,6 +234,7 @@
             {data: 'bankCode', name: 'bankCode'},
             {data: 'accountNo', name: 'accountNo'},
             {data: 'description', name: 'description'},
+            {data: 'transferCode', name: 'transferCode'},
             {data: 'recordStatus', name: 'recordStatus'}
         ],
         select: {
@@ -265,6 +267,7 @@
                 {data: 'bankCode', name: 'bankCode'},
                 {data: 'accountNo', name: 'accountNo'},
                 {data: 'description', name: 'description'},
+                {data: 'transferCode', name: 'transferCode'},
                 {data: 'recordStatus', name: 'recordStatus'}
             ],
             select: {

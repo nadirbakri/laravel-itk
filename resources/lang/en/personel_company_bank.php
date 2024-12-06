@@ -19,6 +19,7 @@ return [
     'label_bank_code' => 'Bank Code',
     'label_account_no' => 'Account No',
     'label_description' => 'Description',
+    'label_transfer_code' => 'Transfer Code',
     'bank_code_required' => 'Bank Code is Required',
     'account_no_required' => 'Account No is Required',
     'btn_save' => 'Save',

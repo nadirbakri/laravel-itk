@@ -6271,6 +6271,22 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
+            // dd(json_encode(
+            //     [
+            //         'recordStatus' => $request->func,
+            //         'companyCode' => Session::get('companyCode'),
+            //         'employeeNo' => $request->employeeNo,
+            //         'changeNo' => 0,
+            //         "changedDate" => date("Y-m-d\TH:i:s"),
+            //         "changedBy" => Session::get('userID'),
+            //         "sessionID" => 0,
+            //         'sessionUserID' => Session::get('userID'),
+            //         'logActionUserID' => Session::get('userID'),
+            //         'logActionUsername' => Session::get('userName'),
+            //         "languageID" => App::getLocale()
+            //     ]
+            //     ));
+
             $response = $client->put(env('API_URL') . '/personel/PeMaster/UpdateRecordStatus',
                 ['body' => json_encode(
                     [
@@ -7826,6 +7842,7 @@ class PersonelController extends Controller
                             'bankCode' => $request->bank_code,
                             'accountNo' => $request->account_no,
                             'description' => $request->description,
+                            'transferCode' => $request->transfer_code,
                             "changedNo" => 0,
                             "createdDate" => date("Y-m-d\TH:i:s"),
                             "createdBy" => Session::get('userID'),
@@ -7847,6 +7864,7 @@ class PersonelController extends Controller
                             'bankCode' => $request->bank_code,
                             'accountNo' => $request->account_no,
                             'description' => $request->description,
+                            'transferCode' => $request->transfer_code,
                             "changedDate" => date("Y-m-d\TH:i:s"),
                             "changedBy" => Session::get('userID'),
                             'userID' => Session::get('userID'),
