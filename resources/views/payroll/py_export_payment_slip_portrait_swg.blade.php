@@ -52,7 +52,15 @@
     <table class="table" style="width:100%; padding-left:2%; padding-right:2%; padding-bottom:1%;">
 		<tr>
             <td>
-                <!-- <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/pictures/logo_digima.png'))) }}" style="width: 105px; height: 85px" alt="Logo"> -->
+                @if($companyCode == 'SWG')
+                    <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/pictures/logo_swg.png'))) }}" style="width: 255px; height: 55px;" alt="Logo">
+                @elseif($companyCode == 'GRC')
+                    <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/pictures/logo_grc.png'))) }}" style="width: 255px; height: 55px;" alt="Logo">
+                @elseif($companyCode == 'XSYS')
+                    <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/pictures/logo_xsys.png'))) }}" style="width: 205px; height: 55px;" alt="Logo">
+                @else
+                    <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/pictures/logo_swg.png'))) }}" style="width: 255px; height: 55px;" alt="Logo">
+                @endif
             </td>
 		</tr>
 	</table>
