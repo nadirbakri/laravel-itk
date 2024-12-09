@@ -13,9 +13,9 @@ return [
     'label_field_chooser' => 'Pemilihan Bidang',
     'label_select_slip_code' => 'Pilih Kode Slip',
     'label_select_column_type' => 'Pilih Tipe Kolom',
-    
     'label_component' => 'Komponen',
     'label_field_label' => 'Label Bidang',
+    'btn_add_to_field_name' => 'Tambah Ke Nama Bidang',
     'btn_add' => 'Tambah',
     'btn_edit' => 'Ubah',
     'btn_remove' => 'Hapus',

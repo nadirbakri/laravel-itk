@@ -1102,7 +1102,7 @@
 
         $('#btn-add-to-formula').on('click', function () {
             var operator = $('input[name="operator"]:checked').val();
-            if(operator == 'none'){
+            if(operator == 'none' || typeof operator === 'undefined'){
                 operator = '';
             }
 

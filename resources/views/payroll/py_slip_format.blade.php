@@ -207,16 +207,6 @@
                                     </div>
                                     <input type="hidden" class="form-control" id="func_detail" name="func_detail">
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-6">
-                                    <div class="form-group">
-                                        <label
-                                            for="field_chooser">{{ __('payroll_slip_format.label_field_chooser') }}</label>
-                                        <span class="required">*</span>
-                                        <select class="form-control select2" id="field_chooser" name="field_chooser"></select>
-                                    </div>
-                                </div>
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label
@@ -224,6 +214,94 @@
                                         <span class="required">*</span>
                                         <input type="text" class="form-control" id="label_name" name="label_name"
                                             placeholder="{{ __('payroll_slip_format.label_label_name') }}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label
+                                            for="field_chooser">{{ __('payroll_slip_format.label_field_chooser') }}</label>
+                                        <select class="form-control select2" id="field_chooser" name="field_chooser"></select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-2">
+                                    <div class="form-group">
+                                        <label
+                                            for="operator">&nbsp;</label>
+                                        <div class="form-radio">
+                                            <input class="form-radio-input" type="radio" id="none_operator"
+                                                name="operator" value="none">
+                                            <label class="form-radio-label"
+                                                for="none_operator">None</label>
+                                        </div>
+                                    </div>
+                                </div> 
+                                <div class="col-2">
+                                    <div class="form-group">
+                                        <label
+                                            for="operator">&nbsp;</label>
+                                        <div class="form-radio">
+                                            <input class="form-radio-input" type="radio" id="plus_operator"
+                                                name="operator" value="+">
+                                            <label class="form-radio-label"
+                                                for="plus_operator">+</label>
+                                        </div>
+                                    </div>
+                                </div> 
+                                <div class="col-2">
+                                    <div class="form-group">
+                                        <label
+                                            for="operator">&nbsp;</label>
+                                        <div class="form-radio">
+                                            <input class="form-radio-input" type="radio" id="minus_operator"
+                                                name="operator" value="-">
+                                            <label class="form-radio-label"
+                                                for="minus_operator">-</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="form-group">
+                                        <label
+                                            for="operator">&nbsp;</label>
+                                        <div class="form-radio">
+                                            <input class="form-radio-input" type="radio" id="times_operator"
+                                                name="operator" value="*">
+                                            <label class="form-radio-label"
+                                                for="times_operator">*</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="form-group">
+                                        <label
+                                            for="operator">&nbsp;</label>
+                                        <div class="form-radio">
+                                            <input class="form-radio-input" type="radio" id="divide_operator"
+                                                name="operator" value="/">
+                                            <label class="form-radio-label"
+                                                for="divide_operator">/</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" style="margin: 0;">
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <label for="btn-add-to-field">&nbsp;</label>
+                                        <button type="button" class="btn btn-process" name="btn-add-to-field" id="btn-add-to-field">
+                                            {{ __('payroll_slip_format.btn_add_to_field_name') }}
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-1"></div>
+                                <div class="col-7">
+                                    <div class="form-group">
+                                        <label for="field_name">{{ __('payroll_slip_format.label_field_name') }}</label>
+                                        <textarea class="form-control" id="field_name" name="field_name" rows="5"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -461,6 +539,8 @@
             $('#func_detail').val('new');
             $('#field_chooser').val(null).trigger('change');
             $('#label_name').val('');
+            $('input[name="operator"]').prop('checked', false);
+            $('#field_name').val('');
         });
 
         $("#btn-edit").on('click', function() {
@@ -470,23 +550,28 @@
                 $('#modal_add_edit_slip_format').modal('show');
                 $('#func_detail').val('edit');
                 $('#no').val((data[0].seqNo !== null) ? data[0].seqNo : '');
+                $('#field_chooser').val(null).trigger('change');
                 $('#label_name').val((data[0].header !== null) ? data[0].header : '');
-
-                var option = new Option(data[0].columnName, data[0].columnName, true, true);
-
-                $('#field_chooser').append(option).trigger('change');
-
-                $('#field_chooser').trigger({
-                    type: 'select2:select',
-                    params: {
-                        id: data[0].columnName,
-                        text: data[0].columnName,
-                        data: data
-                    }
-                });
+                $('input[name="operator"]').prop('checked', false);
+                $('#field_name').val((data[0].columnName !== null) ? data[0].columnName : '');
             }else{
                 $('#notification_error').modal('show');
                 $('#message-notification-error').html('No Data Selected');
+            }
+        });
+
+        $('#btn-add-to-field').on('click', function () {
+            var operator = $('input[name="operator"]:checked').val();
+            var fieldChooser = $('#field_chooser').val();
+            console.log(operator);
+            if(operator == 'none' || typeof operator === 'undefined'){
+                operator = '';
+            }
+
+            if (typeof fieldChooser !== 'undefined' && fieldChooser !== null) {
+                $('#field_name').val($('#field_name').val() + fieldChooser + operator);
+            } else {
+                $('#field_name').val($('#field_name').val() + operator);
             }
         });
 
@@ -516,7 +601,7 @@
             if(func_detail == "new"){
                 arraySlipFormat.push({
                     "seqNo": $("#no").val() ? $("#no").val() : "",
-                    "columnName": $("#field_chooser").val(),
+                    "columnName": $("#field_name").val(),
                     "header": $("#label_name").val()
                 });
             }else{
@@ -525,7 +610,7 @@
                     var index = arraySlipFormat.findIndex(x => x.seqNo == data[i].seqNo && x.columnName == data[i].columnName);
                     arraySlipFormat[index] = {
                         "seqNo": $("#no").val() ? $("#no").val() : "",
-                        "columnName": $("#field_chooser").val(),
+                        "columnName": $("#field_name").val(),
                         "header": $("#label_name").val()
                     };
                 }

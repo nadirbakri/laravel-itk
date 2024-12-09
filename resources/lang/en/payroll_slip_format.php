@@ -13,9 +13,9 @@ return [
     'label_field_chooser' => 'Field Chooser',
     'label_select_slip_code' => 'Select Slip Code',
     'label_select_column_type' => 'Select Column Type',
-    
     'label_component' => 'Component',
     'label_field_label' => 'Field Label',
+    'btn_add_to_field_name' => 'Add To Field Name',
     'btn_add' => 'Add',
     'btn_edit' => 'Edit',
     'btn_remove' => 'Remove',
