@@ -1660,9 +1660,10 @@
                 );
 
                 var previewFormulaValue = $("#preview_formula").val();
+                var addFormulaChecked = $('#add_formula').is(":checked");
 
                 if($("#record_function_det").val() == "New"){
-                    if (previewFormulaValue !== null && previewFormulaValue !== '') {
+                    if ((previewFormulaValue !== null && previewFormulaValue !== '') && addFormulaChecked) {
                         arrayReportFormatFormula.push({
                             "columnNo": $("#column_no").val() ? parseInt($("#column_no").val()) - 1 : "",
                             "tableName": $("#table_name_detail").val(),
@@ -1690,7 +1691,7 @@
                     var indexToEditFormula = getIndexByColumnNoFormula(parseInt($("#column_no_edit").val()) - 1);
 
                     if (indexToEdit !== -1 || indexToEditFormula !== -1) {
-                        if (previewFormulaValue !== null && previewFormulaValue !== '') {
+                        if ((previewFormulaValue !== null && previewFormulaValue !== '') && addFormulaChecked) {
                             if (arrayReportFormatFormula.hasOwnProperty(indexToEditFormula) && arrayReportFormatFormula[indexToEditFormula].hasOwnProperty('columnNo')) {
                                 arrayReportFormatFormula[indexToEditFormula].columnNo = parseInt($("#column_no").val()) - 1;
                                 arrayReportFormatFormula[indexToEditFormula].tableName = $("#table_name_detail").val();
@@ -1715,14 +1716,29 @@
                                 arrayReportFormatDetail.splice(indexToEdit, 1);
                             }
                         }else{
-                            arrayReportFormatDetail[indexToEdit].columnNo = parseInt($("#column_no").val()) - 1;
-                            arrayReportFormatDetail[indexToEdit].tableName = $("#table_name_detail").val();
-                            arrayReportFormatDetail[indexToEdit].fieldName = ($("#table_name_detail").val() == 'GmLevel') ? $("#field_name_detail").val() + "-" + $("input[name='field_name_type_detail']:checked").val() : $("#field_name_detail").val();
-                            arrayReportFormatDetail[indexToEdit].columnHeader = $("#column_header").val();
-                            arrayReportFormatDetail[indexToEdit].alignment = $("#alignment").val();
-                            arrayReportFormatDetail[indexToEdit].dataFormat = $("#data_format").val();
-                            arrayReportFormatDetail[indexToEdit].display = ($("#display").is(":checked") ? $("#display").val() : false);
-                            arrayReportFormatDetail[indexToEdit].fieldFormula = $("#preview_formula").val();
+                            if (arrayReportFormatDetail.hasOwnProperty(indexToEdit) && arrayReportFormatDetail[indexToEdit].hasOwnProperty('columnNo')) {
+                                arrayReportFormatDetail[indexToEdit].columnNo = parseInt($("#column_no").val()) - 1;
+                                arrayReportFormatDetail[indexToEdit].tableName = $("#table_name_detail").val();
+                                arrayReportFormatDetail[indexToEdit].fieldName = ($("#table_name_detail").val() == 'GmLevel') ? $("#field_name_detail").val() + "-" + $("input[name='field_name_type_detail']:checked").val() : $("#field_name_detail").val();
+                                arrayReportFormatDetail[indexToEdit].columnHeader = $("#column_header").val();
+                                arrayReportFormatDetail[indexToEdit].alignment = $("#alignment").val();
+                                arrayReportFormatDetail[indexToEdit].dataFormat = $("#data_format").val();
+                                arrayReportFormatDetail[indexToEdit].display = ($("#display").is(":checked") ? $("#display").val() : false);
+                                arrayReportFormatDetail[indexToEdit].fieldFormula = $("#preview_formula").val();
+                            } else {
+                                arrayReportFormatDetail.push({
+                                    "columnNo": $("#column_no").val() ? parseInt($("#column_no").val()) - 1 : "",
+                                    "tableName": $("#table_name_detail").val(),
+                                    "fieldName": ($("#table_name_detail").val() == 'GmLevel') ? $("#field_name_detail").val() + "-" + $("input[name='field_name_type_detail']:checked").val() : $("#field_name_detail").val(),
+                                    "columnHeader": $("#column_header").val(),
+                                    "alignment": $("#alignment").val(),
+                                    "dataFormat": $("#data_format").val(),
+                                    "display": ($("#display").is(":checked") ? $("#display").val() : false),
+                                    "fieldFormula": ""
+                                });
+
+                                arrayReportFormatFormula.splice(indexToEditFormula, 1);
+                            }
                         }
                     } else {
                         alert("Object with columnNo value " + $("#column_no_edit").val() + " not found.");
