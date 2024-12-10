@@ -383,7 +383,7 @@
         function load_data_absent_code() {
             table = $('#detail_absenteeism_report_table').DataTable({
                 processing: true,
-                serverSide: true,
+                // serverSide: true,
                 orderCellsTop: true,
                 ajax: "{{ url('time_management/absent_code/table') }}",
                 error: function(jqXHR, ajaxOptions, thrownError) {
@@ -467,12 +467,14 @@
             textarea.value = result.join("\n");
         });
 
-        $('#detail_absenteeism_report_table tbody').on('click', '.chk-select', function () {     
+        $('#detail_absenteeism_report_table tbody').on('click', '.chk-select', function (e) {     
             var data = table.rows('.selected').data().toArray();
             var data2 = table.row(this.closest('tr')).data();
+            var $row = $(this).closest('tr');
             var result = [];
             
             if(!this.checked){
+                $row.removeClass('selected');
                 data = data.filter(obj => obj.absentCode !== data2.absentCode);
                 var all = $('#all_absent_code').get(0);
                 var selection = $('#selection_absent_code').get(0);
@@ -481,9 +483,15 @@
                     selection.checked = true;
                 }
             } else  {
-                data.push(data2);
+                $row.addClass('selected');
+                if (!data.some(obj => obj.absentCode === data2.absentCode)) { 
+                    data.push(data2);
+                }
+                var all = $('#all_absent_code').get(0);
                 var selection = $('#selection_absent_code').get(0);
-                if(selection && selection.checked && ('checked' in selection)){
+
+                if(selection && selection.checked && ('checked' in selection) && ($('.chk-select:checked').length == $('.chk-select').length)){
+                    all.checked = true;
                     selection.checked = false;
                 }
             }
@@ -494,6 +502,8 @@
 
             var textarea = document.getElementById("selected_absent_code");
             textarea.value = result.join("\n");
+
+            e.stopPropagation();
         });
 
         // $('#detail_absenteeism_report_table tbody').on("change", 'input[type="checkbox"]', function(){

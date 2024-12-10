@@ -419,7 +419,7 @@
         function load_data_absent_code() {
             table = $('#detail_absenteeism_reason_report_table').DataTable({
                 processing: true,
-                serverSide: true,
+                // serverSide: true,
                 orderCellsTop: true,
                 ajax: "{{ url('time_management/absent_code/table') }}",
                 error: function(jqXHR, ajaxOptions, thrownError) {
