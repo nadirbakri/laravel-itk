@@ -835,7 +835,7 @@ class TransactionController extends Controller
                         'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
                         'exportMenu' => false,
                         'isWeb' => true,
-                        'processDate'=> Carbon::parse($request->processDate)->format('Y-m-d'),
+                        'processDate'=> isset($request->processDate) ? Carbon::parse($request->processDate)->format('Y-m-d') : null,
                         'type' =>  $request->type,
                         'businessUnit'=> $request->businessUnit,
                         'employeeNo'=> $request->employeeNo,
@@ -860,6 +860,8 @@ class TransactionController extends Controller
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
+
+        // dd($arrResult->dataListSet);
 
         if($arrResult->dataListSet == null){
             // return Datatables::of([])->make(true);
