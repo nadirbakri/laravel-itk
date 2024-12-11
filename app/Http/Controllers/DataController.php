@@ -1332,33 +1332,33 @@ class DataController extends Controller
 	    }
 
 	    $arrResult = json_decode($response->getBody()->getContents());
+		
 
 		$arrPropinsi = [];
 		if($arrResult->dataListSet != null){
-			foreach($arrResult->dataListSet as $key => $val) {
-				if(!in_array($val->propinsi, $arrPropinsi)) {
-					$arrPropinsi[] = $val->propinsi;
-				}else{
-					array_splice($arrResult->dataListSet, $key);
+			foreach($arrResult->dataListSet as $val) {
+				if(!array_key_exists($val->propinsi, $arrPropinsi)) {
+					$arrPropinsi[$val->propinsi] = [
+						'zipCode' => $val->zipCode,
+						'propinsi' => $val->propinsi,
+					];
 				}
 			}
 		}
 
-		// var_dump($arrResult->dataListSet);
+		// Reset keys untuk membuat array numerik
+		$arrPropinsi = array_values($arrPropinsi);
 
-		// $resultArr = array_values(array_filter($arrResult->dataListSet, function($obj){
-		// 	if(in_array($obj->propinsi, $arrPropinsi)) {
-		// 		return false;
-		// 	}
-		// 	$arrPropinsi[] = $obj->propinsi;
-		// 	return true;
-		// }));
+		// Urutkan berdasarkan abjad
+		usort($arrPropinsi, function ($a, $b) {
+			return strcmp($a['propinsi'], $b['propinsi']);
+		});
 
 	    if($search == ''){
-	    	$data = $arrResult->dataListSet;
+	    	$data = $arrPropinsi;
 	    }else{
 	    	$data = array_filter(
-	    		$arrResult->dataListSet,
+	    		$arrPropinsi,
 	    		function($value) use ($search){
 	    			if(preg_match('/' . $search . '/i', $value->propinsi)){
 	    				return preg_match('/' . $search . '/i', $value->propinsi);
@@ -1442,21 +1442,30 @@ class DataController extends Controller
 	    $arrResult = json_decode($response->getBody()->getContents());
 
 		$arrKabupaten = [];
-		if($arrResult->dataListSet != null){
-			foreach($arrResult->dataListSet as $key => $val) {
-				if(!in_array($val->kabupaten, $arrKabupaten)) {
-					$arrKabupaten[] = $val->kabupaten;
-				}else{
-					array_splice($arrResult->dataListSet, $key);
+		if ($arrResult->dataListSet != null) {
+			foreach ($arrResult->dataListSet as $val) {
+				if (!array_key_exists($val->kabupaten, $arrKabupaten)) {
+					$arrKabupaten[$val->kabupaten] = [
+						'zipCode' => $val->zipCode,
+						'kabupaten' => $val->kabupaten,
+					];
 				}
 			}
 		}
 
+		// Reset keys untuk membuat array numerik
+		$arrKabupaten = array_values($arrKabupaten);
+
+		// Urutkan berdasarkan abjad
+		usort($arrKabupaten, function ($a, $b) {
+			return strcmp($a['kabupaten'], $b['kabupaten']);
+		});
+
 	    if($search == ''){
-	    	$data = $arrResult->dataListSet;
+	    	$data = $arrKabupaten;
 	    }else{
 	    	$data = array_filter(
-	    		$arrResult->dataListSet,
+	    		$arrKabupaten,
 	    		function($value) use ($search){
 	    			if(preg_match('/' . $search . '/i', $value->kabupaten)){
 	    				return preg_match('/' . $search . '/i', $value->kabupaten);
