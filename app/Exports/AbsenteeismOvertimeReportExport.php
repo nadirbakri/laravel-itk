@@ -13,7 +13,7 @@ use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Events\AfterSheet;
 
-class AbsenteeismOvertimeReportExport implements FromView, ShouldAutoSize, WithEvents
+class AbsenteeismOvertimeReportExport implements FromView, ShouldAutoSize
 {
     public function __construct($employeeNoFrom, $employeeNoTo, $absentDateFrom, $absentDateTo, $groupAuthorizeFrom, $groupAuthorizeTo, $reportType, $includeResign, $position, $ranking, $location, $dataLevel)
     {
@@ -39,75 +39,87 @@ class AbsenteeismOvertimeReportExport implements FromView, ShouldAutoSize, WithE
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $param = [ 
-                'companyCode' => Session::get('companyCode'), 
-                'languageID' => App::getLocale(), 
-                'sessionID' => 0, 
-                'sessionUserID' => Session::get('userID'),
-                'incResign' => $this->includeResign
-            ];
+            if($this->reportType == "overtime"){
+                $viewFile = 'time_management.tm_export_absenteeism_overtime_report';
 
-            if(!empty($this->employeeNoFrom) || !empty($this->employeeNoTo)){
-                $param['employeeNoFrom'] = $this->employeeNoFrom;
-                $param['employeeNoTo'] = $this->employeeNoTo;
-            }
+                $param = [ 
+                    'companyCode' => Session::get('companyCode')
+                ];
 
-            if(!empty($this->absentDateFrom) || !empty($this->absentDateTo)){
-                $param['absenDateFrom'] = $this->absentDateFrom;
-                $param['absenDateTo'] = $this->absentDateTo;
-            }
-
-            if(!empty($this->groupAuthorizeFrom) || !empty($this->groupAuthorizeTo)){
-                $param['groupAuthorizeFrom'] = $this->groupAuthorizeFrom;
-                $param['groupAuthorizeTo'] = $this->groupAuthorizeTo;
-            }
-
-            if(!empty($request->position) && !is_null($request->position[0])){
-                foreach($request->position as $value){
-                    $data_position[] = $value;
+                if(!empty($this->absentDateFrom) || !empty($this->absentDateTo)){
+                    $param['overtimeDateFrom'] = $this->absentDateFrom;
+                    $param['overtimeDateTo'] = $this->absentDateTo;
                 }
-                $param['position'] = $data_position;
-            }
 
-            if(!empty($request->location) && !is_null($request->location[0])){
-                foreach($request->location as $value){
-                    $data_location[] = $value;
+                $response = $client->post(env('API_URL') . '/mobile/TmOvertime/GetOvertimeReport',
+                    ['body' => json_encode($param)]
+                );
+            }else{
+                $viewFile = 'time_management.tm_export_absenteeism_absent_report';
+
+                $param = [ 
+                    'companyCode' => Session::get('companyCode'), 
+                    'languageID' => App::getLocale(), 
+                    'sessionID' => 0, 
+                    'sessionUserID' => Session::get('userID'),
+                    'incResign' => $this->includeResign
+                ];
+
+                if(!empty($this->employeeNoFrom) || !empty($this->employeeNoTo)){
+                    $param['employeeNoFrom'] = $this->employeeNoFrom;
+                    $param['employeeNoTo'] = $this->employeeNoTo;
                 }
-                $param['location'] = $data_location;
-            }
 
-            if(!empty($request->ranking) && !is_null($request->ranking[0])){
-                foreach($request->ranking as $value){
-                    $data_ranking[] = $value;
+                if(!empty($this->absentDateFrom) || !empty($this->absentDateTo)){
+                    $param['absenDateFrom'] = $this->absentDateFrom;
+                    $param['absenDateTo'] = $this->absentDateTo;
                 }
-                $param['ranking'] = $data_ranking;
-            }
 
-            if(!empty($this->dataLevel) && !is_null($this->dataLevel[0])){
-                foreach($this->dataLevel as $key => $value){
-                    $data_level_detail = [];
-                    foreach($this->dataLevel[$key] as $value2){
-                        $data_level_detail[] = $value2;
+                if(!empty($this->groupAuthorizeFrom) || !empty($this->groupAuthorizeTo)){
+                    $param['groupAuthorizeFrom'] = $this->groupAuthorizeFrom;
+                    $param['groupAuthorizeTo'] = $this->groupAuthorizeTo;
+                }
+
+                if(!empty($request->position) && !is_null($request->position[0])){
+                    foreach($request->position as $value){
+                        $data_position[] = $value;
                     }
-                    $data_level[] = [
-                        "levelType" => (string) ($key + 1),
-                        "levelCode" => $data_level_detail
-                    ];
+                    $param['position'] = $data_position;
                 }
-                $param['levelMaster'] = $data_level;
-            }
 
-            // dd(json_encode($param));
+                if(!empty($request->location) && !is_null($request->location[0])){
+                    foreach($request->location as $value){
+                        $data_location[] = $value;
+                    }
+                    $param['location'] = $data_location;
+                }
 
-            if($this->reportType == "absent"){
+                if(!empty($request->ranking) && !is_null($request->ranking[0])){
+                    foreach($request->ranking as $value){
+                        $data_ranking[] = $value;
+                    }
+                    $param['ranking'] = $data_ranking;
+                }
+
+                if(!empty($this->dataLevel) && !is_null($this->dataLevel[0])){
+                    foreach($this->dataLevel as $key => $value){
+                        $data_level_detail = [];
+                        foreach($this->dataLevel[$key] as $value2){
+                            $data_level_detail[] = $value2;
+                        }
+                        $data_level[] = [
+                            "levelType" => (string) ($key + 1),
+                            "levelCode" => $data_level_detail
+                        ];
+                    }
+                    $param['levelMaster'] = $data_level;
+                }
+
+                // dd(json_encode($param));
+            
                 $response = $client->post(env('API_URL') . '/absentovertimereport/getabsenteeismreport',
-                ['body' => json_encode($param)]
-            );
-            }
-            else{
-                $response = $client->post(env('API_URL') . '/absentovertimereport/getovertimereport',
-                ['body' => json_encode($param)]
-            );
+                    ['body' => json_encode($param)]
+                );
             }
         } catch (RequestException $e) {
             $response = $e->getResponse();
@@ -123,29 +135,16 @@ class AbsenteeismOvertimeReportExport implements FromView, ShouldAutoSize, WithE
 
         $arrResult = json_decode($response->getBody()->getContents());
 
-        // var_dump($arrResult->dataListSet);
+        // dd($arrResult->dataListSet);
 
         if($arrResult->dataListSet == null){
-            return view('time_management.tm_export_absenteeism_absent_report', [
+            return view($viewFile, [
                 'data' => []
             ]); 
         }else{
-            return view('time_management.tm_export_absenteeism_absent_report', [
+            return view($viewFile, [
                 'data' => $arrResult->dataListSet
             ]);
         }
-    }
-    
-    public function registerEvents(): array
-    {
-        return [
-            AfterSheet::class    => function(AfterSheet $event) {
-   
-                $event->sheet->getDelegate()->getStyle('A1:BN500')
-                                ->getAlignment()
-                                ->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-   
-            },
-        ];
     }
 }
