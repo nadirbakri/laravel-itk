@@ -151,12 +151,19 @@
                             <select class="form-control select2" id="parent_id" name="parent_id"></select>
                         </div>
                     </div>
-                </div>
-                <div class="row">
                     <div class="col-6">
                         <div class="form-group">
                             <label for="module_id">{{ __('utilities_menu_master_web.label_module_id') }}</label>
                             <select class="form-control select2" id="module_id" name="module_id"></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="order_line">{{ __('utilities_menu_master_web.label_order_line') }}</label>
+                            <input type="number" class="form-control" id="order_line" name="order_line"
+                                placeholder="{{ __('utilities_menu_master_web.label_order_line') }}">
                         </div>
                     </div>
                     <div class="col-6">
@@ -261,12 +268,14 @@
             $('#check_have_child').prop('checked', false);
             $('#parent_id').val(null).trigger('change');
             $('#module_id').val(null).trigger('change');
+            $('#order_line').val("");
             $('#icon_url').val("");
         } else if (func == 'edit') {
             $('#record_function').val("Edit");
             $('#menu_id').val("{{ isset($data[0]->menuID) ? $data[0]->menuID : '' }}");
             $('#menu_name').val("{{ isset($data[0]->menuName) ? $data[0]->menuName : '' }}");
             $('#page_url').val("{{ isset($data[0]->pageURL) ? $data[0]->pageURL : '' }}");
+            $('#order_line').val("{{ isset($data[0]->orderLine) ? $data[0]->orderLine : '' }}");
             $('#icon_url').val("{{ isset($data[0]->iconURL) ? $data[0]->iconURL : '' }}");
             if (typeof arrData[0].isHaveChild !== 'undefined' && arrData[0].isHaveChild == "1") {
                 $('#check_have_child').prop('checked', true);

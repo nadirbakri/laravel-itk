@@ -20,6 +20,7 @@ return [
     'label_parent_id' => 'ID Induk',
     'label_module_id' => 'ID Modul',
     'label_icon_url' => 'URL Ikon',
+    'label_order_line' => 'Urutan Baris',
     'menu_name_required' => 'Nama Menu Harus Diisi',
     'page_url_required' => 'URL Halaman Harus Diisi',
     'module_id_required' => 'ID Modul Harus Diisi',

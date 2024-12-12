@@ -20,6 +20,7 @@ return [
     'label_parent_id' => 'Parent ID',
     'label_module_id' => 'Module ID',
     'label_icon_url' => 'Icon URL',
+    'label_order_line' => 'Order Line',
     'menu_name_required' => 'Menu Name is Required',
     'page_url_required' => 'Page URL is Required',
     'module_id_required' => 'Module ID is Required',

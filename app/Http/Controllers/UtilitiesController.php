@@ -2586,6 +2586,7 @@ class UtilitiesController extends Controller
                 "isHaveChild" => isset($request->check_have_child) ? $request->check_have_child : "0",
                 "parentID" => (int) $request->parent_id,
                 "moduleID" => $request->module_id,
+                "orderLine" => (int) $request->order_line,
                 "iconURL" => $request->icon_url,
                 "changedNo" => 0,
                 "createdDate" => date("Y-m-d\TH:i:s"),
