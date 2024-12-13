@@ -169,7 +169,7 @@
             </td>
             <td width="20%" colspan="6" style="font-size: 10px; font-weight: 700;">9. KODE NEGARA DOMISILI</td>
             <td width="3%" style="font-size: 10px; font-weight: 700; ">:</td>
-            <td width="17%" style="font-size: 10px; font-weight: 700; border-bottom: 1px solid #000;">{{ $value->nationalityCode }}</td>
+            <td width="17%" style="font-size: 10px; font-weight: 700; border-bottom: 1px solid #000;">{{ ($value->flagIsExpat) ? $value->nationalityCode : "" }}</td>
         </tr>
 	</table>
     <div style="font-size: 11px; font-weight: 700;">B. RINCIAN PENGHASILAN DAN PERHITUNGAN PPh PASAL 21</div>
