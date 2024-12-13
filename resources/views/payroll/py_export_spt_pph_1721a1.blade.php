@@ -8,7 +8,7 @@
 	<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet"> -->
 	<link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon"/>
-	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
 	<style type="text/css">
 		* { box-sizing: border-box; }
@@ -41,6 +41,9 @@
 </head>
 <body>
 	@foreach($data as $key => $value)
+    <?php
+    $formattedSeqNo = str_pad($value->seqNo, 7, '0', STR_PAD_LEFT);
+    ?>
 	<table style="width:100%; border-collapse:collapse;">
 		<tr>
 			<td style="border-right: 2px solid #000;"><img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/pictures/LogoFormulir1721A1.PNG'))) }}" style="width: 190px; height: 80px;" alt="Logo"></td>
@@ -49,22 +52,25 @@
 		</tr>
         <tr>
 			<td width="26%" style="font-size: 12px; font-weight: 700; text-align:center; border-right: 2px solid #000;">KEMENTERIAN KEUANGAN RI<br>DIREKTORAT JENDERAL<br>PAJAK</td>
-            <td width="50%" style="font-size: 12px; font-weight: 700; padding-left: 20px; border-top: 2px solid #000;">NOMOR : 1.1-12.21-000000001</td>
+            <td width="50%" style="font-size: 12px; font-weight: 700; padding-left: 20px; border-top: 2px solid #000;">NOMOR : 1.1-12.{{date('y') - 1}}-{{ $formattedSeqNo }}</td>
             <td width="7%" style="border-top: 2px solid #000; border-right: 2px solid #000;">&nbsp;</td>
             <td width="23%" style="font-size: 12px; text-align: center;"><div style="text-decoration: underline; display:inline;">{{ date('m', strtotime('2020-' . $value->masaAwal . '-01')) }}</div> - <div style="text-decoration: underline; display:inline;">{{ date('m', strtotime('2020-' . $value->masaAkhir . '-01')) }}</div></td>
         </tr>
 	</table>
-    <table style="width:100%; border: 1px solid #000;">
+    <table style="width:100%; margin-bottom: 13px; border: 1px solid #000;">
 		<tr>
-            <?php $arr_npwp = explode("-", $value->companyNPWP); ?>
+            <?php 
+            $arr_npwp = explode("-", $value->companyNPWP); 
+            $arr_npwp_detail = explode(".", $arr_npwp[1]);
+            ?>
 			<td width="12%" style="font-size: 11px; font-weight: 700;">NPWP PEMOTONG</td>
             <td width="3%" style="font-size: 11px; font-weight: 700;">:</td>
             @if(count($arr_npwp) > 1)
 			<td width="20%" style="font-size: 11px; font-weight: 700; border-bottom: 1px solid #000;">{{ $arr_npwp[0] }}</td>
             <td width="1%" style="font-size: 11px; font-weight: 700;">-</td>
-            <td width="8%" style="font-size: 11px; font-weight: 700; border-bottom: 1px solid #000;">{{ $arr_npwp[1] }}</td>
-            <td width="1%" style="font-size: 11px; font-weight: 700;">-</td>
-            <td width="8%"style="font-size: 11px; font-weight: 700; border-bottom: 1px solid #000;">{{ $arr_npwp[1] }}</td>
+            <td width="8%" style="font-size: 11px; font-weight: 700; border-bottom: 1px solid #000;">{{ $arr_npwp_detail[0] }}</td>
+            <td width="1%" style="font-size: 11px; font-weight: 700;">.</td>
+            <td width="8%"style="font-size: 11px; font-weight: 700; border-bottom: 1px solid #000;">{{ $arr_npwp_detail[1] }}</td>
             @else
             <td width="20%" style="font-size: 11px; font-weight: 700; border-bottom: 1px solid #000;">{{ $value->companyNPWP }}</td>
             <td width="1%" style="font-size: 11px; font-weight: 700;">-</td>
@@ -80,19 +86,19 @@
 			<td colspan="6" style="font-size: 11px; font-weight: 700; border-bottom: 1px solid #000;">{{ $value->companyName }}</td>
         </tr>
 	</table>
-    <br>
     <div style="font-size: 11px; font-weight: 700;">A. IDENTITAS PENERIMA PENGHASILAN YANG DIPOTONG</div>
-    <table style="width:100%; border: 1px solid #000;">
+    <table style="width:100%; margin-bottom: 13px; border: 1px solid #000;">
 		<tr>
             <?php $arr_npwp2 = explode("-", $value->taxRegisteredNo); ?>
 			<td width="15%" style="font-size: 10px; font-weight: 700;">1. NPWP</td>
             <td width="3%" style="font-size: 10px; font-weight: 700; ">:</td>
             @if(count($arr_npwp2) > 1)
+            <?php $arr_npwp2_detail = explode(".", $arr_npwp2[1]); ?>
 			<td width="20%" style="font-size: 11px; font-weight: 700; border-bottom: 1px solid #000;">{{ $arr_npwp2[0] }}</td>
             <td width="1%" style="font-size: 11px; font-weight: 700;">-</td>
-            <td width="8%" style="font-size: 11px; font-weight: 700; border-bottom: 1px solid #000;">{{ $arr_npwp2[1] }}</td>
+            <td width="8%" style="font-size: 11px; font-weight: 700; border-bottom: 1px solid #000;">{{ $arr_npwp2_detail[0] }}</td>
             <td width="1%" style="font-size: 11px; font-weight: 700;">-</td>
-            <td width="8%"style="font-size: 11px; font-weight: 700; border-bottom: 1px solid #000;">{{ $arr_npwp2[1] }}</td>
+            <td width="8%"style="font-size: 11px; font-weight: 700; border-bottom: 1px solid #000;">{{ $arr_npwp2_detail[1] }}</td>
             @else
 			<td width="20%" style="font-size: 11px; font-weight: 700; border-bottom: 1px solid #000;">{{ $value->taxRegisteredNo }}</td>
             <td width="1%" style="font-size: 11px; font-weight: 700;">-</td>
@@ -103,15 +109,28 @@
             <td colspan="8" style="font-size: 10px; font-weight: 700;">6. STATUS / JUMLAH TANGGUNGAN KELUARGA UNTUK PTKP</td>
 		</tr>
         <tr>
+            <?php
+            $str0 = "";
+            $str1 = "";
+            $str2 = "";
+            
+            if (preg_match('/TK\/(\d+)/', $value->taxStatus, $matches)){
+                $str1 = $matches[1];
+            } elseif (preg_match('/K\/(\d+)/', $value->taxStatus, $matches)) {
+                $str0 = $matches[1];
+            } elseif (preg_match('/HB\/(\d+)/', $value->taxStatus, $matches)) {
+                $str2 = $matches[1];
+            }
+            ?>
             <td style="font-size: 10px; font-weight: 700;">2. NIK / NO PASPOR</td>
             <td style="font-size: 10px; font-weight: 700; ">:</td>
 			<td colspan="5" style="font-size: 10px; font-weight: 700; border-bottom: 1px solid #000;">{{ $value->idNo }}</td>
             <td width="2%" style="font-size: 10px; font-weight: 700;">K/</td>
-            <td width="5%" style="font-size: 10px; font-weight: 700; border-bottom: 1px solid #000;"></td>
+            <td width="5%" style="font-size: 10px; font-weight: 700; border-bottom: 1px solid #000;">{{ $str0 }}</td>
             <td width="2%" style="font-size: 10px; font-weight: 700;">TK/</td>
-            <td width="5%" style="font-size: 10px; font-weight: 700; border-bottom: 1px solid #000;"></td>
+            <td width="5%" style="font-size: 10px; font-weight: 700; border-bottom: 1px solid #000;">{{ $str1 }}</td>
             <td width="2%" style="font-size: 10px; font-weight: 700;">HB/</td>
-            <td width="5%" style="font-size: 10px; font-weight: 700; border-bottom: 1px solid #000;"></td>
+            <td width="5%" style="font-size: 10px; font-weight: 700; border-bottom: 1px solid #000;">{{ $str2 }}</td>
             <td colspan="2" style="font-size: 10px; font-weight: 700;"></td>
         </tr>
         <tr>
@@ -140,7 +159,7 @@
             <td style="font-size: 10px; font-weight: 700;">5. JENIS KELAMIN</td>
             <td style="font-size: 10px; font-weight: 700; ">:</td>
 			<td colspan="5" style="font-size: 10px; font-weight: 700;">
-            @if($value->gender == "M")
+            @if($value->gender == "Male")
             <input type="checkbox" id="laki_laki" name="laki_laki" value="Laki-laki" checked/> <label for="laki_laki" style="word-wrap:break-word;"> LAKI-LAKI</label>
             <input type="checkbox" id="perempuan" name="perempuan" value="Perempuan" /> <label for="perempuan" style="word-wrap:break-word;"> PEREMPUAN</label>
             @else
@@ -153,16 +172,15 @@
             <td width="17%" style="font-size: 10px; font-weight: 700; border-bottom: 1px solid #000;">{{ $value->nationalityCode }}</td>
         </tr>
 	</table>
-    <br>
     <div style="font-size: 11px; font-weight: 700;">B. RINCIAN PENGHASILAN DAN PERHITUNGAN PPh PASAL 21</div>
-    <table class="table_detail" style="width:100%;">
+    <table class="table_detail" style="width:100%; margin-bottom: 13px;">
 		<tr>
 			<td colspan="2" style="font-size: 10px; font-weight: 700; text-align: center;">URAIAN</td>
             <td style="font-size: 10px; font-weight: 700; text-align: center;">JUMLAH (Rp)</td>
 		</tr>
         <tr>
             <td colspan="2" style="font-size: 10px; font-weight: 700;">KODE OBJEK PAJAK : 
-            @if($value->taxStatus == null)
+            @if(!empty($value->taxStatus))
             <input type="checkbox" id="tipe1" name="tipe1" value="Tipe 1" checked/> <label for="tipe1" style="word-wrap:break-word;"> 21-100-01</label>
             <input type="checkbox" id="tipe2" name="tipe2" value="Tipe 2" /> <label for="tipe2" style="word-wrap:break-word;"> 21-100-02</label>
             @else
@@ -285,19 +303,21 @@
 			<td  style="font-size: 10px; text-align: right;"> {{ number_format($value->c20, 0, '.', ',') }}</td>
         </tr>
 	</table>
-    <br>
     <div style="font-size: 12px; font-weight: 700;">C. IDENTITAS PEMOTONG</div>
-    <table style="width:100%; border: 1px solid #000;">
+    <table style="width:100%; margin: 0; border: 1px solid #000;">
 		<tr>
-            <?php $arr_npwp3 = explode("-", $value->signerNPWP); ?>
+            <?php 
+            $arr_npwp3 = explode("-", $value->signerNPWP); 
+            $arr_npwp3_detail = explode(".", $arr_npwp3[1]); 
+            ?>
 			<td width="15%" style="font-size: 10px; font-weight: 700;">1. NPWP</td>
             <td width="3%" style="font-size: 10px; font-weight: 700; ">:</td>
 			@if(count($arr_npwp3) > 1)
 			<td width="20%" style="font-size: 11px; font-weight: 700; border-bottom: 1px solid #000;">{{ $arr_npwp3[0] }}</td>
             <td width="1%" style="font-size: 11px; font-weight: 700;">-</td>
-            <td width="8%" style="font-size: 11px; font-weight: 700; border-bottom: 1px solid #000;">{{ $arr_npwp3[1] }}</td>
-            <td width="1%" style="font-size: 11px; font-weight: 700;">-</td>
-            <td width="8%"style="font-size: 11px; font-weight: 700; border-bottom: 1px solid #000;">{{ $arr_npwp3[1] }}</td>
+            <td width="8%" style="font-size: 11px; font-weight: 700; border-bottom: 1px solid #000;">{{ $arr_npwp3_detail[0] }}</td>
+            <td width="1%" style="font-size: 11px; font-weight: 700;">.</td>
+            <td width="8%"style="font-size: 11px; font-weight: 700; border-bottom: 1px solid #000;">{{ $arr_npwp3_detail[1] }}</td>
             @else
             <td width="20%" style="font-size: 11px; font-weight: 700; border-bottom: 1px solid #000;">{{ $value->signerNPWP }}</td>
             <td width="1%" style="font-size: 11px; font-weight: 700;">-</td>
@@ -307,7 +327,7 @@
             @endif
             <td colspan="5" width="20%" style="font-size: 10px; font-weight: 700;">3. TANGGAL & TANDA TANGAN</td>
             <td rowspan="2" style="font-size: 10px; font-weight: 700;">
-            <table style="width: 100%; height: 4%; border: 1px solid #000;">
+            <table style="width: 100%; height: 4%; border: 1px solid #000; text-align: center; vertical-align: middle;">
             </table>
             </td>
 		</tr>
@@ -322,7 +342,6 @@
             <td width="5%"style="font-size: 11px; font-weight: 700; border-bottom: 1px solid #000;">{{ date('Y', strtotime($value->printDate)) }}</td>
         </tr>
 	</table>
-    <br>
 	<table style="width:100%;">
 		<tr>
 			<td width="90%"><img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/pictures/LogoFormulir1721A1Bottom1.png'))) }}" style="width: 70px; height: 10px;" alt="Logo"></td>

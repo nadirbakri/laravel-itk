@@ -7101,7 +7101,7 @@ public function dataDetailReportFormatPY(Request $request)
 
                 // var_dump(json_encode($param));
 
-                $response = $client->post(env('API_URL').'/reportsptpph1721a1/getreportsptpph1721a1', [
+                $response = $client->post(env('API_URL').'/ReportSPTPPH1721A1/getReportSPTPPH1721A1', [
                     'body' => json_encode($param)
                 ]);
             }
@@ -7122,22 +7122,36 @@ public function dataDetailReportFormatPY(Request $request)
 
         $arrResult = json_decode($response->getBody()->getContents());
 
-        // var_dump($arrResult->dataListSet);
+        // dd($arrResult->dataListSet);
 
         if($arrResult->dataListSet == null){
+            set_time_limit(18000);
             if($request->spt_type == 'pph_1721i'){
-                $pdf = PDF::loadView('payroll.py_export_spt_pph_1721i', ['data' => [], 'type' => $request->report_format])->setPaper('letter', 'landscape')->setOptions(['defaultFont' => 'arial']);
+                $pdf = PDF::loadView('payroll.py_export_spt_pph_1721i', ['data' => [], 'type' => $request->report_format, 'npwp' => $request->npwp_group])->setPaper('letter', 'landscape')->setOptions(['defaultFont' => 'arial']);
                 return $pdf->stream('SPT PPh 1721I.pdf');
             }else{
-                $pdf = PDF::loadView('payroll.py_export_spt_pph_1721a1', ['data' => [], 'type' => $request->report_format])->setPaper('letter', 'portrait')->setOptions(['defaultFont' => 'arial']);
+                $pdf = PDF::loadView('payroll.py_export_spt_pph_1721a1', ['data' => [], 'type' => $request->report_format, 'npwp' => $request->npwp_group])->setPaper('legal', 'portrait')->setOptions(['defaultFont' => 'arial']);
                 return $pdf->stream('SPT PPh 1721A1.pdf');
             }
         }else{
+            set_time_limit(18000);
             if($request->spt_type == 'pph_1721i'){
-                $pdf = PDF::loadView('payroll.py_export_spt_pph_1721i', ['data' => $arrResult->dataListSet, 'type' => $request->report_format])->setPaper('letter', 'landscape')->setOptions(['defaultFont' => 'arial']);
+                $pdf = PDF::loadView('payroll.py_export_spt_pph_1721i', ['data' => $arrResult->dataListSet, 'type' => $request->report_format, 'npwp' => $request->npwp_group])->setPaper('letter', 'landscape')->setOptions(['defaultFont' => 'arial']);
+                $pdf->setEncryption($arrResult->dataListSet[0]->employeeNo, $arrResult->dataListSet[0]->employeeNo, array('print', 'copy'));
                 return $pdf->stream('SPT PPh 1721I.pdf');
             }else{
-                $pdf = PDF::loadView('payroll.py_export_spt_pph_1721a1', ['data' => $arrResult->dataListSet, 'type' => $request->report_format])->setPaper('letter', 'portrait')->setOptions(['defaultFont' => 'arial']);
+                foreach ($arrResult->dataListSet as $data) {
+                    $angkaString = strval($data->taxRegisteredNo);
+                    $tax1 = substr($angkaString, 0, 2);
+                    $tax2 = substr($angkaString, 2, 3);
+                    $tax3 = substr($angkaString, 5, 3);
+                    $tax4 = substr($angkaString, 8, 1);
+                    $tax5 = substr($angkaString, 9, 3);
+                    $tax6 = substr($angkaString, 12, 3);
+                    $data->taxRegisteredNo = $tax1 . "." . $tax2 . "." . $tax3 . "." . $tax4 . "-" . $tax5 . "." . $tax6;
+                }
+                $pdf = PDF::loadView('payroll.py_export_spt_pph_1721a1', ['data' => $arrResult->dataListSet, 'type' => $request->report_format, 'npwp' => $request->npwp_group])->setPaper('legal', 'portrait')->setOptions(['defaultFont' => 'arial']);
+                $pdf->setEncryption(Session::get('companyCode'), Session::get('companyCode'), array('print', 'copy'));
                 return $pdf->stream('SPT PPh 1721A1.pdf');
             }
         }
