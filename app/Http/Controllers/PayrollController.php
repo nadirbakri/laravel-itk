@@ -7099,14 +7099,12 @@ public function dataDetailReportFormatPY(Request $request)
                 $param['groupAuthorizeFrom'] = $request->group_authorized_code_from;
                 $param['groupAuthorizeTo'] = $request->group_authorized_code_to;
 
-                // var_dump(json_encode($param));
+                // dd(json_encode($param));
 
                 $response = $client->post(env('API_URL').'/ReportSPTPPH1721A1/getReportSPTPPH1721A1', [
                     'body' => json_encode($param)
                 ]);
             }
-
-            // var_dump(json_encode($param));
 
         }catch(Exception $e){
             $response = $e->getResponse();
