@@ -352,7 +352,7 @@
                     </div>
                     <div class="row">
                         <div class="table-responsive">
-                            <table id="business_trip_table" class="display table-striped table-hover dt-responsive display nowrap" cellspacing="10">
+                            <table id="business_trip_table" class="display table-striped table-hover dt-responsive display nowrap" cellspacing="10" style="width: 100%;">
                                 <thead>
                                     <tr>
                                         <th>{{ __('trans_business_trip.detail') }}</th>
@@ -939,7 +939,7 @@
                                     <td>${val2.remarks ? val2.remarks : ''}</td>
                                     <td>${val2.currency}</td>
                                     <td>${val2.exchangeRate.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
-                                    <td>0</td>
+                                    <td>${val2.amountInForex.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
                                     <td>${val2.totalClaim.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>`;
 
                             if (isFirstRow) {
