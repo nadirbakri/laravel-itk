@@ -5,13 +5,13 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css">
+	<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet"> -->
 	<link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon"/>
 	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
 	<style type="text/css">
-		@font-face {
+        @font-face {
             font-family: 'Arial Alternates';
             font-style: normal;
             font-weight: normal;
@@ -24,11 +24,9 @@
             font-weight: normal;
             src: url('fonts/arialbold.ttf') format('truetype');
         }
-
 		* { box-sizing: border-box; }
 		html {
 			margin: 1%;
-			font-size: 11px;
 		}
 		.table_detail td{
 			border:1px solid #000;
@@ -40,9 +38,10 @@
             padding:4px;
             background-color:#84c2e0;
 		}
-		/* .table{
+		.table_detail{
 			border-collapse:collapse;
-		} */
+		}
+
         .double-layer-hr {
             position: relative;
             border: none; /* Hilangkan garis default */
@@ -76,22 +75,22 @@
 	</style>
 </head>
 <body>
-	@foreach($data as $key => $value)
+    @foreach($data as $key => $value)
     <hr>
     <table style="width:100%; padding-left:1%; padding-right:1%;">
 		<tr>
-            <td width="40%" style="font-size: 16px; text-align:left; font-family: 'Arial Bold', sans-serif;">PT. CORINTHIAN INDUSTRIES INDONESIA</td>
+            <td width="40%" style="font-size: 12px; text-align:left; font-family: 'Arial Bold', sans-serif;">PT. CORINTHIAN INDUSTRIES INDONESIA</td>
 			@if($display_logo == "1")
             <td width="20%" rowspan="4">&nbsp;</td>
             <td width="40%" rowspan="4" style="text-align:right;">
-				<img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/pictures/logo_cori.png'))) }}" style="width: 205px; height: 45px" alt="Logo">
+				<img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/pictures/logo_cori.png'))) }}" style="width: 165px; height: 30px" alt="Logo">
 			</td>
 			@else
-			<td width="60%" rowspan="4" style="text-align:right; height: 45px">&nbsp;</td>
+			<td width="60%" rowspan="4" style="text-align:right; height: 30px">&nbsp;</td>
 			@endif
 		</tr>
 	</table>
-	<table class="table" style="width:100%; font-size: 13px; padding-left:1%; padding-right:1%; border-collapse: collapse; font-family: 'Arial Alternates', sans-serif;">
+	<table class="table" style="width:100%; font-size: 9px; padding-left:1%; padding-right:1%; border-collapse: collapse; font-family: 'Arial Alternates', sans-serif;">
 		<tr>
 			<td colspan="3" style="padding-bottom: 10px;">Pay Slip</td>
 		</tr>
@@ -101,7 +100,7 @@
 			<td width="84%" style="padding-left: 10px;">{{ $periode }}</td>
 		</tr>
     </table>
-    <table class="table" style="width:100%; font-size: 13px; padding-left:1%; padding-right:1%; padding-bottom: 1%; border-collapse: collapse; font-family: 'Arial Alternates', sans-serif;">
+    <table class="table" style="width:100%; font-size: 9px; padding-left:1%; padding-right:1%; padding-bottom: 1%; border-collapse: collapse; font-family: 'Arial Alternates', sans-serif;">
 		<tr>
 			<td colspan="3">&nbsp;</td>
 			<td width="15%">PAGE</td>
@@ -127,7 +126,7 @@
 	$totalIncome = 0;
 	$totalDeduction = 0;
 	?>
-	<table class="table" style="width:100%; font-size: 13px; padding-left:1%; padding-right:1%; border-collapse: collapse; font-family: 'Arial Alternates', sans-serif;">
+	<table class="table" style="width:100%; font-size: 9px; padding-left:1%; padding-right:1%; border-collapse: collapse; font-family: 'Arial Alternates', sans-serif;">
     	<tr>
         	<td style="width:50%; vertical-align: top;">
 				<table style="width:100%; padding-bottom: 1%; border-collapse: collapse;">
@@ -191,7 +190,7 @@
 			</td>
 		</tr>
 	</table>
-	<table class="table" style="width:100%; font-size: 13px; padding-left:1%; padding-right:1%; border-collapse: collapse; font-family: 'Arial Alternates', sans-serif;">
+	<table class="table" style="width:100%; font-size: 9px; padding-left:1%; padding-right:1%; border-collapse: collapse; font-family: 'Arial Alternates', sans-serif;">
     	<tr>
         	<td style="width:50%; vertical-align: top;">
 				<table style="width:100%; padding-bottom: 1%; border-collapse: collapse;">
@@ -228,7 +227,7 @@
 		</tr>
 	</table>
 	<hr>
-	<table class="table" style="width:100%; font-size: 13px; padding-top: 0 !important; padding-left:1%; padding-right:1%; border-collapse: collapse; font-family: 'Arial Alternates', sans-serif;">
+	<table class="table" style="width:100%; font-size: 9px; padding-top: 0 !important; padding-left:1%; padding-right:1%; border-collapse: collapse; font-family: 'Arial Alternates', sans-serif;">
     	<tr>
         	<td colspan="3" style="width:65%; vertical-align: top;">&nbsp;</td>
 			<td style="width:35%; vertical-align: top;">Received By,</td>
@@ -243,7 +242,7 @@
 			<td colspan="2" style="padding-left: 10px;">{{ $value->noRekening }}</td>
 		</tr>
 		<tr>
-        	<td colspan="4" style="width:65%; vertical-align: top; padding-top: 60px;">&nbsp;</td>
+        	<td colspan="4" style="width:65%; vertical-align: top; padding-top: 40px;">&nbsp;</td>
 		</tr>
 		<tr>
         	<td colspan="3" style="width:65%; vertical-align: top;">&nbsp;</td>
@@ -253,10 +252,10 @@
 	<br>
 	<hr>
 
-    @if($key != array_key_last($data))
+	@if($key != array_key_last($data))
 		<div class="page_break"></div>
 	@endif
-    @endforeach
+	@endforeach
     <script type="text/php">
     if (isset($pdf)) {
         $pdf->page_script('
