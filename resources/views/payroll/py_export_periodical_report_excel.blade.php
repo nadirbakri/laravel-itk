@@ -406,6 +406,18 @@
                 $total = [];
                 $totalJumlah = 0;
             ?>
+            @if($company == 'IPN' || $company == 'UPM' || $company == 'IGT' || $company == 'IVT' || $company == 'IPNJT')
+            <table>
+                <thead>
+                    <tr>
+                        <th style="text-align:left; font-weight:bold;">{{ $report_name }}</th>
+                    </tr>
+                    <tr>
+                        <th style="text-align:left; font-weight:bold;"><pre>Periode   :    {{ $data_period }}</pre></th>
+                    </tr>
+                </thead>
+            </table>
+            @else
             <table style='width: 100%'>
                 <tr>
                     <td>Pay Cycle</td>
@@ -423,6 +435,7 @@
                     <td>{{ $dataTable->data[0]->companyName }}</td>
                 </tr>
             </table>
+            @endif
             <table style="width: 100%;" class="table table-bordered table-hover responsive table_detail">
                 <thead>
                     <tr>
@@ -431,7 +444,13 @@
                                 @if($loop->first)
                                     <th style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7; font-size: {{ $dataRow->fontSize }}px !important; font-weight: bold;">No</th>
                                     <th style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7; font-size: {{ $dataRow->fontSize }}px !important; font-weight: bold;">Cost Center</th>
-                                    <th style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7; font-size: {{ $dataRow->fontSize }}px !important; font-weight: bold;">Jumlah</th>
+                                    <th style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7; font-size: {{ $dataRow->fontSize }}px !important; font-weight: bold;">
+                                        @if($company == 'IPN' || $company == 'UPM' || $company == 'IGT' || $company == 'IVT' || $company == 'IPNJT')
+                                        No of Employees
+                                        @else
+                                        Jumlah
+                                        @endif 
+                                    </th>
                                 @endif
                                 @if(!is_string($dataRow->value))
                                     <?php
@@ -448,7 +467,13 @@
                     @foreach($dataTable->data as $key => $dataRow)  
                     <tr>
                         <td style="text-align:center; vertical-align:middle; border:1px solid #000; font-size: {{ $dataRow->field[0]->fontSize }}px !important;">{{ $key+1 }}</td>
-                        <td style="text-align:center; vertical-align:middle; border:1px solid #000; font-size: {{ $dataRow->field[0]->fontSize }}px !important;">{{ $dataRow->levelCode }}</td>
+                        <td style="text-align:center; vertical-align:middle; border:1px solid #000; font-size: {{ $dataRow->field[0]->fontSize }}px !important;">
+                            @if($company == 'IPN' || $company == 'UPM' || $company == 'IGT' || $company == 'IVT' || $company == 'IPNJT')
+                            {{ $dataRow->levelCode . " " . $dataRow->companyName }}
+                            @else
+                            {{ $dataRow->levelCode }}
+                            @endif
+                        </td>
                         <td style="text-align:center; vertical-align:middle; border:1px solid #000; font-size: {{ $dataRow->field[0]->fontSize }}px !important;">{{ $dataRow->total }}</td>
                         <?php $totalJumlah += $dataRow->total; ?>
                         @foreach($dataRow->field as $key2 => $dataRow2)
