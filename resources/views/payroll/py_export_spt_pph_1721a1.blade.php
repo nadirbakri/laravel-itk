@@ -159,7 +159,7 @@
             <td style="font-size: 10px; font-weight: 700;">5. JENIS KELAMIN</td>
             <td style="font-size: 10px; font-weight: 700; ">:</td>
 			<td colspan="5" style="font-size: 10px; font-weight: 700;">
-            @if($value->gender == "Male")
+            @if($value->gender == "M")
             <input type="checkbox" id="laki_laki" name="laki_laki" value="Laki-laki" checked/> <label for="laki_laki" style="word-wrap:break-word;"> LAKI-LAKI</label>
             <input type="checkbox" id="perempuan" name="perempuan" value="Perempuan" /> <label for="perempuan" style="word-wrap:break-word;"> PEREMPUAN</label>
             @else
