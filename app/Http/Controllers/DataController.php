@@ -10971,6 +10971,8 @@ class DataController extends Controller
 			$response = $client->post(env('API_URL') . '/mobile/TmAbsentCode/getAbsentCode',
 				['body' => json_encode([
 					'companyCode' => Session::get('companyCode'),
+					'absentType' => 'A',
+					'deductLeave' => '1',
 					"languageCode" => strtoupper(App::getLocale())
 				])]
 			);
