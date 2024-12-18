@@ -6954,20 +6954,37 @@ public function dataDetailReportFormatPY(Request $request)
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
+            $urlReport = '/payroll/JournalReport';
+
             $param = [
                 'companyCode' => Session::get('companyCode'),
-                'journalPeriod' => $request->journal_period,
-                'languageID' =>App::getLocale(),
+                'languageCode' => strtoupper(App::getLocale()),
                 'sessionID' => 0,
-                'sessionUserID' => Session::get('userID')
+                'sessionUserID' => Session::get('userID'),
+                'logActionUserID' => Session::get('userID'),
+                'logActionUsername' => Session::get('userName')
             ];
 
-            if(!empty($request->group_authorized_from) || !empty($request->group_authorized_to)){
-                $param['groupAuthorizeFrom'] = $request->group_authorized_from;
-                $param['groupAuthorizeTo'] = $request->group_authorized_to;
+            if(Session::get('companyCode') == 'SWG' || Session::get('companyCode') == 'XSYS' || 
+                Session::get('companyCode') == 'GRC'){
+                $urlReport = '/payroll/getSWGGroupJournal';
+
+                if(!empty($request->journal_period)){
+                    $param['periodMonth'] = (int) date('m', strtotime($request->journal_period));
+                    $param['periodYear'] = (int) date('Y', strtotime($request->journal_period));
+                }
+            }else{
+                if(!empty($request->journal_period)){
+                    $param['journalPeriod'] = $request->journal_period;
+                }
+
+                if(!empty($request->group_authorized_from) || !empty($request->group_authorized_to)){
+                    $param['groupAuthorizeFrom'] = $request->group_authorized_from;
+                    $param['groupAuthorizeTo'] = $request->group_authorized_to;
+                }
             }
 
-            $response = $client->post(env('API_URL').'/payroll/JournalReport', [
+            $response = $client->post(env('API_URL').$urlReport, [
                 'body' => json_encode($param)
             ]);
         }catch (RequestException $e){
@@ -6982,14 +6999,20 @@ public function dataDetailReportFormatPY(Request $request)
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
+        // dd([$arrResult->dataListSet[0]]);
 
-        // var_dump($arrResult->dataListSet[0]);
+        $viewReport = 'payroll.py_export_journal_report';
+
+        if(Session::get('companyCode') == 'SWG' || Session::get('companyCode') == 'XSYS' || 
+            Session::get('companyCode') == 'GRC'){
+            $viewReport = 'payroll.py_export_journal_report_swg';
+        }
 
         if($arrResult->dataListSet == null){
-            $pdf = PDF::loadView('payroll.py_export_journal_report', ['data' => []])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
+            $pdf = PDF::loadView($viewReport, ['data' => []])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
             return $pdf->stream('Journal Report.pdf');
         }else{
-            $pdf = PDF::loadView('payroll.py_export_journal_report', ['data' => [$arrResult->dataListSet[0]]])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
+            $pdf = PDF::loadView($viewReport, ['data' => [$arrResult->dataListSet[0]]])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
             return $pdf->stream('Journal Report.pdf');
         }
     }

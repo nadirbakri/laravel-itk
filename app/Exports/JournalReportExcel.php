@@ -25,26 +25,40 @@ class JournalReportExcel implements FromView, ShouldAutoSize{
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
+
+            $urlReport = '/payroll/JournalReport';
     
             $param = [ 
                 'companyCode' => Session::get('companyCode'), 
-                'languageCode' => App::getLocale(), 
+                'languageCode' => strtoupper(App::getLocale()), 
                 'sessionID' => 0, 
-                'sessionUserID' => Session::get('userID')
+                'sessionUserID' => Session::get('userID'),
+                'logActionUserID' => Session::get('userID'),
+                'logActionUsername' => Session::get('userName')
             ];
-    
-            if(!empty($this->journalPeriod)){
-                $param['journalPeriod'] = $this->journalPeriod;
-            }
-    
-            if(!empty($this->groupAuthorizeFrom) || !empty($this->groupAuthorizeTo)){
-                $param['groupAuthorizeFrom'] = $this->groupAuthorizeFrom;
-                $param['groupAuthorizeTo'] = $this->groupAuthorizeTo;
+
+            if(Session::get('companyCode') == 'SWG' || Session::get('companyCode') == 'XSYS' || 
+                Session::get('companyCode') == 'GRC'){
+                $urlReport = '/payroll/getSWGGroupJournal';
+
+                if(!empty($this->journalPeriod)){
+                    $param['periodMonth'] = (int) date('m', strtotime($this->journalPeriod));
+                    $param['periodYear'] = (int) date('Y', strtotime($this->journalPeriod));
+                }
+            }else{
+                if(!empty($this->journalPeriod)){
+                    $param['journalPeriod'] = $this->journalPeriod;
+                }
+        
+                if(!empty($this->groupAuthorizeFrom) || !empty($this->groupAuthorizeTo)){
+                    $param['groupAuthorizeFrom'] = $this->groupAuthorizeFrom;
+                    $param['groupAuthorizeTo'] = $this->groupAuthorizeTo;
+                }
             }
 
             // var_dump(json_encode($param));
     
-            $response = $client->post(env('API_URL').'/payroll/JournalReport',
+            $response = $client->post(env('API_URL').$urlReport,
             ['body' => json_encode($param)]);
 
         }catch(RequestException $e){
@@ -59,14 +73,21 @@ class JournalReportExcel implements FromView, ShouldAutoSize{
         }
     
         $arrResult = json_decode($response->getBody()->getContents());
-        // var_dump($arrResult->dataListSet[0]);
+        // dd($arrResult->dataListSet[0]);
+
+        $viewReport = 'payroll.py_export_journal_report_excel';
+
+        if(Session::get('companyCode') == 'SWG' || Session::get('companyCode') == 'XSYS' || 
+            Session::get('companyCode') == 'GRC'){
+            $viewReport = 'payroll.py_export_journal_report_excel_swg';
+        }
     
         if($arrResult->dataListSet == null){
-            return view('payroll.py_export_journal_report_excel', [
+            return view($viewReport, [
                 'data' => []
             ]);
         }else{
-            return view('payroll.py_export_journal_report_excel', [
+            return view($viewReport, [
                 'data' => [$arrResult->dataListSet[0]]
             ]); 
         }
