@@ -222,6 +222,17 @@
                         <td>{{ $dataTable->departement }}</td>
                     </tr>
                 </table>
+                @elseif($company == 'IPN' || $company == 'UPM' || $company == 'IGT' || $company == 'IVT' || $company == 'IPNJT')
+                <table>
+                    <?php
+                        $totalEmployee += count($dataTable->data);
+                        $branch = $dataTable->departement;
+                    ?>
+                    <tr>
+                        <th>Cost Center :</th>
+                        <th>{{ $dataTable->departement }}</th>
+                    </tr>
+                </table>
                 @else
                 <table>
                     <?php
@@ -443,7 +454,11 @@
                             @foreach($dataTable->data[0]->field as $key_data => $dataRow)
                                 @if($loop->first)
                                     <th style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7; font-size: {{ $dataRow->fontSize }}px !important; font-weight: bold;">No</th>
+                                    @if($company == 'IPN' || $company == 'UPM' || $company == 'IGT' || $company == 'IVT' || $company == 'IPNJT')
+                                    <th colspan="2" style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7; font-size: {{ $dataRow->fontSize }}px !important; font-weight: bold;">Cost Center</th>
+                                    @else
                                     <th style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7; font-size: {{ $dataRow->fontSize }}px !important; font-weight: bold;">Cost Center</th>
+                                    @endif
                                     <th style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7; font-size: {{ $dataRow->fontSize }}px !important; font-weight: bold;">
                                         @if($company == 'IPN' || $company == 'UPM' || $company == 'IGT' || $company == 'IVT' || $company == 'IPNJT')
                                         No of Employees
@@ -467,13 +482,18 @@
                     @foreach($dataTable->data as $key => $dataRow)  
                     <tr>
                         <td style="text-align:center; vertical-align:middle; border:1px solid #000; font-size: {{ $dataRow->field[0]->fontSize }}px !important;">{{ $key+1 }}</td>
+                        @if($company == 'IPN' || $company == 'UPM' || $company == 'IGT' || $company == 'IVT' || $company == 'IPNJT')
                         <td style="text-align:center; vertical-align:middle; border:1px solid #000; font-size: {{ $dataRow->field[0]->fontSize }}px !important;">
-                            @if($company == 'IPN' || $company == 'UPM' || $company == 'IGT' || $company == 'IVT' || $company == 'IPNJT')
-                            {{ $dataRow->levelCode . " " . $dataRow->companyName }}
-                            @else
                             {{ $dataRow->levelCode }}
-                            @endif
                         </td>
+                        <td style="text-align:center; vertical-align:middle; border:1px solid #000; font-size: {{ $dataRow->field[0]->fontSize }}px !important;">
+                            {{ $dataRow->groupingName }}
+                        </td>
+                        @else
+                        <td style="text-align:center; vertical-align:middle; border:1px solid #000; font-size: {{ $dataRow->field[0]->fontSize }}px !important;">
+                            {{ $dataRow->levelCode }}
+                        </td>
+                        @endif
                         <td style="text-align:center; vertical-align:middle; border:1px solid #000; font-size: {{ $dataRow->field[0]->fontSize }}px !important;">{{ $dataRow->total }}</td>
                         <?php $totalJumlah += $dataRow->total; ?>
                         @foreach($dataRow->field as $key2 => $dataRow2)
