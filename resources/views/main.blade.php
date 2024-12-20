@@ -245,7 +245,8 @@
                     	<div class="row">
                     		<div class="col-12">
 								<div class="form-check">
-									<input type="radio" id="change_language" name="change_language_english" value="en">
+									<input type="radio" id="change_language_english" name="change_language" value="en" selected="none"
+										{{ strtolower(App::getLocale()) == 'en' ? 'checked' : '' }}>
 									<label for="change_language_english">English</label>
 								</div>
                     		</div>
@@ -253,7 +254,8 @@
 						<div class="row">
                     		<div class="col-12">
 								<div class="form-check">
-									<input type="radio" id="change_language" name="change_language_bahasa_indonesia" value="id">
+									<input type="radio" id="change_language_bahasa_indonesia" name="change_language" value="id"
+									{{ strtolower(App::getLocale()) == 'id' ? 'checked' : '' }}>
 									<label for="change_language_bahasa_indonesia">Bahasa Indonesia</label>
 								</div>
                     		</div>
@@ -322,6 +324,27 @@
             </div>
         </div>
     </div>
+
+	<div class="modal fade" role="dialog" id="successModalDownload">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header modal-header-notification-success">
+					<h5 class="modal-title">Download Complete</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="div-title-notification">
+						<span class="message-notification-success">Your download has been successfully completed!</span>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 
 <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
@@ -360,6 +383,25 @@
 
 	})(jQuery);
 
+	// function checkDownloadStatus() {
+    //    const interval = setInterval(() => {
+    //        $.get('/get-report-filename', function(response) {
+    //             if (response.filename) {
+    //                 initiateDownload(response.filename); // Trigger download
+	// 				$('#successModalDownload').modal('show');
+    //                 $.get('/clear-report-filename'); // Clear cached filename after download
+    //             }
+    //         });
+    //     }, 2000); // Poll every 2 seconds
+    // }
+
+    // function initiateDownload(filename) {
+    //     const link = document.createElement('a');
+    //     link.href = `/download-report/${filename}`;
+    //     link.download = filename;
+    //     link.click();
+    // }
+
 	$(document).ready(function() {
 		var companyCode = "{{ Session::get('companyCode') }}";
 		$('.list-group-item-action').first().toggleClass('active');
@@ -380,6 +422,8 @@
 		$('#web-collapse').on('hidden.bs.collapse', function () {
 			$("#footer").css("padding-top", "0");
 		});
+
+		// checkDownloadStatus();
 
 		function setRoundedImage() {
 			const images = document.querySelectorAll('.rounded-image');
