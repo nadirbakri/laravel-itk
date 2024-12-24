@@ -640,6 +640,7 @@ Route::get('payroll/export_data_kepesertaan_bpjs_tk_report', 'PayrollController@
 Route::get('payroll/export_sipp_online', 'PayrollController@pageExportSIPPOnline');
 Route::get('payroll/pension_fund_report', 'PayrollController@pagePensionFundReport');
 Route::get('payroll/cbi_report', 'PayrollController@pageCBIReport');
+Route::get('payroll/spt_list_report', 'PayrollController@pageSPTListReport');
 
 /* Route untuk tabel Payroll */
 Route::get('payroll/account/table', 'PayrollController@tableAccountPY');
@@ -795,6 +796,8 @@ Route::post('payroll/cbi_report_monthly/print/excel', 'PayrollController@printCB
 Route::post('payroll/cbi_report_yearly/print/excel', 'PayrollController@printCBIReportYearlyPayrollExcel');
 Route::post('payroll/salary_component_data/download_template', 'PayrollController@downloadTemplateSalaryComponentDataPayroll');
 Route::post('payroll/salary_component_data/import', 'PayrollController@importSalaryComponentDataPayroll');
+Route::post('payroll/spt_list_report/print', 'PayrollController@printSPTListReportPayroll');
+Route::post('payroll/spt_list_report/print/excel', 'PayrollController@printSPTListReportPayrollExcel');
 
 /* Route Untuk Menu Medical */
 Route::get('medical', 'MedicalController@pageMedical')->name('medical');

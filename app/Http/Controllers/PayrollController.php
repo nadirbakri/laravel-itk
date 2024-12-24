@@ -28,6 +28,7 @@ use App\Exports\ExcelTransferBankExport;
 use App\Exports\EBupotPeriodicalTemplateExport;
 use App\Exports\EBupotA1TemplateExport;
 use App\Exports\PensionFundReportExport;
+use App\Exports\SPTListReportExport;
 use App\Exports\DataPesertaPensionFundReportExport;
 use App\Exports\PerubahanUpahPensionFundReportExport;
 use App\Exports\DataPesertaAktifPensionFundReportExport;
@@ -648,6 +649,10 @@ class PayrollController extends Controller
         }
 
         return view ('payroll.py_cbi_report', ['data' => $data]);
+    }
+
+    public function pageSPTListReport(){
+        return view ('payroll.py_spt_list_report');
     }
      
     public function pageSalaryCalculationProcess()
@@ -9035,6 +9040,71 @@ public function dataDetailReportFormatPY(Request $request)
             // );
             return response()->download(public_path() . '/' . $arrResult->dataListSet[0]->filenamezip . '.zip', $arrResult->dataListSet[0]->filenamezip . '.zip');
             // return response()->json(file_get_contents($zip->getArchive()->filename));
+        }
+    }
+
+    public function printSPTListReportPayrollExcel(Request $request){
+        $groupNPWP = filter_var($request->group_npwp, FILTER_VALIDATE_BOOLEAN);
+        
+        return Excel::download(new SPTListReportExport(
+            isset($request->range_employee_no) ? (bool) $request->range_employee_no : false,
+            $request->employee_no_from,
+            $request->employee_no_to, 
+            ($groupNPWP) ? $request->npwp : "ALL",), 
+            'SPT List Report.xlsx'
+        );
+    }
+
+    public function printSPTListReportPayroll(Request $request){
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+    
+            $groupNPWP = filter_var($request->group_npwp, FILTER_VALIDATE_BOOLEAN);
+
+            $response = $client->post(env('API_URL') . '/payroll/SPTList',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        "employeeNoFrom" => $request->employee_no_from,
+                        "employeeNoTo" => $request->employee_no_to,
+                        "range" => isset($request->range_employee_no) ? (bool) $request->range_employee_no : false,
+                        "groupNPWP" => ($groupNPWP) ? $request->npwp : "ALL",
+                        'languageCode' => strtoupper(App::getLocale()),
+                        'sessionUserID' => Session::get('userID'),
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+    
+        $arrResult = json_decode($response->getBody()->getContents());
+    
+        // dd($arrResult->dataListSet);
+    
+        if($arrResult->dataListSet == null){
+            $data = [];
+        }else{
+            $data = $arrResult->dataListSet;
+        }
+
+        if($arrResult->dataListSet == null){
+            $pdf = PDF::loadView('payroll.py_export_spt_list_report', ['data' => []])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
+            return $pdf->stream('SPT List Report.pdf');
+        }else{
+            $pdf = PDF::loadView('payroll.py_export_spt_list_report', ['data' => $arrResult->dataListSet])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
+            return $pdf->stream('SPT List Report.pdf');
         }
     }
 
