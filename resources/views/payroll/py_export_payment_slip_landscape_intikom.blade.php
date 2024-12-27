@@ -126,7 +126,7 @@
 						<?php
 							$totalIncome += (float) $value2->columnValue;
 						?>
-						@if($value2->columnValue > 0)
+						@if((float) $value2->columnValue !== 0.0)
 						<?php
 							$totalDataIncome++;
 						?>
@@ -155,7 +155,7 @@
 						<?php
 							$totalDeduction += (float) $value2->columnValue;
 						?>
-						@if($value2->columnValue > 0)
+						@if((float) $value2->columnValue !== 0.0)
 						<?php
 							$totalDataDeduction++;
 						?>
