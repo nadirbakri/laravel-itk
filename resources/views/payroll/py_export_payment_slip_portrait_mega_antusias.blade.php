@@ -192,7 +192,7 @@
 			<td style="width:45%; vertical-align: top; padding-right: 10px;">
 				<table style="width:100%; border-collapse: collapse;">
                     <tr>
-                        <td colspan="4" style="padding-left: 20px;">Jakarta, {{ date('d') }} {{ $periode }}</td>
+                        <td colspan="4" style="padding-left: 20px;">Jakarta, {{ date('d', strtotime($transfer_date)) }} {{ $periode }}</td>
                     </tr>
                     <tr>
                         <td colspan="4" style="padding-left: 20px;">Yang Menerima</td>
