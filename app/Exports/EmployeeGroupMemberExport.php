@@ -23,7 +23,7 @@ class EmployeeGroupMemberExport implements FromView, ShouldAutoSize
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
             
-            $response = $client->post(env('API_URL') . '/mobile/GmGroup/ExportGroupApprovalMember',
+            $response = $client->post(env('API_URL') . '/mobile/GmGroup/ExportApprovalMember',
                 ['body' => json_encode([   
                     'companyCode' => Session::get('companyCode'),
                     "changedNo" => 0,
