@@ -80,7 +80,7 @@
     <hr>
     <table style="width:100%; padding-left:1%; padding-right:1%;">
 		<tr>
-            <td width="40%" style="font-size: 16px; text-align:left; font-family: 'Arial Bold', sans-serif;">PT. CORINTHIAN INDUSTRIES INDONESIA</td>
+            <td width="40%" style="font-size: 16px; text-align:left; font-family: 'Arial Bold', sans-serif;">{{ strtoupper($value->namaPerusahaan) }}</td>
 			@if($display_logo == "1")
             <td width="20%" rowspan="4">&nbsp;</td>
             <td width="40%" rowspan="4" style="text-align:right;">
@@ -98,7 +98,7 @@
 		<tr>
 			<td width="15%">For the month of</td>
 			<td width="1%">:</td>
-			<td width="84%" style="padding-left: 10px;">{{ $periode }}</td>
+			<td width="84%" style="padding-left: 10px;">{{ $value->slipPeriod }}</td>
 		</tr>
     </table>
     <table class="table" style="width:100%; font-size: 13px; padding-left:1%; padding-right:1%; padding-bottom: 1%; border-collapse: collapse; font-family: 'Arial Alternates', sans-serif;">
@@ -106,7 +106,7 @@
 			<td colspan="3">&nbsp;</td>
 			<td width="15%">PAGE</td>
 			<td width="1%">:</td>
-			<td width="34%" style="padding-left: 10px;">25</td>
+			<td width="34%" style="padding-left: 10px;">{{ ($key + 1) }}</td>
 		</tr>
 		<tr>
 			<td width="15%">BUNDY</td>
@@ -114,12 +114,12 @@
 			<td colspan="4" style="padding-left: 10px;">{{ $value->employeeNo }}</td>
 		</tr>
 		<tr>
-			<td width="15%">NAME</td>
+			<td width="15%">NAME</td>	
 			<td width="1%">:</td>
 			<td width="34%" style="padding-left: 10px;">{{ $value->employeeName }}</td>
 			<td width="15%">DEPT/SECTION</td>
 			<td width="1%">:</td>
-			<td width="34%" style="padding-left: 10px;">{{ $value->jabatan }}</td>
+			<td width="34%" style="padding-left: 10px;">{{ $value->departemen }}</td>
 		</tr>
 	</table>
     <hr>
@@ -140,17 +140,35 @@
 						?>
 						<tr>
                             <td width="5%" style="padding-left: 20px;">{{ ($key2 + 1) }}</td>
-                            @if($value2->columnLabel == 'TUNJANGAN MAKAN' || $value2->columnLabel == 'TUNJANGAN TRANSPORTASI')
-                            <td width="40%" style="padding-left: 5px;">{{ $value2->columnLabel }}</td>
-							<td width="32%" style="text-align: center;">
-                                <span style="padding-right: 10px;">0.00</span>X<span style="padding-left: 20px;">20,000</span>
-                            </td>
-                            @else
-                            <td colspan="2" style="padding-left: 5px;">{{ $value2->columnLabel }}</td>
-                            @endif
+                            @if(($companyCode == 'CII' && $value->groupAuthorizeCode == '200') || 
+								($companyCode == 'CORI' && in_array($value->groupAuthorizeCode, ['100', '200'])))
+								@if(strtoupper($value2->columnLabel) == 'UANG MAKAN')
+									<td width="40%" style="padding-left: 5px;">{{ $value2->columnLabel }}</td>
+									<td width="32%" style="text-align: center;">
+										<span style="padding-right: 10px; padding-left: 20px;">{{ $value->tarifUangMakan }}</span>
+									</td>
+								@elseif(strtoupper($value2->columnLabel) == 'UANG TRANSPORT')
+									<td width="40%" style="padding-left: 5px;">{{ $value2->columnLabel }}</td>
+									<td width="32%" style="text-align: center;">
+										<span style="padding-right: 10px; padding-left: 20px;">{{ $value->tarifUangTransport }}</span>
+									</td>
+								@else
+									<td colspan="2" style="padding-left: 5px;">{{ $value2->columnLabel }}</td>
+								@endif
+							@endif
                             <td width="2%">Rp.</td>
 							<td width="26%" style="text-align:right; padding-right: 10px;">{{ number_format((float) $value2->columnValue, 0, '.', ',')}}</td>
 						</tr>
+						@if(($companyCode == 'CII' && $value->groupAuthorizeCode == '200') || 
+							($companyCode == 'CORI' && in_array($value->groupAuthorizeCode, ['100', '200'])) && 
+							strtoupper($value2->columnLabel) == 'INSENTIF HARI SABTU')
+						<tr>
+                            <td width="5%" style="padding-left: 20px;">{{ ($key2 + 1) }}</td>
+                            <td colspan="2" style="padding-left: 5px;">{{ $value2->columnLabel }}</td>
+                            <td width="2%">Rp.</td>
+							<td width="26%" style="text-align:right; padding-right: 10px;">{{ number_format((float) $value2->columnValue, 0, '.', ',')}}</td>
+						</tr>
+						@endif
 					@endforeach
                     <tr>
                         <td colspan="3">&nbsp;</td>
@@ -170,10 +188,12 @@
 						?>
 						<tr>
                             <td width="5%" style="padding-left: 20px;">{{ ($key2 + 1) }}</td>
-                            @if($value2->columnLabel == 'ANGSURAN PINJAMAN')
+                            @if(($companyCode == 'CII' && $value->groupAuthorizeCode == '200') || 
+								($companyCode == 'CORI' && in_array($value->groupAuthorizeCode, ['100', '200'])) && 
+								strtoupper($value2->columnLabel) == 'UNPAID (TAXABLE)')
                             <td width="40%" style="padding-left: 5px;">{{ $value2->columnLabel }}</td>
 							<td width="32%" style="text-align: center;">
-                                <span style="padding-right: 10px;">0</span>X<span style="padding-left: 20px;">463,828</span>
+                                <span style="padding-right: 10px; padding-left: 20px;">{{ $value->tarifUnpaid }}</span>
                             </td>
                             @else
                             <td colspan="2" style="padding-left: 5px;">{{ $value2->columnLabel }}</td>
@@ -240,7 +260,7 @@
 		<tr>
 			<td width="15%">No. Rekening</td>
 			<td width="1%">:</td>
-			<td colspan="2" style="padding-left: 10px;">{{ $value->noRekening }}</td>
+			<td colspan="2" style="padding-left: 10px;">{{ empty($value->noRekening) ? "-" : $value->noRekening }}</td>
 		</tr>
 		<tr>
         	<td colspan="4" style="width:65%; vertical-align: top; padding-top: 60px;">&nbsp;</td>
