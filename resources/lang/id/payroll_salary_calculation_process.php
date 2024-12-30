@@ -10,6 +10,7 @@ return [
     'label_include_probation_period' => 'Sertakan Masa Percobaan',
     'label_include_jamsostek_retroactive' => 'Sertakan Jamsostek Retroaktif',
     'label_rounded_jamsostek_amount' => 'Pembulatan Jumlah Jamsostek',
+    'label_medical_process' => 'Proses Medical',
     'label_range' => 'Jangkauan',
     'label_employee_no_from' => 'No Karyawan Dari',
     'label_employee_no_to' => 'No Karyawan Sampai',

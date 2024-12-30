@@ -80,6 +80,7 @@ Route::get('personnel/employee_approval', 'PersonelController@pageEmployeeApprov
 Route::get('personnel/employee_attachment', 'PersonelController@pageEmployeeAttachmentPersonel');
 Route::get('personnel/import_export_personal_data', 'PersonelController@pageImportExportPersonel');
 Route::get('personnel/import_master_data', 'PersonelController@pageImportMasterDataPersonel');
+Route::get('personnel/import_employee_transaction', 'PersonelController@pageImportEmployeeTransactionPersonel');
 Route::get('personnel/import_update_personal_data', 'PersonelController@pageImportUpdatePersonel');
 Route::get('personnel/import_employee_level', 'PersonelController@pageImportEmployeeLevelPersonel');
 Route::get('personnel/export_loan_whitelist', 'PersonelController@pageExportLoanWhitelistPersonel');
@@ -437,6 +438,8 @@ Route::get('personnel/performance/result/check', 'PersonelController@checkResult
 Route::get('personnel/employee_attachment/view', 'PersonelController@viewEmployeeAttachmentPersonel');
 Route::post('personnel/import_master_data/download_template', 'PersonelController@downloadTemplateMasterDataPersonel');
 Route::post('personnel/import_master_data/import', 'PersonelController@importMasterDataPersonel');
+Route::post('personnel/import_employee_transaction/download_template', 'PersonelController@downloadTemplateEmployeeTransactionPersonel');
+Route::post('personnel/import_employee_transaction/import', 'PersonelController@importEmployeeTransactionPersonel');
 Route::post('personnel/export_loan_whitelist/download', 'PersonelController@downloadExportLoanWhitelistPersonel');
 Route::post('personnel/import_employee_level/download_template', 'PersonelController@downloadTemplateEmployeeLevelPersonel');
 Route::post('personnel/import_employee_level/import', 'PersonelController@importEmployeeLevelPersonel');

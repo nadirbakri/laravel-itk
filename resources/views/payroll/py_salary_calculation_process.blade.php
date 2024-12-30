@@ -201,6 +201,14 @@
                 <div class="row">
                     <div class="col-3">
                         <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="medical_process" name="medical_process" value="true">
+                            <label for="medical_process">{{ __('payroll_salary_calculation_process.label_medical_process') }}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-3">
+                        <div class="form-check">
                             <input class="form-check-input" type="checkbox" id="range_salary" name="range_salary" value="true">
                             <label for="range_salary">{{ __('payroll_salary_calculation_process.label_range') }}</label>
                         </div>
