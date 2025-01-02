@@ -12,9 +12,9 @@ return [
     |
     */
 
-    'judul' => 'Halaman Plafon Kesehatan',
+    'judul' => 'Halaman Plafon Penggantian Biaya',
     'list' => 'Daftar Menu Personnel',
-    'list_detail' => 'Daftar Plafon Kesehatan',
+    'list_detail' => 'Daftar Plafon Penggantian Biaya',
     'label_code' => 'Kode Plafon',
     'label_year' => 'Tahun Plafon',
     'label_type' => 'Jenis Plafon',

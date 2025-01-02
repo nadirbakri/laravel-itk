@@ -36,6 +36,7 @@ class TemplatePlafonInfoTemplateSheet implements FromView, WithTitle, ShouldAuto
                     "MEDICAL" => "MedicalType_",
                     "BUSINESSTRIP" => "List_BusinessTrip_",
                     "TRANSPORT" => "List_Reimbursement_Transport",
+                    "RMB" => "List_Reimbursement_",
                 },
                 "languageCode" => strtoupper(App::getLocale())
             ];
@@ -46,8 +47,17 @@ class TemplatePlafonInfoTemplateSheet implements FromView, WithTitle, ShouldAuto
                 "languageCode" => strtoupper(App::getLocale())
             ];
 
+            $param3 = [
+                "companyCode" => Session::get("companyCode"),
+                "variable" => "TravelAdvance-DestinationType_",
+                "languageCode" => strtoupper(App::getLocale())
+            ];
+
             $response = $client->post(env('API_URL') . '/personel/referencemobile/getreferencemobile',
 				['body' => json_encode($param)]);
+            
+            $response_ranking = $client->post(env('API_URL') . '/personel/GmRanking/getgmRanking',
+				['body' => json_encode($param3)]);
 
             if ($this->type === 'BUSINESSTRIP' || $this->type === 'TRANSPORT') {
                 $response_status = $client->post(env('API_URL') . '/personel/referencemobile/getreferencemobile',
@@ -56,6 +66,7 @@ class TemplatePlafonInfoTemplateSheet implements FromView, WithTitle, ShouldAuto
             }
 
             $arrResult = json_decode($response->getBody()->getContents());
+            $arrResult3 = json_decode($response_ranking->getBody()->getContents());
 
         } catch (RequestException $e) {
             $response = $e->getResponse();
@@ -71,6 +82,7 @@ class TemplatePlafonInfoTemplateSheet implements FromView, WithTitle, ShouldAuto
         return view('personel.personel_plafon_info_template_sheet', [
             'data' => ($arrResult->dataListSet != null) ? $arrResult->dataListSet : [],
             'data_status' => ($arrResult2->dataListSet != null) ? $arrResult2->dataListSet : [],
+            'data_ranking' => ($arrResult3->dataListSet != null) ? $arrResult3->dataListSet : [],
         ]);
     }
 

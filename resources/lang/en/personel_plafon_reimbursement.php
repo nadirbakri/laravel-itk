@@ -12,9 +12,9 @@ return [
     |
     */
 
-    'judul' => 'Plafon Business Trip Page',
+    'judul' => 'Plafon Reimbursement Page',
     'list' => 'Personnel Menu List',
-    'list_detail' => 'Plafon Business Trip List',
+    'list_detail' => 'Plafon Reimbursement List',
     'label_code' => 'Plafon Code',
     'label_year' => 'Plafon Year',
     'label_type' => 'Plafon Type',

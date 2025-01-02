@@ -33,6 +33,24 @@
 		</tbody>
 	</table>
 	@endif
+	@if(!empty($data_ranking))
+	<table style="width: 100%; font-size: 14px;" class="table table-bordered table-hover responsive">
+		<thead>
+			<tr>
+				<th style="font-weight: bold">Ranking Code</th>
+				<th style="font-weight: bold">Ranking Name</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach($data_ranking as $value)
+			<tr>
+				<td>{{ $value->rankingCode }}</td>
+				<td>{{ $value->rankingName }}</td>
+			</tr>
+			@endforeach
+		</tbody>
+	</table>
+	@endif
 	@if(!empty($data_status))
 	<table style="width: 100%; font-size: 14px;" class="table table-bordered table-hover responsive">
 		<thead>
