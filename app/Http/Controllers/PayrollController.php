@@ -6324,6 +6324,7 @@ public function dataDetailReportFormatPY(Request $request)
                         "retroactive" => (int) $request->retroactive_salary,
                         "includeProbationPerod" => isset($request->include_probation_period_salary) ? (bool) $request->include_probation_period_salary : false,
                         "includeJamsostekRetroactive" => isset($request->include_jamsostek_retroactive_salary) ? (bool) $request->include_jamsostek_retroactive_salary : false,
+                        "medicalProcess" => isset($request->medical_process) ? (bool) $request->medical_process : false,
                         "range" => isset($request->range_salary) ? (bool) $request->range_salary : false,
                         "languageCode" => App::getLocale(),
                         "changedBy" => Session::get('userID'),

@@ -18,6 +18,7 @@ use App\Exports\MasterDataTemplateExport;
 use App\Exports\EmployeeLevelTemplateExport;
 use App\Exports\PlafonExport;
 use App\Exports\PlafonTemplateExport;
+use App\Exports\EmployeeTransactionTemplateExport;
 
 use App\Imports\PersonalDataSheetImport;
 use App\Imports\PersonalDataImport;
@@ -39,6 +40,7 @@ use App\Imports\PersonalDataUpdateImport;
 use App\Imports\PersonalDataPartialUpdateImport;
 use App\Imports\EmployeeLevelImport;
 use App\Imports\PlafonImport;
+use App\Imports\EmployeeTransactionImport;
 
 use App\Jobs\ProcessImportMasterDataPersonel;
 use App\Jobs\ProcessImportPersonalDataPersonel;
@@ -158,6 +160,11 @@ class PersonelController extends Controller
     public function pageImportMasterDataPersonel()
     {
          return view('personel.personel_import_master_data');
+    }
+
+    public function pageImportEmployeeTransactionPersonel()
+    {
+         return view('personel.personel_import_employee_transaction');
     }
 
     public function pageImportUpdatePersonel()
@@ -12230,6 +12237,65 @@ class PersonelController extends Controller
                 $fileName = "Template Master.xlsx";
         }
         return Excel::download(new MasterDataTemplateExport($request->maintenance_type), $fileName);
+    }
+
+    public function importEmployeeTransactionPersonel(Request $request)
+    {
+        $file = $request->file('import_export');
+        // $base64File = base64_encode(file_get_contents($file->getRealPath()));
+        // $processJobs = new ProcessImportMasterDataPersonel($request->maintenance_type, $base64File);
+        // $this->dispatch($processJobs);
+
+        // return response()->json(['status' => "true", 'message' => 'Import Master Data is in Progress']);
+
+        try{
+            $import = new EmployeeTransactionImport(
+                $request->mutation_type
+            );
+            Excel::import($import, $file->getRealPath(), null, \Maatwebsite\Excel\Excel::XLSX);
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            $failures = $e->failures();
+            $objError = (object) ['status' => false, 'message' => $failures[0]->errors()[0]];
+            return array(0 => $objError);
+        }
+
+        if(empty($import->getArrResult())){
+            $objError = (object) ['status' => false, 'message' => "The Uploaded File Doesn't Match The Template"];
+            return array(0 => $objError);
+        }else{
+            return $import->getArrResult();
+        }
+    }
+
+    public function downloadTemplateEmployeeTransactionPersonel(Request $request)
+    {
+        $fileName = null;
+        switch ($request->mutation_type) {
+            case 'N':
+                $fileName = "Template Employee NPWP Mutation.xlsx";
+                break;
+            case 'M':
+                $fileName = "Template Employee Company Mutation.xlsx";
+                break;
+            case 'P':
+                $fileName = "Template Employee Promotion.xlsx";
+                break;
+            case 'D':
+                $fileName = "Template Employee Demotion.xlsx";
+                break;
+            case 'O':
+                $fileName = "Template Employee Other Transaction.xlsx";
+                break;
+            case 'T':
+                $fileName = "Template Employee Termination.xlsx";
+                break;
+            case 'PE':
+                $fileName = "Template Employee Personal Data Change.xlsx";
+                break;
+            default:
+                $fileName = "Template Employee Transaction.xlsx";
+        }
+        return Excel::download(new EmployeeTransactionTemplateExport($request->mutation_type), $fileName);
     }
 
     public function importEmployeeLevelPersonel(Request $request)
