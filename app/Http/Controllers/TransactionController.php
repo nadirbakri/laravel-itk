@@ -1429,7 +1429,7 @@ class TransactionController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/mobile/reimbursementmedical/updatereimbursementapproval',
+            $response = $client->put(env('API_URL') . '/mobile/reimbursementmedical/updatebyadmin',
                 ['body' => json_encode(
                     [
                         'status'=> $request->status,

@@ -142,6 +142,7 @@ Route::get('personnel/free_format_field', 'PersonelController@pageFreeFormatFiel
 Route::get('personnel/plafon_medical', 'PersonelController@pagePlafonMedicalPersonel');
 Route::get('personnel/plafon_business_trip', 'PersonelController@pagePlafonBusinessTripPersonel');
 Route::get('personnel/plafon_transport', 'PersonelController@pagePlafonTransportPersonel');
+Route::get('personnel/plafon_reimbursement', 'PersonelController@pagePlafonReimbursementPersonel');
 Route::get('personnel/format_report', 'PersonelController@pageFormatReportPersonel');
 Route::get('personnel/relation_code', 'PersonelController@pageRelationCodePersonel');
 Route::get('personnel/employee_list', 'PersonelController@pageEmployeeListPersonel');
@@ -218,6 +219,7 @@ Route::get('personnel/free_format_field/table', 'PersonelController@tableFreeFor
 Route::get('personnel/plafon_medical/table', 'PersonelController@tablePlafonMedicalPersonel');
 Route::get('personnel/plafon_business_trip/table', 'PersonelController@tablePlafonBusinessTripPersonel');
 Route::get('personnel/plafon_transport/table', 'PersonelController@tablePlafonTransportPersonel');
+Route::get('personnel/plafon_reimbursement/table', 'PersonelController@tablePlafonReimbursementPersonel');
 Route::get('personnel/format_report/table', 'PersonelController@tableFormatReportPersonel');
 Route::get('personnel/relation_code/table', 'PersonelController@tableRelationCodePersonel');
 Route::get('personnel/employee_termination/table', 'PersonelController@tableEmployeeTerminationPersonel');
@@ -279,6 +281,7 @@ Route::get('personnel/free_format_field/detail_data', 'PersonelController@dataDe
 Route::get('personnel/plafon_medical/detail_data', 'PersonelController@dataDetailPlafonMedicalPersonel');
 Route::get('personnel/plafon_business_trip/detail_data', 'PersonelController@dataDetailPlafonBusinessTripPersonel');
 Route::get('personnel/plafon_transport/detail_data', 'PersonelController@dataDetailPlafonTransportPersonel');
+Route::get('personnel/plafon_reimbursement/detail_data', 'PersonelController@dataDetailPlafonReimbursementPersonel');
 Route::get('personnel/format_report/detail_data', 'PersonelController@dataDetailFormatReportPersonel');
 Route::get('personnel/relation_code/detail_data', 'PersonelController@dataDetailRelationCodePersonel');
 Route::get('personnel/final_performance_result/detail_data', 'PersonelController@dataDetailFinalPerformanceResultPersonel');
@@ -396,6 +399,7 @@ Route::post('personnel/loan_whitelist/proses', 'PersonelController@prosesLoanWhi
 Route::post('personnel/plafon_medical/proses', 'PersonelController@prosesPlafonMedicalPersonel');
 Route::post('personnel/plafon_business_trip/proses', 'PersonelController@prosesPlafonBusinessTripPersonel');
 Route::post('personnel/plafon_transport/proses', 'PersonelController@prosesPlafonTransportPersonel');
+Route::post('personnel/plafon_reimbursement/proses', 'PersonelController@prosesPlafonReimbursementPersonel');
 Route::post('personnel/employee_termination/proses', 'PersonelController@prosesEmployeeTerminationPersonel');
 
 Route::get('personnel/final_performance_result/remove', 'PersonelController@removeFinalPerformanceResultPersonel');
@@ -1395,6 +1399,8 @@ Route::get('plafon_business_trip/api', 'DataController@dataPlafonBusinessTripAPI
 Route::get('plafon_business_trip/func/api', 'DataController@dataPlafonBusinessTripFunctionAPI');
 Route::get('plafon_transport/api', 'DataController@dataPlafonTransportAPI');
 Route::get('plafon_transport/func/api', 'DataController@dataPlafonTransportFunctionAPI');
+Route::get('plafon_reimbursement/api', 'DataController@dataPlafonReimbursementAPI');
+Route::get('plafon_reimbursement/func/api', 'DataController@dataPlafonReimbursementFunctionAPI');
 
 /* Route Untuk Save Token Device dan Notification Firebase */
 Route::get('save-token', 'DashboardController@saveToken');

@@ -514,6 +514,11 @@ class PersonelController extends Controller
         return view('personel.personel_plafon_transport');
     }
 
+    public function pagePlafonReimbursementPersonel()
+    {
+        return view('personel.personel_plafon_reimbursement');
+    }
+
     public function pageFormatReportPersonel()
     {
         return view('personel.personel_format_report');
@@ -2423,6 +2428,46 @@ class PersonelController extends Controller
         }
     }
 
+    public function tablePlafonReimbursementPersonel(Request $request)
+    {
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/personel/PePlafon/getAllPlafon',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'category' => 'RMB',
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
+        }
+    }
+
     public function tableFormatReportPersonel(Request $request)
     {
         if ($request->ajax()) {
@@ -3923,6 +3968,47 @@ class PersonelController extends Controller
         $arrResult = json_decode($response->getBody()->getContents());  
 
         return view('personel.personel_plafon_transport_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
+    }
+
+    public function dataDetailPlafonReimbursementPersonel(Request $request)
+    {
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/personel/PePlafon/getAllPlafon',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'plafonYear' => $request->plafonYear,
+                        'plafonCode' => $request->plafonCode,
+                        'rankCode' => $request->rankCode,
+                        'category' => $request->category,
+                        'plafonAmount' => (int) $request->plafonAmount,
+                        'status' => $request->status,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());  
+
+        return view('personel.personel_plafon_reimbursement_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
     }
 
     public function dataDetailFormatReportPersonel(Request $request)
@@ -11770,6 +11856,59 @@ class PersonelController extends Controller
         return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
     }
 
+    public function prosesPlafonReimbursementPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $param = [
+                'companyCode' => Session::get('companyCode'),
+                'plafonCode' => $request->code,
+                'plafonYear' => $request->year,
+                'plafonAmount' => (int) $request->nominal,
+                'rankCode' => $request->ranking_code,
+                'category' => 'RMB',
+                'status' => $request->status,
+                'isDuty' => false,
+                'sessionUserID' => Session::get('userID'),
+                'sessionID' => 0,
+                'logActionUserID' => Session::get('userID'),
+                'logActionUsername' => Session::get('userName'),
+                "languageCode" => App::getLocale()
+            ];
+
+            if($request->record_function == 'New'){
+                $response = $client->post(env('API_URL') . '/personel/PePlafon/InsertPePlafon',
+                    ['body' => json_encode($param)]
+                );
+            }else{
+                $response = $client->put(env('API_URL') . '/personel/PePlafon/UpdatePePlafon',
+                    ['body' => json_encode($param)]
+                );
+            }
+
+
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
     public function prosesEmployeeTerminationPersonel(Request $request)
     {
         date_default_timezone_set('Asia/Jakarta');
@@ -12257,8 +12396,11 @@ class PersonelController extends Controller
         else if ($type === 'BUSINESSTRIP') {
             $fileName = 'Business Trip';
         }
-        else {
+        else if ($type === 'TRANSPORT') {
             $fileName = 'Transport';
+        }
+        else {
+            $fileName = 'Reimbursement';
         }
 
         return Excel::download(new PlafonExport($type, $fileName), "Plafon {$fileName}.xlsx");
