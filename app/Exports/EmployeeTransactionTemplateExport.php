@@ -46,7 +46,6 @@ class EmployeeTransactionTemplateExport implements FromView, ShouldAutoSize
 
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            dd($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -56,10 +55,10 @@ class EmployeeTransactionTemplateExport implements FromView, ShouldAutoSize
             }
         }
 
-        dd($arrResult);
+        // dd($arrResult);
             
         return view('personel.personel_export_template_employee_transaction', [
-            'data' => ($arrResult != null) ? $arrResult : []
+            'data' => ($arrResult->dataListSet != null) ? $arrResult->dataListSet : []
         ]);
     }
 }

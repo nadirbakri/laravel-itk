@@ -106,6 +106,34 @@
             font-weight: 500;
             font-size: 2.5vw;
         }
+
+        #loading {
+			display: none;
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(255, 255, 255, 0.8);
+			z-index: 9999;
+		}
+
+		.spinner {
+            position: absolute;
+			margin-left: 45%;
+			margin-top: 20%;
+			border-radius: 50%;
+			width: 50px;
+			height: 50px;
+			border-radius: 50%;
+			border: 5px solid #ccc;
+			border-top-color: #333;
+			animation: spin 1s infinite linear;
+		}
+
+        @keyframes spin {
+		to { transform: rotate(360deg); }
+		}
     </style>
 </head>
 
@@ -248,8 +276,11 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body table-responsive">
-                        <table id="list_mass_leave_table" class="display">
+                    <div class="modal-body">
+                        <div id="loading">
+                            <div class="spinner"></div>
+                        </div>
+                        <table id="list_mass_leave_table" class="table" style="width: 100%;">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -371,6 +402,7 @@
     var selectedEmployees = {};
 
     load_data_employee();
+    load_data_table_mass_leave();
 
     $('#submit_type').on('change', function() {
         if (this.value == "STB") {
@@ -511,6 +543,7 @@
             arrayMassLeave = data;
             $('#list_mass_leave_table').DataTable().destroy();
             load_data_table_mass_leave();
+            $('#loading').hide();
         });
     }
 
@@ -525,7 +558,7 @@
             },
             "sDom": 'lfrtip',
             'sPaginationType': 'full_numbers',
-            "order": [[ 1, "asc" ]],
+            ordering: false,
             columns: [
                 {
                     orderable: false,
@@ -565,6 +598,7 @@
     }
 
     $('#modal_list_mass_leave').on('show.bs.modal', function () {
+        $('#loading').show();
         load_data_mass_leave();
     })
     
