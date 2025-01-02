@@ -2,17 +2,22 @@
 
 namespace App\Exports;
 
+use PhpOffice\PhpSpreadsheet\Cell\Cell;
 use Maatwebsite\Excel\Concerns\FromView;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\WithTitle;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
+use PhpOffice\PhpSpreadsheet\Cell\DataType;
+use Maatwebsite\Excel\Concerns\WithEvents;
+use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 use Validator;
 use Session;
 use App;
 
-class EmployeeTransactionTemplateExport implements FromView, ShouldAutoSize
+class EmployeeTransactionTemplateExport implements FromView, WithColumnFormatting, WithEvents, ShouldAutoSize
 {
     public function __construct($type)
     {
@@ -60,5 +65,17 @@ class EmployeeTransactionTemplateExport implements FromView, ShouldAutoSize
         return view('personel.personel_export_template_employee_transaction', [
             'data' => ($arrResult->dataListSet != null) ? $arrResult->dataListSet : []
         ]);
+    }
+
+    public function registerEvents(): array
+    {
+        return [
+            AfterSheet::class => function(AfterSheet $event) {
+                $sheet = $event->sheet->getDelegate();
+    
+                // Terapkan format teks untuk seluruh sheet (seluruh kolom dan baris)
+                $sheet->getStyle()->getNumberFormat()->setFormatCode('@');
+            },
+        ];
     }
 }
