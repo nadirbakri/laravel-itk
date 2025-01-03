@@ -91,6 +91,7 @@ class EmployeeTransactionImport implements ToCollection, SkipsEmptyRows, WithSta
                 $param = [
                     "companyCode" => (!is_null($row[0]) && $row[0] != "NULL") ? strval($row[0]) : null,
                     "employeeNo" => (!is_null($row[1]) && $row[1] != "NULL") ? strval($row[1]) : null,
+                    "mutationType" => $this->type
                 ];
 
                 if ($this->type == 'N') {
