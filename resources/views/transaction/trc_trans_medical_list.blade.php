@@ -820,7 +820,7 @@
                 },
                 {data: 'reimbursementEntity.ticketNo', name: 'reimbursementEntity.ticketNo'},
                 {data: 'reimbursementEntity.reimbursementStatus', name: 'reimbursementEntity.reimbursementStatus'},
-                {data: 'reimbursementEntity.directSuperiorID', name: 'reimbursementEntity.directSuperiorID'},
+                {data: 'reimbursementEntity.employeeNo', name: 'reimbursementEntity.employeeNo'},
                 {data: 'reimbursementEntity.fullnameRequester', name: 'reimbursementEntity.fullnameRequester'},
                 {data: 'reimbursementEntity.receiptDate', name: 'reimbursementEntity.receiptDate',
                     render: function (data, type, row) {
