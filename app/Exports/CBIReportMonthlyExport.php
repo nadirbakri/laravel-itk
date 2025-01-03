@@ -98,7 +98,6 @@ class CBIReportMonthlyExport extends DefaultValueBinder implements WithCustomVal
             }
         }catch (RequestException $e){
             $response = $e->getResponse();
-            // dd($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){

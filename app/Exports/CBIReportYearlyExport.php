@@ -63,7 +63,7 @@ class CBIReportYearlyExport extends DefaultValueBinder implements WithCustomValu
             }else if($this->reportType == 'YEARLY_RECAP_JAMSOSTEK_REPORT'){
                 $param = [
                     'companyCode' => Session::get('companyCode'),
-                    "periodYear" => (int) date('Y', strtotime($this->period)),
+                    "periodYear" => (int) date('Y', strtotime($this->period . '-01-01')),
                     "languageCode" => App::getLocale(),
                     "sessionID" => 0,
                     "sessionUserID" => Session::get('userID'),
@@ -78,7 +78,7 @@ class CBIReportYearlyExport extends DefaultValueBinder implements WithCustomValu
             }else if($this->reportType == 'YEARLY_RECAP_REPORT'){
                 $param = [
                     'companyCode' => Session::get('companyCode'),
-                    "periodYear" => (int) date('Y', strtotime($this->period)),
+                    "periodYear" => (int) date('Y', strtotime($this->period . '-01-01')),
                     "languageCode" => App::getLocale(),
                     "sessionID" => 0,
                     "sessionUserID" => Session::get('userID'),
