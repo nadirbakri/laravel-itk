@@ -240,7 +240,7 @@ class EmployeeTransactionImport implements ToCollection, SkipsEmptyRows, WithSta
                 $param['mutationEmployee'] = $transactionData;
             });
 
-            dd(json_encode($param));
+            // dd(json_encode($param));
 
             $response = $client->post(env('API_URL') . '/personel/MutationEmployee/ImprotTransactionBulkEmployees',
                 ['body' => json_encode($param)]
