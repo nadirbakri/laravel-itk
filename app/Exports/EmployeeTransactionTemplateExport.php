@@ -12,12 +12,11 @@ use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use PhpOffice\PhpSpreadsheet\Cell\DataType;
 use Maatwebsite\Excel\Concerns\WithEvents;
-use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 use Validator;
 use Session;
 use App;
 
-class EmployeeTransactionTemplateExport implements FromView, WithColumnFormatting, WithEvents, ShouldAutoSize
+class EmployeeTransactionTemplateExport implements FromView, WithEvents, ShouldAutoSize
 {
     public function __construct($type)
     {
