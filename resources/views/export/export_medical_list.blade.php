@@ -36,6 +36,9 @@
 				<th>Alamat Email</th>
 				<th>Division</th>
 				<th>Cost Center</th>
+				@if($companyCode == 'CBI')
+				<th>Employee No</th>
+				@endif
 			</tr>
 		</thead>
 		<tbody>
@@ -67,6 +70,9 @@
 				<td>{{ isset($value->reimbursementEntity->emailRequester) ? $value->reimbursementEntity->emailRequester : '' }}</td>
 				<td>{{ isset($value->reimbursementEntity->businessUnit) ? $value->reimbursementEntity->businessUnit : '' }}</td>
 				<td>{{ isset($value->reimbursementEntity->costCenter) ? $value->reimbursementEntity->costCenter : '' }}</td>
+				@if($companyCode == 'CBI')
+				<td>{{ isset($value->reimbursementEntity->employeeNo) ? $value->reimbursementEntity->employeeNo : '' }}</td>
+				@endif
 			</tr>
 			@endforeach
 			<tr>
@@ -87,6 +93,9 @@
 				<td></td> 
 				<td></td>
 				<td></td>
+				@if($companyCode == 'CBI')
+				<td></td>
+				@endif
 			</tr>
 		</tbody>
 	</table>

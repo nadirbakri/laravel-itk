@@ -111,7 +111,13 @@
                                 $total[$totalKey] += $dataTable2->value;
                             }
                             ?>
-                            <td data-format="{{ $dataTable2->dataFormat }}" style="text-align:{{ $alignment }}; border:1px solid #000; font-size:{{ $dataTable2->fontSize }}px !important;">{{ empty($dataTable2->value) ? 0 : $dataTable2->value }}</td>
+                            <td data-format="{{ $dataTable2->dataFormat }}" style="text-align:{{ $alignment }}; border:1px solid #000; font-size:{{ $dataTable2->fontSize }}px !important;">
+                                @if($company == 'CBI')
+                                    {{ $dataTable2->value }}
+                                @else
+                                    {{ empty($dataTable2->value) ? 0 : $dataTable2->value }}
+                                @endif
+                            </td>
                         @elseif(!is_string($dataTable2->value) && $dataTable2->dataFormat == "#,##0.00")
                             <?php
                             if(!empty($dataTable2->value)){
@@ -119,14 +125,38 @@
                                 $total[$totalKey] += $dataTable2->value;
                             }
                             ?>
-                            <td data-format="{{ $dataTable2->dataFormat }}" style="text-align:{{ $alignment }}; border:1px solid #000; font-size:{{ $dataTable2->fontSize }}px !important;">{{ empty($dataTable2->value) ? 0 : $dataTable2->value }}</td>
+                            <td data-format="{{ $dataTable2->dataFormat }}" style="text-align:{{ $alignment }}; border:1px solid #000; font-size:{{ $dataTable2->fontSize }}px !important;">
+                                @if($company == 'CBI')
+                                    {{ $dataTable2->value }}
+                                @else
+                                    {{ empty($dataTable2->value) ? 0 : $dataTable2->value }}
+                                @endif
+                            </td>
                         
                         @elseif($dataTable2->dataFormat == "dd/MM/yyyy")
-                            <td style="text-align:{{ $alignment }}; border:1px solid #000; font-size:{{ $dataTable2->fontSize }}px !important;">{{ empty($dataTable2->value) ? "" : date('d/m/Y', strtotime($dataTable2->value)) }}</td>
+                            <td style="text-align:{{ $alignment }}; border:1px solid #000; font-size:{{ $dataTable2->fontSize }}px !important;">
+                                @if($company == 'CBI')
+                                    {{ date('d/m/Y', strtotime($dataTable2->value)) }}
+                                @else
+                                    {{ empty($dataTable2->value) ? "" : date('d/m/Y', strtotime($dataTable2->value)) }}
+                                @endif
+                            </td>
                         @elseif($dataTable2->dataFormat == "dd MM yyyy")
-                            <td style="text-align:{{ $alignment }}; border:1px solid #000; font-size:{{ $dataTable2->fontSize }}px !important;">{{ empty($dataTable2->value) ? "" : date('d m Y', strtotime($dataTable2->value)) }}</td>
+                            <td style="text-align:{{ $alignment }}; border:1px solid #000; font-size:{{ $dataTable2->fontSize }}px !important;">
+                                @if($company == 'CBI')
+                                    {{ date('d m Y', strtotime($dataTable2->value)) }}
+                                @else
+                                    {{ empty($dataTable2->value) ? "" : date('d m Y', strtotime($dataTable2->value)) }}
+                                @endif
+                            </td>
                         @else
-                            <td data-format="@" style="text-align:{{ $alignment }}; border:1px solid #000; font-size:{{ $dataTable2->fontSize }}px !important;">{{ empty($dataTable2->value) ? "" : $dataTable2->value }}</td>
+                            <td data-format="@" style="text-align:{{ $alignment }}; border:1px solid #000; font-size:{{ $dataTable2->fontSize }}px !important;">
+                                @if($company == 'CBI')
+                                    {{ $dataTable2->value }}
+                                @else
+                                    {{ empty($dataTable2->value) ? "" : $dataTable2->value }}
+                                @endif
+                            </td>
                         @endif
                     @endforeach
                 </tr>
@@ -300,7 +330,13 @@
                                             $totalBranch[$branch] += $total[$branch][$totalKey];
                                         }
                                     ?>
-                                    <td data-format="{{ $dataRow2->dataFormat }}" style="text-align:{{ $alignment }}; border:1px solid #000; font-size:{{ $fontSize }}px !important;">{{ empty($dataRow2->value) ? 0 : $dataRow2->value }}</td>
+                                    <td data-format="{{ $dataRow2->dataFormat }}" style="text-align:{{ $alignment }}; border:1px solid #000; font-size:{{ $fontSize }}px !important;">
+                                        @if($company == 'CBI')
+                                            {{ $dataRow2->value }}
+                                        @else
+                                            {{ empty($dataRow2->value) ? 0 : $dataRow2->value }}
+                                        @endif
+                                    </td>
                                 @elseif(!is_string($dataRow2->value) && $dataRow2->dataFormat == "#,##0.00")
                                     <?php
                                         if(!empty($dataRow2->value)){
@@ -309,13 +345,37 @@
                                             $totalBranch[$branch] += $total[$branch][$totalKey];
                                         }
                                     ?>
-                                    <td data-format="{{ $dataRow2->dataFormat }}" style="text-align:{{ $alignment }}; border:1px solid #000; font-size:{{ $fontSize }}px !important;">{{ empty($dataRow2->value) ? 0 : $dataRow2->value }}</td>
+                                    <td data-format="{{ $dataRow2->dataFormat }}" style="text-align:{{ $alignment }}; border:1px solid #000; font-size:{{ $fontSize }}px !important;">
+                                        @if($company == 'CBI')
+                                            {{ $dataRow2->value }}
+                                        @else
+                                            {{ empty($dataRow2->value) ? 0 : $dataRow2->value }}
+                                        @endif
+                                    </td>
                                 @elseif($dataRow2->dataFormat == "dd/MM/yyyy")
-                                    <td style="text-align:{{ $alignment }}; border:1px solid #000; font-size:{{ $fontSize }}px !important;">{{ empty($dataRow2->value) ? "" : date('d/m/Y', strtotime($dataRow2->value)) }}</td>
+                                    <td style="text-align:{{ $alignment }}; border:1px solid #000; font-size:{{ $fontSize }}px !important;">
+                                        @if($company == 'CBI')
+                                            {{ date('d/m/Y', strtotime($dataRow2->value)) }}
+                                        @else
+                                            {{ empty($dataRow2->value) ? "" : date('d/m/Y', strtotime($dataRow2->value)) }}
+                                        @endif
+                                    </td>
                                 @elseif($dataRow2->dataFormat == "dd MM yyyy")
-                                    <td style="text-align:{{ $alignment }}; border:1px solid #000; font-size:{{ $fontSize }}px !important;">{{ empty($dataRow2->value) ? "" : date('d m Y', strtotime($dataRow2->value)) }}</td>
+                                    <td style="text-align:{{ $alignment }}; border:1px solid #000; font-size:{{ $fontSize }}px !important;">
+                                        @if($company == 'CBI')
+                                            {{ date('d m Y', strtotime($dataRow2->value)) }}
+                                        @else
+                                            {{ empty($dataRow2->value) ? "" : date('d m Y', strtotime($dataRow2->value)) }}
+                                        @endif
+                                    </td>
                                 @else
-                                    <td data-format="@" style="text-align:{{ $alignment }}; border:1px solid #000; font-size:{{ $fontSize }}px !important;">{{ empty($dataRow2->value) ? "" : $dataRow2->value }}</td>
+                                    <td data-format="@" style="text-align:{{ $alignment }}; border:1px solid #000; font-size:{{ $fontSize }}px !important;">
+                                        @if($company == 'CBI')
+                                            {{ $dataRow2->value }}
+                                        @else
+                                            {{ empty($dataRow2->value) ? "" : $dataRow2->value }}
+                                        @endif
+                                    </td>
                                 @endif
                             @endforeach
                         </tr>
@@ -514,7 +574,13 @@
                                         $totalCompany[$dataRow->companyName] += $total[$dataRow->companyName][$key2];
                                     }
                                 ?>
-                                <td data-format="{{ $dataRow2->dataFormat }}" style="text-align:{{ $alignment }}; border:1px solid #000; font-size: {{ $dataRow2->fontSize }}px !important;">{{ empty($dataRow2->value) ? 0 : $dataRow2->value }}</td>
+                                <td data-format="{{ $dataRow2->dataFormat }}" style="text-align:{{ $alignment }}; border:1px solid #000; font-size: {{ $dataRow2->fontSize }}px !important;">
+                                    @if($company == 'CBI')
+                                        {{ $dataRow2->value }}
+                                    @else
+                                        {{ empty($dataRow2->value) ? 0 : $dataRow2->value }}
+                                    @endif
+                                </td>
                             @elseif(!is_string($dataRow2->value) && $dataRow2->dataFormat == "#,##0.00")
                                 <?php
                                     if(!empty($dataRow2->value)){
@@ -522,13 +588,37 @@
                                         $totalCompany[$dataRow->companyName] += $total[$dataRow->companyName][$key2];
                                     }
                                 ?>
-                                <td data-format="{{ $dataRow2->dataFormat }}" style="text-align:{{ $alignment }}; border:1px solid #000; font-size: {{ $dataRow2->fontSize }}px !important;">{{ empty($dataRow2->value) ? 0 : $dataRow2->value }}</td>
+                                <td data-format="{{ $dataRow2->dataFormat }}" style="text-align:{{ $alignment }}; border:1px solid #000; font-size: {{ $dataRow2->fontSize }}px !important;">
+                                    @if($company == 'CBI')
+                                        {{ $dataRow2->value }}
+                                    @else
+                                        {{ empty($dataRow2->value) ? 0 : $dataRow2->value }}
+                                    @endif
+                                </td>
                             @elseif($dataRow2->dataFormat == "dd/MM/yyyy")
-                                <td style="text-align:{{ $alignment }}; border:1px solid #000; font-size: {{ $dataRow2->fontSize }}px !important;">{{ empty($dataRow2->value) ? "" : date('d/m/Y', strtotime($dataRow2->value)) }}</td>
+                                <td style="text-align:{{ $alignment }}; border:1px solid #000; font-size: {{ $dataRow2->fontSize }}px !important;">
+                                    @if($company == 'CBI')
+                                        {{ date('d/m/Y', strtotime($dataRow2->value)) }}
+                                    @else
+                                        {{ empty($dataRow2->value) ? "" : date('d/m/Y', strtotime($dataRow2->value)) }}
+                                    @endif
+                                </td>
                             @elseif($dataRow2->dataFormat == "dd MM yyyy")
-                                <td style="text-align:{{ $alignment }}; border:1px solid #000; font-size: {{ $dataRow2->fontSize }}px !important;">{{ empty($dataRow2->value) ? "" : date('d m Y', strtotime($dataRow2->value)) }}</td>
+                                <td style="text-align:{{ $alignment }}; border:1px solid #000; font-size: {{ $dataRow2->fontSize }}px !important;">
+                                    @if($company == 'CBI')
+                                        {{ date('d m Y', strtotime($dataRow2->value)) }}
+                                    @else
+                                        {{ empty($dataRow2->value) ? "" : date('d m Y', strtotime($dataRow2->value)) }}
+                                    @endif
+                                </td>
                             @else
-                                <td data-format="@" style="text-align:{{ $alignment }}; border:1px solid #000; font-size: {{ $dataRow2->fontSize }}px !important;">{{ empty($dataRow2->value) ? "" : $dataRow2->value }}</td>
+                                <td data-format="@" style="text-align:{{ $alignment }}; border:1px solid #000; font-size: {{ $dataRow2->fontSize }}px !important;">
+                                    @if($company == 'CBI')
+                                        {{ $dataRow2->value }}
+                                    @else
+                                        {{ empty($dataRow2->value) ? "" : $dataRow2->value }}
+                                    @endif
+                                </td>
                             @endif
                         @endforeach
                     </tr>

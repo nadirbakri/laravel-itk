@@ -90,11 +90,11 @@ class MedicalExport extends DefaultValueBinder implements WithCustomValueBinder,
 
         if($arrResult->dataListSet == null){
             return view('export.export_medical_list', [
-                'data' => []
+                'data' => [], 'companyCode' => Session::get('companyCode')
             ]);
         }else{
             return view('export.export_medical_list', [
-                'data' => $arrResult->dataListSet
+                'data' => $arrResult->dataListSet, 'companyCode' => Session::get('companyCode')
             ]);
         }
     }
