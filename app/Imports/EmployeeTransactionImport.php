@@ -77,21 +77,18 @@ class EmployeeTransactionImport implements ToCollection, SkipsEmptyRows, WithSta
 
             Validator::make($rows->toArray(), $rules, $messages)->validate();
 
-            $param = [
-                "languageCode" => App::getLocale(),
-                "sessionID" => 0,
-                "sessionUserID" => Session::get('userID'),
-                "logActionUserID" => Session::get('userID'),
-                "logActionUsername" => Session::get('userName')
-            ];
-
             $rows->filter(function ($row) {
                 return !empty($row[1]);
             })->each(function ($row) use (&$param, &$levelType) {
                 $param = [
                     "companyCode" => (!is_null($row[0]) && $row[0] != "NULL") ? strval($row[0]) : null,
                     "employeeNo" => (!is_null($row[1]) && $row[1] != "NULL") ? strval($row[1]) : null,
-                    "mutationType" => $this->type
+                    "mutationType" => $this->type,
+                    "languageCode" => App::getLocale(),
+                    "sessionID" => 0,
+                    "sessionUserID" => Session::get('userID'),
+                    "logActionUserID" => Session::get('userID'),
+                    "logActionUsername" => Session::get('userName')
                 ];
 
                 if ($this->type == 'N') {
