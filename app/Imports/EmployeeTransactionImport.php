@@ -38,7 +38,8 @@ class EmployeeTransactionImport implements ToCollection, SkipsEmptyRows, WithSta
 
     public function collection(Collection $rows)
     {
-        $param = [];
+        $transactionData = [];
+        $companyCode = Session::get('companyCode');
 
         date_default_timezone_set('Asia/Jakarta');
         try {
@@ -77,19 +78,32 @@ class EmployeeTransactionImport implements ToCollection, SkipsEmptyRows, WithSta
 
             Validator::make($rows->toArray(), $rules, $messages)->validate();
 
+            // $param = [
+            //     "companyCode" => (!is_null($row[0]) && $row[0] != "NULL") ? strval($row[0]) : null,
+            //     "employeeNo" => (!is_null($row[1]) && $row[1] != "NULL") ? strval($row[1]) : null,
+            //     "mutationType" => $this->type,
+            //     "languageCode" => App::getLocale(),
+            //     "sessionID" => 0,
+            //     "sessionUserID" => Session::get('userID'),
+            //     "logActionUserID" => Session::get('userID'),
+            //     "logActionUsername" => Session::get('userName')
+            // ];
+
+            $param = [
+                "companyCode" => $companyCode,
+                "employeeNo" => Session::get('userID'),
+                "mutationType" => $this->type,
+                "languageCode" => App::getLocale(),
+                "sessionID" => 0,
+                "sessionUserID" => Session::get('userID'),
+                "logActionUserID" => Session::get('userID'),
+                "logActionUsername" => Session::get('userName')
+            ];
+
             $rows->filter(function ($row) {
                 return !empty($row[1]);
-            })->each(function ($row) use (&$param, &$levelType) {
-                $param = [
-                    "companyCode" => (!is_null($row[0]) && $row[0] != "NULL") ? strval($row[0]) : null,
-                    "employeeNo" => (!is_null($row[1]) && $row[1] != "NULL") ? strval($row[1]) : null,
-                    "mutationType" => $this->type,
-                    "languageCode" => App::getLocale(),
-                    "sessionID" => 0,
-                    "sessionUserID" => Session::get('userID'),
-                    "logActionUserID" => Session::get('userID'),
-                    "logActionUsername" => Session::get('userName')
-                ];
+            })->each(function ($row) use (&$param, &$transactionData, &$levelType) {
+                $companyCode = (!is_null($row[0]) && $row[0] != "NULL") ? strval($row[0]) : null;
 
                 if ($this->type == 'N') {
                     $transactionData[] = [
@@ -234,10 +248,11 @@ class EmployeeTransactionImport implements ToCollection, SkipsEmptyRows, WithSta
                         "employeeNo" => (!is_null($row[1]) && $row[1] != "NULL") ? strval($row[1]) : null
                     ];
                 }
-
-                $param['mutationEmployee'] = $transactionData;
             });
 
+            $param['mutationEmployee'] = $transactionData;
+
+            // Storage::put('debug_data.txt', json_encode($param));
             // dd(json_encode($param));
 
             $response = $client->post(env('API_URL') . '/personel/MutationEmployee/ImprotTransactionBulkEmployees',
