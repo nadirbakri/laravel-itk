@@ -367,6 +367,7 @@
                 processing: true,
                 orderCellsTop: true,
                 paging: false,
+                ordering: false,
                 "sDom": 'lrtip'
             });
         }

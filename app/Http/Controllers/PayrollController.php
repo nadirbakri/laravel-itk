@@ -1979,9 +1979,11 @@ class PayrollController extends Controller
             $data = [];
         }else{
             $data = $arrResult->dataListSet;
-        }
 
-        // dd($data);
+            usort($data[0]->grid, function ($a, $b) {
+                return strcasecmp($a->fieldName, $b->fieldName);
+            });
+        }
 
         return view('payroll.py_salary_master_detail', ['data' => $data]);
     }
@@ -2071,6 +2073,10 @@ class PayrollController extends Controller
             $data = [];
         }else{
             $data = $arrResult->dataListSet;
+
+            usort($data[0]->grid, function ($a, $b) {
+                return strcasecmp($a->fieldName, $b->fieldName);
+            });
         }
 
         return view('payroll.py_tariff_master_detail', ['data' => $data]);

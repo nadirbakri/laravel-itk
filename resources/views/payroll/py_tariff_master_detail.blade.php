@@ -297,6 +297,7 @@
             table = $('#tariff_master_detail_table').DataTable({
                 processing: true,
                 orderCellsTop: true,
+                ordering: false,
                 "sDom": 'lrtip',
                 'sPaginationType': 'full_numbers',
             });
