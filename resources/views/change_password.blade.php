@@ -31,7 +31,7 @@
         .div-title img {
             height: 3.5vh;
         }
-        .modal-header-notification {
+        .modal-header-notification-error {
             border-bottom:1px solid #eee;
             background-color: #f44336;
             -webkit-border-top-left-radius: 1rem;
@@ -40,6 +40,37 @@
             -moz-border-radius-topright: 1rem;
             border-top-left-radius: 1rem;
             border-top-right-radius: 1rem;
+        }
+        .modal-header-notification-success {
+            border-bottom:1px solid #eee;
+            background-color: #00a862;
+            -webkit-border-top-left-radius: 1rem;
+            -webkit-border-top-right-radius: 1rem;
+            -moz-border-radius-topleft: 1rem;
+            -moz-border-radius-topright: 1rem;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
+        }
+        .div-title-notification {
+            margin: 1.5%;
+            margin-top: 2%;
+            margin-bottom: 5%;
+            font-family: Monserrat;
+            text-decoration: none;
+            display: flex;
+            align-items:center;
+            justify-content: center;
+        }
+        .div-title-notification img {
+            max-width: 100%;
+            height: 6vh;
+            margin-right: 5%;
+        }
+        .title-text-notification {
+            font-family: Inter;
+            font-weight: 700;
+            font-size: 2.5vw;
+            margin-left: 0.5%;
         }
 	</style>
 </head>
@@ -105,21 +136,40 @@
             </form>
 		</div>
 	</div>
-    <div class="modal fade" role="dialog" id="notification">
+    <div class="modal fade" role="dialog" id="notification_error">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <div class="modal-header modal-header-notification">
+                <div class="modal-header modal-header-notification-error">
                     <h5 class="modal-title">Error!</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <span id="message-notification">{{ $errors->first() }}</span>
+                    <span id="message-notification-error">{{ $errors->first() }}</span>
                 </div>
             </div>
         </div>
     </div>
+    <div class="modal fade" role="dialog" id="notification_success">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-header-notification-success">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="div-title-notification">
+                        <img src="{{ url('/pictures/checklist-green-confirm-password.svg') }}" alt="Password">
+                        <span class="title-text-notification">{{ __('utilities_user_access_group.alert_success') }}</span>
+                    </div>
+                    <div class="div-title-notification">
+                        <span id="message-notification-success"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
 </body>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -183,6 +233,10 @@
         }
     });
 
+    $('#notification_success').on('hide.bs.modal', function () {
+        window.top.location = "{{ url('logout') }}";
+    })
+
     if($("#change_password_form").length > 0) {
         $("#change_password_form").validate({
             rules: {
@@ -234,19 +288,23 @@
                     data: $('#change_password_form').serialize(),
                     success: function(response) {
                         if(response.status == "true"){
-                            window.location = response.message;
+                            $('#notification_success').modal('show');
+                            $('#message-notification-success').html(response.message);
+                            setTimeout(function(){ 
+                                window.top.location = "{{ url('logout') }}";
+                            }, 3000);
                         }else{
-                            $('#notification').modal('show');
+                            $('#notification_error').modal('show');
                             if(response.message == null || response.message == ''){
-                                $('#message-notification').html("{{ __('change_password.error') }}");
+                                $('#message-notification-error').html("{{ __('login.error') }}");
                             }else{
-                                $('#message-notification').html(response.message);
+                                $('#message-notification-error').html(response.message);
                             }
                         }
                     },
                     error: function(response) {
-                        $('#notification').modal('show');
-                        $('#message-notification').html(response);
+                        $('#notification_error').modal('show');
+                        $('#message-notification-error').html(response);
                     }
 
                 });

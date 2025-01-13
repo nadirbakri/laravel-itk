@@ -53,15 +53,6 @@ class ChangePasswordController extends Controller
 
         $arrResult = json_decode($response->getBody()->getContents());
 
-        // dd($arrResult);
-
-        if($arrResult->status == "true"){
-            Session::flush();
-
-            return redirect()->route('main')->with('message', $arrResult->message);
-            // return response()->json(["status" => $arrResult->status, "message" => "/login"]);
-        }else{
-            return response()->json(["status" => $arrResult->status, "message" => $arrResult->message]);
-        }
+        return response()->json(["status" => $arrResult->status, "message" => $arrResult->message]);
     }
 }
