@@ -108,6 +108,9 @@
                             <?php
                             if(!empty($dataTable2->value)){
                                 $totalKey = $dataTable2->field . '_' . $key2;
+                                if (!isset($total[$totalKey])) {
+                                    $total[$totalKey] = 0;
+                                }
                                 $total[$totalKey] += $dataTable2->value;
                             }
                             ?>
@@ -122,6 +125,9 @@
                             <?php
                             if(!empty($dataTable2->value)){
                                 $totalKey = $dataTable2->field . '_' . $key2;
+                                if (!isset($total[$totalKey])) {
+                                    $total[$totalKey] = 0;
+                                }
                                 $total[$totalKey] += $dataTable2->value;
                             }
                             ?>
