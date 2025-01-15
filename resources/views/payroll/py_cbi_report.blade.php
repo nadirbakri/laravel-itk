@@ -514,7 +514,7 @@
                             results: $.map(data, function (item) {
                                 return {
                                     text: item.value,
-                                    id: item.comGenCode,
+                                    id: item.code,
                                     data: item
                                 }
                             })

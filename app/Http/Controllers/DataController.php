@@ -9869,13 +9869,15 @@ class DataController extends Controller
 	    		'headers' => [ 'Content-Type' => 'application/json',
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
-	    	$response = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    	$response = $client->post(env('API_URL') . '/mobile/ReferenceMobile/getReferenceMobile',
 			['body' => json_encode(
 				[
-					// 'companyCode' => Session::get('companyCode'),
+					'companyCode' => Session::get('companyCode'),
 					"variable" => "MedicalType_",
-					"languageCode" => strtoupper(App::getLocale())
-	    			]
+					"languageCode" => strtoupper(App::getLocale()),
+					"logActionUserID" => Session::get('userID'),
+					"logActionUsername" => Session::get('userID')
+				]
 					)]
 				);
 			} catch (RequestException $e) {
@@ -9894,7 +9896,7 @@ class DataController extends Controller
 			$arrData = array_filter(
 	    		$arrResult->dataListSet,
 	    		function($value) {
-	    			if($value->comGenCode != 'FRM' && $value->comGenCode != 'ROO'){
+	    			if($value->code != 'FRM' && $value->code != 'ROO'){
 	    				return $value;
 	    			}
 	    		}
