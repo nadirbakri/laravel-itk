@@ -35,6 +35,9 @@
                 <th>Total Request (Rp)</th>
                 <th>Total Settlement (Rp)</th>
                 <th>Difference (Rp)</th>
+				@if($companyCode == 'CBI')
+				<th>Employee No</th>
+				@endif
 			</tr>
 		</thead>
 		<tbody>
@@ -66,6 +69,9 @@
 					<td data-format="#,##0">{{ $value->totalRequest}}</td>
 					<td data-format="#,##0">{{ $value->totalClaimAmount }}</td>
 					<td data-format="#,##0">{{ $value->totalDifferentAmount }}</td>
+					@if($companyCode == 'CBI')
+					<td>{{ $value->employeeNo }}</td>
+					@endif
 				</tr>
             @endforeach
 		</tbody>
@@ -75,6 +81,9 @@
 				<td data-format="#,##0">{{ $totalRequest }}</td>
 				<td data-format="#,##0">{{ $totalSettlement  }}</td>
 				<td data-format="#,##0">{{ $totalDifference }}</td>
+				@if($companyCode == 'CBI')
+				<td></td>
+				@endif
 			</tr>
 		</tfoot>
 	</table>

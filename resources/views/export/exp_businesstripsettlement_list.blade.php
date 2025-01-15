@@ -40,6 +40,9 @@
 				<th>Alamat Email</th>
 				<th>Division</th>
 				<th>Cost Center</th>
+				@if($companyCode == 'CBI')
+				<th>Employee No</th>
+				@endif
 			</tr>
 		</thead>
 		<tbody>
@@ -67,6 +70,9 @@
 					<td>{{ isset($value->email) ? $value->email : '' }}</td>
 					<td>{{ isset($value->businessUnit) ? $value->businessUnit : '' }}</td>
 					<td>{{ isset($value->costCenter) ? $value->costCenter : '' }}</td>
+					@if($companyCode == 'CBI')
+					<td>{{ isset($value->employeeNo) ? $value->employeeNo : '' }}</td>
+					@endif
 				</tr>
 				<?php $no++; ?>
 			@endforeach

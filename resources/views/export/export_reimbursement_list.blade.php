@@ -36,6 +36,9 @@
 				<th>{{ __('export_reimbursement.email') }}</th>
 				<th>{{ __('export_reimbursement.division') }}</th>
 				<th>{{ __('export_reimbursement.costcenter') }}</th>
+				@if($companyCode == 'CBI')
+				<th>{{ __('export_reimbursement.employee') }}</th>
+				@endif
 			</tr>
 		</thead>
 		<tbody>
@@ -67,6 +70,9 @@
 				<td>{{ isset($value->reimbursementEntity->emailRequester) ? $value->reimbursementEntity->emailRequester : '' }}</td> 
 				<td>{{ isset($value->reimbursementEntity->businessUnit) ? $value->reimbursementEntity->businessUnit : '' }}</td>
 				<td>{{ isset($value->reimbursementEntity->costCenter) ? $value->reimbursementEntity->costCenter : '' }}</td>
+				@if($companyCode == 'CBI')
+				<td>{{ isset($value->reimbursementEntity->employeeNo) ? $value->reimbursementEntity->employeeNo : '' }}</td>
+				@endif
 			</tr>
 			@endforeach
 			<tr>
@@ -87,6 +93,9 @@
 				<td></td> 
 				<td></td>
 				<td></td>
+				@if($companyCode == 'CBI')
+				<td></td>
+				@endif
 			</tr>
 		</tbody>
 	</table>
