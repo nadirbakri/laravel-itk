@@ -2329,6 +2329,7 @@ class PersonelController extends Controller
                     [
                         'companyCode' => Session::get('companyCode'),
                         'category' => 'MEDICAL',
+                        'languageCode' => strtoupper(App::getLocale()),
                         'userID' => Session::get('userID'),
                         'logActionUserID' => Session::get('userID'),
                         'logActionUsername' => Session::get('userName')
@@ -2369,6 +2370,7 @@ class PersonelController extends Controller
                     [
                         'companyCode' => Session::get('companyCode'),
                         'category' => 'BUSINESSTRIP',
+                        'languageCode' => strtoupper(App::getLocale()),
                         'userID' => Session::get('userID'),
                         'logActionUserID' => Session::get('userID'),
                         'logActionUsername' => Session::get('userName')
@@ -2409,6 +2411,7 @@ class PersonelController extends Controller
                     [
                         'companyCode' => Session::get('companyCode'),
                         'category' => 'TRANSPORT',
+                        'languageCode' => strtoupper(App::getLocale()),
                         'userID' => Session::get('userID'),
                         'logActionUserID' => Session::get('userID'),
                         'logActionUsername' => Session::get('userName')
@@ -2449,6 +2452,7 @@ class PersonelController extends Controller
                     [
                         'companyCode' => Session::get('companyCode'),
                         'category' => 'RMB',
+                        'languageCode' => strtoupper(App::getLocale()),
                         'userID' => Session::get('userID'),
                         'logActionUserID' => Session::get('userID'),
                         'logActionUsername' => Session::get('userName')
@@ -3872,6 +3876,7 @@ class PersonelController extends Controller
                         'plafonCode' => $request->plafonCode,
                         'rankCode' => $request->rankCode,
                         'category' => $request->category,
+                        'languageCode' => strtoupper(App::getLocale()),
                         'userID' => Session::get('userID'),
                         'logActionUserID' => Session::get('userID'),
                         'logActionUsername' => Session::get('userName')
@@ -3914,6 +3919,7 @@ class PersonelController extends Controller
                         'plafonAmount' => (int) $request->plafonAmount,
                         'status' => $request->status,
                         'isDuty' => $request->isDuty === 'true' ? true : false,
+                        'languageCode' => strtoupper(App::getLocale()),
                         'userID' => Session::get('userID'),
                         'logActionUserID' => Session::get('userID'),
                         'logActionUsername' => Session::get('userName')
@@ -3955,6 +3961,7 @@ class PersonelController extends Controller
                         'category' => $request->category,
                         'plafonAmount' => (int) $request->plafonAmount,
                         'status' => $request->status,
+                        'languageCode' => strtoupper(App::getLocale()),
                         'userID' => Session::get('userID'),
                         'logActionUserID' => Session::get('userID'),
                         'logActionUsername' => Session::get('userName')
@@ -3996,6 +4003,7 @@ class PersonelController extends Controller
                         'category' => $request->category,
                         'plafonAmount' => (int) $request->plafonAmount,
                         'status' => $request->status,
+                        'languageCode' => strtoupper(App::getLocale()),
                         'userID' => Session::get('userID'),
                         'logActionUserID' => Session::get('userID'),
                         'logActionUsername' => Session::get('userName')
