@@ -856,18 +856,24 @@ class DataController extends Controller
 
 	    $arrResult = json_decode($response->getBody()->getContents());
 
-	    if($search == ''){
-	    	$data = $arrResult->dataListSet;
-	    }else{
-	    	$data = array_filter(
-	    		$arrResult->dataListSet,
-	    		function($value) use ($search){
-	    			if(preg_match('/' . $search . '/i', $value->value)){
-	    				return preg_match('/' . $search . '/i', $value->value);
-	    			}
-	    		}
-	    	);
-	    }
+		// dd($arrResult->dataListSet);
+
+		if(empty($request->deductLeave)){
+			$data = [];
+		}else{
+			if($search == ''){
+				$data = $arrResult->dataListSet;
+			}else{
+				$data = array_filter(
+					$arrResult->dataListSet,
+					function($value) use ($search){
+						if(preg_match('/' . $search . '/i', $value->value)){
+							return preg_match('/' . $search . '/i', $value->value);
+						}
+					}
+				);
+			}
+		}
 
         return response()->json($data);
 	}
