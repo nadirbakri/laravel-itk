@@ -166,7 +166,7 @@
         </tr>
 	</table>
     <br><br><br>
-    <table class="table" style="width:100%; font-size: 14px; padding-left:10%; padding-right:2%; padding-bottom:1%; font-family: 'Arial Bold', sans-serif;">
+    <table class="table" style="width:100%; font-size: 7px; padding-left:10%; padding-right:2%; padding-bottom:1%; font-family: 'Arial Bold', sans-serif;">
 		<tr>
             <td>Payroll System</td>
 		</tr>
