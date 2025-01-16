@@ -90,7 +90,15 @@
             </tr>
         @endforeach
         </table>
-        <br><br><br><br><br>
+        <table>
+            <tr>
+                <td colspan="7">&nbsp;</td>
+                <td colspan="2">Grand Total Claim</td>
+                <td>{{ $data[0]->claimPerType[0]->employeeData[0]->currencyCode }}</td>
+                <td data-format="#,##0" style="text-align: right;">{{ $data[0]->totalClaim }}</td>
+            </tr>
+        </table>
+        <br><br><br>
         <table>
             <tr>
                 <td>&nbsp;</td>
