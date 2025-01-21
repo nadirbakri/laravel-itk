@@ -1423,6 +1423,11 @@
                             var allowedStatuses = ["NEW", "APPROVED", "CANCELED", "PARTIAL APPROVED", "REJECTED"];
                             return allowedStatuses.includes(item.value);
                         });
+                    }else if(companyCode == 'CBI'){
+                        var filteredData = data.filter(function (item) {
+                            var allowedStatuses = ["NEW", "APPROVED", "CANCELED", "PARTIAL APPROVED", "REJECTED", "WAITING PAYMENT"];
+                            return allowedStatuses.includes(item.value);
+                        });
                     }else{
                         var filteredData = data.filter(function (item) {
                             var allowedStatuses = ["NEW", "APPROVED", "CANCELED", "PARTIAL APPROVED", "REJECTED"];

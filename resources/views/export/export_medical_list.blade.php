@@ -64,7 +64,7 @@
 				<td>{{ isset($value->reimbursementEntity->reimbursementRemarks) ? $value->reimbursementEntity->reimbursementRemarks : '' }}</td>
 				<td data-format="#,##0">{{ isset($value->reimbursementEntity->totalClaimAmount) ? $value->reimbursementEntity->totalClaimAmount : '' }}</td>
 				<td data-format="@">{{ isset($value->reimbursementEntity->bankAccountNo) ? $value->reimbursementEntity->bankAccountNo : '' }}</td>
-				<td data-format="#,##0"></td>
+				<td data-format="#,##0">{{ isset($value->reimbursementEntity->totalApprovalHRD) ? $value->reimbursementEntity->totalApprovalHRD : '' }}</td>
 				<td data-format="#,##0">{{ isset($value->reimbursementEntity->paidAmount) ? $value->reimbursementEntity->paidAmount : '' }}</td>
 				<td>{{ isset($value->reimbursementEntity->hrdRemarks) ? $value->reimbursementEntity->hrdRemarks : '' }}</td>
 				<td>{{ isset($value->reimbursementEntity->emailRequester) ? $value->reimbursementEntity->emailRequester : '' }}</td>
