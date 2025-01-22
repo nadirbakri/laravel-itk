@@ -61,13 +61,14 @@ class UpdateMedical implements ToCollection, WithStartRow
                         "changedBy" => Session::get('userID'),
                         "status" => $row[2],
                         "ticketNo" => $row[3],
+                        "totalApprovalHRD" => $row[11],
                         "paidAmount" => $row[12],
                         "hrdRemarks" => $row[13]
                     ];
                 }
             }
 
-            // var_dump(json_encode($param));
+            // dd(json_encode($param));
 
             $response = $client->put(env('API_URL') . '/mobile/ReimbursementMedical/UpdateListTicketNo',
                 ['body' => json_encode($param)]

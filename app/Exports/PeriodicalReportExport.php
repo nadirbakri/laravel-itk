@@ -165,7 +165,6 @@ class PeriodicalReportExport extends DefaultValueBinder implements WithCustomVal
                 $param['levelMaster'] = $data_level;
             }
 
-
             // dd(json_encode($param));
             $response = $client->post(env('API_URL').'/payroll/GetPeriodicalReport', [
                 'body' => json_encode($param)

@@ -86,11 +86,11 @@ class TransportExport extends DefaultValueBinder implements WithCustomValueBinde
 
         if($arrResult->dataListSet == null){
             return view('export.transport_export', [
-                'data' => []
+                'data' => [], 'companyCode' => Session::get('companyCode')
             ]);
         }else{
             return view('export.transport_export', [
-                'data' => $arrResult->dataListSet
+                'data' => $arrResult->dataListSet, 'companyCode' => Session::get('companyCode')
             ]);
         }
     }

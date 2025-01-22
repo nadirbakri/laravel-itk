@@ -83,7 +83,7 @@ class MultipleChecking implements FromView, ShouldAutoSize
         $data = $arrResult->dataListSet;
 
         return view('export.export_businesstrip_checking_list_settlement', [
-            'data' => $data ? $data : []
+            'data' => $data ? $data : [], 'companyCode' => Session::get('companyCode')
         ]);
 
         // if ($this->status == 'SETTLEMENT CHECKING'){
