@@ -627,6 +627,10 @@
                     loadDataSelectLevel('#level1', 1, "IEI");
                 }else if(data[0].data.bankCode.indexOf("CITROEN") !== -1){
                     loadDataSelectLevel('#level1', 1, "CITROEN");
+                }else if(data[0].data.bankCode.indexOf("AIDI") !== -1){
+                    loadDataSelectLevel('#level1', 1, "AIDI");
+                }else if(data[0].data.bankCode.indexOf("IEB") !== -1){
+                    loadDataSelectLevel('#level1', 1, "IEB");
                 }else{
                     loadDataSelectLevel('#level1', 1, "NMDI");
                 }
