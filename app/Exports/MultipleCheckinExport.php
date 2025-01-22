@@ -68,11 +68,11 @@ class MultipleCheckinExport implements FromView, ShouldAutoSize
 
         if($arrResult->dataListSet == null){    
             return view('export.export_multiple_checkin_list', [
-                'data' => []
+                'data' => [], 'companyCode' => Session::get('companyCode')
             ]);
         }else{
             return view('export.export_multiple_checkin_list', [
-                'data' => $arrResult->dataListSet
+                'data' => $arrResult->dataListSet, 'companyCode' => Session::get('companyCode')
             ]);
         }
     }

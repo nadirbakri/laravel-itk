@@ -88,11 +88,11 @@ class ReimbursementExport extends DefaultValueBinder implements WithCustomValueB
 
         if($arrResult->dataListSet == null){
             return view('export.export_reimbursement_list', [
-                'data' => []
+                'data' => [], 'companyCode' => Session::get('companyCode')
             ]);
         }else{
             return view('export.export_reimbursement_list', [
-                'data' => $arrResult->dataListSet
+                'data' => $arrResult->dataListSet, 'companyCode' => Session::get('companyCode')
             ]);
         }
     }

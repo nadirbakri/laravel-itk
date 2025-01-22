@@ -78,11 +78,11 @@ class BusinessTripSeattleExport implements FromView, ShouldAutoSize
 
         if($arrResult->dataListSet == null){
             return view('export.exp_businesstripsettlement_list', [
-                'data' => []
+                'data' => [], 'companyCode' => Session::get('companyCode')
             ]);
         }else{
             return view('export.exp_businesstripsettlement_list', [
-                'data' => $arrResult->dataListSet
+                'data' => $arrResult->dataListSet, 'companyCode' => Session::get('companyCode')
             ]);
         }
     }
