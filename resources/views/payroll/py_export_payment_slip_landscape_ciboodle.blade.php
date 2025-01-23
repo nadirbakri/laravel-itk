@@ -187,7 +187,7 @@
 						</tr>
 						<tr>
 							<td width="60%" style="margin-left: 10px;">TAKEHOMEPAY</td>
-							<td width="37%" style="text-align:right;">{{ number_format((float) ($totalIncome + $totalDeduction), 0, ',', '.')}}</td>
+							<td width="37%" style="text-align:right;">{{ number_format((float) ($totalIncome - $totalDeduction), 0, ',', '.')}}</td>
 						</tr>
 						<tr>
 							<td colspan="2">&nbsp;</td>
