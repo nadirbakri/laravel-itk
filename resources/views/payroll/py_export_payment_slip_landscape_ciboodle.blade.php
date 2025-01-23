@@ -56,14 +56,14 @@
 			@if($display_logo == "1")
             <td width="50%" rowspan="4">&nbsp;</td>
             <td width="30%" rowspan="4" style="text-align:right;">
-				<!-- <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/pictures/logo_digima.png'))) }}" style="width: 175px; height: 85px" alt="Logo"> -->
-				<!-- <table style="width: 100%;">
+				<img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/pictures/logo_cbi.png'))) }}" style="width: 195px; height: 95px" alt="Logo">
+				<table style="width: 100%;">
 					<tr>
 						<td>
 							
 						</td>
 					</tr>
-				</table> -->
+				</table>
 			</td>
 			@else
 			<td width="80%" rowspan="4" style="text-align:right; height: 85px">&nbsp;</td>
