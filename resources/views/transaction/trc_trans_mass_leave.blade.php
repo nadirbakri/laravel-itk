@@ -711,7 +711,7 @@
     });
     $.get("{{ url('submit_type/api') }}", function (data) {
         $.each(data, function (k, v) {
-            $('#submit_type').append("<option value=" + v.variable + ">" + v.value +
+            $('#submit_type').append("<option value=" + v.comGenCode + ">" + v.value +
                 "</option>");
         });
     });
