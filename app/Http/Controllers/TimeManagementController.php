@@ -2557,6 +2557,14 @@ class TimeManagementController extends Controller
     {
         date_default_timezone_set('Asia/Jakarta');
         try{
+            $param = [];
+
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+            
             $file = $request->file('file_location');
             $extension = $file->getClientOriginalExtension();
 
@@ -2572,97 +2580,115 @@ class TimeManagementController extends Controller
                     return $import->getArrResult();
                 }
             } else if ($extension === 'txt') {
-                $fileContent = file($file->getRealPath());
-                $result = [];
-
-                foreach ($fileContent as $line) {
-                    $employeeNo = trim(substr($line, 0, 7));
-                    $tanggal = trim(substr($line, 8, 10));
-                    $strTanggal = str_replace('/', '-', $tanggal);
-                    $date = date('Y-m-d', strtotime($strTanggal)); // Format tanggal
-                    $time = trim(substr($line, 19, 5)); // Waktu
-                    $status = trim(substr($line, 25)); // Status
-                    
-                    // Key untuk menentukan karyawan dan tanggal yang sama
-                    $key = $employeeNo . '_' . $date;
-                
-                    if ($status === 'C/In') {
-                        // Jika C/In, tambahkan entri baru atau perbarui entry yang sudah ada
-                        $result[$key] = [
-                            'employeeNo' => $employeeNo,
-                            'absentDateIn' => $date,
-                            'timeIn' => $date . 'T' . $time . ':00',
-                            'absentDateOut' => null, // Sementara kosong, diisi ketika C/Out ditemukan
-                            'timeOut' => null, // Sementara kosong, diisi ketika C/Out ditemukan
-                        ];
-                    } elseif ($status === 'C/Out' && isset($result[$key])) {
-                        // Jika C/Out, tambahkan waktu keluar pada entry yang sesuai
-                        $result[$key]['absentDateOut'] = $date;
-                        $result[$key]['timeOut'] = $date . 'T' . $time . ':00';
-                    }
-                }
-                
-                // Hapus key dan reindex array jika diperlukan
-                $result = array_values($result);
-
-                $client = new Client([
-                    'verify' => false,
-                    'headers' => [ 'Content-Type' => 'application/json',
-                    'Authorization' => 'Bearer ' . Session::get('token') ]
-                ]);
-
-                foreach ($result as $row) {
-                    $param[] = [
-                        "employeeNo" => isset($row['employeeNo']) ? $row['employeeNo'] : null,
-                        "absentDateIn" => isset($row['absentDateIn']) ? $row['absentDateIn'] : null,
-                        "absentDateOut" => isset($row['absentDateOut']) ? $row['absentDateOut'] : null,
-                        "timeIn" => isset($row['timeIn']) ? $row['timeIn'] : null,
-                        "timeOut" => isset($row['timeOut']) ? $row['timeOut'] : null,
-                        "shiftCode" => null,
-                    ];
-                }
-
-                // Storage::put('debug_data.txt', json_encode(
-                //     [
-                //         'companyCode' => Session::get('companyCode'),
-                //         'fileLocation' => null,
-                //         'automaticInOut' => isset($this->automatic) ? (bool) $this->automatic : false,
-                //         'file64' => null,
-                //         'data' => $param,
-                //         "changedNo" => 0,
-                //         "createdDate" => date("Y-m-d\TH:i:s"),
-                //         "createdBy" => Session::get('userID'),
-                //         "changedDate" => date("Y-m-d\TH:i:s"),
-                //         "changedBy" => Session::get('userID'),
-                //         "languageCode" => App::getLocale(),
-                //         'sessionID' => 0,
-                //         'sessionUserID' => Session::get('userID'),
-                //         'logActionUsername' => Session::get('userName'),
-                //         'logActionUserID' => Session::get('userID')
-                //     ]));
-                // dd();
-
-                $response = $client->post(env('API_URL') . '/mobile/TempAbsentMachine/InsertTempAbsentMachine',
+                $response = $client->post(env('API_URL') . '/mobile/ReferenceTimeRecord/getReferenceTimeRecord',
                     ['body' => json_encode(
                         [
                             'companyCode' => Session::get('companyCode'),
-                            'fileLocation' => null,
-                            'automaticInOut' => isset($this->automatic) ? (bool) $this->automatic : false,
-                            'file64' => null,
-                            'data' => $param,
-                            "changedNo" => 0,
-                            "createdDate" => date("Y-m-d\TH:i:s"),
-                            "createdBy" => Session::get('userID'),
-                            "changedDate" => date("Y-m-d\TH:i:s"),
-                            "changedBy" => Session::get('userID'),
-                            "languageCode" => App::getLocale(),
-                            'sessionID' => 0,
-                            'sessionUserID' => Session::get('userID'),
-                            'logActionUsername' => Session::get('userName'),
-                            'logActionUserID' => Session::get('userID')
-                        ])
-                    ]
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName')
+                        ]
+                    )]
                 );
+
+                $arrResult = json_decode($response->getBody()->getContents());
+
+                // dd($arrResult->dataListSet);
+
+                if(!empty($arrResult->dataListSet)){
+                    $data = $arrResult->dataListSet[0];
+                    $fileContent = file($file->getRealPath());
+                    $result = [];
+
+                    foreach ($fileContent as $line) {
+                        $employeeNo = trim(substr($line, ($data->employeeNoStart - 1), $data->employeeNoLong));
+                        $tanggal = trim(substr($line, ($data->dateStart - 1), $data->dateLong));
+                        $month = trim(substr($line, ($data->monthStart - 1), $data->monthLong));
+                        $year = trim(substr($line, ($data->yearStart - 1), $data->yearLong));
+                        $date = $year . "-" . $month . "-" . $tanggal;
+                        $hour = trim(substr($line, ($data->hourStart - 1), $data->hourLong));
+                        $minute = trim(substr($line, ($data->minuteStart - 1), $data->minuteLong));
+                        $time = $hour . ":" . $minute . ':00';
+                        $status = trim(substr($line, ($data->codeInOutStart - 1), $data->codeInOutLong)); // Status
+                        
+                        // Key untuk menentukan karyawan dan tanggal yang sama
+                        $key = $employeeNo . '_' . $date;
+                    
+                        if ($status === $data->inCode) {
+                            // Jika C/In, tambahkan entri baru atau perbarui entry yang sudah ada
+                            $result[$key] = [
+                                'employeeNo' => $employeeNo,
+                                'absentDateIn' => $date,
+                                'timeIn' => $date . 'T' . $time,
+                                'absentDateOut' => null, // Sementara kosong, diisi ketika C/Out ditemukan
+                                'timeOut' => null, // Sementara kosong, diisi ketika C/Out ditemukan
+                            ];
+                        } elseif ($status === $data->outCode && isset($result[$key])) {
+                            // Jika C/Out, tambahkan waktu keluar pada entry yang sesuai
+                            $result[$key]['absentDateOut'] = $date;
+                            $result[$key]['timeOut'] = $date . 'T' . $time;
+                        }
+                    }
+                    
+                    // Hapus key dan reindex array jika diperlukan
+                    $result = array_values($result);
+
+                    foreach ($result as $row) {
+                        $param[] = [
+                            "employeeNo" => isset($row['employeeNo']) ? $row['employeeNo'] : null,
+                            "absentDateIn" => isset($row['absentDateIn']) ? $row['absentDateIn'] : null,
+                            "absentDateOut" => isset($row['absentDateOut']) ? $row['absentDateOut'] : null,
+                            "timeIn" => isset($row['timeIn']) ? $row['timeIn'] : null,
+                            "timeOut" => isset($row['timeOut']) ? $row['timeOut'] : null,
+                            "shiftCode" => null,
+                        ];
+                    }
+
+                    // Storage::put('debug_data.txt', json_encode(
+                    //     [
+                    //         'companyCode' => Session::get('companyCode'),
+                    //         'fileLocation' => null,
+                    //         'automaticInOut' => isset($this->automatic) ? (bool) $this->automatic : false,
+                    //         'file64' => null,
+                    //         'data' => $param,
+                    //         "changedNo" => 0,
+                    //         "createdDate" => date("Y-m-d\TH:i:s"),
+                    //         "createdBy" => Session::get('userID'),
+                    //         "changedDate" => date("Y-m-d\TH:i:s"),
+                    //         "changedBy" => Session::get('userID'),
+                    //         "languageCode" => App::getLocale(),
+                    //         'sessionID' => 0,
+                    //         'sessionUserID' => Session::get('userID'),
+                    //         'logActionUsername' => Session::get('userName'),
+                    //         'logActionUserID' => Session::get('userID')
+                    //     ]));
+                    // dd();
+
+                    $response = $client->post(env('API_URL') . '/mobile/TempAbsentMachine/InsertTempAbsentMachine',
+                        ['body' => json_encode(
+                            [
+                                'companyCode' => Session::get('companyCode'),
+                                'fileLocation' => null,
+                                'automaticInOut' => isset($this->automatic) ? (bool) $this->automatic : false,
+                                'file64' => null,
+                                'data' => $param,
+                                "changedNo" => 0,
+                                "createdDate" => date("Y-m-d\TH:i:s"),
+                                "createdBy" => Session::get('userID'),
+                                "changedDate" => date("Y-m-d\TH:i:s"),
+                                "changedBy" => Session::get('userID'),
+                                "languageCode" => App::getLocale(),
+                                'sessionID' => 0,
+                                'sessionUserID' => Session::get('userID'),
+                                'logActionUsername' => Session::get('userName'),
+                                'logActionUserID' => Session::get('userID')
+                            ])
+                        ]
+                    );
+                }else{
+                    $objError = (object) ['status' => false, 'message' => "Time Recording Reference Not Set"];
+                    return array(0 => $objError);
+                }
             } else {
                 $objError = (object) ['status' => false, 'message' => "Unsupported file format"];
                 return array(0 => $objError);
