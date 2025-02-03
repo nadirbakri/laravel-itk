@@ -861,10 +861,12 @@ Route::get('trans/update_permit/table', 'TransactionController@tableUpdateTransP
 Route::get('trans/update_transport/table', 'TransactionController@tableUpdateTransTransport');
 Route::get('trans/update_mass_leave/table', 'TransactionController@tableUpdateTransMassLeave');
 Route::get('trans/update_approvalbusinesstrip/table', 'TransactionController@tableUpdateApprovalBusinesstrip');
+Route::get('trans/update_salary_complaint/table', 'TransactionController@tableUpdateTransSalaryComplaint');
 Route::get('trans/trans_active_document/detail_data', 'TransactionController@tableUpdateListBusinesstrip');
 Route::get('trans/update_medical/table', 'TransactionController@tableUpdateTransMedical');
 Route::get('trans/update_overtime/table', 'TransactionController@tableUpdateOvertime');
 Route::get('trans/mass_leave/table', 'TransactionController@tableDetailMassLeave');
+Route::get('trans/salary_complaint/table', 'TransactionController@tableDetailSalaryComplaint');
 Route::get('adm/checkinlist/table', 'TransactionController@tableDetailCheckinList');
 Route::get('adm/checkinlistmaps/table', 'TransactionController@tableDetailMapsCheckinList');
 Route::get('adm/checkinlist_mapsall/table', 'TransactionController@tableDetailCheckinListAll');
@@ -1063,6 +1065,7 @@ Route::get('transaction/transaction_active_document', 'TransactionController@pag
 Route::post('transaction/transaction_active_document/proses', 'TransactionController@prosesTransactionActiveDocument');
 Route::get('transaction/checkin_list', 'TransactionController@pageTransactionCheckinList');
 Route::get('transaction/mapscheckin_list', 'TransactionController@pageTransactionMapsCheckinList');
+Route::get('transaction/transaction_salary_complaint_list', 'TransactionController@pageTransactionSalaryComplaintList');
 
 /* Route untuk Menu Master Data MOB */
 Route::get('master_data', 'MasterDataController@pageMasterData')->name('master_data');

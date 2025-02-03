@@ -1,0 +1,28 @@
+<?php
+return [ 
+    'judul' => 'Komplain Gaji List',
+    'list' => 'Komplain Gaji List',
+    'employee' => 'No Karyawan',
+    'list_table' => 'LIST KOMPLAIN GAJI',
+    'label_claim_date_start' => 'Tanggal Dari',
+    'label_claim_date_end' => 'Tanggal Sampai',
+    'label_processed_date' => 'Tanggal di Proses',
+    'label_business_unit' => 'Unit Bisnis',
+    'label_salary_complaint_status' => 'Status Komplain Gaji',
+    'label_status' => 'Status',
+    'label_bu' => 'Unit Bisnis',
+    'btn_upload' => 'Unggah',
+    'btn_search' => 'Cari',
+    'btn_list' => 'Daftar',
+    'alert_success' => 'Sukses !',
+    'detail' => 'Detail',
+    'complaint_date' => 'Tanggal Komplain',
+    'complaint_type' => 'Tipe Komplain',
+    'status' => 'Status',
+    'ticket_no' => 'No Tiket',
+    'name' => 'Name',
+    'missing_amount' => 'Total Yang Hilang',
+    'correct_amount' => 'Total Yang Benar',
+    'remarks' => 'Catatan',
+]
+?>
