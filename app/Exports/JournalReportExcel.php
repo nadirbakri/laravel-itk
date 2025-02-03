@@ -56,7 +56,7 @@ class JournalReportExcel implements FromView, ShouldAutoSize{
                 }
             }
 
-            // var_dump(json_encode($param));
+            // dd(json_encode($param));
     
             $response = $client->post(env('API_URL').$urlReport,
             ['body' => json_encode($param)]);

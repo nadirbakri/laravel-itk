@@ -84,9 +84,9 @@ class JournalTemplateDataImport implements ToCollection, SkipsEmptyRows, WithSta
                 ];
             }
 
-            // var_dump(json_encode($param));
+            // dd(json_encode($param));
 
-            $response = $client->post(env('API_URL') . '/payroll/bulkInsert',
+            $response = $client->post(env('API_URL') . '/payroll/bulkInsertPrJournalTemplate',
                 ['body' => json_encode($param)]
             );
         } catch (ValidationException $e) {

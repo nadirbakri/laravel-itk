@@ -74,7 +74,7 @@ class AccountDataImport implements ToCollection, SkipsEmptyRows, WithStartRow
 
             // dd(json_encode($param));
 
-            $response = $client->post(env('API_URL') . '/payroll/bulkInsert',
+            $response = $client->post(env('API_URL') . '/payroll/bulkInsertPrAccount',
                 ['body' => json_encode($param)]
             );
         } catch (ValidationException $e) {
