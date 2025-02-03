@@ -1,0 +1,29 @@
+<?php
+return [ 
+    'judul' => 'Salary Complaint List',
+    'list' => 'Salary Complaint List',
+    'employee' => 'Employee No',
+    'list_table' => 'SALARY COMPLAINT LIST',
+    'label_claim_date_start' => 'Start Date',
+    'label_claim_date_end' => 'End Date',
+    'label_processed_date' => 'Processed Date',
+    'label_business_unit' => 'Business Unit',
+    'label_salary_complaint_status' => 'Salary Complaint Status',
+    'label_status' => 'Status',
+    'label_bu' => 'Business Unit',
+    'btn_upload' => 'Upload',
+    'btn_search' => 'Search',
+    'btn_list' => 'List',
+    'alert_success' => 'Success !',
+    'detail' => 'Detail',
+    'complaint_date' => 'Complaint Date',
+    'complaint_type' => 'Complaint Type',
+    'status' => 'Status',
+    'ticket_no' => 'Ticket No',
+    'name' => 'Name',
+    'missing_amount' => 'Missing Amount',
+    'correct_amount' => 'Correct Amount',
+    'remarks' => 'Remarks',
+]
+
+?>

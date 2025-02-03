@@ -116,6 +116,10 @@ class TransactionController extends Controller
         return view('transaction.trc_trans_checkin_list');
     }
 
+    public function pageTransactionSalaryComplaintList(){
+        return view('transaction.trc_trans_salary_complaint_list');
+    }
+
     // public function tableInputTransactionTransport(Request $request)
     // {
     //     try {
@@ -1467,6 +1471,55 @@ class TransactionController extends Controller
         // }
     }
 
+    public function tableUpdateTransSalaryComplaint(Request $request)
+    {
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->put(env('API_URL') . '/TmSalaryComplain/UpdateApproval',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'status'=> $request->status,
+                        'ticketNo' => $request->ticketNo,
+                        'employeeNo' => $request->employeeNo,
+                        'approvalRemarks' => $request->approvalRemarks,
+                        'isWeb' => true,
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "changedBy" => Session::get('userID'),
+                        'sessionID' => 0,
+                        'sessionUserID' => 'Admin',
+                        'logActionUserID'=> Session::get('userID'),
+                        'logActionUsername'=> Session::get('userName'),
+                        'languageCode' => App::getLocale(), 
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+        // var_dump($arrResult->dataListSet);
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+        // if($arrResult->dataListSet == null){
+        //     return Datatables::of([])->make(true);
+        // }else{
+        //     return Datatables::of($arrResult->dataListSet)->make(true);
+        // }
+    }
+
     public function tableDetailAttendance(Request $request)
     {
         try {
@@ -1599,6 +1652,53 @@ class TransactionController extends Controller
 
         $arrResult = json_decode($response->getBody()->getContents());
         // var_dump($arrResult->dataListSet);
+
+        if($arrResult->dataListSet == null){
+            // return Datatables::of([])->make(true);
+            return response()->json([]);
+        }else{
+            // return Datatables::of($arrResult->dataListSet)->make(true);
+            return response()->json($arrResult->dataListSet);
+        }
+    }
+
+    public function tableDetailSalaryComplaint(Request $request)
+    {
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/TmSalaryComplain/GetSalaryComplainDetailList',
+                ['body' => json_encode(
+                    [
+                        'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
+                        'endDate' => Carbon::parse($request->endDate)->format('Y-m-d'),
+                        'employeeNo'=> $request->employeeNo,
+                        'businessUnit' => $request->businessUnit,
+                        'status' => $request->salaryComplaintStatus,
+                        'companyCode' => Session::get('companyCode'), 
+                        'languageCode' => strtoupper(App::getLocale()), 
+                        'userID' => Session::get('userID'),
+                        'sessionID' => 0, 
+                        'sessionUserID' => Session::get('userID')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
 
         if($arrResult->dataListSet == null){
             // return Datatables::of([])->make(true);
