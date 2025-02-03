@@ -2600,8 +2600,10 @@ class TimeManagementController extends Controller
                     $fileContent = file($file->getRealPath());
                     $result = [];
 
+                    // dd($fileContent);
+
                     foreach ($fileContent as $line) {
-                        $employeeNo = trim(substr($line, ($data->employeeNoStart - 1), $data->employeeNoLong));
+                        $employeeNo = substr($line, ($data->employeeNoStart - 1), $data->employeeNoLong);
                         $tanggal = trim(substr($line, ($data->dateStart - 1), $data->dateLong));
                         $month = trim(substr($line, ($data->monthStart - 1), $data->monthLong));
                         $year = trim(substr($line, ($data->yearStart - 1), $data->yearLong));
@@ -2609,7 +2611,7 @@ class TimeManagementController extends Controller
                         $hour = trim(substr($line, ($data->hourStart - 1), $data->hourLong));
                         $minute = trim(substr($line, ($data->minuteStart - 1), $data->minuteLong));
                         $time = $hour . ":" . $minute . ':00';
-                        $status = trim(substr($line, ($data->codeInOutStart - 1), $data->codeInOutLong)); // Status
+                        $status = trim(substr($line, ($data->codeInOutStart - 1), $data->codeInOutLong));
                         
                         // Key untuk menentukan karyawan dan tanggal yang sama
                         $key = $employeeNo . '_' . $date;
@@ -2664,7 +2666,26 @@ class TimeManagementController extends Controller
                     //     ]));
                     // dd();
 
-                    $response = $client->post(env('API_URL') . '/mobile/TempAbsentMachine/InsertTempAbsentMachine',
+                    // dd(json_encode(
+                    //     [
+                    //         'companyCode' => Session::get('companyCode'),
+                    //         'fileLocation' => null,
+                    //         'automaticInOut' => isset($this->automatic) ? (bool) $this->automatic : false,
+                    //         'file64' => null,
+                    //         'data' => $param,
+                    //         "changedNo" => 0,
+                    //         "createdDate" => date("Y-m-d\TH:i:s"),
+                    //         "createdBy" => Session::get('userID'),
+                    //         "changedDate" => date("Y-m-d\TH:i:s"),
+                    //         "changedBy" => Session::get('userID'),
+                    //         "languageCode" => App::getLocale(),
+                    //         'sessionID' => 0,
+                    //         'sessionUserID' => Session::get('userID'),
+                    //         'logActionUsername' => Session::get('userName'),
+                    //         'logActionUserID' => Session::get('userID')
+                    //     ]));
+
+                    $response2 = $client->post(env('API_URL') . '/mobile/TempAbsentMachine/InsertTempAbsentMachine',
                         ['body' => json_encode(
                             [
                                 'companyCode' => Session::get('companyCode'),
@@ -2685,6 +2706,18 @@ class TimeManagementController extends Controller
                             ])
                         ]
                     );
+
+                    $arrResult2 = json_decode($response2->getBody()->getContents());
+
+                    // dd($arrResult2);
+
+                    if(empty($arrResult2)){
+                        $objError = (object) ['status' => false, 'message' => "The Uploaded File Doesn't Match The Template"];
+                        return array(0 => $objError);
+                    }else{
+                        // dd($import->getArrResult());
+                        return array(0 => $arrResult2);
+                    }
                 }else{
                     $objError = (object) ['status' => false, 'message' => "Time Recording Reference Not Set"];
                     return array(0 => $objError);

@@ -4502,7 +4502,7 @@ public function dataDetailReportFormatPY(Request $request)
                 ];
             }
 
-            // var_dump($param);
+            // dd(json_encode($param));
 
             if($request->record_function == 'New'){
                 $response = $client->post(env('API_URL') . '/payroll/InsertPrJournalTemplate',
