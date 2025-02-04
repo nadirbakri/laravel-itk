@@ -1480,7 +1480,7 @@ class TransactionController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/TmSalaryComplain/UpdateApproval',
+            $response = $client->put(env('API_URL') . '/mobile/TmSalaryComplain/UpdateApproval',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1671,7 +1671,7 @@ class TransactionController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/TmSalaryComplain/GetSalaryComplainDetailList',
+            $response = $client->post(env('API_URL') . '/mobile/TmSalaryComplain/GetSalaryComplainDetailList',
                 ['body' => json_encode(
                     [
                         'startDate' => Carbon::parse($request->startDate)->format('Y-m-d'),
