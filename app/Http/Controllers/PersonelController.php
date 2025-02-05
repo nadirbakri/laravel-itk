@@ -12632,6 +12632,9 @@ class PersonelController extends Controller
         else if ($type === 'BUSINESSTRIP') {
             $fileName = 'Business Trip';
         }
+        else if ($type === 'TUNJANGAN') {
+            $fileName = 'Tunjangan';
+        }
         else {
             $fileName = 'Transport';
         }
