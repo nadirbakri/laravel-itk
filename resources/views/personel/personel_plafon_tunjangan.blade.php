@@ -380,7 +380,7 @@
             url: "{{ url('personnel/export_plafon/download') }}",
             type: "POST",
             data: {
-                type: 'MEDICAL'
+                type: 'TUNJANGAN'
             },
             success: function (result, status, xhr) {
                 $("#toolbar-download-template").prop("disabled", false);

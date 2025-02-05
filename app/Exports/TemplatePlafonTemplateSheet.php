@@ -31,6 +31,9 @@ class TemplatePlafonTemplateSheet implements FromView, WithTitle, ShouldAutoSize
         else if ($this->type === 'BUSINESSTRIP') {
             return 'Template Plafon Business Trip';
         }
+        else if ($this->type === 'TUNJANGAN') {
+            return 'Template Plafon Tunjangan';
+        }
         else {
             return 'Template Plafon Transport';
         }
