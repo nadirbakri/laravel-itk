@@ -13,8 +13,10 @@ return [
     */
 
     'judul' => 'Plafon Medical Page',
+    'judul_tunjangan' => 'Plafon Tunjangan Page',
     'list' => 'Personnel Menu List',
     'list_detail' => 'Plafon Medical List',
+    'list_detail_tunjangan' => 'Plafon Tunjangan List',
     'label_code' => 'Plafon Code',
     'label_year' => 'Plafon Year',
     'label_type' => 'Plafon Type',

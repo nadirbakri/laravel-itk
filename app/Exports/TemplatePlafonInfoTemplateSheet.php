@@ -37,6 +37,7 @@ class TemplatePlafonInfoTemplateSheet implements FromView, WithTitle, ShouldAuto
                     "BUSINESSTRIP" => "List_BusinessTrip_",
                     "TRANSPORT" => "List_Reimbursement_Transport",
                     "RMB" => "List_Reimbursement_",
+                    "TUNJANGAN" => "TunjanganType_",
                 },
                 "languageCode" => strtoupper(App::getLocale())
             ];
@@ -55,7 +56,7 @@ class TemplatePlafonInfoTemplateSheet implements FromView, WithTitle, ShouldAuto
 
             $response = $client->post(env('API_URL') . '/personel/referencemobile/getreferencemobile',
 				['body' => json_encode($param)]);
-            
+
             $response_ranking = $client->post(env('API_URL') . '/personel/GmRanking/getgmRanking',
 				['body' => json_encode($param3)]);
 

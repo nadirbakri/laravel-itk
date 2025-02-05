@@ -13,8 +13,10 @@ return [
     */
 
     'judul' => 'Halaman Plafon Kesehatan',
+    'judul_tunjangan' => 'Halaman Plafon Tunjangan',
     'list' => 'Daftar Menu Personnel',
     'list_detail' => 'Daftar Plafon Kesehatan',
+    'list_detail_tunjangan' => 'Daftar Plafon Tunjangan',
     'label_code' => 'Kode Plafon',
     'label_year' => 'Tahun Plafon',
     'label_type' => 'Jenis Plafon',
