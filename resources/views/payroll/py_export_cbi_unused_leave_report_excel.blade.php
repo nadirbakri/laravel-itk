@@ -51,6 +51,7 @@
                     <th style="border:1px solid #000; background-color: #D3D3D3;">Employee No</th>
                     <th style="border:1px solid #000; background-color: #D3D3D3;">Employee Name</th>
                     <th style="border:1px solid #000; background-color: #D3D3D3;">Budget Code</th>
+                    <th style="border:1px solid #000; background-color: #D3D3D3;">Product Code</th>
                     <th style="border:1px solid #000; background-color: #D3D3D3;">Monthly Salary</th>
                     <th style="border:1px solid #000; background-color: #D3D3D3;">Annual Salary</th>
                     <th style="border:1px solid #000; background-color: #D3D3D3;">Daily Rate</th>
@@ -64,6 +65,7 @@
                     <td style="border:1px solid #000;">{{ $value->employeeNo }}</td>
                     <td style="border:1px solid #000;">{{ $value->employeeName }}</td>
                     <td style="border:1px solid #000;">{{ $value->budgetCode }}</td>
+                    <td style="border:1px solid #000; text-align: right">{{ $value->productCode }}</td>
                     <td data-format="#,##0" style="border:1px solid #000;">{{ $value->monthlySalary }}</td>
                     <td data-format="#,##0" style="border:1px solid #000;">{{ $value->annualSalary }}</td>
                     <td data-format="#,##0" style="border:1px solid #000;">{{ $value->dailyRate }}</td>
