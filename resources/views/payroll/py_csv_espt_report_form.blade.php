@@ -145,6 +145,24 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label for="coretax_mp">&nbsp;</label>
+                            <div class="form-check">
+                                <input type="radio" id="coretax_mp" name="format" value="coretax_mp">
+                                <label for="coretax_mp">{{ __('payroll_csv_espt_report_form.label_coretax_mp') }}</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label for="coretax_a1">&nbsp;</label>
+                            <div class="form-check">
+                                <input type="radio" id="coretax_a1" name="format" value="coretax_a1">
+                                <label for="coretax_a1">{{ __('payroll_csv_espt_report_form.label_coretax_a1') }}</label>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 @if(Session::get('companyCode') == 'CBI')
                 <div class="row">

@@ -26,7 +26,7 @@ use App\Exports\ExportSIPPOnlineFile3Export;
 use App\Exports\ExportSIPPOnlineFile4Export;
 use App\Exports\ExcelTransferBankExport;
 use App\Exports\EBupotPeriodicalTemplateExport;
-use App\Exports\EBupotA1TemplateExport;
+use App\Exports\EBupotCoretaxTemplateExport;
 use App\Exports\PensionFundReportExport;
 use App\Exports\SPTListReportExport;
 use App\Exports\DataPesertaPensionFundReportExport;
@@ -8303,6 +8303,23 @@ public function dataDetailReportFormatPY(Request $request)
                 );
             }else if($request->format == "final"){
                 $namaFile = "EsptFinal-" . date('n', strtotime($request->period)) . date('Y', strtotime($request->period)) . "-" . $request->rectification . "-" . $request->npwp_group . ".xlsx";
+            }else if ($request->format == "coretax_mp" || $request->format == "coretax_a1") {
+                if ($request->format == "coretax_mp") {
+                    $namaFile = "EsptCoretaxMP-" . date('n', strtotime($request->period)) . date('Y', strtotime($request->period)) . "-" . $request->rectification . "-" . $request->npwp_group . ".xlsx";
+                }
+                else {
+                    $namaFile = "EsptCoretaxA1-" . date('n', strtotime($request->period)) . date('Y', strtotime($request->period)) . "-" . $request->rectification . "-" . $request->npwp_group . ".xlsx";
+                }
+                return Excel::download(new EBupotCoretaxTemplateExport(
+                    $request->format, 
+                    $request->period,
+                    $request->rectification,
+                    $request->npwp_group,
+                    $request->print_date,
+                    $request->group_authorized_code_from,
+                    $request->group_authorized_code_to), 
+                    $namaFile
+                );
             }
             // return Excel::download(new CSVESPTReportFormExport(
             //     $request->format, 

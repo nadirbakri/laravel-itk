@@ -7,6 +7,8 @@ return [
     'label_periodical' => 'Periodical',
     'label_annual' => 'A1',
     'label_final' => 'Final',
+    'label_coretax_mp' => 'Coretax MP',
+    'label_coretax_a1' => 'Coretax A1',
     'label_format_file' => 'Format File',
     'label_excel' => 'Excel',
     'label_csv' => 'CSV',

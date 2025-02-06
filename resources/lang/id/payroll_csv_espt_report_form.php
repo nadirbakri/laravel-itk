@@ -7,6 +7,8 @@ return [
     'label_periodical' => 'Secara Berkala',
     'label_annual' => 'A1',
     'label_final' => 'Terakhir',
+    'label_coretax_mp' => 'Coretax MP',
+    'label_coretax_a1' => 'Coretax A1',
     'label_format_file' => 'Format File',
     'label_excel' => 'Excel',
     'label_csv' => 'CSV',
