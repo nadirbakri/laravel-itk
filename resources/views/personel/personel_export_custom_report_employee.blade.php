@@ -20,22 +20,17 @@
 		<thead>
 			<tr>
 				<th>No</th>
-				<th>Employee No</th>
-				<th>Employee Name</th>
-				@foreach($data[0]->fieldName as $value)
-					<th>{{ $value->columnHeader }}</th>
+				@foreach($data[0] as $key => $value)
+					<th>{{ $key }}</th>
 				@endforeach
 			</tr>
 		</thead>
 		<tbody>
-            <?php $no = 0; ?>
-			@foreach($data as $value)
+			@foreach($data as $index => $value)
 			<tr>
-                <td>{{ $no++ }}</td>
-				<td>{{ $value->employeeNo }}</td>
-				<td>{{ $value->fullName }}</td>
-				@foreach($value->fieldName as $value2)
-					<td>{{ $value2->fieldName }}</td>
+				<td>{{ $index + 1 }}</td>
+				@foreach($value as $item)
+					<td>{{ $item }}</td>
 				@endforeach
 			</tr>
 			@endforeach
