@@ -70,7 +70,9 @@ class CustomReportEmployeeExport implements FromView, ShouldAutoSize
                 $param['fieldNames'] = $data_field;
             }
 
-            $response = $client->post(env('API_URL') . '/reportformatemployee/getreportformatemployee',
+            // dd(json_encode($param));
+
+            $response = $client->post(env('API_URL') . '/personel/reportformatemployee/GetReportCustom',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {
@@ -85,6 +87,8 @@ class CustomReportEmployeeExport implements FromView, ShouldAutoSize
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
+
+        // dd($arrResult->dataListSet);
 
         if($arrResult->dataListSet == null){
             return view('personel.personel_export_custom_report_employee', [

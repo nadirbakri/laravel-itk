@@ -4348,7 +4348,7 @@ class DataController extends Controller
 	    						'Authorization' => 'Bearer ' . Session::get('token') ]
 	    	]);
 
-	    	$response = $client->post(env('API_URL') . '/personel/reportformatemployee/getfieldnamelist',
+	    	$response = $client->post(env('API_URL') . '/personel/reportformatemployee/v2/getFieldNameList',
 	    		['body' => json_encode(
 	    			[
 	    				'companyCode' => Session::get('companyCode')
