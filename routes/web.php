@@ -83,6 +83,7 @@ Route::get('personnel/import_master_data', 'PersonelController@pageImportMasterD
 Route::get('personnel/import_employee_transaction', 'PersonelController@pageImportEmployeeTransactionPersonel');
 Route::get('personnel/import_update_personal_data', 'PersonelController@pageImportUpdatePersonel');
 Route::get('personnel/import_employee_level', 'PersonelController@pageImportEmployeeLevelPersonel');
+Route::get('personnel/import_employee_family', 'PersonelController@pageImportEmployeeFamilyPersonel');
 Route::get('personnel/export_loan_whitelist', 'PersonelController@pageExportLoanWhitelistPersonel');
 Route::get('personnel/employee_mutation', 'PersonelController@pageEmployeeMutationPersonel');
 Route::get('personnel/npwp_mutation', 'PersonelController@pageNPWPMutationPersonel');
@@ -451,6 +452,8 @@ Route::post('personnel/import_employee_transaction/import', 'PersonelController@
 Route::post('personnel/export_loan_whitelist/download', 'PersonelController@downloadExportLoanWhitelistPersonel');
 Route::post('personnel/import_employee_level/download_template', 'PersonelController@downloadTemplateEmployeeLevelPersonel');
 Route::post('personnel/import_employee_level/import', 'PersonelController@importEmployeeLevelPersonel');
+Route::post('personnel/import_employee_family/download_template', 'PersonelController@downloadTemplateEmployeeFamilyPersonel');
+Route::post('personnel/import_employee_family/import', 'PersonelController@importEmployeeFamilyPersonel');
 Route::post('personnel/plafon/import', 'PersonelController@importPlafonPersonel');
 Route::post('personnel/plafon/export', 'PersonelController@exportPlafonPersonel');
 Route::post('personnel/export_plafon/download', 'PersonelController@downloadTemplatePlafonPersonel');

@@ -99,6 +99,7 @@ class PersonalDataImport implements ToCollection, SkipsEmptyRows, WithStartRow, 
                         "employeeNo" => (!is_null($row[1]) && $row[1] != "NULL") ? strval($row[1]) : null
                     ];
                 }
+
                 $param[] = [
                     "recordStatus" => "A",
                     "companyCode" => (!is_null($row[0]) && $row[0] != "NULL") ? trim(strval($row[0])) : null,

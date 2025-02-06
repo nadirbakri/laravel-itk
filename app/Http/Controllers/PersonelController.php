@@ -16,6 +16,7 @@ use App\Exports\PersonalDataTemplateExport;
 use App\Exports\PersonalDataPartialTemplateExport;
 use App\Exports\MasterDataTemplateExport;
 use App\Exports\EmployeeLevelTemplateExport;
+use App\Exports\EmployeeFamilyTemplateExport;
 use App\Exports\PlafonExport;
 use App\Exports\PlafonTemplateExport;
 use App\Exports\EmployeeTransactionTemplateExport;
@@ -39,6 +40,7 @@ use App\Imports\JournalTemplateDataImport;
 use App\Imports\PersonalDataUpdateImport;
 use App\Imports\PersonalDataPartialUpdateImport;
 use App\Imports\EmployeeLevelImport;
+use App\Imports\EmployeeFamilyImport;
 use App\Imports\PlafonImport;
 use App\Imports\EmployeeTransactionImport;
 
@@ -175,6 +177,11 @@ class PersonelController extends Controller
     public function pageImportEmployeeLevelPersonel()
     {
          return view('personel.personel_import_employee_level');
+    }
+
+    public function pageImportEmployeeFamilyPersonel()
+    {
+         return view('personel.personel_import_employee_family');
     }
 
     public function pageExportLoanWhitelistPersonel()
@@ -12473,6 +12480,36 @@ class PersonelController extends Controller
     public function downloadTemplateEmployeeLevelPersonel(Request $request)
     {
         return Excel::download(new EmployeeLevelTemplateExport(), "Template Employee Level.xlsx");
+    }
+
+    public function importEmployeeFamilyPersonel(Request $request)
+    {
+        $file = $request->file('import_export');
+        // $base64File = base64_encode(file_get_contents($file->getRealPath()));
+        // $processJobs = new ProcessImportEmployeeLevelPersonel($base64File);
+        // $this->dispatch($processJobs);
+
+        // return response()->json(['status' => "true", 'message' => 'Import Employee Level is in Progress']);
+        try{
+            $import = new EmployeeFamilyImport;
+            Excel::import($import, $file->getRealPath(), null, \Maatwebsite\Excel\Excel::XLSX);
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            $failures = $e->failures();
+            $objError = (object) ['status' => false, 'message' => $failures[0]->errors()[0]];
+            return array(0 => $objError);
+        }
+
+        if(empty($import->getArrResult())){
+            $objError = (object) ['status' => false, 'message' => "The Uploaded File Doesn't Match The Template"];
+            return array(0 => $objError);
+        }else{
+            return $import->getArrResult();
+        }
+    }
+
+    public function downloadTemplateEmployeeFamilyPersonel(Request $request)
+    {
+        return Excel::download(new EmployeeFamilyTemplateExport(), "Template Employee Family.xlsx");
     }
 
     public function downloadExportLoanWhitelistPersonel(Request $request)
