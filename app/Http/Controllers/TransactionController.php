@@ -1480,7 +1480,7 @@ class TransactionController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/mobile/TmSalaryComplain/UpdateApproval',
+            $response = $client->post(env('API_URL') . '/mobile/TmSalaryComplain/UpdateApproval',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -1707,6 +1707,51 @@ class TransactionController extends Controller
             // return Datatables::of($arrResult->dataListSet)->make(true);
             return response()->json($arrResult->dataListSet);
         }
+    }
+
+    public function dataDetailSalaryComplaint(Request $request)
+    {
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/mobile/TmSalaryComplain/GetSalaryComplainDetailList',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'complainDate' => $request->complainDate,
+                        'employeeNo'=> $request->employeeNo,
+                        'ticketNo'=> $request->ticketNo,
+                        'languageCode' => strtoupper(App::getLocale()), 
+                        'userID' => Session::get('userID'),
+                        'sessionID' => 0, 
+                        'sessionUserID' => Session::get('userID'),
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+        
+        if($arrResult->dataListSet == null){
+            $data = [];
+        }else{
+            $data = $arrResult->dataListSet[0];
+        }
+
+        return response()->json($data);
     }
 
     public function importUpdateReimbursement(Request $request)

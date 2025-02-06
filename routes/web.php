@@ -871,6 +871,7 @@ Route::get('trans/update_medical/table', 'TransactionController@tableUpdateTrans
 Route::get('trans/update_overtime/table', 'TransactionController@tableUpdateOvertime');
 Route::get('trans/mass_leave/table', 'TransactionController@tableDetailMassLeave');
 Route::get('trans/salary_complaint/table', 'TransactionController@tableDetailSalaryComplaint');
+Route::get('trans/salary_complaint/attachment', 'TransactionController@dataDetailTransactionMedical');
 Route::get('adm/checkinlist/table', 'TransactionController@tableDetailCheckinList');
 Route::get('adm/checkinlistmaps/table', 'TransactionController@tableDetailMapsCheckinList');
 Route::get('adm/checkinlist_mapsall/table', 'TransactionController@tableDetailCheckinListAll');

@@ -487,10 +487,9 @@
                                         <h5>Status</h5>
                                     </div>
                                     <div class="col-5">
-                                            <select name="status" id="status" class="custom-select">
+                                            <select name="status_new" id="status_new" class="custom-select">
                                                 <option value="APPROVED">APPROVE</option>
                                                 <option value="REJECTED">REJECT</option>
-                                                <option value="PAID">PAID</option>
                                             </select>
                                     </div>
                                 </div>                                
@@ -839,6 +838,7 @@
     }
 
     const attachmentPreview = (data) => {
+        console.log(data)
         $('#attachment').empty();
         $('#attachment').addClass('spinner-border');
         let attachmentArray = [];
@@ -847,7 +847,7 @@
 
         $.ajax({
             type: 'GET',
-            url: "{{ url('/trans/salary_complaint_list/attachment') }}",
+            url: "{{ url('/trans/salary_complaint/attachment') }}",
             data: {
                 'employeeNo' : data.employeeNo,
                 'complainDate' : data.complainDate,
@@ -855,18 +855,18 @@
             },
             success: function (response) {
                 $('#attachment').removeClass('spinner-border');
-                const attachmentEntity = response.attachmentEntity;
+                const attachmentEntity = response.complainEntity.attachmentEntity;
 
                 if (attachmentEntity.length) {
                     for (let i = 0; i < attachmentEntity.length; i++) {
                         const data = attachmentEntity[i];
-                        attachmentArray.push("data:image/png;base64," + data.reimbursementAttachment64);
+                        attachmentArray.push("data:image/png;base64," + data.complainAttachment64);
 
                         $('#attachment').append(`
                             <div class="col-2">
-                                <a href="javascript:void(0);" onclick="load_image('data:image/png;base64,${data.reimbursementAttachment64}')">
+                                <a href="javascript:void(0);" onclick="load_image('data:image/png;base64,${data.complainAttachment64}')">
                                 <a href="javascript:void(0);" class="attachment-link" data-index="${i}">
-                                    <img id="${i + 1}" class="myimage img-rounded img-fluid" src="data:image/png;base64,${data.reimbursementAttachment64}" alt="${i}"/>
+                                    <img id="${i + 1}" class="myimage img-rounded img-fluid" src="data:image/png;base64,${data.complainAttachment64}" alt="${i}"/>
                                 </a>
                             </div>`
                         );
@@ -999,7 +999,7 @@
     // });
 
     $('#btn-update').click(()=>{
-        let status = $('#status').val();
+        let status = $('#status_new').val();
         let ticketNo = $('#tiketno').val();
         let employeeNo = $("#employee_no").val();
         let approvalremarks = $("#approvalremarks").val();
