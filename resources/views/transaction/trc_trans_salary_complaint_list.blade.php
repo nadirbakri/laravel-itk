@@ -815,30 +815,7 @@
         lastImg = img.id;
     }
 
-    const klikpreview = (element) => {
-        let data = table.row($(element).parent()).data().attachmentEntity;
-
-        $('#detailPhoto').empty();
-        $('#previewPhoto').empty();	
-        
-        if(data[0] != "")
-        {
-            for(var i =0; i < data.length ; i++)
-            {
-                $('#detailPhoto').append('<div class="imgdiv col-2" ><img id="'+(i+1)+'" class="myimage img-rounded" src="data:image/png;base64,'+ data[i].reimbursementAttachment64 +'" onclick="preview(this)" alt="'+i+'"/></div>');					
-            }
-            
-            $('#previewPhoto').append('<img id="0" class="preview" src="" alt="preview" />');
-            document.getElementById(0).src = document.getElementById(lastImg).src;
-        }
-        else
-        {
-            $('#previewPhoto').append('<div>No Data Available.</div>');
-        }
-    }
-
     const attachmentPreview = (data) => {
-        console.log(data)
         $('#attachment').empty();
         $('#attachment').addClass('spinner-border');
         let attachmentArray = [];
@@ -855,18 +832,18 @@
             },
             success: function (response) {
                 $('#attachment').removeClass('spinner-border');
-                const attachmentEntity = response.complainEntity.attachmentEntity;
+                const attachmentEntity = response.attachmentEntity;
 
                 if (attachmentEntity.length) {
                     for (let i = 0; i < attachmentEntity.length; i++) {
                         const data = attachmentEntity[i];
-                        attachmentArray.push("data:image/png;base64," + data.complainAttachment64);
+                        attachmentArray.push("data:image/png;base64," + data.complainAttachment);
 
                         $('#attachment').append(`
                             <div class="col-2">
-                                <a href="javascript:void(0);" onclick="load_image('data:image/png;base64,${data.complainAttachment64}')">
+                                <a href="javascript:void(0);" onclick="load_image('data:image/png;base64,${data.complainAttachment}')">
                                 <a href="javascript:void(0);" class="attachment-link" data-index="${i}">
-                                    <img id="${i + 1}" class="myimage img-rounded img-fluid" src="data:image/png;base64,${data.complainAttachment64}" alt="${i}"/>
+                                    <img id="${i + 1}" class="myimage img-rounded img-fluid" src="data:image/png;base64,${data.complainAttachment}" alt="${i}"/>
                                 </a>
                             </div>`
                         );

@@ -1718,7 +1718,7 @@ class TransactionController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/mobile/TmSalaryComplain/GetSalaryComplainDetailList',
+            $response = $client->post(env('API_URL') . '/mobile/TmSalaryComplain/GetSalaryComplainDetail',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
