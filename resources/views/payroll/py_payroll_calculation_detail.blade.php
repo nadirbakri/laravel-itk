@@ -519,7 +519,7 @@
         }
 
         $('#btn-add').on('click', function () {
-            $('#no').val(arrayPayrollCalculation.length);
+            $('#no').val(arrayPayrollCalculation.length + 1);
             $('#func_detail').val('new');
             $('#table_chooser').val(null).trigger('change');
             $('#field_chooser').val(null).trigger('change');
@@ -535,7 +535,7 @@
             if(data.count() > 0){
                 $('#modal_add_edit_payroll_calculation').modal('show');
                 $('#func_detail').val('edit');
-                $('#no').val((data[0].seqNo !== null) ? data[0].seqNo : '');
+                $('#no').val((data[0].seqNo !== null) ? (data[0].seqNo + 1) : '');
                 $('#preview_formula').val((data[0].formula !== null) ? data[0].formula : '');
                 $('#preview_condition').val((data[0].condition !== null) ? data[0].condition : '');
                 $('#none_operator').prop('checked', true);
@@ -706,7 +706,7 @@
                     },
                 ],
                 select: {
-                    style: 'multi',
+                    style: 'single',
                     selector: 'td:first-child'
                 }
             });
@@ -842,48 +842,48 @@
             }
         });
 
-        $('#modal_add_edit_payroll_calculation').on('show.bs.modal', function () {
-            if (func == 'new') {
-                var count = table.rows().count();
-                $('#no').val(count+1);
-            }
-            else {
-                if(arrData2 != null){
-                    $.ajax({
-                        url: "{{ url('payroll/payroll_calculation_number/check') }}",
-                        type: "GET",
-                        data: {
-                            'url': '/payroll/getPrCalculationDetail',
-                            'seqNo': arrData2[0].seqNo
-                        },
-                        success: function (response) {
-                            $('#no').val(response);
-                            // console.log(table.rows().count());
-                            // var count = (table.rows().count())+1;
-                            // if (response > 0 && count !== response) {
-                            //     var total = parseInt(response) + parseInt(count);
-                            //     $('#no').val(total - 1);
-                            // }
-                            // else if (response > 0 && count == response) {
-                            //     $('#no').val(response);
-                            // }
-                            // else {
-                            //     for (var i = 0; i <= count; i++){
-                            //         $('#no').val(i);
-                            //     }
-                            // }
-                        },
-                        error: function (response) {
-                            $('#notification_error').modal('show');
-                            $('#message-notification-error').html(response);
-                        }
-                    });
-                }else{
-                    var count = table.rows().count();
-                    $('#no').val(count+1);
-                }
-            }
-        });
+        // $('#modal_add_edit_payroll_calculation').on('show.bs.modal', function () {
+        //     if (func == 'new') {
+        //         var count = table.rows().count();
+        //         $('#no').val(count+1);
+        //     }
+        //     else {
+        //         if(arrData2 != null){
+        //             $.ajax({
+        //                 url: "{{ url('payroll/payroll_calculation_number/check') }}",
+        //                 type: "GET",
+        //                 data: {
+        //                     'url': '/payroll/getPrCalculationDetail',
+        //                     'seqNo': arrData2[0].seqNo
+        //                 },
+        //                 success: function (response) {
+        //                     $('#no').val(response);
+        //                     // console.log(table.rows().count());
+        //                     // var count = (table.rows().count())+1;
+        //                     // if (response > 0 && count !== response) {
+        //                     //     var total = parseInt(response) + parseInt(count);
+        //                     //     $('#no').val(total - 1);
+        //                     // }
+        //                     // else if (response > 0 && count == response) {
+        //                     //     $('#no').val(response);
+        //                     // }
+        //                     // else {
+        //                     //     for (var i = 0; i <= count; i++){
+        //                     //         $('#no').val(i);
+        //                     //     }
+        //                     // }
+        //                 },
+        //                 error: function (response) {
+        //                     $('#notification_error').modal('show');
+        //                     $('#message-notification-error').html(response);
+        //                 }
+        //             });
+        //         }else{
+        //             var count = table.rows().count();
+        //             $('#no').val(count+1);
+        //         }
+        //     }
+        // });
 
         $("#btn-save").click(function () {
             $(this).prop("disabled", true);
