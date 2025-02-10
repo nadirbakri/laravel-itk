@@ -77,26 +77,26 @@ class MonthlyAbsenteeismDetailExport implements FromView, ShouldAutoSize
             //     $param['groupAuthorizeTo'] = (int) $this->groupAuthorizeTo;
             // }
 
-            // if(!empty($this->position) && !is_null($this->position[0])){
-            //     foreach($this->position as $value){
-            //         $data_position[] = $value;
-            //     }
-            //     $param['position'] = $data_position;
-            // }
+            if(!empty($this->position) && !is_null($this->position[0])){
+                foreach($this->position as $value){
+                    $data_position[] = $value;
+                }
+                $param['position'] = $data_position;
+            }
 
-            // if(!empty($this->location) && !is_null($this->location[0])){
-            //     foreach($this->location as $value){
-            //         $data_location[] = $value;
-            //     }
-            //     $param['location'] = $data_location;
-            // }
+            if(!empty($this->location) && !is_null($this->location[0])){
+                foreach($this->location as $value){
+                    $data_location[] = $value;
+                }
+                $param['location'] = $data_location;
+            }
 
-            // if(!empty($this->ranking) && !is_null($this->ranking[0])){
-            //     foreach($this->ranking as $value){
-            //         $data_ranking[] = $value;
-            //     }
-            //     $param['ranking'] = $data_ranking;
-            // }
+            if(!empty($this->ranking) && !is_null($this->ranking[0])){
+                foreach($this->ranking as $value){
+                    $data_ranking[] = $value;
+                }
+                $param['ranking'] = $data_ranking;
+            }
 
             if(!empty($this->dataLevel) && !is_null($this->dataLevel[0])){
                 foreach($this->dataLevel as $key => $value){
