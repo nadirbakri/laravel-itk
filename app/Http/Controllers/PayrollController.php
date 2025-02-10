@@ -26,6 +26,7 @@ use App\Exports\ExportSIPPOnlineFile3Export;
 use App\Exports\ExportSIPPOnlineFile4Export;
 use App\Exports\ExcelTransferBankExport;
 use App\Exports\EBupotPeriodicalTemplateExport;
+use App\Exports\EBupotA1TemplateExport;
 use App\Exports\EBupotCoretaxTemplateExport;
 use App\Exports\PensionFundReportExport;
 use App\Exports\SPTListReportExport;
@@ -8787,6 +8788,7 @@ public function dataDetailReportFormatPY(Request $request)
                 "reportType" => $request->report_type,
                 "displayLine" => isset($request->display_line) ? (bool) $request->display_line : false,
                 "printSignature" => isset($request->print_signature) ? (bool) $request->print_signature : false,
+                "groupBy" => isset($request->select_grouping) ? $request->select_grouping : null,
                 "languageCode" => App::getLocale(),
                 "sessionID" => 0,
                 "sessionUserID" => Session::get('userID'),
@@ -9001,6 +9003,7 @@ public function dataDetailReportFormatPY(Request $request)
             $request->cost_center_code_from, 
             $request->cost_center_code_to, 
             isset($request->group_department) ? (bool) $request->group_department : false,
+            isset($request->select_grouping) ? $request->select_grouping : null,
             isset($request->multi_cost_center) ? (bool) $request->multi_cost_center : false,
             $request->report_status, 
             $request->report_type, 

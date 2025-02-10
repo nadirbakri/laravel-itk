@@ -20,7 +20,7 @@ use App;
 
 class PeriodicalReportExport extends DefaultValueBinder implements WithCustomValueBinder, FromView, WithEvents, ShouldAutoSize
 {
-    public function __construct($reportName, $grandTotal, $employeeNoFrom, $employeeNoTo, $period, $costCenterCodeFrom, $costCenterCodeTo, $groupDepartment, $multiCostCenter, $reportStatus, $reportType, $groupAuthorizedCodeFrom, $groupAuthorizedCodeTo, $displayLine, $printSignature, $position, $ranking, $location, $group, $dataLevel, $reportNameDetail)
+    public function __construct($reportName, $grandTotal, $employeeNoFrom, $employeeNoTo, $period, $costCenterCodeFrom, $costCenterCodeTo, $groupDepartment, $groupingType, $multiCostCenter, $reportStatus, $reportType, $groupAuthorizedCodeFrom, $groupAuthorizedCodeTo, $displayLine, $printSignature, $position, $ranking, $location, $group, $dataLevel, $reportNameDetail)
     {
         $this->reportName = $reportName;
         $this->grandTotal = $grandTotal;
@@ -30,6 +30,7 @@ class PeriodicalReportExport extends DefaultValueBinder implements WithCustomVal
         $this->costCenterCodeFrom = $costCenterCodeFrom;
         $this->costCenterCodeTo = $costCenterCodeTo;
         $this->groupDepartment = $groupDepartment;
+        $this->groupingType = $groupingType; 
         $this->multiCostCenter = $multiCostCenter;
         $this->reportStatus = $reportStatus;
         $this->reportType = $reportType;
@@ -79,6 +80,7 @@ class PeriodicalReportExport extends DefaultValueBinder implements WithCustomVal
                 "reportType" => $this->reportType,
                 "displayLine" => $this->displayLine,
                 "printSignature" => $this->printSignature,
+                "groupBy" => $this->groupingType,
                 "languageCode" => App::getLocale(),
                 "sessionID" => 0,
                 "sessionUserID" => Session::get('userID'),

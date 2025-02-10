@@ -238,6 +238,23 @@
                 </div>
                 @endif
                 <div class="row">
+                    <div class="col-3">
+                        <div class="form-group">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="check_grouping"
+                                    name="check_grouping" value="true">
+                                <label
+                                    for="check_grouping">{{ __('payroll_periodical_report.label_data_grouping') }}</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <select class="form-control select2" id="select_grouping" name="select_grouping" disabled></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col-2">
                         <div class="form-group">
                             <label for="report_status">{{ __('payroll_periodical_report.label_report_status') }}</label>
@@ -524,6 +541,7 @@
         loadDataLocationCode();
         loadDataRankingCode();
         loadDataGroupCode();
+        loadDataGroupingType()
 
         loadDataFirstLastAllPosition();
         loadDataFirstLastAllLocation();
@@ -595,6 +613,14 @@
         $('#report_name').on("select2:select, change", function (e) {
             var data = $('#report_name').select2('data');
             $('#report_name_detail').val(htmlDecode(data[0].title));
+        });
+
+        $('#check_grouping').on('change', function () {
+            if ($('#check_grouping').is(':checked')) {
+                $('#select_grouping').prop('disabled', false);
+            } else {
+                $('#select_grouping').prop('disabled', true);
+            }
         });
 
         function loadDataFirstLastAllEmployeeNo(field = '', func = '') {
@@ -1255,6 +1281,76 @@
                 },
                 ajax: {
                     url: "{{ url('/group/all/api') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.groupName,
+                                    id: item.groupCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataGroupingType() {
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' +
+                        '<div class="col-6">' + data.data.groupCode + '</div>' +
+                        '<div class="col-6">' + data.data.groupName + '</div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var headerIsAppend = false;
+            $('#select_grouping').on('select2:open', function (e) {
+                if (!headerIsAppend) {
+                    html = '<div class="row">' +
+                        '<div class="col-6"><b>Group Code</b></div>' +
+                        '<div class="col-6"><b>Group Name</b></div>' +
+                        '</div>';
+                    $('.select2-search--dropdown').append(html);
+                    headerIsAppend = true;
+                }
+            });
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $('#select_grouping').select2({
+                width: '100%',
+                placeholder: 'Choose Grouping Type',
+                allowClear: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: "{{ url('/grouping_type/all/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
