@@ -8307,12 +8307,15 @@ public function dataDetailReportFormatPY(Request $request)
                 );
             }else if($request->format == "final"){
                 $namaFile = "EsptFinal-" . date('n', strtotime($request->period)) . date('Y', strtotime($request->period)) . "-" . $request->rectification . "-" . $request->npwp_group . ".xlsx";
-            }else if ($request->format == "coretax_mp" || $request->format == "coretax_a1") {
+            }else if ($request->format == "coretax_mp" || $request->format == "coretax_a1" || $request->format == "coretax_21") {
                 if ($request->format == "coretax_mp") {
                     $namaFile = "EsptCoretaxMP-" . date('n', strtotime($request->period)) . date('Y', strtotime($request->period)) . "-" . $request->rectification . "-" . $request->npwp_group . ".xlsx";
                 }
-                else {
+                else if ($request->format == "coretax_a1") {
                     $namaFile = "EsptCoretaxA1-" . date('n', strtotime($request->period)) . date('Y', strtotime($request->period)) . "-" . $request->rectification . "-" . $request->npwp_group . ".xlsx";
+                }
+                else if ($request->format == "coretax_21") {
+                    $namaFile = "EsptCoretax21-" . date('n', strtotime($request->period)) . date('Y', strtotime($request->period)) . "-" . $request->rectification . "-" . $request->npwp_group . ".xlsx";
                 }
                 return Excel::download(new EBupotCoretaxTemplateExport(
                     $request->format, 

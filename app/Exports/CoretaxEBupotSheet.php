@@ -13,6 +13,8 @@ use PhpOffice\PhpSpreadsheet\Cell\DataType;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\WithCustomValueBinder;
 use PhpOffice\PhpSpreadsheet\Cell\DefaultValueBinder;
+use Maatwebsite\Excel\Events\AfterSheet;
+use PhpOffice\PhpSpreadsheet\Cell\DataValidation;
 use Validator;
 use Session;
 use App;
@@ -62,12 +64,6 @@ class CoretaxEBupotSheet extends DefaultValueBinder implements WithCustomValueBi
                 "sessionID" => 0,
                 "sessionUserID" => Session::get('userID')
             ];
-
-            // if(!empty($this->groupAuthorizedCodeFrom) || !empty($this->groupAuthorizedCodeTo)){
-            //     $param['groupAuthorizeCodeFrom'] = (int) $this->groupAuthorizedCodeFrom;
-            //     $param['groupAuthorizeCodeTo'] = (int) $this->groupAuthorizedCodeTo;
-            // }
-
             // dd(json_encode($param));
 
             if ($this->format === "coretax_mp") {
@@ -75,8 +71,13 @@ class CoretaxEBupotSheet extends DefaultValueBinder implements WithCustomValueBi
                     'body' => json_encode($param)
                 ]);
             } 
-            else {
+            else if ($this->format === "coretax_a1") {
                 $response = $client->post(env('API_URL') . "/payroll/getCoretaxA1", [
+                    'body' => json_encode($param)
+                ]);
+            }
+            else if ($this->format === "coretax_21") {
+                $response = $client->post(env('API_URL') . "/payroll/getCoretax21", [
                     'body' => json_encode($param)
                 ]);
             }
@@ -102,9 +103,15 @@ class CoretaxEBupotSheet extends DefaultValueBinder implements WithCustomValueBi
                 'data_company_npwp' => (isset($arrResult->dataListSet[0]->companyNPWP)) ? $arrResult->dataListSet[0]->companyNPWP : "",
             ]);
         }
-        else {
+        else if ($this->format === "coretax_a1") {
             return view('payroll.py_export_csv_espt_report_coretax_excel', [
                 'data' => (isset($arrResult->dataListSet[0]->coretax_A1)) ? $arrResult->dataListSet[0]->coretax_A1[0] : [],
+                'data_company_npwp' => (isset($arrResult->dataListSet[0]->companyNPWP)) ? $arrResult->dataListSet[0]->companyNPWP : "",
+            ]);
+        }
+        else if ($this->format === "coretax_21") {
+            return view('payroll.py_export_csv_espt_report_coretax_excel', [
+                'data' => (isset($arrResult->dataListSet[0]->coretax_21)) ? $arrResult->dataListSet[0]->coretax_21[0] : [],
                 'data_company_npwp' => (isset($arrResult->dataListSet[0]->companyNPWP)) ? $arrResult->dataListSet[0]->companyNPWP : "",
             ]);
         }
@@ -113,25 +120,62 @@ class CoretaxEBupotSheet extends DefaultValueBinder implements WithCustomValueBi
     public function registerEvents(): array
     {
         return [
-            \Maatwebsite\Excel\Events\BeforeExport::class => function(\Maatwebsite\Excel\Events\BeforeExport $event) {
-                $sheet = $event->sheet;
-                $sheet->getDelegate()->getStyle('A1:BN2')
-                    ->getAlignment()
-                    ->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-            },
             AfterSheet::class => function(AfterSheet $event) {
-                $sheet = $event->sheet;
+                $sheet = $event->sheet->getDelegate();
+                $highestRow = $sheet->getHighestRow();
+                $highestColumn = $sheet->getHighestColumn();
+                $spreadsheet = $sheet->getParent();
+                $dropdownSheet = $spreadsheet->createSheet();
+                $dropdownSheet->setTitle('DropdownSheet');
+                
+                if ($this->format === "coretax_21") {
+                    $dropdownMappings = [
+                        'Kode Objek Pajak' => [
+                            "21-100-35", "21-100-10", "21-100-27", "21-100-07", 
+                            "21-100-18", "21-100-19", "21-100-20", "21-100-21",
+                            "21-100-22", "21-100-23", "21-100-06", "21-100-05",
+                            "21-100-04", "21-100-30", "21-100-31", "21-100-12",
+                            "21-100-36", "21-100-14", "21-100-15", "21-100-16",
+                            "21-100-17", "21-100-25", "21-100-33", "21-100-34",
+                            "21-100-24", "21-100-29", "21-402-04", "21-402-02",
+                            "21-402-03", "21-401-01", "21-401-02", "21-100-37",
+                        ],
+                        'Jenis Dok. Referensi' => [
+                            "Announcement", "CommercialInvoice", "Contract", 
+                            "CurrentAccount", "Decree", "DeedOfEngagement",
+                            "DeedOfGeneral", "Other", "OtherFacilityDoc", 
+                            "PaymentProof", "StatementLetter", "TaxInvoice",
+                            "TaxRegulationDoc", "TradeConfirmation"
+                        ],
+                    ];
+                    
+                    $namedRanges = [];
+                    foreach ($dropdownMappings as $key => $values) {
+                        $col = chr(65 + count($namedRanges));
+                        foreach ($values as $index => $value) {
+                            $dropdownSheet->setCellValue("{$col}" . ($index + 1), $value);
+                        }
+                        $namedRanges[$key] = "DropdownSheet!{$col}1:{$col}" . count($values);
+                    }
 
-                $cells = $sheet->getDelegate()->getElementsByTagName('td');
-                foreach ($cells as $cell) {
-                    $dataFormat = $cell->getAttribute('data-format');
+                    $highestRow = $sheet->getHighestRow();
+                    $highestColumn = $sheet->getHighestColumn();
 
-                    // Set format sel jika atribut data-format ditemukan
-                    if (!empty($dataFormat)) {
-                        $sheet->getStyle($cell->getCoordinate())->getNumberFormat()->setFormatCode($dataFormat);
+                    // Terapkan dropdown
+                    foreach (range('B', $highestColumn) as $col) {
+                        $cellValue = $sheet->getCell("{$col}3")->getValue();
+                        
+                        if (isset($namedRanges[$cellValue])) {
+                            $validation = $sheet->getCell("{$col}4")->getDataValidation();
+                            $validation->setType(DataValidation::TYPE_LIST);
+                            $validation->setAllowBlank(false);
+                            $validation->setShowDropDown(true);
+                            $validation->setFormula1("=" . $namedRanges[$cellValue]);
+                            $validation->setSqref("{$col}4:{$col}{$highestRow}"); // Terapkan untuk seluruh kolom
+                        }
                     }
                 }
-            },
+            }
         ];
     }
 
@@ -140,8 +184,11 @@ class CoretaxEBupotSheet extends DefaultValueBinder implements WithCustomValueBi
         if ($this->format === 'coretax_mp') {
             return 'Coretax MP';
         }
-        else {
+        else if ($this->format === "coretax_a1") {
             return 'Coretax A1';
+        }
+        else if ($this->format === "coretax_21") {
+            return 'Coretax 21';
         }
     }
 }

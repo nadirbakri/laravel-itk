@@ -163,6 +163,15 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label for="coretax_21">&nbsp;</label>
+                            <div class="form-check">
+                                <input type="radio" id="coretax_21" name="format" value="coretax_21">
+                                <label for="coretax_21">{{ __('payroll_csv_espt_report_form.label_coretax_21') }}</label>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 @if(Session::get('companyCode') == 'CBI')
                 <div class="row">
