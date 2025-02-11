@@ -2944,9 +2944,11 @@ public function dataDetailReportFormatPY(Request $request)
         $arrResult = json_decode($response->getBody()->getContents());
         $arrResult2 = json_decode($response_table->getBody()->getContents());
 
-        usort($arrResult2->dataListSet, function ($a, $b) {
-            return $a->seqNo <=> $b->seqNo;
-        });
+        if ($arrResult2->dataListSet) {
+            usort($arrResult2->dataListSet, function ($a, $b) {
+                return $a->seqNo <=> $b->seqNo;
+            });
+        }
 
         return view('payroll.py_payroll_calculation_detail', ['data' => $arrResult->dataListSet, 'data_table' => $arrResult2->dataListSet, 'func' => $request->func]);
     }
