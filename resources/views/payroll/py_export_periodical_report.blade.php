@@ -248,7 +248,7 @@
                         <td><h1 style="font-weight: normal;">{{ $level }}</h1></td>
                     </tr>
                     <tr>
-                        <td><h1 style="font-weight: normal;">Cost Center</h1></td>
+                        <td><h1 style="font-weight: normal;">{{ $group_name }}</h1></td>
                         <td><h1 style="font-weight: normal;">:</h1></td>
                         <td><h1 style="font-weight: normal;">{{ $dataTable->departement }}</h1></td>
                     </tr>
@@ -260,7 +260,7 @@
                         $branch = $dataTable->departement;
                     ?>
                     <tr>
-                        <th>Cost Center :</th>
+                        <th>{{ $group_name }} :</th>
                         <th>{{ $dataTable->departement }}</th>
                     </tr>
                 </table>
@@ -384,7 +384,7 @@
                                     @if($loop->first)
                                         <td style="background-color: yellow; text-align:center; border:1px solid #000; font-size:{{ $fontSize }}px !important; font-weight: bold;">
                                             @if($company == 'NMDI' || $company == 'CITROEN')
-                                            Total per Cost Center
+                                            Total per {{ $group_name }}
                                             @else
                                             Total {{ $branch }}
                                             @endif
@@ -521,9 +521,9 @@
                                 @if($loop->first)
                                     <th style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7; font-size: {{ $dataRow->fontSize }}px !important;">No</th>
                                     @if($company == 'IPN' || $company == 'UPM' || $company == 'IGT' || $company == 'IVT' || $company == 'IPNJT')
-                                    <th colspan="2" style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7; font-size: {{ $dataRow->fontSize }}px !important;">Cost Center</th>
+                                    <th colspan="2" style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7; font-size: {{ $dataRow->fontSize }}px !important;">{{ $group_name }}</th>
                                     @else
-                                    <th style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7; font-size: {{ $dataRow->fontSize }}px !important;">Cost Center</th>
+                                    <th style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7; font-size: {{ $dataRow->fontSize }}px !important;">{{ $group_name }}</th>
                                     @endif
                                     <th style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7; font-size: {{ $dataRow->fontSize }}px !important;">
                                         @if($company == 'IPN' || $company == 'UPM' || $company == 'IGT' || $company == 'IVT' || $company == 'IPNJT')

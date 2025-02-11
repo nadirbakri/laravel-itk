@@ -1547,6 +1547,27 @@ class TimeManagementController extends Controller
                 'sessionUserID' => Session::get('userID')
             ];
 
+            if(!empty($request->position) && !is_null($request->position[0])){
+                foreach($request->position as $value){
+                    $data_position[] = $value;
+                }
+                $param['position'] = $data_position;
+            }
+
+            if(!empty($request->location) && !is_null($request->location[0])){
+                foreach($request->location as $value){
+                    $data_location[] = $value;
+                }
+                $param['location'] = $data_location;
+            }
+
+            if(!empty($request->ranking) && !is_null($request->ranking[0])){
+                foreach($request->ranking as $value){
+                    $data_ranking[] = $value;
+                }
+                $param['ranking'] = $data_ranking;
+            }
+
             if(!empty($dataLevel) && !is_null($dataLevel[0])){
                 foreach($dataLevel as $key => $value){
                     $data_level_detail = [];

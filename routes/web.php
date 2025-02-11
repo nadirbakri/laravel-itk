@@ -1307,6 +1307,7 @@ Route::get('group/api', 'DataController@dataGroupAPI');
 Route::get('group/detail/api', 'DataController@dataGroupDetailAPI');
 Route::get('group/func/api', 'DataController@dataGroupFunctionAPI');
 Route::get('group/all/api', 'DataController@dataGroupAllAPI');
+Route::get('grouping_type/api', 'DataController@dataGroupingTypeAPI');
 Route::get('nature_of_work/api', 'DataController@dataNatureofWorkAPI');
 Route::get('nature_of_work/detail/api', 'DataController@dataNatureofWorkDetailAPI');
 Route::get('free_format_field/api', 'DataController@dataFreeFormatFieldAPI');

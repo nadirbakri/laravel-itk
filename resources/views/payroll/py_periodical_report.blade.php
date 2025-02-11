@@ -222,21 +222,24 @@
                         </div>
                     </div>
                 </div>
-                @if($companyCode == 'NMDI' || $companyCode == 'CITROEN')
-                <div class="row" id="div-level">
-                    <div class="col-3">
+                <div class="row">
+                    <div class="col-2">
                         <div class="form-group">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="group_department"
-                                    name="group_department" value="true">
+                                <input class="form-check-input" type="checkbox" id="check_grouping"
+                                    name="check_grouping" value="true">
                                 <label
-                                    for="group_department">{{ __('payroll_periodical_report.label_group_department') }}</label>
+                                    for="check_grouping">{{ __('payroll_periodical_report.label_data_grouping') }}</label>
                             </div>
-                            <input type="hidden" class="form-control" id="level_format" name="level_format">
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <select class="form-control select2" id="select_grouping" name="select_grouping" disabled></select>
+                            <input type="hidden" id="select_grouping_detail" name="select_grouping_detail">
                         </div>
                     </div>
                 </div>
-                @endif
                 <div class="row">
                     <div class="col-2">
                         <div class="form-group">
@@ -370,11 +373,9 @@
                         </div>
                     </div>
                 </div>
-                @if($companyCode != 'NMDI' && $companyCode != 'CITROEN')
                 <div class="row" id="div-level">
                     <input type="hidden" class="form-control" id="level_format" name="level_format">
                 </div>
-                @endif
                 <!-- BUTTON -->
                 <div class="row">
                     <div class="col-3">
@@ -524,6 +525,7 @@
         loadDataLocationCode();
         loadDataRankingCode();
         loadDataGroupCode();
+        loadDataGroupingType()
 
         loadDataFirstLastAllPosition();
         loadDataFirstLastAllLocation();
@@ -535,29 +537,19 @@
             type: "GET",
             success: function (response) {
                 $('#level_format').val(response.data[0].levelFormat);
-                for (var i = 1; i <= ((companyCode == 'NMDI' || companyCode == 'CITROEN') ? 1 : response.data[0].levelFormat); i++) {
-                    if(companyCode == 'NMDI' || companyCode == 'CITROEN'){
-                        $('#div-level').append(
-                            '<div class="col-4">' +
-                            '<div class="form-group">' +
-                            '<select class="form-control select2" id="level' + i + '" name="level' +
-                            i + '[]"></select>' +
-                            '</div></div>'
-                        );
-                    }else{
-                        $('#div-level').append(
-                            '<div class="col-2">' +
-                            '<div class="form-group">'+
-                            '<label for="level' + i + ' form-check-label">' + response.data_level[i - 1]
-                            .levelDescription + '</label>' +
-                            '</div></div>'+
-                            '<div class="col-4">' +
-                            '<div class="form-group">' +
-                            '<select class="form-control select2" id="level' + i + '" name="level' +
-                            i + '[]" multiple="multiple"></select>' +
-                            '</div></div>'
-                        );
-                    }
+                for (var i = 1; i <= response.data[0].levelFormat; i++) {
+                    $('#div-level').append(
+                        '<div class="col-2">' +
+                        '<div class="form-group">'+
+                        '<label for="level' + i + ' form-check-label">' + response.data_level[i - 1]
+                        .levelDescription + '</label>' +
+                        '</div></div>'+
+                        '<div class="col-4">' +
+                        '<div class="form-group">' +
+                        '<select class="form-control select2" id="level' + i + '" name="level' +
+                        i + '[]" multiple="multiple"></select>' +
+                        '</div></div>'
+                    );
 
                     loadDataLevelCode('#level' + i, i);
                     loadDataFirstLastAllLevel('#level' + i, i);
@@ -595,6 +587,19 @@
         $('#report_name').on("select2:select, change", function (e) {
             var data = $('#report_name').select2('data');
             $('#report_name_detail').val(htmlDecode(data[0].title));
+        });
+
+        $('#check_grouping').on('change', function () {
+            if ($('#check_grouping').is(':checked')) {
+                $('#select_grouping').prop('disabled', false);
+            } else {
+                $('#select_grouping').prop('disabled', true);
+            }
+        });
+
+        $('#select_grouping').on("select2:select, change", function (e) {
+            var data = $('#select_grouping').select2('data');
+            $('#select_grouping_detail').val(htmlDecode(data[0].title));
         });
 
         function loadDataFirstLastAllEmployeeNo(field = '', func = '') {
@@ -1270,6 +1275,77 @@
                                 return {
                                     text: item.groupName,
                                     id: item.groupCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataGroupingType() {
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' +
+                        '<div class="col-6">' + data.data.groupCode + '</div>' +
+                        '<div class="col-6">' + data.data.groupName + '</div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var headerIsAppend = false;
+            $('#select_grouping').on('select2:open', function (e) {
+                if (!headerIsAppend) {
+                    html = '<div class="row">' +
+                        '<div class="col-6"><b>Group Code</b></div>' +
+                        '<div class="col-6"><b>Group Name</b></div>' +
+                        '</div>';
+                    $('.select2-search--dropdown').append(html);
+                    headerIsAppend = true;
+                }
+            });
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $('#select_grouping').select2({
+                width: '100%',
+                placeholder: 'Choose Grouping Type',
+                allowClear: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: "{{ url('/grouping_type/api') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.groupName,
+                                    id: item.groupCode,
+                                    title: item.groupName,
                                     data: item
                                 }
                             })
