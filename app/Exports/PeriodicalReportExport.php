@@ -20,7 +20,7 @@ use App;
 
 class PeriodicalReportExport extends DefaultValueBinder implements WithCustomValueBinder, FromView, WithEvents, ShouldAutoSize
 {
-    public function __construct($reportName, $grandTotal, $employeeNoFrom, $employeeNoTo, $period, $costCenterCodeFrom, $costCenterCodeTo, $groupDepartment, $groupingType, $multiCostCenter, $reportStatus, $reportType, $groupAuthorizedCodeFrom, $groupAuthorizedCodeTo, $displayLine, $printSignature, $position, $ranking, $location, $group, $dataLevel, $reportNameDetail)
+    public function __construct($reportName, $grandTotal, $employeeNoFrom, $employeeNoTo, $period, $costCenterCodeFrom, $costCenterCodeTo, $grouping, $groupingType, $multiCostCenter, $reportStatus, $reportType, $groupAuthorizedCodeFrom, $groupAuthorizedCodeTo, $displayLine, $printSignature, $position, $ranking, $location, $group, $dataLevel, $reportNameDetail, $groupNameDetail)
     {
         $this->reportName = $reportName;
         $this->grandTotal = $grandTotal;
@@ -29,7 +29,7 @@ class PeriodicalReportExport extends DefaultValueBinder implements WithCustomVal
         $this->period = $period;
         $this->costCenterCodeFrom = $costCenterCodeFrom;
         $this->costCenterCodeTo = $costCenterCodeTo;
-        $this->groupDepartment = $groupDepartment;
+        $this->grouping = $grouping;
         $this->groupingType = $groupingType; 
         $this->multiCostCenter = $multiCostCenter;
         $this->reportStatus = $reportStatus;
@@ -44,6 +44,7 @@ class PeriodicalReportExport extends DefaultValueBinder implements WithCustomVal
         $this->group = $group;
         $this->dataLevel = $dataLevel;
         $this->reportNameDetail = $reportNameDetail;
+        $this->groupNameDetail = $groupNameDetail;
     }
 
     public function bindValue(Cell $cell, $value)
@@ -74,7 +75,7 @@ class PeriodicalReportExport extends DefaultValueBinder implements WithCustomVal
                 "employeeNoTo" => $this->employeeNoTo,
                 "period" => $this->period,
                 "statusPeriod" => 0,
-                "deptGroup" => $this->groupDepartment,
+                "deptGroup" => $this->grouping,
                 "multiCostCenter" => $this->multiCostCenter,
                 "reportStatus" => $this->reportStatus,
                 "reportType" => $this->reportType,
@@ -322,7 +323,7 @@ class PeriodicalReportExport extends DefaultValueBinder implements WithCustomVal
 
         if($arrResult->dataListSet == null){
             return view('payroll.py_export_periodical_report_excel', [
-                'param' => $param, 'grandTotal' => [], 'data' => [], 'data_company' => $arrCompany->dataListSet, 'data_period' => $this->period, 'grand_total' => $this->grandTotal, 'print_signature' => $this->printSignature, 'level1' => $this->dataLevel[0], 'report_name' => $this->reportNameDetail, 'company' => Session::get('companyCode')
+                'param' => $param, 'grandTotal' => [], 'data' => [], 'data_company' => $arrCompany->dataListSet, 'data_period' => $this->period, 'grand_total' => $this->grandTotal, 'print_signature' => $this->printSignature, 'level1' => $this->dataLevel[0], 'report_name' => $this->reportNameDetail, 'group_name' => $this->groupNameDetail, 'company' => Session::get('companyCode')
             ]);
         }else{
             $total = [];
@@ -398,7 +399,7 @@ class PeriodicalReportExport extends DefaultValueBinder implements WithCustomVal
             }
 
             return view('payroll.py_export_periodical_report_excel', [
-                'param' => $param, 'grandTotal' => $total, 'data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet, 'data_period' => $this->period, 'grand_total' => $this->grandTotal, 'print_signature' => $this->printSignature, 'level1' => $this->dataLevel[0], 'report_name' => $this->reportNameDetail, 'company' => Session::get('companyCode')
+                'param' => $param, 'grandTotal' => $total, 'data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet, 'data_period' => $this->period, 'grand_total' => $this->grandTotal, 'print_signature' => $this->printSignature, 'level1' => $this->dataLevel[0], 'report_name' => $this->reportNameDetail, 'group_name' => $this->groupNameDetail, 'company' => Session::get('companyCode')
             ]); 
         }
     }

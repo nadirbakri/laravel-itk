@@ -222,23 +222,8 @@
                         </div>
                     </div>
                 </div>
-                @if($companyCode == 'NMDI' || $companyCode == 'CITROEN')
-                <div class="row" id="div-level">
-                    <div class="col-3">
-                        <div class="form-group">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="group_department"
-                                    name="group_department" value="true">
-                                <label
-                                    for="group_department">{{ __('payroll_periodical_report.label_group_department') }}</label>
-                            </div>
-                            <input type="hidden" class="form-control" id="level_format" name="level_format">
-                        </div>
-                    </div>
-                </div>
-                @endif
                 <div class="row">
-                    <div class="col-3">
+                    <div class="col-2">
                         <div class="form-group">
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="check_grouping"
@@ -251,6 +236,7 @@
                     <div class="col-4">
                         <div class="form-group">
                             <select class="form-control select2" id="select_grouping" name="select_grouping" disabled></select>
+                            <input type="hidden" id="select_grouping_detail" name="select_grouping_detail">
                         </div>
                     </div>
                 </div>
@@ -387,11 +373,9 @@
                         </div>
                     </div>
                 </div>
-                @if($companyCode != 'NMDI' && $companyCode != 'CITROEN')
                 <div class="row" id="div-level">
                     <input type="hidden" class="form-control" id="level_format" name="level_format">
                 </div>
-                @endif
                 <!-- BUTTON -->
                 <div class="row">
                     <div class="col-3">
@@ -553,29 +537,19 @@
             type: "GET",
             success: function (response) {
                 $('#level_format').val(response.data[0].levelFormat);
-                for (var i = 1; i <= ((companyCode == 'NMDI' || companyCode == 'CITROEN') ? 1 : response.data[0].levelFormat); i++) {
-                    if(companyCode == 'NMDI' || companyCode == 'CITROEN'){
-                        $('#div-level').append(
-                            '<div class="col-4">' +
-                            '<div class="form-group">' +
-                            '<select class="form-control select2" id="level' + i + '" name="level' +
-                            i + '[]"></select>' +
-                            '</div></div>'
-                        );
-                    }else{
-                        $('#div-level').append(
-                            '<div class="col-2">' +
-                            '<div class="form-group">'+
-                            '<label for="level' + i + ' form-check-label">' + response.data_level[i - 1]
-                            .levelDescription + '</label>' +
-                            '</div></div>'+
-                            '<div class="col-4">' +
-                            '<div class="form-group">' +
-                            '<select class="form-control select2" id="level' + i + '" name="level' +
-                            i + '[]" multiple="multiple"></select>' +
-                            '</div></div>'
-                        );
-                    }
+                for (var i = 1; i <= response.data[0].levelFormat; i++) {
+                    $('#div-level').append(
+                        '<div class="col-2">' +
+                        '<div class="form-group">'+
+                        '<label for="level' + i + ' form-check-label">' + response.data_level[i - 1]
+                        .levelDescription + '</label>' +
+                        '</div></div>'+
+                        '<div class="col-4">' +
+                        '<div class="form-group">' +
+                        '<select class="form-control select2" id="level' + i + '" name="level' +
+                        i + '[]" multiple="multiple"></select>' +
+                        '</div></div>'
+                    );
 
                     loadDataLevelCode('#level' + i, i);
                     loadDataFirstLastAllLevel('#level' + i, i);
@@ -621,6 +595,11 @@
             } else {
                 $('#select_grouping').prop('disabled', true);
             }
+        });
+
+        $('#select_grouping').on("select2:select, change", function (e) {
+            var data = $('#select_grouping').select2('data');
+            $('#select_grouping_detail').val(htmlDecode(data[0].title));
         });
 
         function loadDataFirstLastAllEmployeeNo(field = '', func = '') {
@@ -1350,7 +1329,7 @@
                     }
                 },
                 ajax: {
-                    url: "{{ url('/grouping_type/all/api') }}",
+                    url: "{{ url('/grouping_type/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -1366,6 +1345,7 @@
                                 return {
                                     text: item.groupName,
                                     id: item.groupCode,
+                                    title: item.groupName,
                                     data: item
                                 }
                             })
