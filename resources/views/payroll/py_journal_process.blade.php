@@ -175,11 +175,10 @@
             success: function (response) {
                 isData = Object.keys(response).length;
                 if (isData !== 0) {                    
-                    $('#period_month').val((typeof response[0].periodMonth !== 'undefined') ? response[0].periodMonth : '');
+                    $('#period_month').val((typeof response[0].periodMonth !== 'undefined') ? String(response[0].periodMonth).padStart(2, '0') : '');
                     $('#period_year').val((typeof response[0].periodYear !== 'undefined') ? response[0].periodYear : '');
                 }
                 var month_year = moment(response[0].periodYear.toString() + "-" + response[0].periodMonth.toString()).format('MMMM' + ' ' + 'YYYY');
-                console.log(response[0].periodMonth.toString());
                 $('#period_process').val(month_year);
             }
         });

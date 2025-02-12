@@ -6620,11 +6620,10 @@ public function dataDetailReportFormatPY(Request $request)
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
             
-            // var_dump(json_encode(
+            // dd(json_encode(
             //     [
             //         "companyCode" => Session::get('companyCode'),
-            //         "periodMonth" => (int) $request->period_month,
-            //         "periodYear" => (int) $request->period_year,
+            //         "journalPeriod" => $request->period_year . "-" . $request->period_month . "-01",
             //         "languageCode" => App::getLocale(),
             //         "sessionID" => 0,
             //         "sessionUserID" => Session::get('userID'),
@@ -6633,12 +6632,11 @@ public function dataDetailReportFormatPY(Request $request)
             //     ]
             // ));
 
-            $response = $client->put(env('API_URL') . '/prmonthlyendprocess/updateprmonthlyendprocess',
+            $response = $client->put(env('API_URL') . '/payroll/journalprocess',
                 ['body' => json_encode(
                     [
                         "companyCode" => Session::get('companyCode'),
-                        "periodMonth" => (int) $request->period_month,
-                        "periodYear" => (int) $request->period_year,
+                        "journalPeriod" => $request->period_year . "-" . $request->period_month . "-01",
                         "languageCode" => App::getLocale(),
                         "sessionID" => 0,
                         "sessionUserID" => Session::get('userID'),

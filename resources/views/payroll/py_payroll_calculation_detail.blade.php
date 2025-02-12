@@ -438,6 +438,8 @@
     }
     
     $(document).ready(function () {
+        $.fn.modal.Constructor.prototype._enforceFocus = function() {};
+        
         var arrData = @json($data);
         var arrData2 = @json($data_table);
         var func = "{{ $func }}";
