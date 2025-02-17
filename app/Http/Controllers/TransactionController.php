@@ -437,7 +437,7 @@ class TransactionController extends Controller
                         'employeeNo'=> $request->employeeNo,
                         'status' => $request->status === 'ALL' ? null : $request->status,
                         // 'type' => $request->type,
-                        'exportMenu' => true,
+                        'exportMenu' => false,
                         'isWeb' => true,
                         'companyCode' => Session::get('companyCode'), 
                         'languageCode' => strtoupper(App::getLocale()), 
