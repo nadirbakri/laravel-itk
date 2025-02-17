@@ -37,40 +37,46 @@ class JournalTemplateDataImport implements ToCollection, SkipsEmptyRows, WithSta
                 '*.2' => 'required|not_in:NULL',
                 '*.3' => 'required|not_in:NULL',
                 '*.4' => 'required|not_in:NULL',
-                '*.5' => 'required|not_in:NULL',
                 '*.6' => 'required|not_in:NULL',
-                '*.7' => 'required|not_in:NULL'
+                '*.7' => 'required|not_in:NULL',
+                '*.8' => 'required|not_in:NULL',
+                '*.9' => 'required|not_in:NULL'
             ], [
-                '*.0.required' => 'Journal Code is Required',
-                '*.0.not_in' => 'Journal Code cannot be Null',
-                '*.1.required' => 'Field Name is Required',
-                '*.1.not_in' => 'Field Name cannot be Null',
-                '*.2.required' => 'Debit Kredit is Required',
-                '*.2.not_in' => 'Debit Kredit cannot be Null',
-                '*.3.required' => 'Operator is Required',
-                '*.3.not_in' => 'Operator cannot be Null',
-                '*.4.required' => 'Cost Center is Required',
-                '*.4.not_in' => 'Cost Center cannot be Null',
-                '*.5.required' => 'Account is Required',
-                '*.5.not_in' => 'Account cannot be Null',
-                '*.6.required' => 'Grouping 1 is Required',
-                '*.6.not_in' => 'Grouping 1 cannot be Null',
-                '*.7.required' => 'Grouping 2 is Required',
-                '*.7.not_in' => 'Grouping 2 cannot be Null'
+                '*.0.required' => 'Record Status is Required',
+                '*.0.not_in' => 'Record Status cannot be Null',
+                '*.1.required' => 'Company Code is Required',
+                '*.1.not_in' => 'Company Code cannot be Null',
+                '*.2.required' => 'Journal Code is Required',
+                '*.2.not_in' => 'Journal Code cannot be Null',
+                '*.3.required' => 'Seq No is Required',
+                '*.3.not_in' => 'Seq No cannot be Null',
+                '*.4.required' => 'Doc No is Required',
+                '*.4.not_in' => 'Doc No cannot be Null',
+                '*.6.required' => 'Debit Kredit is Required',
+                '*.6.not_in' => 'Debit Kredit cannot be Null',
+                '*.7.required' => 'Description is Required',
+                '*.7.not_in' => 'Description cannot be Null',
+                '*.8.required' => 'Cost Center is Required',
+                '*.8.not_in' => 'Cost Center cannot be Null',
+                '*.9.required' => 'Account is Required',
+                '*.9.not_in' => 'Account cannot be Null'
             ])->validate();
 
             foreach ($rows as $row) {
                 $param[] = [
-                    "recordStatus" => "A",
-                    "companyCode" => Session::get('companyCode'),
-                    "journalCode" => (isset($row[0])) ? $row[0] : null,
-                    "fieldName" => (isset($row[1])) ? $row[1] : null,
-                    "debitKredit" => (isset($row[2])) ? $row[2] : null,
-                    "operator" => (isset($row[3])) ? $row[3] : null,
-                    "costCenter" => (isset($row[4])) ? $row[4] : null,
-                    "account" => (isset($row[5])) ? $row[5] : null,
-                    "grouping1" => (isset($row[6])) ? $row[6] : null,
-                    "grouping2" => (isset($row[7])) ? $row[7] : null,
+                    "recordStatus" => (isset($row[0])) ? $row[0] : null,
+                    "companyCode" => (isset($row[1])) ? $row[1] : null,
+                    "journalCode" => (isset($row[2])) ? $row[2] : null,
+                    "seqNo" => (isset($row[3])) ? (int) $row[3] : null,
+                    "docNo" => (isset($row[4])) ? (int) $row[4] : null,
+                    "fieldName" => (isset($row[5])) ? $row[5] : null,
+                    "debitKredit" => (isset($row[6])) ? $row[6] : null,
+                    "description" => (isset($row[7])) ? $row[7] : null,
+                    "costCenter" => (isset($row[8])) ? $row[8] : null,
+                    "account" => (isset($row[9])) ? strval($row[9]) : null,
+                    "grouping1" => (isset($row[10])) ? $row[10] : null,
+                    "grouping2" => (isset($row[11])) ? $row[11] : null,
+                    "condition" => (isset($row[12])) ? $row[12] : null,
                     "changedNo" => 0,
                     "changedBy" => Session::get('userID'),
                     "changedDate" => date("Y-m-d\TH:i:s"),
@@ -86,7 +92,7 @@ class JournalTemplateDataImport implements ToCollection, SkipsEmptyRows, WithSta
 
             // dd(json_encode($param));
 
-            $response = $client->post(env('API_URL') . '/payroll/bulkInsertPrJournalTemplate',
+            $response = $client->post(env('API_URL') . '/payroll/importJournalTemplate',
                 ['body' => json_encode($param)]
             );
         } catch (ValidationException $e) {

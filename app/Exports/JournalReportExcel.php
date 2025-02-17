@@ -84,11 +84,11 @@ class JournalReportExcel implements FromView, ShouldAutoSize{
     
         if($arrResult->dataListSet == null){
             return view($viewReport, [
-                'data' => []
+                'data' => [], 'companyCode' => Session::get('companyName'), 'period' => (!empty($this->journalPeriod)) ? date('y-M', strtotime($this->journalPeriod)) : ""
             ]);
         }else{
             return view($viewReport, [
-                'data' => [$arrResult->dataListSet[0]]
+                'data' => $arrResult->dataListSet[0], 'companyCode' => Session::get('companyName'), 'period' => (!empty($this->journalPeriod)) ? date('y-M', strtotime($this->journalPeriod)) : ""
             ]); 
         }
     }

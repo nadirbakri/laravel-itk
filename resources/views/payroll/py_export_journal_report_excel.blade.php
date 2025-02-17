@@ -15,56 +15,47 @@
 	</style>
 </head>
 <body>
-@foreach($data as $key => $value)
 	<table style="width:100%" class="table table-bordered table-hover responsive table_detail">
         <thead>
             <tr>
-                <th colspan="7">{{ $value->headerA }}</th>
+                <th></th>
+                <th></th>
+                <th>{{ $companyCode }}</th>
             </tr>
             <tr>
-                <th colspan="7">{{ __('payroll_journal_report.judul') }}</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th>Jurnal Salary For</th>
+                <th>{{ $period }}</th>
             </tr>
             <tr>
-                <th colspan="7">FOR : {{ $value->headerC }}</th>
-            </tr>
-            <tr></tr>
-            <tr>
-                <th style="border:1px solid #000; padding:4px;
-                background-color:#84c2e0; text-align:center;">Account No</th>
-                <th style="border:1px solid #000; padding:4px;
-                background-color:#84c2e0; text-align:center;">Name of Account</th>
-                <th style="border:1px solid #000; padding:4px;
-                background-color:#84c2e0; text-align:center;">Cost Center</th>
-                <th style="border:1px solid #000; padding:4px;
-                background-color:#84c2e0; text-align:center;">Cost Center Name</th>
-                <th style="border:1px solid #000; padding:4px;
-                background-color:#84c2e0; text-align:center;">Description</th>
-                <th style="border:1px solid #000; padding:4px;
-                background-color:#84c2e0; text-align:center; width:80px;">Debit</th>
-                <th style="border:1px solid #000; padding:4px;
-                background-color:#84c2e0; text-align:center; width:80px;">Credit</th>
+                <th style="border: 1px solid black;">Doc. No.</th>
+                <th style="border: 1px solid black;">Company Code</th>
+                <th style="border: 1px solid black;">Month-Year of Payroll</th>
+                <th style="border: 1px solid black;">SAP GL Account</th>
+                <th style="border: 1px solid black;">SAP GL Account Description</th>
+                <th style="border: 1px solid black;">AmountD</th>
+                <th style="border: 1px solid black;">AmountK</th>
+                <th style="border: 1px solid black;"></th>
+                <th style="border: 1px solid black;">SAP Cost Center</th>
             </tr>
         </thead>
         <tbody>
-            @foreach($value->excelColumns as $dataTables)
+            @foreach($data as $key => $value)
             <tr>
-                <td style="border:1px solid #000; text-align:center; padding:4px;">{{ $dataTables->accountNo }}</td>
-                <td style="border:1px solid #000; text-align:center; padding:4px;">{{ $dataTables->nameOfAccount }}</td>
-                <td style="border:1px solid #000; text-align:center; padding:4px;">{{ $dataTables->costCenter }}</td>
-                <td style="border:1px solid #000; text-align:center; padding:4px;">{{ $dataTables->costCenterName }}</td>
-                <td style="border:1px solid #000; text-align:center; padding:4px;">{{ $dataTables->description }}</td>
-                <td style="border:1px solid #000; text-align:center; padding:4px;">{{ $dataTables->debit }}</td>
-                <td style="border:1px solid #000; text-align:center; padding:4px;">{{ $dataTables->credit }}</td>
+                <td style="border: 1px solid black;">{{ $value->DocNo }}</td>
+                <td style="border: 1px solid black;">{{ $value->Company }}</td>
+                <td style="border: 1px solid black;">{{ $value->MonthYearOfPayroll }}</td>
+                <td style="border: 1px solid black;">{{ $value->SAPGLAccount }}</td>
+                <td style="border: 1px solid black;">{{ $value->SAPGLAccountDescription }}</td>
+                <td style="border: 1px solid black;">{{ $value->AmountD }}</td>
+                <td style="border: 1px solid black;">{{ $value->AmountK }}</td>
+                <td style="border: 1px solid black;">{{ $value->TotalEmployee }}</td>
+                <td style="border: 1px solid black;">{{ $value->SAPCostCenter }}</td>
             </tr>
             @endforeach
-            <tr>
-                <td colspan="4" style="border:1px solid #000; text-align:center; padding:4px;"></td>
-                <td style="border:1px solid #000; text-align:center; padding:4px;">Total</td>
-                <td style="border:1px solid #000; text-align:center; padding:4px;">{{ $value->totalDebit }}</td>
-                <td style="border:1px solid #000; text-align:center; padding:4px;">{{ $value->totalKredit }}</td>
-            </tr>
         </tbody>
     </table>
-    @endforeach
 </body>
 </html>

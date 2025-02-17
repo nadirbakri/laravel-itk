@@ -18,14 +18,19 @@
 <table style="width: 100%; font-size: 14px;" class="table table-bordered table-hover responsive">
 		<thead>
             <tr>
+				<th>Record Status *</th>
+				<th>Company Code *</th>
 				<th>Journal Code *</th>
-				<th>Field Name *</th>
+				<th>Seq No *</th>
+				<th>Doc No</th>
+				<th>Field Name</th>
 				<th>Debit Kredit *</th>
-				<th>Operator *</th>
+				<th>Description *</th>
 				<th>Cost Center *</th>
 				<th>Account *</th>
-				<th>Grouping 1 *</th>
-				<th>Grouping 2 *</th>
+				<th>Grouping 1</th>
+				<th>Grouping 2</th>
+				<th>Condition</th>
 			</tr>
 		</thead>
 	</table>
