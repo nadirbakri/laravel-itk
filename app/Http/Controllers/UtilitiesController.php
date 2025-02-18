@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exports\AuditTrailExport;
 
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
@@ -271,9 +272,11 @@ class UtilitiesController extends Controller
         $arrResult = json_decode($response->getBody()->getContents());
 
         if($arrResult->dataListSet == null){
-            return Datatables::of([])->make(true);
+            // return Datatables::of([])->make(true);
+            return response()->json([]);
         }else{
-            return Datatables::of($arrResult->dataListSet)->make(true);
+            // return Datatables::of($arrResult->dataListSet)->make(true);
+            return response()->json($arrResult->dataListSet);
         }
     }
 
@@ -1169,10 +1172,10 @@ class UtilitiesController extends Controller
 
         $arrResult = json_decode($response->getBody()->getContents());
 
-        if($arrResult->dataListSet == null){
-            return Datatables::of([])->make(true);
+        if(isset($arrResult->dataListSet[0]->data)){
+            return Datatables::of($arrResult->dataListSet[0]->data)->make(true);
         }else{
-            return Datatables::of($arrResult->dataListSet)->make(true);
+            return Datatables::of([])->make(true);
         }
     }
 
@@ -2080,6 +2083,8 @@ class UtilitiesController extends Controller
 
     public function prosesMenuMasterUtilities(Request $request)
     {
+        $param = [];
+
         date_default_timezone_set('Asia/Jakarta');
         try {
             $client = new Client([
@@ -2088,25 +2093,30 @@ class UtilitiesController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/personel/MenuMasterWebDetail',
-                ['body' => json_encode(
-                    [
-                        'companyCode' => Session::get('companyCode'),
-                        'menuID' => (int) $request->menuID,
-                        'groupAccessID' => $request->groupAccessID,
-                        'allowAccess' => $request->allowAccess,
-                        'allowAdd' => $request->allowAdd,
-                        'allowEdit' => $request->allowEdit,
-                        "createdDate" => date("Y-m-d\TH:i:s"),
-                        "createdBy" => Session::get('userID'),
-                        "changedDate" => date("Y-m-d\TH:i:s"),
-                        "changedBy" => Session::get('userID'),
-                        'userID' => Session::get('userID'),
-                        'logActionUserID' => Session::get('userID'),
-                        'logActionUsername' => Session::get('userName'),
-                        "languageCode" => App::getLocale()
-                    ]
-                )]
+            foreach ($request->all() as $row) {
+                $param[] = [
+                    'companyCode' => Session::get('companyCode'),
+                    'menuID' => isset($row['menuID']) ? (int) $row['menuID'] : null ,
+                    'groupAccessID' => isset($row['groupAccessID']) ? $row['groupAccessID'] : null,
+                    'allowAccess' => isset($row['allowAccess']) ? $row['allowAccess'] : null,
+                    'allowAdd' => isset($row['allowAdd']) ? $row['allowAdd'] : null,
+                    'allowEdit' => isset($row['allowEdit']) ? $row['allowEdit'] : null,
+                    "createdDate" => date("Y-m-d\TH:i:s"),
+                    "createdBy" => Session::get('userID'),
+                    "changedDate" => date("Y-m-d\TH:i:s"),
+                    "changedBy" => Session::get('userID'),
+                    'userID' => Session::get('userID'),
+                    'logActionUserID' => Session::get('userID'),
+                    'logActionUsername' => Session::get('userName'),
+                    "languageCode" => App::getLocale()
+                ];
+            }
+
+            // Storage::put('debug_data.txt', json_encode($param));
+            // dd(json_encode($param));
+
+            $response = $client->post(env('API_URL') . '/personel/MenuMasterWebDetail/UpdateBulkMasterWebDetail',
+                ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {
             $response = $e->getResponse();
@@ -2345,7 +2355,7 @@ class UtilitiesController extends Controller
             ]);
 
             foreach($request->selected_authorization as $key => $value){
-                $arrLevel[] = $key;
+                $arrLevel[] = strval($key);
             }
 
             $response = $client->put(env('API_URL') . '/personel/User/UpdateLevel',
