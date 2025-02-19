@@ -2808,6 +2808,10 @@ class TimeManagementController extends Controller
 
     public function prosesReferenceTimeManagementTM(Request $request)
     {
+        if ($request->flag_absent_mobile == null) {
+            $request->flag_absent_mobile = false;
+        }
+
         parse_str($request->field, $arrData);
         $arrData2 = json_decode($request->field_name);
 
@@ -2826,7 +2830,7 @@ class TimeManagementController extends Controller
                 'statusProcess' => isset($arrData['process_status']) ? $arrData['process_status'] : null,
                 'statusPeriod' => isset($arrData['period_status']) ? $arrData['period_status'] : null,
                 'templatePreparation' => isset($arrData['template_preparation_process']) ? $arrData['template_preparation_process'] : null,
-                'flagAbsentMobile' => isset($request->flag_absent_mobile) ? (bool) $request->flag_absent_mobile : false,
+                'flagAbsentMobile' => (bool) ($request->flag_absent_mobile == 'true') ? true : false,
                 'calculateLateHour' => isset($arrData['late_hour']) ? $arrData['late_hour'] : null,
                 'calculateEarlyBackHour' => isset($arrData['early_back_hour']) ? $arrData['early_back_hour'] : null,
                 'calculateOvertime' => isset($arrData['default_calculation']) ? $arrData['default_calculation'] : null,
