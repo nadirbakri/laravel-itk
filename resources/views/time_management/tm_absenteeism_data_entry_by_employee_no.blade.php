@@ -643,7 +643,7 @@
                             pickrActualTimeOut[k].setDate(((typeof v.actualDateOut !== 'undefined' && v.actualDateOut !== null) ? moment(v.actualDateOut).format('HH:mm:ss') : ''));
                             pickrTotalActualHour[k].setDate(((typeof v.totalActualHour !== 'undefined' && v.totalActualHour !== null) ? moment(v.totalActualHour).format('HH:mm:ss') : ''));
                             // pickrFingerAbsentHour[k].setDate(((typeof v.hourAbsent !== 'undefined' && v.hourAbsent !== null) ? moment(v.hourAbsent).format('HH:mm:ss') : ''));
-                            pickrAbsentHour[k].setDate(((typeof v.absentHour !== 'undefined' && v.absentHour !== null) ? moment(v.hourAbsent2).format('HH:mm:ss') : ''));
+                            pickrAbsentHour[k].setDate(((typeof v.hourAbsent !== 'undefined' && v.hourAbsent !== null) ? moment(v.hourAbsent).format('HH:mm:ss') : ''));
                             pickrOvertimeBefore[k].setDate(((typeof v.ovtBeforeIn !== 'undefined' && v.ovtBeforeIn !== null) ? moment(v.ovtBeforeIn).format('HH:mm:ss') : ''));
                             pickrOvertimeStart[k].setDate(((typeof v.ovtIn !== 'undefined' && v.ovtIn !== null) ? moment(v.ovtIn).format('HH:mm:ss') : ''));
                             pickrOvertimeFinish[k].setDate(((typeof v.ovtOut !== 'undefined' && v.ovtOut !== null) ? moment(v.ovtOut).format('HH:mm:ss') : ''));
