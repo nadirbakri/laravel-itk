@@ -75,6 +75,34 @@
             margin-left: 0.5%;
         }
 
+        #loading {
+			display: none;
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(255, 255, 255, 0.8);
+			z-index: 9999;
+		}
+
+        .spinner {
+            position: absolute;
+			margin-left: 45%;
+			margin-top: 20%;
+			border-radius: 50%;
+			width: 50px;
+			height: 50px;
+			border-radius: 50%;
+			border: 5px solid #ccc;
+			border-top-color: #333;
+			animation: spin 1s infinite linear;
+		}
+
+        @keyframes spin {
+		to { transform: rotate(360deg); }
+		}
+
     </style>
 </head>
 
@@ -122,22 +150,34 @@
                     </div>
                 </div>
             </form>
-            <div class="row">
-                <div class="col-12">
-                    <table id="menu_master_table" class="table hover">
-                        <thead>
-                            <tr>
-                                <th>Module</th>
-                                <!-- <th>Sub Module</th> -->
-                                <th>Menu Title</th>
-                                <th>Allow Access</th>
-                                <th>Allow Add</th>
-                                <th>Allow Edit</th>
-                            </tr>
-                        </thead>
-                    </table>
+            <form id="configure_form" method="post">
+                @csrf
+                <div class="row">
+                    <div class="col-12">
+                        <div id="loading">
+                            <div class="spinner"></div>
+                        </div>
+                        <table id="menu_master_table" class="table hover">
+                            <thead>
+                                <tr>
+                                    <th>Module</th>
+                                    <!-- <th>Sub Module</th> -->
+                                    <th>Menu Title</th>
+                                    <th>Allow Access</th>
+                                    <th>Allow Add</th>
+                                    <th>Allow Edit</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
                 </div>
-            </div>
+                <div class="row">
+                    <div class="col-4">
+                        <button type="button" class="btn btn-primary" id="btn-save-configure" style="width: 100%;"><i
+                            class="fa fa-floppy-o"></i> {{ __('utilities_menu_master.btn_save') }}</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
     <div class="modal fade" id="modal_configure_menu"  role="dialog" aria-hidden="true">
@@ -352,14 +392,15 @@
     $(document).ready(function () {
         var table = null;
         var rows_configure_menu_selected = [];
+        var arrayMenuMaster = [];
 
         loadDataGroupID('#group_id');
 
         $('#group_id').on("select2:select", function (e) {
+            $('#loading').show();
             var data = $('#group_id').select2('data');
 
-            $('#menu_master_table').DataTable().destroy();
-            load_table_menu_master(data[0].id);
+            load_data_menu_master(data[0].id);
 
             $('#menu_title').on('keyup change', function () {
                 if (table.column(1).search() !== this.value) {
@@ -391,17 +432,34 @@
             $('#configure_menu_table').DataTable().clear().destroy();
         });
 
-        function load_table_menu_master(groupAccessID = '') {
+        function load_data_menu_master(groupAccessID = ''){
+            $.ajax({
+                type: 'GET',
+                url: "{{ url('/utilities/menu_master/table') }}",
+                data: {
+                    'groupAccessID': groupAccessID
+                }
+            }).then(function (data) {
+                arrayMenuMaster = data;
+                console.log(arrayMenuMaster);
+                $('#menu_master_table').DataTable().destroy();
+                load_table_menu_master();
+                $('#loading').hide();
+            });
+        }
+
+        function load_table_menu_master() {
             table = $('#menu_master_table').DataTable({
                 processing: true,
-                serverSide: true,
+                // serverSide: true,
                 orderCellsTop: true,
-                ajax: {
-                    url: "{{ url('utilities/menu_master/table') }}",
-                    data: {
-                        groupAccessID: groupAccessID
-                    }
-                },
+                data: arrayMenuMaster,
+                // ajax: {
+                //     url: "{{ url('utilities/menu_master/table') }}",
+                //     data: {
+                //         groupAccessID: groupAccessID
+                //     }
+                // },
                 error: function (jqXHR, ajaxOptions, thrownError) {
                     alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText +
                         "\r\n" + ajaxOptions.responseText);
@@ -413,12 +471,18 @@
                 ],
                 columns: [{
                         data: 'moduleName',
-                        name: 'moduleName'
+                        name: 'moduleName',
+                        render: function (data, type, row) {
+                            return '<input type="hidden" class="form-control" name="group_access_id_menu_master[]" value="' +  $('<div />').text(row.groupAccessID).html() + '">' +  $('<div />').text(row.moduleName).html();
+                        }
                     },
                     // {data: 'subModuleName', name: 'subModuleName'},
                     {
                         data: 'menuName',
-                        name: 'menuName'
+                        name: 'menuName',
+                        render: function (data, type, row) {
+                            return '<input type="hidden" class="form-control" name="menu_id_menu_master[]" value="' +  $('<div />').text(row.menuID).html() + '">' +  $('<div />').text(row.menuName).html();
+                        }
                     },
                     {
                         data: 'allowAccess',
@@ -596,6 +660,15 @@
             loadDataGroupID('#group_id_copy_destination');
         });
 
+        $("#btn-save-configure").on('click', function () {
+            $(this).prop("disabled", true);
+            $(this).html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+
+            $("#configure_form").submit();
+        });
+
         $("#btn-save-configure-menu").on('click', function () {
             var data = table.rows('.selected').data();
             if (data.count() > 0) {
@@ -609,144 +682,6 @@
                 $('#notification_error').modal('show');
                 $('#message-notification-error').html('No Data Selected');
             }
-        });
-
-        $(document).on("change", "input[name='allow_access_menu_master[]']", function () {
-            var data = table.row(this.closest('tr')).data();
-            var allowAccess = 'N';
-            var group_id = $('#group_id').val();
-            // console.log(data.menuID);
-
-            if (this.checked) {
-                allowAccess = 'Y';
-            }
-
-            $.ajax({
-                type: "POST",
-                url: "{{ url('utilities/menu_master/proses') }}",
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                dataType: 'json',
-                data: {
-                    'menuID': data.menuID,
-                    'groupAccessID': data.groupAccessID,
-                    'allowAccess': allowAccess,
-                    'allowAdd': data.allowAdd,
-                    'allowEdit': data.allowEdit
-                },
-                success: function (response) {
-                    if (response.status == "true") {
-                        $('#notification_success_detail').modal('show');
-                        $('#message-notification-success-detail').html(response.message);
-                        $('#menu_master_table').DataTable().destroy();
-                        load_table_menu_master(group_id);
-                        setTimeout(function () {
-                            $('#notification_success_detail').modal('hide');
-                        }, 3000);
-                    } else {
-                        $('#notification_error').modal('show');
-                        if (response.message == null || response.message == '') {
-                            $('#message-notification-error').html(
-                            "{{ __('login.error') }}");
-                        } else {
-                            $('#message-notification-error').html(response.message);
-                        }
-                    }
-                }
-            });
-        });
-
-        $(document).on("change", "input[name='allow_add_menu_master[]']", function () {
-            var data = table.row(this.closest('tr')).data();
-            var allowAdd = 'N';
-            var group_id = $('#group_id').val();
-            // console.log(data.menuID);
-
-            if (this.checked) {
-                allowAdd = 'Y';
-            }
-
-            $.ajax({
-                type: "POST",
-                url: "{{ url('utilities/menu_master/proses') }}",
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                dataType: 'json',
-                data: {
-                    'menuID': data.menuID,
-                    'groupAccessID': data.groupAccessID,
-                    'allowAccess': data.allowAccess,
-                    'allowAdd': allowAdd,
-                    'allowEdit': data.allowEdit
-                },
-                success: function (response) {
-                    if (response.status == "true") {
-                        $('#notification_success_detail').modal('show');
-                        $('#message-notification-success-detail').html(response.message);
-                        $('#menu_master_table').DataTable().destroy();
-                        load_table_menu_master(group_id);
-                        setTimeout(function () {
-                            $('#notification_success_detail').modal('hide');
-                        }, 3000);
-                    } else {
-                        $('#notification_error').modal('show');
-                        if (response.message == null || response.message == '') {
-                            $('#message-notification-error').html(
-                            "{{ __('login.error') }}");
-                        } else {
-                            $('#message-notification-error').html(response.message);
-                        }
-                    }
-                }
-            });
-        });
-
-        $(document).on("change", "input[name='allow_edit_menu_master[]']", function () {
-            var data = table.row(this.closest('tr')).data();
-            var allowEdit = 'N';
-            var group_id = $('#group_id').val();
-            // console.log(data.menuID);
-
-            if (this.checked) {
-                allowEdit = 'Y';
-            }
-
-            $.ajax({
-                type: "POST",
-                url: "{{ url('utilities/menu_master/proses') }}",
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                dataType: 'json',
-                data: {
-                    'menuID': data.menuID,
-                    'groupAccessID': data.groupAccessID,
-                    'allowAccess': data.allowAccess,
-                    'allowAdd': data.allowAdd,
-                    'allowEdit': allowEdit
-                },
-                success: function (response) {
-                    if (response.status == "true") {
-                        $('#notification_success_detail').modal('show');
-                        $('#message-notification-success-detail').html(response.message);
-                        $('#menu_master_table').DataTable().destroy();
-                        load_table_menu_master(group_id);
-                        setTimeout(function () {
-                            $('#notification_success_detail').modal('hide');
-                        }, 3000);
-                    } else {
-                        $('#notification_error').modal('show');
-                        if (response.message == null || response.message == '') {
-                            $('#message-notification-error').html(
-                            "{{ __('login.error') }}");
-                        } else {
-                            $('#message-notification-error').html(response.message);
-                        }
-                    }
-                }
-            });
         });
 
         $('#group_id_copy_from').on("select2:select", function (e) {
@@ -928,6 +863,76 @@
             $("#copy_to_another_group_form").submit();
         });
 
+        $('#configure_form').on('submit', function () {
+            // var data = decodeURI(table.rows().nodes().$('input').serialize());
+            var rows = table.rows().nodes();
+            var serializedData = [];
+
+            $(rows).each(function () {
+                serializedData.push({
+                    menuID: $(this).find('input[name="menu_id_menu_master[]"]').val(),
+                    groupAccessID: $(this).find('input[name="group_access_id_menu_master[]"]').val(),
+                    allowAccess: $(this).find('.allow_access_menu_master').is(':checked') ? 'Y' : 'N',
+                    allowAdd: $(this).find('.allow_add_menu_master').is(':checked') ? 'Y' : 'N',
+                    allowEdit: $(this).find('.allow_edit_menu_master').is(':checked') ? 'Y' : 'N'
+                });
+            });
+
+            // Serialize data menggunakan $.param
+            // var data = $.param({ data: serializedData });
+
+            $.ajax({
+                type: "POST",
+                url: "{{ url('utilities/menu_master/proses') }}",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                contentType: 'application/json',
+                dataType: 'json',
+                data: JSON.stringify(serializedData),
+                success: function (response) {
+                    if (response.status == "true") {
+                        $("#btn-save-configure").prop("disabled", false);
+                        $("#btn-save-configure").html(
+                            '<i class="fa fa-floppy-o"></i> {{ __("utilities_menu_master.btn_save") }}'
+                        );
+
+                        $('#modal_configure_menu').modal('hide');
+                        $('#notification_success_detail').modal('show');
+                        $('#message-notification-success-detail').html(response.message);
+                        load_data_menu_master();
+                        setTimeout(function () {
+                            $('#notification_success_detail').modal('hide');
+                        }, 3000);
+                    } else {
+                        $("#btn-save-configure").prop("disabled", false);
+                        $("#btn-save-configure").html(
+                            '<i class="fa fa-floppy-o"></i> {{ __("utilities_menu_master.btn_save") }}'
+                        );
+
+                        $('#notification_error').modal('show');
+                        if (response.message == null || response.message == '') {
+                            $('#message-notification-error').html(
+                            "{{ __('login.error') }}");
+                        } else {
+                            $('#message-notification-error').html(response.message);
+                        }
+                    }
+                },
+                error: function (response) {
+                    $("#btn-save-configure").prop("disabled",
+                    false);
+                    $("#btn-save-configure").html(
+                        '<i class="fa fa-floppy-o"></i> {{ __("utilities_menu_master.btn_save") }}'
+                    );
+                    $('#notification_error').modal('show');
+                    $('#message-notification-error').html(response);
+                }
+            });
+
+            return false;
+        });
+
         $('#configure_menu_form').on('submit', function () {
             var data = decodeURI(table.rows('.selected').nodes().$('input').serialize());
 
@@ -952,7 +957,7 @@
                         $('#notification_success_detail').modal('show');
                         $('#message-notification-success-detail').html(response.message);
                         $('#menu_master_table').DataTable().destroy();
-                        load_table_menu_master(group_id);
+                        load_table_menu_master();
                         setTimeout(function () {
                             $('#notification_success_detail').modal('hide');
                         }, 3000);
@@ -970,6 +975,15 @@
                             $('#message-notification-error').html(response.message);
                         }
                     }
+                },
+                error: function (response) {
+                    $("#btn-save-configure-menu").prop("disabled",
+                    false);
+                    $("#btn-save-configure-menu").html(
+                        '<i class="fa fa-floppy-o"></i> {{ __("utilities_menu_master.btn_save") }}'
+                    );
+                    $('#notification_error').modal('show');
+                    $('#message-notification-error').html(response);
                 }
             });
 

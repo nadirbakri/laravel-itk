@@ -170,6 +170,7 @@
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <a class="dropdown-item" href="#" id="send-to-pdf">PDF</a>
                                 <a class="dropdown-item" href="#" id="send-to-xls">Excel</a>
+                                <a class="dropdown-item" href="#" id="send-to-csv">CSV</a>
                             </div>
                         </div>
                     </div>
@@ -408,6 +409,15 @@
             $('#journal_report_form').submit();
         });
 
+        $('#send-to-csv').click(function (){
+            $("#btn-send-to-report").prop("disabled", true);
+            $("#btn-send-to-report").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+            clicked = "DOWNLOAD_CSV";
+            $('#journal_report_form').submit();
+        });
+
         $('#btn-preview').click(function (){
             $(this).prop("disabled", true);
             $(this).html(
@@ -494,6 +504,51 @@
                                     document.body.removeChild(link);
 
                                     clicked = "";
+                                }
+                            },
+                            error: function(response){
+                                $('#btn-send-to-report').prop("disabled", false);
+                                $('#btn-send-to-report').html(
+                                    '<i class="fa fa-print"></i> {{ __("payroll_journal_report.btn_send_to") }}'
+                                );
+                                $('#notification_error').modal('show');
+                                $('#message-notification-error').html(response);
+                            }
+                        });
+                    }
+                    else if(clicked=="DOWNLOAD_CSV"){
+                        $.ajax({
+                            xhrFields: {
+                                responseType: 'blob',
+                            },
+                            url: "{{ url('payroll/journal_report/print/csv') }}",
+                            type: "POST",
+                            data: $('#journal_report_form').serialize(),
+                            success: function(result, status, xhr){
+                                $('#btn-send-to-report').prop("disabled", false);
+                                $("#btn-send-to-report").html(
+                                    '<i class="fa fa-print"></i> {{ __("payroll_journal_report.btn_send_to") }}'
+                                );
+                                
+                                if(clicked == "DOWNLOAD_CSV"){
+                                    var disposition = xhr.getResponseHeader(
+                                        'content-disposition');
+                                    var matches = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/.exec(disposition);
+                                    var filename = (matches != null && matches[1] ? matches[1].replace(/['"]/g, '') :
+                                        'noname_file.csv');
+
+                                    // The actual download
+                                    var blob = new Blob([result], {
+                                        type: 'text/csv'
+                                    });
+                                    var link = document.createElement('a');
+                                    link.href = window.URL.createObjectURL(blob);
+                                    link.download = filename;
+
+                                    document.body.appendChild(link);
+
+                                    link.click();
+                                    document.body.removeChild(link);
                                 }
                             },
                             error: function(response){

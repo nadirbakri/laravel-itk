@@ -30,6 +30,7 @@ use App\Exports\EBupotA1TemplateExport;
 use App\Exports\EBupotCoretaxTemplateExport;
 use App\Exports\PensionFundReportExport;
 use App\Exports\SPTListReportExport;
+use App\Exports\JournalTemplateReportExport;
 use App\Exports\DataPesertaPensionFundReportExport;
 use App\Exports\PerubahanUpahPensionFundReportExport;
 use App\Exports\DataPesertaAktifPensionFundReportExport;
@@ -7001,6 +7002,8 @@ public function dataDetailReportFormatPY(Request $request)
                 }
             }
 
+            // dd(json_encode($param));
+
             $response = $client->post(env('API_URL').$urlReport, [
                 'body' => json_encode($param)
             ]);
@@ -7016,7 +7019,7 @@ public function dataDetailReportFormatPY(Request $request)
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
-        // dd([$arrResult->dataListSet[0]]);
+        // dd($arrResult->dataListSet[0]);
 
         $viewReport = 'payroll.py_export_journal_report';
 
@@ -7026,10 +7029,14 @@ public function dataDetailReportFormatPY(Request $request)
         }
 
         if($arrResult->dataListSet == null){
-            $pdf = PDF::loadView($viewReport, ['data' => []])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
+            $pdf = PDF::loadView($viewReport, [
+                'data' => [], 'companyCode' => Session::get('companyName'), 'period' => (!empty($request->journal_period)) ? date('y-M', strtotime($request->journal_period)) : ""
+            ])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
             return $pdf->stream('Journal Report.pdf');
         }else{
-            $pdf = PDF::loadView($viewReport, ['data' => [$arrResult->dataListSet[0]]])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
+            $pdf = PDF::loadView($viewReport, [
+                'data' => $arrResult->dataListSet[0], 'companyCode' => Session::get('companyName'), 'period' => (!empty($request->journal_period)) ? date('y-M', strtotime($request->journal_period)) : ""
+            ])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
             return $pdf->stream('Journal Report.pdf');
         }
     }
@@ -7037,6 +7044,107 @@ public function dataDetailReportFormatPY(Request $request)
     public function printJournalReportPayrollExcel(Request $request){
         // var_dump($request->journal_period, $request->group_authorized_from, $request->group_authorized_to);
         return Excel::download(new JournalReportExcel($request->journal_period, $request->group_authorized_from, $request->group_authorized_to), 'Journal Report.xlsx');
+    }
+
+    public function printJournalReportPayrollCSV(Request $request){
+        try{
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $urlReport = '/payroll/JournalReport';
+
+            $param = [
+                'companyCode' => Session::get('companyCode'),
+                'languageCode' => strtoupper(App::getLocale()),
+                'sessionID' => 0,
+                'sessionUserID' => Session::get('userID'),
+                'logActionUserID' => Session::get('userID'),
+                'logActionUsername' => Session::get('userName')
+            ];
+
+            if(Session::get('companyCode') == 'SWG' || Session::get('companyCode') == 'XSYS' || 
+                Session::get('companyCode') == 'GRC'){
+                $urlReport = '/payroll/getSWGGroupJournal';
+
+                if(!empty($request->journal_period)){
+                    $param['periodMonth'] = (int) date('m', strtotime($request->journal_period));
+                    $param['periodYear'] = (int) date('Y', strtotime($request->journal_period));
+                }
+            }else{
+                if(!empty($request->journal_period)){
+                    $param['journalPeriod'] = $request->journal_period;
+                }
+
+                if(!empty($request->group_authorized_from) || !empty($request->group_authorized_to)){
+                    $param['groupAuthorizeFrom'] = $request->group_authorized_from;
+                    $param['groupAuthorizeTo'] = $request->group_authorized_to;
+                }
+            }
+
+            // dd(json_encode($param));
+
+            $response = $client->post(env('API_URL').$urlReport, [
+                'body' => json_encode($param)
+            ]);
+        }catch (RequestException $e){
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+        // dd($arrResult->dataListSet[0]);
+
+        if($arrResult->dataListSet == null){
+            $array = [];
+        }else{
+            $array = array_map(fn($obj) => json_decode(json_encode($obj), true), $arrResult->dataListSet[0]);
+        }
+
+        $array = array_filter($array, function($value) {
+            return !empty($value);
+        });
+
+        $csvHeader = [
+            '', '', Session::get('companyName'), '', '', '', '', '', ''
+        ];
+
+        $csvHeader2 = [
+            '', '', '', 'Jurnal Salary For', (!empty($request->journal_period)) ? date('y-M', strtotime($request->journal_period)) : "", '', '', '', ''
+        ];
+
+        $csvHeader3 = [
+            'Doc. No.', 'Company Code', 'Month-Year of Payroll', 'SAP GL Account', 'SAP GL Account Description', 'AmountD', 'AmountK', '', 'SAP Cost Center'
+        ];
+
+        $array = array_merge([$csvHeader], [$csvHeader2], [$csvHeader3], $array);
+
+        $tempFile = fopen('php://temp', 'w+');
+
+        foreach ($array as $row) {
+            $row = array_pad($row, count($csvHeader), '');
+
+            fputcsv($tempFile, $row);
+        }
+
+        rewind($tempFile);
+        
+        $csvContent = str_replace('"', '', stream_get_contents($tempFile));
+        
+        fclose($tempFile);
+
+        return Response::make($csvContent, 200, [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => 'attachment; filename="Journal Report.csv"',
+        ]);
     }
 
     public function printAnnualReportPayrollExcel(Request $request){
@@ -9141,6 +9249,13 @@ public function dataDetailReportFormatPY(Request $request)
             $pdf = PDF::loadView('payroll.py_export_spt_list_report', ['data' => $arrResult->dataListSet])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
             return $pdf->stream('SPT List Report.pdf');
         }
+    }
+
+    public function printJournalTemplatePayrollExcel(Request $request){
+        return Excel::download(
+            new JournalTemplateReportExport(), 
+            'Journal Template List.xlsx'
+        );
     }
 
     public function printPensionFundReportPayrollExcel(Request $request){

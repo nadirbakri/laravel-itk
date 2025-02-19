@@ -12385,7 +12385,7 @@ class PersonelController extends Controller
                 $fileName = "Template Account Master.xlsx";
                 break;
             case 'journal_template':
-                $fileName = "Template Journal Master.xlsx";
+                $fileName = "Template Journal Template Master.xlsx";
                 break;
             default:
                 $fileName = "Template Master.xlsx";

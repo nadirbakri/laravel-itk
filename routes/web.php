@@ -776,6 +776,7 @@ Route::post('payroll/severance_report/print', 'PayrollController@printSeveranceR
 Route::post('payroll/severance_report/print/excel', 'PayrollController@printSeveranceReportPayrollExcel');
 Route::post('payroll/journal_report/print', 'PayrollController@printJournalReportPayroll');
 Route::post('payroll/journal_report/print/excel', 'PayrollController@printJournalReportPayrollExcel');
+Route::post('payroll/journal_report/print/csv', 'PayrollController@printJournalReportPayrollCSV');
 Route::get('payroll/payment_slip/get', 'PayrollController@getPaymentSlipPayroll');
 Route::post('payroll/payment_slip/print', 'PayrollController@printPaymentSlipPayroll');
 Route::post('payroll/payment_slip/proses', 'PayrollController@prosesPaymentSlipPayroll');
@@ -812,6 +813,7 @@ Route::post('payroll/salary_component_data/download_template', 'PayrollControlle
 Route::post('payroll/salary_component_data/import', 'PayrollController@importSalaryComponentDataPayroll');
 Route::post('payroll/spt_list_report/print', 'PayrollController@printSPTListReportPayroll');
 Route::post('payroll/spt_list_report/print/excel', 'PayrollController@printSPTListReportPayrollExcel');
+Route::post('payroll/journal_template/print/excel', 'PayrollController@printJournalTemplatePayrollExcel');
 
 /* Route Untuk Menu Medical */
 Route::get('medical', 'MedicalController@pageMedical')->name('medical');

@@ -2175,7 +2175,11 @@
                     $.ajax({
                         url: "{{ url('time_management/reference_time_management/proses') }}",
                         type: "POST",
-                        data: { 'field' : $('#reference_time_management_form').serialize(), 'field_name' : JSON.stringify(arrayMinutesRounded) },
+                        data: {
+                            'field' : $('#reference_time_management_form').serialize(),
+                            'flag_absent_mobile': $('#flag_absent_mobile').is(':checked') ? 'true' : 'false',
+                            'field_name' : JSON.stringify(arrayMinutesRounded)
+                        },
                         success: function (response) {
                             if (response.status == "true") {
                                 $("#toolbar-save").prop("disabled", false);

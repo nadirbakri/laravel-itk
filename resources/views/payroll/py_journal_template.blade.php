@@ -99,6 +99,11 @@
                 <img src="{{ url('/icons/functionbar/functionbar-deactivate-white.svg') }}" class="functionbar-hover" alt="Deactivate">
                 <span>{{ __('payroll_journal_template.label_deactivate') }}</span>
             </a>
+            <a href="javascript:void(0)" id="toolbar-export" style="width: 9%">
+                <img src="{{ url('/icons/functionbar/functionbar-download-blue.svg') }}" alt="Export">
+                <img src="{{ url('/icons/functionbar/functionbar-download-white.svg') }}" class="functionbar-hover" alt="Export">
+                <span>Export</span>
+            </a>
             <a href="javascript:void(0)" style="display: none;" id="toolbar-list">
                 <img src="{{ url('/icons/functionbar/functionbar-list-blue.svg') }}" alt="List">
                 <img src="{{ url('/icons/functionbar/functionbar-list-white.svg') }}" class="functionbar-hover" alt="List">
@@ -369,6 +374,61 @@
         $('#journal_template_table tbody').on('click', 'tr td:not(:first-child)', function () {
             var data = table.row(this).data();
             $.redirect("{{ url('payroll/journal_template/detail_data') }}", { 'journalCode' : data.journalCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
+        });
+
+        $("#toolbar-export").click(function () {
+            $(this).prop("disabled", true);
+            $(this).html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" style="margin: 0;"></span>'+
+                '<span style="padding-left: 0.5rem;">Loading...</span>'
+            );
+            
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                xhrFields: {
+                    responseType: 'blob',
+                },
+                url: "{{ url('payroll/journal_template/print/excel') }}",
+                type: "POST",
+                success: function (result, status, xhr) {
+                    $("#toolbar-export").prop("disabled", false);
+                    $("#toolbar-export").html(
+                        '<a href="javascript:void(0)" id="toolbar-export" style="width: 9%"><img src="{{ url('/icons/functionbar/functionbar-download-blue.svg') }}" alt="Export"><img src="{{ url('/icons/functionbar/functionbar-download-white.svg') }}" class="functionbar-hover" alt="Export"><span>Export</span></a>'
+                    );
+                    
+                    var disposition = xhr.getResponseHeader(
+                        'content-disposition');
+                    var matches = /"([^"]*)"/.exec(disposition);
+                    var filename = (matches != null && matches[1] ? matches[1] :
+                        'noname_file.xlsx');
+                
+                    // The actual download
+                    var blob = new Blob([result], {
+                        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                    });
+
+                    var link = document.createElement('a');
+                    link.href = window.URL.createObjectURL(blob);
+                    link.download = filename;
+
+                    document.body.appendChild(link);
+
+                    link.click();
+                    document.body.removeChild(link);
+                },
+                error: function (response) {
+                    $("#toolbar-export").prop("disabled", false);
+                    $("#toolbar-export").html(
+                        '<a href="javascript:void(0)" id="toolbar-export" style="width: 9%"><img src="{{ url('/icons/functionbar/functionbar-download-blue.svg') }}" alt="Export"><img src="{{ url('/icons/functionbar/functionbar-download-white.svg') }}" class="functionbar-hover" alt="Export"><span>Export</span></a>'
+                    );
+                    $('#notification_error').modal('show');
+                    $('#message-notification-error').html(response);
+                }
+            });
         });
     })
 </script>

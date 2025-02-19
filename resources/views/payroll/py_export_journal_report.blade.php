@@ -18,16 +18,8 @@
 			margin-bottom: 25px;
 			margin-top: 25px;
 		}
-		.table_detail td{
-			border:1px solid #000;
-			text-align:center;
-		}
-		.table_detail th{
-			border:1px solid #000;
-            padding:4px;
-            background-color:#97d7f7;
-		}
-		.table_detail{
+
+        .table_detail{
 			border-collapse:collapse;
 		}
 
@@ -35,45 +27,46 @@
 	</style>
 </head>
 <body>
-    @foreach($data as $key => $value)
-    <h3 style="text-align:left">{{ $value->headerA }}</h3>
-    <h3 style="text-align:left; padding: 0;">{{ __('payroll_journal_report.judul') }} <br> For : {{ $value->headerC }}</h3>
-	<table style="width:100%; font-size:14px;" class="table table-bordered table-hover responsive table_detail">
+    <table style="width:100%; font-size:14px;" class="table table-bordered table-hover responsive table_detail">
         <thead>
             <tr>
-                <th>Account No</th>
-                <th>Name of Account</th>
-                <th>Cost Center</th>
-                <th>Cost Center Name</th>
-                <th>Description</th>
-                <th>Debit</th>
-                <th>Credit</th>
+                <td></td>
+                <td></td>
+                <td colspan="7" style="text-align: left; font-weight: 700;">{{ $companyCode }}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td colspan="7" style="text-align: left; font-weight: 700;">Jurnal Salary For {{ $period }}</td>
+            </tr>
+            <tr>
+                <th style="border: 1px solid black;">Doc. No.</th>
+                <th style="border: 1px solid black;">Company Code</th>
+                <th style="border: 1px solid black;">Month-Year of Payroll</th>
+                <th style="border: 1px solid black;">SAP GL Account</th>
+                <th style="border: 1px solid black;">SAP GL Account Description</th>
+                <th style="border: 1px solid black;">AmountD</th>
+                <th style="border: 1px solid black;">AmountK</th>
+                <th style="border: 1px solid black;"></th>
+                <th style="border: 1px solid black;">SAP Cost Center</th>
             </tr>
         </thead>
         <tbody>
-            @foreach($value->excelColumns as $dataTables)
+            @foreach($data as $key => $value)
             <tr>
-                <td>{{ $dataTables->accountNo }}</td>
-                <td>{{ $dataTables->nameOfAccount }}</td>
-                <td>{{ $dataTables->costCenter }}</td>
-                <td>{{ $dataTables->costCenterName }}</td>
-                <td>{{ $dataTables->description }}</td>
-                <td>{{ $dataTables->debit }}</td>
-                <td>{{ $dataTables->credit }}</td>
+                <td style="border: 1px solid black;">{{ $value->DocNo }}</td>
+                <td style="border: 1px solid black;">{{ $value->Company }}</td>
+                <td style="border: 1px solid black;">{{ $value->MonthYearOfPayroll }}</td>
+                <td style="border: 1px solid black;">{{ $value->SAPGLAccount }}</td>
+                <td style="border: 1px solid black;">{{ $value->SAPGLAccountDescription }}</td>
+                <td style="border: 1px solid black;">{{ $value->AmountD }}</td>
+                <td style="border: 1px solid black;">{{ $value->AmountK }}</td>
+                <td style="border: 1px solid black;">{{ $value->TotalEmployee }}</td>
+                <td style="border: 1px solid black;">{{ $value->SAPCostCenter }}</td>
             </tr>
             @endforeach
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td style="font-weight:200;">Total</td>
-                <td>{{ $value->totalDebit }}</td>
-                <td>{{ $value->totalKredit }}</td>
-            </tr>
         </tbody>
     </table>
-    @endforeach
 
     <script type="text/php">
     if (isset($pdf)) {
