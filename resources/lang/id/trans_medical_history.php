@@ -19,6 +19,7 @@
         'redate' => 'Receipt Date',
         'treq' => 'Total Request',
         'tpaid' => 'Total Paid',
+        'appdate' => 'Tanggal Disetujui',
         'prem' => 'Paid Remarks',
         'tmedical' => 'Total Medis',
         'pbalance' => 'Saldo Plafon',

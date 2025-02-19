@@ -33,6 +33,7 @@
                 <th>{{ __('export_reimbursement.tapprove') }}</th>
                 <th>{{ __('export_reimbursement.tpaid') }}</th>
 				<th>{{ __('export_reimbursement.premarks') }}</th>
+				<th>{{ __('export_reimbursement.appdate') }}</th>
 				<th>{{ __('export_reimbursement.email') }}</th>
 				<th>{{ __('export_reimbursement.division') }}</th>
 				<th>{{ __('export_reimbursement.costcenter') }}</th>
@@ -67,6 +68,7 @@
 				<td data-format="#,##0"></td>
 				<td data-format="#,##0">{{ isset($value->reimbursementEntity->paidAmount) ? $value->reimbursementEntity->paidAmount : '' }}</td>
 				<td>{{ isset($value->reimbursementEntity->hrdRemarks) ? $value->reimbursementEntity->hrdRemarks : '' }}</td> 
+				<td>{{ isset($value->reimbursementEntity->changedDate) ? \Carbon\Carbon::parse($value->reimbursementEntity->changedDate)->format('Y-m-d') : '' }}</td> 
 				<td>{{ isset($value->reimbursementEntity->emailRequester) ? $value->reimbursementEntity->emailRequester : '' }}</td> 
 				<td>{{ isset($value->reimbursementEntity->businessUnit) ? $value->reimbursementEntity->businessUnit : '' }}</td>
 				<td>{{ isset($value->reimbursementEntity->costCenter) ? $value->reimbursementEntity->costCenter : '' }}</td>

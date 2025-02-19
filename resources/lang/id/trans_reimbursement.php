@@ -21,6 +21,7 @@ return [
     'status' => 'Status',
     'ticketno' => 'Nomor Tiket',
     'name' => 'Nama',
+    'appdate' => 'Tanggal Disetujui',
     'cname' => 'Nama Pelanggan',
     'pname' => 'Nama Proyek',
     'pdate' => 'Tanggal Pembayaran',

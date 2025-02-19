@@ -21,6 +21,8 @@ return [
     'detail' => 'Detail',
     'name' => 'Name',
     'status' => 'Status',
+    'reqdate' => 'Request Date',
+    'appdate' => 'Approval Date',
     'tnom' => 'Ticket Number',
     'pname' => 'Project Name',
     'odate' => 'Overtime Date',

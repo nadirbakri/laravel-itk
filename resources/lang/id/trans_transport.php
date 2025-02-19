@@ -23,6 +23,7 @@ return [
     'tnom' => 'Nomor Tiket',
     'name' => 'Nama',
     'type' => 'Tipe',
+    'appdate' => 'Tanggal Disetujui',
     'cname' => 'Nama Pelanggan',
     'sloc' => 'Lokasi Awal',
     'eloc' => 'Lokasi Akhir',

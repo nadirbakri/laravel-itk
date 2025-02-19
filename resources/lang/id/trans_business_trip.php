@@ -23,6 +23,8 @@ return [
     'tnom' => 'Nomor Tiket',
     'type' => 'Type',
     'name' => 'Nama',
+    'reqdate' => 'Tanggal Permintaan',
+    'appdate' => 'Tanggal Disetujui',
     'cname' => 'Nama Pelanggan',
     'status' => 'Status',
     'destination' => 'Destinasi',

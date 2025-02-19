@@ -320,6 +320,7 @@
                                             <th>{{ __('trans_transport.tnom') }}</th>
                                             <th>{{ __('trans_transport.name') }}</th>
                                             <th>{{ __('trans_transport.type') }}</th>
+                                            <th>{{ __('trans_transport.appdate') }}</th>
                                             <th>{{ __('trans_transport.cname') }}</th>
                                             <th>{{ __('trans_transport.sloc') }}</th>
                                             <th>{{ __('trans_transport.eloc') }}</th>
@@ -455,6 +456,14 @@
                             <div class="col-3">
                                 <input type="hidden" id="totalclaim" name="totalclaim" class="form-control" readonly><span id="totalclaim_val"></span>
                             </div>
+                        </div>
+
+                        <div class="row detailstatus">
+                            <div class="col-3">
+                                <h5>{{ __('trans_transport.appdate') }}</h5>                                    
+                            </div>
+                            <div class="col-3">
+                                <input id="approvaldate" name="approvaldate" type="hidden" class="form-control" readonly><span id="approvaldate_val"></span>
                             </div>
                         </div>
 
@@ -838,7 +847,7 @@
                     }
                 },
                 {data: 'receiptDate', name: 'receiptDate', 
-                        render: function (data, type, row) {
+                    render: function (data, type, row) {
                         return moment(data).format('DD-MMM-YYYY');
                     }
                 },
@@ -847,6 +856,15 @@
                 {data: 'fullName', name: 'fullName'},
                 {data: 'type', name: 'type'},
                 // {data: 'companyCostumer', name: 'companyCostumer'},
+                {data: 'changedDate', name: 'changedDate', 
+                    render: function (data, type, row) {
+                        if (data == null || row.status == 'NEW'){
+                            return '-'
+                        }else {
+                            return moment(data).format('YYYY-MM-DD');
+                        }
+                    }
+                },
                 {data: 'customerName', name: 'customerName'},
                 {data: 'startLocation', name: 'startLocation'},
                 {data: 'endLocation', name: 'endLocation'},
@@ -929,6 +947,13 @@
         $('#approvalremarks').val(data.approvalRemarks)
         $('#totalpaid').val(data.paidAmount)
         $('#reimbursement_status').val(data.status).trigger('change')
+        if(data.status == 'NEW' || data.changedDate == null){
+            $('#approvaldate').val('-')
+            $('#approvaldate_val').html('-')
+        }else{
+            $('#approvaldate').val(moment(data.changedDate).format('YYYY-MM-DD'))
+            $('#approvaldate_val').html(moment(data.changedDate).format('YYYY-MM-DD'))
+        }
         $('#project_name').val(data.projectName)
         $('#project_name_val').html(data.projectName)
         $('#directsuperior').val(data.directSuperiorID)

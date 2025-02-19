@@ -35,6 +35,7 @@ return [
     'tapprove' => 'Total Persetujuan HRD',
     'tpaid' => 'Total Pembayaran',
     'premarks' => 'Catatan Pembayaran',
+    'appdate' => 'Tanggal Disetujui',
     'costcenter' => 'Cost Center',
 ]
 

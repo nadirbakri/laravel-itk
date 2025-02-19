@@ -36,6 +36,7 @@
 				<th>Total Approve HRD (Rp)</th>
 				<th>Total Paid (Rp)</th>
 				<th>Paid Remarks</th>
+				<th>Approval Date</th>
 				<th>Alamat Email</th>
 				<th>Division</th>
 				<th>Cost Center</th>
@@ -73,6 +74,7 @@
 					<td data-format="#,##0"></td>
 					<td data-format="#,##0">{{ isset($value->totalPaid) ? $value->totalPaid : '' }}</td>
 					<td>{{ isset($value->paidRemarks) ? $value->paidRemarks : '' }}</td>
+					<td>{{ isset($value->changedDate) ? date('Y-m-d', strtotime($value->changedDate)) : '' }}</td>
 					<td>{{ isset($value->email) ? $value->email : '' }}</td>
 					<td>{{ isset($value->businessUnit) ? $value->businessUnit : '' }}</td>
 					<td>{{ isset($value->costCenter) ? $value->costCenter : '' }}</td>

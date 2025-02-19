@@ -329,6 +329,7 @@
                                         <th>{{ __('trans_reimbursement.status') }}</th>
                                         <th>{{ __('trans_reimbursement.ticketno') }}</th>
                                         <th>{{ __('trans_reimbursement.name') }}</th>
+                                        <th>{{ __('trans_reimbursement.appdate') }}</th>
                                         <th>{{ __('trans_reimbursement.cname') }}</th>
                                         <th>{{ __('trans_reimbursement.pname') }}</th>
                                         <th>{{ __('trans_reimbursement.pdate') }}</th>
@@ -468,6 +469,15 @@
                                     </div>
                                     <div class="col">
                                         <input id="totalclaim" name="totalclaim" type="hidden" class="form-control"><span id="totalclaim_val"></span>
+                                    </div>
+                                </div>
+
+                                <div class="row detailstatus">
+                                    <div class="col-3">
+                                        <h5>Approval Date</h5>
+                                    </div>
+                                    <div class="col">
+                                        <input id="approvaldate" name="approvaldate" type="hidden" class="form-control"><span id="approvaldate_val"></span>
                                     </div>
                                 </div>
 
@@ -798,6 +808,15 @@
                 {data: 'reimbursementEntity.reimbursementStatus', name: 'reimbursementEntity.reimbursementStatus'},
                 {data: 'reimbursementEntity.ticketNo', name: 'reimbursementEntity.ticketNo'},
                 {data: 'reimbursementEntity.fullnameRequester', name: 'reimbursementEntity.fullnameRequester'},
+                {data: 'reimbursementEntity.changedDate', name: 'reimbursementEntity.changedDate', 
+                        render: function (data, type, row) {
+                            if (data == null || row.reimbursementEntity.reimbursementStatus == 'NEW'){
+                                return '-'
+                            }else {
+                                return moment(data).format('YYYY-MM-DD');
+                            }
+                        }
+                },
                 {data: 'reimbursementEntity.customerName', name: 'reimbursementEntity.customerName'},
                 {data: 'reimbursementEntity.projectName', name: 'reimbursementEntity.projectName'},
                 {data: 'reimbursementEntity.paymentDate', name: 'reimbursementEntity.paymentDate', 
@@ -882,6 +901,13 @@
         $('#employee_name_val').html(data.fullnameRequester)
         $('#c_type').val(data.reimbursementType)
         $('#c_type_val').html(data.reimbursementType)
+        if(data.reimbursementStatus == 'NEW' || data.changedDate == null){
+            $('#approvaldate').val('-')
+            $('#approvaldate_val').html('-')
+        }else{
+            $('#approvaldate').val(moment(data.changedDate).format('YYYY-MM-DD'))
+            $('#approvaldate_val').html(moment(data.changedDate).format('YYYY-MM-DD'))
+        }
         $('#totalclaim').val(data.totalClaimAmount)
         $('#totalclaim_val').html(data.totalClaimAmount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."))
         $('#approvalremarks').val(data.approvalRemarks)

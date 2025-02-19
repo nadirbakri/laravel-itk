@@ -33,6 +33,7 @@
 				<th>Total Approval HRD (Rp)</th>
 				<th>Total Paid (Rp)</th>
 				<th>Paid Remarks</th>
+				<th>Approval Date</th>
 				<th>Alamat Email</th>
 				<th>Division</th>
 				<th>Cost Center</th>
@@ -67,6 +68,7 @@
 				<td data-format="#,##0">{{ isset($value->reimbursementEntity->totalApprovalHRD) ? $value->reimbursementEntity->totalApprovalHRD : '' }}</td>
 				<td data-format="#,##0">{{ isset($value->reimbursementEntity->paidAmount) ? $value->reimbursementEntity->paidAmount : '' }}</td>
 				<td>{{ isset($value->reimbursementEntity->hrdRemarks) ? $value->reimbursementEntity->hrdRemarks : '' }}</td>
+				<td>{{ isset($value->reimbursementEntity->approvalDate) ? \Carbon\Carbon::parse($value->reimbursementEntity->approvalDate)->format('Y-m-d') : '' }}</td>
 				<td>{{ isset($value->reimbursementEntity->emailRequester) ? $value->reimbursementEntity->emailRequester : '' }}</td>
 				<td>{{ isset($value->reimbursementEntity->businessUnit) ? $value->reimbursementEntity->businessUnit : '' }}</td>
 				<td>{{ isset($value->reimbursementEntity->costCenter) ? $value->reimbursementEntity->costCenter : '' }}</td>

@@ -357,8 +357,10 @@
                                     <tr>
                                         <th>{{ __('trans_business_trip.detail') }}</th>
                                         <th>{{ __('trans_business_trip.tnom') }}</th>
+                                        <th>{{ __('trans_business_trip.reqdate') }}</th>
                                         <th>{{ __('trans_business_trip.type') }}</th>
                                         <th>{{ __('trans_business_trip.name') }}</th>
+                                        <th>{{ __('trans_business_trip.appdate') }}</th>
                                         <th>{{ __('trans_business_trip.cname') }}</th>
                                         <th>{{ __('trans_business_trip.status') }}</th>
                                         <th>{{ __('trans_business_trip.destination') }}</th>
@@ -504,6 +506,21 @@
                                 </div>
                                 <div class="col">
                                     <input id="employee_no" name="employee_no" type="hidden" class="form-control"><span id="employee_no_val"></span>
+                                </div>
+                            </div>
+
+                            <div class="row detailstatus">
+                                <div class="col-3">
+                                    <h5>{{ __('trans_business_trip.reqdate') }}</h5>
+                                </div>
+                                <div class="col">
+                                    <input id="requestdate" name="requestdate" type="hidden" class="form-control"><span id="requestdate_val"></span>
+                                </div>
+                                <div class="col-3">
+                                    <h5>{{ __('trans_business_trip.appdate') }}</h5>
+                                </div>
+                                <div class="col">
+                                    <input id="approvaldate" name="approvaldate" type="hidden" class="form-control"><span id="approvaldate_val"></span>
                                 </div>
                             </div>
 
@@ -1047,8 +1064,26 @@
                 //     }
                 // },
                 {data: 'ticketNo', name: 'ticketNo'},
+                {data: 'requestDate', name: 'requestDate', 
+                    render: function (data, type, row) {
+                        if (data == null){
+                            return '-'
+                        }else {
+                            return moment(data).format('YYYY-MM-DD');
+                        }
+                    }
+                },
                 {data: 'claimType', name: 'claimType'},
                 {data: 'fullName', name: 'fullName'},
+                {data: 'changedDate', name: 'changedDate', 
+                    render: function (data, type, row) {
+                        if (data == null || row.status == 'NEW'){
+                            return '-'
+                        }else {
+                            return moment(data).format('YYYY-MM-DD');
+                        }
+                    }
+                },
                 {data: 'customerName', name: 'customerName'},
                 {data: 'status', name: 'status'},
                 {data: 'destination', name: 'destination'},
@@ -1152,6 +1187,20 @@
         $('#b_unit_val').html(data.businessUnit)
         $('#employee_no').val(data.employeeNo)
         $('#employee_no_val').html(data.employeeNo)
+        if(data.requestDate == null){
+            $('#requestdate').val('-')
+            $('#requestdate_val').html('-')
+        }else{
+            $('#requestdate').val(moment(data.requestDate).format('YYYY-MM-DD'))
+            $('#requestdate_val').html(moment(data.requestDate).format('YYYY-MM-DD'))
+        }
+        if(data.status == 'NEW' || data.changedDate == null){
+            $('#approvaldate').val('-')
+            $('#approvaldate_val').html('-')
+        }else{
+            $('#approvaldate').val(moment(data.changedDate).format('YYYY-MM-DD'))
+            $('#approvaldate_val').html(moment(data.changedDate).format('YYYY-MM-DD'))
+        }
         $('#c_type').val(data.totalClaimAmount)
         $('#c_type_val').html(data.totalClaimAmount)
         $('#approvalremarks').val(data.approvalRemarks)

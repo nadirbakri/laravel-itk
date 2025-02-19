@@ -308,6 +308,7 @@
                                         <th>{{ __('trans_medical.ename') }}</th>
                                         <th>{{ __('trans_medical.redate') }}</th>
                                         <th>{{ __('trans_medical.treq') }}</th>
+                                        <th>{{ __('trans_medical.appdate') }}</th>
                                         <th>{{ __('trans_medical.prem') }}</th>
                                         <th>{{ __('trans_medical.tpaid') }}</th>
                                         {{-- <th>Remarks</th> --}}
@@ -457,6 +458,16 @@
                                         <input style="border: none" style="outline: none" type="hidden" class="form-control" id="dependent" name="dependent"><span id="dependent_val"></span>
                                     </div>
                                 </div>
+
+                                <div class="row detailstatus">
+                                    <div class="col-3">
+                                        <h5>{{ __('trans_medical.appdate') }}</h5>
+                                    </div>
+                                    <div class="col">
+                                        <input id="approvaldate" name="approvaldate" style="border: none" style="outline: none" type="hidden" class="form-control"><span id="approvaldate_val"></span>
+                                    </div>
+                                </div>
+
                                 <div class="row approve">
                                     <div class="col-12">
                                         <h5>Attachment</h5>
@@ -836,6 +847,15 @@
                         return data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
                     }
                 },
+                {data: 'reimbursementEntity.changedDate', name: 'reimbursementEntity.changedDate', 
+                    render: function (data, type, row) {
+                        if (data == null || row.reimbursementEntity.reimbursementStatus == 'NEW'){
+                            return '-'
+                        }else {
+                            return moment(data).format('YYYY-MM-DD');
+                        }
+                    }
+                },
                 {data: 'reimbursementEntity.hrdRemarks', name: 'reimbursementEntity.hrdRemarks'
                 },
                 {data: 'reimbursementEntity.paidAmount', name: 'reimbursementEntity.paidAmount',
@@ -875,7 +895,7 @@
 
     const klikdetail = (element) => {
         let data = table.row($(element).parent()).data().reimbursementEntity;
-
+        
         $('#reqdate').val(moment(data.createdDate).format('DD-MMM-YYYY'))
         $('#reqdate_val').html(moment(data.createdDate).format('DD-MMM-YYYY'))
         $('#recdate').val(moment(data.receiptDate).format('DD-MMM-YYYY'))
@@ -888,6 +908,8 @@
         $('#b_unit_val').html(data.businessUnit)
         $('#employee_no').val(data.employeeNo)
         $('#employee_no_val').html(data.employeeNo)
+        $('#dependent').val(data.dependentName)
+        $('#dependent_val').html(data.dependentName)
         if(data.medicalType1 == null){
             $('#c_type').val()
             $('#c_type_val').html()
@@ -899,6 +921,13 @@
         $('#totalclaim_val').html(data.totalClaimAmount)
         $('#project_name').val(data.projectName)
         $('#project_name_val').html(data.projectName)
+        if(data.reimbursementStatus == 'NEW' || data.changedDate == null){
+            $('#approvaldate').val('-')
+            $('#approvaldate_val').html('-')
+        }else{
+            $('#approvaldate').val(moment(data.changedDate).format('YYYY-MM-DD'))
+            $('#approvaldate_val').html(moment(data.changedDate).format('YYYY-MM-DD'))
+        }
 
         $('#approvalremarks').val(data.approvalRemarks)
         $('#totalpaid').val(data.paidAmount)

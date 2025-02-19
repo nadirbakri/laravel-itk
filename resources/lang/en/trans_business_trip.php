@@ -23,6 +23,8 @@ return [
     'tnom' => 'Ticket Number',
     'type' => 'Type',
     'name' => 'Name',
+    'reqdate' => 'Request Date',
+    'appdate' => 'Approval Date',
     'cname' => 'Customer Name',
     'status' => 'Status',
     'destination' => 'Destination',

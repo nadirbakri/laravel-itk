@@ -22,6 +22,7 @@ return [
     'ename' => 'Nama Karyawan',
     'redate' => 'Tanggal Penerimaan',
     'treq' => 'Total Permintaan',
+    'appdate' => 'Tanggal Disetujui',
     'prem' => 'Catatan Pembayaran',
     'tpaid' => 'Total Pembayaran',
     'luser' => 'Daftar Pengguna',

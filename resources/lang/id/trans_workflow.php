@@ -19,6 +19,7 @@ return [
     'lduration' => ' Durasi',
     'aby' => 'Disetujui Oleh',
     'tno' => 'Nomor Tiket',
+    'appdate' => 'Tanggal Disetujui',
     'appremarks' => 'Catatan Disetujui',
     'luser' => 'Daftar Pengguna',
     'fname' => 'Nama Lengkap',

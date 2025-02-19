@@ -84,6 +84,8 @@ class TransportExport extends DefaultValueBinder implements WithCustomValueBinde
 
         $arrResult = json_decode($response->getBody()->getContents());
 
+        // dd($arrResult->dataListSet);
+
         if($arrResult->dataListSet == null){
             return view('export.transport_export', [
                 'data' => [], 'companyCode' => Session::get('companyCode')

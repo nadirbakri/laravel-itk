@@ -22,6 +22,7 @@ return [
     'status' => 'Status',
     'ticketno' => 'Ticket No',
     'name' => 'Name',
+    'appdate' => 'Approval Date',
     'cname' => 'Customer Name',
     'pname' => 'Project Name',
     'pdate' => 'Payment Date',

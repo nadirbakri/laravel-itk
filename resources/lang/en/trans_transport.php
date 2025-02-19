@@ -22,6 +22,7 @@ return [
     'tnom' => 'Ticket Number',
     'name' => 'Name',
     'type' => 'Type',
+    'appdate' => 'Approval Date',
     'cname' => 'Customer Name',
     'sloc' => 'Start Location',
     'eloc' => 'End Location',

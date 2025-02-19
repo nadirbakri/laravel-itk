@@ -252,10 +252,12 @@
                                 <thead>
                                     <tr>
                                        <th>{{ __('trans_overtime.detail') }}</th>
+                                       <th>{{ __('trans_overtime.reqdate') }}</th>
                                        <th>{{ __('trans_overtime.name') }}</th>
                                        <th>{{ __('trans_overtime.status') }}</th>
                                        <th>{{ __('trans_overtime.tnom') }}</th>
                                        <th>{{ __('trans_overtime.pname') }}</th>
+                                       <th>{{ __('trans_overtime.appdate') }}</th>
                                        <th>{{ __('trans_overtime.odate') }}</th>
                                        <th>{{ __('trans_overtime.ohourfrom') }}</th>
                                        <th>{{ __('trans_overtime.ohourto') }}</th>
@@ -672,15 +674,24 @@
                             return type === 'display'? '<button type="button" onclick="klikdetail(this)" class="btn btn-info" name="btn-detail" id="btn-detail" style="width: 100%;" data-toggle="modal" data-target="#modal_list_detail"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-justify" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M2 12.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/></svg> {{ __('trans_medical.detail') }} </button>' : '';
                         }
                     },
-                    // {data: 'overtimeEntity.requestDate', name: 'requestDate', 
-                    //         render: function (data, type, row) {
-                    //         return moment(data).format('YYYY-MM-DD');
-                    //     }
-                    // },
+                    {data: 'overtimeEntity.requestDate', name: 'requestDate', 
+                        render: function (data, type, row) {
+                            return moment(data).format('YYYY-MM-DD');
+                        }
+                    },
                     {data: 'overtimeEntity.fullnameRequester', name: 'overtimeEntity.fullnameRequester'},
                     {data: 'overtimeEntity.status', name: 'overtimeEntity.status'},
                     {data: 'overtimeEntity.ticketNo', name: 'overtimeEntity.ticketNo'},
                     {data: 'overtimeEntity.projectName', name: 'overtimeEntity.projectName'},
+                    {data: 'overtimeEntity.changedDate', name: 'overtimeEntity.changedDate', 
+                            render: function (data, type, row) {
+                                if (data == null || row.overtimeEntity.status == 'NEW'){
+                                    return '-'
+                                }else {
+                                    return moment(data).format('YYYY-MM-DD');
+                                }
+                            }
+                    },
                     {data: 'overtimeEntity.overtimeDate', name: 'overtimeEntity.overtimeDate', 
                             render: function (data, type, row){
                             return moment(data).format('YYYY-MM-DD');
@@ -805,7 +816,11 @@
         $('#description').html(data.overtimeRemarks)
         $('#customer').html(data.customerName)
         $('#overtime_status').val(data.status).trigger('change')
-        $('#last_approval_date').val(moment().format('YYYY-MM-DD'))
+        if(data.status == 'NEW' || data.changedDate == null){
+            $('#last_approval_date').val('')
+        }else{
+            $('#last_approval_date').val(moment(data.changedDate).format('YYYY-MM-DD'))
+        }
         $('#approval_remarks').val(data.approvalRemarks)
         
         $('#expired_date').val(moment(data.offSubstituteExpDate).format('YYYY-MM-DD'))

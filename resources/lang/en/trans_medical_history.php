@@ -19,6 +19,7 @@
         'redate' => 'Receipt Date',
         'treq' => 'Total Request',
         'tpaid' => 'Total Paid',
+        'appdate' => 'Approval Date',
         'prem' => 'Paid Remarks',
         'tmedical' => 'Total Medical',
         'pbalance' => 'Plafon Balance',

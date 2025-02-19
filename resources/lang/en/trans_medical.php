@@ -21,6 +21,7 @@ return [
     'ename' => 'Employee Name',
     'redate' => 'Receipt Date',
     'treq' => 'Total Request',
+    'appdate' => 'Approval Date',
     'prem' => 'Paid Remarks',
     'tpaid' => 'Total Paid',
     'luser' => 'List User',

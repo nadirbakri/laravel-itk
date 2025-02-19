@@ -254,6 +254,7 @@
                                         <th>{{ __('trans_workflow.lduration') }}</th>
                                         <th>{{ __('trans_workflow.aby') }}</th>
                                         <th>{{ __('trans_workflow.tno') }}</th>
+                                        <th>{{ __('trans_workflow.appdate') }}</th>
                                         <th>{{ __('trans_workflow.appremarks') }}</th>
                                     </tr>
                                 </thead>
@@ -272,6 +273,7 @@
                                         <th>{{ __('trans_workflow.lduration') }}</th>
                                         <th>{{ __('trans_workflow.aby') }}</th>
                                         <th>{{ __('trans_workflow.tno') }}</th>
+                                        <th>{{ __('trans_workflow.appdate') }}</th>
                                         <th>{{ __('trans_workflow.appremarks') }}</th>
                                     </tr>
                                 </thead>
@@ -409,6 +411,12 @@
                             <div class="col-3">
                                 <input id="permit_type_permit" name="permit_type_permit" type="hidden" class="form-control"><span id="permit_type_permit_val"></span>
                             </div>
+                            <div class="col-3">
+                                <h6>Approval Date</h6>
+                            </div>
+                            <div class="col-3">
+                                <span id="approval_date_permit_val"></span>
+                            </div>
                         </div>
 
                         <div class="row">
@@ -533,6 +541,12 @@
                             </div>
                             <div class="col-3">
                                 <input id="leave_type_leave" name="leave_type_leave" type="hidden" class="form-control"><span id="leave_type_leave_val"></span>
+                            </div>
+                            <div class="col-3">
+                                <h6>Approval Date</h6>
+                            </div>
+                            <div class="col-3">
+                                <input id="approval_date_leave" name="approval_date_leave" type="hidden" class="form-control"><span id="approval_date_leave_val"></span>
                             </div>
                         </div>
 
@@ -717,6 +731,11 @@
             $('#workflow_type_permit_val').html('PERMIT')
             $('#permit_type_permit').html(data.permitCode)
             $('#permit_type_permit_val').html((data.permitNameList[0] == null) ? data.permitCode : data.permitNameList[0])
+            if(data.status == 'NEW' || data.changedDate == null){
+                $('#approval_date_permit_val').html('-')
+            }else{
+                $('#approval_date_permit_val').html(moment(data.changedDate).format('YYYY-MM-DD'))
+            }
             $('#remarks_permit').html(data.permitRemarks)
             $('#remarks_permit_val').html(data.permitRemarks)
         }else{
@@ -741,6 +760,13 @@
             $('#workflow_type_leave_val').html('LEAVE')
             $('#leave_type_leave').html(data.leaveCode)
             $('#leave_type_leave_val').html(data.leaveName)
+            if(data.status == 'NEW' || data.changedDate == null){
+                $('#approval_date_leave').val('-')
+                $('#approval_date_leave_val').html('-')
+            }else{
+                $('#approval_date_leave').val(moment(data.changedDate).format('YYYY-MM-DD'))
+                $('#approval_date_leave_val').html(moment(data.changedDate).format('YYYY-MM-DD'))
+            }
             $('#leave_time_leave').html(data.leaveTime)
             $('#leave_time_leave_val').html(data.dayDuration)
             $('#remarks_leave').html(data.leaveRemarks)
@@ -822,6 +848,15 @@
                 {data: 'permitEntity.time', name: 'permitEntity.time'},
                 {data: 'permitEntity.superiorFullname', name: 'permitEntity.superiorFullname'},
                 {data: 'permitEntity.ticketNo', name: 'permitEntity.ticketNo'},
+                {data: 'permitEntity.changedDate', name: 'permitEntity.changedDate', 
+                    render: function (data, type, row) {
+                        if (data == null || row.permitEntity.status == 'NEW'){
+                            return '-'
+                        }else {
+                            return moment(data).format('YYYY-MM-DD');
+                        }
+                    }
+                },
                 {data: 'permitEntity.approvalRemarks', name: 'permitEntity.approvalRemarks'}
             ]
         });  
@@ -875,6 +910,15 @@
                 {data: 'leaveEntity.leaveDurationDepan', name: 'leaveEntity.leaveDurationDepan'},
                 {data: 'leaveEntity.changedBy', name: 'leaveEntity.changedBy'},
                 {data: 'leaveEntity.ticketNo', name: 'leaveEntity.ticketNo'},
+                {data: 'leaveEntity.changedDate', name: 'leaveEntity.changedDate', 
+                    render: function (data, type, row) {
+                        if (data == null || row.leaveEntity.status == 'NEW'){
+                            return '-'
+                        }else {
+                            return moment(data).format('YYYY-MM-DD');
+                        }
+                    }
+                },
                 {data: 'leaveEntity.approvalRemarks', name: 'leaveEntity.approvalRemarks'},
             ]
         });

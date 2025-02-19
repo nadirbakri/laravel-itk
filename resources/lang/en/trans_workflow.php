@@ -19,6 +19,7 @@ return [
     'lduration' => 'Duration',
     'aby' => 'Approved By',
     'tno' => 'Ticket No',
+    'appdate' => 'Approval Date',
     'appremarks' => 'Approval Remarks',
     'luser' => 'List User',
     'fname' => 'Full Name',

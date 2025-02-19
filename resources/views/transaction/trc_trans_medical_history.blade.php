@@ -223,6 +223,7 @@
                                         <th>{{ __('trans_medical_history.redate') }}</th>
                                         <th>{{ __('trans_medical_history.treq') }}</th>
                                         <th>{{ __('trans_medical_history.tpaid') }}</th>
+                                        <th>{{ __('trans_medical_history.appdate') }}</th>
                                         <th>{{ __('trans_medical_history.prem') }}</th>
                                     </tr>
                                 </thead>
@@ -463,6 +464,15 @@
                 {data: 'reimbursementEntity.paidAmount', name: 'reimbursementEntity.paidAmount',
                     render: function (data, type, row) {
                         return data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                    }
+                },
+                {data: 'reimbursementEntity.changedDate', name: 'reimbursementEntity.changedDate', 
+                    render: function (data, type, row) {
+                        if (data == null || row.reimbursementEntity.reimbursementStatus == 'NEW'){
+                            return '-'
+                        }else {
+                            return moment(data).format('YYYY-MM-DD');
+                        }
                     }
                 },
                 {data: 'reimbursementEntity.hrdRemarks', name: 'reimbursementEntity.hrdRemarks'
