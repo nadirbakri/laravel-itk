@@ -616,7 +616,6 @@
         var arrayMinutesRounded = [];
 
         if (arrData2) {
-            
             let processStatus = arrData[0].statusProcess
 
             if (processStatus == "1") {
@@ -644,6 +643,17 @@
             $('#overtime_before_from').val(((typeof arrData[0].ovtBeforeHourFrom !== 'undefined') ? arrData[0].ovtBeforeHourFrom : ''));
             $('#overtime_after_from').val(((typeof arrData[0].ovtAfterHourFrom !== 'undefined') ? arrData[0].ovtAfterHourFrom : ''));
 
+            $('#not_clock_in').val(((typeof arrData[0].noTimeInCode !== 'undefined') ? arrData[0].noTimeInCode : ''));
+            $('#late').val(((typeof arrData[0].lateCode !== 'undefined') ? arrData[0].lateCode : ''));
+            $('#not_clock_out').val(((typeof arrData[0].noTimeOutCode !== 'undefined') ? arrData[0].noTimeOutCode : ''));
+            $('#early_back').val(((typeof arrData[0].earlybackCode !== 'undefined') ? arrData[0].earlybackCode : ''));
+            $('#not_clock_in_early_back').val(((typeof arrData[0].noTimeInEarlybackCode !== 'undefined') ? arrData[0].noTimeInEarlybackCode : ''));
+            $('#late_early_back').val(((typeof arrData[0].lateEarlybackCode !== 'undefined') ? arrData[0].lateEarlybackCode : ''));
+            $('#not_clock_out_late').val(((typeof arrData[0].lateNoTimeOutCode !== 'undefined') ? arrData[0].lateNoTimeOutCode : ''));
+            $('#unpaid_leave').val(((typeof arrData[0].unpaidLeaveCode !== 'undefined') ? arrData[0].unpaidLeaveCode : ''));
+            $('#absent').val(((typeof arrData[0].absentCode !== 'undefined') ? arrData[0].absentCode : ''));
+            $('#overtime').val(((typeof arrData[0].overtimeCode !== 'undefined') ? arrData[0].overtimeCode : ''));
+            
             if(arrData[0].ovtRounded.length > 0){
                 for (const obj of arrData[0].ovtRounded) {
                     arrayMinutesRounded.push({

@@ -2882,6 +2882,8 @@ class TimeManagementController extends Controller
                 $param['ovtRounded'] = null;
             }
 
+            // dd(json_encode($param));
+
             if($arrData['record_function'] == 'New'){
                 $response = $client->post(env('API_URL') . '/mobile/ReferenceTM',
                     ['body' => json_encode($param)]
