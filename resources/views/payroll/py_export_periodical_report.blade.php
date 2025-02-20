@@ -410,8 +410,8 @@
             @endif
         @endfor
         <br>
-        @if($grand_total && isset($level1[0]))
-            @if($level1[0] !== "ALL")
+        @if($grand_total)
+            @if(isset($level1[0]) && $level1[0] !== "ALL")
             <table style="width: 100%; marginY: 2" class="table table-bordered table-hover responsive table_detail">
                 <tbody>
                     <tr>
@@ -425,6 +425,21 @@
                                 @endif
                             @else
                                 <td style="text-align:right; border:1px solid #000; font-size:{{ $fontSize }}px !important;">&nbsp;</td>
+                            @endif
+                        @endforeach
+                    </tr>
+                </tbody>
+            </table>
+            @else
+            <table style="width: 100%; marginY: 2" class="table table-bordered table-hover responsive table_detail">
+                <tbody>
+                    <tr>
+                        <th style="background-color: yellow; text-align:center; border:1px solid #000; font-size:{{ $fontSize }}px !important;">Grand Total</th>
+                        @foreach($grandTotal as $key_total => $periodicalTotal)
+                            @if($key_total == 'EmployeeNo')
+                            <td data-format="#,##0" style="text-align:left; border:1px solid #000; font-size:{{ $fontSize }}px !important;">{{ $periodicalTotal }}</td>
+                            @else
+                            <td data-format="#,##0" style="text-align:right; border:1px solid #000; font-size:{{ $fontSize }}px !important;">{{ $periodicalTotal }}</td>
                             @endif
                         @endforeach
                     </tr>

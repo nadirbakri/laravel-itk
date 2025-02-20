@@ -616,6 +616,7 @@
         var arrayMinutesRounded = [];
 
         if (arrData2) {
+            
             let processStatus = arrData[0].statusProcess
 
             if (processStatus == "1") {

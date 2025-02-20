@@ -9055,7 +9055,7 @@ public function dataDetailReportFormatPY(Request $request)
                         }
                     }
                 }
-            }else if(Session::get('companyCode') == 'SWG' || Session::get('companyCode') == 'XSYS' || Session::get('companyCode') == 'GRC'){
+            }else{
                 if(isset($arrResult->dataListSet[0]->detail)){
                     usort($arrResult->dataListSet[0]->detail, function ($a, $b) {
                         return (int) $a->employeeNo - (int) $b->employeeNo;
