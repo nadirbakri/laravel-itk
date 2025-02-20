@@ -21,19 +21,19 @@
 	<table class="table table-bordered table-hover responsive table_detail" style="width:100%; font-size: 15px;">
         <tr>
             <th>&nbsp;</th>
-            <td style="font-weight: bold; text-align:left;">{{ $data[0]->reportName }}</td>
+            <td style="font-weight: bold; text-align:left;">{{ $data->reportName }}</td>
         </tr>
         <tr>
             <th>&nbsp;</th>
-            <td style="font-weight: bold; text-align:left;">{{ $data[0]->reportYear }}</td>
+            <td style="font-weight: bold; text-align:left;">{{ $data->reportYear }}</td>
         </tr>
         <tr>
             <th>&nbsp;</th>
-            <td style="font-weight: bold; text-align:left;">{{ $data[0]->reportPeriod }}</td>
+            <td style="font-weight: bold; text-align:left;">{{ $data->reportPeriod }}</td>
         </tr>
         <tr>
             <th>&nbsp;</th>
-            <td style="font-weight: bold; text-align:left;">{{ $data[0]->companyName }}</td>
+            <td style="font-weight: bold; text-align:left;">{{ $data->companyName }}</td>
         </tr>
     </table>
     <br>
@@ -42,11 +42,11 @@
             <tr>
                 <th style="border:1px solid #000; text-align:center; font-weight: bold;">NO</th>
                 <th style="border:1px solid #000; text-align:center; font-weight: bold;">KETERANGAN</th>
-                <th style="border:1px solid #000; text-align:center; font-weight: bold;">{{ $data[0]->reportPeriod }}</th>
+                <th style="border:1px solid #000; text-align:center; font-weight: bold;">{{ $data->reportPeriod }}</th>
             </tr>
         </thead>
         <tbody>
-            @foreach($data[0]->data as $key => $dataTables)
+            @foreach($data->data as $key => $dataTables)
             <tr>
                 <td style="border:1px solid #000; text-align:center; padding:4px;">{{ ($key + 1) }}</td>
                 <td style="border:1px solid #000; text-align:left; padding:4px;">{{ $dataTables->columnName }}</td>
@@ -55,7 +55,7 @@
             @endforeach
             <tr>
                 <td colspan="2" style="border:1px solid #000; text-align:right; padding:4px;">TOTAL</td>
-                <td style="border:1px solid #000; text-align:right; padding:4px;">{{ number_format($data[0]->total, 0, ',', '.') }}</td>
+                <td style="border:1px solid #000; text-align:right; padding:4px;">{{ number_format($data->total, 0, ',', '.') }}</td>
             </tr>
         </tbody>
     </table>
