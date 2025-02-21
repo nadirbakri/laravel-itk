@@ -318,7 +318,7 @@ class PeriodicalReportExport extends DefaultValueBinder implements WithCustomVal
         // Storage::put('debug_data.txt', json_encode($arrResult->dataListSet));
         // dd(implode(', ', $indexes));
         // dd($indexes);
-        // dd($this->reportNameDetail);
+        // dd($this->groupNameDetail);
         // exit;
 
         if($arrResult->dataListSet == null){

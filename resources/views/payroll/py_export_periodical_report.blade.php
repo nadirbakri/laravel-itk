@@ -232,6 +232,11 @@
             ?>
             @if(!empty($dataTable->data))
                 @if($company == 'NMDI' || $company == 'CITROEN')
+                @if(empty($group_name))
+                <?php
+                    $group_name = "Cost Center";
+                ?>
+                @endif
                 <table style="font-size: 8px">
                     <?php
                         foreach($dataTable->data as $key => $dataRow) {
@@ -411,25 +416,27 @@
         @endfor
         <br>
         @if($grand_total)
-            @if(isset($level1[0]) && $level1[0] !== "ALL")
-            <table style="width: 100%; marginY: 2" class="table table-bordered table-hover responsive table_detail">
-                <tbody>
-                    <tr>
-                        <th style="background-color: yellow; text-align:center; border:1px solid #000; font-size:{{ $fontSize }}px !important;">Total per Company</th>
-                        @foreach($grandTotal[$branch] as $key_total => $periodicalTotal)
-                            @if(!is_string($periodicalTotal))
-                                @if($key_total == 'EmployeeNo')
-                                    <td style="text-align:left; border:1px solid #000; font-size:{{ $fontSize }}px !important;">{{ number_format($periodicalTotal, 0, ',', '.') }}</td>
+            @if($company == 'NMDI' || $company == 'CITROEN')
+                @if(isset($level1[0]) && $level1[0] !== "ALL")
+                <table style="width: 100%; marginY: 2" class="table table-bordered table-hover responsive table_detail">
+                    <tbody>
+                        <tr>
+                            <th style="background-color: yellow; text-align:center; border:1px solid #000; font-size:{{ $fontSize }}px !important;">Grand Total</th>
+                            @foreach($grandTotal[$branch] as $key_total => $periodicalTotal)
+                                @if(!is_string($periodicalTotal))
+                                    @if($key_total == 'EmployeeNo')
+                                        <td style="text-align:left; border:1px solid #000; font-size:{{ $fontSize }}px !important;">{{ number_format($periodicalTotal, 0, ',', '.') }}</td>
+                                    @else
+                                        <td style="text-align:right; border:1px solid #000; font-size:{{ $fontSize }}px !important;">{{ number_format($periodicalTotal, 0, ',', '.') }}</td>
+                                    @endif
                                 @else
-                                    <td style="text-align:right; border:1px solid #000; font-size:{{ $fontSize }}px !important;">{{ number_format($periodicalTotal, 0, ',', '.') }}</td>
+                                    <td style="text-align:right; border:1px solid #000; font-size:{{ $fontSize }}px !important;">&nbsp;</td>
                                 @endif
-                            @else
-                                <td style="text-align:right; border:1px solid #000; font-size:{{ $fontSize }}px !important;">&nbsp;</td>
-                            @endif
-                        @endforeach
-                    </tr>
-                </tbody>
-            </table>
+                            @endforeach
+                        </tr>
+                    </tbody>
+                </table>
+                @endif
             @else
             <table style="width: 100%; marginY: 2" class="table table-bordered table-hover responsive table_detail">
                 <tbody>

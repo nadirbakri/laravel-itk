@@ -69,7 +69,7 @@
                     <td data-format="#,##0" style="border:1px solid #000;">{{ $value->monthlySalary }}</td>
                     <td data-format="#,##0" style="border:1px solid #000;">{{ $value->annualSalary }}</td>
                     <td data-format="#,##0" style="border:1px solid #000;">{{ $value->dailyRate }}</td>
-                    <td data-format="#,##0" style="border:1px solid #000;">{{ $value->unusedLeaveBalance }}</td>
+                    <td style="border:1px solid #000;">{{ $value->unusedLeaveBalance }}</td>
                     <td data-format="#,##0" style="border:1px solid #000;">{{ $value->unusedLeaveAmount }}</td>
                 </tr>
                 @endforeach
