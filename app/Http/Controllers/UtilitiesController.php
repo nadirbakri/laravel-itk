@@ -2115,7 +2115,7 @@ class UtilitiesController extends Controller
             // Storage::put('debug_data.txt', json_encode($param));
             // dd(json_encode($param));
 
-            $response = $client->post(env('API_URL') . '/personel/MenuMasterWebDetail/UpdateBulkMasterWebDetail',
+            $response = $client->put(env('API_URL') . '/personel/MenuMasterWebDetail/UpdateBulkMasterWebDetail',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {
