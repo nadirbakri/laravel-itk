@@ -25,6 +25,7 @@
             <th>Description (Bahasa Indonesia)</th>
             <th>Deduct Leave</th>
             <th>Must Woman</th>
+            <th>Must Man</th>
             <th>Deduct Salary</th>
             <th>Deduct Allowance</th>
             <th>Get Compensation Leave</th>

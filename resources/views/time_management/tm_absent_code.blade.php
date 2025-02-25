@@ -533,7 +533,7 @@
                                     .message);
                                 setTimeout(function () {
                                     window.location =
-                                        "{{ url('payroll/absent_code') }}";
+                                        "{{ url('time_management/absent_code') }}";
                                 }, 3000);
                             } else {
                                 $("#btn-import").prop("disabled", false);
