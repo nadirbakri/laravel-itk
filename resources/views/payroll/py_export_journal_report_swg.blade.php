@@ -50,7 +50,7 @@
             <tr>
                 <td style="border:1px solid #000; text-align:center; padding:4px;">{{ ($key + 1) }}</td>
                 <td style="border:1px solid #000; text-align:left; padding:4px;">{{ $dataTables->columnName }}</td>
-                <td style="border:1px solid #000; text-align:right; padding:4px;">{{ ($dataTables->amount > 0) ? number_format($dataTables->amount, 0, ',', '.') : "-" }}</td>
+                <td style="border:1px solid #000; text-align:right; padding:4px;">{{ number_format($dataTables->amount, 0, ',', '.') }}</td>
             </tr>
             @endforeach
             <tr>
