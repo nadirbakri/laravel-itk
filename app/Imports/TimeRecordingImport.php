@@ -81,10 +81,17 @@ class TimeRecordingImport implements ToCollection, SkipsEmptyRows, WithStartRow
             foreach ($rows as $row) {
                 $param[] = [
                     "employeeNo" => isset($row[0]) ? (string) $row[0] : null,
-                    "absentDateIn" => isset($row[1]) ? date("Y-m-d", strtotime($row[1])) : null,
-                    "absentDateOut" => isset($row[3]) ? date("Y-m-d", strtotime($row[3])) : null,
-                    "timeIn" => isset($row[2]) ? date("Y-m-d\TH:i:s", strtotime($row[1] . " " . $row[2])) : null,
-                    "timeOut" => isset($row[4]) ? date("Y-m-d\TH:i:s", strtotime($row[3] . " " . $row[4])) : null,
+                    "absentDate" => isset($row[1]) ? date("Y-m-d", strtotime($row[1])) : null,
+                    "time" => isset($row[2]) ? date("H:i:s", strtotime($row[1] . " " . $row[2])) : null,
+                    "type" => "I",
+                    "shiftCode" => isset($row[5]) ? (string) $row[5] : null,
+                ];
+
+                $param[] = [
+                    "employeeNo" => isset($row[0]) ? (string) $row[0] : null,
+                    "absentDate" => isset($row[3]) ? date("Y-m-d", strtotime($row[3])) : null,
+                    "time" => isset($row[4]) ? date("H:i:s", strtotime($row[3] . " " . $row[4])) : null,
+                    "type" => "O",
                     "shiftCode" => isset($row[5]) ? (string) $row[5] : null,
                 ];
             }

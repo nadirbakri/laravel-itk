@@ -2633,23 +2633,21 @@ class TimeManagementController extends Controller
                         $minute = trim(substr($line, ($data->minuteStart - 1), $data->minuteLong));
                         $time = $hour . ":" . $minute . ':00';
                         $status = trim(substr($line, ($data->codeInOutStart - 1), $data->codeInOutLong));
-                        
-                        // Key untuk menentukan karyawan dan tanggal yang sama
-                        $key = $employeeNo . '_' . $date;
-                    
-                        if ($status === $data->inCode) {
-                            // Jika C/In, tambahkan entri baru atau perbarui entry yang sudah ada
-                            $result[$key] = [
+
+                        if($status === $data->inCode){
+                            $result[] = [
                                 'employeeNo' => $employeeNo,
-                                'absentDateIn' => $date,
-                                'timeIn' => $date . 'T' . $time,
-                                'absentDateOut' => null, // Sementara kosong, diisi ketika C/Out ditemukan
-                                'timeOut' => null, // Sementara kosong, diisi ketika C/Out ditemukan
+                                'absentDate' => $date,
+                                'time' => $time,
+                                'type' => 'I'
                             ];
-                        } elseif ($status === $data->outCode && isset($result[$key])) {
-                            // Jika C/Out, tambahkan waktu keluar pada entry yang sesuai
-                            $result[$key]['absentDateOut'] = $date;
-                            $result[$key]['timeOut'] = $date . 'T' . $time;
+                        }else if($status === $data->outCode){
+                            $result[] = [
+                                'employeeNo' => $employeeNo,
+                                'absentDate' => $date,
+                                'time' => $time,
+                                'type' => 'O'
+                            ];
                         }
                     }
                     
@@ -2659,11 +2657,10 @@ class TimeManagementController extends Controller
                     foreach ($result as $row) {
                         $param[] = [
                             "employeeNo" => isset($row['employeeNo']) ? $row['employeeNo'] : null,
-                            "absentDateIn" => isset($row['absentDateIn']) ? $row['absentDateIn'] : null,
-                            "absentDateOut" => isset($row['absentDateOut']) ? $row['absentDateOut'] : null,
-                            "timeIn" => isset($row['timeIn']) ? $row['timeIn'] : null,
-                            "timeOut" => isset($row['timeOut']) ? $row['timeOut'] : null,
-                            "shiftCode" => null,
+                            "absentDate" => isset($row['absentDate']) ? $row['absentDate'] : null,
+                            "time" => isset($row['time']) ? $row['time'] : null,
+                            "type" => isset($row['type']) ? $row['type'] : null,
+                            "shiftCode" => null
                         ];
                     }
 
