@@ -870,13 +870,15 @@ Route::get('trans/update_permit/table', 'TransactionController@tableUpdateTransP
 Route::get('trans/update_transport/table', 'TransactionController@tableUpdateTransTransport');
 Route::get('trans/update_mass_leave/table', 'TransactionController@tableUpdateTransMassLeave');
 Route::get('trans/update_approvalbusinesstrip/table', 'TransactionController@tableUpdateApprovalBusinesstrip');
-Route::get('trans/update_salary_complaint/table', 'TransactionController@tableUpdateTransSalaryComplaint');
 Route::get('trans/trans_active_document/detail_data', 'TransactionController@tableUpdateListBusinesstrip');
 Route::get('trans/update_medical/table', 'TransactionController@tableUpdateTransMedical');
 Route::get('trans/update_overtime/table', 'TransactionController@tableUpdateOvertime');
+Route::get('trans/update_salary_complaint/table', 'TransactionController@tableUpdateTransSalaryComplaint');
+Route::get('trans/update_death_benefit/table', 'TransactionController@tableUpdateTransDeathBenefit');
 Route::get('trans/mass_leave/table', 'TransactionController@tableDetailMassLeave');
 Route::get('trans/salary_complaint/table', 'TransactionController@tableDetailSalaryComplaint');
 Route::get('trans/salary_complaint/attachment', 'TransactionController@dataDetailSalaryComplaint');
+Route::get('trans/death_benefit/table', 'TransactionController@tableDetailDeathBenefit');
 Route::get('adm/checkinlist/table', 'TransactionController@tableDetailCheckinList');
 Route::get('adm/checkinlistmaps/table', 'TransactionController@tableDetailMapsCheckinList');
 Route::get('adm/checkinlist_mapsall/table', 'TransactionController@tableDetailCheckinListAll');
@@ -1076,6 +1078,7 @@ Route::post('transaction/transaction_active_document/proses', 'TransactionContro
 Route::get('transaction/checkin_list', 'TransactionController@pageTransactionCheckinList');
 Route::get('transaction/mapscheckin_list', 'TransactionController@pageTransactionMapsCheckinList');
 Route::get('transaction/transaction_salary_complaint_list', 'TransactionController@pageTransactionSalaryComplaintList');
+Route::get('transaction/transaction_death_benefit_list', 'TransactionController@pageTransactionDeathBenefitList');
 
 /* Route untuk Menu Master Data MOB */
 Route::get('master_data', 'MasterDataController@pageMasterData')->name('master_data');

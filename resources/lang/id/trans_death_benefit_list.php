@@ -1,0 +1,28 @@
+<?php
+return [ 
+    'judul' => 'Tunjangan Kematian List',
+    'list' => 'Tunjangan Kematian List',
+    'employee' => 'No Karyawan',
+    'list_table' => 'LIST KOMPLAIN GAJI',
+    'label_claim_date_start' => 'Tanggal Dari',
+    'label_claim_date_end' => 'Tanggal Sampai',
+    'label_processed_date' => 'Tanggal di Proses',
+    'label_business_unit' => 'Unit Bisnis',
+    'label_salary_complaint_status' => 'Status Penggantian Biaya',
+    'label_status' => 'Status',
+    'label_bu' => 'Unit Bisnis',
+    'btn_upload' => 'Unggah',
+    'btn_search' => 'Cari',
+    'btn_list' => 'Daftar',
+    'alert_success' => 'Sukses !',
+    'detail' => 'Detail',
+    'date_of_death' => 'Tanggal Kematian',
+    'ticket_no' => 'No Tiket',
+    'status' => 'Status',
+    'family_member' => 'Anggota Keluarga',
+    'total_claim_amount' => 'Jumlah Klaim Total',
+    'paid_amount' => 'Jumlah Yang Dibayar',
+    'payment_date' => 'Tanggal Pembyaran',
+    'remarks' => 'Catatan',
+]
+?>
