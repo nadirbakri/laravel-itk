@@ -1,6 +1,6 @@
 <?php
 
-return [ 
+return [
     'judul' => 'Master Karyawan',
     'subjudul' => 'Master Karyawan',
     'status' => 'Status',
@@ -35,6 +35,8 @@ return [
     'judul_employee_group_member' => 'Anggota Grup Karyawan',
     'judul_employee_group_leave' => 'Grup Karyawan Cuti',
     'judul_employee_group_permit' => 'Grup Karyawan Izin',
+    'judul_employee_group_overtime' => 'Grup Karyawan Lembur',
+    'judul_employee_group_salary_complaint' => 'Grup Karyawan Keluhan Gaji',
     'btn_cancel' => 'Batal',
     'btn_list' => 'Daftar Karyawan'
 ]

@@ -8,7 +8,5 @@ return
     'formgroupname2' => 'Group Name',
     'formgroupname3' => 'Direct Approval',
     'formgroupname4' => 'Email Settings',
-
-
 ];
 

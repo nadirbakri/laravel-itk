@@ -86,6 +86,14 @@ class MasterDataController extends Controller
         return view('master_data.master_data_employee_groupovertime');
     }
 
+    public function pageMasterDataEmployeeGroupSalaryComplaint(){
+        return view('master_data.master_data_employee_salary_complaint');
+    }
+
+    public function pageMasterDataEmployeeGroupTunjKematian(){
+        return view('master_data.master_data_employee_tunjangan_kematian');
+    }
+
     public function pageMasterDataEmployeeGroupDetail(){
         return view('master_data.master_data_employee_group_detail');
     }
@@ -275,7 +283,81 @@ class MasterDataController extends Controller
             return Datatables::of($arrResult->dataListSet)->make(true);
         }
     }
-   
+
+    public function tabelDetailEmployeeSalaryComplaint(Request $request)
+    {
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/mobile/gmgroup/GetGroupCodeSalaryComplaint',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+        // var_dump($arrResult->dataListSet);
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
+        }
+    }
+
+    public function tabelDetailEmployeeTunjKematian(Request $request)
+    {
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/mobile/gmgroup/GetGroupCodeTunjanganKematian',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+        // var_dump($arrResult->dataListSet);
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
+        }
+    }
+
     public function tabelDetailReimbursement(Request $request)
     {
         try {
@@ -898,6 +980,72 @@ class MasterDataController extends Controller
         return response()->json($arrResult->dataListSet);
     }
 
+    public function getSalaryMasterMasterData(Request $request)
+    {
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/mobile/gmgroup/GetGroupCodeSalaryComplaint',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'groupCode' => $request->groupCode
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json($arrResult->dataListSet);
+    }
+
+    public function getTunjanganKematianMasterData(Request $request)
+    {
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/mobile/gmgroup/GetGroupCodeTunjanganKematian',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'groupCode' => $request->groupCode
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json($arrResult->dataListSet);
+    }
+
     public function getDetailMasterData(Request $request)
     {
         try {
@@ -1248,8 +1396,131 @@ class MasterDataController extends Controller
         $arrResult = json_decode($response->getBody()->getContents());
         return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
     }
-    
-   
+
+    public function prosesEmployeeGroupSalaryComplaint(Request $request)
+    {
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            if(isset($request->approvalCode)){
+                foreach($request->approvalCode as $key=>$value){
+                    $a[] = [
+                        "approvalLevel" => (int) $request->approvalLevel[$key],
+                        "approvalCode" => $value
+                    ];
+                }
+            }else{
+                $a = [];
+            }
+
+            if(isset($request->groupName)){
+                foreach($request->groupName as $key=>$value){
+                    $b[] = [
+                        "groupID" => $request->groupID[$key],
+                        "groupName" => $value
+                    ];
+                }
+            }else{
+                $b = [];
+            }
+
+            $response = $client->post(env('API_URL') . '/mobile/gmgroup/insertgroupcodesalarycomplaint',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'groupCode' => $request->group_code,
+                        'groupName' => $request->group_name,
+                        'directApproval' => $a,
+                        'emailSetting' =>$b,
+                        "sessionID" => 0,
+                        "sessionUserID" => Session::get('userID'),
+                        "languageCode" => App::getLocale()
+                    ]
+                )]
+            );
+
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            // var_dump($response);
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function prosesEmployeeGroupTunjKematian(Request $request)
+    {
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            if(isset($request->approvalCode)){
+                foreach($request->approvalCode as $key=>$value){
+                    $a[] = [
+                        "approvalLevel" => (int) $request->approvalLevel[$key],
+                        "approvalCode" => $value
+                    ];
+                }
+            }else{
+                $a = [];
+            }
+
+            if(isset($request->groupName)){
+                foreach($request->groupName as $key=>$value){
+                    $b[] = [
+                        "groupID" => $request->groupID[$key],
+                        "groupName" => $value
+                    ];
+                }
+            }else{
+                $b = [];
+            }
+
+            $response = $client->post(env('API_URL') . '/mobile/gmgroup/InsertGroupCodeTunjanganKematian',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'groupCode' => $request->group_code,
+                        'groupName' => $request->group_name,
+                        'directApproval' => $a,
+                        'emailSetting' =>$b,
+                        "sessionID" => 0,
+                        "sessionUserID" => Session::get('userID'),
+                        "languageCode" => App::getLocale()
+                    ]
+                )]
+            );
+
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            // var_dump($response);
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
     public function prosesEmployeeReimbursement(Request $request)
     {
         try {

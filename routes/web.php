@@ -1090,6 +1090,8 @@ Route::get('master_data/employee_group_detail', 'MasterDataController@pageMaster
 Route::get('master_data/employee_group_multiple_checkin', 'MasterDataController@pageMasterDataEmployeeGroupMultipleCheckin');
 Route::get('master_data/employee_group_reimbursement', 'MasterDataController@pageMasterDataEmployeeGroupReimbursement');
 Route::get('master_data/employee_group_reimbursement_detail', 'MasterDataController@pageMasterDataEmployeeGroupReimbursementDetail');
+Route::get('master_data/employee_group_salary_complaint', 'MasterDataController@pageMasterDataEmployeeGroupSalaryComplaint');
+Route::get('master_data/employee_group_tunj_kematian', 'MasterDataController@pageMasterDataEmployeeGroupTunjKematian');
 Route::get('master_data/holiday_calender', 'MasterDataController@pageMasterDataHolidayCalender');
 Route::get('master_data/bussines_trip', 'MasterDataController@pageMasterDataBussinesTrip');
 Route::get('master_data/bussines_trip_detail', 'MasterDataController@pageMasterDataBussinesTripDetail');
@@ -1101,6 +1103,8 @@ Route::get('master_data/list/table', 'MasterDataController@tabelDetailEmployee')
 Route::get('master_data/employee_list/table', 'MasterDataController@tabelDetailEmployeeMaster');
 Route::get('master_data_leave/list/table', 'MasterDataController@tabelDetailEmployeeLeave');
 Route::get('master_data_overtime/list/table', 'MasterDataController@tabelDetailEmployeeOvertime');
+Route::get('master_data_salary_complaint/list/table', 'MasterDataController@tabelDetailEmployeeSalaryComplaint');
+Route::get('master_data_tunj_kematian/list/table', 'MasterDataController@tabelDetailEmployeeTunjKematian');
 Route::get('master_data/list_reimbursement/table', 'MasterDataController@tabelDetailReimbursement');
 Route::get('master_data/employee_group_multiple_checkin/table', 'MasterDataController@tabelEmployeeGroupMultipleCheckin');
 Route::get('master_data/list_businesstrip/table', 'MasterDataController@tabelDetailBusinessTrip');
@@ -1118,6 +1122,8 @@ Route::get('master_data/employee_master/get', 'MasterDataController@getEmployeeM
 Route::get('master_data/employee_group_detail/get', 'MasterDataController@getMasterDataEmployeeGroupDetail');
 Route::get('master_data/leave/get', 'MasterDataController@getLeaveMasterData');
 Route::get('master_data/overtime/get', 'MasterDataController@getOvertimeMasterData');
+Route::get('master_data/salary_complaint/get', 'MasterDataController@getSalaryMasterMasterData');
+Route::get('master_data/tunj_kematian/get', 'MasterDataController@getTunjanganKematianMasterData');
 Route::get('master_data/detail/get', 'MasterDataController@getDetailMasterData');
 Route::get('master_data/reimbursement/get', 'MasterDataController@getReimbursementMasterData');
 Route::get('master_data/holiday_calendar/get', 'MasterDataController@getHolidayCalendarMasterData');
@@ -1127,6 +1133,8 @@ Route::get('master_data/multiple_checkin/get', 'MasterDataController@getMultiple
 Route::post('master_data/employee_group/proses', 'MasterDataController@prosesEmployeeGroup');
 Route::post('master_data/employee_group_leave/proses', 'MasterDataController@prosesEmployeeGroupLeave');
 Route::post('master_data/employee_group_overtime/proses', 'MasterDataController@prosesEmployeeGroupOvertime');
+Route::post('master_data/employee_group_salary_complaint/proses', 'MasterDataController@prosesEmployeeGroupSalaryComplaint');
+Route::post('master_data/tunj_kematian/proses', 'MasterDataController@prosesEmployeeGroupTunjKematian');
 Route::post('master_data/employee_reimbursement/proses', 'MasterDataController@prosesEmployeeReimbursement');
 Route::post('master_data/holiday_calendar/proses', 'MasterDataController@prosesEmployeeHolidayCalendar');
 Route::post('master_data/employee_businesstrip/proses', 'MasterDataController@prosesEmployeeBusinessTrip');
@@ -1463,3 +1471,5 @@ Route::get('/config-cache', function() {
     $exitCode = Artisan::call('config:cache');
     return '<h1>Clear Config cleared</h1>';
 });
+Route::get('master_data/salary_complaint/get', 'MasterDataController@getSalaryMasterMasterData');
+Route::get('master_data/tunj_kematian/get', 'MasterDataController@getTunjanganKematianMasterData');

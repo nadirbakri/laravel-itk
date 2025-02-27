@@ -1,6 +1,6 @@
 <?php
 
-return [ 
+return [
     'judul' => 'Employee Master',
     'subjudul' => 'Employee Master',
     'status' => 'Status',
@@ -35,6 +35,8 @@ return [
     'judul_employee_group_member' => 'Employee Group Member',
     'judul_employee_group_leave' => 'Employee Group Leave',
     'judul_employee_group_permit' => 'Employee Group Permit',
+    'judul_employee_group_overtime' => 'Employee Group Overtime',
+    'judul_employee_group_salary_complaint' => 'Employee Group Salary Complaint',
     'btn_cancel' => 'Cancel',
     'btn_list' => 'Employee List'
 ]
