@@ -30,6 +30,15 @@
 			border-collapse:collapse;
 		}
 
+		.div-footer {
+			position: relative; 
+			bottom: -15.5cm; 
+			left: 0cm; 
+			right: 0cm;
+			height: 1cm;
+			font-size: 7.5px;
+		}
+
 		.page_break { page-break-before: always; }
 	</style>
 </head>
@@ -163,6 +172,18 @@
 			<td style="width:55%; vertical-align: top;">&nbsp;</td>
 		</tr>
 	</table>
+	<div class="div-footer" style="font-family: 'Arial Alternates', sans-serif;">
+		<table class="table" style="width:100%; font-size: 12px; padding-left:1%; padding-right:1%; border-collapse: collapse; font-family: 'ArialCustomBold', sans-serif; border-top: 1px solid black;">
+			<tr>
+				<td width="5%" style="padding-left: 10px;">No ID</td>
+				<td width="1%">:</td>
+				<td width="34%" style="padding-left: 5px;">{{ $value->idNo }}</td>
+				<td width="5%" style="padding-left: 10px;">Email</td>
+				<td width="1%">:</td>
+				<td width="34%" style="padding-left: 5px;">{{ $value->email }}</td>
+			</tr>
+		</table>
+	</div>
 
 	@if($key != array_key_last($data))
 		<div class="page_break"></div>
