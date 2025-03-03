@@ -361,7 +361,6 @@
                                         <th>{{ __('trans_business_trip.type') }}</th>
                                         <th>{{ __('trans_business_trip.name') }}</th>
                                         <th>{{ __('trans_business_trip.appdate') }}</th>
-                                        <th>{{ __('trans_business_trip.cname') }}</th>
                                         <th>{{ __('trans_business_trip.status') }}</th>
                                         <th>{{ __('trans_business_trip.destination') }}</th>
                                         <th>{{ __('trans_business_trip.cname') }}</th>
@@ -1084,7 +1083,6 @@
                         }
                     }
                 },
-                {data: 'customerName', name: 'customerName'},
                 {data: 'status', name: 'status'},
                 {data: 'destination', name: 'destination'},
                 {data: 'customerName', name: 'customerName'},
