@@ -163,7 +163,7 @@
                                         <label
                                             for="service_month_from">{{ __('payroll_thr_formula.label_service_month_from') }}</label>
                                         <span class="required">*</span>
-                                        <input type="number" class="form-control" min="1" max="12" id="service_month_from" name="service_month_from"
+                                        <input type="number" class="form-control" min="0" max="12" id="service_month_from" name="service_month_from"
                                             placeholder="{{ __('payroll_thr_formula.label_service_month_from') }}" readonly>
                                     </div>
                                 </div>

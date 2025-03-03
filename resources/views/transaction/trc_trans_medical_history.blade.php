@@ -384,10 +384,6 @@
 </script>
 
 <script type="text/javascript">
-    $(function () {
-        initDatePicker();
-    });
-    
     var prevYear = moment(moment().subtract(5, 'years')).format('YYYY');
     var defaultYear = moment().format('YYYY');
 
