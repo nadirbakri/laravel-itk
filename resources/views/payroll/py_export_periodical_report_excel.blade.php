@@ -430,11 +430,15 @@
                     <tbody>
                         <tr>
                             <th style="background-color: yellow; text-align:center; border:1px solid #000; font-size:{{ $fontSize }}px !important;">Grand Total</th>
-                            @foreach($grandTotal[$branch] as $key_total => $periodicalTotal)
-                                @if($key_total == 'EmployeeNo')
-                                <td data-format="#,##0" style="text-align:left; border:1px solid #000; font-size:{{ $fontSize }}px !important;">{{ $periodicalTotal }}</td>
+                            @foreach($grandTotal as $key_total => $periodicalTotal)
+                                @if(!is_string($periodicalTotal))
+                                    @if($key_total == 'EmployeeNo')
+                                    <td data-format="#,##0" style="text-align:left; border:1px solid #000; font-size:{{ $fontSize }}px !important;">{{ $periodicalTotal }}</td>
+                                    @else
+                                    <td data-format="#,##0" style="text-align:right; border:1px solid #000; font-size:{{ $fontSize }}px !important;">{{ $periodicalTotal }}</td>
+                                    @endif
                                 @else
-                                <td data-format="#,##0" style="text-align:right; border:1px solid #000; font-size:{{ $fontSize }}px !important;">{{ $periodicalTotal }}</td>
+                                <td style="text-align:left; border:1px solid #000; font-size:{{ $fontSize }}px !important;">&nbsp;</td>
                                 @endif
                             @endforeach
                         </tr>

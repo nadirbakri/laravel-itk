@@ -347,20 +347,23 @@ class PeriodicalReportExport extends DefaultValueBinder implements WithCustomVal
                     $totalEmployee = count($dept->data);
                     foreach ($dept->data as $key => $value) {
                         foreach ($value->field as $k => $v) {
-                            if ($v->tableName === 'Company') {
-                                $branch = $v->value;
-                                if (!isset($total[$branch])) {
-                                    $total[$branch] = [];
-                                }
-                            }
+                            // if ($v->tableName === 'Company') {
+                            //     // $branch = $v->value;
+                            //     // if (!isset($total[$branch])) {
+                            //     //     $total[$branch] = [];
+                            //     // }
+                            // }
                             if (!is_string($v->value)) {
-                                $total[$branch][$v->field . '_' . $k] = (isset($total[$branch][$v->field . '_' . $k])) ? $total[$branch][$v->field . '_' . $k] + $v->value : $v->value;
+                                // $total[$branch][$v->field . '_' . $k] = (isset($total[$branch][$v->field . '_' . $k])) ? $total[$branch][$v->field . '_' . $k] + $v->value : $v->value;
+                                $total[$v->field . '_' . $k] = (isset($total[$v->field . '_' . $k])) ? $total[$v->field . '_' . $k] + $v->value : $v->value;
                             }else{
                                 if($v->field == 'EmployeeNo'){
-                                    $total[$branch][$v->field . '_' . $k] = (isset($total[$branch][$v->field . '_' . $k])) ? $total[$branch][$v->field . '_' . $k] + $totalEmployee : $totalEmployee;
+                                    // $total[$branch][$v->field . '_' . $k] = (isset($total[$branch][$v->field . '_' . $k])) ? $total[$branch][$v->field . '_' . $k] + $totalEmployee : $totalEmployee;
+                                    $total[$v->field . '_' . $k] = (isset($total[$v->field . '_' . $k])) ? $total[$v->field . '_' . $k] + $totalEmployee : $totalEmployee;
                                     $totalEmployee = 0;
                                 }else{
-                                    $total[$branch][$v->field . '_' . $k] = '';
+                                    // $total[$branch][$v->field . '_' . $k] = '';
+                                    $total[$v->field . '_' . $k] = '';
                                 }
                             }
                         }
@@ -397,6 +400,8 @@ class PeriodicalReportExport extends DefaultValueBinder implements WithCustomVal
                     }
                 }
             }
+
+            // dd($total);
 
             return view('payroll.py_export_periodical_report_excel', [
                 'param' => $param, 'grandTotal' => $total, 'data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet, 'data_period' => $this->period, 'grand_total' => $this->grandTotal, 'print_signature' => $this->printSignature, 'level1' => $this->dataLevel[0], 'report_name' => $this->reportNameDetail, 'group_name' => $this->groupNameDetail, 'company' => Session::get('companyCode')

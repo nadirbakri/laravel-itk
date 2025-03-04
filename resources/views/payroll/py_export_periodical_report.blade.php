@@ -422,7 +422,7 @@
                     <tbody>
                         <tr>
                             <th style="background-color: yellow; text-align:center; border:1px solid #000; font-size:{{ $fontSize }}px !important;">Grand Total</th>
-                            @foreach($grandTotal[$branch] as $key_total => $periodicalTotal)
+                            @foreach($grandTotal as $key_total => $periodicalTotal)
                                 @if(!is_string($periodicalTotal))
                                     @if($key_total == 'EmployeeNo')
                                         <td style="text-align:left; border:1px solid #000; font-size:{{ $fontSize }}px !important;">{{ number_format($periodicalTotal, 0, ',', '.') }}</td>
