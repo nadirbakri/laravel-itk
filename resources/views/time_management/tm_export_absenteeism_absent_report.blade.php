@@ -17,6 +17,7 @@
 </head>
 
 <body>
+	@if(!empty($data))
 	<table style="width: 100%; font-size: 14px;" class="table table-bordered table-hover responsive">
 		<thead>
 			<tr>
@@ -56,5 +57,6 @@
 			@endforeach
 		</tbody>
 	</table>
+	@endif
 </body>
 </html>

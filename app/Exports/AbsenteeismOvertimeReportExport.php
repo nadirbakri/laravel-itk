@@ -13,7 +13,7 @@ use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Events\AfterSheet;
 
-class AbsenteeismOvertimeReportExport implements FromView, ShouldAutoSize, WithEvents
+class AbsenteeismOvertimeReportExport implements FromView, ShouldAutoSize
 {
     public function __construct($employeeNoFrom, $employeeNoTo, $absentDateFrom, $absentDateTo, $groupAuthorizeFrom, $groupAuthorizeTo, $reportType, $includeResign, $position, $ranking, $location, $dataLevel)
     {
@@ -46,66 +46,95 @@ class AbsenteeismOvertimeReportExport implements FromView, ShouldAutoSize, WithE
                 'incResign' => $this->includeResign
             ];
 
-            if(!empty($this->employeeNoFrom) || !empty($this->employeeNoTo)){
-                $param['employeeNoFrom'] = $this->employeeNoFrom;
-                $param['employeeNoTo'] = $this->employeeNoTo;
-            }
-
-            if(!empty($this->absentDateFrom) || !empty($this->absentDateTo)){
-                $param['absenDateFrom'] = $this->absentDateFrom;
-                $param['absenDateTo'] = $this->absentDateTo;
-            }
-
-            if(!empty($this->groupAuthorizeFrom) || !empty($this->groupAuthorizeTo)){
-                $param['groupAuthorizeFrom'] = $this->groupAuthorizeFrom;
-                $param['groupAuthorizeTo'] = $this->groupAuthorizeTo;
-            }
-
-            if(!empty($request->position) && !is_null($request->position[0])){
-                foreach($request->position as $value){
-                    $data_position[] = $value;
-                }
-                $param['position'] = $data_position;
-            }
-
-            if(!empty($request->location) && !is_null($request->location[0])){
-                foreach($request->location as $value){
-                    $data_location[] = $value;
-                }
-                $param['location'] = $data_location;
-            }
-
-            if(!empty($request->ranking) && !is_null($request->ranking[0])){
-                foreach($request->ranking as $value){
-                    $data_ranking[] = $value;
-                }
-                $param['ranking'] = $data_ranking;
-            }
-
-            if(!empty($this->dataLevel) && !is_null($this->dataLevel[0])){
-                foreach($this->dataLevel as $key => $value){
-                    $data_level_detail = [];
-                    foreach($this->dataLevel[$key] as $value2){
-                        $data_level_detail[] = $value2;
-                    }
-                    $data_level[] = [
-                        "levelType" => (string) ($key + 1),
-                        "levelCode" => $data_level_detail
-                    ];
-                }
-                $param['levelMaster'] = $data_level;
-            }
             // var_dump(json_encode($param));
 
             if($this->reportType == "absent"){
+                if(!empty($this->employeeNoFrom) || !empty($this->employeeNoTo)){
+                    $param['employeeNoFrom'] = $this->employeeNoFrom;
+                    $param['employeeNoTo'] = $this->employeeNoTo;
+                }
+    
+                if(!empty($this->absentDateFrom) || !empty($this->absentDateTo)){
+                    $param['absenDateFrom'] = $this->absentDateFrom;
+                    $param['absenDateTo'] = $this->absentDateTo;
+                }
+    
+                if(!empty($this->groupAuthorizeFrom) || !empty($this->groupAuthorizeTo)){
+                    $param['groupAuthorizeFrom'] = $this->groupAuthorizeFrom;
+                    $param['groupAuthorizeTo'] = $this->groupAuthorizeTo;
+                }
+    
+                if(!empty($request->position) && !is_null($request->position[0])){
+                    foreach($request->position as $value){
+                        $data_position[] = $value;
+                    }
+                    $param['position'] = $data_position;
+                }
+    
+                if(!empty($request->location) && !is_null($request->location[0])){
+                    foreach($request->location as $value){
+                        $data_location[] = $value;
+                    }
+                    $param['location'] = $data_location;
+                }
+    
+                if(!empty($request->ranking) && !is_null($request->ranking[0])){
+                    foreach($request->ranking as $value){
+                        $data_ranking[] = $value;
+                    }
+                    $param['ranking'] = $data_ranking;
+                }
+
+                if(!empty($this->dataLevel) && !is_null($this->dataLevel[0])){
+                    foreach($this->dataLevel as $key => $value){
+                        $data_level_detail = [];
+                        foreach($this->dataLevel[$key] as $value2){
+                            $data_level_detail[] = $value2;
+                        }
+                        $data_level[] = [
+                            "levelType" => (string) ($key + 1),
+                            "levelCode" => $data_level_detail
+                        ];
+                    }
+                    $param['levelMaster'] = $data_level;
+                }
+                
                 $response = $client->post(env('API_URL') . '/absentovertimereport/getabsenteeismreport',
-                ['body' => json_encode($param)]
-            );
+                    ['body' => json_encode($param)]
+                );
+
+                $arrResult = json_decode($response->getBody()->getContents());
+
+                // dd($arrResult->dataListSet);
+
+                if($arrResult->dataListSet == null){
+                    return view('time_management.tm_export_absenteeism_absent_report', [
+                        'data' => []
+                    ]); 
+                }else{
+                    return view('time_management.tm_export_absenteeism_absent_report', [
+                        'data' => $arrResult->dataListSet
+                    ]);
+                }
             }
             else{
-                $response = $client->post(env('API_URL') . '/absentovertimereport/getovertimereport',
-                ['body' => json_encode($param)]
-            );
+                $response = $client->post(env('API_URL') . '/TmOvertime/getOvertimeCompensation',
+                    ['body' => json_encode($param)]
+                );
+
+                $arrResult = json_decode($response->getBody()->getContents());
+
+                // dd($arrResult->dataListSet);
+
+                if($arrResult->dataListSet == null){
+                    return view('time_management.tm_export_absenteeism_overtime_report', [
+                        'data' => []
+                    ]); 
+                }else{
+                    return view('time_management.tm_export_absenteeism_overtime_report', [
+                        'data' => $arrResult->dataListSet
+                    ]);
+                }
             }
         } catch (RequestException $e) {
             $response = $e->getResponse();
@@ -118,31 +147,18 @@ class AbsenteeismOvertimeReportExport implements FromView, ShouldAutoSize, WithE
                 return view('error.bad_request');
             }
         }
-
-        $arrResult = json_decode($response->getBody()->getContents());
-
-        // var_dump($arrResult->dataListSet);
-
-        if($arrResult->dataListSet == null){
-            return view('time_management.tm_export_absenteeism_absent_report', [
-                'data' => []
-            ]); 
-        }else{
-            return view('time_management.tm_export_absenteeism_absent_report', [
-                'data' => $arrResult->dataListSet
-            ]);
-        }
     }
-    public function registerEvents(): array
-    {
-        return [
-            AfterSheet::class    => function(AfterSheet $event) {
+
+    // public function registerEvents(): array
+    // {
+    //     return [
+    //         AfterSheet::class    => function(AfterSheet $event) {
    
-                $event->sheet->getDelegate()->getStyle('A1:BN500')
-                                ->getAlignment()
-                                ->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+    //             $event->sheet->getDelegate()->getStyle('A1:BN500')
+    //                             ->getAlignment()
+    //                             ->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
    
-            },
-        ];
-    }
+    //         },
+    //     ];
+    // }
 }
