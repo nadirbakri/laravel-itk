@@ -4672,6 +4672,8 @@ public function dataDetailReportFormatPY(Request $request)
                 foreach($array as $key => $value){
                     if($request->source_bank == 'BCA' && $request->transfer_type == "2"){
                         $arrayTwo = explode("|", $value);
+                    }else if($request->source_bank == 'CIMB'){
+                        $arrayTwo = explode(";", $value);
                     }else{
                         $arrayTwo = explode(",", $value);
                     }
