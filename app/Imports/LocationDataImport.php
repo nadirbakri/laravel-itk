@@ -33,15 +33,12 @@ class LocationDataImport implements ToCollection, SkipsEmptyRows, WithStartRow
 
             Validator::make($rows->toArray(), [
                 '*.0' => 'required|not_in:NULL',
-                '*.1' => 'required|not_in:NULL',
-                '*.2' => 'required|not_in:NULL'
+                '*.1' => 'required|not_in:NULL'
             ], [
                 '*.0.required' => 'Location Code is Required',
                 '*.0.not_in' => 'Location Code cannot be Null',
                 '*.1.required' => 'Location Name is Required',
-                '*.1.not_in' => 'Location Name cannot be Null',
-                '*.2.required' => 'BPJS Location Code is Required',
-                '*.2.not_in' => 'BPJS Location Code cannot be Null'
+                '*.1.not_in' => 'Location Name cannot be Null'
             ])->validate();
 
             foreach ($rows as $row) {
