@@ -475,8 +475,8 @@
                 },
             ],
             footerCallback: function (row, data, start, end, display) {
-                var plafonBalance = data.length > 0 ? data[0].balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") : 0;
-                var totalMedical = data.length > 0 ? data[0].totalClaim.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") : 0;
+                var plafonBalance = data.length > 0 ? data[0]?.balance?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") : 0;
+                var totalMedical = data.length > 0 ? data[0]?.totalClaim?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") : 0;
                 $('#total_medical').html(totalMedical);
                 $('#plafon_balance').html(plafonBalance);
             }
