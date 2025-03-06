@@ -1621,10 +1621,14 @@
                                 $('#notification_success').modal('show');
                                 $('#message-notification-success').html(response
                                     .message);
+
+                                $('#close').click(function () {
+                                    window.location = "{{ url('time_management/absenteeism_data_entry_by_employee_no') }}";
+                                })
+
                                 setTimeout(function () {
                                     $('#notification_success').modal('hide');
-                                    // window.location =
-                                        // "{{ url('time_management/period_maintenance') }}";
+                                    window.location = "{{ url('time_management/absenteeism_data_entry_by_employee_no') }}";
                                 }, 3000);
                             } else {
                                 $("#btn-save").prop("disabled", false);
@@ -1641,6 +1645,11 @@
                                     $('#message-notification-error').html(response
                                         .message);
                                 }
+
+                                setTimeout(function () {
+                                    $('#notification_error').modal('hide');
+                                    window.location = "{{ url('time_management/absenteeism_data_entry_by_employee_no') }}";
+                                }, 3000);
                             }
                         },
                         error: function (response) {
