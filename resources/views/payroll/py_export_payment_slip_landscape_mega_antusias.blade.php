@@ -111,6 +111,7 @@
         <tr>
             <td colspan="2">&nbsp;</td>
         </tr>
+		@if($slip_code == 'Salary')
     	<tr>
         	<td style="width:55%; vertical-align: top; padding-right: 100px;">
 				<table style="width:100%; padding-bottom: 1%; border-collapse: collapse;">
@@ -184,12 +185,70 @@
 				</table>
 			</td>
 		</tr>
+		@elseif($slip_code == 'THR')
+		<tr>
+        	<td style="width:55%; vertical-align: top; padding-right: 100px;">
+				<table style="width:100%; padding-bottom: 1%; border-collapse: collapse;">
+					@foreach($value->a as $key2 => $value2)
+						<?php
+							$totalIncome += (float) $value2->columnValue;
+						?>
+						<?php
+							$totalDataIncome++;
+						?>
+						<tr>
+							<td width="25%" style="padding-left: 20px;">{{ $value2->columnLabel }}</td>
+                            <td width="1%">:</td>
+							<td width="8%">Rp.</td>
+							<td width="8%" style="text-align:right;">{{ number_format((float) $value2->columnValue, 0, ',', '.')}}</td>
+						</tr>
+					@endforeach
+					@foreach($value->d as $key2 => $value2)
+						<?php
+							$totalDeduction += (float) $value2->columnValue;
+						?>
+						<?php
+							$totalDataDeduction++;
+						?>
+						<tr>
+							<td width="17%" style="padding-left: 20px;">{{ $value2->columnLabel }}</td>
+                            <td width="1%">:</td>
+							<td width="5%">Rp.</td>
+							<td width="8%" style="text-align:right;">{{ number_format((float) $value2->columnValue, 0, ',', '.')}}</td>
+						</tr>
+					@endforeach
+					<br>
+                    <tr>
+                        <td width="25%" style="padding-left: 20px;">THR Bersih</td>
+                        <td width="1%">:</td>
+                        <td width="8%" style="border-top: 1px solid black;">Rp.</td>
+                        <td width="8%" style="text-align:right; border-top: 1px solid black;">{{ number_format((float) ($totalIncome - $totalDeduction), 0, ',', '.')}}</td>
+                    </tr>
+					<br><br><br><br>
+					<tr>
+                        <td width="25%" style="padding-left: 20px;">Jumlah</td>
+                        <td width="1%">:</td>
+                        <td width="8%">Rp.</td>
+                        <td width="8%" style="text-align:right;">{{ number_format((float) ($totalIncome - $totalDeduction), 0, ',', '.')}}</td>
+                    </tr>
+					<br>
+					<tr>
+                        <td width="25%" style="padding-left: 20px;">THR Diterima</td>
+                        <td width="1%">:</td>
+                        <td width="8%">Rp.</td>
+                        <td width="8%" style="text-align:right;">{{ number_format($value->takeHomePayTHR, 0, ',', '.')}}</td>
+                    </tr>
+				</table>
+			</td>
+		</tr>
+		@endif
 	</table>
 	<table class="table" style="width:100%; font-size: 16px; padding-left:3%; padding-right:3%; border-collapse: collapse; font-family: 'Arial Alternates', sans-serif;">
         <tr>
             <td colspan="2">&nbsp;</td>
         </tr>
-    	<tr>
+		@if($slip_code == 'Salary')
+		<tr>
         	<td style="width:55%; vertical-align: top; padding-right: 100px;">
 				<table style="width:100%; padding-bottom: 1%; border-collapse: collapse;">
                     <tr>
@@ -220,6 +279,33 @@
 				</table>
 			</td>
 		</tr>
+		@elseif($slip_code == 'THR')
+		<br>
+    	<tr>
+        	<td style="width:55%; vertical-align: top; padding-right: 100px;">
+				<table style="width:100%; border-collapse: collapse;">
+                    <tr>
+                        <td colspan="4" style="padding-left: 20px;">Jakarta, {{ date('d', strtotime($transfer_date)) }} {{ $periode }}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4" style="padding-left: 20px;">Yang Menerima</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4" style="padding-left: 20px;">(&nbsp;&nbsp;&nbsp;&nbsp; {{ $value->employeeName }} &nbsp;&nbsp;&nbsp;&nbsp;)</td>
+                    </tr>
+				</table>
+			</td>
+		</tr>
+		@endif
 	</table>
 
 	<div class="div-footer" style="font-family: 'Arial Alternates', sans-serif;">
