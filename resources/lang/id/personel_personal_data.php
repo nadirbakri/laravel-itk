@@ -17,6 +17,7 @@ return [
     'list_detail' => 'Daftar Data Pribadi',
     'btn_change_picture' => 'Ubah Foto',
     'btn_add' => 'Tambah',
+    'btn_edit' => 'Ubah',
     'btn_remove' => 'Hapus',
     'btn_save' => 'Simpan',
     'btn_cancel' => 'Batal',

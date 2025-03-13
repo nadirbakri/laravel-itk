@@ -61,16 +61,16 @@
 	<table style="width: 100%; font-size: 14px;" class="table table-bordered table-hover responsive">
 		<tbody>
             <tr>
-				<td>Table Location</td>
+				<td>Table Office Location</td>
 			</tr>
 			<tr>
-				<th>Location Code</th>
-				<th>Location Name</th>
+				<th>Office Location Code</th>
+				<th>Office Location Desc</th>
 			</tr>
 			@foreach($data3 as $value)
 			<tr>
-				<td>{{ $value->locationCode }}</td>
-				<td>{{ $value->locationName }}</td>
+				<td>{{ $value->officeCode }}</td>
+				<td>{{ $value->officeDesc }}</td>
 			</tr>
 			@endforeach
 		</tbody>

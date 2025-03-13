@@ -11272,7 +11272,7 @@ class DataController extends Controller
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
 
-			$response = $client->post(env('API_URL') . '/personel/Location/getLocation',
+			$response = $client->post(env('API_URL') . '/mobile/OfficeLocation/getOfficeLocation',
 				['body' => json_encode(
 					[
 						'recordStatus' => 'A',
@@ -11319,12 +11319,12 @@ class DataController extends Controller
 								'Authorization' => 'Bearer ' . Session::get('token') ]
 			]);
 
-			$response = $client->post(env('API_URL') . '/personel/Location/getLocation',
+			$response = $client->post(env('API_URL') . '/mobile/OfficeLocation/getOfficeLocation',
 				['body' => json_encode(
 					[
 						'recordStatus' => 'A',
 						'companyCode' => Session::get('companyCode'),
-						'locationCode' => $request->locationCode
+						'officeCode' => $request->officeCode,
 					]
 					)]
 				);
@@ -11341,7 +11341,11 @@ class DataController extends Controller
 			
 		$arrResult = json_decode($response->getBody()->getContents());
 
-		return response()->json($arrResult->dataListSet);
+		if(empty($request->officeCode)){
+			return response()->json(null);
+		}else{
+			return response()->json($arrResult->dataListSet);
+		}
 	}
 
 	public function dataOutputFileAPI(Request $request)

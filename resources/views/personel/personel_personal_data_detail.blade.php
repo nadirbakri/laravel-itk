@@ -1974,6 +1974,12 @@
                                 </button>
                             </div>
                             <div class="col-3">
+                                <button type="button" class="btn btn-warning" name="btn-edit-family-dependent-data"
+                                    id="btn-edit-family-dependent-data" style="width: 100%;">
+                                    <i class="fa fa-pencil"></i> {{ __('personel_personal_data.btn_edit') }}
+                                </button>
+                            </div>
+                            <div class="col-3">
                                 <button type="button" class="btn btn-danger" name="btn-remove-family-dependent-data"
                                     id="btn-remove-family-dependent-data" style="width: 100%;">
                                     <i class="fa fa-times"></i> {{ __('personel_personal_data.btn_remove') }}
@@ -3568,18 +3574,19 @@
                     type: 'GET',
                     url: "{{ url('/office_location/func/api') }}",
                     data: {
-                        'locationCode': ((typeof arrData2[0].locationCode !== 'undefined') ? arrData2[0].locationCode : ''),
+                        'officeCode': ((typeof arrData2[0].officeCode !== 'undefined') ? arrData2[0].officeCode : ''),
                     }
                 }).then(function (data) {
-                    var option = new Option(data[0].locationName, data[0].locationCode, true, true);
+                    console.log(data);
+                    var option = new Option(data[0].officeDesc, data[0].officeCode, true, true);
 
                     $('#office_location_employment').append(option).trigger('change');
 
                     $('#office_location_employment').trigger({
                         type: 'select2:select',
                         params: {
-                            id: data[0].locationCode,
-                            text: data[0].locationName,
+                            id: data[0].officeCode,
+                            text: data[0].officeDesc,
                             data: data[0]
                         }
                     });
@@ -5561,7 +5568,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-12">' + data.data.locationName + '<div>' +
+                        '<div class="col-12">' + data.data.officeDesc + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -5600,8 +5607,8 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.locationName,
-                                    id: item.locationCode,
+                                    text: item.officeDesc,
+                                    id: item.officeCode,
                                     data: item
                                 }
                             })
@@ -7053,6 +7060,16 @@
             $(this).parent().find('input[type="checkbox"]').trigger('click');
         });
 
+        $("#btn-edit-family-dependent-data").on('click', function () {
+            var data = table2.rows('.selected').data();
+            if (data.count() > 0) {
+                $('#modal_add_family_dependent_data').modal('show');
+            } else {
+                $('#notification_error').modal('show');
+                $('#message-notification-error').html('No Data Selected');
+            }
+        });
+
         function load_table_family_dependent_data() {
             table2 = $('#family_dependent_data_table').DataTable({
                 // processing: true,
@@ -7075,9 +7092,9 @@
                     {   
                         data: 'seqNoFamilyDependent',
                         name: 'seqNoFamilyDependent',
-                        render: function (data, type, row) {
+                        render: function (data, type, row, meta) {
                             return '<input type="hidden" class="form-control" name="seq_no_family_dependent[]" value="' +
-                                data + '">' + data;
+                                meta.row + '">' + (meta.row + 1);
                         }
                     },
                     {
@@ -7162,7 +7179,7 @@
                     },
                 ],
                 select: {
-                    style: 'multi',
+                    style: 'single',
                     selector: 'td:first-child'
                 }
             });
@@ -7232,45 +7249,9 @@
         $('#modal_add_family_dependent_data').on('show.bs.modal', function () {
             if (func == 'new') {
                 var count = table2.rows().count();
-                $('#seq_no_family_dependent_data').val(count);
-            }
-
-            else {
-                $.ajax({
-                    url: "{{ url('personel_data_detail/number/check') }}",
-                    type: "GET",
-                    data: {
-                        'url': '/personel/PeMaster/getPeMasterDetail',
-                        'pemasterType' : 'peMasterFamily',
-                        'employeeNo': arrData2[0].employeeNo
-                    },
-                    success: function (response) {
-                        var count = table2.rows().count();
-                        // console.log(response);
-                        // console.log(count);
-
-                        if (response > 0 && count !== response) {
-                            var total = parseInt(response) + parseInt(count);
-                            $('#seq_no_family_dependent_data').val(total - 1);
-                        }
-                        else if (response > 0 && count == response) {
-                            // var total = parseInt(response) + parseInt(count);
-                            $('#seq_no_family_dependent_data').val(response);
-                        }
-                        else {
-                            for (var i = 0; i <= count; i++){
-                                $('#seq_no_family_dependent_data').val(i);
-                                // console.log(i);
-                            }
-                        }
-                        // console.log(count);
-                        // console.log(total);
-                    },
-                    error: function (response) {
-                        $('#notification_error').modal('show');
-                        $('#message-notification-error').html(response);
-                    }
-                });
+                $('#seq_no_family_dependent_data').val(count + 1);
+            } else {
+                
             }
         });
 

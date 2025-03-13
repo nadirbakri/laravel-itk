@@ -6559,7 +6559,7 @@ class PersonelController extends Controller
                 "terminationRemarks" => $request->termination_remarks_employment,
                 "effectiveTerminationDate" => $request->effective_terminated_employment,
                 "effectivePermanentDate" => $request->effective_permanent_date_employment,
-                "officeCode" => null,
+                "officeCode" => $request->office_location_employment,
                 "pensionDate" => null,
                 "serviceYear" => 0,
                 "employmentType" => $request->employment_type_employment,

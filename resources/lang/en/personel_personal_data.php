@@ -17,6 +17,7 @@ return [
     'list_detail' => 'Personnel Data List',
     'btn_change_picture' => 'Change Picture',
     'btn_add' => 'Add',
+    'btn_edit' => 'Edit',
     'btn_remove' => 'Remove',
     'btn_save' => 'Save',
     'btn_cancel' => 'Cancel',
