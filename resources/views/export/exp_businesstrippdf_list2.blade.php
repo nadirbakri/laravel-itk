@@ -22,14 +22,17 @@
         }
         .table_detail{
 			border-collapse:collapse;
-            table-layout: auto;
+            table-layout: fixed;
 		}
         .table_detail td{
             margin: 0;
 			border:1px solid #000;
             padding:4px;
             font-size: 14px;
-            text-align: left
+            text-align: left;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            white-space: normal;
 		}
 		.table_detail th{
             margin: 0;
@@ -195,10 +198,10 @@
                     <br>
                     <thead>
                         <tr>
-                            <th>No</th>
+                            <th style="width: 6%">No</th>
                             <th>Date</th>
                             <th>Cost Type</th>
-                            <th>Description</th>
+                            <th style="width: 35%">Description</th>
                             <th>Currency</th>
                             <th>Exchange Rate</th>
                             <th>Amount</th>
