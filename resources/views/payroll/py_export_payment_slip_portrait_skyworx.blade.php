@@ -46,7 +46,7 @@
 @foreach($data as $key => $value)
     <table style="width:100%; padding-left:1%; padding-right:1%;">
 		<tr>
-			<td width="20%" colspan="2">PT. SkyWorx Indonesia</td>
+			<td width="20%" colspan="2">{{ $value->namaPerusahaan }}</td>
 			@if($display_logo == "1")
 			<td width="20%" rowspan="4">&nbsp;</td>
 			<td width="7%" rowspan="4" style="text-align:right;">
@@ -79,9 +79,11 @@
 		<tr>
 			<td width="18%">Position</td>
 			<td width="39%" colspan="2">{{ $value->jabatan }}</td>
-			<td width="15%">Dept / Location</td>
 			<td width="15%">Location</td>
 			<td width="35%" colspan="2">{{ $value->location }}</td>
+		</tr>
+		<tr>
+			<td width="17%" colspan="6" style="border-bottom: 1px solid black;">&nbsp;</td>
 		</tr>
 	</table>
 	<br>
@@ -140,6 +142,7 @@
 						<td width="60%" style="padding: 0; margin: 0;">Total Deduction (B)</td>
 						<td width="37%" style="text-align: right; padding: 0; margin: 0;">{{ number_format($totalDeduction, 0, ',', '.')}}</td>
 					</tr>
+					@if($slip_code == "Salary")
 					<tr>
 						<td colspan="2">&nbsp;</td>
 					</tr>
@@ -154,6 +157,7 @@
 						</tr>
 						@endif
 					@endforeach
+					@endif
 				</table>
 			</td>
 		</tr>

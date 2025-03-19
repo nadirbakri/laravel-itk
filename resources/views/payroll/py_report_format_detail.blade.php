@@ -684,6 +684,8 @@
     }
     
     $(document).ready(function () {
+        $.fn.modal.Constructor.prototype._enforceFocus = function() {};
+        
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         var func = "{{ $func }}";
         var arrData = @json($data);
