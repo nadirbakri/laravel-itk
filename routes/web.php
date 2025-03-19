@@ -838,6 +838,7 @@ Route::get('medical/outstanding_claim_report', 'MedicalController@pageOutstandin
 Route::get('medical/disease_report', 'MedicalController@pageDiseaseReport');
 Route::get('medical/transfer_payment_to_excel/monthly', 'MedicalController@pageTransferPaymentToExcelMonthly');
 Route::get('medical/transfer_payment_to_excel/remaining_limit', 'MedicalController@pageTransferPaymentToExcelRemainingLimit');
+Route::get('medical/payment', 'MedicalController@pagePayment');
 
 /* Route untuk tabel Medical */
 Route::get('medical/claim_code/table', 'MedicalController@tableClaimCodeMD');
@@ -848,6 +849,7 @@ Route::get('medical/input_limit/table', 'MedicalController@tableInputLimitMD');
 Route::get('medical/input_personnel_limit/table', 'MedicalController@tableInputPersonnelLimitMD');
 Route::get('medical/treatment_eligibility/table', 'MedicalController@tableTreatmentEligibilityMD');
 Route::get('medical/claim_transaction/table', 'MedicalController@tableClaimTransactionMD');
+Route::get('medical/payment/table', 'MedicalController@tablePaymentMD');
 
 /* Route untuk Detail Tabel Transaction */
 Route::get('transaction/list/table', 'TransactionController@tableDetailTransactionList');
@@ -898,6 +900,7 @@ Route::get('medical/input_limit/detail_data', 'MedicalController@dataDetailInput
 Route::get('medical/input_personnel_limit/detail_data', 'MedicalController@dataDetailInputPersonnelLimit');
 Route::get('medical/treatment_eligibility/detail_data', 'MedicalController@dataDetailTreatmentEligibility');
 Route::get('medical/claim_transaction/detail_data', 'MedicalController@dataDetailClaimTransaction');
+Route::get('medical/payment/detail_data', 'MedicalController@dataDetailPaymentMD');
 
 /*Route untuk Proses Medical*/
 Route::post('medical/medical_reference/proses', 'MedicalController@prosesMedicalReferenceMD');
@@ -911,6 +914,7 @@ Route::post('medical/input_personnel_limit_all_employee/proses', 'MedicalControl
 Route::post('medical/treatment_eligibility/proses', 'MedicalController@prosesTreatmentEligibilityMD');
 Route::post('medical/claim_list/proses', 'MedicalController@prosesClaimListMD');
 Route::post('medical/claim_transaction/proses', 'MedicalController@prosesClaimTransactionMD');
+Route::post('medical/payment/proses', 'MedicalController@prosesPaymentMD');
 
 Route::post('medical/medical_facility_used_report/print', 'MedicalController@printMedicalFacilityUsedReport');
 Route::post('medical/medical_facility_used_report/print/excel', 'MedicalController@printMedicalFacilityUsedReportExcel');

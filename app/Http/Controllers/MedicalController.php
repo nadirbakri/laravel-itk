@@ -201,6 +201,11 @@ class MedicalController extends Controller
         return view('medical.md_transfer_payment_to_excel_remaining_limit');
     }
 
+    public function pagePayment()
+    {
+        return view('medical.md_payment');
+    }
+
     public function tableClaimCodeMD()
     {
         try {
@@ -489,6 +494,47 @@ class MedicalController extends Controller
             return Datatables::of([])->make(true);
         }else{
             return Datatables::of($arrResult->dataListSet)->make(true);
+        }
+    }
+
+    public function tablePaymentMD()
+    {
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/mobile/ReimbursementMedical/MedicalPaymentMasterList',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'sessionID' => 0,
+                        'sessionUserID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        'languageCode' => strtoupper(App::getLocale()),
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet[0]->serviceCodeList)->make(true);
         }
     }
 
@@ -876,6 +922,48 @@ class MedicalController extends Controller
         }
 
         return view('medical.md_claim_transaction_detail', ['data' => $data, 'func' => $request->func]);
+    }
+
+    public function dataDetailPaymentMD(Request $request)
+    {
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/personel/DiseaseCode/GetDiseaseCode',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'serviceCode' => $request->serviceCode,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+        
+        if($arrResult->dataListSet == null){
+            $data = [];
+        }else{
+            $data = $arrResult->dataListSet;
+        }
+
+        return view('medical.md_payment_detail', ['data' => $data, 'func' => $request->func]);
     }
 
     public function prosesClaimCodeMD(Request $request)
@@ -1739,6 +1827,65 @@ class MedicalController extends Controller
                     )]
                 );
             }
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            // var_dump($response);
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function prosesPaymentMD(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $param = [
+                'companyCode' => Session::get('companyCode'),
+                'serviceCode' => $request->master_code,
+                'iD_Value' => $request->indonesian_value,
+                'eN_Value' => $request->english_value,
+                "sessionID" => 0,
+                "sessionUserID" => Session::get('userID'),
+                "logActionUserID" => Session::get('userID'),
+                "logActionUsername" => Session::get('userID'),
+                'languageCode' => strtoupper(App::getLocale())
+            ];
+
+            $claimForDetailLength = count($request->claimForDetail);
+
+            if (isset($request->claimForDetail)) {
+                foreach($request->claimForDetail as $key => $value) {
+                    $dataClaimForDetail[] = [
+                        'serviceCode' => $request->master_code,
+                        'claimForCode' => $value['claimForCode'],
+                        'iD_Value' => $value['iD_Value'],
+                        'eN_Value' => $value['eN_Value'],
+                    ];
+                }
+            }
+
+            $param['claimForDetail'] = $dataClaimForDetail;
+
+            // dd(json_encode($param));
+
+            $response = $client->post(env('API_URL') . '/mobile/ReimbursementMedical/insertMedicalPaymentMaster',
+                ['body' => json_encode($param)]
+            );
         } catch (RequestException $e) {
             $response = $e->getResponse();
             // var_dump($response);
