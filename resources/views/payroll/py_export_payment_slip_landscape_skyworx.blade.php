@@ -31,7 +31,7 @@
 
 		.div-footer {
 			position: relative; 
-			bottom: -5cm; 
+			bottom: -4cm; 
 			left: 0cm; 
 			right: 0cm;
 			height: 1cm;
@@ -80,6 +80,9 @@
 			<td width="40%" colspan="2">{{ $value->jabatan }}</td>
 			<td width="15%">Location</td>
 			<td width="35%" colspan="2">{{ $value->location }}</td>
+		</tr>
+		<tr>
+			<td width="17%" colspan="6" style="border-bottom: 1px solid black;">&nbsp;</td>
 		</tr>
 	</table>
 	<br>
