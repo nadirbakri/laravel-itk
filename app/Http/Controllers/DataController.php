@@ -9446,6 +9446,7 @@ class DataController extends Controller
 	    	$response = $client->post(env('API_URL') . '/payroll/getReportFormatList',
 	    		['body' => json_encode(
 	    			[
+						'recordStatus' => 'A',
 	    				'companyCode' => Session::get('companyCode')
 	    			]
 	    		)]
@@ -9819,6 +9820,7 @@ class DataController extends Controller
 	    	$response = $client->post(env('API_URL') . '/payroll/getReportFormatList',
 	    		['body' => json_encode(
 	    			[
+						'recordStatus' => 'A',
 	    				'companyCode' => Session::get('companyCode')
 	    			]
 	    		)]
