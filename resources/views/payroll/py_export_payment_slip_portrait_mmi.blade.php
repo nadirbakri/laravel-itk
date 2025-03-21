@@ -185,7 +185,7 @@
 				<table style="width:100%; padding-bottom: 1%; border-collapse: collapse;">
 					<tr>
 						<th style="width: 70%; text-align: left; padding-top: 0.4%; padding-left: 3%; font-size: 14px;">Take Home Pay (A-B)</th>
-						<th style="width: 30%; text-align: right; padding-top: 0.4%; padding-right: 17%; font-size: 14px;">{{ number_format((float) $value->takeHomePaySalary, 0, ',', '.')}}</th>
+						<th style="width: 30%; text-align: right; padding-top: 0.4%; padding-right: 17%; font-size: 14px;">{{ number_format((float) ($value->takeHomePaySalary + $value->takeHomePayBonus + $value->takeHomePayTHR), 0, ',', '.')}}</th>
 					</tr>
 				</table>
 			</td>
