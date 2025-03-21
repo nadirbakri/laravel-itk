@@ -6745,7 +6745,7 @@ class PersonelController extends Controller
             $datapeMasterInfo = [
                 'companyCode' => Session::get('companyCode'),
                 'employeeNo' => $request->employee_no_info,
-                // "nickName" => $request->fullname_info,
+                "nickName" => $request->nickname_info,
                 "bloodType" => $request->blood_type_info,
                 "passportNo" => $request->passport_no_info,
                 "passportDate" => $request->passport_date_info,

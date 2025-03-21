@@ -203,14 +203,21 @@
                                 <input type="hidden" class="form-control" id="record_status" name="record_status">
                                 <input type="hidden" class="form-control" id="record_function" name="record_function">
                             </div>
-                        </div>
-                        <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="fullname_info">{{ __('personel_personal_data.label_fullname') }}</label>
                                     <span class="required">*</span>
                                     <input type="text" class="form-control" id="fullname_info" name="fullname_info"
                                         placeholder="{{ __('personel_personal_data.label_fullname') }}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="nickname_info">{{ __('personel_personal_data.label_nickname') }}</label>
+                                    <input type="text" class="form-control" id="nickname_info" name="nickname_info"
+                                        placeholder="{{ __('personel_personal_data.label_nickname') }}">
                                 </div>
                             </div>
                             <div class="col-6">
@@ -2912,6 +2919,7 @@
             //     }
             // });
             $('#fullname_info').val("");
+            $('#nickname_info').val("");
             $('#title_info').val("");
             $('#birth_place_info').val(null).trigger('change');
             $('#gender_info').val(null).trigger('change');
@@ -3337,6 +3345,7 @@
             
             if (arrData2[0].peMasterInfo !== null) {
                 //Tab Info
+                $('#nickname_info').val(((typeof arrData2[0].peMasterInfo.nickName !== 'undefined') ? arrData2[0].peMasterInfo.nickName : ''));
                 $.ajax({
                     type: 'GET',
                     url: "{{ url('/comgen/api') }}",
