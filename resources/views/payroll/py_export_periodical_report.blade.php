@@ -160,6 +160,12 @@
                 @endforeach
                 @if($grand_total)
                     <tr>
+                        <td colspan="3" style="text-align:center; border:1px solid #000; font-weight: bold;">&nbsp;</td>
+                        @foreach(array_slice($data[0]->detail[0]->field, 2) as $key3 => $dataTable3)
+                            <th style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7; font-size:{{ $dataTable3->fontSize }}px !important;">{{ $dataTable3->tableName }}</th>
+                        @endforeach
+                    </tr>
+                    <tr>
                         <td colspan="3" style="background-color: yellow; text-align:center; border:1px solid #000; font-weight: bold;">Grand Total</td>
                         @foreach(array_slice($data[0]->detail[0]->field, 2) as $key3 => $dataTable3)
                             <?php
@@ -441,6 +447,22 @@
             <table style="width: 100%; marginY: 2" class="table table-bordered table-hover responsive table_detail">
                 <tbody>
                     <tr>
+                        @for($i = 0; $i < count($data[0]->departementGroup); $i++)
+                            <?php
+                                $dataTable = $data[0]->departementGroup[$i];
+                            ?>
+                            @if(!empty($dataTable->data[0]->field))
+                                @foreach($dataTable->data[0]->field as $key_data => $dataRow)
+                                    @if($loop->first)
+                                        <th style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7; font-size:{{ $dataRow->fontSize }}px !important;">&nbsp;</th>
+                                    @endif
+                                    <th style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7; font-size:{{ $dataRow->fontSize }}px !important;">{{ $dataRow->tableName }}</th>
+                                @endforeach
+                                @break
+                            @endif
+                        @endfor
+                    </tr>
+                    <tr>
                         <th style="background-color: yellow; text-align:center; border:1px solid #000; font-size:{{ $fontSize }}px !important;">Grand Total</th>
                         @foreach($grandTotal as $key_total => $periodicalTotal)
                             @if($key_total == 'EmployeeNo')
@@ -656,14 +678,22 @@
                             <td style="text-align:center; vertical-align:middle; border:1px solid #000;">&nbsp;</td>
                             <td style="text-align:center; vertical-align:middle; border:1px solid #000;">&nbsp;</td>
                             <td style="text-align:center; vertical-align:middle; border:1px solid #000;">&nbsp;</td>
+                            <td style="text-align:center; vertical-align:middle; border:1px solid #000;">&nbsp;</td>
                             @foreach($dataTable->data[0]->field as $key2 => $dataRow2)
                                 <td style="border:1px solid #000;">&nbsp;</td>
                             @endforeach
                         </tr>
                         @if($grand_total)
                             <tr>
-                                <td style="background-color: yellow; text-align:center; border:1px solid #000;">Total per Company</td>
-                                <td style="background-color: yellow; text-align:center; border:1px solid #000;">&nbsp;</td>
+                                @if(!empty($dataTable->data[0]->field))
+                                    <th colspan="4" style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7;">&nbsp;</th>
+                                    @foreach($dataTable->data[0]->field as $key_data => $dataRow)
+                                        <th style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7; font-size: {{ $dataRow->fontSize }}px !important;">{{ $dataRow->tableName }}</th>
+                                    @endforeach
+                                @endif
+                            </tr>
+                            <tr>
+                                <td colspan="3" style="background-color: yellow; text-align:center; border:1px solid #000;">Total per Company</td>
                                 <td style="background-color: yellow; text-align:center; border:1px solid #000;">{{ $totalJumlah }}</td>
                                 @foreach($total[$dataTable->data[0]->companyName] as $key => $totalValue)
                                     <td style="text-align:right; border:1px solid #000;">{{ number_format($totalValue, 0, ',', '.') }}</td>
