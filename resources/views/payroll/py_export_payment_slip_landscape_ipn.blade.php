@@ -116,7 +116,7 @@
 			<td width="10%">NAMA</td>
 			<td width="1%" style="text-align:center;">:</td>
 			<td width="22.5%">{{ $value->employeeName }}</td>
-			<td width="10%">POSITION / JABATAN</td>
+			<td width="10%">POSITION</td>
 			<td width="1%" style="text-align:center;">:</td>
 			<td colspan="2">{{ $value->jabatan }}</td>
 		</tr>
