@@ -176,9 +176,25 @@
 			</td>
 			<td style="width:52%; vertical-align: top;">
 				<table style="width:100%; border-collapse: collapse;">
+					<?php
+					$THP = $value->takeHomePaySalary;
+					?>
 					<tr>
 						<th style="width: 42%; text-align: left; padding-top: 0.4%; padding-left: 2%; font-size: 20px;">Take Home Pay</th>
-						<th style="width: 10%; text-align: right; padding-top: 0.4%; padding-right: 6%; font-size: 20px;">Rp{{ number_format((float) $value->takeHomePaySalary, 0, ',', '.')}}</th>
+						@if($slip_code == 'Salary')
+						<?php
+						$THP = $value->takeHomePaySalary;
+						?>
+						@elseif($slip_code == 'THR')
+						<?php
+						$THP = $value->takeHomePayTHR;
+						?>
+						@elseif($slip_code == 'Bonus')
+						<?php
+						$THP = $value->takeHomePayBonus;
+						?>
+						@endif
+						<th style="width: 10%; text-align: right; padding-top: 0.4%; padding-right: 6%; font-size: 20px;">Rp{{ number_format((float) $THP, 0, ',', '.')}}</th>
 					</tr>
 				</table>
 			</td>
