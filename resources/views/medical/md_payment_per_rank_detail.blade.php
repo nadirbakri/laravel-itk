@@ -280,56 +280,46 @@
                 return;
             }
 
-            Promise.all([
-                $.ajax({
-                    type: 'GET',
-                    url: "{{ url('/medical_service_code/ranking/api') }}",
-                    data: {
-                        serviceCode: service_code
-                    }
-                }).then(function (data) {
-                    dataChild = data
-                }),
-
-                $.ajax({
+            $.ajax({
+                type: 'GET',
+                url: "{{ url('/medical_service_code/ranking/api') }}",
+                data: { serviceCode: service_code }
+            }).then(function (data) {
+                dataChild = data;
+                return $.ajax({
                     type: 'GET',
                     url: "{{ url('/medical/payment_per_rank/claim/detail_data') }}",
-                    data: {
-                        rankCode: ranking_code,
-                        serviceCode: service_code
-                    }
-                }).then(function (data) {
-                    if (data) {
-                        if (data.claimForDetail.length > 0) {
-                            const claimForDetail = data.claimForDetail
-                            claimForDetail.forEach((detail, index) => {
-                                const code = `${data.serviceCode}_${detail.claimForCode}`
-                                const code2 = `${data.serviceCode}_${detail.serviceCode}`
-                                const matchedIndex = dataChild.findIndex(item => item.code === code || item.code === code2)
+                    data: { rankCode: ranking_code, serviceCode: service_code }
+                });
+            }).then(function (data) {
+                if (data?.claimForDetail?.length > 0) {
+                    data.claimForDetail.forEach((detail) => {
+                        const code = `${data.serviceCode}_${detail.claimForCode}`;
+                        const code2 = `${data.serviceCode}_${detail.serviceCode}`;
+                        
+                        const matchedIndex = dataChild.findIndex(item => item.code === code || item.code === code2);
 
-                                if (matchedIndex !== -1) {
-                                    dataChild[matchedIndex].claimDetails = detail; 
-                                }
-                            })
+                        if (matchedIndex !== -1) {
+                            dataChild[matchedIndex].claimDetails = detail; 
                         }
-                    }
-                })
-            ]).then(() => {
+                    });
+                }
+
                 dataChild.forEach((item, index) => {
                     handleNewBox(item, index);
                     addValidationRules(index);
                 });
 
-                $(this).html(
+                $("#btn-search").html(
                     '<img src="{{ url('icons/mob/button/button-search.svg') }}" alt="export"> {{ __('md_payment_per_rank.btn_search') }}'
                 );
-                $(this).prop("disabled", false);
+                $("#btn-search").prop("disabled", false);
             }).catch((error) => {
                 alert("Terjadi kesalahan saat mengambil data.");
-                $(this).html(
+                $("#btn-search").html(
                     '<img src="{{ url('icons/mob/button/button-search.svg') }}" alt="export"> {{ __('md_payment_per_rank.btn_search') }}'
                 );
-                $(this).prop("disabled", false);
+                $("#btn-search").prop("disabled", false);
             });
         });
 
