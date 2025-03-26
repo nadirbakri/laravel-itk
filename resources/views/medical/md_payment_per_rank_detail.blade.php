@@ -333,8 +333,8 @@
                         <div style="border-radius: 8px; border: 1px solid #D4D4D4; padding: 20px;">
                             <div style="display: flex; justify-content: space-between">
                                 <h6 class="child-title">${item.value}</h6>
-                                <div class="reset" style="display: flex; align-items: center; gap: 6px; color: #FE3440; cursor: pointer">
-                                    <i class="fa fa-trash"></i> Remove Detail
+                                <div class="reset" style="display: flex; justify-content: flex-end; align-items: center; gap: 6px; color: #FE3440; cursor: pointer">
+                                    <i class="fa fa-trash"></i> Remove
                                 </div>
                             </div>
                             <div class="row">
@@ -410,7 +410,7 @@
                     <div style="display: flex; justify-content: space-between">
                         <h6 class="child-title">${itemValue}</h6>
                         <div class="reset" style="display: flex; align-items: center; gap: 6px; color: #FE3440; cursor: pointer">
-                            <i class="fa fa-trash"></i> Remove Detail
+                            <i class="fa fa-trash"></i> Remove
                         </div>
                     </div>
                     <div class="row">
