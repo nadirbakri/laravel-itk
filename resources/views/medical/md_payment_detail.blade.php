@@ -372,7 +372,6 @@
         });
 
         function addValidationRules(index) {
-            console.log($("#payment_form").validate().settings)
             $("#payment_form").validate().settings.rules[`claimForDetail[${index}][claimForCode]`] = { required: true };
             $("#payment_form").validate().settings.rules[`claimForDetail[${index}][iD_Value]`] = { required: true };
             $("#payment_form").validate().settings.rules[`claimForDetail[${index}][eN_Value]`] = { required: true };

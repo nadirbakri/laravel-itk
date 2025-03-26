@@ -839,6 +839,7 @@ Route::get('medical/disease_report', 'MedicalController@pageDiseaseReport');
 Route::get('medical/transfer_payment_to_excel/monthly', 'MedicalController@pageTransferPaymentToExcelMonthly');
 Route::get('medical/transfer_payment_to_excel/remaining_limit', 'MedicalController@pageTransferPaymentToExcelRemainingLimit');
 Route::get('medical/payment', 'MedicalController@pagePayment');
+Route::get('medical/payment_per_rank', 'MedicalController@pagePaymentPerRank');
 
 /* Route untuk tabel Medical */
 Route::get('medical/claim_code/table', 'MedicalController@tableClaimCodeMD');
@@ -850,6 +851,7 @@ Route::get('medical/input_personnel_limit/table', 'MedicalController@tableInputP
 Route::get('medical/treatment_eligibility/table', 'MedicalController@tableTreatmentEligibilityMD');
 Route::get('medical/claim_transaction/table', 'MedicalController@tableClaimTransactionMD');
 Route::get('medical/payment/table', 'MedicalController@tablePaymentMD');
+Route::get('medical/payment_per_rank/table', 'MedicalController@tablePaymentPerRankMD');
 
 /* Route untuk Detail Tabel Transaction */
 Route::get('transaction/list/table', 'TransactionController@tableDetailTransactionList');
@@ -901,6 +903,8 @@ Route::get('medical/input_personnel_limit/detail_data', 'MedicalController@dataD
 Route::get('medical/treatment_eligibility/detail_data', 'MedicalController@dataDetailTreatmentEligibility');
 Route::get('medical/claim_transaction/detail_data', 'MedicalController@dataDetailClaimTransaction');
 Route::get('medical/payment/detail_data', 'MedicalController@dataDetailPaymentMD');
+Route::get('medical/payment_per_rank/detail_data', 'MedicalController@dataDetailPaymentPerRankMD');
+Route::get('medical/payment_per_rank/claim/detail_data', 'MedicalController@dataDetailPaymentPerRankClaimDetailMD');
 
 /*Route untuk Proses Medical*/
 Route::post('medical/medical_reference/proses', 'MedicalController@prosesMedicalReferenceMD');
@@ -915,6 +919,7 @@ Route::post('medical/treatment_eligibility/proses', 'MedicalController@prosesTre
 Route::post('medical/claim_list/proses', 'MedicalController@prosesClaimListMD');
 Route::post('medical/claim_transaction/proses', 'MedicalController@prosesClaimTransactionMD');
 Route::post('medical/payment/proses', 'MedicalController@prosesPaymentMD');
+Route::post('medical/payment_per_rank/proses', 'MedicalController@prosesPaymentPerRankMD');
 
 Route::post('medical/medical_facility_used_report/print', 'MedicalController@printMedicalFacilityUsedReport');
 Route::post('medical/medical_facility_used_report/print/excel', 'MedicalController@printMedicalFacilityUsedReportExcel');
@@ -1435,6 +1440,8 @@ Route::get('plafon_transport/api', 'DataController@dataPlafonTransportAPI');
 Route::get('plafon_transport/func/api', 'DataController@dataPlafonTransportFunctionAPI');
 Route::get('plafon_reimbursement/api', 'DataController@dataPlafonReimbursementAPI');
 Route::get('plafon_reimbursement/func/api', 'DataController@dataPlafonReimbursementFunctionAPI');
+Route::get('medical_service_code/api', 'DataController@dataMedicalServiceCodeAPI');
+Route::get('medical_service_code/ranking/api', 'DataController@dataMedicalServiceCodeRankingAPI');
 
 /* Route Untuk Save Token Device dan Notification Firebase */
 Route::get('save-token', 'DashboardController@saveToken');

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>{{ __('md_payment.judul') }}</title>
+	<title>{{ __('md_payment_per_rank.judul') }}</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon"/>
 	<meta name="csrf-token" content="{{ csrf_token() }}">
@@ -60,6 +60,22 @@
             font-size: 2.5vw;
             margin-left: 0.5%;
         }
+        .required {
+            color: red
+        }
+
+		.spinner {
+            position: absolute;
+			margin-left: 45%;
+			margin-top: 20%;
+			border-radius: 50%;
+			width: 50px;
+			height: 50px;
+			border-radius: 50%;
+			border: 5px solid #ccc;
+			border-top-color: #333;
+			animation: spin 1s infinite linear;
+		}
 	</style>
 </head>
 
@@ -76,12 +92,12 @@
                 <img src="{{ url('/icons/functionbar/functionbar-next-white.svg') }}" class="functionbar-hover" alt="Next">
                 <span>Next</span>
             </a>
-            <a href="javascript:void(0)" id="toolbar-new" target="iframe_dashboard">
+            <a href="javascript:void(0)" style="display: none;" id="toolbar-new" target="iframe_dashboard">
                 <img src="{{ url('/icons/functionbar/functionbar-new-blue.svg') }}" alt="New">
                 <img src="{{ url('/icons/functionbar/functionbar-new-white.svg') }}" class="functionbar-hover" alt="New">
                 <span>New</span>
             </a>
-            <a href="javascript:void(0)" style="display: none;" id="toolbar-edit">
+            <a href="javascript:void(0)" id="toolbar-edit">
                 <img src="{{ url('/icons/functionbar/functionbar-edit-blue.svg') }}" alt="Edit">
                 <img src="{{ url('/icons/functionbar/functionbar-edit-white.svg') }}" class="functionbar-hover" alt="Edit">
                 <span>Edit</span>
@@ -110,22 +126,54 @@
 		<div class="div-title">
 			<a href="{{ route('medical', ['moduleID' => 'MD']) }}" target="iframe_dashboard">
 				<img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
-				<span class="title-text">{{ __('md_payment.list') }}</span>
+				<span class="title-text">{{ __('md_payment_per_rank.list') }}</span>
 			</a>
 		</div>
 
+        <div class="div-form">
+            <form id="payment_per_rank_form" method="post">
+                @csrf
+                <div class="row">
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label for="ranking_code">{{ __('md_payment_per_rank.label_ranking_code') }}</label>
+                            <span class="required">*</span>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <select class="form-control" id="ranking_code" name="ranking_code"
+                                placeholder="{{ __('md_payment_per_rank.label_ranking_code') }}"> </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-3">
+                        <button class="btn btn-primary" name="btn-search" id="btn-search" value="preview" style="width: 100%;">
+                            <img src="{{ url('icons/mob/button/button-search.svg') }}" alt="export"> {{ __('md_payment_per_rank.btn_search') }}
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
 		<div class="div-table">
-			<table id="payment_table" class="table hover">
-				<thead>
-					<tr>
-                        <th></th>
-						<th></th>
-						<th>Master Code</th>
-                        <th>Indonesian Value</th>
-                        <th>English Value</th>
-					</tr>
-				</thead>
-			</table>
+			{{-- <div id="loading">
+                <div class="spinner"></div>
+            </div> --}}
+            {{-- <div class="table-responsive"> --}}
+                <table id="payment_per_rank_table" class="table hover" cellspacing="10">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            {{-- <th></th> --}}
+                            <th>Service Code</th>
+                            <th>Service Name</th>
+                        </tr>
+                    </thead>
+                </table>
+            {{-- </div> --}}
 		</div>
 	</div>
     <div class="modal fade" role="dialog" id="notification_error">
@@ -154,7 +202,7 @@
                 <div class="modal-body">
                     <div class="div-title-notification">
                         <img src="{{ url('/pictures/checklist-green-confirm-password.svg') }}" alt="Password">
-                        <span class="title-text-notification">{{ __('md_payment.alert_success') }}</span>
+                        <span class="title-text-notification">{{ __('md_payment_per_rank.alert_success') }}</span>
                     </div>
                     <div class="div-title-notification">
                         <span id="message-notification-success"></span>
@@ -171,6 +219,7 @@
 <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/select/1.3.3/js/dataTables.select.min.js"></script>
 <script src="https://cdn.datatables.net/plug-ins/1.10.24/pagination/ellipses.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
 <script src="{{ asset('js/jquery.redirect.js') }}"></script>
 
 <script type="text/javascript">
@@ -198,12 +247,43 @@
     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
     var table = null;
+    var arrayPaymentPerRank = []
+    let ranking_code = null;
+
+    loadDataRankingCode();
 
     $('.div-navbar a.disabled').attr('onclick', 'return false;');
 
-  	$('#payment_table thead tr').clone(true).appendTo('#payment_table thead');
-    $('#payment_table thead tr:eq(1) th:not(:first-child)').each( function (i) {
-        if (i > 0) {
+    $("#payment_per_rank_form").submit((e)=>{
+        e.preventDefault();
+
+        $("#btn-search").prop("disabled", true);
+        $("#btn-search").html(
+            '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+
+        );
+
+        ranking_code = $("#ranking_code").val();
+        load_data_payment_per_rank(ranking_code);
+    });
+
+    function load_data_payment_per_rank(ranking_code){
+        $.ajax({
+            type: 'GET',
+            url: "{{ url('/medical/payment_per_rank/table') }}",
+            data: {
+                'rankCode': ranking_code
+            }
+        }).then(function (data) {
+            arrayPaymentPerRank = data.data;
+            $('#payment_per_rank_table').DataTable().destroy();
+            load_data_table_payment_per_rank();
+        });
+    }
+
+  	$('#payment_per_rank_table thead tr').clone(true).appendTo('#payment_per_rank_table thead');
+    $('#payment_per_rank_table thead tr:eq(1) th:not(:first-child)').each( function (i) {
+        // if (i > 0) {
             var title = $(this).text();
             $(this).html('<input class="form-control" type="text" placeholder="' + title + '" />');
 
@@ -215,21 +295,19 @@
                         .draw();
                 }
             });
-        } else {
-            $(this).html('');
-        }
+        // }
     });
     
-    function load_data_table_payment() {
-        table = $('#payment_table').DataTable({
+    function load_data_table_payment_per_rank() {
+        table = $('#payment_per_rank_table').DataTable({
             processing: true,
-            serverSide: true,
+            // serverSide: true,
             orderCellsTop: true,
-            ajax: "{{ url('medical/payment/table') }}",
+            data: arrayPaymentPerRank,
             error: function(jqXHR, ajaxOptions, thrownError) {
                 alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
             },
-            "sDom": 'lrtip',
+            "sDom": 'lfrtip',
             'sPaginationType': 'full_numbers',
             "order": [[ 1, "asc" ]],
             columns: [
@@ -239,28 +317,31 @@
                     "data": null,
                     "defaultContent": ''
                 },
-                {
-                    orderable: false,
-                    targets: 0, 
-                    "defaultContent": '',
-                    render: function(data, type, row) {
-                        return type === 'display'? '<input class="chk-select" type="checkbox">' : '';
-                    }
-                },
+                // {
+                //     orderable: false,
+                //     targets: 0,
+                //     "defaultContent": '',
+                //     render: function (data, type) {
+                //         return type === 'display' ?
+                //             '<input class="chk-select" type="checkbox">' : '';
+                //     }
+                // },
                 {data: 'serviceCode', name: 'serviceCode'},
-                {data: 'iD_Value', name: 'iD_Value'},
-                {data: 'eN_Value', name: 'eN_Value'},
+                {data: 'serviceName', name: 'serviceName'},
             ],
             select: {
                 style:    'multi',
                 selector: 'td:first-child'
             }
         });
-    }
-    
-    load_data_table_payment()
 
-    $('#payment_table tbody').on('click', 'td.details-control', function () {
+        $("#btn-search").prop("disabled", false);
+        $("#btn-search").html(
+            "<img src={{ url('icons/mob/button/button-search.svg') }} alt='export'> {{ __('trans_transport.btn_search') }}"
+        );
+    }
+
+    $(document).on('click', '#payment_per_rank_table tbody td.details-control', function () {
         var tr = $(this).closest('tr');
         var row = table.row(tr);
 
@@ -275,9 +356,12 @@
                     <table class="table hover" style="width: 100%;">
                         <thead>
                             <tr>
-                                <th>Claim For Code</th>
-                                <th>English Value</th>
-                                <th>Indonesian Value</th>
+                                <th>Claim For</th>
+                                <th>Claim Code</th>
+                                <th>Cut Off Year</th>
+                                <th>Age Minimum</th>
+                                <th>Max Payment</th>
+                                <th>Minimum Month of Service</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -286,9 +370,12 @@
                 d.claimForDetail.forEach(detail => {
                     tableContent += `
                         <tr>
-                            <td>${detail.claimForCode || '-'}</td>
-                            <td>${detail.eN_Value || '-'}</td>
-                            <td>${detail.iD_Value || '-'}</td>
+                            <td>${detail.claimForCode}</td>
+                            <td>${detail.claimForName}</td>
+                            <td>${detail.cutOffYear}</td>
+                            <td>${detail.ageMinimum}</td>
+                            <td>${(Number(detail.maxPayment).toLocaleString('id-ID'))}</td>
+                            <td>${detail.minServiceMonth}</td>
                         </tr>
                     `;
                 });
@@ -301,17 +388,120 @@
         }
     });
 
-    $('#payment_table').on('click', 'tr td:first-child', function(e){
+    function loadDataRankingCode() {
+        function formatSelect(data) {
+            if (data.loading) {
+                return $search
+            }
+
+            if (data.id) {
+                var $result2 = $('<div class="row">' +
+                    '<div class="col-6">' + data.data.rankingCode + '</div>' +
+                    '<div class="col-6">' + data.data.rankingName + '</div>' +
+                    '</div>');
+
+                return $result2;
+            }
+        }
+
+        var headerIsAppend = false;
+        $('#ranking_code').on('select2:open', function (e) {
+            if (!headerIsAppend) {
+                html = '<div class="row">' +
+                    '<div class="col-6"><b>Ranking Code</b></div>' +
+                    '<div class="col-6"><b>Ranking Name</b></div>' +
+                    '</div>';
+                $('.select2-search--dropdown').append(html);
+                headerIsAppend = true;
+            }
+        });
+
+        var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+        $('#ranking_code').select2({
+            width: '100%',
+            placeholder: 'Choose Ranking Code',
+            allowClear: true,
+            language: {
+                errorLoading: function () {
+                    return $search;
+                },
+                searching: function () {
+                    return $search;
+                }
+            },
+            ajax: {
+                url: "{{ url('/ranking/api') }}",
+                dataType: 'json',
+                delay: 250,
+                type: "GET",
+                data: function (params) {
+                    return {
+                        _token: CSRF_TOKEN,
+                        search: params.term
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: $.map(data, function (item) {
+                            return {
+                                text: item.rankingName,
+                                id: item.rankingCode,
+                                data: item
+                            }
+                        })
+                    };
+                },
+                cache: true,
+            },
+            templateResult: formatSelect
+        });
+    }
+
+    $('#payment_per_rank_table').on('click', 'tr td:first-child', function(e){
         $(this).parent().find('input[type="checkbox"]').trigger('click');
     });
 
     $('#notification_success').on('hide.bs.modal', function () {
-        window.location = "{{ url('medical/payment') }}";
+        window.location = "{{ url('medical/payment_per_rank') }}";
     })
 
-    $("#toolbar-new").on('click', function() {
-        $.redirect("{{ url('medical/payment/detail_data') }}", { 'serviceCode' : null, 'func' : 'new' }, "GET", "iframe_dashboard");
+    $("#toolbar-edit").on('click', function() {
+        ranking_code = $("#ranking_code").val();
+        if (ranking_code !== null){
+            $.redirect("{{ url('medical/payment_per_rank/detail_data') }}", { 'rankCode' : ranking_code }, "GET", "iframe_dashboard");
+        }
+        else {
+            $('#notification_error').modal('show');
+            $('#message-notification-error').html('No Ranking Code Selected');
+        }
     });
+
+    if ($("#payment_per_rank_form").length > 0) {
+        $("#payment_per_rank_form").validate({
+            rules: {
+                ranking_code: {
+                    required: true,
+                },
+            },
+            messages: {
+                ranking_code: {
+                    required: "{{ __('md_payment_per_rank.label_ranking_code_required') }}",
+                },
+            },
+            highlight: function (element) {
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function (element) {
+                $(element).removeClass('is-invalid');
+            },
+            errorElement: 'span',
+            errorPlacement: function (error, element) {
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+            },
+        })
+    }
     
   });
 </script>

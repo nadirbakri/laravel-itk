@@ -206,6 +206,11 @@ class MedicalController extends Controller
         return view('medical.md_payment');
     }
 
+    public function pagePaymentPerRank()
+    {
+        return view('medical.md_payment_per_rank');
+    }
+
     public function tableClaimCodeMD()
     {
         try {
@@ -510,6 +515,48 @@ class MedicalController extends Controller
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
+                        'sessionID' => 0,
+                        'sessionUserID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        'languageCode' => strtoupper(App::getLocale()),
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet[0]->serviceCodeList)->make(true);
+        }
+    }
+
+    public function tablePaymentPerRankMD(Request $request)
+    {
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/mobile/ReimbursementMedical/getMedicalPaymentList',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'rankCode' => $request->rankCode,
                         'sessionID' => 0,
                         'sessionUserID' => Session::get('userID'),
                         'logActionUserID' => Session::get('userID'),
@@ -933,7 +980,7 @@ class MedicalController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/DiseaseCode/GetDiseaseCode',
+            $response = $client->post(env('API_URL') . '/mobile/ReimbursementMedical/MedicalPaymentMasterList',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -964,6 +1011,95 @@ class MedicalController extends Controller
         }
 
         return view('medical.md_payment_detail', ['data' => $data, 'func' => $request->func]);
+    }
+
+    public function dataDetailPaymentPerRankMD(Request $request)
+    {
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/mobile/ReimbursementMedical/getMedicalPaymentList',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'rankCode' => $request->rankCode,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        // dd($arrResult->dataListSet);        
+        
+        if($arrResult->dataListSet == null){
+            $data = json_encode(['rankCode' => $request->rankCode]);
+        }else{
+            $data = $arrResult->dataListSet[0]->serviceCodeList[0];
+        }
+
+        // dd($data);
+
+        return view('medical.md_payment_per_rank_detail', ['data' => $data]);
+    }
+
+    public function dataDetailPaymentPerRankClaimDetailMD(Request $request)
+    {
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/mobile/ReimbursementMedical/getMedicalPaymentList',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'rankCode' => $request->rankCode,
+                        'serviceCode' => $request->serviceCode,
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+        
+        if($arrResult->dataListSet == null){
+            $data = null;
+        }else{
+            $data = $arrResult->dataListSet[0]->serviceCodeList[0];
+        }
+
+        return $data;
     }
 
     public function prosesClaimCodeMD(Request $request)
@@ -1866,8 +2002,6 @@ class MedicalController extends Controller
                 'languageCode' => strtoupper(App::getLocale())
             ];
 
-            $claimForDetailLength = count($request->claimForDetail);
-
             if (isset($request->claimForDetail)) {
                 foreach($request->claimForDetail as $key => $value) {
                     $dataClaimForDetail[] = [
@@ -1884,6 +2018,67 @@ class MedicalController extends Controller
             // dd(json_encode($param));
 
             $response = $client->post(env('API_URL') . '/mobile/ReimbursementMedical/insertMedicalPaymentMaster',
+                ['body' => json_encode($param)]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            // var_dump($response);
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function prosesPaymentPerRankMD(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $param = [
+                'companyCode' => Session::get('companyCode'),
+                'rankCode' => $request->ranking_code_hidden,
+                'serviceCode' => $request->service_code,
+                "sessionID" => 0,
+                "sessionUserID" => Session::get('userID'),
+                "logActionUserID" => Session::get('userID'),
+                "logActionUsername" => Session::get('userID'),
+                'languageCode' => strtoupper(App::getLocale())
+            ];
+
+            if (isset($request->claimForDetail)) {
+                foreach($request->claimForDetail as $key => $value) {
+                    $dataClaimForDetail[] = [
+                        'companyCode' => Session::get('companyCode'),
+                        'rankCode' => $request->ranking_code_hidden,
+                        'serviceCode' => $request->service_code,
+                        'claimForCode' => $value['claimForCode'],
+                        'cutOffYear' => (int) $value['cutOffYear'],
+                        'ageMinimum' => (int) $value['ageMinimum'],
+                        'maxPayment' => (int) $value['maxPayment'],
+                        'minServiceMonth' => $value['minServiceMonth'],
+                    ];
+                }
+            }
+            else {
+                $dataClaimForDetail = [];
+            }
+
+            $param['claimForDetail'] = $dataClaimForDetail;
+
+            $response = $client->post(env('API_URL') . '/mobile/ReimbursementMedical/MedicalPaymentRanking',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {
