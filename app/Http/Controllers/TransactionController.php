@@ -314,8 +314,20 @@ class TransactionController extends Controller
             // return Datatables::of([])->make(true);
             return response()->json([]);
         }else{
-            // return Datatables::of($arrResult->dataListSet)->make(true);
-            return response()->json($arrResult->dataListSet);
+            $data = [];
+
+            foreach ($arrResult->dataListSet as $item) {
+                $data[] = array_merge(
+                    (array) $item->reimbursementEntity,
+                    [
+                        "attachmentEntity" => $item->attachmentEntity,
+                        "totalClaim" => $item->totalClaim,
+                        "balance" => $item->balance,
+                    ]
+                );
+            }
+            // dd(response()->json($data));
+            return response()->json($data);
         }
     }
    

@@ -430,56 +430,104 @@
             'sPaginationType': 'full_numbers',
             "order": [[ 1, "asc" ]],
             columns: [
-                {data: 'reimbursementEntity.createdDate', name: 'reimbursementEntity.createdDate', 
+                {
+                    data: 'createdDate', name: 'createdDate',
                     render: function (data, type, row) {
-                        if (data == null){
-                            return '-'
-                        }else {
-                            return moment(data).format('DD-MM-YYYY');
+                        return data ? moment(data).format('DD-MM-YYYY') : '-';
+                    }
+                },
+                {
+                    data: 'ticketNo', name: 'ticketNo',
+                    render: function (data) {
+                        return data ?? '-';
+                    }
+                },
+                {
+                    data: 'businessUnit', name: 'businessUnit',
+                    render: function (data) {
+                        return data ?? '-';
+                    }
+                },
+                {
+                    data: 'fullnameRequester', name: 'fullnameRequester',
+                    render: function (data) {
+                        return data ?? '-';
+                    }
+                },
+                {
+                    data: 'reimbursementStatus', name: 'reimbursementStatus',
+                    render: function (data) {
+                        return data ?? '-';
+                    }
+                },
+                {
+                    data: 'receiptDate', name: 'receiptDate',
+                    render: function (data) {
+                        return data ? moment(data).format('DD-MM-YYYY') : '-';
+                    }
+                },
+                {
+                    data: 'totalClaimAmount', name: 'totalClaimAmount',
+                    render: function (data) {
+                        return typeof data === 'number' ? data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") : '-';
+                    }
+                },
+                {
+                    data: 'paidAmount', name: 'paidAmount',
+                    render: function (data) {
+                        return typeof data === 'number' ? data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") : '-';
+                    }
+                },
+                {
+                    data: 'changedDate', name: 'changedDate',
+                    render: function (data, type, row) {
+                        if (!data || row.reimbursementStatus === 'NEW') {
+                            return '-';
                         }
+                        return moment(data).format('YYYY-MM-DD');
                     }
                 },
-                {data: 'reimbursementEntity.ticketNo', name: 'reimbursementEntity.ticketNo'},
-                {data: 'reimbursementEntity.businessUnit', name: 'reimbursementEntity.businessUnit'},
-                {data: 'reimbursementEntity.fullnameRequester', name: 'reimbursementEntity.fullnameRequester'},
-                {data: 'reimbursementEntity.reimbursementStatus', name: 'reimbursementEntity.reimbursementStatus'},
-                {data: 'reimbursementEntity.receiptDate', name: 'reimbursementEntity.receiptDate',
-                    render: function (data, type, row) {
-                        if (data == null){
-                            return '-'
-                        }else {
-                            return moment(data).format('DD-MM-YYYY');
-                        }
+                {
+                    data: 'hrdRemarks', name: 'hrdRemarks',
+                    render: function (data) {
+                        return data ?? '-';
                     }
-                },
-                {data: 'reimbursementEntity.totalClaimAmount', name: 'reimbursementEntity.totalClaimAmount',
-                    render: function (data, type, row) {
-                        return data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-                    }
-                },
-                {data: 'reimbursementEntity.paidAmount', name: 'reimbursementEntity.paidAmount',
-                    render: function (data, type, row) {
-                        return data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-                    }
-                },
-                {data: 'reimbursementEntity.changedDate', name: 'reimbursementEntity.changedDate', 
-                    render: function (data, type, row) {
-                        if (data == null || row.reimbursementEntity.reimbursementStatus == 'NEW'){
-                            return '-'
-                        }else {
-                            return moment(data).format('YYYY-MM-DD');
-                        }
-                    }
-                },
-                {data: 'reimbursementEntity.hrdRemarks', name: 'reimbursementEntity.hrdRemarks'
                 },
             ],
+            drawCallback: function(settings) {
+                var api = this.api();
+                var data = api.rows({ page: 'current' }).data();
+
+                let allEmpty = true;
+
+                data.each(function(rowData) {
+                    const { balance, totalClaim, ...otherFields } = rowData;
+
+                    const values = Object.values(otherFields);
+
+                    const rowIsEmpty = values.every(val =>
+                        val === '-' || val === null || val === '' || val === undefined
+                    );
+
+                    if (!rowIsEmpty) {
+                        allEmpty = false;
+                    }
+                });
+
+                if (data.length === 0 || allEmpty) {
+                    $('#medical_history_table tbody').html(`
+                        <tr>
+                            <td colspan="${api.columns().nodes().length}" class="text-center">No data available in table</td>
+                        </tr>
+                    `);
+                }
+            },
             footerCallback: function (row, data, start, end, display) {
                 var plafonBalance = data.length > 0 ? data[0]?.balance?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") : 0;
                 var totalMedical = data.length > 0 ? data[0]?.totalClaim?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") : 0;
                 $('#total_medical').html(totalMedical);
                 $('#plafon_balance').html(plafonBalance);
-            }
+            },
         });
 
         $("#btn-search").prop("disabled", true);

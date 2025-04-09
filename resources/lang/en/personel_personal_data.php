@@ -122,6 +122,7 @@ return [
     'label_employee_no' => 'Employee No',
     'label_employee_name' => 'Employee Name',
     'label_fullname' => 'Fullname',
+    'label_nickname' => 'Nickname',
     'label_title' => 'Title',
     'label_birth_place' => 'Birth Place',
     'label_birth_date' => 'Birth Date',

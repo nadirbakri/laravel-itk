@@ -122,6 +122,7 @@ return [
     'label_employee_no' => 'No Karyawan',
     'label_employee_name' => 'Employee Name',
     'label_fullname' => 'Nama Lengkap',
+    'label_nickname' => 'Nama Panggilan',
     'label_title' => 'Gelar',
     'label_birth_place' => 'Tempat Lahir',
     'label_birth_date' => 'Tanggal Lahir',
