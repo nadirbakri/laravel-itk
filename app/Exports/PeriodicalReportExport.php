@@ -353,9 +353,9 @@ class PeriodicalReportExport extends DefaultValueBinder implements WithCustomVal
                             //     //     $total[$branch] = [];
                             //     // }
                             // }
-                            if (!is_string($v->value)) {
+                            if (!is_string($v->value) && !empty($v->value)) {
                                 // $total[$branch][$v->field . '_' . $k] = (isset($total[$branch][$v->field . '_' . $k])) ? $total[$branch][$v->field . '_' . $k] + $v->value : $v->value;
-                                $total[$v->field . '_' . $k] = (isset($total[$v->field . '_' . $k])) ? $total[$v->field . '_' . $k] + $v->value : $v->value;
+                                $total[$v->field . '_' . $k] = (isset($total[$v->field . '_' . $k]) && !empty($total[$v->field . '_' . $k])) ? $total[$v->field . '_' . $k] + $v->value : $v->value;
                             }else{
                                 if($v->field == 'EmployeeNo'){
                                     // $total[$branch][$v->field . '_' . $k] = (isset($total[$branch][$v->field . '_' . $k])) ? $total[$branch][$v->field . '_' . $k] + $totalEmployee : $totalEmployee;
