@@ -28,7 +28,10 @@ class MasterDataTemplateExport implements FromView, ShouldAutoSize
                 return view('personel.personel_export_cost_center_master');
                 break;
             case 'location':
-                return view('personel.personel_export_location_master');
+            return view('personel.personel_export_location_master');
+                break;
+            case 'office_location':
+                return view('personel.personel_export_office_location_master');
                 break;
             case 'position':
                 return view('personel.personel_export_position_master');

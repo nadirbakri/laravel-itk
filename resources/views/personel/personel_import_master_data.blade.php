@@ -105,6 +105,7 @@
                             <option value="level">{{ __('personel_import_master_data.select_level') }}</option>
                             <option value="cost_center">{{ __('personel_import_master_data.select_cost_center') }}</option>
                             <option value="location">{{ __('personel_import_master_data.select_location') }}</option>
+                            <option value="office_location">{{ __('personel_import_master_data.select_office_location') }}</option>
                             <option value="position">{{ __('personel_import_master_data.select_position') }}</option>
                             <option value="ranking">{{ __('personel_import_master_data.select_ranking') }}</option>
                             <option value="grade">{{ __('personel_import_master_data.select_grade') }}</option>

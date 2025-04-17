@@ -10,6 +10,7 @@ return [
     'select_level' => 'Level',
     'select_cost_center' => 'Cost Center',
     'select_location' => 'Location',
+    'select_office_location' => 'Office Location',
     'select_position' => 'Position',
     'select_ranking' => 'Ranking',
     'select_grade' => 'Grade',

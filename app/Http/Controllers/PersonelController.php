@@ -26,6 +26,7 @@ use App\Imports\PersonalDataImport;
 use App\Imports\LevelDataImport;
 use App\Imports\CostCenterDataImport;
 use App\Imports\LocationDataImport;
+use App\Imports\OfficeLocationDataImport;
 use App\Imports\PositionDataImport;
 use App\Imports\RankingDataImport;
 use App\Imports\GradeDataImport;
@@ -6823,6 +6824,7 @@ class PersonelController extends Controller
                 'logActionUserID' => Session::get('userID'),
                 'logActionUsername' => Session::get('userName')
             ];
+            
             $param['peMasterInsurance'] = $datapeMasterInsurance;
 
             if(isset($request->fringe_benefits)){
@@ -7256,6 +7258,24 @@ class PersonelController extends Controller
                     )]
                 );
             }else{
+                // dd(json_encode(
+                //     [
+                //         'recordStatus' => $request->record_status,
+                //         'companyCode' => Session::get('companyCode'),
+                //         'officeCode' => $request->office_location_code,
+                //         'officeDesc' => $request->office_location_desc,
+                //         'longitude' => (float) $request->longitude,
+                //         'latitude' => (float) $request->latitude,
+                //         'maxTolerance' => (float) $request->max_tolerance,
+                //         'isLock' => isset($request->check_lock) ? (bool) $request->check_lock : false,
+                //         "changedDate" => date("Y-m-d\TH:i:s"),
+                //         "changedBy" => Session::get('userID'),
+                //         'userID' => Session::get('userID'),
+                //         'logActionUserID' => Session::get('userID'),
+                //         'logActionUsername' => Session::get('userName'),
+                //         "languageCode" => App::getLocale()
+                //     ]
+                //     ));
                 $response = $client->put(env('API_URL') . '/mobile/OfficeLocation/updateOfficeLocation',
                     ['body' => json_encode(
                         [
@@ -7272,7 +7292,7 @@ class PersonelController extends Controller
                             'userID' => Session::get('userID'),
                             'logActionUserID' => Session::get('userID'),
                             'logActionUsername' => Session::get('userName'),
-                            "languageCode" => App::getLocale()
+                            "languageCode" => App::getLocale()  
                         ]
                     )]
                 );
@@ -12290,6 +12310,9 @@ class PersonelController extends Controller
                 case 'location':
                     $import = new LocationDataImport;
                     break;
+                case 'office_location':
+                    $import = new OfficeLocationDataImport;
+                    break;
                 case 'position':
                     $import = new PositionDataImport;
                     break;
@@ -12353,6 +12376,9 @@ class PersonelController extends Controller
                 break;
             case 'location':
                 $fileName = "Template Location Master.xlsx";
+                break;
+            case 'office_location':
+                $fileName = "Template Office Location Master.xlsx";
                 break;
             case 'position':
                 $fileName = "Template Position Master.xlsx";

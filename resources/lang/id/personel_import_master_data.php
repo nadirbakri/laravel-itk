@@ -10,6 +10,7 @@ return [
     'select_level' => 'Level',
     'select_cost_center' => 'Cost Center',
     'select_location' => 'Lokasi',
+    'select_office_location' => 'Lokasi Kantor',
     'select_position' => 'Posisi',
     'select_ranking' => 'Ranking',
     'select_grade' => 'Grade',
