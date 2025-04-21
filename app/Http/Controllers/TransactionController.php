@@ -1916,12 +1916,32 @@ class TransactionController extends Controller
             $file = $request->file('file_medical');
             $import = new UpdateMedical;
             Excel::import($import, $file->getRealPath(), null, \Maatwebsite\Excel\Excel::XLSX);
-        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+        }
+        catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             $failures = $e->failures();
             $objError = (object) ['status' => false, 'message' => $failures[0]->errors()[0]];
             return array(0 => $objError);
         }
-        
+        catch (\Exception $e) {
+            $message = $e->getMessage();
+            $code = $e->getCode();
+            $locale = strtoupper(App::getLocale());
+
+            if ($locale == 'ID') {
+                $userMessage = 'Terjadi kesalahan. Silakan coba lagi nanti.';
+            } else {
+                $userMessage = 'An error occurred. Please try again later.';
+            }
+
+            $objError = (object) [
+                'status' => false,
+                'message' => $message ?: $userMessage,
+                'code' => $code
+            ];
+
+            return array(0 => $objError);
+        }
+
         return $import->getArrResult();
     }
    
