@@ -115,6 +115,7 @@
                             <option value="major">{{ __('personel_import_master_data.select_major') }}</option>
                             <option value="city">{{ __('personel_import_master_data.select_city') }}</option>
                             <option value="zip_code">{{ __('personel_import_master_data.select_zip_code') }}</option>
+                            <option value="title">{{ __('personel_import_master_data.select_title') }}</option>
                             <option value="account">{{ __('personel_import_master_data.select_account') }}</option>
                             <option value="journal_template">{{ __('personel_import_master_data.select_journal_template') }}</option>
                         </select>

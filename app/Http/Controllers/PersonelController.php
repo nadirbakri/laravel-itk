@@ -38,6 +38,7 @@ use App\Imports\InstitutionDataImport;
 use App\Imports\MajorDataImport;
 use App\Imports\CityDataImport;
 use App\Imports\ZipCodeDataImport;
+use App\Imports\TitleDataImport;
 use App\Imports\AccountDataImport;
 use App\Imports\JournalTemplateDataImport;
 use App\Imports\PersonalDataUpdateImport;
@@ -12381,6 +12382,9 @@ class PersonelController extends Controller
                 case 'zip_code':
                     $import = new ZipCodeDataImport;
                     break;
+                case 'title':
+                    $import = new TitleDataImport;
+                    break;
                 case 'account':
                     $import = new AccountDataImport;
                     break;
@@ -12447,6 +12451,9 @@ class PersonelController extends Controller
                 break;
             case 'zip_code':
                 $fileName = "Template Zip Code Master.xlsx";
+                break;
+            case 'title':
+                $fileName = "Template Title Master.xlsx";
                 break;
             case 'account':
                 $fileName = "Template Account Master.xlsx";

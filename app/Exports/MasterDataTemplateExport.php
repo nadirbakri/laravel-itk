@@ -60,6 +60,9 @@ class MasterDataTemplateExport implements FromView, ShouldAutoSize
             case 'zip_code':
                 return view('personel.personel_export_zip_code_master');
                 break;
+            case 'title':
+                return view('personel.personel_export_title_master');
+                break;
             case 'account':
                 return view('personel.personel_export_account_master');
                 break;

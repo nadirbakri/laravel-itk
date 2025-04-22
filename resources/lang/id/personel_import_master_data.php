@@ -20,6 +20,7 @@ return [
     'select_major' => 'Keahlian',
     'select_city' => 'Kota',
     'select_zip_code' => 'Kode Pos',
+    'select_title' => 'Gelar',
     'select_account' => 'Payroll Akun',
     'select_journal_template' => 'Template Jurnal',
     'btn-import' => 'Impor',

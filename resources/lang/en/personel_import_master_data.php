@@ -20,6 +20,7 @@ return [
     'select_major' => 'Major',
     'select_city' => 'City',
     'select_zip_code' => 'Zip Code',
+    'select_title' => 'Title',
     'select_account' => 'Payroll Account',
     'select_journal_template' => 'Journal Template',
     'btn-import' => 'Import',
