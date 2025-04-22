@@ -20,6 +20,8 @@ use App\Exports\EmployeeFamilyTemplateExport;
 use App\Exports\PlafonExport;
 use App\Exports\PlafonTemplateExport;
 use App\Exports\EmployeeTransactionTemplateExport;
+use App\Exports\EmployeeMultipleLocationTemplateExport;
+use App\Exports\EmployeeMultipleLocationExport;
 
 use App\Imports\PersonalDataSheetImport;
 use App\Imports\PersonalDataImport;
@@ -44,6 +46,7 @@ use App\Imports\EmployeeLevelImport;
 use App\Imports\EmployeeFamilyImport;
 use App\Imports\PlafonImport;
 use App\Imports\EmployeeTransactionImport;
+use App\Imports\EmployeeMultipleLocationImport;
 
 use App\Jobs\ProcessImportMasterDataPersonel;
 use App\Jobs\ProcessImportPersonalDataPersonel;
@@ -168,6 +171,11 @@ class PersonelController extends Controller
     public function pageImportEmployeeTransactionPersonel()
     {
          return view('personel.personel_import_employee_transaction');
+    }
+
+    public function pageEmployeeMultipleLocationPersonel()
+    {
+        return view('personel.personel_employee_multiple_location');
     }
 
     public function pageImportUpdatePersonel()
@@ -5358,6 +5366,39 @@ class PersonelController extends Controller
         $arrResult = json_decode($response->getBody()->getContents());
 
         return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function getDetailEmployeeMultipleLocationPersonel(Request $request)
+    {
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/mobile/OfficeLocation/getOfficeLocationV2',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'), 
+                        'employeeNo' => $request->employeeNo
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json($arrResult->dataListSet);
     }
 
     public function statusGradeCodePersonel(Request $request)
@@ -12536,6 +12577,41 @@ class PersonelController extends Controller
     public function downloadTemplateEmployeeFamilyPersonel(Request $request)
     {
         return Excel::download(new EmployeeFamilyTemplateExport(), "Template Employee Family.xlsx");
+    }
+
+    public function importEmployeeMultipleLocationPersonel(Request $request)
+    {
+        $file = $request->file('import_export');
+        // $base64File = base64_encode(file_get_contents($file->getRealPath()));
+        // $processJobs = new ProcessImportEmployeeLevelPersonel($base64File);
+        // $this->dispatch($processJobs);
+
+        // return response()->json(['status' => "true", 'message' => 'Import Employee Level is in Progress']);
+        try{
+            $import = new EmployeeMultipleLocationImport;
+            Excel::import($import, $file->getRealPath(), null, \Maatwebsite\Excel\Excel::XLSX);
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            $failures = $e->failures();
+            $objError = (object) ['status' => false, 'message' => $failures[0]->errors()[0]];
+            return array(0 => $objError);
+        }
+
+        if(empty($import->getArrResult())){
+            $objError = (object) ['status' => false, 'message' => "The Uploaded File Doesn't Match The Template"];
+            return array(0 => $objError);
+        }else{
+            return $import->getArrResult();
+        }
+    }
+
+    public function exportEmployeeMultipleLocationPersonel(Request $request)
+    {
+        return Excel::download(new EmployeeMultipleLocationExport(), "ALL Employee Multiple Location.xlsx");
+    }
+
+    public function downloadTemplateEmployeeMultipleLocationPersonel(Request $request)
+    {
+        return Excel::download(new EmployeeMultipleLocationTemplateExport(), "Template Employee Multiple Location.xlsx");
     }
 
     public function downloadExportLoanWhitelistPersonel(Request $request)
