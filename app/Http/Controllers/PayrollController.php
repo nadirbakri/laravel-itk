@@ -2046,19 +2046,38 @@ class PayrollController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/payroll/getPrTariffMaster',
+            $response_tm = $client->post(env('API_URL') . '/mobile/ReferenceTM/getReferenceTM',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
-                        'employeeNo' => $request->employeeNo,
-                        'statusPeriod' => $request->statusPeriod,
-                        'groupAuthorizeCode' => Session::get('groupAuthorizePayroll'),
                         'userID' => Session::get('userID'),
                         'logActionUserID' => Session::get('userID'),
                         'logActionUsername' => Session::get('userName')
                     ]
                 )]
             );
+
+            $arrResult_tm = json_decode($response_tm->getBody()->getContents()); 
+
+            if($arrResult_tm->dataListSet == null){
+                return redirect()->back()->withErrors(['msg' => 'There is no TM Reference Data']);
+            }else{
+                $response = $client->post(env('API_URL') . '/payroll/getPrTariffMaster',
+                    ['body' => json_encode(
+                        [
+                            'companyCode' => Session::get('companyCode'),
+                            'employeeNo' => $request->employeeNo,
+                            'statusPeriod' => $request->statusPeriod,
+                            'groupAuthorizeCode' => Session::get('groupAuthorizePayroll'),
+                            "periodMonth" => (int) $arrResult_tm->dataListSet[0]->periodMonth,
+                            "periodYear" => (int) $arrResult_tm->dataListSet[0]->periodYear,
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName')
+                        ]
+                    )]
+                );
+            }
         } catch (RequestException $e) {
             $response = $e->getResponse();
             if($response->getStatusCode() == 401){
