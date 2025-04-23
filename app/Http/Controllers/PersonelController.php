@@ -7320,17 +7320,6 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            // dd((float) $request->longitude);
-
-            function truncate_decimal($number, $decimals = 20) {
-                if (strpos($number, '.') === false) {
-                    return $number;
-                }
-            
-                list($int, $dec) = explode('.', $number);
-                return $int . '.' . substr($dec, 0, $decimals);
-            }
-
             if($request->record_function == 'New'){
                 $response = $client->post(env('API_URL') . '/mobile/OfficeLocation/insertOfficeLocation',
                     ['body' => json_encode(
@@ -7339,9 +7328,9 @@ class PersonelController extends Controller
                             'companyCode' => Session::get('companyCode'),
                             'officeCode' => $request->office_location_code,
                             'officeDesc' => $request->office_location_desc,
-                            'longitude' => truncate_decimal($request->longitude, 20),
-                            'latitude' => truncate_decimal($request->latitude, 20),
-                            'maxTolerance' => truncate_decimal($request->max_tolerance, 20),
+                            'longitude' => $request->longitude,
+                            'latitude' => $request->latitude,
+                            'maxTolerance' => $request->max_tolerance,
                             'isLock' => isset($request->check_lock) ? (bool) $request->check_lock : false,
                             "changedNo" => 0,
                             "createdDate" => date("Y-m-d\TH:i:s"),
@@ -7356,24 +7345,6 @@ class PersonelController extends Controller
                     )]
                 );
             }else{
-                // dd(json_encode(
-                //     [
-                //         'recordStatus' => $request->record_status,
-                //         'companyCode' => Session::get('companyCode'),
-                //         'officeCode' => $request->office_location_code,
-                //         'officeDesc' => $request->office_location_desc,
-                //         'longitude' => (float) $request->longitude,
-                //         'latitude' => (float) $request->latitude,
-                //         'maxTolerance' => (float) $request->max_tolerance,
-                //         'isLock' => isset($request->check_lock) ? (bool) $request->check_lock : false,
-                //         "changedDate" => date("Y-m-d\TH:i:s"),
-                //         "changedBy" => Session::get('userID'),
-                //         'userID' => Session::get('userID'),
-                //         'logActionUserID' => Session::get('userID'),
-                //         'logActionUsername' => Session::get('userName'),
-                //         "languageCode" => App::getLocale()
-                //     ]
-                //     ));
                 $response = $client->put(env('API_URL') . '/mobile/OfficeLocation/updateOfficeLocation',
                     ['body' => json_encode(
                         [
@@ -7381,9 +7352,9 @@ class PersonelController extends Controller
                             'companyCode' => Session::get('companyCode'),
                             'officeCode' => $request->office_location_code,
                             'officeDesc' => $request->office_location_desc,
-                            'longitude' => truncate_decimal($request->longitude, 20),
-                            'latitude' => truncate_decimal($request->latitude, 20),
-                            'maxTolerance' => truncate_decimal($request->max_tolerance, 20),
+                            'longitude' => $request->longitude,
+                            'latitude' => $request->latitude,
+                            'maxTolerance' => $request->max_tolerance,
                             'isLock' => isset($request->check_lock) ? (bool) $request->check_lock : false,
                             "changedDate" => date("Y-m-d\TH:i:s"),
                             "changedBy" => Session::get('userID'),
