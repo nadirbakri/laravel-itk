@@ -12,6 +12,7 @@ return [
     'label_multi_cost_center' => 'Pusat Multi Biaya',
     'label_group_department' => 'Grup Departemen',
     'label_data_grouping' => 'Pengelompokkan Data',
+    'label_display_by_grouping' => 'Tampilkan Berdasarkan Pengelompokan',
     'label_report_status' => 'Status Laporan',
     'label_actual' => 'Aktual',
     'label_reconsiliation' => 'Rekonsiliasi',

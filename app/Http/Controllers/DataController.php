@@ -12616,4 +12616,45 @@ class DataController extends Controller
 		}
 		return response()->json($data);
 	}
+
+	public function dataMedicalServiceCodePaidTypeAPI(Request $request)
+	{
+		$search = $request->search;
+		$data = [];
+
+		try {
+			$client = new Client([
+                'verify' => false,
+				'headers' => [ 'Content-Type' => 'application/json',
+								'Authorization' => 'Bearer ' . Session::get('token') ]
+			]);
+			$response = $client->post(env('API_URL') . '/mobile/ReimbursementMedical/getMedicalPaymentList',
+				['body' => json_encode(
+					[
+						'companyCode' => Session::get('companyCode'),
+						"ticketNo" => $request->ticketNo,
+						"languageCode" => strtoupper(App::getLocale())
+					]
+				)]);
+			} 
+		catch (RequestException $e) {
+			$response = $e->getResponse();
+			if($response->getStatusCode() == 401){
+				return view('error.login');
+			}else if($response->getStatusCode() == 404){
+				return view('error.not_found');
+			}else{
+				return view('error.bad_request');
+			}
+		}
+			
+		$arrResult = json_decode($response->getBody()->getContents());
+		
+		if ($arrResult->dataListSet == null) {
+			return response()->json([]);
+		}
+		else {
+			return response()->json($arrResult->dataListSet[0]->serviceCodeList);
+		}
+	}
 }

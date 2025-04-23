@@ -9001,6 +9001,7 @@ public function dataDetailReportFormatPY(Request $request)
                 "employeeNoTo" => $request->employee_no_to,
                 "period" => $request->period,
                 "statusPeriod" => 0,
+                "groupingLevel" => isset($request->grouping_level) ? (bool) $request->grouping_level : false,
                 "multiCostCenter" => isset($request->multi_cost_center) ? (bool) $request->multi_cost_center : false,
                 "deptGroup" => isset($request->check_grouping) ? (bool) $request->check_grouping : false,
                 "reportStatus" => $request->report_status,
@@ -9076,22 +9077,46 @@ public function dataDetailReportFormatPY(Request $request)
             if(!empty($dataLevel)){
                 foreach($dataLevel as $key => $value){
                     $data_level_detail = [];
-                    if(empty($dataLevel[$key])){
-                        $data_level_detail[] = ['levelCode' => ''];
-                    }else{
-                        foreach($dataLevel[$key] as $value2){
-                            $data_level_detail[] = [
-                                'levelCode' => $value2
+                    $flag_level = $request->{'flagLevel' . ($key+1)};
+
+                    if (isset($request->grouping_level)) {
+                        if(!empty($dataLevel[$key]) && (bool) $flag_level){
+                            foreach($dataLevel[$key] as $value2){
+                                $data_level_detail[] = [
+                                    'levelCode' => $value2
+                                ];
+                            }
+                            $data_level[] = [
+                                "companyCode" => Session::get('companyCode'),
+                                "levelType" => (string) ($key + 1),
+                                "level" => $data_level_detail
                             ];
                         }
                     }
-                    $data_level[] = [
-                        "companyCode" => Session::get('companyCode'),
-                        "levelType" => (string) ($key + 1),
-                        "level" => $data_level_detail
-                    ];
+                    else {
+                        if(empty($dataLevel[$key])){
+                            $data_level_detail[] = ['levelCode' => ''];
+                        }else{
+                            foreach($dataLevel[$key] as $value2){
+                                $data_level_detail[] = [
+                                    'levelCode' => $value2
+                                ];
+                            }
+                        }
+                        $data_level[] = [
+                            "companyCode" => Session::get('companyCode'),
+                            "levelType" => (string) ($key + 1),
+                            "level" => $data_level_detail
+                        ];
+                    }
                 }
                 $param['levelMaster'] = $data_level;
+            }
+
+            if(isset($request->flagGrandTotal)) {
+                foreach($request->flagGrandTotal as $key => $value) {
+                    $flag_grand_total['level' . $key] = $value;
+                }
             }
 
             // dd(json_encode($param));
@@ -9204,7 +9229,7 @@ public function dataDetailReportFormatPY(Request $request)
             }
             // dd($total);
 
-            $pdf = PDF::loadView('payroll.py_export_periodical_report', ['param' => $param, 'grandTotal' => $total, 'data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet, 'data_period' => $request->period, 'grand_total' => isset($request->grand_total) ? (bool) $request->grand_total : false, 'report_name' => $request->report_name_detail, 'group_name' => $request->select_grouping_detail, 'print_signature' => isset($request->print_signature) ? (bool) $request->print_signature : false, 'level1' => $dataLevel[0], 'company' => Session::get('companyCode')])->setPaper($customPaper, 'landscape')->setOptions(['defaultFont' => 'arial']);
+            $pdf = PDF::loadView('payroll.py_export_periodical_report', ['param' => $param, 'grandTotal' => $total, 'data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet, 'data_period' => $request->period, 'grand_total' => isset($request->grand_total) ? (bool) $request->grand_total : false, 'report_name' => $request->report_name_detail, 'group_name' => $request->select_grouping_detail, 'print_signature' => isset($request->print_signature) ? (bool) $request->print_signature : false, 'level1' => $dataLevel[0], 'flag_grand_total' => $flag_grand_total, 'company' => Session::get('companyCode')])->setPaper($customPaper, 'landscape')->setOptions(['defaultFont' => 'arial']);
             return $pdf->stream($request->report_name_detail . '.pdf');
         }
     }

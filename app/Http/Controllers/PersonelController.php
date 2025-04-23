@@ -597,6 +597,11 @@ class PersonelController extends Controller
     {
         return view('personel.personel_employee_termination');
     }
+    
+    public function pageInsurance()
+    {
+        return view('personel.personel_insurance');
+    }
 
     public function tablePersonalDataPersonel(Request $request)
     {
@@ -4287,6 +4292,46 @@ class PersonelController extends Controller
         return response()->json($data);
     }
 
+    public function dataDetailInsurancePersonel(Request $request)
+    {
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/personel/PePlafon/getAllPlafon',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'plafonYear' => $request->plafonYear,
+                        'plafonCode' => $request->plafonCode,
+                        'rankCode' => $request->rankCode,
+                        'category' => $request->category,
+                        'languageCode' => strtoupper(App::getLocale()),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());  
+
+        return view('personel.personel_insurance_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
+    }
+
     public function tableFringeBenefitPersonalDataPersonel(Request $request)
     {
         if ($request->ajax()) {
@@ -7231,6 +7276,17 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
+            // dd((float) $request->longitude);
+
+            function truncate_decimal($number, $decimals = 20) {
+                if (strpos($number, '.') === false) {
+                    return $number;
+                }
+            
+                list($int, $dec) = explode('.', $number);
+                return $int . '.' . substr($dec, 0, $decimals);
+            }
+
             if($request->record_function == 'New'){
                 $response = $client->post(env('API_URL') . '/mobile/OfficeLocation/insertOfficeLocation',
                     ['body' => json_encode(
@@ -7239,9 +7295,9 @@ class PersonelController extends Controller
                             'companyCode' => Session::get('companyCode'),
                             'officeCode' => $request->office_location_code,
                             'officeDesc' => $request->office_location_desc,
-                            'longitude' => (float) $request->longitude,
-                            'latitude' => (float) $request->latitude,
-                            'maxTolerance' => (float) $request->max_tolerance,
+                            'longitude' => truncate_decimal($request->longitude, 20),
+                            'latitude' => truncate_decimal($request->latitude, 20),
+                            'maxTolerance' => truncate_decimal($request->max_tolerance, 20),
                             'isLock' => isset($request->check_lock) ? (bool) $request->check_lock : false,
                             "changedNo" => 0,
                             "createdDate" => date("Y-m-d\TH:i:s"),
@@ -7263,9 +7319,9 @@ class PersonelController extends Controller
                             'companyCode' => Session::get('companyCode'),
                             'officeCode' => $request->office_location_code,
                             'officeDesc' => $request->office_location_desc,
-                            'longitude' => (float) $request->longitude,
-                            'latitude' => (float) $request->latitude,
-                            'maxTolerance' => (float) $request->max_tolerance,
+                            'longitude' => truncate_decimal($request->longitude, 20),
+                            'latitude' => truncate_decimal($request->latitude, 20),
+                            'maxTolerance' => truncate_decimal($request->max_tolerance, 20),
                             'isLock' => isset($request->check_lock) ? (bool) $request->check_lock : false,
                             "changedDate" => date("Y-m-d\TH:i:s"),
                             "changedBy" => Session::get('userID'),

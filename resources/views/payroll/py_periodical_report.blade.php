@@ -241,6 +241,18 @@
                     </div>
                 </div>
                 <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="check_grouping"
+                                    name="check_grouping" value="true">
+                                <label
+                                    for="check_grouping">{{ __('payroll_periodical_report.label_data_grouping') }}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col-2">
                         <div class="form-group">
                             <label for="report_status">{{ __('payroll_periodical_report.label_report_status') }}</label>
@@ -323,6 +335,22 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <h6>{{ __('payroll_periodical_report.label_display_by_grouping') }}</h6>
+                    </div>
+                </div>
+                <div class="row" id="div-level-check">
+                    <input class="form-check-input" type="checkbox" id="grouping_level" name="grouping_level" hidden>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <h6>{{ __('payroll_periodical_report.label_grand_total') }}</h6>
+                    </div>
+                </div>
+                <div class="row" id="div-grand-total-check">
+                    <input class="form-check-input" type="checkbox" id="grouping_level_grand_total" name="grouping_level_grand_total" hidden>
                 </div>
                 <div class="row">
                     <div class="col-2">
@@ -498,7 +526,7 @@
         var arrData = @json($data);
         var companyCode = @json($companyCode);
 
-        if (arrData) {
+        if (arrData.length > 0) {
             pickerPeriod.setDate(arrData[0].periodYear + "-" + arrData[0].periodMonth + "-01");
         }
 
@@ -550,7 +578,35 @@
                         i + '[]" multiple="multiple"></select>' +
                         '</div></div>'
                     );
+                    
+                    $('#div-level-check').append(
+                        `<div class="col-3">
+                            <div class="form-group">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="flagLevel${i}"
+                                        name="flagLevel${i}" value="true">
+                                    <label
+                                        for="flagLevel${i}">Level ${response.data_level[i - 1].levelDescription}</label>
+                                </div>
+                            </div>
+                        </div>
+                        `
+                    );
 
+                    $('#div-grand-total-check').append(
+                        `<div class="col-3">
+                            <div class="form-group">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="flagGrandTotal${i}"
+                                        name="flagGrandTotal[${i}]" value="true">
+                                    <label
+                                        for="flagGrandTotal[${i}]">Level ${response.data_level[i - 1].levelDescription}</label>
+                                </div>
+                            </div>
+                        </div>
+                        `
+                    );
+                    
                     loadDataLevelCode('#level' + i, i);
                     loadDataFirstLastAllLevel('#level' + i, i);
                 }
@@ -559,6 +615,15 @@
                 $('#notification_error').modal('show');
                 $('#message-notification-error').html(response);
             }
+        });
+
+        function updateGroupingLevelCheckbox() {
+            const anyChecked = $('input[name^="flagLevel"]:checked').length > 0;
+            $('#grouping_level').prop('checked', anyChecked);
+        }
+
+        $(document).on('change', 'input[name^="flagLevel"]', function () {
+            updateGroupingLevelCheckbox();
         });
 
         function htmlDecode(value) {

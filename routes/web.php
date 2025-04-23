@@ -158,6 +158,7 @@ Route::get('personnel/evaluation_report', 'PersonelController@pageEvaluationRepo
 Route::get('personnel/employee_skill_report', 'PersonelController@pageEmployeeSkillReportPersonel');
 Route::get('personnel/employee_turn_over_report', 'PersonelController@pageEmployeeTurnOverReportPersonel');
 Route::get('personnel/employee_termination', 'PersonelController@pageEmployeeTerminationPersonel');
+Route::get('personnel/insurance', 'PersonelController@pageInsurance');
 
 Route::get('personnel/personal_data/table', 'PersonelController@tablePersonalDataPersonel');
 Route::get('personnel/performance/table', 'PersonelController@tablePerformancePersonel');
@@ -293,6 +294,7 @@ Route::get('personnel/final_performance_result/detail_data', 'PersonelController
 Route::get('personnel/employee_mutation/detail_data', 'PersonelController@dataDetailEmployeeMutationPersonel');
 Route::get('personnel/city_name/detail', 'PersonelController@dataDetailCityNamePersonel');
 Route::get('personnel/zip_code/detail', 'PersonelController@dataDetailZipCodeDetailPersonel');
+Route::get('personnel/insurance/detail_data', 'PersonelController@dataDetailInsurancePersonel');
 
 Route::get('personnel/personal_data/fringe_benefit/table', 'PersonelController@tableFringeBenefitPersonalDataPersonel');
 Route::get('personnel/personal_data/dependent/table', 'PersonelController@tableDependentPersonalDataPersonel');
@@ -1442,6 +1444,7 @@ Route::get('plafon_reimbursement/api', 'DataController@dataPlafonReimbursementAP
 Route::get('plafon_reimbursement/func/api', 'DataController@dataPlafonReimbursementFunctionAPI');
 Route::get('medical_service_code/api', 'DataController@dataMedicalServiceCodeAPI');
 Route::get('medical_service_code/ranking/api', 'DataController@dataMedicalServiceCodeRankingAPI');
+Route::get('medical_service_code/paid_type/api', 'DataController@dataMedicalServiceCodePaidTypeAPI');
 
 /* Route Untuk Save Token Device dan Notification Firebase */
 Route::get('save-token', 'DashboardController@saveToken');

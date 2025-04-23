@@ -1449,20 +1449,40 @@ class TransactionController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/mobile/reimbursementmedical/updatebyadmin',
-                ['body' => json_encode(
-                    [
-                        'status'=> $request->status,
+            $param = [
+                'companyCode' => Session::get('companyCode'),
+                'status'=> $request->status,
+                'ticketNo' => $request->ticketNo,
+                'directSuperiorID'=> $request->directSuperiorID,
+                'TotalApprovalHRD'=> $request->totalPayment,
+                // 'paidAmount'=> (int) $request->paidAmount,
+                // 'approvalRemarks'=> $request->approvalRemarks,
+                'sessionID' => 0,
+                'sessionUserID' => Session::get('userID'),
+                'logActionUserID' => Session::get('userID'),
+                'logActionUsername' => Session::get('userName'),
+                'languageCode' => strtoupper(App::getLocale())
+            ];
+
+            if (isset($request->claimForDetail)) {
+                foreach($request->claimForDetail as $key => $value) {
+                    $dataClaimForDetail[] = [
                         'companyCode' => Session::get('companyCode'),
                         'ticketNo' => $request->ticketNo,
-                        'directSuperiorID'=> $request->directSuperiorID,
-                        'sessionUserID' => Session::get('userID'),
-                        'languageCode' => App::getLocale(), 
-                        'paidAmount'=> (int) $request->paidAmount,
-                        'approvalRemarks'=> $request->approvalRemarks
-                       
-                    ]
-                )]
+                        'serviceCode' => $value['serviceCode'],
+                        'claimForCode' => $value['claimForCode'],
+                        'paidAmount' => $value['paidAmount'],
+                    ];
+                }
+            }
+            else {
+                $dataClaimForDetail = [];
+            }
+
+            $param['claimForDetail'] = $dataClaimForDetail;
+
+            $response = $client->put(env('API_URL') . '/mobile/reimbursementmedical/updatebyadmin',
+                ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {
             $response = $e->getResponse();

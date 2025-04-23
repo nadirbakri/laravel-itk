@@ -517,193 +517,153 @@
             @endif
         @endif
     @elseif(count($data) > 0 && (count($data[0]->summary) > 0))
-        @foreach($data[0]->summary as $no => $dataTable)            
-            <?php
-                date_default_timezone_set('Asia/Jakarta');
-                $dateString = $param["period"];
-                $dateTime = strtotime($dateString);
-                $formattedDate = date('F Y', $dateTime);
+    @elseif(count($data) > 0 && (count($data[0]->detailGroupingLevel) > 0))
+    <h3>
+        @if($company == 'NMDI' || $company == 'CITROEN')
+        {{ ($level1[0] == "ALL") ? $data_company[0]->companyName : 'PT ' . $data[0]->detail[0]->companyName }}
+        @else
+        {{ $data_company[0]->companyName }}
+        @endif
+    <br> 
+        @if($company == 'NMDI' || $company == 'CITROEN')
+        {{ ($level1[0] == "ALL") ? $data_company[0]->address : $data[0]->detail[0]->companyLocation }}
+        @else
+        {{ $data_company[0]->address }}
+        @endif
+    </h3>
+    <h3 style="text-align:center">{{ $report_name }}</h3>
+    <h4 style="text-align:center">Period : {{ date('F Y', strtotime($data_period)) }}</h4>
 
-                $total = [];
-                $totalJumlah = 0;
-            ?>
-            @if(!empty($dataTable->data))
-                @if($company == 'IPN' || $company == 'UPM' || $company == 'IGT' || $company == 'IVT' || $company == 'IPNJT')
-                <table>
-                    <thead>
+    {{-- @foreach ($data[0]->detailGroupingLevel as $level)
+        @include('components.recursive-level', ['level' => $level, 'company' => $company, 'grand_total' => $grand_total, 'globalTotal' => &$globalTotal])
+    @endforeach
+     --}}
+    
+    @php
+        $globalTotal = [];
+    @endphp
+
+    @once
+        @php
+            function renderLevel($level, $company, $grand_total, &$globalTotal)
+                {
+                    $total = [];
+
+                    echo '<table>
                         <tr>
-                            <th style="text-align:left; font-weight:bold;">{{ $report_name }}</th>
+                            <th style="min-width: 150px; text-align: left">' . $level->levelDesription . '</th>
+                            <th style="min-width: 50px; text-align: left">' . $level->levelCode . '</th>
+                            <th style="min-width: 100px; text-align: left">' . $level->levelName . '</th>
                         </tr>
-                        <tr>
-                            <th style="text-align:left; font-weight:bold;"><pre>Periode   :    {{ $data_period }}</pre></th>
-                        </tr>
-                    </thead>
-                </table>
-                @else
-                <table style='width: 100%'>
-                    <tr>
-                        <td>Pay Cycle</td>
-                        <td>:</td>
-                        <td>REG - {{ $dataTable->data[0]->companyName }}</td>
-                    </tr>
-                    <tr>
-                        <td>Month / Year</td>
-                        <td>:</td>
-                        <td>{{ $formattedDate }}</td>
-                    </tr>
-                    <tr>
-                        <td>Company</td>
-                        <td>:</td>
-                        <td>{{ $dataTable->data[0]->companyName }}</td>
-                    </tr>
-                </table>
-                @endif
-                <table style="width: 100%;" class="table table-bordered table-hover responsive table_detail">
-                    <thead>
-                        <tr>
-                            @if(!empty($dataTable->data[0]->field))
-                                @foreach($dataTable->data[0]->field as $key_data => $dataRow)
-                                    @if($loop->first)
-                                        <th style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7; font-size: {{ $dataRow->fontSize }}px !important;">No</th>
-                                        @if($company == 'IPN' || $company == 'UPM' || $company == 'IGT' || $company == 'IVT' || $company == 'IPNJT')
-                                        <th colspan="2" style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7; font-size: {{ $dataRow->fontSize }}px !important;">{{ $group_name }}</th>
-                                        @else
-                                        <th style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7; font-size: {{ $dataRow->fontSize }}px !important;">{{ $group_name }}</th>
-                                        @endif
-                                        <th style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7; font-size: {{ $dataRow->fontSize }}px !important;">
-                                            @if($company == 'IPN' || $company == 'UPM' || $company == 'IGT' || $company == 'IVT' || $company == 'IPNJT')
-                                            No of Employees
-                                            @else
-                                            Jumlah
-                                            @endif 
-                                        </th>
-                                    @endif 
-                                    @if(!is_string($dataRow->value))
-                                        <?php
-                                            $total[$dataTable->data[0]->companyName][$key_data] = 0;
-                                            $totalCompany[$dataTable->data[0]->companyName] = 0;
-                                        ?>
-                                    @endif
-                                    <th style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7; font-size: {{ $dataRow->fontSize }}px !important;">{{ $dataRow->tableName }}</th>
-                                @endforeach
-                            @endif
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($dataTable->data as $key => $dataRow)  
-                        <tr>
-                            <td style="text-align:center; vertical-align:middle; border:1px solid #000; font-size: {{ $dataRow->field[0]->fontSize }}px !important;">{{ $key+1 }}</td>
-                            @if($company == 'IPN' || $company == 'UPM' || $company == 'IGT' || $company == 'IVT' || $company == 'IPNJT')
-                            <td style="text-align:center; vertical-align:middle; border:1px solid #000; font-size: {{ $dataRow->field[0]->fontSize }}px !important;">
-                                {{ $dataRow->levelCode }}
-                            </td>
-                            <td style="text-align:center; vertical-align:middle; border:1px solid #000; font-size: {{ $dataRow->field[0]->fontSize }}px !important;">
-                                {{ $dataRow->groupingName }}
-                            </td>
-                            @else
-                            <td style="text-align:center; vertical-align:middle; border:1px solid #000; font-size: {{ $dataRow->field[0]->fontSize }}px !important;">
-                                {{ $dataRow->levelCode }}
-                            </td>
-                            @endif
-                            <td style="text-align:center; vertical-align:middle; border:1px solid #000; font-size: {{ $dataRow->field[0]->fontSize }}px !important;">{{ $dataRow->total }}</td>
-                            <?php $totalJumlah += $dataRow->total; ?>
-                            @foreach($dataRow->field as $key2 => $dataRow2)
-                                <?php
-                                    $alignment = "center";
-                                    if($dataRow2->alignment == 1){
-                                        $alignment = "left";
-                                    }else if($dataRow2->alignment == 2){
-                                        $alignment = "center";
-                                    }else if($dataRow2->alignment == 3){
-                                        $alignment = "right";
-                                    }
-                                ?>
-                                @if(!is_string($dataRow2->value) && $dataRow2->dataFormat == "#,##0")
-                                    <?php
-                                    if(!empty($dataRow2->value)){
-                                        $total[$dataRow->companyName][$key2] += $dataRow2->value;
-                                        $totalCompany[$dataRow->companyName] += $total[$dataRow->companyName][$key2];
-                                    }
-                                    ?>
-                                    <td style="text-align:{{ $alignment }}; border:1px solid #000; font-size: {{ $dataRow2->fontSize }}px !important;">
-                                        @if($company == 'CBI')
-                                            {{ number_format($dataRow2->value, 0, '.', ',') }}
-                                        @else
-                                            {{ empty($dataRow2->value) ? number_format(0, 0, '.', ',') : number_format($dataRow2->value, 0, '.', ',') }}
-                                        @endif
-                                    </td>
-                                @elseif(!is_string($dataRow2->value) && $dataRow2->dataFormat == "#,##0.00")
-                                    <?php
-                                    if(!empty($dataRow2->value)){
-                                        $total[$dataRow->companyName][$key2] += $dataRow2->value;
-                                        $totalCompany[$dataRow->companyName] += $total[$dataRow->companyName][$key2];
-                                    }
-                                    ?>
-                                    <td style="text-align:{{ $alignment }}; border:1px solid #000; font-size: {{ $dataRow2->fontSize }}px !important;">
-                                        @if($company == 'CBI')
-                                            {{ number_format($dataRow2->value, 2, '.', ',') }}
-                                        @else
-                                            {{ empty($dataRow2->value) ? number_format(0, 2, '.', ',') : number_format($dataRow2->value, 2, '.', ',') }}
-                                        @endif
-                                    </td>
-                                @elseif($dataRow2->dataFormat == "dd/MM/yyyy")
-                                    <td style="text-align:{{ $alignment }}; border:1px solid #000; font-size: {{ $dataRow2->fontSize }}px !important;">
-                                        @if($company == 'CBI')
-                                            {{ date('d/m/Y', strtotime($dataRow2->value)) }}
-                                        @else
-                                            {{ empty($dataRow2->value) ? "" : date('d/m/Y', strtotime($dataRow2->value)) }}
-                                        @endif
-                                    </td>
-                                @elseif($dataRow2->dataFormat == "dd MM yyyy")
-                                    <td style="text-align:{{ $alignment }}; border:1px solid #000; font-size: {{ $dataRow2->fontSize }}px !important;">
-                                        @if($company == 'CBI')
-                                            {{ date('d m Y', strtotime($dataRow2->value)) }}
-                                        @else
-                                            {{ empty($dataRow2->value) ? "" : date('d m Y', strtotime($dataRow2->value)) }}
-                                        @endif
-                                    </td>
-                                @else
-                                    <td style="text-align:{{ $alignment }}; border:1px solid #000; font-size: {{ $dataRow2->fontSize }}px !important;">
-                                        @if($company == 'CBI')
-                                            {{ $dataRow2->value }}
-                                        @else
-                                            {{ empty($dataRow2->value) ? "" : $dataRow2->value }}
-                                        @endif
-                                    </td>
-                                @endif
-                            @endforeach
-                        </tr>
-                        @endforeach
-                        <tr>
-                            <td style="text-align:center; vertical-align:middle; border:1px solid #000;">&nbsp;</td>
-                            <td style="text-align:center; vertical-align:middle; border:1px solid #000;">&nbsp;</td>
-                            <td style="text-align:center; vertical-align:middle; border:1px solid #000;">&nbsp;</td>
-                            <td style="text-align:center; vertical-align:middle; border:1px solid #000;">&nbsp;</td>
-                            @foreach($dataTable->data[0]->field as $key2 => $dataRow2)
-                                <td style="border:1px solid #000;">&nbsp;</td>
-                            @endforeach
-                        </tr>
-                        @if($grand_total)
-                            <tr>
-                                @if(!empty($dataTable->data[0]->field))
-                                    <th colspan="4" style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7;">&nbsp;</th>
-                                    @foreach($dataTable->data[0]->field as $key_data => $dataRow)
-                                        <th style="text-align:center; vertical-align:middle; border:1px solid #000; padding:4px; background-color: #97d7f7; font-size: {{ $dataRow->fontSize }}px !important;">{{ $dataRow->tableName }}</th>
-                                    @endforeach
-                                @endif
-                            </tr>
-                            <tr>
-                                <td colspan="3" style="background-color: yellow; text-align:center; border:1px solid #000;">Total per Company</td>
-                                <td style="background-color: yellow; text-align:center; border:1px solid #000;">{{ $totalJumlah }}</td>
-                                @foreach($total[$dataTable->data[0]->companyName] as $key => $totalValue)
-                                    <td style="text-align:right; border:1px solid #000;">{{ number_format($totalValue, 0, ',', '.') }}</td>
-                                @endforeach
-                            </tr>
-                        @endif
-                    </tbody>
-                </table>
-            @endif
-        @endforeach
+                    </table>';
+
+                    // Kalau punya pegawai langsung, isi total dari mereka
+                    if (count($level->employees ?? []) > 0) {
+                        foreach ($level->employees[0]->field as $key => $field) {
+                            $totalKey = $field->field . '_' . $key;
+                            $globalKey = $field->tableName;
+                            $total[$globalKey] = is_string($field->value) ? '' : 0;
+                        }
+
+                        echo '<table class="table table-bordered table-hover responsive table_detail"><thead><tr>';
+                        echo '<th>No</th>';
+                        foreach ($level->employees[0]->field as $field) {
+                            echo '<th>' . $field->tableName . '</th>';
+                        }
+                        echo '</tr></thead><tbody>';
+
+                        foreach ($level->employees as $i => $employee) {
+                            echo '<tr>';
+                            echo '<td>' . ($i + 1) . '</td>';
+
+                            foreach ($employee->field as $j => $field) {
+                                $value = $field->value ?? '';
+                                $totalKey = $field->field . '_' . $j;
+                                $globalKey = $field->tableName;
+
+                                if (!is_string($value) && in_array($field->dataFormat, ['#,##0', '#,##0.00'])) {
+                                    $total[$globalKey] += $value;
+                                    $globalTotal[$globalKey] = ($globalTotal[$globalKey] ?? 0) + $value;
+                                    $formatted = number_format($value, $field->dataFormat === '#,##0.00' ? 2 : 0, '.', ',');
+                                } else {
+                                    $formatted = is_string($value) ? $value : number_format($value);
+                                }
+
+                                echo '<td>' . $formatted . '</td>';
+                            }
+
+                            echo '</tr>';
+                        }
+
+                        echo '</tbody></table>';
+                    }
+
+                    // Lakukan rekursi untuk anak-anak level
+                    if (count($level->levelChild ?? []) > 0) {
+                        foreach ($level->levelChild as $child) {
+                            $childTotal = renderLevel($child, $company, $grand_total, $globalTotal);
+
+                            // Gabungkan child total ke parent
+                            foreach ($childTotal as $key => $value) {
+                                if (!is_string($value)) {
+                                    $total[$key] = ($total[$key] ?? 0) + $value;
+                                }
+                            }
+                        }
+                    }
+
+                    // Tampilkan Grand Total untuk level ini (baik punya pegawai sendiri atau tidak)
+                    if ($grand_total && !empty($total)) {
+                        echo '<table style="margin-top:10px; width: 100%;" class="table table-bordered table-hover responsive table_detail">';
+                        echo '<thead><tr><th colspan="' . count($total) . '" style="background-color:yellow; text-align: left;">Grand Total: ' . $level->levelName . '</th></tr><tr>';
+                        
+                        foreach ($total as $key => $val) {
+                            echo '<th style="text-align:center;">' . $key . '</th>';
+                        }
+
+                        echo '</tr></thead>';
+
+                        echo '<tbody><tr>';
+
+                        foreach ($total as $val) {
+                            echo '<td style="text-align:right;">' . (is_numeric($val) ? number_format($val, 0, ',', '.') : '') . '</td>';
+                        }
+
+                        echo '</tr></tbody></table>';
+                    }
+
+                    return $total;
+                }
+        @endphp
+    @endonce
+
+    @foreach ($data[0]->detailGroupingLevel as $level)
+        @php renderLevel($level, $company, $grand_total, $globalTotal);
+        @endphp
+    @endforeach
+
+    @if (!empty($globalTotal))
+    <h4 style="margin-top: 40px;">GRAND TOTAL KESELURUHAN</h4>
+        <table class="table table-bordered table-hover responsive table_detail" style="width: 100%;">
+            <thead>
+                <tr>
+                    <th style="text-align:center; border:1px solid #000; background-color: #97d7f7;">Keterangan</th>
+                    @foreach($globalTotal as $key => $value)
+                        <th style="text-align:center; border:1px solid #000; background-color: #97d7f7;">{{ $key }}</th>
+                    @endforeach
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="text-align:center; border:1px solid #000;">Grand Total</td>
+                    @foreach($globalTotal as $key => $value)
+                        <td style="text-align:right; border:1px solid #000;">{{ number_format($value, 0, ',', '.') }}</td>
+                    @endforeach
+                </tr>
+            </tbody>
+        </table>
+    @endif
+
     @endif
     @if($print_signature)
         <br>
