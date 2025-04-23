@@ -86,6 +86,7 @@ Route::get('personnel/import_employee_level', 'PersonelController@pageImportEmpl
 Route::get('personnel/import_employee_family', 'PersonelController@pageImportEmployeeFamilyPersonel');
 Route::get('personnel/export_loan_whitelist', 'PersonelController@pageExportLoanWhitelistPersonel');
 Route::get('personnel/employee_mutation', 'PersonelController@pageEmployeeMutationPersonel');
+Route::get('personnel/employee_multiple_location', 'PersonelController@pageEmployeeMultipleLocationPersonel');
 Route::get('personnel/npwp_mutation', 'PersonelController@pageNPWPMutationPersonel');
 Route::get('personnel/termination_data_entry', 'PersonelController@pageTerminationDataEntryPersonel');
 Route::get('personnel/award_data_entry', 'PersonelController@pageAwardDataEntryPersonel');
@@ -326,6 +327,8 @@ Route::get('personnel/format_report/report_format_condition/table', 'PersonelCon
 Route::get('personnel/source_document/detail/table', 'PersonelController@tableSourceDocumentDetailPersonel');
 Route::get('personnel/source_document/signer/table', 'PersonelController@tableSourceDocumentSignerPersonel');
 
+Route::get('personnel/employee_multiple_location/detail/get', 'PersonelController@getDetailEmployeeMultipleLocationPersonel');
+
 Route::get('personnel/nature_of_work/status', 'PersonelController@statusNatureofWorkPersonel');
 Route::get('personnel/grade/status', 'PersonelController@statusGradeCodePersonel');
 Route::get('personnel/position/status', 'PersonelController@statusPositionPersonel');
@@ -459,6 +462,9 @@ Route::post('personnel/import_employee_family/import', 'PersonelController@impor
 Route::post('personnel/plafon/import', 'PersonelController@importPlafonPersonel');
 Route::post('personnel/plafon/export', 'PersonelController@exportPlafonPersonel');
 Route::post('personnel/export_plafon/download', 'PersonelController@downloadTemplatePlafonPersonel');
+Route::post('personnel/employee_multiple_location/download_template', 'PersonelController@downloadTemplateEmployeeMultipleLocationPersonel');
+Route::post('personnel/employee_multiple_location/import', 'PersonelController@importEmployeeMultipleLocationPersonel');
+Route::post('personnel/employee_multiple_location/export', 'PersonelController@exportEmployeeMultipleLocationPersonel');
 
 /* Route Untuk Menu Time Management */
 Route::get('time_management', 'TimeManagementController@pageTimeManagement')->name('time_management');
@@ -785,6 +791,7 @@ Route::post('payroll/payment_slip/proses', 'PayrollController@prosesPaymentSlipP
 Route::post('payroll/salary_historical_report/print', 'PayrollController@printSalaryHistoricalReportPayroll');
 Route::post('payroll/salary_historical_report/print/excel', 'PayrollController@printSalaryHistoricalReportPayrollExcel');
 Route::post('payroll/csv_espt_report_form/print/excel', 'PayrollController@printCSVESPTReportFormPayrollExcel');
+Route::post('payroll/csv_espt_report_form/print/xml', 'PayrollController@printCSVESPTReportFormPayrollXML');
 Route::post('payroll/bonus_thr_report/print', 'PayrollController@printBonusTHRReportPayroll');
 Route::post('payroll/bonus_thr_report/print/excel', 'PayrollController@printBonusTHRReportPayrollExcel');
 Route::post('payroll/spt_pph_1721a1_report/print', 'PayrollController@printSPTPPH1721a1ReportPayroll');

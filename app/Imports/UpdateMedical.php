@@ -75,13 +75,24 @@ class UpdateMedical implements ToCollection, WithStartRow
             );
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            // var_dump($response);
-            if($response->getStatusCode() == 401){
-                return view('error.login');
-            }else if($response->getStatusCode() == 404){
-                return view('error.not_found');
-            }else{
-                return view('error.bad_request');
+
+            $locale = strtoupper(App::getLocale());
+
+            if ($response) {
+                $statusCode = $response->getStatusCode();
+                switch ($statusCode) {
+                    case 401:
+                        $message = ($locale == 'ID') ? 'Akses tidak sah. Silakan login.' : 'Unauthorized access. Please log in.';
+                        break;
+                    case 404:
+                        $message = ($locale == 'ID') ? 'Sumber daya tidak ditemukan.' : 'Resource not found.';
+                        break;
+                    default:
+                        $message = ($locale == 'ID') ? 'Permintaan buruk atau error tak terduga.' : 'Bad request or unexpected error.';
+                        break;
+                }
+            } else {
+                $message = ($locale == 'ID') ? 'Terjadi error yang tidak terduga. Silakan coba lagi nanti.' : 'An unexpected error occurred. Please try again later.';
             }
         }
 

@@ -105,6 +105,7 @@
                             <option value="level">{{ __('personel_import_master_data.select_level') }}</option>
                             <option value="cost_center">{{ __('personel_import_master_data.select_cost_center') }}</option>
                             <option value="location">{{ __('personel_import_master_data.select_location') }}</option>
+                            <option value="office_location">{{ __('personel_import_master_data.select_office_location') }}</option>
                             <option value="position">{{ __('personel_import_master_data.select_position') }}</option>
                             <option value="ranking">{{ __('personel_import_master_data.select_ranking') }}</option>
                             <option value="grade">{{ __('personel_import_master_data.select_grade') }}</option>
@@ -114,6 +115,7 @@
                             <option value="major">{{ __('personel_import_master_data.select_major') }}</option>
                             <option value="city">{{ __('personel_import_master_data.select_city') }}</option>
                             <option value="zip_code">{{ __('personel_import_master_data.select_zip_code') }}</option>
+                            <option value="title">{{ __('personel_import_master_data.select_title') }}</option>
                             <option value="account">{{ __('personel_import_master_data.select_account') }}</option>
                             <option value="journal_template">{{ __('personel_import_master_data.select_journal_template') }}</option>
                         </select>

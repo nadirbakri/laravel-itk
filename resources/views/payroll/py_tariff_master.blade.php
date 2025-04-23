@@ -214,6 +214,12 @@
     
     $(document).ready(function () {
         var table = null;
+        var error = "{{ $errors->any() }}";
+        var msgError = "{{ $errors->first() }}";
+		if (error) {
+			$('#notification_error').modal('show');
+		}
+        
         $('.div-navbar a.disabled').attr('onclick', 'return false;');
 
         $('#tariff_master_table thead tr').clone(true).appendTo('#tariff_master_table thead');
