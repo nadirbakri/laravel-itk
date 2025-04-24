@@ -7050,28 +7050,43 @@ public function dataDetailReportFormatPY(Request $request)
         // dd($arrResult->dataListSet[0]);
 
         $viewReport = 'payroll.py_export_journal_report';
+        $filenameReport = 'Journal Report.pdf';
 
         if(Session::get('companyCode') == 'SWG' || Session::get('companyCode') == 'XSYS' || 
             Session::get('companyCode') == 'GRC'){
             $viewReport = 'payroll.py_export_journal_report_swg';
         }
 
+        if(Session::get('companyCode') == 'CORI'){
+            $filenameReport = 'Payroll_3575_' . date('M', strtotime($request->journal_period)) . '_' . date('Y', strtotime($request->journal_period)) . '.pdf';
+        }else if(Session::get('companyCode') == 'CII'){
+            $filenameReport = 'Payroll_3576_' . date('M', strtotime($request->journal_period)) . '_' . date('Y', strtotime($request->journal_period)) . '.pdf';
+        }
+
         if($arrResult->dataListSet == null){
             $pdf = PDF::loadView($viewReport, [
                 'data' => [], 'companyCode' => Session::get('companyName'), 'period' => (!empty($request->journal_period)) ? date('y-M', strtotime($request->journal_period)) : ""
             ])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
-            return $pdf->stream('Journal Report.pdf');
+            return $pdf->stream($filenameReport);
         }else{
             $pdf = PDF::loadView($viewReport, [
                 'data' => $arrResult->dataListSet[0], 'companyCode' => Session::get('companyName'), 'period' => (!empty($request->journal_period)) ? date('y-M', strtotime($request->journal_period)) : ""
             ])->setPaper('a4', 'landscape')->setOptions(['defaultFont' => 'arial']);
-            return $pdf->stream('Journal Report.pdf');
+            return $pdf->stream($filenameReport);
         }
     }
 
     public function printJournalReportPayrollExcel(Request $request){
         // var_dump($request->journal_period, $request->group_authorized_from, $request->group_authorized_to);
-        return Excel::download(new JournalReportExcel($request->journal_period, $request->group_authorized_from, $request->group_authorized_to), 'Journal Report.xlsx');
+        $filenameReport = 'Journal Report.xlsx';
+
+        if(Session::get('companyCode') == 'CORI'){
+            $filenameReport = 'Payroll_3575_' . date('M', strtotime($request->journal_period)) . '_' . date('Y', strtotime($request->journal_period)) . '.xlsx';
+        }else if(Session::get('companyCode') == 'CII'){
+            $filenameReport = 'Payroll_3576_' . date('M', strtotime($request->journal_period)) . '_' . date('Y', strtotime($request->journal_period)) . '.xlsx';
+        }
+
+        return Excel::download(new JournalReportExcel($request->journal_period, $request->group_authorized_from, $request->group_authorized_to), $filenameReport);
     }
 
     public function printJournalReportPayrollCSV(Request $request){
@@ -7136,6 +7151,14 @@ public function dataDetailReportFormatPY(Request $request)
             $array = array_map(fn($obj) => json_decode(json_encode($obj), true), $arrResult->dataListSet[0]);
         }
 
+        $filenameReport = 'Journal Report.csv';
+
+        if(Session::get('companyCode') == 'CORI'){
+            $filenameReport = 'Payroll_3575_' . date('M', strtotime($request->journal_period)) . '_' . date('Y', strtotime($request->journal_period)) . '.csv';
+        }else if(Session::get('companyCode') == 'CII'){
+            $filenameReport = 'Payroll_3576_' . date('M', strtotime($request->journal_period)) . '_' . date('Y', strtotime($request->journal_period)) . '.csv';
+        }
+
         $array = array_filter($array, function($value) {
             return !empty($value);
         });
@@ -7189,7 +7212,7 @@ public function dataDetailReportFormatPY(Request $request)
 
         return Response::make($csvContent, 200, [
             'Content-Type' => 'text/csv',
-            'Content-Disposition' => 'attachment; filename="Journal Report.csv"',
+            'Content-Disposition' => 'attachment; filename=' . $filenameReport . '',
         ]);
     }
 
