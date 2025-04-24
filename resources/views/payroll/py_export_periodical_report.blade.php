@@ -545,11 +545,12 @@
     
     @php
         $globalTotal = [];
+        $totals = [];
     @endphp
 
     @once
         @php
-            function renderLevel($level, $company, $grand_total, &$globalTotal)
+            function renderLevel($level, $company, $grand_total, &$globalTotal, $flag_grand_total, $totals, $parentCode = null)
                 {
                     $total = [];
 
@@ -561,7 +562,6 @@
                         </tr>
                     </table>';
 
-                    // Kalau punya pegawai langsung, isi total dari mereka
                     if (count($level->employees ?? []) > 0) {
                         foreach ($level->employees[0]->field as $key => $field) {
                             $totalKey = $field->field . '_' . $key;
@@ -569,7 +569,7 @@
                             $total[$globalKey] = is_string($field->value) ? '' : 0;
                         }
 
-                        echo '<table class="table table-bordered table-hover responsive table_detail"><thead><tr>';
+                        echo '<table class="table table-bordered table-hover responsive table_detail" style="margin-bottom: 20px; margin-top: 20px;"><thead><tr>';
                         echo '<th>No</th>';
                         foreach ($level->employees[0]->field as $field) {
                             echo '<th>' . $field->tableName . '</th>';
@@ -599,15 +599,29 @@
                             echo '</tr>';
                         }
 
+                        // $flagKey = 'level' . strval($level->levelType);
+                        // $key = ($parentCode ? $parentCode . '|' : '') . $level->levelCode;
+
+                        // if (isset($flag_grand_total[$flagKey]) && $flag_grand_total[$flagKey] === 'true') {
+                        //     $levelTotals = $totals[$flagKey][$key] ?? [];
+
+                        //     if (!empty($levelTotals)) {
+                        //         echo '<tr style="background-color: yellow">';
+                        //         echo '<td colspan="3"><strong>Total</strong></td>';
+
+                        //         foreach ($levelTotals as $val) {
+                        //             echo '<td style="text-align:right;">' . (is_numeric($val) ? number_format($val, 0, ',', '.') : '') . '</td>';
+                        //         }
+                        //     }
+                        // }
+
                         echo '</tbody></table>';
                     }
 
-                    // Lakukan rekursi untuk anak-anak level
                     if (count($level->levelChild ?? []) > 0) {
                         foreach ($level->levelChild as $child) {
-                            $childTotal = renderLevel($child, $company, $grand_total, $globalTotal);
+                            $childTotal = renderLevel($child, $company, $grand_total, $globalTotal, $flag_grand_total, $totals, $level->levelCode);
 
-                            // Gabungkan child total ke parent
                             foreach ($childTotal as $key => $value) {
                                 if (!is_string($value)) {
                                     $total[$key] = ($total[$key] ?? 0) + $value;
@@ -616,38 +630,80 @@
                         }
                     }
 
-                    // Tampilkan Grand Total untuk level ini (baik punya pegawai sendiri atau tidak)
-                    if ($grand_total && !empty($total)) {
-                        echo '<table style="margin-top:10px; width: 100%;" class="table table-bordered table-hover responsive table_detail">';
-                        echo '<thead><tr><th colspan="' . count($total) . '" style="background-color:yellow; text-align: left;">Grand Total: ' . $level->levelName . '</th></tr><tr>';
-                        
-                        foreach ($total as $key => $val) {
-                            echo '<th style="text-align:center;">' . $key . '</th>';
+                    $flagKey = 'level' . strval($level->levelType);
+                    $key = ($parentCode ? $parentCode . '|' : '') . $level->levelCode;
+
+                    if (isset($flag_grand_total[$flagKey]) && $flag_grand_total[$flagKey] === 'true') {
+                        $levelTotals = $totals[$flagKey][$key] ?? [];
+
+                        if (!empty($levelTotals)) {
+                            echo '<table style="margin-top:20px; margin-bottom: 20px; width: 100%;" class="table table-bordered table-hover responsive table_detail">';
+                            echo '<thead><tr><th colspan="' . count($levelTotals) . '" style="background-color:yellow; text-align: left;">Grand Total Level ' . $level->levelDesription . ' : ' . $level->levelName . '</th></tr><tr>';
+
+                            foreach ($levelTotals as $key => $val) {
+                                echo '<th style="text-align:center;">' . $key . '</th>';
+                            }
+
+                            echo '</tr></thead><tbody><tr>';
+
+                            foreach ($levelTotals as $val) {
+                                echo '<td style="text-align:right;">' . (is_numeric($val) ? number_format($val, 0, '.', ',') : '') . '</td>';
+                            }
+
+                            echo '</tr></tbody></table>';
                         }
-
-                        echo '</tr></thead>';
-
-                        echo '<tbody><tr>';
-
-                        foreach ($total as $val) {
-                            echo '<td style="text-align:right;">' . (is_numeric($val) ? number_format($val, 0, ',', '.') : '') . '</td>';
-                        }
-
-                        echo '</tr></tbody></table>';
                     }
 
                     return $total;
                 }
+
+                function sumByLevel($data, &$totals, $currentLevel = 1, $parentCode = null) {
+                    foreach ($data as $level) {
+                        $localTotal = [];
+
+                        foreach ($level->employees ?? [] as $emp) {
+                            foreach ($emp->field as $f) {
+                                $fieldName = $f->tableName;
+                                $value = $f->value;
+
+                                if (is_string($value)) continue;
+
+                                $localTotal[$fieldName] = ($localTotal[$fieldName] ?? 0) + floatval($value);
+                            }
+                        }
+
+                        if (!empty($level->levelChild)) {
+                            sumByLevel($level->levelChild, $totals, $currentLevel + 1, $level->levelCode);
+
+                            foreach ($level->levelChild as $child) {
+                                $childKey = $level->levelCode . '|' . $child->levelCode;
+                                $childTotals = $totals['level' . ($currentLevel + 1)][$childKey] ?? [];
+
+                                foreach ($childTotals as $key => $value) {
+                                    $localTotal[$key] = ($localTotal[$key] ?? 0) + $value;
+                                }
+                            }
+                        }
+
+                        $key = ($parentCode ? $parentCode . '|' : '') . $level->levelCode;
+                        $totals['level' . $currentLevel][$key] = $localTotal;
+                    }
+                }
         @endphp
     @endonce
 
+    @php
+        sumByLevel($data[0]->detailGroupingLevel, $totals);
+    @endphp
+
     @foreach ($data[0]->detailGroupingLevel as $level)
-        @php renderLevel($level, $company, $grand_total, $globalTotal);
+        @php 
+            renderLevel($level, $company, $grand_total, $globalTotal, $flag_grand_total, $totals);
         @endphp
     @endforeach
 
-    @if (!empty($globalTotal))
-    <h4 style="margin-top: 40px;">GRAND TOTAL KESELURUHAN</h4>
+    @if (!empty($globalTotal) && $grand_total)
+        <h4 style="margin-top: 40px;">GRAND TOTAL KESELURUHAN</h4>
         <table class="table table-bordered table-hover responsive table_detail" style="width: 100%;">
             <thead>
                 <tr>
