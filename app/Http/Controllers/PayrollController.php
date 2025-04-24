@@ -7129,7 +7129,6 @@ public function dataDetailReportFormatPY(Request $request)
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
-        // dd($arrResult->dataListSet[0]);
 
         if($arrResult->dataListSet == null){
             $array = [];
@@ -7157,11 +7156,30 @@ public function dataDetailReportFormatPY(Request $request)
 
         $tempFile = fopen('php://temp', 'w+');
 
-        foreach ($array as $row) {
-            $row = array_pad($row, count($csvHeader), '');
+        $totalAmountD = 0;
+        $totalAmountK = 0;
+
+        foreach ($array as $i => $row) {
+            $row = array_pad($row, count($csvHeader3), '');
+            $row = array_slice($row, 0, count($csvHeader3));
+
+            if ($i > 2) {
+                // dd($row);
+                $amountD = isset($row["AmountD"]) ? $row["AmountD"] : 0;
+                $amountK = isset($row["AmountK"]) ? $row["AmountK"] : 0;
+        
+                $totalAmountD += $amountD;
+                $totalAmountK += $amountK;
+            }
 
             fputcsv($tempFile, $row);
         }
+
+        $totalRow = array_pad([], count($csvHeader3), '');
+        $totalRow[5] = $totalAmountD;
+        $totalRow[6] = $totalAmountK;
+
+        fputcsv($tempFile, $totalRow);
 
         rewind($tempFile);
         

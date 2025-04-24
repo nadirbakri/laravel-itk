@@ -52,7 +52,15 @@
             </tr>
         </thead>
         <tbody>
+            <?php
+            $totalAmountD = 0;
+            $totalAmountK = 0;
+            ?>
             @foreach($data as $key => $value)
+            <?php
+            $totalAmountD += $value->AmountD;
+            $totalAmountK += $value->AmountK;
+            ?>
             <tr>
                 <td style="border: 1px solid black;">{{ $value->DocNo }}</td>
                 <td style="border: 1px solid black;">{{ $value->Company }}</td>
@@ -65,6 +73,17 @@
                 <td style="border: 1px solid black;">{{ $value->SAPCostCenter }}</td>
             </tr>
             @endforeach
+            <tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>{{ $totalAmountD }}</td>
+                <td>{{ $totalAmountK }}</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+            </tr>
         </tbody>
     </table>
 
