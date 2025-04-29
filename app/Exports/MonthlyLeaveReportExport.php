@@ -124,7 +124,7 @@ class MonthlyLeaveReportExport implements FromView, ShouldAutoSize
         $arrResult = json_decode($response->getBody()->getContents());
         $arrResult1 = json_decode($dataabsent->getBody()->getContents());
 
-        // var_dump($arrResult1->dataListSet);
+        // dd($arrResult->dataListSet);
 
         if($arrResult->dataListSet == null){
             return view('time_management.tm_export_monthly_leave_report', [
