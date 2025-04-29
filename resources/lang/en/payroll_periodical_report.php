@@ -3,14 +3,6 @@
 return [
     'judul' => 'Periodical Report',
     'list' => 'Periodical Report',
-    'label_report_sequence' => 'Report Sequence',
-    'label_level' => 'Level',
-    'label_subtotal_by_level' => 'Subtotal by Level',
-    'label_page_break' => 'Page Break',
-    'label_level_1' => 'Level 1',
-    'label_level_2' => 'Level 2',
-    'label_level_3' => 'Level 3',
-    'label_level_4' => 'Level 4',
     'label_grand_total' => 'Grand Total',
     'label_report_name' => 'Report Name',
     'label_employee_no' => 'Employee No',
@@ -34,8 +26,12 @@ return [
     'label_ranking' => 'Ranking',
     'label_location' => 'Location',
     'label_group' => 'Group',
+    'label_level' => 'Level',
+    'label_page_break' => 'Page Break',
     'btn_preview' => 'Preview',
     'btn_send_to' => 'Send To',
+    'btn_save' => 'Save',
+    'btn_cancel' => 'Cancel',
     'alert_success' => 'Success !'
 
 ]

@@ -713,6 +713,252 @@
                 @endif
             @endif
         @endforeach
+
+    @elseif(count($data) > 0 && (count($data[0]->detailGroupingLevel) > 0))
+        {{-- <h3>
+            @if($company == 'NMDI' || $company == 'CITROEN')
+            {{ ($level1[0] == "ALL") ? $data_company[0]->companyName : 'PT ' . $data[0]->detail[0]->companyName }}
+            @else
+            {{ $data_company[0]->companyName }}
+            @endif
+        <br> 
+            @if($company == 'NMDI' || $company == 'CITROEN')
+            {{ ($level1[0] == "ALL") ? $data_company[0]->address : $data[0]->detail[0]->companyLocation }}
+            @else
+            {{ $data_company[0]->address }}
+            @endif
+        </h3>
+        <h3 style="text-align:center">{{ $report_name }}</h3>
+        <h4 style="text-align:center">Period : {{ date('F Y', strtotime($data_period)) }}</h4> --}}
+
+        <table>
+            <thead>
+                <tr>
+                    <th colspan="25">
+                        @if($company == 'NMDI' || $company == 'CITROEN')
+                        {{ ($level1[0] == "ALL") ? $data_company[0]->companyName : 'PT ' . $data[0]->detail[0]->companyName }}
+                        @else
+                        {{ $data_company[0]->companyName }}
+                        @endif
+                    </th>
+                </tr>
+                <tr>
+                    <th colspan="25">
+                        @if($company == 'NMDI' || $company == 'CITROEN')
+                        {{ ($level1[0] == "ALL") ? $data_company[0]->address : $data[0]->detail[0]->companyLocation }}
+                        @else
+                        {{ $data_company[0]->address }}
+                        @endif
+                    </th>
+                </tr>
+                <tr>
+                    <th colspan="25" style="text-align:left; font-weight:bold;">{{ $report_name }}</th>
+                </tr>
+                <tr>
+                    <th colspan="25" style="text-align:left; font-weight:bold;"><pre>Periode   :    {{ $data_period }}</pre></th>
+                </tr>
+                <tr></tr>
+            </thead>
+        </table>
+        
+        @php
+            $globalTotal = [];
+            $totals = [];
+            $pageBreakWritten = false;
+        @endphp
+    
+        @once
+            @php
+                function renderLevel($level, $company, $grand_total, &$globalTotal, $flag_grand_total, $totals, $parentCode = null, $flag_page_break, $pageBreakWritten, $isLastLevel = false)
+                {
+                    $total = [];
+                    $flagKey = 'level' . strval($level->levelType);
+                    $childKey = ($parentCode ? $parentCode . '|' : '') . $level->levelCode;
+
+                    echo '<table>
+                        <tr>
+                            <th style="min-width: 150px; text-align: left; font-weight: bold;">' . $level->levelDesription . '</th>
+                            <th style="min-width: 50px; text-align: left; font-weight: bold;">' . $level->levelCode . '</th>
+                            <th style="min-width: 100px; text-align: left; font-weight: bold;">' . $level->levelName . '</th>
+                        </tr>
+                    </table>';
+
+                    if (count($level->employees ?? []) > 0) {
+                        foreach ($level->employees[0]->field as $key => $field) {
+                            $totalKey = $field->field . '_' . $key;
+                            $globalKey = $field->tableName;
+                            $total[$globalKey] = is_string($field->value) ? '' : 0;
+                        }
+
+                        echo '<table class="table table-bordered table-hover responsive table_detail"><thead><tr>';
+                        echo '<th style="text-align:center; border:1px solid #000; font-weight: bold; background-color: #97d7f7;">No</th>';
+                        foreach ($level->employees[0]->field as $field) {
+                            echo '<th style="text-align:center; border:1px solid #000; font-weight: bold; background-color: #97d7f7;">' . $field->tableName . '</th>';
+                        }
+                        echo '</tr></thead><tbody>';
+
+                        foreach ($level->employees as $i => $employee) {
+                            echo '<tr>';
+                            echo '<td style="text-align:center; border:1px solid #000;">' . ($i + 1) . '</td>';
+
+                            foreach ($employee->field as $j => $field) {
+                                $value = $field->value ?? '';
+                                $totalKey = $field->field . '_' . $j;
+                                $globalKey = $field->tableName;
+
+                                if (!is_string($value) && in_array($field->dataFormat, ['#,##0', '#,##0.00'])) {
+                                    $total[$globalKey] += $value;
+                                    $globalTotal[$globalKey] = ($globalTotal[$globalKey] ?? 0) + $value;
+                                    $formatted = number_format($value, $field->dataFormat === '#,##0.00' ? 2 : 0, ',', '.');
+                                } else {
+                                    $formatted = is_string($value) ? $value : number_format($value);
+                                }
+
+                                echo '<td style="border:1px solid #000;">' . $formatted . '</td>';
+                            }
+
+                            echo '</tr>';
+                        }
+
+                        echo '</tbody></table>';
+                    }
+
+                    if (count($level->levelChild ?? []) > 0) {
+                        $isFirst = true;
+                        foreach ($level->levelChild as $child) {
+                            $childFlagKey = 'level' . strval($level->levelType + 1);
+
+                            if ($isFirst) {
+                                if (!$pageBreakWritten && isset($flag_page_break[$childFlagKey]) && $flag_page_break[$childFlagKey] === 'true') {
+                                    echo '<tr>
+                                            <td>__PAGE_BREAK__</td>
+                                        </tr>';
+                                    $pageBreakWritten = true;
+                                }
+                                $isFirst = false;
+                            }
+
+                            [$childTotal, $pageBreakWritten] = renderLevel($child, $company, $grand_total, $globalTotal, $flag_grand_total, $totals, $level->levelCode, $flag_page_break, $pageBreakWritten, $isLastLevel);
+
+                            foreach ($childTotal as $key => $value) {
+                                if (!is_string($value)) {
+                                    $total[$key] = ($total[$key] ?? 0) + $value;
+                                }
+                            }
+                        }
+                    }
+
+                    if (isset($flag_grand_total[$flagKey]) && $flag_grand_total[$flagKey] === 'true') {
+                        $levelTotals = $totals[$flagKey][$childKey] ?? [];
+
+                        if (!empty($levelTotals)) {
+                            echo '<table style="margin-top:20px; margin-bottom: 20px; width: 100%;" class="table table-bordered table-hover responsive table_detail">';
+                            echo '<thead><tr>';
+
+                            for ($i = 0; $i < 3; $i++) {
+                                echo '<th style="text-align:center; border:1px solid #000; font-weight: bold; background-color: #97d7f7;"></th>';
+                            }
+
+                            foreach ($levelTotals as $key => $val) {
+                                echo '<th style="text-align:center; border:1px solid #000; font-weight: bold; background-color: #97d7f7;">' . $key . '</th>';
+                            } 
+
+                            echo '</tr></thead><tbody><tr><td style="border:1px solid #000; font-weight: bold; background-color:yellow;">Grand Total Level ' . $level->levelDesription . ' : ' . $level->levelName . '</td><td style="border:1px solid #000;"></td><td style="border:1px solid #000;"></td>';
+
+                            foreach ($levelTotals as $val) {
+                                echo '<td style="text-align:right; border: 1px solid #000;">' . (is_numeric($val) ? number_format($val, 0, ',', '.') : '') . '</td>';
+                            }
+
+                            echo '</tr></tbody></table>';
+                        }
+                    }
+
+                    if (isset($flag_page_break[$flagKey]) && $flag_page_break[$flagKey] === 'true') {
+                        echo '<br>';
+                    }
+
+                    $addParent = 0;
+                    foreach ($flag_page_break as $key => $val) {
+                        if ($val === 'true') {
+                            preg_match('/\d+/', $key, $matches);
+                            $addParent = isset($matches[0]) ? (int) $matches[0] : null;
+                        }
+                    }
+
+                    if (!$parentCode && (isset($flag_page_break[$flagKey]) && $flag_page_break[$flagKey] === 'true') && !$isLastLevel && $addParent > 1) {
+                        echo '<tr><td>__PAGE_BEFORE__</td></tr>';
+                    }
+
+                    return [$total, $pageBreakWritten];
+                }
+    
+                function sumByLevel($data, &$totals, $currentLevel = 1, $parentCode = null) {
+                    foreach ($data as $level) {
+                        $localTotal = [];
+
+                        foreach ($level->employees ?? [] as $emp) {
+                            foreach ($emp->field as $f) {
+                                $fieldName = $f->tableName;
+                                $value = $f->value;
+
+                                if (is_string($value)) continue;
+
+                                $localTotal[$fieldName] = ($localTotal[$fieldName] ?? 0) + floatval($value);
+                            }
+                        }
+
+                        if (!empty($level->levelChild)) {
+                            sumByLevel($level->levelChild, $totals, $currentLevel + 1, $level->levelCode);
+
+                            foreach ($level->levelChild as $child) {
+                                $childKey = $level->levelCode . '|' . $child->levelCode;
+                                $childTotals = $totals['level' . ($currentLevel + 1)][$childKey] ?? [];
+
+                                foreach ($childTotals as $key => $value) {
+                                    $localTotal[$key] = ($localTotal[$key] ?? 0) + $value;
+                                }
+                            }
+                        }
+
+                        $key = ($parentCode ? $parentCode . '|' : '') . $level->levelCode;
+                        $totals['level' . $currentLevel][$key] = $localTotal;
+                    }
+                }
+            @endphp
+        @endonce
+    
+        @php
+            sumByLevel($data[0]->detailGroupingLevel, $totals);
+        @endphp
+    
+        @foreach ($data[0]->detailGroupingLevel as $idx => $level)
+            @php 
+                $isLastLevel = $idx === count($data[0]->detailGroupingLevel) - 1;
+                [$total, $pageBreakWritten] = renderLevel($level, $company, $grand_total, $globalTotal, $flag_grand_total, $totals, null, $flag_page_break, $pageBreakWritten, $isLastLevel);
+            @endphp
+        @endforeach
+    
+        @if (!empty($globalTotal) && $grand_total)
+            <h4 style="margin-top: 40px; background-color: yellow;">GRAND TOTAL KESELURUHAN</h4>
+            <table class="table table-bordered table-hover responsive table_detail" style="width: 100%;">
+                <thead>
+                    <tr>
+                        <th style="text-align:center; border:1px solid #000; background-color: #97d7f7; font-weight: bold;">Keterangan</th>
+                        @foreach($globalTotal as $key => $value)
+                            <th style="text-align:center; border:1px solid #000; background-color: #97d7f7; font-weight: bold;">{{ $key }}</th>
+                        @endforeach
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="text-align:center; border:1px solid #000; font-weight: bold;  background-color: yellow;">Grand Total</td>
+                        @foreach($globalTotal as $key => $value)
+                            <td style="text-align:right; border:1px solid #000;">{{ number_format($value, 0, '.', ',') }}</td>
+                        @endforeach
+                    </tr>
+                </tbody>
+            </table>
+        @endif
     @endif
     @if($print_signature)
         <br>

@@ -26,8 +26,12 @@ return [
     'label_ranking' => 'Ranking',
     'label_location' => 'Lokasi',
     'label_group' => 'Grup',
+    'label_level' => 'Tingkatan',
+    'label_page_break' => 'Jeda Halaman',
     'btn_preview' => 'Pratinjau',
     'btn_send_to' => 'Kirim Ke',
+    'btn_save' => 'Simpan',
+    'btn_cancel' => 'Batal',
     'alert_success' => 'Sukses !'
 
 ]

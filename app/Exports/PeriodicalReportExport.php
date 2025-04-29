@@ -12,6 +12,7 @@ use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use PhpOffice\PhpSpreadsheet\Cell\DataType;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\WithCustomValueBinder;
+use Maatwebsite\Excel\Events\AfterSheet;
 use PhpOffice\PhpSpreadsheet\Cell\DefaultValueBinder;
 use Illuminate\Support\Facades\Storage;
 use Validator;
@@ -20,7 +21,7 @@ use App;
 
 class PeriodicalReportExport extends DefaultValueBinder implements WithCustomValueBinder, FromView, WithEvents, ShouldAutoSize
 {
-    public function __construct($reportName, $grandTotal, $employeeNoFrom, $employeeNoTo, $period, $costCenterCodeFrom, $costCenterCodeTo, $grouping, $groupingType, $multiCostCenter, $reportStatus, $reportType, $groupAuthorizedCodeFrom, $groupAuthorizedCodeTo, $displayLine, $printSignature, $position, $ranking, $location, $group, $dataLevel, $reportNameDetail, $groupNameDetail)
+    public function __construct($reportName, $grandTotal, $employeeNoFrom, $employeeNoTo, $period, $costCenterCodeFrom, $costCenterCodeTo, $grouping, $groupingType, $multiCostCenter, $reportStatus, $reportType, $groupAuthorizedCodeFrom, $groupAuthorizedCodeTo, $displayLine, $printSignature, $position, $ranking, $location, $group, $dataLevel, $reportNameDetail, $groupNameDetail, $groupingLevel, $flagLevel, $flagGrandTotal, $flagPageBreak)
     {
         $this->reportName = $reportName;
         $this->grandTotal = $grandTotal;
@@ -45,6 +46,10 @@ class PeriodicalReportExport extends DefaultValueBinder implements WithCustomVal
         $this->dataLevel = $dataLevel;
         $this->reportNameDetail = $reportNameDetail;
         $this->groupNameDetail = $groupNameDetail;
+        $this->groupingLevel = $groupingLevel;
+        $this->flagLevel = $flagLevel;
+        $this->flagGrandTotal = $flagGrandTotal;
+        $this->flagPageBreak = $flagPageBreak;
     }
 
     public function bindValue(Cell $cell, $value)
@@ -75,6 +80,7 @@ class PeriodicalReportExport extends DefaultValueBinder implements WithCustomVal
                 "employeeNoTo" => $this->employeeNoTo,
                 "period" => $this->period,
                 "statusPeriod" => 0,
+                "groupingLevel" => $this->groupingLevel,
                 "deptGroup" => $this->grouping,
                 "multiCostCenter" => $this->multiCostCenter,
                 "reportStatus" => $this->reportStatus,
@@ -147,25 +153,78 @@ class PeriodicalReportExport extends DefaultValueBinder implements WithCustomVal
                 $param['group'] = $data_group;
             }
 
+            // if(!empty($this->dataLevel)){
+            //     foreach($this->dataLevel as $key => $value){
+            //         $data_level_detail = [];
+            //         if(empty($this->dataLevel[$key])){
+            //             $data_level_detail[] = ['levelCode' => ''];
+            //         }else{
+            //             foreach($this->dataLevel[$key] as $value2){
+            //                 $data_level_detail[] = [
+            //                     'levelCode' => $value2
+            //                 ];
+            //             }
+            //         }
+            //         $data_level[] = [
+            //             "companyCode" => Session::get('companyCode'),
+            //             "levelType" => (string) ($key + 1),
+            //             "level" => $data_level_detail
+            //         ];
+            //     }
+            //     $param['levelMaster'] = $data_level;
+            // }
+
+            $data_level = [];
+
             if(!empty($this->dataLevel)){
                 foreach($this->dataLevel as $key => $value){
                     $data_level_detail = [];
-                    if(empty($this->dataLevel[$key])){
-                        $data_level_detail[] = ['levelCode' => ''];
-                    }else{
-                        foreach($this->dataLevel[$key] as $value2){
-                            $data_level_detail[] = [
-                                'levelCode' => $value2
+                    $flag_level = $request->flagLevel[$key + 1] ?? null;
+
+                    if (isset($request->grouping_level)) {
+                        if(!empty($this->dataLevel[$key]) && isset($flag_level) && (bool) $flag_level){
+                            foreach($this->dataLevel[$key] as $value2){
+                                $data_level_detail[] = [
+                                    'levelCode' => $value2
+                                ];
+                            }
+                            $data_level[] = [
+                                "companyCode" => Session::get('companyCode'),
+                                "levelType" => (string) ($key + 1),
+                                "level" => $data_level_detail
                             ];
                         }
                     }
-                    $data_level[] = [
-                        "companyCode" => Session::get('companyCode'),
-                        "levelType" => (string) ($key + 1),
-                        "level" => $data_level_detail
-                    ];
+                    else {
+                        if(empty($this->dataLevel[$key])){
+                            $data_level_detail[] = ['levelCode' => ''];
+                        }else{
+                            foreach($this->dataLevel[$key] as $value2){
+                                $data_level_detail[] = [
+                                    'levelCode' => $value2
+                                ];
+                            }
+                        }
+                        $data_level[] = [
+                            "companyCode" => Session::get('companyCode'),
+                            "levelType" => (string) ($key + 1),
+                            "level" => $data_level_detail
+                        ];
+                    }
                 }
                 $param['levelMaster'] = $data_level;
+            }
+
+            if($this->flagGrandTotal) {
+                foreach($this->flagGrandTotal as $key => $value) {
+                    $flag_grand_total['level' . $key] = $value;
+                }
+            }
+            
+            if($this->flagPageBreak) {
+                foreach($this->flagPageBreak as $key => $value) {
+                    $flag_page_break['level' . $key] = $value;
+                }
             }
 
             // dd(json_encode($param));
@@ -323,7 +382,7 @@ class PeriodicalReportExport extends DefaultValueBinder implements WithCustomVal
 
         if($arrResult->dataListSet == null){
             return view('payroll.py_export_periodical_report_excel', [
-                'param' => $param, 'grandTotal' => [], 'data' => [], 'data_company' => $arrCompany->dataListSet, 'data_period' => $this->period, 'grand_total' => $this->grandTotal, 'print_signature' => $this->printSignature, 'level1' => $this->dataLevel[0], 'report_name' => $this->reportNameDetail, 'group_name' => $this->groupNameDetail, 'company' => Session::get('companyCode')
+                'param' => $param, 'grandTotal' => [], 'data' => [], 'data_company' => $arrCompany->dataListSet, 'data_period' => $this->period, 'grand_total' => $this->grandTotal, 'print_signature' => $this->printSignature, 'level1' => $this->dataLevel[0], 'report_name' => $this->reportNameDetail, 'group_name' => $this->groupNameDetail, 'flag_grand_total' => $flag_grand_total ?? [], 'flag_page_break' => $flag_page_break ?? [], 'company' => Session::get('companyCode')
             ]);
         }else{
             $total = [];
@@ -404,7 +463,7 @@ class PeriodicalReportExport extends DefaultValueBinder implements WithCustomVal
             // dd($total);
 
             return view('payroll.py_export_periodical_report_excel', [
-                'param' => $param, 'grandTotal' => $total, 'data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet, 'data_period' => $this->period, 'grand_total' => $this->grandTotal, 'print_signature' => $this->printSignature, 'level1' => $this->dataLevel[0], 'report_name' => $this->reportNameDetail, 'group_name' => $this->groupNameDetail, 'company' => Session::get('companyCode')
+                'param' => $param, 'grandTotal' => $total, 'data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet, 'data_period' => $this->period, 'grand_total' => $this->grandTotal, 'print_signature' => $this->printSignature, 'level1' => $this->dataLevel[0], 'report_name' => $this->reportNameDetail, 'group_name' => $this->groupNameDetail, 'flag_grand_total' => $flag_grand_total ?? [], 'flag_page_break' => $flag_page_break ?? [], 'company' => Session::get('companyCode')
             ]); 
         }
     }
@@ -413,18 +472,157 @@ class PeriodicalReportExport extends DefaultValueBinder implements WithCustomVal
     {
         return [
             AfterSheet::class => function(AfterSheet $event) {
-                $sheet = $event->sheet;
+                // $sheet = $event->sheet;
 
-                $cells = $sheet->getDelegate()->getElementsByTagName('td');
-                foreach ($cells as $cell) {
-                    $dataFormat = $cell->getAttribute('data-format');
+                // $cells = $sheet->getDelegate()->getElementsByTagName('td');
+                // foreach ($cells as $cell) {
+                //     $dataFormat = $cell->getAttribute('data-format');
 
-                    // Set format sel jika atribut data-format ditemukan
-                    if (!empty($dataFormat)) {
-                        $sheet->getStyle($cell->getCoordinate())->getNumberFormat()->setFormatCode($dataFormat);
+                //     // Set format sel jika atribut data-format ditemukan
+                //     if (!empty($dataFormat)) {
+                //         $sheet->getStyle($cell->getCoordinate())->getNumberFormat()->setFormatCode($dataFormat);
+                //     }
+                // }
+
+                $worksheet = $event->sheet->getDelegate();
+                $highestRow = $worksheet->getHighestRow();
+                $highestColumn = $worksheet->getHighestColumn();
+                $highestColumnIndex = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::columnIndexFromString($highestColumn);
+                
+                for ($row = 1; $row <= $highestRow; $row++) {
+                    $pageBreakFound = false;
+                    $pageBeforeFound = false;
+                    $pageBreakCol = null;
+
+                    for ($col = 1; $col <= $highestColumnIndex; $col++) {
+                        $colLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($col);
+                        $cellValue = $worksheet->getCell($colLetter . $row)->getValue();
+    
+                        if ($cellValue === '__PAGE_BREAK__') {
+                            $pageBreakFound = true;
+                            $pageBreakCol = $colLetter;
+                            break;
+                        } else if ($cellValue === '__PAGE_BEFORE__') {
+                            $pageBeforeFound = true;
+                            $pageBreakCol = $colLetter;
+                            break;
+                        }
+                    }
+    
+                    if ($pageBreakFound) {
+                        $worksheet->setBreak($pageBreakCol . $row, \PhpOffice\PhpSpreadsheet\Worksheet\Worksheet::BREAK_COLUMN);
+                        
+                        $rowsToMove = [];
+                        $startRow = $row + 1;
+                        
+                        for ($r = $startRow; $r <= $highestRow; $r++) {
+                            $rowData = [];
+                            $highestCol = $worksheet->getHighestColumn();
+                            
+                            foreach (range($pageBreakCol, $highestCol) as $col) {
+                                $cell = $worksheet->getCell($col . $r);
+                                $style = $worksheet->getStyle($col . $r);
+                                
+                                $rowData[$col] = [
+                                    'value' => $cell->getValue(),
+                                    'style' => [
+                                        'font' => [
+                                            'name' => $style->getFont()->getName(),
+                                            'size' => $style->getFont()->getSize(),
+                                            'bold' => $style->getFont()->getBold(),
+                                            'italic' => $style->getFont()->getItalic(),
+                                            'underline' => $style->getFont()->getUnderline(),
+                                            'strikethrough' => $style->getFont()->getStrikethrough(),
+                                            'color' => ['rgb' => $style->getFont()->getColor()->getRGB()],
+                                        ],
+                                        'fill' => [
+                                            'fillType' => $style->getFill()->getFillType(),
+                                            'color' => ['rgb' => $style->getFill()->getStartColor()->getRGB()],
+                                        ],
+                                        'borders' => $this->getBordersArray($style->getBorders()),
+                                        'alignment' => [
+                                            'horizontal' => $style->getAlignment()->getHorizontal(),
+                                            'vertical' => $style->getAlignment()->getVertical(),
+                                            'wrapText' => $style->getAlignment()->getWrapText(),
+                                        ],
+                                        'numberFormat' => [
+                                            'formatCode' => $style->getNumberFormat()->getFormatCode(),
+                                        ],
+                                    ],
+                                ];
+                            }
+                            $rowsToMove[] = $rowData;
+                        }
+                        
+                        $worksheet->removeRow($row, $highestRow - $row + 1);
+                        $highestRow = $row - 1;
+                        
+                        foreach ($rowsToMove as $rowData) {
+                            $newRow = ++$highestRow;
+                            
+                            foreach ($rowData as $col => $cellData) {
+                                $newCol = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(
+                                    \PhpOffice\PhpSpreadsheet\Cell\Coordinate::columnIndexFromString($col) + 1
+                                );
+                                
+                                if ($newCol <= 'XFD') {
+                                    $worksheet->setCellValue($newCol . $newRow, $cellData['value']);                                    
+                                    $worksheet->getStyle($newCol . $newRow)->applyFromArray($cellData['style']);
+                                }
+                            }
+                        }
+                        
+                        $row--;
+                    }
+                    else if ($pageBeforeFound) {
+                        $nextRow = $row + 1;
+
+                        if ($nextRow <= $highestRow) {
+                            $rowData = [];
+                            $highestColumn = $worksheet->getHighestColumn();
+                            $highestColumnIndex = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::columnIndexFromString($highestColumn);
+                            
+                            for ($col = 1; $col <= $highestColumnIndex; $col++) {
+                                $colLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($col);
+                                $cellValue = $worksheet->getCell($colLetter . $nextRow)->getValue();
+                                $cellStyle = $worksheet->getStyle($colLetter . $nextRow);
+
+                                if ($cellValue !== null) {
+                                    $newColIndex = $col - 1;
+
+                                    if ($newColIndex >= 1) {
+                                        $newColLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($newColIndex);
+
+                                        $worksheet->setCellValue($newColLetter . $nextRow, $cellValue);
+                                        $worksheet->duplicateStyle($cellStyle, $newColLetter . $nextRow);
+                                        $worksheet->setCellValue($colLetter . $nextRow, null);
+                                    }
+                                    $worksheet->setCellValue($colLetter . $row, null);
+                                }
+                            }
+                        }
                     }
                 }
             },
         ];
+    }
+
+    public function getBordersArray($borders)
+    {
+        $borderArray = [];
+
+        foreach (['top', 'right', 'bottom', 'left'] as $borderPosition) {
+            $border = $borders->{'get' . ucfirst($borderPosition)}();
+            $borderStyle = $border->getBorderStyle();
+    
+            if ($borderStyle !== null) {
+                $borderArray[$borderPosition] = [
+                    'borderStyle' => $borderStyle, 
+                    'color' => ['rgb' => $border->getColor()->getRGB()] 
+                ];
+            }
+        }
+    
+        return $borderArray;
     }
 }

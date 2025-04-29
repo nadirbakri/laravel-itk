@@ -336,7 +336,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                {{-- <div class="row">
                     <div class="col-12">
                         <h6>{{ __('payroll_periodical_report.label_display_by_grouping') }}</h6>
                     </div>
@@ -351,7 +351,7 @@
                 </div>
                 <div class="row" id="div-grand-total-check">
                     <input class="form-check-input" type="checkbox" id="grouping_level_grand_total" name="grouping_level_grand_total" hidden>
-                </div>
+                </div> --}}
                 <div class="row">
                     <div class="col-2">
                         <div class="form-group">
@@ -420,6 +420,57 @@
                                 <a class="dropdown-item" href="#" id="send-to-pdf">PDF</a>
                                 <a class="dropdown-item" href="#" id="send-to-xls">Excel</a>
                             </div>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <button class="btn btn-primary" name="btn-by-level" id="btn-by-level" value="by-level" style="width: 100%;" data-toggle="modal" data-target="#modal_display_by_grouping">
+                            {{ __('payroll_periodical_report.label_display_by_grouping') }}
+                        </button>
+                    </div>
+                </div>
+                <div class="modal fade" id="modal_display_by_grouping"  role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">{{ __('payroll_periodical_report.label_display_by_grouping') }}</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="display_by_grouping_form" method="post">
+                                    @csrf
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <h6>{{ __('payroll_periodical_report.label_level') }}</h6>
+                                        </div>
+                                    </div>
+                                    <div class="row" id="div-level-check">
+                                        <input class="form-check-input" type="checkbox" id="grouping_level" name="grouping_level" hidden>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <h6>{{ __('payroll_periodical_report.label_grand_total') }}</h6>
+                                        </div>
+                                    </div>
+                                    <div class="row" id="div-grand-total-check">
+                                        <input class="form-check-input" type="checkbox" id="grouping_level_grand_total" name="grouping_level_grand_total" hidden>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <h6>{{ __('payroll_periodical_report.label_page_break') }}</h6>
+                                        </div>
+                                    </div>
+                                    <div class="row" id="div-page-break-check">
+                                        <input class="form-check-input" type="checkbox" id="grouping_level_page_break" name="grouping_level_page_break" hidden>
+                                    </div>
+                                </div>
+                                <div class="modal-footer justify-content-between">
+                                    <button type="button" id="btn-save" class="btn btn-primary w-25"><i class="fa fa-floppy-o"></i> {{ __('payroll_periodical_report.btn_save') }}</button>
+                                    <button type="button" class="btn btn-primary w-25" id="btn-cancel" data-dismiss="modal"><i
+                                            class="fa fa-times-circle"></i> {{ __('payroll_periodical_report.btn_cancel') }}</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -584,9 +635,9 @@
                             <div class="form-group">
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" id="flagLevel${i}"
-                                        name="flagLevel${i}" value="true">
+                                        name="flagLevel[${i}]" value="true">
                                     <label
-                                        for="flagLevel${i}">Level ${response.data_level[i - 1].levelDescription}</label>
+                                        for="flagLevel[${i}]">Level ${response.data_level[i - 1].levelDescription}</label>
                                 </div>
                             </div>
                         </div>
@@ -601,6 +652,20 @@
                                         name="flagGrandTotal[${i}]" value="true">
                                     <label
                                         for="flagGrandTotal[${i}]">Level ${response.data_level[i - 1].levelDescription}</label>
+                                </div>
+                            </div>
+                        </div>
+                        `
+                    );
+
+                    $('#div-page-break-check').append(
+                        `<div class="col-3">
+                            <div class="form-group">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="flagPageBreak${i}"
+                                        name="flagPageBreak[${i}]" value="true">
+                                    <label
+                                        for="flagPageBreak[${i}]">Level ${response.data_level[i - 1].levelDescription}</label>
                                 </div>
                             </div>
                         </div>
@@ -1547,6 +1612,16 @@
             clicked = "PREVIEW";
             $('#periodical_report_form').submit();
         });
+
+        $('#btn-save').click(function () {
+            $('#modal_display_by_grouping').modal('hide');
+        });
+
+        $('#btn-cancel').click(function () {
+            $('input[name^="flagLevel"]').prop('checked', false);
+            $('input[name^="flagGrandTotal"]').prop('checked', false);
+            $('input[name^="flagPageBreak"]').prop('checked', false);
+        })
 
         if($('#periodical_report_form').length > 0){
             $('#periodical_report_form').validate({

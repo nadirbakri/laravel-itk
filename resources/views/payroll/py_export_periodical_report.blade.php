@@ -174,7 +174,7 @@
                                 $totalKey = $dataTable3->field . '_' . ($key3 + 2);
                             ?>
                             @if(!is_string($total[$totalKey]))
-                                <td style="text-align:right; border:1px solid #000; font-size:{{ $dataTable3->fontSize }}px !important;">{{ number_format($total[$totalKey], 0, ',', '.') }}</td>
+                                <td style="text-align:right; border:1px solid #000; font-size:{{ $dataTable3->fontSize }}px !important;">{{ number_format($total[$totalKey], 0, '.', ',') }}</td>
                             @else
                                 <td style="text-align:right; border:1px solid #000; font-size:{{ $dataTable3->fontSize }}px !important;">&nbsp;</td>
                             @endif
@@ -433,9 +433,9 @@
                             @foreach($grandTotal as $key_total => $periodicalTotal)
                                 @if(!is_string($periodicalTotal))
                                     @if($key_total == 'EmployeeNo')
-                                        <td style="text-align:left; border:1px solid #000; font-size:{{ $fontSize }}px !important;">{{ number_format($periodicalTotal, 0, ',', '.') }}</td>
+                                        <td style="text-align:left; border:1px solid #000; font-size:{{ $fontSize }}px !important;">{{ number_format($periodicalTotal, 0, '.', ',') }}</td>
                                     @else
-                                        <td style="text-align:right; border:1px solid #000; font-size:{{ $fontSize }}px !important;">{{ number_format($periodicalTotal, 0, ',', '.') }}</td>
+                                        <td style="text-align:right; border:1px solid #000; font-size:{{ $fontSize }}px !important;">{{ number_format($periodicalTotal, 0, '.', ',') }}</td>
                                     @endif
                                 @else
                                     <td style="text-align:right; border:1px solid #000; font-size:{{ $fontSize }}px !important;">&nbsp;</td>
@@ -507,9 +507,9 @@
                         @foreach($grandTotal as $key_total => $periodicalTotal)
                             @if(!is_string($periodicalTotal))
                                 @if($key_total == 'EmployeeNo')
-                                    <td style="text-align:left; border:1px solid #000; font-size:{{ $fontSize }}px !important;">{{ number_format($periodicalTotal, 0, ',', '.') }}</td>
+                                    <td style="text-align:left; border:1px solid #000; font-size:{{ $fontSize }}px !important;">{{ number_format($periodicalTotal, 0, '.', ',') }}</td>
                                 @else
-                                    <td style="text-align:right; border:1px solid #000; font-size:{{ $fontSize }}px !important;">{{ number_format($periodicalTotal, 0, ',', '.') }}</td>
+                                    <td style="text-align:right; border:1px solid #000; font-size:{{ $fontSize }}px !important;">{{ number_format($periodicalTotal, 0, '.', ',') }}</td>
                                 @endif
                             @else
                                 <td style="text-align:right; border:1px solid #000; font-size:{{ $fontSize }}px !important;">&nbsp;</td>
@@ -537,11 +537,6 @@
     </h3>
     <h3 style="text-align:center">{{ $report_name }}</h3>
     <h4 style="text-align:center">Period : {{ date('F Y', strtotime($data_period)) }}</h4>
-
-    {{-- @foreach ($data[0]->detailGroupingLevel as $level)
-        @include('components.recursive-level', ['level' => $level, 'company' => $company, 'grand_total' => $grand_total, 'globalTotal' => &$globalTotal])
-    @endforeach
-     --}}
     
     @php
         $globalTotal = [];
@@ -550,7 +545,7 @@
 
     @once
         @php
-            function renderLevel($level, $company, $grand_total, &$globalTotal, $flag_grand_total, $totals, $parentCode = null)
+            function renderLevel($level, $company, $grand_total, &$globalTotal, $flag_grand_total, $totals, $parentCode = null, $flag_page_break)
                 {
                     $total = [];
 
@@ -599,28 +594,12 @@
                             echo '</tr>';
                         }
 
-                        // $flagKey = 'level' . strval($level->levelType);
-                        // $key = ($parentCode ? $parentCode . '|' : '') . $level->levelCode;
-
-                        // if (isset($flag_grand_total[$flagKey]) && $flag_grand_total[$flagKey] === 'true') {
-                        //     $levelTotals = $totals[$flagKey][$key] ?? [];
-
-                        //     if (!empty($levelTotals)) {
-                        //         echo '<tr style="background-color: yellow">';
-                        //         echo '<td colspan="3"><strong>Total</strong></td>';
-
-                        //         foreach ($levelTotals as $val) {
-                        //             echo '<td style="text-align:right;">' . (is_numeric($val) ? number_format($val, 0, ',', '.') : '') . '</td>';
-                        //         }
-                        //     }
-                        // }
-
                         echo '</tbody></table>';
                     }
 
                     if (count($level->levelChild ?? []) > 0) {
                         foreach ($level->levelChild as $child) {
-                            $childTotal = renderLevel($child, $company, $grand_total, $globalTotal, $flag_grand_total, $totals, $level->levelCode);
+                            $childTotal = renderLevel($child, $company, $grand_total, $globalTotal, $flag_grand_total, $totals, $level, $flag_page_break);
 
                             foreach ($childTotal as $key => $value) {
                                 if (!is_string($value)) {
@@ -630,8 +609,12 @@
                         }
                     }
 
+                    // dd($parentCode);
+
                     $flagKey = 'level' . strval($level->levelType);
-                    $key = ($parentCode ? $parentCode . '|' : '') . $level->levelCode;
+                    $key = ($parentCode ? $parentCode->levelCode. '|' : '') . $level->levelCode;
+
+                    // dd($key);
 
                     if (isset($flag_grand_total[$flagKey]) && $flag_grand_total[$flagKey] === 'true') {
                         $levelTotals = $totals[$flagKey][$key] ?? [];
@@ -652,6 +635,37 @@
 
                             echo '</tr></tbody></table>';
                         }
+                    }
+
+                    if(isset($flag_page_break[$flagKey]) && $flag_page_break[$flagKey] === 'true') {
+                        echo '<style>
+                                .page-break {
+                                    page-break-after: always;
+                                }
+
+                                .page-break:last-of-type {
+                                    page-break-after: auto;
+                                }
+                            </style>';
+                        echo '<div class="page-break"></div>';
+                    }
+
+                    $addParent = 0;
+                    foreach ($flag_page_break as $key => $val) {
+                        if ($val === 'true') {
+                            preg_match('/\d+/', $key, $matches);
+                            $addParent = isset($matches[0]) ? (int) $matches[0] : null;
+                        }
+                    }
+
+                    if (intval($level->levelType) > 1 && $parentCode && $addParent === intval($level->levelType)) {
+                        echo '<table>
+                            <tr>
+                                <th style="min-width: 150px; text-align: left">' . $parentCode->levelDesription . '</th>
+                                <th style="min-width: 50px; text-align: left">' . $parentCode->levelCode . '</th>
+                                <th style="min-width: 100px; text-align: left">' . $parentCode->levelName . '</th>
+                            </tr>
+                        </table>';
                     }
 
                     return $total;
@@ -698,7 +712,7 @@
 
     @foreach ($data[0]->detailGroupingLevel as $level)
         @php 
-            renderLevel($level, $company, $grand_total, $globalTotal, $flag_grand_total, $totals);
+            renderLevel($level, $company, $grand_total, $globalTotal, $flag_grand_total, $totals, null, $flag_page_break);
         @endphp
     @endforeach
 
@@ -715,9 +729,9 @@
             </thead>
             <tbody>
                 <tr>
-                    <td style="text-align:center; border:1px solid #000;">Grand Total</td>
+                    <td style="text-align:center; border:1px solid #000;  background-color: yellow;">Grand Total</td>
                     @foreach($globalTotal as $key => $value)
-                        <td style="text-align:right; border:1px solid #000;">{{ number_format($value, 0, ',', '.') }}</td>
+                        <td style="text-align:right; border:1px solid #000;">{{ number_format($value, 0, '.', ',') }}</td>
                     @endforeach
                 </tr>
             </tbody>
