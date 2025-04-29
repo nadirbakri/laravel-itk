@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 // ini_set('memory_limit', '4096M');
+set_time_limit(0);
 
 use App\Imports\PayrollDataImport;
 use App\Imports\PayrollBonusTHRDataImport;

@@ -2,6 +2,8 @@
 
 namespace App\Exports;
 
+set_time_limit(0);
+
 use PhpOffice\PhpSpreadsheet\Cell\Cell;
 use Maatwebsite\Excel\Concerns\FromView;
 use Illuminate\Contracts\View\View;
