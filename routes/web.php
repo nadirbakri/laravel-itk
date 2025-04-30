@@ -229,6 +229,7 @@ Route::get('personnel/plafon_reimbursement/table', 'PersonelController@tablePlaf
 Route::get('personnel/format_report/table', 'PersonelController@tableFormatReportPersonel');
 Route::get('personnel/relation_code/table', 'PersonelController@tableRelationCodePersonel');
 Route::get('personnel/employee_termination/table', 'PersonelController@tableEmployeeTerminationPersonel');
+Route::get('personnel/insurance/table', 'PersonelController@tableInsurancePersonel');
 
 Route::get('personnel/personal_data/detail_data', 'PersonelController@dataDetailPersonalDataPersonel');
 Route::get('personnel/performance/detail_data', 'PersonelController@dataDetailPerformancePersonel');
@@ -412,6 +413,7 @@ Route::post('personnel/plafon_business_trip/proses', 'PersonelController@prosesP
 Route::post('personnel/plafon_transport/proses', 'PersonelController@prosesPlafonTransportPersonel');
 Route::post('personnel/plafon_reimbursement/proses', 'PersonelController@prosesPlafonReimbursementPersonel');
 Route::post('personnel/employee_termination/proses', 'PersonelController@prosesEmployeeTerminationPersonel');
+Route::post('personnel/insurance/proses', 'PersonelController@prosesInsurancePersonel');
 
 Route::get('personnel/final_performance_result/remove', 'PersonelController@removeFinalPerformanceResultPersonel');
 Route::get('personnel/evaluation_form/evaluated_aspect/remove', 'PersonelController@removeEvaluationFormEvaluatedAspectPersonel');
@@ -429,6 +431,7 @@ Route::get('personnel/competency/project_experience/remove', 'PersonelController
 Route::post('personnel/competency/training_list/remove', 'PersonelController@removeCompetencyTrainingListPersonel');
 Route::post('personnel/employee_attachment/remove', 'PersonelController@removeEmployeeAttachmentPersonel');
 Route::post('personnel/loan_bank/remove', 'PersonelController@removeLoanBankPersonel');
+Route::get('personnel/insurance/remove', 'PersonelController@removeInsurancePersonel');
 
 Route::get('personnel/number/check', 'PersonelController@checkNumberPersonel');
 Route::get('personel_data_detail/number/check', 'PersonelController@checkNumberPersonelDataDetail');
@@ -465,6 +468,9 @@ Route::post('personnel/export_plafon/download', 'PersonelController@downloadTemp
 Route::post('personnel/employee_multiple_location/download_template', 'PersonelController@downloadTemplateEmployeeMultipleLocationPersonel');
 Route::post('personnel/employee_multiple_location/import', 'PersonelController@importEmployeeMultipleLocationPersonel');
 Route::post('personnel/employee_multiple_location/export', 'PersonelController@exportEmployeeMultipleLocationPersonel');
+Route::post('personnel/insurance/download_template', 'PersonelController@downloadTemplateInsurancePersonel');
+Route::post('personnel/insurance/import', 'PersonelController@importInsurancePersonel');
+Route::post('personnel/insurance/export', 'PersonelController@exportInsurancePersonel');
 
 /* Route Untuk Menu Time Management */
 Route::get('time_management', 'TimeManagementController@pageTimeManagement')->name('time_management');

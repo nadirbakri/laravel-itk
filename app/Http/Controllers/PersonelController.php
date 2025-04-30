@@ -22,6 +22,8 @@ use App\Exports\PlafonTemplateExport;
 use App\Exports\EmployeeTransactionTemplateExport;
 use App\Exports\EmployeeMultipleLocationTemplateExport;
 use App\Exports\EmployeeMultipleLocationExport;
+use App\Exports\InsuranceTemplateExport;
+use App\Exports\InsuranceExport;
 
 use App\Imports\PersonalDataSheetImport;
 use App\Imports\PersonalDataImport;
@@ -48,6 +50,7 @@ use App\Imports\EmployeeFamilyImport;
 use App\Imports\PlafonImport;
 use App\Imports\EmployeeTransactionImport;
 use App\Imports\EmployeeMultipleLocationImport;
+use App\Imports\InsuranceImport;
 
 use App\Jobs\ProcessImportMasterDataPersonel;
 use App\Jobs\ProcessImportPersonalDataPersonel;
@@ -4311,21 +4314,36 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/PePlafon/getAllPlafon',
-                ['body' => json_encode(
-                    [
-                        'companyCode' => Session::get('companyCode'),
-                        'plafonYear' => $request->plafonYear,
-                        'plafonCode' => $request->plafonCode,
-                        'rankCode' => $request->rankCode,
-                        'category' => $request->category,
-                        'languageCode' => strtoupper(App::getLocale()),
-                        'userID' => Session::get('userID'),
-                        'logActionUserID' => Session::get('userID'),
-                        'logActionUsername' => Session::get('userName')
-                    ]
-                )]
-            );
+            // dd(json_encode(
+            //     [
+            //         'companyCode' => Session::get('companyCode'),
+            //         'employeeNo' => $request->employeeNo,
+            //         'insuranceCode' => $request->insuranceCode,
+            //         'languageCode' => strtoupper(App::getLocale()),
+            //         'userID' => Session::get('userID'),
+            //         'logActionUserID' => Session::get('userID'),
+            //         'logActionUsername' => Session::get('userName')
+            //     ]
+            //     ));
+
+            if ($request->func === 'edit') {
+                $response = $client->get(env('API_URL') . '/personel/PeMasterInsurance/GetInsuranceEmployees',
+                    ['body' => json_encode(
+                        [
+                            'companyCode' => Session::get('companyCode'),
+                            'employeeNo' => $request->employeeNo,
+                            'insuranceCode' => $request->insuranceCode,
+                            'languageCode' => strtoupper(App::getLocale()),
+                            'userID' => Session::get('userID'),
+                            'logActionUserID' => Session::get('userID'),
+                            'logActionUsername' => Session::get('userName')
+                        ]
+                    )]
+                );   
+                $arrResult = json_decode($response->getBody()->getContents());  
+            }
+
+            return view('personel.personel_insurance_detail', ['data' => $arrResult->dataListSet ?? null, 'func' => $request->func]);
         } catch (RequestException $e) {
             $response = $e->getResponse();
             if($response->getStatusCode() == 401){
@@ -4336,10 +4354,6 @@ class PersonelController extends Controller
                 return view('error.bad_request');
             }
         }
-
-        $arrResult = json_decode($response->getBody()->getContents());  
-
-        return view('personel.personel_insurance_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
     }
 
     public function tableFringeBenefitPersonalDataPersonel(Request $request)
@@ -5340,6 +5354,48 @@ class PersonelController extends Controller
             ]);
 
             $response = $client->post(env('API_URL') . '/personel/MutationEmployee/listkaryawanresign',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'userID' => Session::get('userID'),
+                        'sessionID' => 0,
+                        'sessionUserID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        'languageCode' => App::getLocale()
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
+        }
+    }
+
+    public function tableInsurancePersonel(Request $request)
+    {
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->get(env('API_URL') . '/personel/PeMasterInsurance/GetAllInsuranceEmployees',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -10943,6 +10999,63 @@ class PersonelController extends Controller
         return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
     }
 
+    public function removeInsurancePersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            // dd($request->data);
+            
+            $param = [
+                'companyCode' => Session::get('companyCode'),
+                "languageCode" => App::getLocale(),
+                "sessionID" => 0,
+                "sessionUserID" => Session::get('userID'),
+                "logActionUserID" => Session::get('userID'),
+                "logActionUsername" => Session::get('userID')
+            ];
+
+            foreach($request->data as $value){
+                $data_insurance_employees[] = [
+                    'companyCode' => $value['companyCode'],
+                    'employeeNo' => $value['employeeNo'],
+                    'insuranceCode' => $value['insuranceCode'],
+                    'insuranceClassCode' => $value['insuranceClassCode'],
+                    'insuranceStartDate' => $value['insuranceStartDate'],
+                    'insuranceEndDate' => $value['insuranceEndDate'],
+                    'insurancePolicyNo' => $value['insurancePolicyNo'],
+                    'insuranceRemark' => $value['insuranceRemark']
+                ];
+            }
+
+            $param['insuranceEmployees'] = $data_insurance_employees;
+
+            // dd(json_encode($param));
+
+            $response = $client->delete(env('API_URL') . '/personel/PeMasterInsurance/DeleteInsuranceEmployees',
+                ['body' => json_encode($param)]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
     public function checkNumberPersonel(Request $request)
     {
         try {
@@ -12202,6 +12315,64 @@ class PersonelController extends Controller
         return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
     }
 
+    public function prosesInsurancePersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $param = [
+                'companyCode' => Session::get('companyCode'),
+                'insuranceEmployee' => [
+                    'companyCode' => Session::get('companyCode'),
+                    'employeeNo' => $request->record_function === 'New' ? $request->employee_no : $request->employee_no_hidden,
+                    'insuranceCode' => $request->insurance_code,
+                    'insuranceClassCode' => $request->insurance_class,
+                    'insuranceStartDate' => $request->insurance_start_date,
+                    'insuranceEndDate' => $request->insurance_end_date,
+                    'insurancePolicyNo' => $request->insurance_policy_no,
+                    'insuranceRemark' => $request->remarks,
+                ],
+                'sessionUserID' => Session::get('userID'),
+                'sessionID' => 0,
+                'logActionUserID' => Session::get('userID'),
+                'logActionUsername' => Session::get('userName'),
+                "languageCode" => App::getLocale()
+            ];
+
+            // dd(json_encode($param));
+
+            if($request->record_function == 'New'){
+                $response = $client->post(env('API_URL') . '/personel/PeMasterInsurance/InsertInsuranceEmployees',
+                    ['body' => json_encode($param)]
+                );
+            }else{
+                $response = $client->put(env('API_URL') . '/personel/PeMasterInsurance/PutInsuranceEmployees',
+                    ['body' => json_encode($param)]
+                );
+            }
+
+
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
     // public function prosesCustomReportEmployeePersonel(Request $request)
     // {
     //     date_default_timezone_set('Asia/Jakarta');
@@ -12813,5 +12984,35 @@ class PersonelController extends Controller
         }
 
         return Excel::download(new PlafonTemplateExport($type), "Template Personnel Plafon {$fileName}.xlsx");
+    }
+
+    public function importInsurancePersonel(Request $request)
+    {
+        $file = $request->file;
+        try{
+            $import = new InsuranceImport();
+            Excel::import($import, $file->getRealPath(), null, \Maatwebsite\Excel\Excel::XLSX);
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            $failures = $e->failures();
+            $objError = (object) ['status' => false, 'message' => $failures[0]->errors()[0]];
+            return array(0 => $objError);
+        }
+
+        if(empty($import->getArrResult())){
+            $objError = (object) ['status' => false, 'message' => "The Uploaded File Doesn't Match The Template"];
+            return array(0 => $objError);
+        }else{
+            return $import->getArrResult();
+        }
+    }
+
+    public function exportInsurancePersonel(Request $request)
+    {
+        return Excel::download(new InsuranceExport, "Personnel Insurance.xlsx");
+    }
+
+    public function downloadTemplateInsurancePersonel(Request $request)
+    {
+        return Excel::download(new InsuranceTemplateExport, "Template Personnel Insurance.xlsx");
     }
 }

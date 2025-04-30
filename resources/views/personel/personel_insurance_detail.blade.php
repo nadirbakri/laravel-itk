@@ -11,6 +11,7 @@
     <link href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" rel="stylesheet">
     <!-- <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet"> -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/flatpickr.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/personel_detail_data.css') }}">
     <link rel="stylesheet" href="{{ asset('css/jquery.inputpicker.css') }}">
     <style type="text/css">
@@ -82,9 +83,18 @@
             </a>
         </div>
         <div class="div-form">
-            <form id="plafon_form" method="post">
+            <form id="insurance_form" method="post">
                 @csrf
                 <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="employee_no">{{ __('personel_insurance.label_employee_no') }}</label>
+                            <span class="required">*</span>
+                            <select class="form-control select2" id="employee_no" name="employee_no"></select>
+                            <input type="hidden" class="form-control" id="record_function" name="record_function">
+                            <input type="text" class="form-control" id="employee_no_hidden" name="employee_no_hidden" hidden>
+                        </div>
+                    </div>
                     <div class="col-6">
                         <div class="form-group">
                             <label for="insurance_code">{{ __('personel_insurance.label_insurance_code') }}</label>
@@ -92,26 +102,14 @@
                             <input type="text" class="form-control" id="insurance_code" name="insurance_code" placeholder="{{ __('personel_insurance.label_insurance_code') }}">
                         </div>
                     </div>
+                </div>
+                <div class="row">
                     <div class="col-6">
                         <div class="form-group">
                             <label for="insurance_class">{{ __('personel_insurance.label_insurance_class') }}</label>
                             <span class="required">*</span>
                             <input type="text" class="form-control" id="insurance_class" name="insurance_class"
                                 placeholder="{{ __('personel_insurance.label_insurance_class') }}">
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="insurance_date form-check-label">{{ __('personel_insurance.label_insurance_date') }}</label>
-                            <div class="input-group">
-                                <input type="text" class="form-control" id="insurance_date" name="insurance_date"
-                                    placeholder="{{ __('personel_insurance.label_insurance_date') }}">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="insurance_date"><span class="fa fa-calendar"></span></span>
-                                </div>
-                            </div>
                         </div>
                     </div>
                     <div class="col-6">
@@ -124,9 +122,37 @@
                     </div>
                 </div>
                 <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="insurance_start_date form-check-label">{{ __('personel_insurance.label_insurance_start_date') }}</label>
+                            <span class="required">*</span>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="insurance_start_date" name="insurance_start_date"
+                                    placeholder="{{ __('personel_insurance.label_insurance_start_date') }}">
+                                <div class="input-group-prepend" id="insurance_start_date_calendar">
+                                    <span class="input-group-text" id="insurance_start_date"><span class="fa fa-calendar"></span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="insurance_end_date form-check-label">{{ __('personel_insurance.label_insurance_end_date') }}</label>
+                            <span class="required">*</span>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="insurance_end_date" name="insurance_end_date"
+                                    placeholder="{{ __('personel_insurance.label_insurance_end_date') }}">
+                                <div class="input-group-prepend" id="insurance_end_date_calendar">
+                                    <span class="input-group-text" id="insurance_end_date"><span class="fa fa-calendar"></span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col-12">
                         <div class="form-group">
-                            <label for="remarks form-check-label">Remarks</label>
+                            <label for="remarks form-check-label">{{ __('personel_insurance.label_remarks') }}</label>
                             <textarea rows="4" type="text" class="form-control" id="remarks" name="remarks" placeholder="Remarks"></textarea>
                         </div>
                     </div>
@@ -139,7 +165,7 @@
                         </button>
                     </div>
                     <div class="col-3">
-                        <a class="btn btn-outline-primary" href="{{ url('personnel/plafon_medical') }}" target="iframe_dashboard"
+                        <a class="btn btn-outline-primary" href="{{ url('personnel/insurance') }}" target="iframe_dashboard"
                             name="btn-cancel" id="btn-cancel" style="width: 100%;">
                             <i class="fa fa-times-circle"></i> {{ __('personel_insurance.btn_cancel') }}
                         </a>
@@ -194,6 +220,7 @@
 <script src="{{ asset('js/jquery.redirect.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script src="{{ asset('js/flatpickr.js') }}"></script>
 <script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
 
 <script type="text/javascript">
@@ -216,92 +243,96 @@
     window.onload = function() {
         savePreviousURL();
     }
-
-    var prevYear = moment(moment().subtract(10, 'years')).format('YYYY');
-    var nextYear = moment(moment().add(10, 'years')).format('YYYY');
-    var defaultYear = moment().format('YYYY');
-
-    for (var i = prevYear; i <= nextYear; i++){
-        var option = $("<option/>", {
-            value: i,
-            text: i
-        });
-        $('#year').append(option);
-        $('#year').val(defaultYear);
-    }
     
     $(document).ready(function () {
         var func = "{{ $func }}";
         var arrData = @json($data);
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
-        $('#code').select2();
+        let pickerStartDate = $('#insurance_start_date').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "d-M-Y",
+            dateFormat: "Y-m-d",
+            onReady: function () {
+                var flatPickrInstance = this;
+                // console.log(flatPickrInstance);
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings("#insurance_start_date_calendar").click(function () {
+                    flatPickrInstance.togge();
+                });
+            }
+        });
+
+        let pickerEndDate = $('#insurance_end_date').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "d-M-Y",
+            dateFormat: "Y-m-d",
+            onReady: function () {
+                var flatPickrInstance = this;
+                // console.log(flatPickrInstance);
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings("#insurance_end_date_calendar").click(function () {
+                    flatPickrInstance.togge();
+                });
+            }
+        });
 
         if (func == 'new') {
             $('#record_function').val("New");
-            $('#type').val('Medical');
-            $('#code').val(null).trigger('change');
-            $('#status').val("");
-            $('#nominal').val("");
-            $('#ranking_code').val(null).trigger('change');
+            $('#employee_no').val(null).trigger('change');
+            $('#insurance_code').val("");
+            $('#insurance_class').val("");
+            $('#insurance_policy_no').val("");
+            pickerStartDate.clear();
+            pickerEndDate.clear();
+            $('#remarks').val("");
         } else if (func == 'edit') {
             $('#record_function').val("Edit");
-            $('#year').val(arrData[0].plafonYear).trigger('change');
-            $('#type').val(arrData[0].category);
-            $('#code').val(arrData[0].plafonCode).trigger('change');
-            $('#status').val(arrData[0].status);
-            $('#nominal').val(arrData[0].plafonAmount);
-            $('#ranking_code').val(arrData[0].rankCode).trigger('change');
+            $('#employee_no').prop('disabled', true);
+
+            $('#insurance_code').val(arrData[0].insuranceCode).trigger('change');
+            $('#insurance_class').val(arrData[0].insuranceClassCode);
+            $('#insurance_policy_no').val(arrData[0].insurancePolicyNo);
+            pickerStartDate.setDate(arrData[0].insuranceStartDate);
+            pickerEndDate.setDate(arrData[0].insuranceEndDate);
+            $('#remarks').val(arrData[0].insuranceRemark);
 
             $.ajax({
                 type: 'GET',
-                url: "{{ url('/plafon_medical/func/api') }}",
+                url: "{{ url('/employee_no/req_detail/api') }}",
                 data: {
-                    code: arrData[0].plafonCode
+                    'employeeNo': ((typeof arrData[0].employeeNo !== 'undefined') ? arrData[0].employeeNo : '')
                 }
             }).then(function (data) {
-                var option = new Option(data[0].value, data[0].code, true, true);
-                $('#code').append(option).trigger('change');
-
-                $('#code').trigger({
+                var option = $('<option/>', {
+                    id: data.employeeNo,
+                    title: data.fullName,
+                    text: data.employeeNo
+                });
+                $("#employee_no").append(option).attr('data-alias', 'yourvalue').trigger(
+                    'change');
+                $("#employee_no").trigger({
                     type: 'select2:select',
                     params: {
-                        id: data[0].code,
-                        text: data[0].value,
-                        data: data[0]
+                        id: data.employeeNo,
+                        text: data.employeeNo,
+                        data: data
                     }
                 });
             });
 
-            $.ajax({
-                type: 'GET',
-                url: "{{ url('ranking/detail/api') }}",
-                data: {
-                    rankingCode: arrData[0].rankCode
-                }
-            }).then(function (data) {
-                var option = new Option(data[0].rankingName, data[0].rankingCode, true, true);
-                $('#ranking_code').append(option).trigger('change');
-
-                $('#ranking_code').trigger({
-                    type: 'select2:select',
-                    params: {
-                        id: data[0].rankingCode,
-                        text: data[0].rankingName,
-                        data: data[0]
-                    }
-                });
-            });
+            $('#employee_no_hidden').val((typeof arrData[0].employeeNo !== 'undefined') ? arrData[0].employeeNo : '');
         }
 
         function htmlDecode(value) {
             return $("<textarea/>").html(value).text();
         }
 
-        loadDataPlafonCode();
-        loadDataRankingCode();
+        loadDataEmployeeNo();
 
-        function loadDataPlafonCode() {
+        function loadDataEmployeeNo() {
             function formatSelect(data) {
                 if (data.loading) {
                     return $search
@@ -309,65 +340,8 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' +
-                        '<div class="col-12">' + data.data.value + '</div>' +
-                        '</div>');
-
-                    return $result2;
-                }
-            }
-
-            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
-
-            $('#code').select2({
-                width: '100%',
-                placeholder: 'Choose Plafon Code',
-                allowClear: true,
-                language: {
-                    errorLoading: function () {
-                        return $search;
-                    },
-                    searching: function () {
-                        return $search;
-                    }
-                },
-                ajax: {
-                    url: "{{ url('/plafon_medical/api') }}",
-                    dataType: 'json',
-                    delay: 250,
-                    type: "GET",
-                    data: function (params) {
-                        return {
-                            _token: CSRF_TOKEN,
-                            search: params.term
-                        };
-                    },
-                    processResults: function (data) {
-                        return {
-                            results: $.map(data, function (item) {
-                                return {
-                                    text: item.value,
-                                    id: item.code,
-                                    data: item
-                                }
-                            })
-                        };
-                    },
-                    cache: true,
-                },
-                templateResult: formatSelect
-            });
-        }
-
-        function loadDataRankingCode() {
-            function formatSelect(data) {
-                if (data.loading) {
-                    return $search
-                }
-
-                if (data.id) {
-                    var $result2 = $('<div class="row">' +
-                        '<div class="col-6">' + data.data.rankingCode + '</div>' +
-                        '<div class="col-6">' + data.data.rankingName + '</div>' +
+                        '<div class="col-6">' + data.data.employeeNo + '</div>' +
+                        '<div class="col-6">' + data.data.fullName + '</div>' +
                         '</div>');
 
                     return $result2;
@@ -375,11 +349,11 @@
             }
 
             var headerIsAppend = false;
-            $('#ranking_code').on('select2:open', function (e) {
+            $('#employee_no').on('select2:open', function (e) {
                 if (!headerIsAppend) {
                     html = '<div class="row">' +
-                        '<div class="col-6"><b>Ranking Code</b></div>' +
-                        '<div class="col-6"><b>Ranking Name</b></div>' +
+                        '<div class="col-6"><b>Employee No</b></div>' +
+                        '<div class="col-6"><b>Full Name</b></div>' +
                         '</div>';
                     $('.select2-search--dropdown').append(html);
                     headerIsAppend = true;
@@ -388,10 +362,12 @@
 
             var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
 
-            $('#ranking_code').select2({
+            var $employeeNo = $('#employee_no').select2({
                 width: '100%',
-                placeholder: 'Choose Ranking Code',
+                placeholder: 'Choose Employee No',
                 allowClear: true,
+                // tags: true,
+                closeOnSelect: true,
                 language: {
                     errorLoading: function () {
                         return $search;
@@ -401,7 +377,7 @@
                     }
                 },
                 ajax: {
-                    url: "{{ url('/ranking/api') }}",
+                    url: "{{ url('/employee_no/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -415,8 +391,8 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.rankingName,
-                                    id: item.rankingCode,
+                                    text: item.fullName,
+                                    id: item.employeeNo,
                                     data: item
                                 }
                             })
@@ -429,7 +405,7 @@
         }
 
         $('#notification_success').on('hide.bs.modal', function () {
-            window.location = "{{ url('personnel/plafon_medical') }}";
+            window.location = "{{ url('personnel/insurance') }}";
         })
 
         $("#btn-save").click(function () {
@@ -437,49 +413,49 @@
             $(this).html(
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
-            $("#plafon_form").submit();
+            $("#insurance_form").submit();
         });
 
-        if ($("#plafon_form").length > 0) {
-            $("#plafon_form").validate({
+        if ($("#insurance_form").length > 0) {
+            $("#insurance_form").validate({
                 rules: {
-                    year: {
+                    employee_no: {
                         required: true,
                     },
-                    type: {
+                    insurance_code: {
                         required: true,
                     },
-                    code: {
+                    insurance_class: {
                         required: true,
                     },
-                    status: {
+                    insurance_policy_no: {
                         required: true,
                     },
-                    nominal: {
+                    insurance_start_date: {
                         required: true,
                     },
-                    ranking_code: {
+                    insurance_end_date: {
                         required: true,
                     },
                 },
                 messages: {
-                    year: {
-                        required: "{{ __('personel_insurance.year_required') }}",
+                    employee_no: {
+                        required: "{{ __('personel_insurance.employee_no_required') }}",
                     },
-                    type: {
-                        required: "{{ __('personel_insurance.type_required') }}",
+                    insurance_code: {
+                        required: "{{ __('personel_insurance.insurance_code_required') }}",
                     },
-                    code: {
-                        required: "{{ __('personel_insurance.code_required') }}",
+                    insurance_class: {
+                        required: "{{ __('personel_insurance.insurance_class_required') }}",
                     },
-                    status: {
-                        required: "{{ __('personel_insurance.status_required') }}",
+                    insurance_policy_no: {
+                        required: "{{ __('personel_insurance.insurance_policy_no_required') }}",
                     },
-                    nominal: {
-                        required: "{{ __('personel_insurance.nominal_required') }}",
+                    insurance_start_date: {
+                        required: "{{ __('personel_insurance.insurance_start_date_required') }}",
                     },
-                    ranking_code: {
-                        required: "{{ __('personel_insurance.ranking_code_required') }}",
+                    insurance_end_date: {
+                        required: "{{ __('personel_insurance.insurance_end_date_required') }}",
                     },
                 },
                 highlight: function (element) {
@@ -504,9 +480,9 @@
                         }
                     });
                     $.ajax({
-                        url: "{{ url('personnel/plafon_medical/proses') }}",
+                        url: "{{ url('personnel/insurance/proses') }}",
                         type: "POST",
-                        data: $('#plafon_form').serialize(),
+                        data: $('#insurance_form').serialize(),
                         success: function (response) {
                             if (response.status == "true") {
                                 $("#btn-save").prop("disabled", false);
@@ -518,7 +494,7 @@
                                     .message);
                                 setTimeout(function () {
                                     window.location =
-                                        "{{ url('personnel/plafon_medical') }}";
+                                        "{{ url('personnel/insurance') }}";
                                 }, 3000);
                             } else {
                                 $("#btn-save").prop("disabled", false);

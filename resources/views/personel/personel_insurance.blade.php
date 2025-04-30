@@ -84,6 +84,11 @@
                 <img src="{{ url('/icons/functionbar/functionbar-edit-white.svg') }}" class="functionbar-hover" alt="Edit">
                 <span>Edit</span>
             </a>
+            <a class="list-functionbar-sm" href="javascript:void(0)" id="toolbar-delete" style="width: 9%">
+                <img src="{{ url('/icons/functionbar/functionbar-remove-blue.svg') }}" alt="Delete">
+                <img src="{{ url('/icons/functionbar/functionbar-remove-white.svg') }}" class="functionbar-hover" alt="Delete">
+                <span>Delete</span>
+            </a>
             <a href="javascript:void(0)" id="toolbar-import" style="width: 9%" onclick="document.getElementById('import').click()">
                 <input type="file" class="custom-file-input" name="import" id="import" hidden onchange="handleFileUpload(this)">
                 <img src="{{ url('/icons/functionbar/functionbar-import-blue.svg') }}" alt="Import">
@@ -129,21 +134,44 @@
 		</div>
 
 		<div class="div-table">
-			<table id="plafon_table" class="table hover">
+			<table id="insurance_table" class="table hover">
 				<thead>
 					<tr>
                         <th></th>
-						<th>Plafon Year</th>
-						<th>Plafon Type</th>
-						<th>Plafon Description</th>
-                        <th>Status</th>
-                        <th>Nominal</th>
-                        <th>Rank</th>
+						<th>Employee No</th>
+						<th>Code</th>
+						<th>Class</th>
+						<th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Policy No</th>
+                        <th>Remarks</th>
 					</tr>
 				</thead>
 			</table>
 		</div>
 	</div>
+    <div class="modal fade" role="dialog" id="delete_insurance">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div style="display: flex; flex-direction: column; justify-content: center;  align-items: center;">
+                        <img src="{{ url('/icons/warning/warning-circle-fill.svg') }}" alt="Warning">
+                        <h6>Caution</h6>
+                        <p>Are you sure you want to delete this insurance?</p>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn w-25" style="border: 1px solid #1A7AD0; color: #1A7AD0;" data-dismiss="modal">{{ __('personel_insurance.btn_no') }}</button>
+                    <button type="button" class="btn w-25" style="background-color: #1A7AD0 ;color: #FFFFFF;" id="btn-yes" data-dismiss="modal">{{ __('personel_insurance.btn_yes') }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="modal fade" role="dialog" id="notification_error">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -186,6 +214,7 @@
 <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/select/1.3.3/js/dataTables.select.min.js"></script>
 <script src="https://cdn.datatables.net/plug-ins/1.10.24/pagination/ellipses.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script src="{{ asset('js/jquery.redirect.js') }}"></script>
 
 <script type="text/javascript">
@@ -224,7 +253,6 @@
             else {
                 const formData = new FormData();
                 formData.append('file', file);
-                formData.append('type', 'MEDICAL');
 
                 $.ajaxSetup({
                     headers: {
@@ -233,7 +261,7 @@
                 });
 
                 $.ajax({
-                    url: "{{ url('personnel/plafon/import') }}",
+                    url: "{{ url('personnel/insurance/import') }}",
                     type: "POST",
                     processData: false,
                     contentType: false,
@@ -246,29 +274,23 @@
                                 '<a href="javascript:void(0)" id="toolbar-import" style="width: 17%"><img src="{{ url('/icons/functionbar/functionbar-import-blue.svg') }}" alt="Import"><img src="{{ url('/icons/functionbar/functionbar-import-white.svg') }}" class="functionbar-hover" alt="Import"><span>Import</span></a>'
                             );
                             $('#notification_success').modal('show');
-                            // $('#message-notification-success').html(response
-                            //     .message);
                             $('#message-notification-success').html(response[0]
                                 .message);
-                            // setTimeout(function () {
-                            //     window.location =
-                            //         "{{ url('personnel/insurance') }}";
-                            // }, 3000);
+                            setTimeout(function () {
+                                window.location =
+                                    "{{ url('personnel/insurance') }}";
+                            }, 3000);
                         } else {
                             $("#toolbar-import").prop("disabled", false);
                             $("#toolbar-import").html(
                                 '<a href="javascript:void(0)" id="toolbar-import" style="width: 17%"><img src="{{ url('/icons/functionbar/functionbar-import-blue.svg') }}" alt="Import"><img src="{{ url('/icons/functionbar/functionbar-import-white.svg') }}" class="functionbar-hover" alt="Import"><span>Import</span></a>'
                             );
                             $('#notification_error').modal('show');
-                            // if (response.message == null || response.message ==
-                            //     '') {
                             if (response[0].message == null || response[0].message ==
                                 '') {
                                 $('#message-notification-error').html(
                                     "{{ __('login.error') }}");
                             } else {
-                                // $('#message-notification-error').html(response
-                                //     .message);
                                 $('#message-notification-error').html(response[0]
                                     .message);
                             }
@@ -288,11 +310,11 @@
     }
     
   $(document).ready(function() {
-    //addClass = disabled first;
+    var table = null;
     $('.div-navbar a.disabled').attr('onclick', 'return false;');
   	
-    $('#plafon_table thead tr').clone(true).appendTo('#plafon_table thead');
-    $('#plafon_table thead tr:eq(1) th:not(:first-child)').each( function (i) {
+    $('#insurance_table thead tr').clone(true).appendTo('#insurance_table thead');
+    $('#insurance_table thead tr:eq(1) th:not(:first-child)').each( function (i) {
         var title = $(this).text();
         $(this).html('<input class="form-control" type="text" placeholder="'+title+'" />');
  
@@ -305,6 +327,8 @@
             }
         } );
     });
+
+    load_data_table_insurance();
 
     $("#toolbar-export").click(function () {
         $(this).prop("disabled", true);
@@ -320,11 +344,8 @@
             xhrFields: {
                 responseType: 'blob',
             },
-            url: "{{ url('personnel/plafon/export') }}",
+            url: "{{ url('personnel/insurance/export') }}",
             type: "POST",
-            data: {
-                type: 'MEDICAL'
-            },
             success: function (result, status, xhr) {
                 $("#toolbar-export").prop("disabled", false);
                 $("#toolbar-export").html(
@@ -377,11 +398,8 @@
             xhrFields: {
                 responseType: 'blob',
             },
-            url: "{{ url('personnel/export_plafon/download') }}",
+            url: "{{ url('personnel/insurance/download_template') }}",
             type: "POST",
-            data: {
-                type: 'MEDICAL'
-            },
             success: function (result, status, xhr) {
                 $("#toolbar-download-template").prop("disabled", false);
                 $("#toolbar-download-template").html(
@@ -419,44 +437,51 @@
         });
     });
     
-    var table = $('#plafon_table').DataTable({
-        processing: true,
-        serverSide: true,
-        orderCellsTop: true,
-        ajax: "{{ url('personnel/insurance/table') }}",
-        error: function(jqXHR, ajaxOptions, thrownError) {
-        	alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
-        },
-        "sDom": 'lrtip',
-        'sPaginationType': 'full_numbers',
-        "order": [[ 1, "asc" ]],
-        columns: [
-            {
-                orderable: false,
-                targets: 0, 
-                "defaultContent": '',
-                render: function(data, type) {
-                    return type === 'display'? '<input class="chk-select" type="checkbox">' : '';
-                }
+    function load_data_table_insurance() {
+        table = $('#insurance_table').DataTable({
+            processing: true,
+            serverSide: true,
+            orderCellsTop: true,
+            ajax: "{{ url('personnel/insurance/table') }}",
+            error: function(jqXHR, ajaxOptions, thrownError) {
+                alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
             },
-            {data: 'plafonYear', name: 'plafonYear'},
-            {data: 'category', name: 'category'},
-            {data: 'plafonDescription', name: 'plafonDescription'},
-            {data: 'status', name: 'status'},
-            {data: 'plafonAmount', name: 'plafonAmount',
-                render: function (data, type, row) {
-                    return data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-                }
-            },
-            {data: 'rankCode', name: 'rankCode'},
-        ],
-        select: {
-            style:    'multi',
-            selector: 'td:first-child'
-        }
-    });
+            "sDom": 'lrtip',
+            'sPaginationType': 'full_numbers',
+            "order": [[ 1, "asc" ]],
+            columns: [
+                {
+                    orderable: false,
+                    targets: 0, 
+                    "defaultContent": '',
+                    render: function(data, type) {
+                        return type === 'display'? '<input class="chk-select" type="checkbox">' : '';
+                    }
+                },
+                {data: 'employeeNo', name: 'employeeNo'},
+                {data: 'insuranceCode', name: 'insuranceCode'},
+                {data: 'insuranceClassCode', name: 'insuranceClassCode'},
+                {data: 'insuranceStartDate', name: 'insuranceStartDate',
+                    render: function (data, type, row) {
+                        return moment(data).format('DD-MMM-YYYY');
+                    }
+                },
+                {data: 'insuranceEndDate', name: 'insuranceEndDate',
+                    render: function (data, type, row) {
+                        return moment(data).format('DD-MMM-YYYY');
+                    }
+                },
+                {data: 'insurancePolicyNo', name: 'insurancePolicyNo'},
+                {data: 'insuranceRemark', name: 'insuranceRemark'},
+            ],
+            select: {
+                style:    'multi',
+                selector: 'td:first-child'
+            }
+        });
+    }
 
-    $('#plafon_table tbody').on('click', 'input[type="checkbox"]', function(e){
+    $('#insurance_table tbody').on('click', 'input[type="checkbox"]', function(e){
         var $row = $(this).closest('tr');
 
         if(this.checked){
@@ -469,7 +494,7 @@
         e.stopPropagation();
     });
 
-    $('#plafon_table').on('click', 'tr td:first-child', function(e){
+    $('#insurance_table').on('click', 'tr td:first-child', function(e){
         $(this).parent().find('input[type="checkbox"]').trigger('click');
     });
 
@@ -482,22 +507,66 @@
     })
 
     $("#toolbar-new").on('click', function() {
-        $.redirect("{{ url('personnel/insurance/detail_data') }}", { 'plafonYear' : null, 'plafonCode' : null, 'rankCode' : null, 'category' : null, 'func' : 'new' }, "GET", "iframe_dashboard");
+        $.redirect("{{ url('personnel/insurance/detail_data') }}", { 'employeeNo' : null, 'insuranceCode' : null, 'func' : 'new' }, "GET", "iframe_dashboard");
     });
 
     $("#toolbar-edit").on('click', function() {
         var data = table.rows('.selected').data();
         if(data.count() > 0){
-            $.redirect("{{ url('personnel/insurance/detail_data') }}", { 'plafonYear' : data[0].plafonYear, 'plafonCode' : data[0].plafonCode, 'rankCode' : data[0].rankCode, 'category' : data[0].category, 'func' : 'edit' }, "GET", "iframe_dashboard");
+            $.redirect("{{ url('personnel/insurance/detail_data') }}", { 'employeeNo' : data[0].employeeNo, 'insuranceCode' : data[0].insuranceCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
         }else{
             $('#notification_error').modal('show');
             $('#message-notification-error').html('No Data Selected');
         }
     });
 
-    $('#plafon_table tbody').on('click', 'tr td:not(:first-child)', function () {
+    $("#toolbar-delete").on('click', function() {
+        var data = table.rows('.selected').data().toArray();
+        if(data.length > 0){
+            $('#delete_insurance').modal('show');
+
+            $("#btn-yes").on('click', function() {
+                $.ajax({
+                    url: "{{ url('personnel/insurance/remove') }}",
+                    type: "GET",
+                    data: {
+                        'data' : data
+                    },
+                    success: function (response) {
+                        if (response.status == "true") {
+                            $('#notification_success').modal('show');
+                            $('#message-notification-success').html(response
+                                .message);
+                            $('#insurance_table').DataTable().destroy();
+                            load_data_table_insurance();
+                            setTimeout(function () {
+                                $('#notification_success').modal('hide');
+                            }, 3000);
+                        } else {
+                            $('#notification_error').modal('show');
+                            if (response.message == null || response.message == '') {
+                                $('#message-notification-error').html(
+                                    "{{ __('login.error') }}");
+                            } else {
+                                $('#message-notification-error').html(response.message);
+                            }
+                        }
+                    },
+                    error: function (response) {
+                        $('#notification_error').modal('show');
+                        $('#message-notification-error').html(response);
+                    }
+                });
+            });
+        }else{
+            $('#notification_error').modal('show');
+            $('#message-notification-error').html('No Data Selected');
+        }
+    });
+
+    $('#insurance_table tbody').on('click', 'tr td:not(:first-child)', function () {
     	var data = table.row(this).data();
-    	$.redirect("{{ url('personnel/insurance/detail_data') }}", { 'plafonYear' : data.plafonYear, 'plafonCode' : data.plafonCode, 'rankCode' : data.rankCode, 'category' : data.category, 'func' : 'edit' }, "GET", "iframe_dashboard");
+    	$.redirect("{{ url('personnel/insurance/detail_data') }}", { 'employeeNo' : data.employeeNo, 'insuranceCode' : data.insuranceCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
     });
     
   });
