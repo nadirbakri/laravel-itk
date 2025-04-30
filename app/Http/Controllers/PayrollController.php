@@ -9524,6 +9524,10 @@ public function dataDetailReportFormatPY(Request $request)
             $filename = 'Unused Leave.xlsx';
         }else if($request->report_type == 'MEDICAL_FACILITY_USED'){
             $filename = 'Medical Facility Used.xlsx';
+        }else if($request->report_type == 'AKTUARIA_KARYAWAN_AKTIF'){
+            $filename = 'Aktuaria Karyawan Aktif.xlsx';
+        }else if($request->report_type == 'AKTUARIA_KARYAWAN_RESIGN'){
+            $filename = 'Aktuaria Karyawan Resign.xlsx';
         }else{
             $filename = 'CBI Report Monthly.xlsx';
         }

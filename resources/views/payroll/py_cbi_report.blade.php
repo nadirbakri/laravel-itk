@@ -238,6 +238,8 @@
                                                     <option value="MEDICAL_REIMBURSEMENT_LIMIT">{{ __('payroll_cbi_report.label_medical_reimbursement_limit') }}</option>
                                                     <option value="UNUSED_LEAVE">{{ __('payroll_cbi_report.label_unused_leave') }}</option>
                                                     <option value="MEDICAL_FACILITY_USED">{{ __('payroll_cbi_report.label_medical_facility_used') }}</option>
+                                                    <option value="AKTUARIA_KARYAWAN_AKTIF">{{ __('payroll_cbi_report.label_aktuaria_karyawan_aktif') }}</option>
+                                                    <option value="AKTUARIA_KARYAWAN_RESIGN">{{ __('payroll_cbi_report.label_aktuaria_karyawan_resign') }}</option>
                                                 </select>
                                             </div>
                                         </div>

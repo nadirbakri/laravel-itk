@@ -14,6 +14,8 @@ return [
     'label_salary_summary' => 'Ringkasan Gaji',
     'label_yearly_recap_jamsostek_report' => 'Laporan Rekap Jamsostek Tahunan ',
     'label_yearly_recap_report' => 'Laporan Rekap Tahunan',
+    'label_aktuaria_karyawan_aktif' => 'Aktuaria Karyawan Aktif',
+    'label_aktuaria_karyawan_resign' => 'Aktuaria Karyawan Resign',
     'btn_download' => 'Unduh',
     'btn_cancel' => 'Batal',
     'alert_success' => 'Sukses !',

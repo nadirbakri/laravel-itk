@@ -95,6 +95,42 @@ class CBIReportMonthlyExport extends DefaultValueBinder implements WithCustomVal
                 $response = $client->post(env('API_URL').'/payroll/medicalClaimReport', [
                     'body' => json_encode($param)
                 ]);
+            }else if($this->reportType == 'AKTUARIA_KARYAWAN_AKTIF'){
+                $param = [
+                    'companyCode' => Session::get('companyCode'),
+                    "periodYear" => (int) date('Y', strtotime($this->period)),
+                    "periodMonth" => (int) date('m', strtotime($this->period)),
+                    "isResign" => false,
+                    "isActive" => true,
+                    "languageCode" => App::getLocale(),
+                    "sessionID" => 0,
+                    "sessionUserID" => Session::get('userID'),
+                    "logActionUsername" => Session::get('userName'),
+                    "logActionUserID" => Session::get('userID')
+                ];
+    
+                // dd(json_encode($param));
+                $response = $client->post(env('API_URL').'/payroll/aktuariaReport', [
+                    'body' => json_encode($param)
+                ]);
+            }else if($this->reportType == 'AKTUARIA_KARYAWAN_RESIGN'){
+                $param = [
+                    'companyCode' => Session::get('companyCode'),
+                    "periodYear" => (int) date('Y', strtotime($this->period)),
+                    "periodMonth" => (int) date('m', strtotime($this->period)),
+                    "isResign" => true,
+                    "isActive" => false,
+                    "languageCode" => App::getLocale(),
+                    "sessionID" => 0,
+                    "sessionUserID" => Session::get('userID'),
+                    "logActionUsername" => Session::get('userName'),
+                    "logActionUserID" => Session::get('userID')
+                ];
+    
+                // dd(json_encode($param));
+                $response = $client->post(env('API_URL').'/payroll/aktuariaReport', [
+                    'body' => json_encode($param)
+                ]);
             }
         }catch (RequestException $e){
             $response = $e->getResponse();
@@ -124,6 +160,14 @@ class CBIReportMonthlyExport extends DefaultValueBinder implements WithCustomVal
                 return view('payroll.py_export_cbi_medical_facility_used_report_excel', [
                     'data' => []
                 ]);
+            }else if($this->reportType == 'AKTUARIA_KARYAWAN_AKTIF'){
+                return view('payroll.py_export_cbi_aktuaria_karyawan_aktif_report_excel', [
+                    'data' => []
+                ]);
+            }else if($this->reportType == 'AKTUARIA_KARYAWAN_RESIGN'){
+                return view('payroll.py_export_cbi_aktuaria_karyawan_resign_report_excel', [
+                    'data' => []
+                ]);
             }
             
         }else{
@@ -137,6 +181,14 @@ class CBIReportMonthlyExport extends DefaultValueBinder implements WithCustomVal
                 ]);
             }else if($this->reportType == 'MEDICAL_FACILITY_USED'){
                 return view('payroll.py_export_cbi_medical_facility_used_report_excel', [
+                    'data' => $arrResult->dataListSet
+                ]);
+            }else if($this->reportType == 'AKTUARIA_KARYAWAN_AKTIF'){
+                return view('payroll.py_export_cbi_aktuaria_karyawan_aktif_report_excel', [
+                    'data' => $arrResult->dataListSet
+                ]);
+            }else if($this->reportType == 'AKTUARIA_KARYAWAN_RESIGN'){
+                return view('payroll.py_export_cbi_aktuaria_karyawan_resign_report_excel', [
                     'data' => $arrResult->dataListSet
                 ]);
             }
