@@ -423,7 +423,7 @@
                         </div>
                     </div>
                     <div class="col-3">
-                        <button class="btn btn-primary" name="btn-by-level" id="btn-by-level" value="by-level" style="width: 100%;" data-toggle="modal" data-target="#modal_display_by_grouping">
+                        <button type="button" class="btn btn-primary" style="width: 100%;" data-toggle="modal" data-target="#modal_display_by_grouping">
                             {{ __('payroll_periodical_report.label_display_by_grouping') }}
                         </button>
                     </div>

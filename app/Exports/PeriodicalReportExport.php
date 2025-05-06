@@ -3,6 +3,7 @@
 namespace App\Exports;
 
 set_time_limit(0);
+ini_set('memory_limit', '1024M');
 
 use PhpOffice\PhpSpreadsheet\Cell\Cell;
 use Maatwebsite\Excel\Concerns\FromView;

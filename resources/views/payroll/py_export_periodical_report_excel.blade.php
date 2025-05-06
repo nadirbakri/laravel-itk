@@ -830,9 +830,7 @@
 
                             if ($isFirst) {
                                 if (!$pageBreakWritten && isset($flag_page_break[$childFlagKey]) && $flag_page_break[$childFlagKey] === 'true') {
-                                    echo '<tr>
-                                            <td>__PAGE_BREAK__</td>
-                                        </tr>';
+                                    echo '<tr><td>__PAGE_BREAK__</td></tr>';
                                     $pageBreakWritten = true;
                                 }
                                 $isFirst = false;
@@ -928,6 +926,51 @@
         @endonce
     
         @php
+            function sanitizeText(string $text): string {
+                $sanitized = preg_replace('/[\/&\[\]\.]/', ' ', $text);
+                $sanitized = preg_replace('/\s+/', ' ', $sanitized);
+                $sanitized = trim($sanitized);
+
+                return $sanitized;
+            }
+
+            function sanitizeLevelMeta(array &$levels): void {
+                foreach ($levels as &$level) {
+                    if (isset($level->levelName)) {
+                        $level->levelName = sanitizeText($level->levelName);
+                    }
+
+                    if (isset($level->levelDesription)) {
+                        $level->levelDesription = sanitizeText($level->levelDesription);
+                    }
+
+                    // if (isset($level->employees) && is_array($level->employees)) {
+                    //     foreach ($level->employees as &$employee) {
+                    //         if (isset($employee->fullName)) {
+                    //             $employee->fullName = sanitizeText($employee->fullName);
+                    //         }
+                    //         if (isset($employee->reportName)) {
+                    //             $employee->reportName = sanitizeText($employee->reportName);
+                    //         }
+                    //         if (isset($employee->field) && is_array($employee->field)) {
+                    //             foreach ($employee->field as &$field) {
+                    //                 if (isset($field->tableName)) {
+                    //                     $field->tableName = sanitizeText($field->tableName);
+                    //                 }
+                    //             }
+                    //         }
+                    //     }
+                    // }
+
+                    // Rekursif ke levelChild
+                    if (isset($level->levelChild) && is_array($level->levelChild)) {
+                        sanitizeLevelMeta($level->levelChild);
+                    }
+                }
+            }
+
+            sanitizeLevelMeta($data[0]->detailGroupingLevel);
+
             sumByLevel($data[0]->detailGroupingLevel, $totals);
         @endphp
     
@@ -937,6 +980,10 @@
                 [$total, $pageBreakWritten] = renderLevel($level, $company, $grand_total, $globalTotal, $flag_grand_total, $totals, null, $flag_page_break, $pageBreakWritten, $isLastLevel);
             @endphp
         @endforeach
+
+        @php
+            // dd($total);
+        @endphp
     
         @if (!empty($globalTotal) && $grand_total)
             <h4 style="margin-top: 40px; background-color: yellow;">GRAND TOTAL KESELURUHAN</h4>
