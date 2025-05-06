@@ -922,6 +922,7 @@
                                 <div class="form-group">
                                     <label
                                         for="office_location_employment">{{ __('personel_personal_data.label_office_location') }}</label>
+                                    <span class="required">*</span>
                                     <select class="form-control" id="office_location_employment"
                                         name="office_location_employment">
                                     </select>
@@ -1517,6 +1518,7 @@
                                             <div class="form-group">
                                                 <label
                                                     for="bpjs_number_tenaga_kerja">{{ __('personel_personal_data.label_bpjs_number') }}</label>
+                                                <span class="required">*</span>
                                                 <input type="text" class="form-control" id="bpjs_number_tenaga_kerja"
                                                     name="bpjs_number_tenaga_kerja"
                                                     placeholder="{{ __('personel_personal_data.label_bpjs_number') }}">
@@ -1539,6 +1541,7 @@
                                             <div class="form-group">
                                                 <label
                                                     for="joining_date_tenaga_kerja">{{ __('personel_personal_data.label_joining_date') }}</label>
+                                                <span class="required">*</span>
                                                 <div class='input-group'>
                                                     <input type="text" class="form-control"
                                                         id="joining_date_tenaga_kerja" name="joining_date_tenaga_kerja"
@@ -1554,6 +1557,7 @@
                                             <div class="form-group">
                                                 <label
                                                     for="payment_period_start_date_tenaga_kerja">{{ __('personel_personal_data.label_payment_period_start_date') }}</label>
+                                                <span class="required">*</span>
                                                 <div class='input-group'>
                                                     <input type="text" class="form-control"
                                                         id="payment_period_start_date_tenaga_kerja"
@@ -1672,6 +1676,7 @@
                                             <div class="form-group">
                                                 <label
                                                     for="bpjs_number_kesehatan">{{ __('personel_personal_data.label_bpjs_number') }}</label>
+                                                <span class="required">*</span>
                                                 <input type="text" class="form-control" id="bpjs_number_kesehatan"
                                                     name="bpjs_number_kesehatan"
                                                     placeholder="{{ __('personel_personal_data.label_bpjs_number') }}">
@@ -1694,6 +1699,7 @@
                                             <div class="form-group">
                                                 <label
                                                     for="joining_date_kesehatan">{{ __('personel_personal_data.label_joining_date') }}</label>
+                                                <span class="required">*</span>
                                                 <div class='input-group'>
                                                     <input type="text" class="form-control" id="joining_date_kesehatan"
                                                         name="joining_date_kesehatan"
@@ -1709,6 +1715,7 @@
                                             <div class="form-group">
                                                 <label
                                                     for="payment_period_start_date_kesehatan">{{ __('personel_personal_data.label_payment_period_start_date') }}</label>
+                                                <span class="required">*</span>
                                                 <div class='input-group'>
                                                     <input type="text" class="form-control"
                                                         id="payment_period_start_date_kesehatan"
@@ -7459,6 +7466,9 @@
                     fullname_info: {
                         required: true,
                     },
+                    office_location_employment: {
+                        required: true,
+                    },
                     joining_date_employment: {
                         required: true,
                     },
@@ -7485,6 +7495,48 @@
                     },
                     group_authorize_payroll: {
                         required: true,
+                    },
+                    bpjs_number_tenaga_kerja: {
+                        required: {
+                            depends: function () {
+                                return $('#join_tenaga_kerja').is(':checked');
+                            }
+                        },
+                    },
+                    joining_date_tenaga_kerja: {
+                        required: {
+                            depends: function () {
+                                return $('#join_tenaga_kerja').is(':checked');
+                            }
+                        },
+                    },
+                    payment_period_start_date_tenaga_kerja: {
+                        required: {
+                            depends: function () {
+                                return $('#join_tenaga_kerja').is(':checked');
+                            }
+                        },
+                    },
+                    bpjs_number_kesehatan: {
+                        required: {
+                            depends: function () {
+                                return $('#join_kesehatan').is(':checked');
+                            }
+                        },
+                    },
+                    joining_date_kesehatan: {
+                        required: {
+                            depends: function () {
+                                return $('#join_kesehatan').is(':checked');
+                            }
+                        },
+                    },
+                    payment_period_start_date_kesehatan: {
+                        required: {
+                            depends: function () {
+                                return $('#join_kesehatan').is(':checked');
+                            }
+                        },
                     },
                     birth_place_info: {
                         required: true,
@@ -7548,6 +7600,9 @@
                     fullname_info: {
                         required: "{{ __('personel_personal_data.fullname_required') }}",
                     },
+                    office_location_employment: {
+                        required: "{{ __('personel_personal_data.office_location_required') }}",
+                    },
                     joining_date_employment: {
                         required: "{{ __('personel_personal_data.joining_date_required') }}",
                     },
@@ -7573,7 +7628,25 @@
                         required: "{{ __('personel_personal_data.tax_calculation_method_required') }}",
                     },
                     group_authorize_payroll: {
-                        required: "{{ __('personel_personal_data.group_authorize_required') }}"
+                        required: "{{ __('personel_personal_data.group_authorize_required') }}",
+                    },
+                    bpjs_number_tenaga_kerja: {
+                        required: "{{ __('personel_personal_data.bpjs_number_tenaga_kerja_required') }}",
+                    },
+                    joining_date_tenaga_kerja: {
+                        required: "{{ __('personel_personal_data.joining_date_tenaga_kerja_required') }}",
+                    },
+                    payment_period_start_date_tenaga_kerja: {
+                        required: "{{ __('personel_personal_data.payment_period_start_date_tenaga_kerja_required') }}",
+                    },
+                    bpjs_number_kesehatan: {
+                        required: "{{ __('personel_personal_data.bpjs_number_kesehatan_required') }}",
+                    },
+                    joining_date_kesehatan: {
+                        required: "{{ __('personel_personal_data.joining_date_kesehatan_required') }}",
+                    },
+                    payment_period_start_date_kesehatan: {
+                        required: "{{ __('personel_personal_data.payment_period_start_date_kesehatan_required') }}",
                     },
                     birth_place_info: {
                         required: "{{ __('personel_personal_data.birth_place_info_required') }}",
