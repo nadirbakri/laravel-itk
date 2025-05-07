@@ -7388,6 +7388,9 @@ public function dataDetailReportFormatPY(Request $request)
         }else if($data->companyCode == 'CII' || $data->companyCode == 'CORI'){
             $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_cori';
             $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_cori';
+        }else if($data->companyCode == 'RSPIK'){
+            $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_rspik';
+            $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_rspik';
         }else{
             $viewNamePortrait = 'payroll.py_export_payment_slip_portrait';
             $viewNameLandscape = 'payroll.py_export_payment_slip_landscape';
@@ -7667,6 +7670,9 @@ public function dataDetailReportFormatPY(Request $request)
         }else if($companyCode == 'CII' || $companyCode == 'CORI'){
             $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_cori';
             $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_cori';
+        }else if($companyCode == 'RSPIK'){
+            $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_rspik';
+            $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_rspik';
         }else{
             $viewNamePortrait = 'payroll.py_export_payment_slip_portrait';
             $viewNameLandscape = 'payroll.py_export_payment_slip_landscape';
@@ -7877,6 +7883,9 @@ public function dataDetailReportFormatPY(Request $request)
         }else if($companyCode == 'CII' || $companyCode == 'CORI'){
             $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_cori';
             $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_cori';
+        }else if($companyCode == 'RSPIK'){
+            $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_rspik';
+            $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_rspik';
         }else{
             $viewNamePortrait = 'payroll.py_export_payment_slip_portrait';
             $viewNameLandscape = 'payroll.py_export_payment_slip_landscape';
@@ -8545,54 +8554,64 @@ public function dataDetailReportFormatPY(Request $request)
         if ($request->format == "coretax_mp") {
             $namaFile = "EsptCoretaxMP-" . date('n', strtotime($request->period)) . date('Y', strtotime($request->period)) . "-" . $request->rectification . "-" . $request->npwp_group . ".xml";
 
-            $response = $client->post(env('API_URL') . "/payroll/getCoretaxMP", [
+            $response = $client->post(env('API_URL') . "/payroll/getCoretaxMPXML", [
                 'body' => json_encode($param)
             ]);
 
             $arrResult = json_decode($response->getBody()->getContents());
 
-            $xml = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8" standalone="yes"?><MmPayrollBulk xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"></MmPayrollBulk>');
-            
             if(!empty($arrResult->dataListSet)){
-                $xml->addChild('TIN', $arrResult->dataListSet[0]->companyNPWP);
-                if(!empty($arrResult->dataListSet[0]->coretax_MP)){
-                    $dataTax = $arrResult->dataListSet[0]->coretax_MP[0]->value;
-                    $listOfMmPayroll = $xml->addChild('ListOfMmPayroll');
-                    foreach($dataTax as $value){
-                        $mmPayrollElement = $listOfMmPayroll->addChild('MmPayroll');
-                        $mmPayrollElement->addChild('TaxPeriodMonth', htmlspecialchars($value[0]));
-                        $mmPayrollElement->addChild('TaxPeriodYear', htmlspecialchars($value[1]));
-                        $mmPayrollElement->addChild('CounterpartOpt', htmlspecialchars($value[2]));
-                        if(empty($value[4])){
-                            $child = $mmPayrollElement->addChild('CounterpartPassport', '');
-                            $child->addAttribute('xsi:nil', 'true');
-                        }else{
-                            $mmPayrollElement->addChild('CounterpartPassport', htmlspecialchars($value[4]));
-                        }
-                        $mmPayrollElement->addChild('CounterpartTin', htmlspecialchars($value[3]));
-                        $mmPayrollElement->addChild('StatusTaxExemption', htmlspecialchars($value[5]));
-                        $mmPayrollElement->addChild('Position', htmlspecialchars($value[6]));
-                        $mmPayrollElement->addChild('TaxCertificate', htmlspecialchars($value[7]));
-                        $mmPayrollElement->addChild('TaxObjectCode', htmlspecialchars($value[8]));
-                        $mmPayrollElement->addChild('Gross', htmlspecialchars($value[9]));
-                        $mmPayrollElement->addChild('Rate', htmlspecialchars($value[10]));
-                        $mmPayrollElement->addChild('IDPlaceOfBusinessActivity', htmlspecialchars($value[10]));
-                        if(empty($value[12])){
-                            $child = $mmPayrollElement->addChild('WithholdingDate', '');
-                            $child->addAttribute('xsi:nil', 'true');
-                        }else{
-                            $mmPayrollElement->addChild('WithholdingDate', date('Y-m-d', strtotime($value[12])));
-                        }
-                    }
-                }
+                return response($arrResult->dataListSet[0]->coretaX_XML_FORMAT, 200)
+                    ->header('Content-Type', 'application/xml')
+                    ->header('Content-Disposition', 'attachment; filename="' . $namaFile . '"');
+            }else{
+                return response("", 200)
+                    ->header('Content-Type', 'application/xml')
+                    ->header('Content-Disposition', 'attachment; filename="' . $namaFile . '"');
             }
+
+            /* $xml = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8" standalone="yes"?><MmPayrollBulk xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"></MmPayrollBulk>'); */
+            
+            // if(!empty($arrResult->dataListSet)){
+            //     $xml->addChild('TIN', $arrResult->dataListSet[0]->companyNPWP);
+            //     if(!empty($arrResult->dataListSet[0]->coretax_MP)){
+            //         $dataTax = $arrResult->dataListSet[0]->coretax_MP[0]->value;
+            //         $listOfMmPayroll = $xml->addChild('ListOfMmPayroll');
+            //         foreach($dataTax as $value){
+            //             $mmPayrollElement = $listOfMmPayroll->addChild('MmPayroll');
+            //             $mmPayrollElement->addChild('TaxPeriodMonth', htmlspecialchars($value[0]));
+            //             $mmPayrollElement->addChild('TaxPeriodYear', htmlspecialchars($value[1]));
+            //             $mmPayrollElement->addChild('CounterpartOpt', htmlspecialchars($value[2]));
+            //             if(empty($value[4])){
+            //                 $child = $mmPayrollElement->addChild('CounterpartPassport', '');
+            //                 $child->addAttribute('xsi:nil', 'true');
+            //             }else{
+            //                 $mmPayrollElement->addChild('CounterpartPassport', htmlspecialchars($value[4]));
+            //             }
+            //             $mmPayrollElement->addChild('CounterpartTin', htmlspecialchars($value[3]));
+            //             $mmPayrollElement->addChild('StatusTaxExemption', htmlspecialchars($value[5]));
+            //             $mmPayrollElement->addChild('Position', htmlspecialchars($value[6]));
+            //             $mmPayrollElement->addChild('TaxCertificate', htmlspecialchars($value[7]));
+            //             $mmPayrollElement->addChild('TaxObjectCode', htmlspecialchars($value[8]));
+            //             $mmPayrollElement->addChild('Gross', htmlspecialchars($value[9]));
+            //             $mmPayrollElement->addChild('Rate', htmlspecialchars($value[10]));
+            //             $mmPayrollElement->addChild('IDPlaceOfBusinessActivity', htmlspecialchars($value[10]));
+            //             if(empty($value[12])){
+            //                 $child = $mmPayrollElement->addChild('WithholdingDate', '');
+            //                 $child->addAttribute('xsi:nil', 'true');
+            //             }else{
+            //                 $mmPayrollElement->addChild('WithholdingDate', date('Y-m-d', strtotime($value[12])));
+            //             }
+            //         }
+            //     }
+            // }
 
             // dd($xml->asXML());
 
-            return Response::make($xml->asXML(), 200, [
-                'Content-Type' => 'application/xml',
-                'Content-Disposition' => 'attachment; filename="' . $namaFile . '"'
-            ]);
+            // return Response::make($xml->asXML(), 200, [
+            //     'Content-Type' => 'application/xml',
+            //     'Content-Disposition' => 'attachment; filename="' . $namaFile . '"'
+            // ]);
 
             // Storage::put($namaFile, $xml->asXML());
 
@@ -8605,20 +8624,44 @@ public function dataDetailReportFormatPY(Request $request)
         else if ($request->format == "coretax_a1") {
             $namaFile = "EsptCoretaxA1-" . date('n', strtotime($request->period)) . date('Y', strtotime($request->period)) . "-" . $request->rectification . "-" . $request->npwp_group . ".xml";
 
-            $response = $client->post(env('API_URL') . "/payroll/getCoretaxA1", [
+            $response = $client->post(env('API_URL') . "/payroll/getCoretaxA1XML", [
                 'body' => json_encode($param)
             ]);
 
             $arrResult = json_decode($response->getBody()->getContents());
+
+            // dd($arrResult->dataListSet);
+
+            if(!empty($arrResult->dataListSet)){
+                return response($arrResult->dataListSet[0]->coretaX_XML_FORMAT, 200)
+                    ->header('Content-Type', 'application/xml')
+                    ->header('Content-Disposition', 'attachment; filename="' . $namaFile . '"');
+            }else{
+                return response("", 200)
+                    ->header('Content-Type', 'application/xml')
+                    ->header('Content-Disposition', 'attachment; filename="' . $namaFile . '"');
+            }
         }
         else if ($request->format == "coretax_21") {
             $namaFile = "EsptCoretax21-" . date('n', strtotime($request->period)) . date('Y', strtotime($request->period)) . "-" . $request->rectification . "-" . $request->npwp_group . ".xml";
 
-            $response = $client->post(env('API_URL') . "/payroll/getCoretax21", [
+            $response = $client->post(env('API_URL') . "/payroll/getCoretax21XML", [
                 'body' => json_encode($param)
             ]);
 
             $arrResult = json_decode($response->getBody()->getContents());
+
+            // dd($arrResult->dataListSet);
+
+            if(!empty($arrResult->dataListSet)){
+                return response($arrResult->dataListSet[0]->coretaX_XML_FORMAT, 200)
+                    ->header('Content-Type', 'application/xml')
+                    ->header('Content-Disposition', 'attachment; filename="' . $namaFile . '"');
+            }else{
+                return response("", 200)
+                    ->header('Content-Type', 'application/xml')
+                    ->header('Content-Disposition', 'attachment; filename="' . $namaFile . '"');
+            }
         }
     }
 
