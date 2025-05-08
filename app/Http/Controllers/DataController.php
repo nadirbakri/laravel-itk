@@ -2088,9 +2088,11 @@ class DataController extends Controller
 	    	);
 	    }
 
-		usort($employees, function ($a, $b) {
-			return strcmp($a->employeeNo, $b->employeeNo);
-		});
+		if ($employees) {
+			usort($employees, function ($a, $b) {
+				return strcmp($a->employeeNo, $b->employeeNo);
+			});
+		}
 
         return response()->json($employees);
 	}
@@ -12649,12 +12651,32 @@ class DataController extends Controller
 		}
 			
 		$arrResult = json_decode($response->getBody()->getContents());
-		
-		if ($arrResult->dataListSet == null) {
-			return response()->json([]);
-		}
-		else {
-			return response()->json($arrResult->dataListSet[0]->serviceCodeList);
-		}
+
+		if($search == ''){
+	    	$data = $arrResult->dataListSet[0]->serviceCodeList;
+	    }else{
+	    	$data = array_filter(
+	    		$arrResult->dataListSet[0]->serviceCodeList,
+	    		function($item) use ($search) {
+					$matchService = preg_match('/' . preg_quote($search, '/') . '/i', $item->serviceCode ?? '') ||
+									preg_match('/' . preg_quote($search, '/') . '/i', $item->serviceName ?? '');
+			
+					$matchClaim = false;
+					if (!empty($item->claimForDetail)) {
+						foreach ($item->claimForDetail as $claim) {
+							if (preg_match('/' . preg_quote($search, '/') . '/i', $claim->claimForCode ?? '') ||
+								preg_match('/' . preg_quote($search, '/') . '/i', $claim->claimForName ?? '')) {
+								$matchClaim = true;
+								break;
+							}
+						}
+					}
+			
+					return $matchService || $matchClaim;
+				}
+	    	);
+	    }
+
+        return response()->json($data);
 	}
 }

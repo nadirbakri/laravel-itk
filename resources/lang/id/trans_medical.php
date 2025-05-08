@@ -35,12 +35,19 @@ return [
     'dname' => 'Nama Tanggungan',
     'acc' => 'Disetujui',
     'paid' => 'Dibayar',
+    'waiting_payment' => 'Menunggu Pembayaran',
     'reject' => 'Ditolak',
     'fovt' => 'Berkas Lembur',
+    'detail_paid' => 'Detail Yang Terbayar',
+    'type' => 'Tipe',
+    'limit' => 'Batas',
+    'payment' => 'Pembayaran',
+    'total_payment' => 'Total Pembayaran',
+    'approval_remarks' => 'Catatan Persetujuan',
+    'btn_add_type' => 'Tambah Tipe',
 
     'label_year' => 'Year',
     'label_user_id' => 'User ID',
     'alert_success' => 'Sukses !',
-    'detail' => 'Detail'
 ]
 ?>

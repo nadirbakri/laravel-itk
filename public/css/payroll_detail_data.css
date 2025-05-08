@@ -343,3 +343,22 @@ tr.shown td.details-control {
         transform: rotate(360deg);
     }
 }
+.btn-secondary, .btn-secondary:active, .btn-secondary:focus {
+    border: 1px solid #007BFF;
+    color: #007BFF;
+    background-color: #ffffff;
+    box-shadow: none;
+}
+.btn-secondary:hover {
+    border: 1px solid #007BFF;
+    color: #ffffff;
+    background-color: #007BFF;
+}
+.btn-secondary:hover:disabled,
+.btn-secondary:disabled:hover {
+    border: none;
+    color: #ffffff;
+    background-color: #6c757d;
+    border-color: #6c757d;
+    cursor: not-allowed;
+}

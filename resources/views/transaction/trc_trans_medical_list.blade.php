@@ -467,7 +467,11 @@
                                         <input id="approvaldate" name="approvaldate" style="border: none" style="outline: none" type="hidden" class="form-control"><span id="approvaldate_val"></span>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
 
+                        <div class="card">
+                            <div class="card-body">
                                 <div class="row approve">
                                     <div class="col-12">
                                         <h5>Attachment</h5>
@@ -478,36 +482,18 @@
                                         <div id="attachment" class="row"></div>
                                     </div>
                                 </div>
-                                <br>
-                                <div class="row approve">
-                                    <div class="col-3">
-                                        <h5>Status</h5>
-                                    </div>
-                                    <div class="col-5">
-                                            <select name="reimbursement_status" id="reimbursement_status" class="custom-select">
-                                                <option value="APPROVED">{{ __('trans_medical.acc') }}</option>
-                                                <option value="REJECTED">{{ __('trans_medical.reject') }}</option>
-                                                <option value="PAID">{{ __('trans_medical.paid') }}</option>
-                                            </select>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-body" id="card-detail-paid">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h5>{{ __('trans_medical.detail_paid') }}</h5>
                                     </div>
                                 </div>
-                                <div class="row approve">
-                                    <div class="col-3">
-                                        <h5>{{ __('trans_medical.tpaid') }}</h5>
-                                    </div>
-                                    <div class="col-5">
-                                        <input id="totalpaid" name="totalpaid"  type="text" class="form-control" >
-                                    </div>
+                                <div id="dynamic-total-paid">
                                 </div>
-                                <div class="row approve">
-                                    <div class="col-3">
-                                        <h5>{{ __('trans_medical.prem') }}</h5>
-                                    </div>
-                                    <div class="col-5">
-                                        <input id="approvalremarks" name="approvalremarks"  type="text" class="form-control" id="claim_date_from" name="claim_date_from">
-                                    </div>
-                                </div>
-                                <hr>
                                 <button class="btn btn-primary btn-block" id="btn-update" type="button">{{ __('trans_medical.btn_update') }}</button>
                             </div>
                         </div>
@@ -774,9 +760,11 @@
     var table = null;
     var table2 = null;
     var companyCode = "{{ Session::get('companyCode') }}";
+    let userType = "{{ Session::get('userType') }}";
     var arrayMedical = [];
     let currentIndex = 0;
     let currentAttachments = [];
+    let paymentTypeCounter = 1;
 
     function load_data_medical_list(claim_date_from, claim_date_to, direct_superior, reimbursement_type, business_unit, medical_status){
         $.ajax({
@@ -935,6 +923,7 @@
         $('#directsuperior_val').html(data.directSuperiorID)
 
         attachmentPreview(data)
+        load_detail_paid_card(data);
     }
 
     function preview(img) {
@@ -1119,14 +1108,18 @@
         $('.close').click();
     }
 
-    $('#btn-update').click(()=>{
-        let reimbursement_status = $('#reimbursement_status').val();
-        let totalpaid = $('#totalpaid').val();
-        let ticketNo = $('#tiketno').val();
-        let direct_superior = $("#directsuperior").val();
-        let approvalremarks = $("#approvalremarks").val();
+    // $('#btn-update').click(()=>{
+    //     let reimbursement_status = $('#reimbursement_status').val();
+    //     let totalpaid = $('#totalpaid').val();
+    //     let ticketNo = $('#tiketno').val();
+    //     let direct_superior = $("#directsuperior").val();
+    //     let approvalremarks = $("#approvalremarks").val();
 
-        update_data(reimbursement_status, totalpaid, ticketNo, direct_superior, approvalremarks)
+    //     update_data(reimbursement_status, totalpaid, ticketNo, direct_superior, approvalremarks)
+    // })
+
+    $('#btn-update').click(()=>{
+        $('#update_approval_medical_list_form').submit()
     })
 
     function updateMedicalStatus(reimbursement_status, totalpaid, ticketNo, direct_superior, approvalremarks) {
@@ -1200,6 +1193,336 @@
                 $('#message-notification-error').html(response);
             }
         });
+    }
+
+    function load_detail_paid_card(data) {
+        $('#dynamic-total-paid').empty();
+        if (companyCode === 'ITK') {
+            let paymentHistoryList = []
+
+            const paymentDetail = (data) => {
+                $.ajax({
+                    type: 'GET',
+                    url: "{{ url('/trans/medical_list/attachment') }}",
+                    data: {
+                        'employeeNo' : data.employeeNo,
+                        'receiptDate' : data.receiptDate,
+                        'ticketNo' : data.ticketNo,
+                    }
+                }).then(response => {
+                    const paymentHistoryList = response.paymentHistoryList
+
+                    if (paymentHistoryList.length) {
+                        for (let index = 0; index < paymentHistoryList.length; index++) {
+                            const dataDetail = paymentHistoryList[index]
+                            dynamicPaymentDetail(index, dataDetail)     
+                            paymentTypeCounter = paymentHistoryList.length   
+                        }
+                    }
+                    else  {
+                        dynamicPaymentDetail(0, null)
+                        paymentTypeCounter = 1     
+                    }
+                    loadDataPaymentType(data.ticketNo);
+                    calculateTotalPayment();
+                })
+            }
+
+            $('#dynamic-total-paid').append(
+                `
+                    <div class="payment-entry" data-index="0">
+                        <div class="row">
+                            <div class="col-3">
+                                <h5 color="#8F8F8F">{{ __('trans_medical.tpaid') }}</h5>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="reimbursement_status">Status</label>
+                                    <select name="reimbursement_status" id="reimbursement_status" class="custom-select">
+                                        <option value="APPROVED">{{ __('trans_medical.acc') }}</option>
+                                        <option value="REJECTED">{{ __('trans_medical.reject') }}</option>
+                                        <option value="PAID">{{ __('trans_medical.paid') }}</option>
+                                        <option value="WAITING PAYMENT">{{ __('trans_medical.waiting_payment') }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div id="payment-detail">
+                        </div>
+                        <div id="new-payment-type">
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <button class="btn btn-secondary btn-block" id="btn-add-type" type="button" ${userType.toLowerCase() !== 'hr' ? 'disabled' : ''}><i class="fa fa-plus"></i> {{ __('trans_medical.btn_add_type') }}</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; border-radius: 8px; background-color: #F6F8F8; padding: 12px;">
+                                    <h6 style="margin: 0;">Total Payment</h6>
+                                    <h6 id="total_payment"style="margin: 0;">0</h6>
+                                </div>
+                                <input type="hidden" class="form-control" id="total_payment_hidden" name="total_payment">
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="approval_remarks">{{ __('trans_medical.approval_remarks') }}</label>
+                                    <textarea class="form-control" id="approval_remarks" name="approval_remarks" placeholder="{{ __('trans_medical.approval_remarks') }}"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            )
+
+            paymentDetail(data)
+
+            function dynamicPaymentDetail(index, dataDetail) {
+                $('#payment-detail').append(
+                    `
+                        <div class="payment-entry" data-index="${index}">
+                            <div class="row">
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <label for="paid_type_${index}">{{ __('trans_medical.type') }}</label>
+                                        <select class="form-control paid_type" id="paid_type_${index}" name="paymentList[${index}][claimForCode]" class="custom-select paid-type" ${userType.toLowerCase() !== 'hr' ? 'disabled' : ''}>
+                                        </select>
+                                        <input type="hidden" class="form-control" id="service_code_${index}" name="paymentList[${index}][serviceCode]">
+                                        <input type="hidden" class="form-control" id="claim_for_code_hidden_${index}" name="paymentList[${index}][claimForCode]">
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <label for="paid_limit_${index}">{{ __('trans_medical.limit') }}</label>
+                                        <input type="text" class="form-control paid_limit" id="paid_limit_${index}" name="paid_limit_${index}" placeholder="{{ __('trans_medical.limit') }}" disabled>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="form-group">
+                                        <label for="paid_payment_${index}">{{ __('trans_medical.payment') }}</label>
+                                        <input type="number" class="form-control paid_payment" id="paid_payment_${index}" name="paymentList[${index}][paidAmount]" placeholder="{{ __('trans_medical.payment') }}" ${userType.toLowerCase() !== 'hr' ? 'readonly' : ''}>
+                                    </div>
+                                </div>
+                                <div class="col-1" style="display: flex; justify-content: center; align-items: center; padding-top: 8px;">
+                                    <img style="cursor: pointer;" class="btn-remove" id="btn-remove-${index}" src={{ url('/icons/form/trash-regular.svg') }} alt="Remove" />
+                                </div>
+                            </div>
+                        </div>
+                    `
+                )
+
+                $(`#paid_type_${index}`).select2({
+                    placeholder: "Choose Type",
+                    allowClear: true,
+                    ajax: {
+                        url: "{{ url('/medical_service_code/paid_type/api') }}",
+                        dataType: 'json',
+                        delay: 250,
+                        processResults: function (response) {
+                            return {
+                                results: $.map(response, function (item) {
+                                    return {
+                                        text: item.serviceName || '(No Name)',
+                                        id: item.serviceCode,
+                                        children: item.claimForDetail.map(claim => ({
+                                            id: claim.claimForCode,
+                                            text: claim.claimForName,
+                                            limit: claim.maxPayment,
+                                            serviceCode: claim.serviceCode
+                                        }))
+                                    }
+                                })
+                            };
+                        },
+                        cache: true
+                    }
+                });
+
+                if (dataDetail) {
+                    const newOption = new Option(dataDetail.claimForName, dataDetail.claimForCode, true, true)
+                    $(`#claim_for_code_hidden_${index}`).val(dataDetail.claimForCode)
+                    $(`#service_code_${index}`).val(dataDetail.serviceCode)
+                    $(`#paid_type_${index}`).append(newOption).trigger('change')
+                    $(`#paid_payment_${index}`).val(dataDetail.paidAmount)
+                }
+            }
+
+            $(document).on("select2:select", ".paid_type", function (e) {
+                const index = $(this).closest('.payment-entry').data('index');
+                const data = $(this).select2('data');
+                $(`#service_code_${index}`).val(data[0].serviceCode);
+                $(`#paid_limit_${index}`).val(data[0].limit);
+            });
+
+            $(document).on("select2:unselecting", ".paid_type", function (e) {
+                const index = $(this).closest('.payment-entry').data('index');
+                $(`#service_code_${index}`).val("");
+                $(`#paid_limit_${index}`).val("");
+            });
+
+            $(document).on('click', '#btn-add-type', function () {
+                if (userType.toLowerCase() === 'hr') {
+                    $('#new-payment-type').append(
+                        `
+                            <div class="payment-entry" data-index="${paymentTypeCounter}">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="paid_type_${paymentTypeCounter}">{{ __('trans_medical.type') }}</label>
+                                            <select class="form-control paid_type" id="paid_type_${paymentTypeCounter}" name="paymentList[${paymentTypeCounter}][claimForCode]" class="custom-select paid-type">
+                                            </select>
+                                            <input type="hidden" class="form-control" id="service_code_${paymentTypeCounter}" name="paymentList[${paymentTypeCounter}][serviceCode]">
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="paid_limit_${paymentTypeCounter}">{{ __('trans_medical.limit') }}</label>
+                                            <input type="text" class="form-control paid_limit" id="paid_limit_${paymentTypeCounter}" name="paid_limit_${paymentTypeCounter}" placeholder="{{ __('trans_medical.limit') }}" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label for="paid_payment_${paymentTypeCounter}">{{ __('trans_medical.payment') }}</label>
+                                            <input type="number" class="form-control paid_payment" id="paid_payment_${paymentTypeCounter}" name="paymentList[${paymentTypeCounter}][paidAmount]" placeholder="{{ __('trans_medical.payment') }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-1" style="display: flex; justify-content: center; align-items: center; padding-top: 8px;">
+                                        <img style="cursor: pointer;" class="btn-remove" id="btn-remove-${paymentTypeCounter}" src={{ url('/icons/form/trash-regular.svg') }} alt="Remove" />
+                                    </div>
+                                </div>
+                            </div>
+                        `
+                    )
+                    paymentTypeCounter++
+                    loadDataPaymentType(data.ticketNo);
+                $(`#paid_payment_${paymentTypeCounter - 1}`).on('input', calculateTotalPayment);
+                } else {
+                    alert("You are not authorized to add payment types.");
+                }
+            })
+
+            $(document).on('input', '.paid_payment', function () {
+                calculateTotalPayment();
+            });
+
+            $(document).on('click', '.btn-remove', function () {
+                if (userType.toLowerCase() === 'hr') {
+                    $(this).closest(".row").remove();
+                    calculateTotalPayment();
+                } else {
+                    alert("You are not authorized to remove payment types.");
+                }
+            });
+
+            function calculateTotalPayment() {
+                let total = 0;
+                $('.paid_payment').each(function () {
+                    const value = parseFloat($(this).val());
+                    if (!isNaN(value)) {
+                        total += value;
+                    }
+                });
+                $('#total_payment').text(total.toLocaleString('en-US'));
+                $('#total_payment_hidden').val(total);
+            }
+        }
+        else {
+            $('#dynamic-total-paid').append(
+                `
+                    <div class="row">
+                        <div class="col-3">
+                            <h5>{{ __('trans_medical.status') }}</h5>
+                        </div>
+                        <div class="col-5">
+                            <select name="reimbursement_status" id="reimbursement_status" class="custom-select">
+                                <option value="APPROVED">{{ __('trans_medical.acc') }}</option>
+                                <option value="REJECTED">{{ __('trans_medical.reject') }}</option>
+                                <option value="PAID">{{ __('trans_medical.paid') }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3">
+                            <h5>{{ __('trans_medical.tpaid') }}</h5>
+                        </div>
+                        <div class="col-5">
+                            <input id="totalpaid" name="totalpaid"  type="text" class="form-control" >
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3">
+                            <h5>{{ __('trans_medical.prem') }}</h5>
+                        </div>
+                        <div class="col-5">
+                            <input id="approvalremarks" name="approvalremarks"  type="text" class="form-control">
+                        </div>
+                    </div>
+                `
+            )
+        }
+    }
+
+    if ($("#update_approval_medical_list_form").length > 0) {
+        $("#update_approval_medical_list_form").validate({
+            submitHandler: function (form) {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: "{{ url('trans/update_medical/table') }}",
+                    type: "GET",
+                    data: $('#update_approval_medical_list_form').serialize(),
+                    success: function (response) {
+                        if (response.status == "true") {
+                            $("#btn-update").prop("disabled", false);
+                            $("#btn-update").html(
+                                '<span>Update</span>'
+                            );                              
+                            $('#notification_success').modal('show');
+                            $('#message-notification-success').html(response
+                                .message);
+                            setTimeout(function () {
+                                window.location =
+                                    "{{ url('transaction/transaction_medical_list') }}";
+                            }, 3000);
+                        } else {
+                            $("#btn-update").prop("disabled", false);
+                            $("#btn-update").html(
+                                '<span>Update</span>'
+                            );
+
+                            $('#notification_error').modal('show');
+                            if (response.message == null || response.message ==
+                                '') {
+                                $('#message-notification-error').html(
+                                    "{{ __('login.error') }}");
+                            } else {
+                                $('#message-notification-error').html(response
+                                    .message);
+                            }
+                        }
+                    },
+                    error: function (response) {
+                        $("#btn-update").prop("disabled", false);
+                        $("#btn-update").html(
+                            '<span>Update</span>'
+                        );
+
+                        $('#notification_error').modal('show');
+                        $('#message-notification-error').html(response);
+                    }
+
+                });
+            }
+        })
     }
 
     loadDataExportReimbrusement();
@@ -1493,6 +1816,74 @@
             $('#medical_status_filter option:contains("ALL")').not(':first').remove();
             $('#medical_status_filter').val('ALL');
             $('#medical_status_filter').removeClass('spinner-border');
+        });
+    }
+
+    function loadDataPaymentType(ticketNo){
+        function formatSelect(data) {
+            if (data.loading) {
+                return $search
+            }
+
+            if (!data.id) {
+                return $('<span style="font-weight: bold;">' + data.text + '</span>');
+            }
+
+            return $(
+                '<div style="display: flex; align-items: center;">' +
+                    '<div style="margin-left: 10px;">' +
+                        data.text +
+                    '</div>' +
+                '</div>'
+            );
+        }
+
+        var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+                
+        $('.paid_type').select2({
+            width: '100%',
+            placeholder: 'Choose Type',
+            allowClear: true,
+            closeOnSelect: true,
+            language: {
+                errorLoading: function () {
+                    return $search;
+                },
+                searching: function () {
+                    return $search;
+                }
+            },
+            ajax: {
+                url: "{{ url('/medical_service_code/paid_type/api') }}",
+                dataType: 'json',
+                delay: 250,
+                type: "GET",
+                data: function (params) {
+                    return {
+                        _token: $('meta[name="csrf-token"]').attr('content'),
+                        search: params.term,
+                        ticketNo: ticketNo
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: $.map(data, function (item) {
+                            return {
+                                text: item.serviceName || '(No Name)',
+                                id: item.serviceCode,
+                                children: item.claimForDetail.map(claim => ({
+                                    id: claim.claimForCode,
+                                    text: claim.claimForName,
+                                    limit: claim.maxPayment,
+                                    serviceCode: claim.serviceCode
+                                }))
+                            }
+                        })
+                    };
+                },
+                cache: true,
+            },
+            templateResult: formatSelect
         });
     }
          

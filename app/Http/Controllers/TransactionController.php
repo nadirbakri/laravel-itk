@@ -1449,14 +1449,15 @@ class TransactionController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $param = [
+            // dd($request);
+
+            $paramGeneral = [
                 'companyCode' => Session::get('companyCode'),
-                'status'=> $request->status,
-                'ticketNo' => $request->ticketNo,
-                'directSuperiorID'=> $request->directSuperiorID,
-                'TotalApprovalHRD'=> $request->totalPayment,
-                // 'paidAmount'=> (int) $request->paidAmount,
-                // 'approvalRemarks'=> $request->approvalRemarks,
+                'status'=> $request->reimbursement_status,
+                'ticketNo' => $request->tiketno,
+                'directSuperiorCode'=> $request->directsuperior,
+                'paidAmount'=> $request->totalpaid,
+                'approvalRemarks'=> $request->approvalremarks,
                 'sessionID' => 0,
                 'sessionUserID' => Session::get('userID'),
                 'logActionUserID' => Session::get('userID'),
@@ -1464,25 +1465,42 @@ class TransactionController extends Controller
                 'languageCode' => strtoupper(App::getLocale())
             ];
 
-            if (isset($request->claimForDetail)) {
-                foreach($request->claimForDetail as $key => $value) {
-                    $dataClaimForDetail[] = [
+            $paramITK = [
+                'companyCode' => Session::get('companyCode'),
+                'status'=> $request->reimbursement_status,
+                'ticketNo' => $request->tiketno,
+                'directSuperiorCode'=> $request->directsuperior,
+                'hrdRemarks'=> $request->approval_remarks,
+                'totalApprovalHRD'=> (int) $request->total_payment,
+                'sessionID' => 0,
+                'sessionUserID' => Session::get('userID'),
+                'logActionUserID' => Session::get('userID'),
+                'logActionUsername' => Session::get('userName'),
+                'languageCode' => strtoupper(App::getLocale())
+            ];
+
+            if (isset($request->paymentList)) {
+                foreach($request->paymentList as $key => $value) {
+                    $dataPaymentList[] = [
                         'companyCode' => Session::get('companyCode'),
-                        'ticketNo' => $request->ticketNo,
+                        'ticketNo' => $request->tiketno,
                         'serviceCode' => $value['serviceCode'],
                         'claimForCode' => $value['claimForCode'],
-                        'paidAmount' => $value['paidAmount'],
+                        'paidAmount' => (int) $value['paidAmount'],
                     ];
                 }
             }
             else {
-                $dataClaimForDetail = [];
+                $dataPaymentList = [];
             }
 
-            $param['claimForDetail'] = $dataClaimForDetail;
+            $paramITK['paymentList'] = $dataPaymentList;
+
+            // dd(json_encode($paramITK));
+            // dd(json_encode($paramGeneral));
 
             $response = $client->put(env('API_URL') . '/mobile/reimbursementmedical/updatebyadmin',
-                ['body' => json_encode($param)]
+                ['body' => Session::get('companyCode') === 'ITK' ? json_encode($paramITK) : json_encode($paramGeneral)]
             );
         } catch (RequestException $e) {
             $response = $e->getResponse();
