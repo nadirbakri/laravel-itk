@@ -125,7 +125,7 @@
 			</a>
 		</div>
         <div class="div-table">
-			<table id="salary_accumulation_data_table" class="table hover" style="width: 100%">
+			<table id="salary_accumulation_data_table" class="table hover">
 				<thead>
 					<tr>
                         <th></th>
@@ -217,7 +217,7 @@
     
     $(document).ready(function () {
         var table = null;
-        var period_year = null;
+        // var period_year = null;
         $('.div-navbar a.disabled').attr('onclick', 'return false;');
 
         $('#salary_accumulation_data_table thead tr').clone(true).appendTo('#salary_accumulation_data_table thead');
@@ -242,15 +242,15 @@
                 isData = Object.keys(response).length;
                 if (isData !== 0) {
                     $('#period_year').val((typeof response[0].periodYear !== 'undefined') ? response[0].periodYear : '');
-                    period_year = $('#period_year').val();
-                    load_data_table_salary_accumulation_data();
+                    const period_year = $('#period_year').val();
+                    load_data_table_salary_accumulation_data(period_year);
                 }
             }
         });
 
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         
-        function load_data_table_salary_accumulation_data() {
+        function load_data_table_salary_accumulation_data(period_year) {
             table = $('#salary_accumulation_data_table').DataTable({
                 processing: true,
                 serverSide: true,
@@ -285,24 +285,34 @@
                     selector: 'td:first-child'
                 }
             });
+
+            $('#salary_accumulation_data_table tbody').on('click', 'input[type="checkbox"]', function(e){
+                var $row = $(this).closest('tr');
+
+                if(this.checked){
+                    $row.addClass('selected');
+                } else {
+                    $row.removeClass('selected');
+                }
+
+                // Prevent click event from propagating to parent
+                e.stopPropagation();
+            });
+
+            $('#salary_accumulation_data_table').on('click', 'tr td:first-child', function(e){
+                $(this).parent().find('input[type="checkbox"]').trigger('click');
+            });
+
+            $('#salary_accumulation_data_table tbody').on('click', 'tr td:not(:first-child)', function () {
+                var data = table.row(this).data();
+                $.redirect("{{ url('payroll/salary_accumulation_data/detail_data') }}", 
+                {   
+                    'employeeNo' : data.employeeNo,
+                    'periodYear' : data.periodYear
+                }, 
+                "GET", "iframe_dashboard");
+            });
         }
-
-        $('#salary_accumulation_data_table tbody').on('click', 'input[type="checkbox"]', function(e){
-            var $row = $(this).closest('tr');
-
-            if(this.checked){
-                $row.addClass('selected');
-            } else {
-                $row.removeClass('selected');
-            }
-
-            // Prevent click event from propagating to parent
-            e.stopPropagation();
-        });
-
-        $('#salary_accumulation_data_table').on('click', 'tr td:first-child', function(e){
-            $(this).parent().find('input[type="checkbox"]').trigger('click');
-        });
 
         $("#toolbar-edit").on('click', function() {
             var data = table.rows('.selected').data();
@@ -317,16 +327,6 @@
                 $('#notification_error').modal('show');
                 $('#message-notification-error').html('No Data Selected');
             }
-        });
-
-        $('#salary_accumulation_data_table tbody').on('click', 'tr td:not(:first-child)', function () {
-            var data = table.row(this).data();
-            $.redirect("{{ url('payroll/salary_accumulation_data/detail_data') }}", 
-            {   
-                'employeeNo' : data.employeeNo,
-                'periodYear' : data.periodYear
-            }, 
-            "GET", "iframe_dashboard");
         });
     })
 </script>
