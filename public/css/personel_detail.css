@@ -140,3 +140,22 @@
 .div-navbar a.disabled:hover .functionbar-hover {
     opacity: 0;
 }
+td.details-control {
+    background: url("https://www.datatables.net/examples/resources/details_open.png")
+        no-repeat center center;
+    cursor: pointer;
+}
+tr.shown td.details-control {
+    background: url("https://www.datatables.net/examples/resources/details_close.png")
+        no-repeat center center;
+}
+td.details-control {
+    background: url(../pictures/details_open.png) no-repeat center center;
+    cursor: pointer;
+    background-size: 25% 36%;
+}
+tr.shown td.details-control {
+    background: url(../pictures/details_close.png) no-repeat center center;
+    cursor: pointer;
+    background-size: 25% 36%;
+}

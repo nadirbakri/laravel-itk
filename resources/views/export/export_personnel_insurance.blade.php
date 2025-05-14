@@ -20,6 +20,7 @@
 		<thead>
 			<tr>
 				<th>Employee No *</th>
+				<th>Employee Name</th>
 				<th>Insurance Code *</th>
 				<th>Insurance Class *</th>
 				<th>Insurance Start Date *</th>
@@ -33,15 +34,18 @@
 				$no = 1; 
 			?>
 			@foreach($data as $value)
-				<tr>
-					<td style="text-align: left;">{{ isset($value->employeeNo) ? $value->employeeNo : '' }}</td>
-					<td style="text-align: left;">{{ isset($value->insuranceCode) ? $value->insuranceCode : '' }}</td>
-					<td style="text-align: left;">{{ isset($value->insuranceClassCode) ? $value->insuranceClassCode : '' }}</td>
-					<td style="text-align: left;">{{ isset($value->insuranceStartDate) ? date('d/m/Y', strtotime($value->insuranceStartDate)) : '' }}</td>
-					<td style="text-align: left;">{{ isset($value->insuranceEndDate) ? date('d/m/Y', strtotime($value->insuranceEndDate)) : '' }}</td>
-					<td style="text-align: left;">{{ isset($value->insurancePolicyNo) ? $value->insurancePolicyNo : '' }}</td>
-					<td style="text-align: left;">{{ isset($value->insuranceRemark) ? $value->insuranceRemark : '' }}</td>
-				</tr>
+				@foreach($value->insurance as $value_insurance)
+					<tr>
+						<td style="text-align: left;">{{ isset($value->employeeNo) ? $value->employeeNo : '' }}</td>
+						<td style="text-align: left;">{{ isset($value->fullName) ? $value->fullName : '' }}</td>
+						<td style="text-align: left;">{{ isset($value_insurance->insuranceCode) ? $value_insurance->insuranceCode : '' }}</td>
+						<td style="text-align: left;">{{ isset($value_insurance->insuranceClassCode) ? $value_insurance->insuranceClassCode : '' }}</td>
+						<td style="text-align: left;">{{ isset($value_insurance->insuranceStartDate) ? date('d/m/Y', strtotime($value_insurance->insuranceStartDate)) : '' }}</td>
+						<td style="text-align: left;">{{ isset($value_insurance->insuranceEndDate) ? date('d/m/Y', strtotime($value_insurance->insuranceEndDate)) : '' }}</td>
+						<td style="text-align: left;">{{ isset($value_insurance->insurancePolicyNo) ? $value_insurance->insurancePolicyNo : '' }}</td>
+						<td style="text-align: left;">{{ isset($value_insurance->insuranceRemark) ? $value_insurance->insuranceRemark : '' }}</td>
+					</tr>
+				@endforeach
 				<?php $no++; ?>
 			@endforeach
 		</tbody>

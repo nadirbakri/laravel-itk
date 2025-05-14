@@ -16,6 +16,7 @@ return [
     'list' => 'Personnel Menu List',
     'list_detail' => 'Insurance List',
     'label_employee_no' => 'Employee No',
+    'label_employee_name' => 'Employee Name',
     'label_insurance_code' => 'Insurance Code',
     'label_insurance_class' => 'Insurance Class',
     'label_insurance_start_date' => 'Insurance Start Date',

@@ -11008,8 +11008,6 @@ class PersonelController extends Controller
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
-
-            // dd($request->data);
             
             $param = [
                 'companyCode' => Session::get('companyCode'),
@@ -11022,7 +11020,7 @@ class PersonelController extends Controller
 
             foreach($request->data as $value){
                 $data_insurance_employees[] = [
-                    'companyCode' => $value['companyCode'],
+                    'companyCode' => Session::get('companyCode'),
                     'employeeNo' => $value['employeeNo'],
                     'insuranceCode' => $value['insuranceCode'],
                     'insuranceClassCode' => $value['insuranceClassCode'],

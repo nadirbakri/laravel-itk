@@ -97,27 +97,26 @@
                     </div>
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="insurance_code">{{ __('personel_insurance.label_insurance_code') }}</label>
+                            <label for="employee_name">{{ __('personel_insurance.label_employee_name') }}</label>
                             <span class="required">*</span>
-                            <input type="text" class="form-control" id="insurance_code" name="insurance_code" placeholder="{{ __('personel_insurance.label_insurance_code') }}">
+                            <input type="text" class="form-control" id="employee_name" name="employee_name" placeholder="{{ __('personel_insurance.label_employee_name') }}" disabled>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="insurance_class">{{ __('personel_insurance.label_insurance_class') }}</label>
+                            <label for="insurance_code">{{ __('personel_insurance.label_insurance_code') }}</label>
                             <span class="required">*</span>
-                            <input type="text" class="form-control" id="insurance_class" name="insurance_class"
-                                placeholder="{{ __('personel_insurance.label_insurance_class') }}">
+                            <input type="text" class="form-control" id="insurance_code" name="insurance_code" placeholder="{{ __('personel_insurance.label_insurance_code') }}">
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="insurance_policy_no">{{ __('personel_insurance.label_insurance_policy_no') }}</label>
+                            <label for="insurance_class">{{ __('personel_insurance.label_insurance_class') }}</label>
                             <span class="required">*</span>
-                            <input type="text" class="form-control" id="insurance_policy_no" name="insurance_policy_no"
-                                placeholder="{{ __('personel_insurance.label_insurance_policy_no') }}">
+                            <input type="text" class="form-control" id="insurance_class" name="insurance_class"
+                                placeholder="{{ __('personel_insurance.label_insurance_class') }}">
                         </div>
                     </div>
                 </div>
@@ -146,6 +145,16 @@
                                     <span class="input-group-text" id="insurance_end_date"><span class="fa fa-calendar"></span></span>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="insurance_policy_no">{{ __('personel_insurance.label_insurance_policy_no') }}</label>
+                            <span class="required">*</span>
+                            <input type="text" class="form-control" id="insurance_policy_no" name="insurance_policy_no"
+                                placeholder="{{ __('personel_insurance.label_insurance_policy_no') }}">
                         </div>
                     </div>
                 </div>
@@ -282,6 +291,7 @@
         if (func == 'new') {
             $('#record_function').val("New");
             $('#employee_no').val(null).trigger('change');
+            $('#employee_name').val("");
             $('#insurance_code').val("");
             $('#insurance_class').val("");
             $('#insurance_policy_no').val("");
@@ -291,6 +301,7 @@
         } else if (func == 'edit') {
             $('#record_function').val("Edit");
             $('#employee_no').prop('disabled', true);
+            $('#employee_name').val(arrData[0].fullName);
 
             $('#insurance_code').val(arrData[0].insuranceCode).trigger('change');
             $('#insurance_class').val(arrData[0].insuranceClassCode);
@@ -391,7 +402,7 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.fullName,
+                                    text: item.employeeNo,
                                     id: item.employeeNo,
                                     data: item
                                 }
@@ -404,16 +415,41 @@
             });
         }
 
+        $('#employee_no').on("select2:select", function (e) {
+            var data = $('#employee_no').select2('data');
+            $('#employee_name').val(data[0].data.fullName);
+        });
+
+        $('#employee_no').on("select2:unselecting", function (e) {
+            $('#employee_name').val('');
+        });
+
         $('#notification_success').on('hide.bs.modal', function () {
             window.location = "{{ url('personnel/insurance') }}";
         })
 
         $("#btn-save").click(function () {
-            $(this).prop("disabled", true);
-            $(this).html(
-                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
-            );
-            $("#insurance_form").submit();
+            // $(this).prop("disabled", true);
+            // $(this).html(
+            //     '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            // );
+            // $("#insurance_form").submit();
+            var form = $("#insurance_form");
+            var emptyFields = form.find("input, select, textarea").filter(function () {
+                return $(this).prop("required") && $(this).val().trim() === "";
+            });
+
+            if (emptyFields.length > 0) {
+                $('#notification_error').modal('show');
+                $('#message-notification-error').html("Some Field Are Required, Please Check Again");
+            }else{
+                $(this).prop("disabled", true);
+                $(this).html(
+                    '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+                );
+
+                form.submit();
+            }
         });
 
         if ($("#insurance_form").length > 0) {

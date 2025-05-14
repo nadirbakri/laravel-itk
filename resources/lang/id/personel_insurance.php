@@ -16,6 +16,7 @@ return [
     'list' => 'Daftar Menu Personnel',
     'list_detail' => 'Daftar Asuransi',
     'label_employee_no' => 'No Karyawan',
+    'label_employee_name' => 'Nama Karyawan',
     'label_insurance_code' => 'Kode Asuransi',
     'label_insurance_class' => 'Kelas Asuransi',
     'label_insurance_start_date' => 'Tanggal Mulai Asuransi',

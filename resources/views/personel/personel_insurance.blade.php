@@ -139,12 +139,13 @@
 					<tr>
                         <th></th>
 						<th>Employee No</th>
-						<th>Code</th>
+						<th>Full Name</th>
+						{{-- <th>Code</th>
 						<th>Class</th>
 						<th>Start Date</th>
                         <th>End Date</th>
                         <th>Policy No</th>
-                        <th>Remarks</th>
+                        <th>Remarks</th> --}}
 					</tr>
 				</thead>
 			</table>
@@ -311,24 +312,28 @@
     
   $(document).ready(function() {
     var table = null;
+    let selectedInsurance = {};
     $('.div-navbar a.disabled').attr('onclick', 'return false;');
   	
     $('#insurance_table thead tr').clone(true).appendTo('#insurance_table thead');
-    $('#insurance_table thead tr:eq(1) th:not(:first-child)').each( function (i) {
-        var title = $(this).text();
-        $(this).html('<input class="form-control" type="text" placeholder="'+title+'" />');
- 
-        $('input', this).on('keyup change', function () {
-            if (table.column(i + 1).search() !== this.value) {
-                table
-                    .column(i + 1)
-                    .search(this.value)
-                    .draw();
-            }
-        } );
-    });
+    $('#insurance_table thead tr:eq(1) th').each( function (i) {
+        if (i === 0) {
+            $(this).html('');
+        }
+        else {
+            var title = $(this).text();
+            $(this).html('<input class="form-control" type="text" placeholder="' + title + '" />');
 
-    load_data_table_insurance();
+            $('input', this).on('keyup change', function () {
+                if (table.column(i).search() !== this.value) {
+                    table
+                        .column(i)
+                        .search(this.value)
+                        .draw();
+                }
+            });
+        }
+    });
 
     $("#toolbar-export").click(function () {
         $(this).prop("disabled", true);
@@ -451,28 +456,27 @@
             "order": [[ 1, "asc" ]],
             columns: [
                 {
-                    orderable: false,
-                    targets: 0, 
-                    "defaultContent": '',
-                    render: function(data, type) {
-                        return type === 'display'? '<input class="chk-select" type="checkbox">' : '';
-                    }
+                    "className": 'details-control',
+                    "orderable": false,
+                    "data": null,
+                    "defaultContent": ''
                 },
                 {data: 'employeeNo', name: 'employeeNo'},
-                {data: 'insuranceCode', name: 'insuranceCode'},
-                {data: 'insuranceClassCode', name: 'insuranceClassCode'},
-                {data: 'insuranceStartDate', name: 'insuranceStartDate',
-                    render: function (data, type, row) {
-                        return moment(data).format('DD-MMM-YYYY');
-                    }
-                },
-                {data: 'insuranceEndDate', name: 'insuranceEndDate',
-                    render: function (data, type, row) {
-                        return moment(data).format('DD-MMM-YYYY');
-                    }
-                },
-                {data: 'insurancePolicyNo', name: 'insurancePolicyNo'},
-                {data: 'insuranceRemark', name: 'insuranceRemark'},
+                {data: 'fullName', name: 'fullName'},
+                // {data: 'insurance.insuranceCode', name: 'insurance.insuranceCode'},
+                // {data: 'insurance.insuranceClassCode', name: 'insurance.insuranceClassCode'},
+                // {data: 'insurance.insuranceStartDate', name: 'insurance.insuranceStartDate',
+                //     render: function (data, type, row) {
+                //         return moment(data).format('DD-MMM-YYYY');
+                //     }
+                // },
+                // {data: 'insurance.insuranceEndDate', name: 'insurance.insuranceEndDate',
+                //     render: function (data, type, row) {
+                //         return moment(data).format('DD-MMM-YYYY');
+                //     }
+                // },
+                // {data: 'insurance.insurancePolicyNo', name: 'insurance.insurancePolicyNo'},
+                // {data: 'insurance.insuranceRemark', name: 'insurance.insuranceRemark'},
             ],
             select: {
                 style:    'multi',
@@ -481,21 +485,108 @@
         });
     }
 
-    $('#insurance_table tbody').on('click', 'input[type="checkbox"]', function(e){
-        var $row = $(this).closest('tr');
-
-        if(this.checked){
-            $row.addClass('selected');
-        } else {
-            $row.removeClass('selected');
-        }
-
-        // Prevent click event from propagating to parent
-        e.stopPropagation();
-    });
+    load_data_table_insurance();
 
     $('#insurance_table').on('click', 'tr td:first-child', function(e){
         $(this).parent().find('input[type="checkbox"]').trigger('click');
+    });
+
+    $('#insurance_table tbody').on('click', 'td.details-control', function () {
+        var tr = $(this).closest('tr');
+        var row = table.row(tr);
+
+        if (row.child.isShown()) {
+            row.child.hide();
+            tr.removeClass('shown');
+        } else {
+            if (!tr.hasClass('shown')) {
+                var d = row.data();
+                
+                if (d.insurance && d.insurance.length > 0) {
+                    var childTableId = 'child-table-' + d.employeeNo;
+
+                    var childHtml = `
+                        <table id="${childTableId}" class="display child-table" width="100%">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Insurance Code</th>
+                                    <th>Class Code</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                    <th>Policy No</th>
+                                    <th>Remark</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    `;
+
+                    row.child(childHtml).show();
+                    tr.addClass('shown');
+
+                    d.insurance.forEach(i => {
+                        i.employeeNo = d.employeeNo;
+                    });
+
+                    var childTable = $('#' + childTableId).DataTable({
+                        data: d.insurance,
+                        paging: false,
+                        searching: false,
+                        info: false,
+                        ordering: true,
+                        order: [[ 1, "desc" ]],
+                        columns: [
+                            {
+                                data: null,
+                                orderable: false,
+                                render: function(data, type, row, meta) {
+                                    return type === 'display'? '<input class="chk-select" type="checkbox">' : '';
+                                }
+                            },
+                            {data: 'insuranceCode'},
+                            {data: 'insuranceClassCode'},
+                            {
+                                data: 'insuranceStartDate',
+                                render: function (data) {
+                                    return moment(data).format('DD-MMM-YYYY');
+                                }
+                            },
+                            {
+                                data: 'insuranceEndDate',
+                                render: function (data) {
+                                    return moment(data).format('DD-MMM-YYYY');
+                                }
+                            },
+                            {data: 'insurancePolicyNo'},
+                            {data: 'insuranceRemark'}
+                        ]
+                    });
+
+                    $('#' + childTableId + ' tbody').on('click', 'input.chk-select', function (e) {
+                        e.stopPropagation();
+                    });
+
+                    $('#' + childTableId + ' tbody').on('click', 'td:first-child', function (e) {
+                        e.stopPropagation();
+                    });
+
+                    $('#' + childTableId + ' tbody').on('click', 'tr td:not(:first-child)', function (e) {
+                        var row = childTable.row($(this).closest('tr'));
+                        var data = row.data();
+                        if (data) {
+                            $.redirect("{{ url('personnel/insurance/detail_data') }}", {
+                                'employeeNo': data.employeeNo,
+                                'insuranceCode': data.insuranceCode,
+                                'func': 'edit'
+                            }, "GET", "iframe_dashboard");
+                        }
+                    })
+                } else {
+                    row.child('<div style="padding: 10px;">No insurance data available.</div>').show();
+                    tr.addClass('shown');
+                }
+            }
+        }
     });
 
     $('#notification_success').on('hide.bs.modal', function () {
@@ -511,18 +602,52 @@
     });
 
     $("#toolbar-edit").on('click', function() {
-        var data = table.rows('.selected').data();
-        if(data.count() > 0){
-            $.redirect("{{ url('personnel/insurance/detail_data') }}", { 'employeeNo' : data[0].employeeNo, 'insuranceCode' : data[0].insuranceCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
-        }else{
+        var selectedInsurance = null;
+
+        $('.child-table').each(function () {
+            if (selectedInsurance) return false;
+
+            var childTable = $(this).DataTable();
+
+            $(this).find('tbody input.chk-select:checked').each(function () {
+                var row = $(this).closest('tr');
+                var rowData = childTable.row(row).data();
+
+                if (rowData) {
+                    selectedInsurance = rowData;
+                    return false;
+                }
+            });
+        });
+
+        if (selectedInsurance) {
+            $.redirect("{{ url('personnel/insurance/detail_data') }}", {
+                'employeeNo': selectedInsurance.employeeNo,
+                'insuranceCode': selectedInsurance.insuranceCode,
+                'func': 'edit'
+            }, "GET", "iframe_dashboard");
+        } else {
             $('#notification_error').modal('show');
             $('#message-notification-error').html('No Data Selected');
         }
     });
 
     $("#toolbar-delete").on('click', function() {
-        var data = table.rows('.selected').data().toArray();
-        if(data.length > 0){
+        var selectedInsurances = [];
+
+        $('.child-table').each(function () {
+            var childTable = $(this).DataTable();
+
+            $(this).find('tbody input.chk-select:checked').each(function () {
+                var row = $(this).closest('tr');
+                var rowData = childTable.row(row).data();
+                if (rowData) {
+                    selectedInsurances.push(rowData);
+                }
+            });
+        });
+        
+        if(selectedInsurances.length > 0){
             $('#delete_insurance').modal('show');
 
             $("#btn-yes").on('click', function() {
@@ -530,7 +655,7 @@
                     url: "{{ url('personnel/insurance/remove') }}",
                     type: "GET",
                     data: {
-                        'data' : data
+                        'data' : selectedInsurances
                     },
                     success: function (response) {
                         if (response.status == "true") {
@@ -564,10 +689,10 @@
         }
     });
 
-    $('#insurance_table tbody').on('click', 'tr td:not(:first-child)', function () {
-    	var data = table.row(this).data();
-    	$.redirect("{{ url('personnel/insurance/detail_data') }}", { 'employeeNo' : data.employeeNo, 'insuranceCode' : data.insuranceCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
-    });
+    // $('#insurance_table tbody').on('click', 'tr td:not(:first-child)', function () {
+    // 	var data = table.row(this).data();
+    // 	$.redirect("{{ url('personnel/insurance/detail_data') }}", { 'employeeNo' : data.employeeNo, 'insuranceCode' : data.insuranceCode, 'func' : 'edit' }, "GET", "iframe_dashboard");
+    // });
     
   });
 </script>
