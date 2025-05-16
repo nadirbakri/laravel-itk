@@ -303,12 +303,12 @@
             $('#employee_no').prop('disabled', true);
             $('#employee_name').val(arrData[0].fullName);
 
-            $('#insurance_code').val(arrData[0].insuranceCode).trigger('change');
-            $('#insurance_class').val(arrData[0].insuranceClassCode);
-            $('#insurance_policy_no').val(arrData[0].insurancePolicyNo);
-            pickerStartDate.setDate(arrData[0].insuranceStartDate);
-            pickerEndDate.setDate(arrData[0].insuranceEndDate);
-            $('#remarks').val(arrData[0].insuranceRemark);
+            $('#insurance_code').val(arrData[0].insurance[0].insuranceCode).trigger('change');
+            $('#insurance_class').val(arrData[0].insurance[0].insuranceClassCode);
+            $('#insurance_policy_no').val(arrData[0].insurance[0].insurancePolicyNo);
+            pickerStartDate.setDate(arrData[0].insurance[0].insuranceStartDate);
+            pickerEndDate.setDate(arrData[0].insurance[0].insuranceEndDate);
+            $('#remarks').val(arrData[0].insurance[0].insuranceRemark);
 
             $.ajax({
                 type: 'GET',

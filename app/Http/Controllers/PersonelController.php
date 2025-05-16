@@ -4314,18 +4314,6 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            // dd(json_encode(
-            //     [
-            //         'companyCode' => Session::get('companyCode'),
-            //         'employeeNo' => $request->employeeNo,
-            //         'insuranceCode' => $request->insuranceCode,
-            //         'languageCode' => strtoupper(App::getLocale()),
-            //         'userID' => Session::get('userID'),
-            //         'logActionUserID' => Session::get('userID'),
-            //         'logActionUsername' => Session::get('userName')
-            //     ]
-            //     ));
-
             if ($request->func === 'edit') {
                 $response = $client->get(env('API_URL') . '/personel/PeMasterInsurance/GetInsuranceEmployees',
                     ['body' => json_encode(
