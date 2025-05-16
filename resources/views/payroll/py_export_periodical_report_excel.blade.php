@@ -809,12 +809,14 @@
                                 if (!is_string($value) && in_array($field->dataFormat, ['#,##0', '#,##0.00'])) {
                                     $total[$globalKey] += $value;
                                     $globalTotal[$globalKey] = ($globalTotal[$globalKey] ?? 0) + $value;
-                                    $formatted = number_format($value, $field->dataFormat === '#,##0.00' ? 2 : 0, ',', '.');
+                                    $formatted = number_format((float)$value, $field->dataFormat === '#,##0.00' ? 2 : 0, ',', '.');
+                                    $dataFormatAttr = 'data-format="' . $field->dataFormat . '"';
                                 } else {
                                     $formatted = is_string($value) ? $value : number_format($value);
+                                    $dataFormatAttr = '';
                                 }
 
-                                echo '<td style="border:1px solid #000;">' . $formatted . '</td>';
+                                echo '<td ' . $dataFormatAttr . ' data style="border:1px solid #000;">' . $value . '</td>';
                             }
 
                             echo '</tr>';
