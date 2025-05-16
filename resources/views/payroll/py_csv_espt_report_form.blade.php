@@ -259,8 +259,14 @@
                 </div>
                 <div class="row">
                     <div class="col-3">
-                        <button class="btn btn-primary" name="btn-export" id="btn-export" value="export" style="width: 100%;">
-                            <i class="fa fa-print"></i> {{ __('payroll_csv_espt_report_form.btn_export') }}
+                        <button type="submit" onclick="submitForm('{{ url('payroll/csv_espt_report_form/print/excel') }}')" class="btn btn-primary" name="btn-export" id="btn-export" value="export" style="width: 100%;">
+                            <i class="fa fa-print"></i> {{ __('payroll_csv_espt_report_form.btn_export_excel') }}
+                        </button>
+                    </div>
+
+                    <div class="col-3">
+                        <button type="submit" onclick="submitForm('{{ url('payroll/csv_espt_report_form/print/xml') }}')" class="btn btn-primary" name="btn-export-xml" id="btn-export-xml" value="export_xml" style="width: 100%; display: none;">
+                            <i class="fa fa-print"></i> {{ __('payroll_csv_espt_report_form.btn_export_xml') }}
                         </button>
                     </div>
                 </div>
@@ -338,6 +344,11 @@
     window.onload = function() {
         savePreviousURL();
     }
+
+    function submitForm(actionUrl) {
+        let form = document.getElementById('csv_espt_report_form_form');
+        form.action = actionUrl;
+    }
     
     $(document).ready(function () {
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
@@ -402,6 +413,14 @@
             });
             attrYear.append(option);
         }
+
+        $(document).on('change', 'input[type="radio"][name="format"]', function() {
+            if ($(this).val().includes("coretax")) {
+                $("#btn-export-xml").show();  // Tampilkan tombol
+            } else {
+                $("#btn-export-xml").hide();  // Sembunyikan tombol
+            }
+        });
 
         // $('#npwp_group').on('select2:select', function (e) {
         //     var npwpGroup = $(this).select2('data');
@@ -630,107 +649,198 @@
             });
         }
 
-        $('#btn-export').click(function (){
-            $(this).prop("disabled", true);
-            $(this).html(
-                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
-            );
-            $('#csv_espt_report_form_form').submit();
-        });
+        var clicked = "";
 
-        if ($("#csv_espt_report_form_form").length > 0) {
-            $("#csv_espt_report_form_form").validate({
-                rules: {
-                    npwp_group: {
-                        required: true
-                    },
-                    group_authorized_code_from: {
-                        required: true
-                    },
-                    group_authorized_code_to: {
-                        required: true
-                    }
-                },
-                messages: {
-                    npwp_group: {
-                        required: "{{ __('payroll_csv_espt_report_form.npwp_group_required') }}",
-                    },
-                    group_authorized_code_from: {
-                        required: "{{ __('payroll_csv_espt_report_form.group_authorized_code_from_required') }}",
-                    },
-                    group_authorized_code_to: {
-                        required: "{{ __('payroll_csv_espt_report_form.group_authorized_code_to_required') }}",
-                    }
-                },
-                highlight: function (element) {
-                    $("#btn-export").prop("disabled", false);
-                    $("#btn-export").html(
-                        '<i class="fa fa-print"></i> {{ __("payroll_csv_espt_report_form.btn_export") }}'
-                    );
-                    $(element).addClass('is-invalid');
-                },
-                unhighlight: function (element) {
-                    $(element).removeClass('is-invalid');
-                },
-                errorElement: 'span',
-                errorPlacement: function (error, element) {
-                    $("#btn-export").prop("disabled", false);
-                    $("#btn-export").html(
-                        '<i class="fa fa-print"></i> {{ __("payroll_csv_espt_report_form.btn_export") }}'
-                    );
+        // $('#btn-export-xml').click(function (){
+        //     $(this).prop("disabled", true);
+        //     $(this).html(
+        //         '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+        //     );
+        //     clicked = "XML";
+        //     $('#csv_espt_report_form_form').submit();
+        // });
 
-                    error.addClass('invalid-feedback');
-                    element.closest('.form-group').append(error);
-                },
-                submitHandler: function (form) {
-                    $.ajaxSetup({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        }
-                    });
-                    $.ajax({
-                        xhrFields: {
-                            responseType: 'blob',
-                        },
-                        url: "{{ url('payroll/csv_espt_report_form/print/excel') }}",
-                        type: "POST",
-                        data: $('#csv_espt_report_form_form').serialize(),
-                        success: function (result, status, xhr) {
-                            $("#btn-export").prop("disabled", false);
-                            $("#btn-export").html(
-                                '<i class="fa fa-print"></i> {{ __("payroll_csv_espt_report_form.btn_export") }}'
-                            );
-                            var disposition = xhr.getResponseHeader(
-                                'content-disposition');
-                            var matches = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/.exec(disposition);
-                            var filename = (matches != null && matches[1] ? matches[1].replace(/['"]/g, '') :
-                                'noname_file.csv');
+        // $('#btn-export').click(function (){
+        //     $(this).prop("disabled", true);
+        //     $(this).html(
+        //         '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+        //     );
+        //     clicked = "XLSX";
+        //     $('#csv_espt_report_form_form').submit();
+        // });
 
-                            // The actual download
-                            var blob = new Blob([result], {
-                                type: 'text/csv'
-                            });
-                            var link = document.createElement('a');
-                            link.href = window.URL.createObjectURL(blob);
-                            link.download = filename;
+        // if ($("#csv_espt_report_form_form").length > 0) {
+        //     $("#csv_espt_report_form_form").validate({
+        //         rules: {
+        //             npwp_group: {
+        //                 required: true
+        //             },
+        //             group_authorized_code_from: {
+        //                 required: true
+        //             },
+        //             group_authorized_code_to: {
+        //                 required: true
+        //             }
+        //         },
+        //         messages: {
+        //             npwp_group: {
+        //                 required: "{{ __('payroll_csv_espt_report_form.npwp_group_required') }}",
+        //             },
+        //             group_authorized_code_from: {
+        //                 required: "{{ __('payroll_csv_espt_report_form.group_authorized_code_from_required') }}",
+        //             },
+        //             group_authorized_code_to: {
+        //                 required: "{{ __('payroll_csv_espt_report_form.group_authorized_code_to_required') }}",
+        //             }
+        //         },
+        //         highlight: function (element) {
+        //             $("#btn-export").prop("disabled", false);
+        //             $("#btn-export").html(
+        //                 '<i class="fa fa-print"></i> {{ __("payroll_csv_espt_report_form.btn_export_excel") }}'
+        //             );
 
-                            document.body.appendChild(link);
+        //             $("#btn-export-xml").prop("disabled", false);
+        //             $("#btn-export-xml").html(
+        //                 '<i class="fa fa-print"></i> {{ __("payroll_csv_espt_report_form.btn_export_xml") }}'
+        //             );
 
-                            link.click();
-                            document.body.removeChild(link);
-                        },
-                        error: function (response) {
-                            $("#btn-export").prop("disabled", false);
-                            $("#btn-export").html(
-                                '<i class="fa fa-print"></i> {{ __("payroll_csv_espt_report_form.btn_export") }}'
-                            );
-                            $('#notification_error').modal('show');
-                            $('#message-notification-error').html(response);
-                        }
-                    });
-                }
-            })
-        }
+        //             $(element).addClass('is-invalid');
+        //         },
+        //         unhighlight: function (element) {
+        //             $(element).removeClass('is-invalid');
+        //         },
+        //         errorElement: 'span',
+        //         errorPlacement: function (error, element) {
+        //             $("#btn-export").prop("disabled", false);
+        //             $("#btn-export").html(
+        //                 '<i class="fa fa-print"></i> {{ __("payroll_csv_espt_report_form.btn_export_excel") }}'
+        //             );
+
+        //             $("#btn-export-xml").prop("disabled", false);
+        //             $("#btn-export-xml").html(
+        //                 '<i class="fa fa-print"></i> {{ __("payroll_csv_espt_report_form.btn_export_xml") }}'
+        //             );
+
+        //             error.addClass('invalid-feedback');
+        //             element.closest('.form-group').append(error);
+        //         },
+        //         submitHandler: function (form) {
+        //             $.ajaxSetup({
+        //                 headers: {
+        //                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //                 }
+        //             });
+        //             if(clicked=="XLSX"){
+        //                 $.ajax({
+        //                     xhrFields: {
+        //                         responseType: 'blob',
+        //                     },
+        //                     url: "{{ url('payroll/csv_espt_report_form/print/excel') }}",
+        //                     type: "POST",
+        //                     data: $('#csv_espt_report_form_form').serialize(),
+        //                     success: function (result, status, xhr) {
+        //                         $("#btn-export").prop("disabled", false);
+        //                         $("#btn-export").html(
+        //                             '<i class="fa fa-print"></i> {{ __("payroll_csv_espt_report_form.btn_export_excel") }}'
+        //                         );
+
+        //                         $("#btn-export-xml").prop("disabled", false);
+        //                         $("#btn-export-xml").html(
+        //                             '<i class="fa fa-print"></i> {{ __("payroll_csv_espt_report_form.btn_export_xml") }}'
+        //                         );
+                                
+        //                         var disposition = xhr.getResponseHeader(
+        //                             'content-disposition');
+        //                         var matches = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/.exec(disposition);
+        //                         var filename = (matches != null && matches[1] ? matches[1].replace(/['"]/g, '') :
+        //                             'noname_file.csv');
+
+        //                         // The actual download
+        //                         var blob = new Blob([result], {
+        //                             type: 'text/csv'
+        //                         });
+        //                         var link = document.createElement('a');
+        //                         link.href = window.URL.createObjectURL(blob);
+        //                         link.download = filename;
+
+        //                         document.body.appendChild(link);
+
+        //                         link.click();
+        //                         document.body.removeChild(link);
+        //                     },
+        //                     error: function (response) {
+        //                         $("#btn-export").prop("disabled", false);
+        //                         $("#btn-export").html(
+        //                             '<i class="fa fa-print"></i> {{ __("payroll_csv_espt_report_form.btn_export_excel") }}'
+        //                         );
+
+        //                         $("#btn-export-xml").prop("disabled", false);
+        //                         $("#btn-export-xml").html(
+        //                             '<i class="fa fa-print"></i> {{ __("payroll_csv_espt_report_form.btn_export_xml") }}'
+        //                         );
+
+        //                         $('#notification_error').modal('show');
+        //                         $('#message-notification-error').html(response);
+        //                     }
+        //                 });
+        //             }else{
+        //                 $.ajax({
+        //                     xhrFields: {
+        //                         responseType: 'blob',
+        //                     },
+        //                     url: "{{ url('payroll/csv_espt_report_form/print/xml') }}",
+        //                     type: "GET",
+        //                     dataType: "xml",
+        //                     data: $('#csv_espt_report_form_form').serialize(),
+        //                     success: function (result, status, xhr) {
+        //                         $("#btn-export").prop("disabled", false);
+        //                         $("#btn-export").html(
+        //                             '<i class="fa fa-print"></i> {{ __("payroll_csv_espt_report_form.btn_export_excel") }}'
+        //                         );
+
+        //                         $("#btn-export-xml").prop("disabled", false);
+        //                         $("#btn-export-xml").html(
+        //                             '<i class="fa fa-print"></i> {{ __("payroll_csv_espt_report_form.btn_export_xml") }}'
+        //                         );
+                                
+        //                         var disposition = xhr.getResponseHeader(
+        //                             'content-disposition');
+        //                         var matches = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/.exec(disposition);
+        //                         var filename = (matches != null && matches[1] ? matches[1].replace(/['"]/g, '') :
+        //                             'noname_file.xml');
+
+        //                         // The actual download
+        //                         var blob = new Blob([result], {
+        //                             type: 'application/xml'
+        //                         });
+        //                         var link = document.createElement('a');
+        //                         link.href = window.URL.createObjectURL(blob);
+        //                         link.download = filename;
+
+        //                         document.body.appendChild(link);
+
+        //                         link.click();
+        //                         document.body.removeChild(link);
+        //                     },
+        //                     error: function (xhr, status, error) {
+        //                         $("#btn-export").prop("disabled", false);
+        //                         $("#btn-export").html(
+        //                             '<i class="fa fa-print"></i> {{ __("payroll_csv_espt_report_form.btn_export_excel") }}'
+        //                         );
+
+        //                         $("#btn-export-xml").prop("disabled", false);
+        //                         $("#btn-export-xml").html(
+        //                             '<i class="fa fa-print"></i> {{ __("payroll_csv_espt_report_form.btn_export_xml") }}'
+        //                         );
+
+        //                         $('#notification_error').modal('show');
+        //                         $('#message-notification-error').html(error);
+        //                     }
+        //                 });
+        //             }
+        //         }
+        //     })
+        // }
     })
 </script>
 

@@ -35,6 +35,8 @@ return [
     'group_authorized_code_from_required' => 'Kode Otorisasi Grup Dari Tidak Boleh Dikosongkan',
     'group_authorized_code_to_required' => 'Kode Otorisasi Grup Sampai Tidak Boleh Dikosongkan',
     'btn_export' => 'Ekspor',
+    'btn_export_excel' => 'Ekspor Excel',
+    'btn_export_xml' => 'Ekspor XML',
     'alert_success' => 'Sukses !'
 ]
 

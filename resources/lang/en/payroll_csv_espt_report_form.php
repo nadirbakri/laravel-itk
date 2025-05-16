@@ -36,6 +36,8 @@ return [
     'group_authorized_code_from_required' => 'Group Authorized From Cannot Be Blank',
     'group_authorized_code_to_required' => 'Group Authorized To Cannot Be Blank',
     'btn_export' => 'Export',
+    'btn_export_excel' => 'Export Excel',
+    'btn_export_xml' => 'Export XML',
     'alert_success' => 'Success !'
 ]
 
