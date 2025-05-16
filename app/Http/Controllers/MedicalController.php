@@ -211,6 +211,16 @@ class MedicalController extends Controller
         return view('medical.md_payment_per_rank');
     }
 
+    public function pageVaccinationSchedule()
+    {
+        return view('medical.md_vaccination_schedule');
+    }
+
+    public function pageVaccineMaster()
+    {
+        return view('medical.md_vaccine_master');
+    }
+
     public function tableClaimCodeMD()
     {
         try {
@@ -582,6 +592,90 @@ class MedicalController extends Controller
             return Datatables::of([])->make(true);
         }else{
             return Datatables::of($arrResult->dataListSet[0]->serviceCodeList)->make(true);
+        }
+    }
+
+    public function tableEmployeeList(Request $request)
+    {
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/personel/PeMaster/getPeMasterGrid',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'), 
+                        'languageCode' => strtoupper(App::getLocale()), 
+                        'userID' => Session::get('userID'),
+                        'sessionID' => 0, 
+                        'sessionUserID' => Session::get('userID'),
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
+        }
+    }
+
+    public function tableVaccineMasterMD(Request $request)
+    {
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/personel/HealthActivities/GetHealthActivitiesMaster',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'recordStatus' => 'A',
+                        'type' => 'V',
+                        'sessionID' => 0,
+                        'sessionUserID' => Session::get('userID'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        'languageCode' => strtoupper(App::getLocale())
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
         }
     }
 
@@ -1100,6 +1194,51 @@ class MedicalController extends Controller
         }
 
         return $data;
+    }
+
+    public function dataDetailVaccineMasterMD(Request $request)
+    {
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/personel/HealthActivities/GetHealthActivitiesMaster',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'batch' => $request->batch,
+                        'code' => $request->code,
+                        'type' => 'V',
+                        'languageCode' => strtoupper(App::getLocale()),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+        
+        if($arrResult->dataListSet == null){
+            $data = [];
+        }else{
+            $data = $arrResult->dataListSet;
+        }
+
+        return view('medical.md_vaccine_master_detail', ['data' => $data, 'func' => $request->func]);
     }
 
     public function prosesClaimCodeMD(Request $request)
@@ -2084,6 +2223,59 @@ class MedicalController extends Controller
         } catch (RequestException $e) {
             $response = $e->getResponse();
             // var_dump($response);
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function prosesVaccineMasterMD(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $param[] = [
+                'companyCode' => Session::get('companyCode'),
+                'recordStatus' => 'A',
+                'batch' => $request->batch_code,
+                'code' => $request->vaccine_code,
+                'name' => $request->vaccine_name,
+                'type' => 'V',
+                'sessionID' => 0,
+                'sessionUserID' => Session::get('userID'),
+                'logActionUserID' => Session::get('userID'),
+                'logActionUsername' => Session::get('userName'),
+                "languageCode" => App::getLocale()
+            ];
+
+            // dd(json_encode($param));
+
+            if($request->record_function == 'New'){
+                $response = $client->post(env('API_URL') . '/personel/HealthActivities/InsertHealthActivitiesMaster',
+                    ['body' => json_encode($param)]
+                );
+            }else{
+                $response = $client->post(env('API_URL') . '/personel/HealthActivities/UpdateHealthActivitiesMaster',
+                    ['body' => json_encode($param)]
+                );
+            }
+
+
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -3226,5 +3418,49 @@ class MedicalController extends Controller
         }
 
         return response()->json($number);
+    }
+
+    public function removeVaccineMasterMD(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            foreach($request->data as $value){
+                $param[] = [
+                    'companyCode' => Session::get('companyCode'),
+                    'recordStatus' => 'D',
+                    'batch' => $value['batch'],
+                    'code' => $value['code'],
+                    'type' => 'V',
+                    "languageCode" => App::getLocale(),
+                    "sessionID" => 0,
+                    "sessionUserID" => Session::get('userID'),
+                    "logActionUserID" => Session::get('userID'),
+                    "logActionUsername" => Session::get('userID')
+                ];
+            }
+
+            $response = $client->post(env('API_URL') . '/personel/HealthActivities/UpdateHealthActivitiesMaster',
+                ['body' => json_encode($param)]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
     }
 }

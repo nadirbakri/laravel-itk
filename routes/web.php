@@ -855,6 +855,8 @@ Route::get('medical/transfer_payment_to_excel/monthly', 'MedicalController@pageT
 Route::get('medical/transfer_payment_to_excel/remaining_limit', 'MedicalController@pageTransferPaymentToExcelRemainingLimit');
 Route::get('medical/payment', 'MedicalController@pagePayment');
 Route::get('medical/payment_per_rank', 'MedicalController@pagePaymentPerRank');
+Route::get('medical/vaccination_schedule', 'MedicalController@pageVaccinationSchedule');
+Route::get('medical/vaccine_master', 'MedicalController@pageVaccineMaster');
 
 /* Route untuk tabel Medical */
 Route::get('medical/claim_code/table', 'MedicalController@tableClaimCodeMD');
@@ -867,6 +869,10 @@ Route::get('medical/treatment_eligibility/table', 'MedicalController@tableTreatm
 Route::get('medical/claim_transaction/table', 'MedicalController@tableClaimTransactionMD');
 Route::get('medical/payment/table', 'MedicalController@tablePaymentMD');
 Route::get('medical/payment_per_rank/table', 'MedicalController@tablePaymentPerRankMD');
+Route::get('medical/employee_list/table', 'MedicalController@tableEmployeeList');
+Route::get('medical/vaccine_master/table', 'MedicalController@tableVaccineMasterMD');
+
+Route::get('medical/vaccine_master/remove', 'MedicalController@removeVaccineMasterMD');
 
 /* Route untuk Detail Tabel Transaction */
 Route::get('transaction/list/table', 'TransactionController@tableDetailTransactionList');
@@ -920,6 +926,7 @@ Route::get('medical/claim_transaction/detail_data', 'MedicalController@dataDetai
 Route::get('medical/payment/detail_data', 'MedicalController@dataDetailPaymentMD');
 Route::get('medical/payment_per_rank/detail_data', 'MedicalController@dataDetailPaymentPerRankMD');
 Route::get('medical/payment_per_rank/claim/detail_data', 'MedicalController@dataDetailPaymentPerRankClaimDetailMD');
+Route::get('medical/vaccine_master/detail_data', 'MedicalController@dataDetailVaccineMasterMD');
 
 /*Route untuk Proses Medical*/
 Route::post('medical/medical_reference/proses', 'MedicalController@prosesMedicalReferenceMD');
@@ -935,6 +942,7 @@ Route::post('medical/claim_list/proses', 'MedicalController@prosesClaimListMD');
 Route::post('medical/claim_transaction/proses', 'MedicalController@prosesClaimTransactionMD');
 Route::post('medical/payment/proses', 'MedicalController@prosesPaymentMD');
 Route::post('medical/payment_per_rank/proses', 'MedicalController@prosesPaymentPerRankMD');
+Route::post('medical/vaccine_master/proses', 'MedicalController@prosesVaccineMasterMD');
 
 Route::post('medical/medical_facility_used_report/print', 'MedicalController@printMedicalFacilityUsedReport');
 Route::post('medical/medical_facility_used_report/print/excel', 'MedicalController@printMedicalFacilityUsedReportExcel');
