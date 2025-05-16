@@ -12,6 +12,7 @@ use Maatwebsite\Excel\Concerns\SkipsEmptyRows;
 use Maatwebsite\Excel\Concerns\WithStartRow;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\WithValidation;
+use Illuminate\Support\Facades\Storage;
 use Session;
 use App;
 
@@ -72,7 +73,7 @@ class JournalTemplateDataImport implements ToCollection, SkipsEmptyRows, WithSta
                     "fieldName" => (isset($row[5])) ? $row[5] : null,
                     "debitKredit" => (isset($row[6])) ? $row[6] : null,
                     "description" => (isset($row[7])) ? $row[7] : null,
-                    "costCenter" => (isset($row[8])) ? $row[8] : null,
+                    "costCenter" => (isset($row[8])) ? strval($row[8]) : null,
                     "account" => (isset($row[9])) ? strval($row[9]) : null,
                     "grouping1" => (isset($row[10])) ? $row[10] : null,
                     "grouping2" => (isset($row[11])) ? $row[11] : null,
@@ -90,6 +91,7 @@ class JournalTemplateDataImport implements ToCollection, SkipsEmptyRows, WithSta
                 ];
             }
 
+            // Storage::put('debug_data.txt', json_encode($param));
             // dd(json_encode($param));
 
             $response = $client->post(env('API_URL') . '/payroll/importJournalTemplate',
@@ -102,6 +104,7 @@ class JournalTemplateDataImport implements ToCollection, SkipsEmptyRows, WithSta
             return $this->arrResult;
         } catch (RequestException $e) {
             $response = $e->getResponse();
+            // dd($response);
             $this->arrResult[]['message'] = $response;
             if($response->getStatusCode() == 401){
                 return view('error.login');
