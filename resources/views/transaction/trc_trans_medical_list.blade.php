@@ -1300,7 +1300,7 @@
                                 <div class="col-4">
                                     <div class="form-group">
                                         <label for="paid_limit_${index}">{{ __('trans_medical.limit') }}</label>
-                                        <input type="text" class="form-control paid_limit" id="paid_limit_${index}" name="paid_limit_${index}" placeholder="{{ __('trans_medical.limit') }}" disabled>
+                                        <input type="text" class="form-control paid_limit" id="paid_limit_${index}" name="paymentList[${index}][maxPayment]" placeholder="{{ __('trans_medical.limit') }}" disabled>
                                     </div>
                                 </div>
                                 <div class="col-3">
@@ -1349,6 +1349,7 @@
                     $(`#claim_for_code_hidden_${index}`).val(dataDetail.claimForCode)
                     $(`#service_code_${index}`).val(dataDetail.serviceCode)
                     $(`#paid_type_${index}`).append(newOption).trigger('change')
+                    $(`#paid_limit_${index}`).val(dataDetail.maxPayment)
                     $(`#paid_payment_${index}`).val(dataDetail.paidAmount)
                 }
             }
@@ -1357,7 +1358,7 @@
                 const index = $(this).closest('.payment-entry').data('index');
                 const data = $(this).select2('data');
                 $(`#service_code_${index}`).val(data[0].serviceCode);
-                $(`#paid_limit_${index}`).val(data[0].limit);
+                $(`#paid_limit_${index}`).val(data[0].maxPayment);
             });
 
             $(document).on("select2:unselecting", ".paid_type", function (e) {
@@ -1383,7 +1384,7 @@
                                     <div class="col-4">
                                         <div class="form-group">
                                             <label for="paid_limit_${paymentTypeCounter}">{{ __('trans_medical.limit') }}</label>
-                                            <input type="text" class="form-control paid_limit" id="paid_limit_${paymentTypeCounter}" name="paid_limit_${paymentTypeCounter}" placeholder="{{ __('trans_medical.limit') }}" disabled>
+                                            <input type="text" class="form-control paid_limit" id="paid_limit_${paymentTypeCounter}" name="paymentList[${paymentTypeCounter}][maxPayment]" placeholder="{{ __('trans_medical.limit') }}" disabled>
                                         </div>
                                     </div>
                                     <div class="col-3">
