@@ -2540,6 +2540,7 @@ class DataController extends Controller
 	    	$response = $client->post(env('API_URL') . '/personel/User/getuserholdingcompany',
 	    		['body' => json_encode(
 	    			[
+						'recordStatus' => 'A',
 						'userName' => Session::get('userID'),
 						"sessionID" => 0,
                         "sessionUserID" => Session::get('userID'),
@@ -5834,6 +5835,10 @@ class DataController extends Controller
 	    		}
 	    	);
 	    }
+
+		if(empty($request->groupCode)){
+			$group = [];
+		}
 
         return response()->json($group);
 	}
