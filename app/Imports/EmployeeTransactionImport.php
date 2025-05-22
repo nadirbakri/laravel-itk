@@ -30,9 +30,9 @@ class EmployeeTransactionImport implements ToCollection, SkipsEmptyRows, WithSta
     public function transformDate($value, $format = 'Y-m-d')
     {
         try {
-            return Carbon::instance(Date::excelToDateTimeObject($value));
+            return Carbon::instance(Date::excelToDateTimeObject($value))->format('Y-m-d');
         } catch (\Throwable $e) {
-            return Carbon::createFromFormat($format, date('Y-m-d', strtotime($value)));
+            return Carbon::createFromFormat($format, date('Y-m-d', strtotime($value)))->format('Y-m-d');
         }
     }
 
@@ -219,9 +219,10 @@ class EmployeeTransactionImport implements ToCollection, SkipsEmptyRows, WithSta
                     $transactionData[] = [
                         "companyCode" => (!is_null($row[0]) && $row[0] != "NULL") ? strval($row[0]) : null,
                         "employeeNo" => (!is_null($row[1]) && $row[1] != "NULL") ? strval($row[1]) : null,
-                        "terminationRemarks" => (!is_null($row[2]) && $row[2] != "NULL") ? strval($row[2]) : null,
-                        "terminationDate" => (!is_null($row[3]) && $row[3] != "NULL") ? $this->transformDate($row[3]) : null,
-                        "effectiveTerminantionDate" => (!is_null($row[4]) && $row[4] != "NULL") ? $this->transformDate($row[4]) : null,
+                        "terminationCode" => (!is_null($row[2]) && $row[2] != "NULL") ? strval($row[2]) : null,
+                        "terminationRemarks" => (!is_null($row[3]) && $row[3] != "NULL") ? strval($row[3]) : null,
+                        "terminationDate" => (!is_null($row[4]) && $row[4] != "NULL") ? $this->transformDate($row[4]) : null,
+                        "effectiveTerminantionDate" => (!is_null($row[5]) && $row[5] != "NULL") ? $this->transformDate($row[5]) : null,
                     ];
                 } else if ($this->type == 'PE') {
                     $transactionData[] = [
