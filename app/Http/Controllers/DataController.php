@@ -3271,7 +3271,11 @@ class DataController extends Controller
 
 	    $arrResult = json_decode($response->getBody()->getContents());
 
-        return response()->json($arrResult->dataListSet[0]);
+		if(empty($request->supervisorCode)){
+			return response()->json([]);
+		}else{
+			return response()->json($arrResult->dataListSet[0]);
+		}
 	}
 
 	public function dataEmployeeNoPositionAPI(Request $request)
