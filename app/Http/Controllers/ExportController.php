@@ -19,6 +19,8 @@ use App\Exports\BusinessTripExportPDF;
 // use App\Exports\ BusinessTripSeattleExportPDF;
 use App\Exports\BusinessTripSeattleExportPDF;
 use App\Exports\MultipleCheckinExport;
+use App\Exports\SalaryComplaintExport;
+use App\Exports\DeathBenefitExport;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
@@ -117,6 +119,14 @@ class ExportController extends Controller
 
     public function pageExportMultipleCheckin(){
         return view('export.exp_export_multiple_checkin');
+    }
+
+    public function pageExportSalaryComplaint(){
+        return view('export.exp_export_salary_complaint');
+    }
+
+    public function pageExportDeathBenefit(){
+        return view('export.exp_export_death_benefit');
     }
 
     public function printExportWorkflow(Request $request)
@@ -285,6 +295,32 @@ class ExportController extends Controller
     public function printMultipleCheckinExport(Request $request)
     {
         return Excel::download(new MultipleCheckinExport($request->claim_date_from, $request->claim_date_to, $request->business_unit), 'Employee List Multiple Checkin Report.xlsx');
+    
+    }
+
+    public function printSalaryComplaintExport(Request $request)
+    {
+        // dd($request);
+        $dataLevel = [];
+
+        for($i = 0; $i < $request->level_format; $i++){
+            $dataLevel[] = $request->{'level' . ($i+1)};
+        }
+
+        return Excel::download(new SalaryComplaintExport($request->claim_date_from, $request->claim_date_to, $request->business_unit, $dataLevel, $request->salary_complaint_status), 'SALARY-COMPLAINT-' . $request->business_unit . '-' . date('Y-m-d') . '.xlsx');
+    
+    }
+
+    public function printDeathBenefitExport(Request $request)
+    {
+        // dd($request);
+        $dataLevel = [];
+
+        for($i = 0; $i < $request->level_format; $i++){
+            $dataLevel[] = $request->{'level' . ($i+1)};
+        }
+
+        return Excel::download(new DeathBenefitExport($request->claim_date_from, $request->claim_date_to, $request->business_unit, $dataLevel, $request->death_benefit_status), 'DEATH-BENEFIT-' . $request->business_unit . '-' . date('Y-m-d') . '.xlsx');
     
     }
 }

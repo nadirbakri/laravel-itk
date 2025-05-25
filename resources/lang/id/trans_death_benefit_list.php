@@ -19,6 +19,8 @@ return [
     'date_of_death' => 'Tanggal Kematian',
     'ticket_no' => 'No Tiket',
     'status' => 'Status',
+    'name' => 'Nama Pemohon',
+    'relation' => 'Relasi',
     'family_member' => 'Anggota Keluarga',
     'total_claim_amount' => 'Jumlah Klaim Total',
     'paid_amount' => 'Jumlah Yang Dibayar',

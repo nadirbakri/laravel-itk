@@ -1079,6 +1079,8 @@ Route::get('export/export_overtime', 'ExportController@pageExportOvertime');
 Route::get('export/export_pdf_business_trip', 'ExportController@pageExportPDFBusinessTrip');
 Route::get('export/export_business_trip_checking', 'ExportController@pageExportBusinessTripChecking');
 Route::get('export/export_multiple_checkin', 'ExportController@pageExportMultipleCheckin');
+Route::get('export/export_salary_complaint', 'ExportController@pageExportSalaryComplaint');
+Route::get('export/export_death_benefit', 'ExportController@pageExportDeathBenefit');
 
 Route::post('export/export_workflow/print', 'ExportController@printExportWorkflow');
 Route::post('export/export_medical/print', 'ExportController@printExportMedical');
@@ -1090,6 +1092,8 @@ Route::post('export/export_businesstrip_pdf/print', 'ExportController@printExpor
 Route::post('export/business_trip_checking/print', 'ExportController@printExportBusinessTripChecking');
 Route::post('export_attendance/print', 'ExportController@printAttendanceExport');
 Route::post('export_multiple_checkin/print', 'ExportController@printMultipleCheckinExport');
+Route::post('export/export_salary_complaint/print', 'ExportController@printSalaryComplaintExport');
+Route::post('export/export_death_benefit/print', 'ExportController@printDeathBenefitExport');
 
 /* Route Untuk Proses Menu Export MOB */
 Route::post('export/company_working_calendar/proses','ExportController@prosesCompanyWorkingCalendar');

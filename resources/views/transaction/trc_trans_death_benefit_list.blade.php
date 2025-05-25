@@ -316,7 +316,9 @@
                                         <th>{{ __('trans_death_benefit_list.date_of_death') }}</th>
                                         <th>{{ __('trans_death_benefit_list.ticket_no') }}</th>
                                         <th>{{ __('trans_death_benefit_list.status') }}</th>
+                                        <th>{{ __('trans_death_benefit_list.name') }}</th>
                                         <th>{{ __('trans_death_benefit_list.family_member') }}</th>
+                                        <th>{{ __('trans_death_benefit_list.relation') }}</th>
                                         <th>{{ __('trans_death_benefit_list.total_claim_amount') }}</th>
                                         <th>{{ __('trans_death_benefit_list.paid_amount') }}</th>
                                         <th>{{ __('trans_death_benefit_list.payment_date') }}</th>
@@ -428,10 +430,25 @@
                                         <input id="employee_no" name="employee_no" type="hidden" class="form-control"><span id="employee_no_val"></span>
                                     </div>
                                     <div class="col-3">
+                                        <h5>Requester Name</h5>
+                                    </div>
+                                    <div class="col">
+                                        <input type="hidden" class="form-control" id="requester_name" name="requester_name"><span id="requester_name_val"></span>
+                                    </div>
+                                </div>
+
+                                <div class="row detailstatus">
+                                    <div class="col-3">
                                         <h5>Family Member</h5>
                                     </div>
                                     <div class="col">
-                                        <input type="hidden" class="form-control" id="family_member" name="family_member"><span id="family_member_val"></span>
+                                        <input id="family_member" name="family_member" type="hidden" class="form-control"><span id="family_member_val"></span>
+                                    </div>
+                                    <div class="col-3">
+                                        <h5>Relation</h5>
+                                    </div>
+                                    <div class="col">
+                                        <input type="hidden" class="form-control" id="relation" name="relation"><span id="relation_val"></span>
                                     </div>
                                 </div>
 
@@ -733,12 +750,18 @@
                 },
                 {data: 'tunjanganKematianEntity.claimDate', name: 'tunjanganKematianEntity.claimDate', 
                     render: function (data, type, row) {
-                        return moment(data).format('YYYY-MM-DD');
+                        if(data == null){
+                            return '-'
+                        }else{
+                            return moment(data).format('YYYY-MM-DD')
+                        }
                     }
                 },
                 {data: 'tunjanganKematianEntity.ticketNo', name: 'tunjanganKematianEntity.ticketNo'},
                 {data: 'tunjanganKematianEntity.reimbursementStatus', name: 'tunjanganKematianEntity.reimbursementStatus'},
+                {data: 'tunjanganKematianEntity.fullNameRequester', name: 'tunjanganKematianEntity.fullNameRequester'},
                 {data: 'tunjanganKematianEntity.anggotaKeluarga', name: 'tunjanganKematianEntity.anggotaKeluarga'},
+                {data: 'tunjanganKematianEntity.relasiKeluarga', name: 'tunjanganKematianEntity.relasiKeluarga'},
                 {data: 'tunjanganKematianEntity.totalClaimAmount', name: 'tunjanganKematianEntity.totalClaimAmount',
                     render: function (data, type, row) {
                         return data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
@@ -751,7 +774,11 @@
                 },
                 {data: 'tunjanganKematianEntity.paymentDate', name: 'tunjanganKematianEntity.paymentDate', 
                     render: function (data, type, row) {
-                        return moment(data).format('YYYY-MM-DD');
+                        if(data == null){
+                            return '-'
+                        }else{
+                            return moment(data).format('YYYY-MM-DD')
+                        }
                     }
                 },
                 {data: 'tunjanganKematianEntity.approvalRemarks', name: 'tunjanganKematianEntity.approvalRemarks'},
@@ -791,6 +818,7 @@
 
     const klikdetail = (element) => {
         let data = table.row($(element).parent()).data().tunjanganKematianEntity;
+        let payment_date = moment(data.paymentDate).format('YYYY-MM-DD');
 
         $('#date_of_death').val(moment(data.claimDate).format('YYYY-MM-DD'))
         $('#date_of_death_val').html(moment(data.claimDate).format('YYYY-MM-DD'))
@@ -802,13 +830,20 @@
         $('#status_val').html(data.reimbursementStatus)
         $('#employee_no').val(data.employeeNo)
         $('#employee_no_val').html(data.employeeNo)
+        $('#requester_name').val(data.fullNameRequester)
+        $('#requester_name_val').html(data.fullNameRequester)
         $('#family_member').val(data.anggotaKeluarga)
         $('#family_member_val').html(data.anggotaKeluarga)
+        $('#relation').val(data.relasiKeluarga)
+        $('#relation_val').html(data.relasiKeluarga)
         $('#total_claim_amount').val(data.totalClaimAmount)
         $('#total_claim_amount_val').html(data.totalClaimAmount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."))
         $('#paid_amount').val(data.paidAmount)
         $('#paid_amount_val').html(data.paidAmount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."))
-        $('#payment_date').val(moment(data.paymentDate).format('YYYY-MM-DD'))
+        if(data.paymentDate == null){
+            payment_date = '-';
+        }
+        $('#payment_date').val()
         $('#payment_date_val').html(moment(data.paymentDate).format('YYYY-MM-DD'))
         $('#remarks').val(data.reimbursementRemarks)
         $('#remarks_val').html(data.reimbursementRemarks)
