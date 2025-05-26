@@ -11,6 +11,7 @@
     <link href="https://cdn.datatables.net/select/1.3.3/css/select.dataTables.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/fixedcolumns/4.3.0/css/fixedColumns.dataTables.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/fixedheader/3.4.0/css/fixedHeader.dataTables.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/flatpickr.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/flatpickr.monthselect.css') }}">
@@ -19,7 +20,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/i18n/jquery-ui-timepicker-addon-i18n.min.js"> --}}
     {{-- <link rel="stylesheet" href="https://trentrichardson.com/examples/timepicker/jquery-ui-timepicker-addon.css"> --}}
     <!-- <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet"> -->
-    <link rel="stylesheet" href="{{ asset('css/time_management_detail_data.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/time_management_detail_data_CORI.css') }}">
     <link rel="stylesheet" href="{{ asset('css/jquery.inputpicker.css') }}">
     <style type="text/css">
         .div-time_management {
@@ -162,7 +163,13 @@
             vertical-align: middle !important;
         }
 
-        .table input,
+        .table input {
+            font-size: 0.5em;
+            padding: 0;
+            width: 100%;
+            min-width: 2vw;
+        }
+
         .table select {
             font-size: 0.7em;
             padding: 0;
@@ -179,7 +186,7 @@
 
         .table .select2-container--default .select2-selection--single .select2-selection__rendered {
             line-height: 17px !important;
-            font-size: 8px;
+            font-size: 0.7em;
         }
 
         .table .select2-container--default .select2-selection--single .select2-selection__arrow {
@@ -216,13 +223,13 @@
             <div style="display: flex; gap: 12px; margin-right: 12px;">
                 {{-- <div class="col-2"> --}}
                     <button type="submit" class="btn btn-primary form-control-xs" name="btn-edit" id="btn-edit"
-                        style="width: 60px;">
+                        style="width: 100px;">
                         <i class="fa fa-pencil"></i> {{ __('tm_absenteeism_data_entry_by_employee_no.btn_edit') }}
                     </button>
                 {{-- </div> --}}
                 {{-- <div class="col-2"> --}}
                     <button type="submit" class="btn btn-primary form-control-xs" name="btn-save" id="btn-save"
-                        style="width: 60px;" disabled>
+                        style="width: 100px;" disabled>
                         <i class="fa fa-floppy-o"></i> {{ __('tm_absenteeism_data_entry_by_employee_no.btn_save') }}
                     </button>
                 {{-- </div> --}}
@@ -268,7 +275,7 @@
         </div> --}}
         <form id="absenteeism_data_entry_by_employee_no_table_form" method="post">
             <div class="div-table" width="100%">
-                <table id="absenteeism_data_entry_by_employee_no_table" class="table hover" style="font-size: 0.7rem;">
+                <table id="absenteeism_data_entry_by_employee_no_table" class="table hover" style="font-size: 0.8em; font-weight: lighter">
                     <thead>
                         <tr>
                             <th rowspan="2" class="middle">Absent Date</th>
@@ -366,6 +373,7 @@
 <script src="https://cdn.datatables.net/fixedcolumns/4.3.0/js/dataTables.fixedColumns.min.js"></script>
 <script src="https://cdn.datatables.net/select/1.3.3/js/dataTables.select.min.js"></script>
 <script src="https://cdn.datatables.net/plug-ins/1.10.24/pagination/ellipses.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
 <script src="{{ asset('js/jquery.redirect.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
@@ -1679,7 +1687,7 @@
 
                                 setTimeout(function () {
                                     $('#notification_success').modal('hide');
-                                    window.location = "{{ url('time_management/absenteeism_data_entry_by_employee_no') }}";
+                                    // window.location = "{{ url('time_management/absenteeism_data_entry_by_employee_no') }}";
                                 }, 3000);
                             } else {
                                 $("#btn-save").prop("disabled", false);
@@ -1699,7 +1707,7 @@
 
                                 setTimeout(function () {
                                     $('#notification_error').modal('hide');
-                                    window.location = "{{ url('time_management/absenteeism_data_entry_by_employee_no') }}";
+                                    // window.location = "{{ url('time_management/absenteeism_data_entry_by_employee_no') }}";
                                 }, 3000);
                             }
                         },

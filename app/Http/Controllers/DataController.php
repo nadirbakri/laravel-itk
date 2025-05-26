@@ -4559,17 +4559,19 @@ class DataController extends Controller
 
 	    $arrResult = json_decode($response->getBody()->getContents());
 
-		usort($arrResult->dataListSet, function ($a, $b) {
-			return strcmp($a->employeeNo, $b->employeeNo);
-		});
+		if ($arrResult->dataListSet) {
+			usort($arrResult->dataListSet, function ($a, $b) {
+				return strcmp($a->employeeNo, $b->employeeNo);
+			});
 
-	    if($request->func == 'First'){
-	    	return response()->json($arrResult->dataListSet[0]);
-	    }else if($request->func == 'Last'){
-	    	end($arrResult->dataListSet);
-	    	$key = key($arrResult->dataListSet);
-	    	return response()->json($arrResult->dataListSet[$key]);
-	    }
+			if($request->func == 'First'){
+				return response()->json($arrResult->dataListSet[0]);
+			}else if($request->func == 'Last'){
+				end($arrResult->dataListSet);
+				$key = key($arrResult->dataListSet);
+				return response()->json($arrResult->dataListSet[$key]);
+			}
+		}
 	}
 
 	public function dataPositionFunctionAPI(Request $request)
