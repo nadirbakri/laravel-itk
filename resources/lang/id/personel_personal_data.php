@@ -100,7 +100,7 @@ return [
     'label_grade' => 'Nilai',
     'label_location' => 'Lokasi',
     'label_cost_center' => 'Cost Center',
-    'label_group_code' => 'Group Code',
+    'label_group_code' => 'Kode Grup Persetujuan',
     'label_home_address' => 'Alamat Rumah',
     'label_other_address' => 'Alamat Lain',
     'label_work_address' => 'Alamat Kantor',

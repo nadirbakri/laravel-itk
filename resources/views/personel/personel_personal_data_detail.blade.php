@@ -6027,7 +6027,7 @@
 
             $('#group_code_employment').select2({
                 width: '100%',
-                placeholder: 'Choose Group Code',
+                placeholder: 'Choose Group Approval Code',
                 allowClear: true,
                 // multiple: true,
                 // tags: true,

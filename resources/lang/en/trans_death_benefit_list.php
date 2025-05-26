@@ -19,6 +19,8 @@ return [
     'date_of_death' => 'Date of Death',
     'ticket_no' => 'Ticket No',
     'status' => 'Status',
+    'name' => 'Requester Name',
+    'relation' => 'Relation',
     'family_member' => 'Family Member',
     'total_claim_amount' => 'Total Claim Amount',
     'paid_amount' => 'Paid Amount',

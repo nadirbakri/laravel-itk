@@ -2540,6 +2540,7 @@ class DataController extends Controller
 	    	$response = $client->post(env('API_URL') . '/personel/User/getuserholdingcompany',
 	    		['body' => json_encode(
 	    			[
+						'recordStatus' => 'A',
 						'userName' => Session::get('userID'),
 						"sessionID" => 0,
                         "sessionUserID" => Session::get('userID'),
@@ -3270,7 +3271,11 @@ class DataController extends Controller
 
 	    $arrResult = json_decode($response->getBody()->getContents());
 
-        return response()->json($arrResult->dataListSet[0]);
+		if(empty($request->supervisorCode)){
+			return response()->json([]);
+		}else{
+			return response()->json($arrResult->dataListSet[0]);
+		}
 	}
 
 	public function dataEmployeeNoPositionAPI(Request $request)
@@ -5834,6 +5839,10 @@ class DataController extends Controller
 	    		}
 	    	);
 	    }
+
+		if(empty($request->groupCode)){
+			$group = [];
+		}
 
         return response()->json($group);
 	}
