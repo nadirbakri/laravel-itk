@@ -40,6 +40,8 @@ class EmployeeMultipleLocationImport implements ToCollection, SkipsEmptyRows, Wi
                 '*.0.not_in' => 'Company Code cannot be Null',
                 '*.1.required' => 'Employee No is Required',
                 '*.1.not_in' => 'Employee No cannot be Null',
+                '*.2.required' => 'Seq No is Required',
+                '*.2.not_in' => 'Seq No cannot be Null',
                 '*.3.required' => 'Office Location Code is Required',
                 '*.3.not_in' => 'Office Location Code cannot be Null'
             ])->validate();
@@ -48,6 +50,7 @@ class EmployeeMultipleLocationImport implements ToCollection, SkipsEmptyRows, Wi
                 $param[] = [
                     "companyCode" => (isset($row[0])) ? trim($row[0]) : null,
                     "employeeNo" => (isset($row[1])) ? trim($row[1]) : null,
+                    "seq" => (isset($row[2])) ? (int) $row[2] : null,
                     "officeCode" => (isset($row[3])) ? trim($row[3]) : null,
                     "changedNo" => 0,
                     "changedBy" => Session::get('userID'),
@@ -62,7 +65,7 @@ class EmployeeMultipleLocationImport implements ToCollection, SkipsEmptyRows, Wi
 
             // dd(json_encode($param));
 
-            $response = $client->post(env('API_URL') . '/mobile/GmGroup/ImportApprovalMember',
+            $response = $client->post(env('API_URL') . '/mobile/OfficeLocation/bulkOfficeLocationv2',
                 ['body' => json_encode($param)]
             );
         } catch (ValidationException $e) {

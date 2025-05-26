@@ -414,6 +414,7 @@ Route::post('personnel/plafon_transport/proses', 'PersonelController@prosesPlafo
 Route::post('personnel/plafon_reimbursement/proses', 'PersonelController@prosesPlafonReimbursementPersonel');
 Route::post('personnel/employee_termination/proses', 'PersonelController@prosesEmployeeTerminationPersonel');
 Route::post('personnel/insurance/proses', 'PersonelController@prosesInsurancePersonel');
+Route::post('personnel/employee_multiple_location/proses', 'PersonelController@prosesEmployeeMultipleLocationPersonel');
 
 Route::get('personnel/final_performance_result/remove', 'PersonelController@removeFinalPerformanceResultPersonel');
 Route::get('personnel/evaluation_form/evaluated_aspect/remove', 'PersonelController@removeEvaluationFormEvaluatedAspectPersonel');
