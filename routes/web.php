@@ -855,8 +855,9 @@ Route::get('medical/transfer_payment_to_excel/monthly', 'MedicalController@pageT
 Route::get('medical/transfer_payment_to_excel/remaining_limit', 'MedicalController@pageTransferPaymentToExcelRemainingLimit');
 Route::get('medical/payment', 'MedicalController@pagePayment');
 Route::get('medical/payment_per_rank', 'MedicalController@pagePaymentPerRank');
-Route::get('medical/vaccination_schedule', 'MedicalController@pageVaccinationSchedule');
 Route::get('medical/vaccine_master', 'MedicalController@pageVaccineMaster');
+Route::get('medical/vaccination_schedule', 'MedicalController@pageVaccinationSchedule');
+Route::get('medical/medical_checkup_schedule', 'MedicalController@pageMedicalCheckupSchedule');
 
 /* Route untuk tabel Medical */
 Route::get('medical/claim_code/table', 'MedicalController@tableClaimCodeMD');
@@ -943,6 +944,8 @@ Route::post('medical/claim_transaction/proses', 'MedicalController@prosesClaimTr
 Route::post('medical/payment/proses', 'MedicalController@prosesPaymentMD');
 Route::post('medical/payment_per_rank/proses', 'MedicalController@prosesPaymentPerRankMD');
 Route::post('medical/vaccine_master/proses', 'MedicalController@prosesVaccineMasterMD');
+Route::post('medical/vaccination_schedule/proses', 'MedicalController@prosesVaccinationScheduleMD');
+Route::post('medical/medical_checkup_schedule/proses', 'MedicalController@prosesMedicalCheckupScheduleMD');
 
 Route::post('medical/medical_facility_used_report/print', 'MedicalController@printMedicalFacilityUsedReport');
 Route::post('medical/medical_facility_used_report/print/excel', 'MedicalController@printMedicalFacilityUsedReportExcel');
@@ -956,6 +959,8 @@ Route::post('medical/outstanding_claim_report/print', 'MedicalController@printOu
 Route::post('medical/outstanding_claim_report/print/excel', 'MedicalController@printOutstandingClaimReportExcel');
 Route::post('medical/transfer_payment_to_excel/monthly/print/excel', 'MedicalController@printTransferPaymentToExcelMonthlyExcel');
 Route::post('medical/transfer_payment_to_excel/remaining_limit/print/excel', 'MedicalController@printTransferPaymentToExcelRemainingLimitExcel');
+Route::post('medical/vaccination_schedule/download_template', 'MedicalController@downloadTemplateVaccinationScheduleMD');
+Route::post('medical/medical_checkup_schedule/download_template', 'MedicalController@downloadTemplateVaccinationScheduleMD');
 
 /* Route untuk status Medical */
 Route::get('medical/claim_code/status', 'MedicalController@statusClaimCodeMD');
@@ -1466,6 +1471,7 @@ Route::get('plafon_reimbursement/func/api', 'DataController@dataPlafonReimbursem
 Route::get('medical_service_code/api', 'DataController@dataMedicalServiceCodeAPI');
 Route::get('medical_service_code/ranking/api', 'DataController@dataMedicalServiceCodeRankingAPI');
 Route::get('medical_service_code/paid_type/api', 'DataController@dataMedicalServiceCodePaidTypeAPI');
+Route::get('vaccine_master/api', 'DataController@dataVaccineMasterAPI');
 
 /* Route Untuk Save Token Device dan Notification Firebase */
 Route::get('save-token', 'DashboardController@saveToken');
