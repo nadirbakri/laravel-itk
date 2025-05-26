@@ -1968,10 +1968,16 @@
             rules: {
                     report_code: {
                         required: true,
+                    },
+                    description: {
+                        required: true,
                     }
                 },
                 messages: {
                     report_code: {
+                        required: "{{ __('payroll_report_format.field_mandatory') }}",
+                    },
+                    description: {
                         required: "{{ __('payroll_report_format.field_mandatory') }}",
                     }
                 },
