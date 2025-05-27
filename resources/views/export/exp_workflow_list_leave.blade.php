@@ -19,6 +19,8 @@
 	<table style="width: 100%; font-size: 14px;" class="table table-bordered table-hover responsive">
 		<thead>
 			<tr>
+				<th>No</th>
+				<th>Status</th>
 				<th>Employee Number</th>
 				<th>Employee Name</th>
 				<th>Leave Type</th>
@@ -33,6 +35,8 @@
             <?php $no = 1; ?>
 			@foreach($data as $value)
 			<tr>
+				<td>{{ $no++ }}</td> 
+				<td>{{ isset($value->leaveEntity->status) ? $value->leaveEntity->status : '' }}</td>
                 <td>{{ isset($value->leaveEntity->employeeNo) ? $value->leaveEntity->employeeNo : '' }}</td>
 				<td>{{ isset($value->leaveEntity->fullnameRequester) ? $value->leaveEntity->fullnameRequester : '' }}</td>
 				<td>{{ isset($value->leaveEntity->leaveName) ? $value->leaveEntity->leaveName : '' }}</td>
