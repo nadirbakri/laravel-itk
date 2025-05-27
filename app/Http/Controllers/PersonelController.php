@@ -611,9 +611,14 @@ class PersonelController extends Controller
         return view('personel.personel_employee_termination');
     }
     
-    public function pageInsurance()
+    public function pageInsurancePersonel()
     {
         return view('personel.personel_insurance');
+    }
+
+    public function pageFamilyDependentPersonel()
+    {
+        return view('personel.personel_family_dependent');
     }
 
     public function tablePersonalDataPersonel(Request $request)
@@ -4344,6 +4349,71 @@ class PersonelController extends Controller
         }
     }
 
+    public function dataDetailTableFamilyDependentPersonel(Request $request)
+    {
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/personel/PeMaster/GetPeMasterFamilyActualAdmin',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'employeeNo' => $request->employeeNo,
+                        'userID' => Session::get('userID'),
+                        'sessionID' => 0,
+                        'sessionUserID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        'languageCode' => App::getLocale()
+                    ]
+                )]
+            );   
+            $arrResult = json_decode($response->getBody()->getContents());  
+
+            return view('personel.personel_family_dependent_detail_table', ['data' => $arrResult->dataListSet ?? null]);
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+    }
+
+    public function dataDetailFamilyDependentPersonel(Request $request)
+    {
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);  
+
+            $data = [
+                'employeeNo' => $request->employeeNo,
+                'employeeName' => $request->employeeName,
+            ];
+
+            return view('personel.personel_family_dependent_detail_table', ['employeeNo' => $request->employeeNo ?? null]);
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+    }
+
     public function tableFringeBenefitPersonalDataPersonel(Request $request)
     {
         if ($request->ajax()) {
@@ -5384,6 +5454,48 @@ class PersonelController extends Controller
             ]);
 
             $response = $client->get(env('API_URL') . '/personel/PeMasterInsurance/GetAllInsuranceEmployees',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'userID' => Session::get('userID'),
+                        'sessionID' => 0,
+                        'sessionUserID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        'languageCode' => App::getLocale()
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
+        }
+    }
+
+    public function tableFamilyDependentPersonel(Request $request)
+    {
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/personel/PeMaster/GetPeMasterFamilyActualAdmin',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),

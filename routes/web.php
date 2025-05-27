@@ -159,7 +159,8 @@ Route::get('personnel/evaluation_report', 'PersonelController@pageEvaluationRepo
 Route::get('personnel/employee_skill_report', 'PersonelController@pageEmployeeSkillReportPersonel');
 Route::get('personnel/employee_turn_over_report', 'PersonelController@pageEmployeeTurnOverReportPersonel');
 Route::get('personnel/employee_termination', 'PersonelController@pageEmployeeTerminationPersonel');
-Route::get('personnel/insurance', 'PersonelController@pageInsurance');
+Route::get('personnel/insurance', 'PersonelController@pageInsurancePersonel');
+Route::get('personnel/family_dependent', 'PersonelController@pageFamilyDependentPersonel');
 
 Route::get('personnel/personal_data/table', 'PersonelController@tablePersonalDataPersonel');
 Route::get('personnel/performance/table', 'PersonelController@tablePerformancePersonel');
@@ -230,6 +231,7 @@ Route::get('personnel/format_report/table', 'PersonelController@tableFormatRepor
 Route::get('personnel/relation_code/table', 'PersonelController@tableRelationCodePersonel');
 Route::get('personnel/employee_termination/table', 'PersonelController@tableEmployeeTerminationPersonel');
 Route::get('personnel/insurance/table', 'PersonelController@tableInsurancePersonel');
+Route::get('personnel/family_dependent/table', 'PersonelController@tableFamilyDependentPersonel');
 
 Route::get('personnel/personal_data/detail_data', 'PersonelController@dataDetailPersonalDataPersonel');
 Route::get('personnel/performance/detail_data', 'PersonelController@dataDetailPerformancePersonel');
@@ -297,6 +299,8 @@ Route::get('personnel/employee_mutation/detail_data', 'PersonelController@dataDe
 Route::get('personnel/city_name/detail', 'PersonelController@dataDetailCityNamePersonel');
 Route::get('personnel/zip_code/detail', 'PersonelController@dataDetailZipCodeDetailPersonel');
 Route::get('personnel/insurance/detail_data', 'PersonelController@dataDetailInsurancePersonel');
+Route::get('personnel/family_dependent/detail_table', 'PersonelController@dataDetailTableFamilyDependentPersonel');
+Route::get('personnel/family_dependent/detail_table/detail_data', 'PersonelController@dataDetailFamilyDependentPersonel');
 
 Route::get('personnel/personal_data/fringe_benefit/table', 'PersonelController@tableFringeBenefitPersonalDataPersonel');
 Route::get('personnel/personal_data/dependent/table', 'PersonelController@tableDependentPersonalDataPersonel');
