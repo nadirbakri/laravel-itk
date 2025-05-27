@@ -19,6 +19,8 @@
 	<table style="width: 100%; font-size: 14px;" class="table table-bordered table-hover responsive">
 		<thead>
 			<tr>
+				<th>No</th>
+				<th>Status</th>
 				<th>Employee Number</th>
 				<th>Employee Name</th>
 				<th>Leave Type</th>
@@ -36,6 +38,8 @@
             <?php $no = 1; ?>
 			@foreach($data as $value)
 			<tr>
+				<td>{{ $no++ }}</td> 
+				<td>{{ isset($value->permitEntity->status) ? $value->permitEntity->status : '' }}</td>
                 <td>{{ isset($value->permitEntity->employeeNo) ? $value->permitEntity->employeeNo : '' }}</td>
 				<td>{{ isset($value->permitEntity->fullnameRequester) ? $value->permitEntity->fullnameRequester : '' }}</td>
 				<td>{{ isset($value->permitEntity->permitCode) ? $value->permitEntity->permitCode : '' }}</td>

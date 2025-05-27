@@ -181,30 +181,23 @@
 
                 <div class="row">
                     <div class="col-11">
-                    <table id="multiple_location_table" class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Seq No</th>
-                                <th>Office Location Code</th>
-                                <th>Office Location Description</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td id="ceklis" name="ceklis"></td>
-                                <td id="office_location_code" name="office_location_code"></td>
-                                <td id="office_location_desc" name="office_location_desc"></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                        <table id="multiple_location_table" class="table" style="width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Seq No</th>
+                                    <th>Office Location Code</th>
+                                    <th>Office Location Description</th>
+                                </tr>
+                            </thead>
+                        </table>
 
-                    <button class="button btn btn-primary buttonadd" name="btn-add" id="btn-add" data-toggle="modal" data-target="#modal_list_office_location" type="button" disabled>
-                        <i class="fa fa-plus"></i>
-                    </button>
-                    <button class="button btn btn-danger buttonadd" name="btn-delete" id="btn-delete" type="button" disabled>
-                        <i class="fa fa-trash"></i>
-                    </button>
+                        <button class="button btn btn-primary buttonadd" name="btn-add" id="btn-add" data-toggle="modal" data-target="#modal_list_office_location" type="button" disabled>
+                            <i class="fa fa-plus"></i>
+                        </button>
+                        <button class="button btn btn-danger buttonadd" name="btn-delete" id="btn-delete" type="button" disabled>
+                            <i class="fa fa-trash"></i>
+                        </button>
                     </div>
                 </div> 
                 <br>
@@ -267,7 +260,7 @@
                             </button>
                         </div>
                         <div class="modal-body table-responsive">
-                            <table id="list_office_location_modal_table" class="display">
+                            <table id="list_office_location_modal_table" class="display" style="width: 100%;">
                                 <thead>
                                     <tr>
                                         <th>#</th>
@@ -575,13 +568,19 @@
                         return type === 'display'? '<input class="chk-select" type="checkbox">' : '';
                             }
                 },
+                {data: 'seq', name: 'seq',
+                render: function (data, type, row) {
+                    return '<input type="hidden" class="form-control" name="locationSeqNo[]" value="' +
+                        data + '">' + data;
+                    }
+                },
                 {data: 'officeCode', name: 'officeCode',
                 render: function (data, type, row) {
                     return '<input type="hidden" class="form-control" name="locationOfficeCode[]" value="' +
                         data + '">' + data;
                     }
                 },
-                {data: 'officeDesc', name: 'officeDesc',
+                {data: 'officedesc', name: 'officedesc',
                     render: function (data, type, row) {
                         return '<input type="hidden" class="form-control" name="locationOfficeDesc[]" value="' +
                             data + '">' + data;
@@ -664,9 +663,9 @@
         e.stopPropagation();
     });
 
-    $('#multiple_location_table').on('click', 'tr td:first-child', function(e){
-        $(this).parent().find('input[type="checkbox"]').trigger('click');
-    });
+    // $('#multiple_location_table').on('click', 'tr td:first-child', function(e){
+    //     $(this).parent().find('input[type="checkbox"]').trigger('click');
+    // });
 
     $('#btn-add').click(()=> {
         $('#list_office_location_modal_table').DataTable().destroy();
@@ -687,13 +686,13 @@
                 {
                     orderable: false,
                     targets: 0, 
+                    width: "10%",
                     "defaultContent": '',
                     render: function(data, type) {
                         return type === 'display'? '<button type="button"  onclick="klikk(this)" class="btn btn-primary btn-check" id="btnaja" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/></svg></button>' : '';
                              }
                 },
-                {data: 'seq', name: 'seq'},
-                {data: 'officeCode', name: 'officeCode'},
+                {data: 'officeCode', name: 'officeCode', width: "30%"},
                 {data: 'officeDesc', name: 'officeDesc'},
             ],
             select: {
@@ -714,7 +713,7 @@
             'no' : '<input class="chk-select" type="checkbox">',
             'seq' : (count+1),
             'officeCode' : officeCode,
-            'officeDesc' : officeDesc
+            'officedesc' : officeDesc
         }).draw();
     }
      
@@ -737,7 +736,7 @@
                         }
                     });
                     $.ajax({
-                        url: "{{ url('master_data/employee_group/proses') }}",
+                        url: "{{ url('personnel/employee_multiple_location/proses') }}",
                         type: "POST",
                         data: $('#employee_multiple_location_form').serialize(),
                         success: function (response) {
@@ -752,7 +751,7 @@
                                 .message);
                                 setTimeout(function () {
                                 window.location =
-                                    "{{ url('master_data/employee_group_permit') }}";
+                                    "{{ url('personnel/employee_multiple_location') }}";
                                 }, 3000);
                             } else {
                             $("#btn-save").prop("disabled", false);
@@ -865,7 +864,7 @@
             xhrFields: {
                 responseType: 'blob',
             },
-            url: "{{ url('personnel/employee_multiple_location/template') }}",
+            url: "{{ url('personnel/employee_multiple_location/download_template') }}",
             type: "POST",
             success: function (result, status, xhr) {
                 $("#btn-download-template").prop("disabled", false);
@@ -929,6 +928,7 @@
                             $("#btn-process-import").html(
                                 '{{ __("personel_employee_multiple_location.btn-import") }}'
                             );
+                            $('#modal_import').modal('hide');
                             $('#notification_success').modal('show');
                             // $('#message-notification-success').html(response
                             //     .message);

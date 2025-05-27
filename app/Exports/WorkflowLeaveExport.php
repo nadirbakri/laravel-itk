@@ -59,7 +59,7 @@ class WorkflowLeaveExport extends DefaultValueBinder implements WithCustomValueB
                 'endDate' => $this->permitDateTo,
                 'businessUnit' =>$this->businessUnit,
                 'exportMenu' => false,
-                'isWeb' => true,
+                'isWeb' => false,
                 'status' => $this->status,
                 'companyCode' => Session::get('companyCode'), 
                 'languageCode' => App::getLocale(), 

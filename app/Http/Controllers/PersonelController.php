@@ -2629,7 +2629,7 @@ class PersonelController extends Controller
                 $arrResult = json_decode($response->getBody()->getContents());
                 $arrResult2 = json_decode($response2->getBody()->getContents());  
 
-                // dd($arrResult2->dataListSet);
+                // dd($arrResult->dataListSet);
 
                 if($arrResult->dataListSet == null){
                     $data = [];
@@ -12468,6 +12468,57 @@ class PersonelController extends Controller
 
         $arrResult = json_decode($response->getBody()->getContents());
 
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function prosesEmployeeMultipleLocationPersonel(Request $request)
+    {
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            if(isset($request->locationOfficeCode)){
+                foreach($request->locationOfficeCode as $key=>$value){
+                    $param[] = [
+                        'companyCode' => Session::get('companyCode'),
+                        "employeeNo" => $request->employee_no,
+                        "seq" => (int) $request->locationSeqNo[$key],
+                        "officeCode" => $value,
+                        "changedNo" => 0,
+                        "changedBy" => Session::get('userID'),
+                        "changedDate" => date("Y-m-d\TH:i:s"),
+                        "createdBy" => Session::get('userID'),
+                        "createdDate" => date("Y-m-d\TH:i:s"),
+                        "languageCode" => App::getLocale(),
+                        "sessionID" => 0,
+                        "sessionUserID" => Session::get('userID')
+                    ];
+                }
+            }else{
+                $param = [];
+            }
+
+            // dd(json_encode($param));
+
+            $response = $client->post(env('API_URL') . '/mobile/OfficeLocation/bulkOfficeLocationv2',
+                ['body' => json_encode($param)]
+            );
+    
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
         return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
     }
 
