@@ -12480,32 +12480,41 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            if(isset($request->locationOfficeCode)){
-                foreach($request->locationOfficeCode as $key=>$value){
-                    $param[] = [
-                        'companyCode' => Session::get('companyCode'),
-                        "employeeNo" => $request->employee_no,
-                        "seq" => (int) $request->locationSeqNo[$key],
-                        "officeCode" => $value,
-                        "changedNo" => 0,
-                        "changedBy" => Session::get('userID'),
-                        "changedDate" => date("Y-m-d\TH:i:s"),
-                        "createdBy" => Session::get('userID'),
-                        "createdDate" => date("Y-m-d\TH:i:s"),
-                        "languageCode" => App::getLocale(),
-                        "sessionID" => 0,
-                        "sessionUserID" => Session::get('userID')
-                    ];
-                }
-            }else{
-                $param = [];
+            $param = [
+                'companyCode' => Session::get('companyCode'),
+                "employeeNo" => $request->employee_no,
+                "changedNo" => 0,
+                "changedBy" => Session::get('userID'),
+                "changedDate" => date("Y-m-d\TH:i:s"),
+                "createdBy" => Session::get('userID'),
+                "createdDate" => date("Y-m-d\TH:i:s"),
+                "languageCode" => App::getLocale(),
+                "sessionID" => 0,
+                "sessionUserID" => Session::get('userID')
+            ];
+
+            if ($request->multiple_location === 'all') {
+                $param["listOfficeCode"] = ["ALL"];
+            }
+            else if ($request->multiple_location === 'specific') {
+                $request->office_location ? $param["listOfficeCode"] = [$request->office_location] : $param["listOfficeCode"] = null;
+            }
+            else if ($request->multiple_location === 'multiple' && isset($request->locationOfficeCode)) {
+                $param["listOfficeCode"] = $request->locationOfficeCode;
+            } else{
+                $param["listOfficeCode"] = null;
             }
 
             // dd(json_encode($param));
 
-            $response = $client->post(env('API_URL') . '/mobile/OfficeLocation/bulkOfficeLocationv2',
-                ['body' => json_encode($param)]
-            );
+            if ($param["listOfficeCode"]) {
+                $response = $client->post(env('API_URL') . '/mobile/OfficeLocation/insertOfficeLocationv2',
+                    ['body' => json_encode($param)]
+                );
+            }
+            else {
+                return response()->json(['status' => 'false', 'message' => 'Office Location Code is required at least 1.']);
+            }
     
         } catch (RequestException $e) {
             $response = $e->getResponse();

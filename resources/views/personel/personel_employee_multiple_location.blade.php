@@ -174,6 +174,43 @@
                 <div class="row">
                     <div class="col-2">
                         <div class="form-group">
+                            <label for="multiple_location form-check-label"><b>{{ __('personel_employee_multiple_location.label_multiple_location') }}</b></label>
+                        </div>
+                    </div>
+                    <div class="col-5">
+                        <div class="form-group mb-0">
+                            <div class="form-radio">
+                                <input class="form-radio-input" type="radio" id="multiple_location_all"
+                                    name="multiple_location" value="all">
+                                <label class="form-radio-label"
+                                    for="template_preparation_process">{{ __('personel_employee_multiple_location.label_all') }}</label>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center mb-1" style="gap: 12px">
+                            <div class="form-group m-0 d-flex align-items-center">
+                                <div class="form-radio m-0 d-flex align-items-center" style="gap: 4px">
+                                    <input class="form-radio-input" type="radio" id="multiple_location_specific"
+                                        name="multiple_location" value="specific">
+                                    <label class="form-radio-label ms-1 mb-0" for="multiple_location_specific">
+                                        {{ __('personel_employee_multiple_location.label_specific') }}
+                                    </label>
+                                </div>
+                            </div>
+                            <select class="form-control select2" id="office_location" name="office_location" disabled></select>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-radio">
+                                <input class="form-radio-input" type="radio" id="multiple_location_multiple"
+                                    name="multiple_location" value="multiple">
+                                <label class="form-radio-label"
+                                    for="template_preparation_process">{{ __('personel_employee_multiple_location.label_multiple') }}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-2">
+                        <div class="form-group">
                             <label for="form-check-label"><b>{{ __('personel_employee_multiple_location.label_list_location') }}</b></label>
                         </div>
                     </div>
@@ -422,6 +459,7 @@
         $('table.display').DataTable();
 
         loadDataEmployeeNo();
+        loadDataOfficeLocation();
         // $('#exampletwo').DataTable().destroy();
         // load_data_approval_table();
 
@@ -486,6 +524,78 @@
                                 return {
                                     text: item.employeeNo,
                                     id: item.employeeNo,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataOfficeLocation() {
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' +
+                        '<div class="col-4">' + data.data.officeCode + '</div>' +
+                        '<div class="col-8">' + data.data.officeDesc + '</div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var headerIsAppend = false;
+            $('#office_location').on('select2:open', function (e) {
+                if (!headerIsAppend) {
+                    html = '<div class="row">' +
+                        '<div class="col-4"><b>Office Code</b></div>' +
+                        '<div class="col-8"><b>Office Location</b></div>' +
+                        '</div>';
+                    $('.select2-search--dropdown').append(html);
+                    headerIsAppend = true;
+                }
+            });
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            var $officeCode = $('#office_location').select2({
+                width: '100%',
+                placeholder: 'Choose Office Location',
+                allowClear: true,
+                // tags: true,
+                closeOnSelect: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: "{{ url('/office_location/api') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.officeDesc,
+                                    id: item.officeCode,
                                     data: item
                                 }
                             })
@@ -624,30 +734,53 @@
         });
     }
 
-    $('#employee_no').on('select2:select', function (e) {
-        var data = $('#employee_no').select2('data');
-        $('#employee_name').val(data[0].data.fullName);
-        $('#btn-add').prop('disabled', false);
-        $('#btn-delete').prop('disabled', false);
-
+    function fetchListLocation(employeeNo) {
         $.ajax({
             type: 'GET',
             url: "{{ url('/personnel/employee_multiple_location/detail/get') }}",
             data: {
-                'employeeNo': data[0].data.employeeNo
+                'employeeNo': employeeNo
             }
         }).then(function (data) {
             arrLocation = data;
             load_data_multiple_location_table();
         });
+    }
+
+    $('input[name="multiple_location"]').on('change', function () {
+        if ($('#multiple_location_specific').is(':checked')) {
+            $('#office_location').prop('disabled', false);
+            $('#btn-add').prop('disabled', true);
+            $('#btn-delete').prop('disabled', true);
+        }
+        else if ($('#multiple_location_multiple').is(':checked')) {
+            $('#office_location').prop('disabled', true);
+            $('#btn-add').prop('disabled', false);
+            $('#btn-delete').prop('disabled', false);
+
+            const employeeNo = $('#employee_no').val()
+            employeeNo ? fetchListLocation(employeeNo) : null
+        } 
+        else {
+            $('#office_location').prop('disabled', true);
+            $('#btn-add').prop('disabled', true);
+            $('#btn-delete').prop('disabled', true);
+        }
     });
 
-    $('#employee_no').on("select2:unselecting", function (e) {
-        $('#employee_name').val('');
-        $('#btn-add').prop('disabled', true);
-        $('#btn-delete').prop('disabled', true);
+    $('#employee_no').on('select2:select', function (e) {
+        var data = $('#employee_no').select2('data');
+        $('#employee_name').val(data[0].data.fullName);
 
-        $('#multiple_location_table').DataTable().destroy();
+        fetchListLocation(data[0].data.employeeNo);
+    });
+
+    $('#employee_no').on("select2:clear", function () {
+        $('#employee_name').val('');
+
+        if ($.fn.DataTable.isDataTable('#multiple_location_table')) {
+            $('#multiple_location_table').DataTable().clear().destroy();
+        }
     });
 
     $('#multiple_location_table tbody').on('click', 'input[type="checkbox"]', function(e){
