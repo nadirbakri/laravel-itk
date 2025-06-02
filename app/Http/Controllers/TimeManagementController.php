@@ -165,12 +165,12 @@ class TimeManagementController extends Controller
 
     public function pageAbsenteeismDataEntryByEmployeeNo()
     {
-        if (Session::get('companyCode') === 'CORI' || Session::get('companyCode') === 'CII') {
-            return view ('time_management.tm_absenteeism_data_entry_by_employee_no_CORI');
-        }
-        else {
+        // if (Session::get('companyCode') === 'CORI' || Session::get('companyCode') === 'CII') {
+        //     return view ('time_management.tm_absenteeism_data_entry_by_employee_no_CORI');
+        // }
+        // else {
             return view ('time_management.tm_absenteeism_data_entry_by_employee_no');
-        }
+        // }
     }
 
     public function pageAbsenteeismDataEntryByDate()
