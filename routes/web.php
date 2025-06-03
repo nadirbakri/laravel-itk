@@ -419,6 +419,7 @@ Route::post('personnel/plafon_reimbursement/proses', 'PersonelController@prosesP
 Route::post('personnel/employee_termination/proses', 'PersonelController@prosesEmployeeTerminationPersonel');
 Route::post('personnel/insurance/proses', 'PersonelController@prosesInsurancePersonel');
 Route::post('personnel/employee_multiple_location/proses', 'PersonelController@prosesEmployeeMultipleLocationPersonel');
+Route::post('personnel/family_dependent/proses', 'PersonelController@prosesFamilyDependentPersonel');
 
 Route::get('personnel/final_performance_result/remove', 'PersonelController@removeFinalPerformanceResultPersonel');
 Route::get('personnel/evaluation_form/evaluated_aspect/remove', 'PersonelController@removeEvaluationFormEvaluatedAspectPersonel');
@@ -910,6 +911,7 @@ Route::get('trans/mass_leave/table', 'TransactionController@tableDetailMassLeave
 Route::get('trans/salary_complaint/table', 'TransactionController@tableDetailSalaryComplaint');
 Route::get('trans/salary_complaint/attachment', 'TransactionController@dataDetailSalaryComplaint');
 Route::get('trans/death_benefit/table', 'TransactionController@tableDetailDeathBenefit');
+Route::get('trans/family_data_approval/table', 'TransactionController@tableFamilyDataApprovalTransaction');
 Route::get('adm/checkinlist/table', 'TransactionController@tableDetailCheckinList');
 Route::get('adm/checkinlistmaps/table', 'TransactionController@tableDetailMapsCheckinList');
 Route::get('adm/checkinlist_mapsall/table', 'TransactionController@tableDetailCheckinListAll');
@@ -919,6 +921,8 @@ Route::post('transaction/update_transport/import', 'TransactionController@import
 Route::post('transaction/update_medical/import', 'TransactionController@importUpdateMedical');
 Route::post('transaction/update_overtime/import', 'TransactionController@importUpdateOvertime');
 Route::post('transaction/update_business_trip/import', 'TransactionController@importUpdateBusinesstrip');
+
+Route::post('transaction/family_data_approval/proses', 'TransactionController@prosesFamilyDataApprovalTransaction');
 
 /*Route untuk detail Data Medical*/
 Route::get('medical/claim_code/detail_data', 'MedicalController@dataDetailClaimCodeMD');
@@ -1125,6 +1129,7 @@ Route::get('transaction/checkin_list', 'TransactionController@pageTransactionChe
 Route::get('transaction/mapscheckin_list', 'TransactionController@pageTransactionMapsCheckinList');
 Route::get('transaction/transaction_salary_complaint_list', 'TransactionController@pageTransactionSalaryComplaintList');
 Route::get('transaction/transaction_death_benefit_list', 'TransactionController@pageTransactionDeathBenefitList');
+Route::get('transaction/transaction_family_data_approval_list', 'TransactionController@pageTransactionFamilyDataApprovalList');
 
 /* Route untuk Menu Master Data MOB */
 Route::get('master_data', 'MasterDataController@pageMasterData')->name('master_data');

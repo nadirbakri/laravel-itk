@@ -124,6 +124,10 @@ class TransactionController extends Controller
         return view('transaction.trc_trans_death_benefit_list');
     }
 
+    public function pageTransactionFamilyDataApprovalList(){
+        return view('transaction.trc_trans_family_data_approval_list');
+    }
+
     // public function tableInputTransactionTransport(Request $request)
     // {
     //     try {
@@ -1905,6 +1909,47 @@ class TransactionController extends Controller
         }
     }
 
+    public function tableFamilyDataApprovalTransaction(Request $request)
+    {
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/personel/PeMaster/GetPeMasterFamilyTempAdmin',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'), 
+                        'sessionID' => 0, 
+                        'sessionUserID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        'languageCode' => App::getLocale(), 
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
+        }
+    }
+
     public function importUpdateReimbursement(Request $request)
     {     
         try{
@@ -1998,5 +2043,49 @@ class TransactionController extends Controller
         }
         
         return $import->getArrResult();
+    }
+
+    public function prosesFamilyDataApprovalTransaction(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $param = [
+                'companyCode' => Session::get('companyCode'),
+                'employeeNo' => $request->employeeNo,
+                'seqNo' => (int) $request->seqNo,
+                'status' => $request->status,
+                'sessionID' => 0,
+                'sessionUserID' => Session::get('userID'),
+                'logActionUserID' => Session::get('userID'),
+                'logActionUsername' => Session::get('userName'),
+                "languageCode" => App::getLocale()
+            ];
+
+            // dd(json_encode($param));
+
+            $response = $client->post(env('API_URL') . '/personel/PeMaster/ApprovePeMasterFamily',
+                ['body' => json_encode($param)]
+            );
+
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
     }
 }
