@@ -287,11 +287,11 @@
                             <th colspan="2" class="middle">Actual In</th>
                             <th colspan="2"class="middle">Actual Out</th>
                             <th rowspan="2" class="middle">Total Actual Hour</th>
-                            <th colspan="8" class="middle">Overtime</th>
                             <th colspan="3" class="middle">Summary Absent Code</th>
                             <th colspan="2" class="middle">Shift Hour</th>
                             <th rowspan="2" class="middle">Total Shift Hour</th>
                             <th colspan="2" class="middle">Overtime Shift Hour</th>
+                            <th colspan="8" class="middle">Overtime</th>
                             <!-- <th colspan="3" class="middle">Absent</th> -->
                             <!-- <th rowspan="2" class="middle">Position</th>
                             <th rowspan="2" class="middle">Location</th>
@@ -303,6 +303,13 @@
                             <th class="middle">Date</th>
                             <th class="middle">Time</th>
                             <th class="middle">Code</th>
+                            <th class="middle">Hour</th>
+                            <th class="middle">Description</th>
+                            <th class="middle">In</th>
+                            <th class="middle">Out</th>
+                            <th class="middle">Before</th>
+                            <th class="middle">After</th>
+                            <th class="middle">Code</th>
                             <th class="middle">Before</th>
                             <th class="middle">Start</th>
                             <th class="middle">Finish</th>
@@ -310,13 +317,6 @@
                             <th class="middle">Convert</th>
                             <th class="middle">BOT</th>
                             <th class="middle">Description</th>
-                            <th class="middle">Code</th>
-                            <th class="middle">Hour</th>
-                            <th class="middle">Description</th>
-                            <th class="middle">In</th>
-                            <th class="middle">Out</th>
-                            <th class="middle">Before</th>
-                            <th class="middle">After</th>
                             <!-- <th class="middle">Code</th>
                             <th class="middle">Hour</th>
                             <th class="middle">Description</th> -->
