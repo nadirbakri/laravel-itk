@@ -580,7 +580,7 @@
                                 $totalKey = $field->field . '_' . $j;
                                 $globalKey = $field->tableName;
 
-                                if (!is_string($value) && in_array($field->dataFormat, ['#,##0', '#,##0.00'])) {
+                                if (!is_string($value)) {
                                     $total[$globalKey] += $value;
                                     $globalTotal[$globalKey] = ($globalTotal[$globalKey] ?? 0) + $value;
                                     $formatted = number_format($value, $field->dataFormat === '#,##0.00' ? 2 : 0, '.', ',');
