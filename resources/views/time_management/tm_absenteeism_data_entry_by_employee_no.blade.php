@@ -1628,7 +1628,7 @@
 
                                 setTimeout(function () {
                                     $('#notification_success').modal('hide');
-                                    window.location = "{{ url('time_management/absenteeism_data_entry_by_employee_no') }}";
+                                    // window.location = "{{ url('time_management/absenteeism_data_entry_by_employee_no') }}";
                                 }, 3000);
                             } else {
                                 $("#btn-save").prop("disabled", false);
@@ -1648,7 +1648,7 @@
 
                                 setTimeout(function () {
                                     $('#notification_error').modal('hide');
-                                    window.location = "{{ url('time_management/absenteeism_data_entry_by_employee_no') }}";
+                                    // window.location = "{{ url('time_management/absenteeism_data_entry_by_employee_no') }}";
                                 }, 3000);
                             }
                         },
