@@ -65,7 +65,7 @@ use Illuminate\Support\Facades\Response;
 
 class PayrollController extends Controller
 {
-    public function pagePayroll(Request $request) 
+    public function pagePayroll(Request $request)
     {
         try {
 	    	$client = new Client([
@@ -108,7 +108,7 @@ class PayrollController extends Controller
         }else{
             return view ('payroll.py_main', ['dataMenu' => $arrResult->dataListSet, 'dataParent' => \App\Helpers\ArrayHelper::getKeysWithParentIDAndAllowAccess($arrResult->dataListSet, null)]);
         }
-        
+
         // return view ('payroll.py_main');
     }
 
@@ -137,7 +137,7 @@ class PayrollController extends Controller
         return view ('payroll.py_salary_accumulation_data');
     }
 
-    public function pageImportDataFromExcel() 
+    public function pageImportDataFromExcel()
     {
         try {
             $client = new Client([
@@ -157,7 +157,7 @@ class PayrollController extends Controller
                 )]
             );
 
-            $arrResult_tm = json_decode($response_tm->getBody()->getContents()); 
+            $arrResult_tm = json_decode($response_tm->getBody()->getContents());
 
             if($arrResult_tm->dataListSet == null){
                 return redirect()->back()->withErrors(['msg' => 'There is no TM Reference Data']);
@@ -227,7 +227,7 @@ class PayrollController extends Controller
     {
         return view ('payroll.py_bonus_formula');
     }
-    
+
     public function pageThrFormula()
     {
         return view ('payroll.py_thr_formula');
@@ -339,8 +339,8 @@ class PayrollController extends Controller
         }
 
         $arrResult_tm = json_decode($response_tm->getBody()->getContents());
-        $arrResult_cpy = json_decode($response_cpy->getBody()->getContents()); 
-        $arrResult_pr = json_decode($response_pr->getBody()->getContents()); 
+        $arrResult_cpy = json_decode($response_cpy->getBody()->getContents());
+        $arrResult_pr = json_decode($response_pr->getBody()->getContents());
 
         // dd($arrResult_pr->dataListSet);
 
@@ -387,7 +387,7 @@ class PayrollController extends Controller
         return view('payroll.py_year_end_process', ['data' => $data]);
     }
 
-    public function pageSptProcess() 
+    public function pageSptProcess()
     {
         try {
             $client = new Client([
@@ -448,7 +448,7 @@ class PayrollController extends Controller
         return view ('payroll.py_transfer_data_to_bank_export_to_file');
     }
 
-    public function pageFinalTaxProcess() 
+    public function pageFinalTaxProcess()
     {
         try {
             $client = new Client([
@@ -658,7 +658,7 @@ class PayrollController extends Controller
     public function pageSPTListReport(){
         return view ('payroll.py_spt_list_report');
     }
-     
+
     public function pageSalaryCalculationProcess()
     {
         try {
@@ -813,7 +813,7 @@ class PayrollController extends Controller
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
-        
+
         if($arrResult->dataListSet == null){
             $data = [];
         }else{
@@ -823,7 +823,7 @@ class PayrollController extends Controller
         return view ('payroll.py_monthly_process', ['data' => $data]);
     }
 
-    public function pageDUMTK() 
+    public function pageDUMTK()
     {
         try {
             $client = new Client([
@@ -864,12 +864,12 @@ class PayrollController extends Controller
         return view ('payroll.py_dumtk', ['data' => $data]);
     }
 
-    public function pageSalaryHistoricalReport() 
+    public function pageSalaryHistoricalReport()
     {
         return view ('payroll.py_salary_historical_report');
     }
 
-    public function pageCSVESPTReportForm() 
+    public function pageCSVESPTReportForm()
     {
         try {
             $client = new Client([
@@ -1118,7 +1118,7 @@ class PayrollController extends Controller
                 )]
             );
 
-            $arrResult_tm = json_decode($response_tm->getBody()->getContents()); 
+            $arrResult_tm = json_decode($response_tm->getBody()->getContents());
 
             if($arrResult_tm->dataListSet == null){
                 return response()->json(['status' => false, 'message' =>  'No Data Reference Time Management']);
@@ -1209,7 +1209,7 @@ class PayrollController extends Controller
                 )]
             );
 
-            $arrResult_tm = json_decode($response_tm->getBody()->getContents()); 
+            $arrResult_tm = json_decode($response_tm->getBody()->getContents());
 
             if($arrResult_tm->dataListSet == null){
                 return response()->json(['status' => false, 'message' =>  'No Data Reference Time Management']);
@@ -1947,7 +1947,7 @@ class PayrollController extends Controller
                 )]
             );
 
-            $arrResult_tm = json_decode($response_tm->getBody()->getContents()); 
+            $arrResult_tm = json_decode($response_tm->getBody()->getContents());
 
             if($arrResult_tm->dataListSet == null){
                 return redirect()->back()->withErrors(['msg' => 'There is no TM Reference Data']);
@@ -1980,7 +1980,7 @@ class PayrollController extends Controller
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
-        
+
         if($arrResult->dataListSet == null){
             $data = [];
         }else{
@@ -2027,7 +2027,7 @@ class PayrollController extends Controller
             }
         }
 
-        $arrResult = json_decode($response->getBody()->getContents());  
+        $arrResult = json_decode($response->getBody()->getContents());
 
         if($arrResult->dataListSet == null){
             $data = [];
@@ -2058,7 +2058,7 @@ class PayrollController extends Controller
                 )]
             );
 
-            $arrResult_tm = json_decode($response_tm->getBody()->getContents()); 
+            $arrResult_tm = json_decode($response_tm->getBody()->getContents());
 
             if($arrResult_tm->dataListSet == null){
                 return redirect()->back()->withErrors(['msg' => 'There is no TM Reference Data']);
@@ -2092,8 +2092,8 @@ class PayrollController extends Controller
 
         $arrResult = json_decode($response->getBody()->getContents());
 
-        // dd($arrResult->dataListSet);    
-        
+        // dd($arrResult->dataListSet);
+
         if($arrResult->dataListSet == null){
             $data = [];
         }else{
@@ -2140,7 +2140,7 @@ class PayrollController extends Controller
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
-        
+
         if($arrResult->dataListSet == null){
             $data = [];
         }else{
@@ -2199,7 +2199,7 @@ class PayrollController extends Controller
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
-        
+
         if($arrResult->dataListSet == null){
             $data = [];
         }else{
@@ -2258,7 +2258,7 @@ class PayrollController extends Controller
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
-        
+
         if($arrResult->dataListSet == null){
             $data = [];
         }else{
@@ -2300,7 +2300,7 @@ class PayrollController extends Controller
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
-        
+
         if($arrResult->dataListSet == null){
             $data = [];
         }else{
@@ -2356,9 +2356,9 @@ class PayrollController extends Controller
             }
         }
 
-        $arrResult = json_decode($response->getBody()->getContents());  
+        $arrResult = json_decode($response->getBody()->getContents());
         $arrResult2 = json_decode($response2->getBody()->getContents());
-        
+
         if($arrResult->dataListSet == null){
             $data = [];
             $data2 = [];
@@ -2416,9 +2416,9 @@ class PayrollController extends Controller
             }
         }
 
-        $arrResult = json_decode($response->getBody()->getContents());  
+        $arrResult = json_decode($response->getBody()->getContents());
         $arrResult2 = json_decode($response2->getBody()->getContents());
-        
+
         if($arrResult->dataListSet == null){
             $data = [];
             $data2 = [];
@@ -2500,7 +2500,7 @@ class PayrollController extends Controller
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
-        
+
         if($arrResult->dataListSet == null){
             $data = [];
         }else{
@@ -2558,7 +2558,7 @@ class PayrollController extends Controller
 
         $arrResult = json_decode($response->getBody()->getContents());
         $arrResult2 = json_decode($response_table->getBody()->getContents());
-        
+
         if($arrResult->dataListSet == null){
             $data = [];
         }else{
@@ -2753,7 +2753,7 @@ class PayrollController extends Controller
             }
         }
 
-        $arrResult = json_decode($response->getBody()->getContents());  
+        $arrResult = json_decode($response->getBody()->getContents());
 
         return view('payroll.py_report_format_detail', ['data' => $arrResult->dataListSet, 'func' => $request->func]);
     }
@@ -2800,7 +2800,7 @@ class PayrollController extends Controller
             }
         }
 
-        $arrResult = json_decode($response->getBody()->getContents());  
+        $arrResult = json_decode($response->getBody()->getContents());
 
         if($arrResult->dataListSet == null){
             $data = [];
@@ -2842,14 +2842,14 @@ public function dataDetailReportFormatPY(Request $request)
         }
     }
 
-    $arrResult = json_decode($response->getBody()->getContents());  
+    $arrResult = json_decode($response->getBody()->getContents());
 
     // usort($arrResult->dataListSet[0]->detail, function ($a, $b) {
     //     return (int) $a->columnNo - (int) $b->columnNo;
     // });
 
     // dd($arrResult->dataListSet);
-    
+
     if($arrResult->dataListSet !== null){
         $data = array_map(function($item) {
             $itemClone = clone $item;
@@ -2858,7 +2858,7 @@ public function dataDetailReportFormatPY(Request $request)
             });
             return $itemClone;
         }, $arrResult->dataListSet);
-    
+
         $dataFormula = array_map(function($item) {
             $itemClone = clone $item;
             $itemClone->detail = array_filter($itemClone->detail, function($detailItem) {
@@ -2866,12 +2866,12 @@ public function dataDetailReportFormatPY(Request $request)
             });
             return $itemClone;
         }, $arrResult->dataListSet);
-    
+
         $data = array_map(function ($item) {
             $item->detail = array_values($item->detail);
             return $item;
         }, $data);
-    
+
         $dataFormula = array_map(function ($item) {
             $item->detail = array_values($item->detail);
             return $item;
@@ -2915,7 +2915,7 @@ public function dataDetailReportFormatPY(Request $request)
             }
         }
 
-        $arrResult = json_decode($response->getBody()->getContents());  
+        $arrResult = json_decode($response->getBody()->getContents());
 
         if($arrResult->dataListSet == null){
             $data = [];
@@ -3021,7 +3021,7 @@ public function dataDetailReportFormatPY(Request $request)
             usort($arrResult->dataListSet, function ($a, $b) {
                 return (int) $a->seqNo - (int) $b->seqNo;
             });
-        
+
             return response()->json($arrResult->dataListSet);
         }
     }
@@ -3121,10 +3121,10 @@ public function dataDetailReportFormatPY(Request $request)
                 "changedDate" => date("Y-m-d\TH:i:s"),
                 "changedBy" => Session::get('userID'),
                 "languageCode" => App::getLocale(),
-                'sessionID' => 0, 
+                'sessionID' => 0,
                 'sessionUserID' => Session::get('userID'),
                 'logActionUserID' => Session::get('userID'),
-                'logActionUsername' => Session::get('userName')        
+                'logActionUsername' => Session::get('userName')
             ];
 
             if($request->record_function == 'New'){
@@ -3210,7 +3210,7 @@ public function dataDetailReportFormatPY(Request $request)
                     ];
                 }
             }
-            
+
             if (isset($request->seq_no)) {
                 foreach ($request->seq_no as $key => $value1) {
                     $data_condition[] = [
@@ -3245,10 +3245,10 @@ public function dataDetailReportFormatPY(Request $request)
                 "changedDate" => date("Y-m-d\TH:i:s"),
                 "changedBy" => Session::get('userID'),
                 "languageID" => App::getLocale(),
-                'sessionID' => 0, 
+                'sessionID' => 0,
                 'sessionUserID' => Session::get('userID'),
                 'logActionUserID' => Session::get('userID'),
-                'logActionUsername' => Session::get('userName')        
+                'logActionUsername' => Session::get('userName')
             ];
             $param['detail'] = $data_detail;
             $param['condition'] = $data_condition;
@@ -3434,10 +3434,10 @@ public function dataDetailReportFormatPY(Request $request)
                 "changedDate" => date("Y-m-d\TH:i:s"),
                 "changedBy" => Session::get('userID'),
                 "languageCode" => App::getLocale(),
-                'sessionID' => 0, 
+                'sessionID' => 0,
                 'sessionUserID' => Session::get('userID'),
                 'logActionUserID' => Session::get('userID'),
-                'logActionUsername' => Session::get('userName')        
+                'logActionUsername' => Session::get('userName')
             ];
             $param['detail'] = $data_detail;
 
@@ -4005,7 +4005,7 @@ public function dataDetailReportFormatPY(Request $request)
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
-            
+
             if ($request->record_function === 'New') {
                 if(isset($request->seq_no_table)) {
                     foreach($request->seq_no_table as $key => $value) {
@@ -4397,7 +4397,7 @@ public function dataDetailReportFormatPY(Request $request)
                     "sessionID" => 0,
                     "sessionUserID" => Session::get('userID'),
                     "logActionUserID" => Session::get('userID'),
-                    "logActionUsername" => Session::get('userID')     
+                    "logActionUsername" => Session::get('userID')
                 ];
                 $param['detail'] = $data_detail;
             }
@@ -4441,7 +4441,7 @@ public function dataDetailReportFormatPY(Request $request)
                     "sessionID" => 0,
                     "sessionUserID" => Session::get('userID'),
                     "logActionUserID" => Session::get('userID'),
-                    "logActionUsername" => Session::get('userID')     
+                    "logActionUsername" => Session::get('userID')
                 ];
                 $param['detail'] = $data_detail;
             }
@@ -4502,10 +4502,10 @@ public function dataDetailReportFormatPY(Request $request)
                     "changedDate" => date("Y-m-d\TH:i:s"),
                     "changedBy" => Session::get('userID'),
                     "languageCode" => App::getLocale(),
-                    'sessionID' => 0, 
+                    'sessionID' => 0,
                     'sessionUserID' => Session::get('userID'),
                     'logActionUserID' => Session::get('userID'),
-                    'logActionUsername' => Session::get('userName')        
+                    'logActionUsername' => Session::get('userName')
                 ];
             }
             else {
@@ -4526,10 +4526,10 @@ public function dataDetailReportFormatPY(Request $request)
                     "changedDate" => date("Y-m-d\TH:i:s"),
                     "changedBy" => Session::get('userID'),
                     "languageCode" => App::getLocale(),
-                    'sessionID' => 0, 
+                    'sessionID' => 0,
                     'sessionUserID' => Session::get('userID'),
                     'logActionUserID' => Session::get('userID'),
-                    'logActionUsername' => Session::get('userName')        
+                    'logActionUsername' => Session::get('userName')
                 ];
             }
 
@@ -4628,10 +4628,10 @@ public function dataDetailReportFormatPY(Request $request)
                         "changedDate" => date("Y-m-d\TH:i:s"),
                         "changedBy" => Session::get('userID'),
                         "languageCode" => App::getLocale(),
-                        'sessionID' => 0, 
+                        'sessionID' => 0,
                         'sessionUserID' => Session::get('userID'),
                         'logActionUserID' => Session::get('userID'),
-                        'logActionUsername' => Session::get('userName')        
+                        'logActionUsername' => Session::get('userName')
                     ])
                 ]
             );
@@ -4657,7 +4657,7 @@ public function dataDetailReportFormatPY(Request $request)
             if($request->output_file == 'xlsx'){
                 $array = explode("\r\n", $arrResult->dataListSet[0]->transferBank);
                 foreach($array as $key => $value){
-                    if($request->source_bank == 'PERMATA' || $request->source_bank == 'MCM' || 
+                    if($request->source_bank == 'PERMATA' || $request->source_bank == 'MCM' ||
                         $request->source_bank == 'SMBC'){
                         $arrayTwo = explode(",", $value);
                     }else if($request->source_bank == 'BCA' && $request->transfer_type == "2"){
@@ -4728,13 +4728,13 @@ public function dataDetailReportFormatPY(Request $request)
                 }
 
                 rewind($tempFile);
-                
+
                 $csvContent = str_replace('"', '', stream_get_contents($tempFile));
 
                 if(in_array(Session::get('companyCode'), ['IPN', 'IPNJT', 'UPM', 'IGT', 'IVT'])){
                     $csvContent = str_replace('&quot;', '"', $csvContent);
                 }
-                
+
                 fclose($tempFile);
 
                 return Response::make($csvContent, 200, [
@@ -4754,7 +4754,7 @@ public function dataDetailReportFormatPY(Request $request)
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
-            
+
             $param = [];
 
             foreach($request->data as $value){
@@ -4995,7 +4995,7 @@ public function dataDetailReportFormatPY(Request $request)
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
-            
+
             $param = [];
 
             foreach($request->data as $value){
@@ -5095,7 +5095,7 @@ public function dataDetailReportFormatPY(Request $request)
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
-            
+
             $param = [];
 
             foreach($request->data as $value){
@@ -5188,14 +5188,14 @@ public function dataDetailReportFormatPY(Request $request)
                         "changedDate" => date("Y-m-d\TH:i:s"),
                         "changedBy" => Session::get('userID'),
                         "languageCode" => App::getLocale(),
-                        'sessionID' => 0, 
+                        'sessionID' => 0,
                         'sessionUserID' => Session::get('userID'),
                         'logActionUserID' => Session::get('userID'),
                         'logActionUsername' => Session::get('userName')
                     ]
                 )]
             );
-            
+
         } catch (RequestException $e) {
             $response = $e->getResponse();
             if($response->getStatusCode() == 401){
@@ -5236,14 +5236,14 @@ public function dataDetailReportFormatPY(Request $request)
                         "changedDate" => date("Y-m-d\TH:i:s"),
                         "changedBy" => Session::get('userID'),
                         "languageCode" => App::getLocale(),
-                        'sessionID' => 0, 
+                        'sessionID' => 0,
                         'sessionUserID' => Session::get('userID'),
                         'logActionUserID' => Session::get('userID'),
                         'logActionUsername' => Session::get('userName')
                     ]
                 )]
             );
-            
+
         } catch (RequestException $e) {
             $response = $e->getResponse();
             if($response->getStatusCode() == 401){
@@ -5281,7 +5281,7 @@ public function dataDetailReportFormatPY(Request $request)
                     ]
                 )]
             );
-            
+
         } catch (RequestException $e) {
             $response = $e->getResponse();
             if($response->getStatusCode() == 401){
@@ -5321,7 +5321,7 @@ public function dataDetailReportFormatPY(Request $request)
                         "changedDate" => date("Y-m-d\TH:i:s"),
                         "changedBy" => Session::get('userID'),
                         "languageCode" => App::getLocale(),
-                        'sessionID' => 0, 
+                        'sessionID' => 0,
                         'sessionUserID' => Session::get('userID'),
                         'logActionUserID' => Session::get('userID'),
                         'logActionUsername' => Session::get('userName')
@@ -5329,7 +5329,7 @@ public function dataDetailReportFormatPY(Request $request)
                 )]
             );
             // var_dump($request->reportCode);
-            
+
         } catch (RequestException $e) {
             $response = $e->getResponse();
             if($response->getStatusCode() == 401){
@@ -5373,7 +5373,7 @@ public function dataDetailReportFormatPY(Request $request)
                         "changedDate" => date("Y-m-d\TH:i:s"),
                         "changedBy" => Session::get('userID'),
                         "languageCode" => App::getLocale(),
-                        'sessionID' => 0, 
+                        'sessionID' => 0,
                         'sessionUserID' => Session::get('userID'),
                         'logActionUserID' => Session::get('userID'),
                         'logActionUsername' => Session::get('userName')
@@ -5381,7 +5381,7 @@ public function dataDetailReportFormatPY(Request $request)
                 )]
             );
             // var_dump($request->reportCode);
-            
+
         } catch (RequestException $e) {
             $response = $e->getResponse();
             if($response->getStatusCode() == 401){
@@ -5438,10 +5438,10 @@ public function dataDetailReportFormatPY(Request $request)
                 "changedDate" => date("Y-m-d\TH:i:s"),
                 "changedBy" => Session::get('userID'),
                 "languageCode" => App::getLocale(),
-                'sessionID' => 0, 
+                'sessionID' => 0,
                 'userID' => Session::get('userID'),
                 'logActionUserID' => Session::get('userID'),
-                'logActionUsername' => Session::get('userName')        
+                'logActionUsername' => Session::get('userName')
             ];
 
             // dd(json_encode($param));
@@ -5492,11 +5492,11 @@ public function dataDetailReportFormatPY(Request $request)
                 )]
             );
 
-            $arrResult_tm = json_decode($response_tm->getBody()->getContents()); 
+            $arrResult_tm = json_decode($response_tm->getBody()->getContents());
 
             if($arrResult_tm->dataListSet == null){
                 return response()->json(['status' => false, 'message' =>  'No Data Reference Time Management']);
-            }else{  
+            }else{
                 $response = $client->post(env('API_URL') . '/payroll/ProcessComponent',
                     ['body' => json_encode(
                         [
@@ -5508,7 +5508,7 @@ public function dataDetailReportFormatPY(Request $request)
                             "sessionID" => 0,
                             "sessionUserID" => Session::get('userID'),
                             "logActionUsername" => Session::get('userID'),
-                            "logActionUserID" => Session::get('userName') 
+                            "logActionUserID" => Session::get('userName')
                         ]
                     )]
                 );
@@ -5629,10 +5629,10 @@ public function dataDetailReportFormatPY(Request $request)
                 "changedDate" => date("Y-m-d\TH:i:s"),
                 "changedBy" => Session::get('userID'),
                 "languageCode" => App::getLocale(),
-                'sessionID' => 0, 
+                'sessionID' => 0,
                 'userID' => Session::get('userID'),
                 'logActionUserID' => Session::get('userID'),
-                'logActionUsername' => Session::get('userName')        
+                'logActionUsername' => Session::get('userName')
             ];
 
             // dd(json_encode($param));
@@ -5683,11 +5683,11 @@ public function dataDetailReportFormatPY(Request $request)
                 )]
             );
 
-            $arrResult_tm = json_decode($response_tm->getBody()->getContents()); 
+            $arrResult_tm = json_decode($response_tm->getBody()->getContents());
 
             if($arrResult_tm->dataListSet == null){
                 return response()->json(['status' => false, 'message' =>  'No Data Reference Time Management']);
-            }else{  
+            }else{
                 $response = $client->post(env('API_URL') . '/payroll/YearEndProcess',
                     ['body' => json_encode(
                         [
@@ -5702,7 +5702,7 @@ public function dataDetailReportFormatPY(Request $request)
                             "sessionID" => 0,
                             "sessionUserID" => Session::get('userID'),
                             "logActionUsername" => Session::get('userID'),
-                            "logActionUserID" => Session::get('userName') 
+                            "logActionUserID" => Session::get('userName')
                         ]
                     )]
                 );
@@ -5752,7 +5752,7 @@ public function dataDetailReportFormatPY(Request $request)
                         "sessionID" => 0,
                         "sessionUserID" => Session::get('userID'),
                         "logActionUsername" => Session::get('userID'),
-                        "logActionUserID" => Session::get('userName') 
+                        "logActionUserID" => Session::get('userName')
                     ]
                 )]
             );
@@ -5793,11 +5793,11 @@ public function dataDetailReportFormatPY(Request $request)
                 )]
             );
 
-            $arrResult_tm = json_decode($response_tm->getBody()->getContents()); 
+            $arrResult_tm = json_decode($response_tm->getBody()->getContents());
 
             if($arrResult_tm->dataListSet == null){
                 return response()->json(['status' => false, 'message' =>  'No Data Reference Time Management']);
-            } else{  
+            } else{
                 $response = $client->post(env('API_URL') . '/payroll/FinalTaxProcess',
                     ['body' => json_encode(
                         [
@@ -5815,7 +5815,7 @@ public function dataDetailReportFormatPY(Request $request)
                             "sessionID" => 0,
                             "sessionUserID" => Session::get('userID'),
                             "logActionUsername" => Session::get('userID'),
-                            "logActionUserID" => Session::get('userName') 
+                            "logActionUserID" => Session::get('userName')
                         ]
                     )]
                 );
@@ -5845,12 +5845,12 @@ public function dataDetailReportFormatPY(Request $request)
                 $request->transfer_to,
                 $request->column_a,
                 $request->column_b,
-                $request->column_c, 
-                $request->column_c2, 
-                $request->column_d, 
-                $request->column_d2, 
-                $request->column_e, 
-                $request->column_e2, 
+                $request->column_c,
+                $request->column_c2,
+                $request->column_d,
+                $request->column_d2,
+                $request->column_e,
+                $request->column_e2,
                 $request->column_f,
                 $request->column_f2,
                 $request->column_g,
@@ -5899,11 +5899,11 @@ public function dataDetailReportFormatPY(Request $request)
     public function templateImportDataFromExcelPY(Request $request)
     {
         return Excel::download(new TemplatePayrollDataTemplateSheet(
-            $request->column_a, 
-            $request->column_b, 
-            $request->column_c, 
-            $request->column_d, 
-            $request->column_e, 
+            $request->column_a,
+            $request->column_b,
+            $request->column_c,
+            $request->column_d,
+            $request->column_e,
             $request->column_f,
             $request->column_g,
             $request->column_h,
@@ -5943,10 +5943,10 @@ public function dataDetailReportFormatPY(Request $request)
                 "changedDate" => date("Y-m-d\TH:i:s"),
                 "changedBy" => Session::get('userID'),
                 "languageCode" => App::getLocale(),
-                'sessionID' => 0, 
+                'sessionID' => 0,
                 'sessionUserID' => Session::get('userID'),
                 'logActionUserID' => Session::get('userID'),
-                'logActionUsername' => Session::get('userName')        
+                'logActionUsername' => Session::get('userName')
             ];
 
             // dd(json_encode($param));
@@ -6027,7 +6027,7 @@ public function dataDetailReportFormatPY(Request $request)
                     "sessionID" => 0,
                     "sessionUserID" => Session::get('userID'),
                     "logActionUserID" => Session::get('userID'),
-                    "logActionUsername" => Session::get('userID')     
+                    "logActionUsername" => Session::get('userID')
                 ];
                 $param['slipList'] = $data_detail;
             }
@@ -6065,7 +6065,7 @@ public function dataDetailReportFormatPY(Request $request)
                     "sessionID" => 0,
                     "sessionUserID" => Session::get('userID'),
                     "logActionUserID" => Session::get('userID'),
-                    "logActionUsername" => Session::get('userID')     
+                    "logActionUsername" => Session::get('userID')
                 ];
                 $param['slipList'] = $data_detail;
             }
@@ -6214,10 +6214,10 @@ public function dataDetailReportFormatPY(Request $request)
                 "changedDate" => date("Y-m-d\TH:i:s"),
                 "changedBy" => Session::get('userID'),
                 "languageCode" => App::getLocale(),
-                'sessionID' => 0, 
+                'sessionID' => 0,
                 'sessionUserID' => Session::get('userID'),
                 'logActionUserID' => Session::get('userID'),
-                'logActionUsername' => Session::get('userName')        
+                'logActionUsername' => Session::get('userName')
             ];
 
             $param2 = [
@@ -6293,10 +6293,10 @@ public function dataDetailReportFormatPY(Request $request)
                 "changedDate" => date("Y-m-d\TH:i:s"),
                 "changedBy" => Session::get('userID'),
                 "languageCode" => App::getLocale(),
-                'sessionID' => 0, 
+                'sessionID' => 0,
                 'sessionUserID' => Session::get('userID'),
                 'logActionUserID' => Session::get('userID'),
-                'logActionUsername' => Session::get('userName')        
+                'logActionUsername' => Session::get('userName')
             ];
 
             $param2 = [
@@ -6373,7 +6373,7 @@ public function dataDetailReportFormatPY(Request $request)
                         "sessionID" => 0,
                         "sessionUserID" => Session::get('userID'),
                         "logActionUsername" => Session::get('userID'),
-                        "logActionUserID" => Session::get('userName') 
+                        "logActionUserID" => Session::get('userName')
                     ]
                 )]
             );
@@ -6420,7 +6420,7 @@ public function dataDetailReportFormatPY(Request $request)
                         "sessionID" => 0,
                         "sessionUserID" => Session::get('userID'),
                         "logActionUsername" => Session::get('userID'),
-                        "logActionUserID" => Session::get('userName') 
+                        "logActionUserID" => Session::get('userName')
                     ]
                 )]
             );
@@ -6467,7 +6467,7 @@ public function dataDetailReportFormatPY(Request $request)
                         "sessionID" => 0,
                         "sessionUserID" => Session::get('userID'),
                         "logActionUsername" => Session::get('userID'),
-                        "logActionUserID" => Session::get('userName') 
+                        "logActionUserID" => Session::get('userName')
                     ]
                 )]
             );
@@ -6570,7 +6570,7 @@ public function dataDetailReportFormatPY(Request $request)
                         "sessionID" => 0,
                         "sessionUserID" => Session::get('userID'),
                         "logActionUsername" => Session::get('userID'),
-                        "logActionUserID" => Session::get('userName') 
+                        "logActionUserID" => Session::get('userName')
                     ]
                 )]
             );
@@ -6599,7 +6599,7 @@ public function dataDetailReportFormatPY(Request $request)
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
-            
+
             // var_dump(Session::get('token'));
 
             $response = $client->post(env('API_URL') . '/payroll/InsertPrMonthlyClosing',
@@ -6616,7 +6616,7 @@ public function dataDetailReportFormatPY(Request $request)
                         "sessionID" => 0,
                         "sessionUserID" => Session::get('userID'),
                         "logActionUsername" => Session::get('userID'),
-                        "logActionUserID" => Session::get('userName') 
+                        "logActionUserID" => Session::get('userName')
                     ]
                 )]
             );
@@ -6645,7 +6645,7 @@ public function dataDetailReportFormatPY(Request $request)
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
-            
+
             // dd(json_encode(
             //     [
             //         "companyCode" => Session::get('companyCode'),
@@ -6656,7 +6656,7 @@ public function dataDetailReportFormatPY(Request $request)
             //         "sessionID" => 0,
             //         "sessionUserID" => Session::get('userID'),
             //         "logActionUsername" => Session::get('userID'),
-            //         "logActionUserID" => Session::get('userName') 
+            //         "logActionUserID" => Session::get('userName')
             //     ]
             // ));
 
@@ -6671,7 +6671,7 @@ public function dataDetailReportFormatPY(Request $request)
                         "sessionID" => 0,
                         "sessionUserID" => Session::get('userID'),
                         "logActionUsername" => Session::get('userID'),
-                        "logActionUserID" => Session::get('userName') 
+                        "logActionUserID" => Session::get('userName')
                     ]
                 )]
             );
@@ -6715,7 +6715,7 @@ public function dataDetailReportFormatPY(Request $request)
                         "sessionID" => 0,
                         "sessionUserID" => Session::get('userID'),
                         "logActionUsername" => Session::get('userID'),
-                        "logActionUserID" => Session::get('userName') 
+                        "logActionUserID" => Session::get('userName')
                     ]
                 )]
             );
@@ -6757,10 +6757,10 @@ public function dataDetailReportFormatPY(Request $request)
     //             "changedDate" => date("Y-m-d\TH:i:s"),
     //             "changedBy" => Session::get('userID'),
     //             "languageCode" => App::getLocale(),
-    //             'sessionID' => 0, 
+    //             'sessionID' => 0,
     //             'sessionUserID' => Session::get('userID'),
     //             'logActionUserID' => Session::get('userID'),
-    //             'logActionUsername' => Session::get('userName')        
+    //             'logActionUsername' => Session::get('userName')
     //         ];
     //         // var_dump(json_encode($param));
 
@@ -6917,17 +6917,17 @@ public function dataDetailReportFormatPY(Request $request)
                 'sessionID' => 0,
                 'sessionUserID' => Session::get('userID')
             ];
-    
+
             if(!empty($request->payment_date_from) || !empty($request->payment_date_to)){
                 $param['paymentdateFrom'] = $request->payment_date_from;
                 $param['paymentDateTo'] = $request->payment_date_to;
             }
-    
+
             if(!empty($request->employee_no_from) || !empty($request->employee_no_to)){
                 $param['employeeNoFrom'] = $request->employee_no_from;
                 $param['employeeNoTo'] = $request->employee_no_to;
             }
-    
+
             if(!empty($request->group_authorized_from) || !empty($request->group_authorized_to)){
                 $param['groupAuthorizedCodeFrom'] = intval($request->group_authorized_from);
                 $param['groupAuthorizedCodeTo'] = intval($request->group_authorized_to);
@@ -6944,11 +6944,11 @@ public function dataDetailReportFormatPY(Request $request)
                     'body' => json_encode($param)
                 ]);
             }
-            
+
             $responseGetCompany = $client->post(env('API_URL').'/personel/Company/getcompany', [
                 'body' => json_encode($paramGetCompany)
             ]);
-            
+
         } catch (RequestException $e){
             $response = $e->getResponse();
             if($response->getStatusCode() == 401){
@@ -6963,7 +6963,7 @@ public function dataDetailReportFormatPY(Request $request)
         $arrResult = json_decode($response->getBody()->getContents());
         $arrCompany = json_decode($responseGetCompany->getBody()->getContents());
         // var_dump($arrResult->dataListSet);
-        
+
         $arraySend[] = $arrCompany->dataListSet[0];
 
         // var_dump($arraySend);
@@ -7012,7 +7012,7 @@ public function dataDetailReportFormatPY(Request $request)
                 'logActionUsername' => Session::get('userName')
             ];
 
-            if(Session::get('companyCode') == 'SWG' || Session::get('companyCode') == 'XSYS' || 
+            if(Session::get('companyCode') == 'SWG' || Session::get('companyCode') == 'XSYS' ||
                 Session::get('companyCode') == 'GRC'){
                 $urlReport = '/payroll/getSWGGroupJournal';
 
@@ -7053,7 +7053,7 @@ public function dataDetailReportFormatPY(Request $request)
         $viewReport = 'payroll.py_export_journal_report';
         $filenameReport = 'Journal Report.pdf';
 
-        if(Session::get('companyCode') == 'SWG' || Session::get('companyCode') == 'XSYS' || 
+        if(Session::get('companyCode') == 'SWG' || Session::get('companyCode') == 'XSYS' ||
             Session::get('companyCode') == 'GRC'){
             $viewReport = 'payroll.py_export_journal_report_swg';
         }
@@ -7109,7 +7109,7 @@ public function dataDetailReportFormatPY(Request $request)
                 'logActionUsername' => Session::get('userName')
             ];
 
-            if(Session::get('companyCode') == 'SWG' || Session::get('companyCode') == 'XSYS' || 
+            if(Session::get('companyCode') == 'SWG' || Session::get('companyCode') == 'XSYS' ||
                 Session::get('companyCode') == 'GRC'){
                 $urlReport = '/payroll/getSWGGroupJournal';
 
@@ -7191,7 +7191,7 @@ public function dataDetailReportFormatPY(Request $request)
                 // dd($row);
                 $amountD = isset($row["AmountD"]) ? $row["AmountD"] : 0;
                 $amountK = isset($row["AmountK"]) ? $row["AmountK"] : 0;
-        
+
                 $totalAmountD += $amountD;
                 $totalAmountK += $amountK;
             }
@@ -7206,9 +7206,9 @@ public function dataDetailReportFormatPY(Request $request)
         fputcsv($tempFile, $totalRow);
 
         rewind($tempFile);
-        
+
         $csvContent = str_replace('"', '', stream_get_contents($tempFile));
-        
+
         fclose($tempFile);
 
         return Response::make($csvContent, 200, [
@@ -7253,7 +7253,7 @@ public function dataDetailReportFormatPY(Request $request)
                 'Desember'
             );
             $pecahkan = explode('-', $tanggal);
-         
+
             return $bulan[ (int)$pecahkan[1] ] . ' ' . $pecahkan[0];
         }
 
@@ -7268,7 +7268,7 @@ public function dataDetailReportFormatPY(Request $request)
         // dd($data);
 
         try{
-            
+
             $client = new Client([
                 'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
@@ -7381,6 +7381,9 @@ public function dataDetailReportFormatPY(Request $request)
         }else if($data->companyCode == 'MMI'){
             $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_mmi';
             $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_mmi';
+        }else if($companyCode == 'MCA' || $companyCode == 'MCAJU'){
+            $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_ipn';
+            $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_mca';
         }else if($data->companyCode == 'IPN' || $data->companyCode == 'UPM' || $data->companyCode == 'IGT' ||
             $data->companyCode == 'IVT' || $data->companyCode == 'IPNJT'){
             $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_ipn';
@@ -7399,10 +7402,10 @@ public function dataDetailReportFormatPY(Request $request)
         if($arrResult->dataListSet == null){
             if($data->format_type == "portrait"){
                 $pdf = PDF::loadView($viewNamePortrait, [
-                    'data' => [], 
+                    'data' => [],
                     'display_logo' => $data->display_logo,
                     'slip_code' => $request->slip_type,
-                    'no' => date('m', strtotime($data->period)), 
+                    'no' => date('m', strtotime($data->period)),
                     'first_day' => $firstDayOfPreviousMonth,
                     'last_day' => $lastDayOfPreviousMonth,
                     'period' => date('d-M-Y', strtotime($data->period)),
@@ -7418,10 +7421,10 @@ public function dataDetailReportFormatPY(Request $request)
                 // }
             }else{
                 $pdf = PDF::loadView($viewNameLandscape, [
-                    'data' => [], 
+                    'data' => [],
                     'display_logo' => $data->display_logo,
                     'slip_code' => $request->slip_type,
-                    'no' => date('m', strtotime($data->period)), 
+                    'no' => date('m', strtotime($data->period)),
                     'first_day' => $firstDayOfPreviousMonth,
                     'last_day' => $lastDayOfPreviousMonth,
                     'period' => date('d-M-Y', strtotime($data->period)),
@@ -7439,10 +7442,10 @@ public function dataDetailReportFormatPY(Request $request)
         }else{
             if($data->format_type == "portrait"){
                 $pdf = PDF::loadView($viewNamePortrait, [
-                    'data' => $arrResult->dataListSet, 
+                    'data' => $arrResult->dataListSet,
                     'display_logo' => $data->display_logo,
                     'slip_code' => $request->slip_type,
-                    'no' => date('m', strtotime($data->period)), 
+                    'no' => date('m', strtotime($data->period)),
                     'first_day' => $firstDayOfPreviousMonth,
                     'last_day' => $lastDayOfPreviousMonth,
                     'period' => date('d-M-Y', strtotime($data->period)),
@@ -7458,10 +7461,10 @@ public function dataDetailReportFormatPY(Request $request)
                 // }
             }else{
                 $pdf = PDF::loadView($viewNameLandscape, [
-                    'data' => $arrResult->dataListSet, 
+                    'data' => $arrResult->dataListSet,
                     'display_logo' => $data->display_logo,
                     'slip_code' => $request->slip_type,
-                    'no' => date('m', strtotime($data->period)), 
+                    'no' => date('m', strtotime($data->period)),
                     'first_day' => $firstDayOfPreviousMonth,
                     'last_day' => $lastDayOfPreviousMonth,
                     'period' => date('d-M-Y', strtotime($data->period)),
@@ -7496,7 +7499,7 @@ public function dataDetailReportFormatPY(Request $request)
                 'Desember'
             );
             $pecahkan = explode('-', $tanggal);
-         
+
             return $bulan[ (int)$pecahkan[1] ] . ' ' . $pecahkan[0];
         }
 
@@ -7681,10 +7684,10 @@ public function dataDetailReportFormatPY(Request $request)
         if($arrResult->dataListSet == null){
             if($request->format_type == "portrait"){
                 $pdf = PDF::loadView($viewNamePortrait, [
-                    'data' => [], 
-                    'display_logo' => $request->display_logo, 
+                    'data' => [],
+                    'display_logo' => $request->display_logo,
                     'slip_code' => $request->slip_type,
-                    'no' => date('m', strtotime($request->period)), 
+                    'no' => date('m', strtotime($request->period)),
                     'first_day' => $firstDayOfPreviousMonth,
                     'last_day' => $lastDayOfPreviousMonth,
                     'period' => date('d-M-Y', strtotime($request->period)),
@@ -7701,10 +7704,10 @@ public function dataDetailReportFormatPY(Request $request)
                 }
             }else{
                 $pdf = PDF::loadView($viewNameLandscape, [
-                    'data' => [], 
-                    'display_logo' => $request->display_logo, 
+                    'data' => [],
+                    'display_logo' => $request->display_logo,
                     'slip_code' => $request->slip_type,
-                    'no' => date('m', strtotime($request->period)), 
+                    'no' => date('m', strtotime($request->period)),
                     'first_day' => $firstDayOfPreviousMonth,
                     'last_day' => $lastDayOfPreviousMonth,
                     'period' => date('d-M-Y', strtotime($request->period)),
@@ -7724,10 +7727,10 @@ public function dataDetailReportFormatPY(Request $request)
             // set_time_limit(-1);
             if($request->format_type == "portrait"){
                 $pdf = PDF::loadView($viewNamePortrait, [
-                    'data' => $arrResult->dataListSet, 
-                    'display_logo' => $request->display_logo, 
+                    'data' => $arrResult->dataListSet,
+                    'display_logo' => $request->display_logo,
                     'slip_code' => $request->slip_type,
-                    'no' => date('m', strtotime($request->period)), 
+                    'no' => date('m', strtotime($request->period)),
                     'first_day' => $firstDayOfPreviousMonth,
                     'last_day' => $lastDayOfPreviousMonth,
                     'period' => date('d-M-Y', strtotime($request->period)),
@@ -7744,10 +7747,10 @@ public function dataDetailReportFormatPY(Request $request)
                 }
             }else{
                 $pdf = PDF::loadView($viewNameLandscape, [
-                    'data' => $arrResult->dataListSet, 
-                    'display_logo' => $request->display_logo, 
+                    'data' => $arrResult->dataListSet,
+                    'display_logo' => $request->display_logo,
                     'slip_code' => $request->slip_type,
-                    'no' => date('m', strtotime($request->period)), 
+                    'no' => date('m', strtotime($request->period)),
                     'first_day' => $firstDayOfPreviousMonth,
                     'last_day' => $lastDayOfPreviousMonth,
                     'period' => date('d-M-Y', strtotime($request->period)),
@@ -8002,7 +8005,7 @@ public function dataDetailReportFormatPY(Request $request)
 
     public function printSPTPPHReportPayroll(Request $request){
         try{
-            
+
             $client = new Client([
                 'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
@@ -8115,7 +8118,7 @@ public function dataDetailReportFormatPY(Request $request)
                 'Desember'
             );
             $pecahkan = explode('-', $tanggal);
-         
+
             return $bulan[ (int)$pecahkan[1] ];
         }
 
@@ -8184,9 +8187,9 @@ public function dataDetailReportFormatPY(Request $request)
 
         if($arrResult->dataListSet == null){
             if($request->jamsostek_report_type == 'formulir2'){
-                $pdf = PDF::loadView('payroll.py_export_monthly_jamsostek_formulir2_report', 
+                $pdf = PDF::loadView('payroll.py_export_monthly_jamsostek_formulir2_report',
                 [
-                    'data' => [], 
+                    'data' => [],
                     'period' => $request->jamsostek_period,
                     'bulan' => tgl_indo(date('Y-m-d', strtotime($request->jamsostek_period))),
                     'companyName' => Session::get('companyName'),
@@ -8195,9 +8198,9 @@ public function dataDetailReportFormatPY(Request $request)
                 ])->setPaper('letter', 'portrait')->setOptions(['defaultFont' => 'arial']);
                 return $pdf->stream('Jamsostek Formulir 2.pdf');
             }else if($request->jamsostek_report_type == 'formulir1a'){
-                $pdf = PDF::loadView('payroll.py_export_monthly_jamsostek_formulir1a_report', 
+                $pdf = PDF::loadView('payroll.py_export_monthly_jamsostek_formulir1a_report',
                 [
-                    'data' => [], 
+                    'data' => [],
                     'period' => $request->jamsostek_period,
                     'bulan' => tgl_indo(date('Y-m-d', strtotime($request->jamsostek_period))),
                     'companyName' => Session::get('companyName'),
@@ -8206,9 +8209,9 @@ public function dataDetailReportFormatPY(Request $request)
                 ])->setPaper('letter', 'portrait')->setOptions(['defaultFont' => 'arial']);
                 return $pdf->stream('Jamsostek Formulir 1A.pdf');
             }else if($request->jamsostek_report_type == 'formulir1b'){
-                $pdf = PDF::loadView('payroll.py_export_monthly_jamsostek_formulir1b_report', 
+                $pdf = PDF::loadView('payroll.py_export_monthly_jamsostek_formulir1b_report',
                 [
-                    'data' => [], 
+                    'data' => [],
                     'period' => $request->jamsostek_period,
                     'bulan' => tgl_indo(date('Y-m-d', strtotime($request->jamsostek_period))),
                     'companyName' => Session::get('companyName'),
@@ -8217,9 +8220,9 @@ public function dataDetailReportFormatPY(Request $request)
                 ])->setPaper('letter', 'portrait')->setOptions(['defaultFont' => 'arial']);
                 return $pdf->stream('Jamsostek Formulir 1B.pdf');
             }else if($request->jamsostek_report_type == 'formulir2a'){
-                $pdf = PDF::loadView('payroll.py_export_monthly_jamsostek_formulir2a_report', 
+                $pdf = PDF::loadView('payroll.py_export_monthly_jamsostek_formulir2a_report',
                 [
-                    'data' => [], 
+                    'data' => [],
                     'period' => $request->jamsostek_period,
                     'bulan' => tgl_indo(date('Y-m-d', strtotime($request->jamsostek_period))),
                     'companyName' => Session::get('companyName'),
@@ -8230,9 +8233,9 @@ public function dataDetailReportFormatPY(Request $request)
             }
         }else{
             if($request->jamsostek_report_type == 'formulir2'){
-                $pdf = PDF::loadView('payroll.py_export_monthly_jamsostek_formulir2_report', 
+                $pdf = PDF::loadView('payroll.py_export_monthly_jamsostek_formulir2_report',
                 [
-                    'data' => $arrResult->dataListSet, 
+                    'data' => $arrResult->dataListSet,
                     'period' => $request->jamsostek_period,
                     'bulan' => tgl_indo(date('Y-m-d', strtotime($request->jamsostek_period))),
                     'companyName' => Session::get('companyName'),
@@ -8241,9 +8244,9 @@ public function dataDetailReportFormatPY(Request $request)
                 ])->setPaper('letter', 'portrait')->setOptions(['defaultFont' => 'arial']);
                 return $pdf->stream('Jamsostek Formulir 2.pdf');
             }else if($request->jamsostek_report_type == 'formulir1a'){
-                $pdf = PDF::loadView('payroll.py_export_monthly_jamsostek_formulir1a_report', 
+                $pdf = PDF::loadView('payroll.py_export_monthly_jamsostek_formulir1a_report',
                 [
-                    'data' => $arrResult->dataListSet, 
+                    'data' => $arrResult->dataListSet,
                     'period' => $request->jamsostek_period,
                     'bulan' => tgl_indo(date('Y-m-d', strtotime($request->jamsostek_period))),
                     'companyName' => Session::get('companyName'),
@@ -8252,9 +8255,9 @@ public function dataDetailReportFormatPY(Request $request)
                 ])->setPaper('letter', 'portrait')->setOptions(['defaultFont' => 'arial']);
                 return $pdf->stream('Jamsostek Formulir 1A.pdf');
             }else if($request->jamsostek_report_type == 'formulir1b'){
-                $pdf = PDF::loadView('payroll.py_export_monthly_jamsostek_formulir1b_report', 
+                $pdf = PDF::loadView('payroll.py_export_monthly_jamsostek_formulir1b_report',
                 [
-                    'data' => $arrResult->dataListSet, 
+                    'data' => $arrResult->dataListSet,
                     'period' => $request->jamsostek_period,
                     'bulan' => tgl_indo(date('Y-m-d', strtotime($request->jamsostek_period))),
                     'companyName' => Session::get('companyName'),
@@ -8263,9 +8266,9 @@ public function dataDetailReportFormatPY(Request $request)
                 ])->setPaper('letter', 'portrait')->setOptions(['defaultFont' => 'arial']);
                 return $pdf->stream('Jamsostek Formulir 1B.pdf');
             }else if($request->jamsostek_report_type == 'formulir2a'){
-                $pdf = PDF::loadView('payroll.py_export_monthly_jamsostek_formulir2a_report', 
+                $pdf = PDF::loadView('payroll.py_export_monthly_jamsostek_formulir2a_report',
                 [
-                    'data' => $arrResult->dataListSet, 
+                    'data' => $arrResult->dataListSet,
                     'period' => $request->jamsostek_period,
                     'bulan' => tgl_indo(date('Y-m-d', strtotime($request->jamsostek_period))),
                     'companyName' => Session::get('companyName'),
@@ -8294,14 +8297,14 @@ public function dataDetailReportFormatPY(Request $request)
             $request->jamsostek_report_type,
             $request->jamsostek_period,
             isset($request->grand_total) ? (bool) $request->grand_total : false,
-            $request->group_authorize_code_from, 
+            $request->group_authorize_code_from,
             $request->group_authorize_code_to,
             $request->group_bpjs_code,
-            $request->group_bpjs_name), 
+            $request->group_bpjs_name),
             $fileName
         );
     }
-    
+
     public function printDUMTKPayroll(Request $request){
         try{
             $client = new Client([
@@ -8331,7 +8334,7 @@ public function dataDetailReportFormatPY(Request $request)
                 $param['employeeNoFrom'] = $request->employee_no_from;
                 $param['employeeNoTo'] = $request->employee_no_to;
             }
-    
+
             if(!empty($request->group_authorized_code_from) || !empty($request->group_authorized_code_to)){
                 $param['groupAuthorizedCodeFrom'] = $request->group_authorized_code_from;
                 $param['groupAuthorizedCodeTo'] = $request->group_authorized_code_to;
@@ -8385,12 +8388,12 @@ public function dataDetailReportFormatPY(Request $request)
     public function printDUMTKPayrollExcel(Request $request){
         return Excel::download(new DUMTKReportExport(
             $request->as_of_period,
-            $request->employee_no_from, 
+            $request->employee_no_from,
             $request->employee_no_to,
             $request->group_authorized_code_from,
             $request->group_authorized_code_to,
             $request->bpjs_group_from,
-            $request->bpjs_group_to), 
+            $request->bpjs_group_to),
             'DUMTK Report Form.xlsx'
         );
     }
@@ -8416,7 +8419,7 @@ public function dataDetailReportFormatPY(Request $request)
                 $param['employeeNoFrom'] = $request->employee_no_from;
                 $param['employeeNoTo'] = $request->employee_no_to;
             }
-    
+
             if(!empty($request->group_authorized_code_from) || !empty($request->group_authorized_code_to)){
                 $param['groupAuthorizedFrom'] = (int) $request->group_authorized_code_from;
                 $param['groupAuthorizedTo'] = (int) $request->group_authorized_code_to;
@@ -8456,10 +8459,10 @@ public function dataDetailReportFormatPY(Request $request)
 
     public function printSalaryHistoricalReportPayrollExcel(Request $request){
         return Excel::download(new SalaryHistoricalReportExport(
-            $request->employee_no_from, 
+            $request->employee_no_from,
             $request->employee_no_to,
             $request->group_authorized_code_from,
-            $request->group_authorized_code_to), 
+            $request->group_authorized_code_to),
             'Salary Historical Report.xlsx'
         );
     }
@@ -8472,25 +8475,25 @@ public function dataDetailReportFormatPY(Request $request)
             if($request->format == "periodical"){
                 $namaFile = "EsptMasa" . date('n', strtotime($request->period)) . date('Y', strtotime($request->period)) . "-" . $request->rectification . "-" . $request->npwp_group . ".xlsx";
                 return Excel::download(new EBupotPeriodicalTemplateExport(
-                    $request->format, 
+                    $request->format,
                     $request->period,
                     $request->rectification,
                     $request->npwp_group,
                     $request->print_date,
                     $request->group_authorized_code_from,
-                    $request->group_authorized_code_to), 
+                    $request->group_authorized_code_to),
                     $namaFile
                 );
             }else if($request->format == "annual"){
                 $namaFile = "EsptA1" . date('Y', strtotime($request->period)) . "-" . $request->rectification . "-" . $request->npwp_group . ".xlsx";
                 return Excel::download(new EBupotA1TemplateExport(
-                    $request->format, 
+                    $request->format,
                     $request->period,
                     $request->rectification,
                     $request->npwp_group,
                     $request->print_date,
                     $request->group_authorized_code_from,
-                    $request->group_authorized_code_to), 
+                    $request->group_authorized_code_to),
                     $namaFile
                 );
             }else if($request->format == "final"){
@@ -8506,31 +8509,31 @@ public function dataDetailReportFormatPY(Request $request)
                     $namaFile = "EsptCoretax21-" . date('n', strtotime($request->period)) . date('Y', strtotime($request->period)) . "-" . $request->rectification . "-" . $request->npwp_group . ".xlsx";
                 }
                 return Excel::download(new EBupotCoretaxTemplateExport(
-                    $request->format, 
+                    $request->format,
                     $request->period,
                     $request->rectification,
                     $request->npwp_group,
                     $request->print_date,
                     $request->group_authorized_code_from,
-                    $request->group_authorized_code_to), 
+                    $request->group_authorized_code_to),
                     $namaFile
                 );
             }
             // return Excel::download(new CSVESPTReportFormExport(
-            //     $request->format, 
+            //     $request->format,
             //     $request->period,
             //     $request->rectification,
             //     $request->npwp_group,
             //     $request->print_date,
             //     $request->group_authorized_code_from,
-            //     $request->group_authorized_code_to), 
+            //     $request->group_authorized_code_to),
             //     $namaFile
             // );
         }
     }
 
     public function printCSVESPTReportFormPayrollXML(Request $request)
-    {    
+    {
         $namaFile = "EsptCoretax.xlsx";
 
         $client = new Client([
@@ -8571,7 +8574,7 @@ public function dataDetailReportFormatPY(Request $request)
             }
 
             /* $xml = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8" standalone="yes"?><MmPayrollBulk xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"></MmPayrollBulk>'); */
-            
+
             // if(!empty($arrResult->dataListSet)){
             //     $xml->addChild('TIN', $arrResult->dataListSet[0]->companyNPWP);
             //     if(!empty($arrResult->dataListSet[0]->coretax_MP)){
@@ -8733,7 +8736,7 @@ public function dataDetailReportFormatPY(Request $request)
 
                 rewind($tempFile);
                 $csvContent = str_replace('"', '', stream_get_contents($tempFile));
-                
+
                 fclose($tempFile);
 
                 return Response::make($csvContent, 200, [
@@ -8787,7 +8790,7 @@ public function dataDetailReportFormatPY(Request $request)
                 $param['employeeNoFrom'] = $request->employee_no_from;
                 $param['employeeNoTo'] = $request->employee_no_to;
             }
-    
+
             if(!empty($request->group_authorized_code_from) || !empty($request->group_authorized_code_to)){
                 $param['groupAuthorizedCodeFrom'] = (int) $request->group_authorized_code_from;
                 $param['groupAuthorizedCodeTo'] = (int) $request->group_authorized_code_to;
@@ -8833,13 +8836,13 @@ public function dataDetailReportFormatPY(Request $request)
 
     public function printBonusTHRReportPayrollExcel(Request $request){
         return Excel::download(new BonusTHRReportExport(
-            $request->report, 
+            $request->report,
             $request->payment_date_from,
             $request->payment_date_to,
             $request->employee_no_from,
             $request->employee_no_to,
             $request->group_authorized_code_from,
-            $request->group_authorized_code_to), 
+            $request->group_authorized_code_to),
             'Bonus & THR Report.xlsx'
         );
     }
@@ -8926,7 +8929,7 @@ public function dataDetailReportFormatPY(Request $request)
 
         $arrResult = json_decode($response->getBody()->getContents());
         $customPaper = array(0,0,792.00,1224.00);
-        
+
         if($arrResult->dataListSet == null){
             $pdf = PDF::loadView('payroll.py_export_kepesertaan_bpjs_tk_report', ['data' => []])->setPaper($customPaper, 'landscape')->setOptions(['defaultFont' => 'arial']);
             return $pdf->stream('Export Data Kepesertaan BPJS TK.pdf');
@@ -8946,10 +8949,10 @@ public function dataDetailReportFormatPY(Request $request)
         return Excel::download(new ExportDataKepesertaanBPJSReportExport(
             $request->employee_no_from,
             $request->employee_no_to,
-            $request->position, 
-            $request->ranking, 
-            $request->location, 
-            $dataLevel), 
+            $request->position,
+            $request->ranking,
+            $request->location,
+            $dataLevel),
             'Export Data Kepesertaan BPJS TK Report.xlsx'
         );
     }
@@ -8962,13 +8965,13 @@ public function dataDetailReportFormatPY(Request $request)
         }
 
         return Excel::download(new RetroactiveReportExport(
-            $request->as_of_period, 
+            $request->as_of_period,
             $request->employee_no_from,
             $request->employee_no_to,
-            $request->position, 
-            $request->ranking, 
-            $request->location, 
-            $dataLevel), 
+            $request->position,
+            $request->ranking,
+            $request->location,
+            $dataLevel),
             'Retroactive Report.xlsx'
         );
     }
@@ -9170,7 +9173,7 @@ public function dataDetailReportFormatPY(Request $request)
                 }
                 $param['ranking'] = $data_ranking;
             }
-            
+
             if(!empty($request->group) && !is_null($request->group[0])){
                 foreach($request->group as $value){
                     $data_group[] = [
@@ -9226,7 +9229,7 @@ public function dataDetailReportFormatPY(Request $request)
                     $flag_grand_total['level' . $key] = $value;
                 }
             }
-            
+
             if(isset($request->flagPageBreak)) {
                 foreach($request->flagPageBreak as $key => $value) {
                     $flag_page_break['level' . $key] = $value;
@@ -9242,7 +9245,7 @@ public function dataDetailReportFormatPY(Request $request)
             $responseGetCompany = $client->post(env('API_URL').'/personel/Company/getcompany', [
                 'body' => json_encode($paramGetCompany)
             ]);
-            
+
         } catch (RequestException $e){
             $response = $e->getResponse();
             // dd($response);
@@ -9266,7 +9269,7 @@ public function dataDetailReportFormatPY(Request $request)
             return $pdf->stream($request->report_name_detail . '.pdf');
         }else{
             $total = [];
-            
+
             if(Session::get('companyCode') == 'NMDI' || Session::get('companyCode') == 'CITROEN'){
                 if(isset($arrResult->dataListSet[0]->detail) && count($arrResult->dataListSet[0]->detail) > 1){
                     usort($arrResult->dataListSet[0]->detail, function ($a, $b) {
@@ -9281,7 +9284,7 @@ public function dataDetailReportFormatPY(Request $request)
                 }
 
                 $branch = null;
-                
+
                 foreach ($arrResult->dataListSet[0]->departementGroup as $key => $dept) {
                     $totalEmployee = count($dept->data);
                     foreach ($dept->data as $key => $value) {
@@ -9322,7 +9325,7 @@ public function dataDetailReportFormatPY(Request $request)
                 }
 
                 $total = [];
-                
+
                 foreach ($arrResult->dataListSet[0]->departementGroup as $key => $dept) {
                     $totalEmployee = count($dept->data);
                     foreach ($dept->data as $key => $value) {
@@ -9356,23 +9359,23 @@ public function dataDetailReportFormatPY(Request $request)
         }
 
         return Excel::download(new PeriodicalReportExport(
-            $request->report_name, 
+            $request->report_name,
             isset($request->grand_total) ? (bool) $request->grand_total : false,
             $request->employee_no_from,
-            $request->employee_no_to, 
-            $request->period, 
-            $request->cost_center_code_from, 
-            $request->cost_center_code_to, 
+            $request->employee_no_to,
+            $request->period,
+            $request->cost_center_code_from,
+            $request->cost_center_code_to,
             isset($request->check_grouping) ? (bool) $request->check_grouping : false,
             isset($request->select_grouping) ? $request->select_grouping : null,
             isset($request->multi_cost_center) ? (bool) $request->multi_cost_center : false,
-            $request->report_status, 
-            $request->report_type, 
-            $request->group_authorized_code_from, 
-            $request->group_authorized_code_to, 
+            $request->report_status,
+            $request->report_type,
+            $request->group_authorized_code_from,
+            $request->group_authorized_code_to,
             isset($request->display_line) ? (bool) $request->display_line : false,
             isset($request->print_signature) ? (bool) $request->print_signature : false,
-            $request->position, 
+            $request->position,
             $request->ranking,
             $request->location,
             $request->group,
@@ -9383,7 +9386,7 @@ public function dataDetailReportFormatPY(Request $request)
             $request->flagLevel ?? [],
             $request->flagGrandTotal ?? [],
             $request->flagPageBreak ?? []
-        ), 
+        ),
             $request->report_name_detail . '.xlsx'
         );
     }
@@ -9446,12 +9449,12 @@ public function dataDetailReportFormatPY(Request $request)
 
     public function printSPTListReportPayrollExcel(Request $request){
         $groupNPWP = filter_var($request->group_npwp, FILTER_VALIDATE_BOOLEAN);
-        
+
         return Excel::download(new SPTListReportExport(
             isset($request->range_employee_no) ? (bool) $request->range_employee_no : false,
             $request->employee_no_from,
-            $request->employee_no_to, 
-            ($groupNPWP) ? $request->npwp : "ALL",), 
+            $request->employee_no_to,
+            ($groupNPWP) ? $request->npwp : "ALL",),
             'SPT List Report.xlsx'
         );
     }
@@ -9463,7 +9466,7 @@ public function dataDetailReportFormatPY(Request $request)
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
-    
+
             $groupNPWP = filter_var($request->group_npwp, FILTER_VALIDATE_BOOLEAN);
 
             $response = $client->post(env('API_URL') . '/payroll/SPTList',
@@ -9489,11 +9492,11 @@ public function dataDetailReportFormatPY(Request $request)
                 return view('error.bad_request');
             }
         }
-    
+
         $arrResult = json_decode($response->getBody()->getContents());
-    
+
         // dd($arrResult->dataListSet);
-    
+
         if($arrResult->dataListSet == null){
             $data = [];
         }else{
@@ -9511,7 +9514,7 @@ public function dataDetailReportFormatPY(Request $request)
 
     public function printJournalTemplatePayrollExcel(Request $request){
         return Excel::download(
-            new JournalTemplateReportExport(), 
+            new JournalTemplateReportExport(),
             'Journal Template List.xlsx'
         );
     }
@@ -9521,12 +9524,12 @@ public function dataDetailReportFormatPY(Request $request)
             return Excel::download(new PensionFundReportExport(
                 $request->period,
                 $request->group_department,
-                $request->print_date, 
-                $request->denda_bulan, 
-                $request->kelebihan_bayar, 
-                $request->kurang_bayar, 
-                $request->pengurangan_iuran, 
-                $request->materai), 
+                $request->print_date,
+                $request->denda_bulan,
+                $request->kelebihan_bayar,
+                $request->kurang_bayar,
+                $request->pengurangan_iuran,
+                $request->materai),
                 'Laporan Dana Pensiun.xlsx'
             );
         }else if($request->report_name == "DATA_PESERTA"){
@@ -9540,7 +9543,7 @@ public function dataDetailReportFormatPY(Request $request)
                 $request->period,
                 $request->group_department,
                 $request->print_date,
-                $isNew), 
+                $isNew),
                 $filename
             );
         }else if($request->report_name == "PERUBAHAN_UPAH"){
@@ -9548,15 +9551,15 @@ public function dataDetailReportFormatPY(Request $request)
                 $request->period,
                 $request->group_department,
                 $request->print_date,
-                $request->group_authorized_code_from, 
-                $request->group_authorized_code_to), 
+                $request->group_authorized_code_from,
+                $request->group_authorized_code_to),
                 'Laporan Perubahan Upah Dana Pensiun.xlsx'
             );
         }else if($request->report_name == "DATA_PESERTA_AKTIF"){
             return Excel::download(new DataPesertaAktifPensionFundReportExport(
                 $request->period,
                 $request->group_department,
-                $request->print_date), 
+                $request->print_date),
                 'Laporan Data Peserta Aktif Dana Pensiun.xlsx'
             );
         }
@@ -9576,11 +9579,11 @@ public function dataDetailReportFormatPY(Request $request)
         }else{
             $filename = 'CBI Report Monthly.xlsx';
         }
-        
+
         return Excel::download(new CBIReportMonthlyExport(
             $request->period,
             $request->report_type,
-            $request->claim_type), 
+            $request->claim_type),
             $filename
         );
         // $processJobs = new ProcessExportCBIReportMonthly($request->report_type, $request->period, $request->claim_type);
@@ -9599,10 +9602,10 @@ public function dataDetailReportFormatPY(Request $request)
         }else{
             $filename = 'CBI Report Yearly.xlsx';
         }
-        
+
         return Excel::download(new CBIReportYearlyExport(
             $request->period_yearly,
-            $request->report_type_yearly), 
+            $request->report_type_yearly),
             $filename
         );
         // $processJobs = new ProcessExportCBIReportYearly($request->report_type_yearly, $request->period_yearly);
