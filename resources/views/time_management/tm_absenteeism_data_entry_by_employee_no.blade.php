@@ -1609,11 +1609,6 @@
                         success: function (response) {
                             // console.log(response.status);
                             if (response.status == "true") {
-                                $("#btn-save").prop("disabled", false);
-                                $("#btn-save").html(
-                                    '<i class="fa fa-floppy-o"></i> {{ __("tm_absenteeism_data_entry_by_employee_no.btn_save") }}'
-                                );
-
                                 $('#absenteeism_data_entry_by_employee_no_table').DataTable().destroy();
                                 load_data_table_absenteeism_data_entry_by_employee_no();
                                 load_data();
@@ -1622,9 +1617,14 @@
                                 $('#message-notification-success').html(response
                                     .message);
 
-                                $('#close').click(function () {
-                                    window.location = "{{ url('time_management/absenteeism_data_entry_by_employee_no') }}";
-                                })
+                                // $("#btn-save").prop("disabled", true);
+                                $("#btn-save").html(
+                                    '<i class="fa fa-floppy-o"></i> {{ __("tm_absenteeism_data_entry_by_employee_no.btn_save") }}'
+                                );
+
+                                // $('#close').click(function () {
+                                //     window.location = "{{ url('time_management/absenteeism_data_entry_by_employee_no') }}";
+                                // })
 
                                 setTimeout(function () {
                                     $('#notification_success').modal('hide');
