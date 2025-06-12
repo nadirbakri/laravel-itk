@@ -7783,16 +7783,16 @@ class DataController extends Controller
 	    		)]
 	    	);
 
-			// $response20 = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
-	    	// 	['body' => json_encode(
-	    	// 		[
-	    	// 			'companyCode' => Session::get('companyCode'),
-			// 			'variable' => 'Export_Rimbursement_',
-	    	// 			'comGenCode' => $request->insuranceClassCode,
-	    	// 			'languageCode' => strtoupper(App::getLocale())
-	    	// 		]
-	    	// 	)]
-	    	// );
+			$response20 = $client->post(env('API_URL') . '/personel/ComGen/getComGen',
+	    		['body' => json_encode(
+	    			[
+	    				// 'companyCode' => Session::get('companyCode'),
+						'variable' => 'Relation_',
+	    				'comGenCode' => $request->relationCode,
+	    				'languageCode' => strtoupper(App::getLocale())
+	    			]
+	    		)]
+	    	);
 
 	    } catch (RequestException $e) {
 	    	$response = $e->getResponse();
@@ -7826,6 +7826,7 @@ class DataController extends Controller
 	    $arrResult17 = json_decode($response17->getBody()->getContents());
 	    $arrResult18 = json_decode($response18->getBody()->getContents());
 	    $arrResult19 = json_decode($response19->getBody()->getContents());
+	    $arrResult20 = json_decode($response20->getBody()->getContents());
 
 	    return response()->json(
 			[
@@ -7848,6 +7849,7 @@ class DataController extends Controller
 			'data_driving_license_car_type' => ($request->drivingLicenseMobilType == null || $arrResult17->dataListSet == null) ? [] : $arrResult17->dataListSet[0],
 			'data_insurance_code' => ($request->insuranceCode == null || $arrResult18->dataListSet == null) ? [] : $arrResult18->dataListSet[0],
 			'data_insurance_class' => ($request->insuranceClassCode == null || $arrResult19->dataListSet == null) ? [] : $arrResult19->dataListSet[0],
+			'data_relation_code' => ($request->relationCode == null || $arrResult20->dataListSet == null) ? [] : $arrResult20->dataListSet[0],
 			]
 		);
 	}
@@ -12734,6 +12736,109 @@ class DataController extends Controller
 					function($value) use ($search){
 						if(preg_match('/' . $search . '/i', $value->name)){
 							return preg_match('/' . $search . '/i', $value->name);
+						}
+					}
+				);
+			}
+		}
+		return response()->json($data);
+	}
+
+	public function dataMedicalTypeAPI(Request $request)
+	{
+		$search = $request->search;
+		$data = [];
+
+		try {
+			$client = new Client([
+                'verify' => false,
+				'headers' => [ 'Content-Type' => 'application/json',
+								'Authorization' => 'Bearer ' . Session::get('token') ]
+			]);
+			$response = $client->post(env('API_URL') . '/personel/PePlafon/getPePlafon',
+				['body' => json_encode(
+					[
+						'companyCode' => Session::get('companyCode'),
+						"employeeNo" => $request->employeeNo,
+						"category" => 'MEDICAL',
+						"languageCode" => strtoupper(App::getLocale())
+					]
+				)]);
+			} catch (RequestException $e) {
+				$response = $e->getResponse();
+				if($response->getStatusCode() == 401){
+					return view('error.login');
+				}else if($response->getStatusCode() == 404){
+					return view('error.not_found');
+				}else{
+					return view('error.bad_request');
+				}
+			}
+			
+			$arrResult = json_decode($response->getBody()->getContents());
+			
+			if($arrResult->dataListSet !== null){
+				if($search == ''){
+					$data = array_merge($data, $arrResult->dataListSet);
+				}else{
+					$data = array_merge($data, $arrResult->dataListSet);
+					$data = array_filter(
+					$data,
+					function($value) use ($search){
+						if(preg_match('/' . $search . '/i', $value->plafonDescription)){
+							return preg_match('/' . $search . '/i', $value->plafonDescription);
+						}
+					}
+				);
+			}
+		}
+		return response()->json($data);
+	}
+
+	public function dataDependentNameAPI(Request $request)
+	{
+		$search = $request->search;
+		$data = [];
+
+		try {
+			$client = new Client([
+                'verify' => false,
+				'headers' => [ 'Content-Type' => 'application/json',
+								'Authorization' => 'Bearer ' . Session::get('token') ]
+			]);
+
+			$response = $client->post(env('API_URL') . '/personel/PeDependents/getlistfamily',
+				['body' => json_encode(
+					[
+						'companyCode' => Session::get('companyCode'),
+						"employeeNo" => $request->employeeNo,
+						"category" => 'MEDICAL',
+						"languageCode" => strtoupper(App::getLocale())
+					]
+				)]);
+			} catch (RequestException $e) {
+				$response = $e->getResponse();
+				if($response->getStatusCode() == 401){
+					return view('error.login');
+				}else if($response->getStatusCode() == 404){
+					return view('error.not_found');
+				}else{
+					return view('error.bad_request');
+				}
+			}
+			
+			$arrResult = json_decode($response->getBody()->getContents());
+			
+			if($arrResult->dataListSet !== null){
+				if($search == ''){
+					$data = array_merge($data, $arrResult->dataListSet);
+				}else{
+					$data = array_merge($data, $arrResult->dataListSet);
+					$data = array_filter(
+					$data,
+					function($value) use ($search){
+						if(preg_match('/' . $search . '/i', $value->familyName)){
+							return preg_match('/' . $search . '/i', $value->familyName);
 						}
 					}
 				);

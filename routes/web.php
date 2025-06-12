@@ -1486,6 +1486,8 @@ Route::get('medical_service_code/api', 'DataController@dataMedicalServiceCodeAPI
 Route::get('medical_service_code/ranking/api', 'DataController@dataMedicalServiceCodeRankingAPI');
 Route::get('medical_service_code/paid_type/api', 'DataController@dataMedicalServiceCodePaidTypeAPI');
 Route::get('vaccine_master/api', 'DataController@dataVaccineMasterAPI');
+Route::get('medical_type/api', 'DataController@dataMedicalTypeAPI');
+Route::get('dependent_name/api', 'DataController@dataDependentNameAPI');
 
 /* Route Untuk Save Token Device dan Notification Firebase */
 Route::get('save-token', 'DashboardController@saveToken');

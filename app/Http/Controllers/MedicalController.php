@@ -10,6 +10,7 @@ use App\Exports\ClaimPaymentTransactionReportSlipExport;
 use App\Exports\OutstandingClaimReportExport;
 use App\Exports\TransferPaymentToExcelMonthlyExport;
 use App\Exports\TransferPaymentToExcelRemainingLimitExport;
+use App\Exports\VaccinationScheduleTemplateExport;
 
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
@@ -219,6 +220,11 @@ class MedicalController extends Controller
     public function pageVaccineMaster()
     {
         return view('medical.md_vaccine_master');
+    }
+
+    public function pageMedicalCheckupSchedule()
+    {
+        return view('medical.md_medical_checkup_schedule');
     }
 
     public function tableClaimCodeMD()
@@ -2035,73 +2041,62 @@ class MedicalController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            if($request->record_function == 'New'){
-                $response = $client->post(env('API_URL') . '/mdclaimtransaction/insertclaimtransaction',
-                    ['body' => json_encode(
-                        [
-                            'recordStatus' => 'A',
-                            'companyCode' => Session::get('companyCode'),
-                            'employeeNo' => $request->employee_no_det,
-                            'claimDate' => $request->claim_date,
-                            'seqNo' => (int) $request->seq_no,
-                            'receiptDate' => $request->receipt_date,
-                            'claimTo' => $request->claim_to ,
-                            'claimCode' => $request->claim_code,
-                            'claimFor' => $request->claim_for,
-                            'dependentName' => $request->dependent_name,
-                            'claimCurrencyCode' => $request->claim_currency,
-                            'claimAmount' => (int) $request->claim_amount,
-                            'diseaseCode' => $request->disease_code,
-                            'claimRemarks' => $request->claim_remarks,
-                            'claimStatus' => $request->claim_status,
-                            "changedNo" => 0,
-                            "changedBy" => Session::get('userID'),
-                            "changedDate" => date("Y-m-d\TH:i:s"),
-                            "createdBy" => Session::get('userID'),
-                            "createdDate" => date("Y-m-d\TH:i:s"),
-                            "languageCode" => App::getLocale(),
-                            "sessionID" => 0,
-                            "sessionCompanyCode" => Session::get('companyCode'),
-                            "sessionUserID" => Session::get('userID'),
-                            "logActionUserID" => Session::get('userID'),
-                            "logActionUsername" => Session::get('userID')
-                        ]
-                    )]
-                );
-            }else{
-                $response = $client->put(env('API_URL') . '/mdclaimtransaction/updateclaimtransaction',
-                    ['body' => json_encode(
-                        [
-                            'recordStatus' => 'A',
-                            'companyCode' => Session::get('companyCode'),
-                            'employeeNo' => $request->employee_no_det,
-                            'claimDate' => $request->claim_date,
-                            'seqNo' => (int) $request->seq_no,
-                            'receiptDate' => $request->receipt_date,
-                            'claimTo' => $request->claim_to ,
-                            'claimCode' => $request->claim_code,
-                            'claimFor' => $request->claim_for,
-                            'dependentName' => $request->dependent_name,
-                            'claimCurrencyCode' => $request->claim_currency,
-                            'claimAmount' => (int) $request->claim_amount,
-                            'diseaseCode' => $request->disease_code,
-                            'claimRemarks' => $request->claim_remarks,
-                            'claimStatus' => $request->claim_status,
-                            "changedNo" => 0,
-                            "changedBy" => Session::get('userID'),
-                            "changedDate" => date("Y-m-d\TH:i:s"),
-                            "createdBy" => Session::get('userID'),
-                            "createdDate" => date("Y-m-d\TH:i:s"),
-                            "languageCode" => App::getLocale(),
-                            "sessionID" => 0,
-                            "sessionCompanyCode" => Session::get('companyCode'),
-                            "sessionUserID" => Session::get('userID'),
-                            "logActionUserID" => Session::get('userID'),
-                            "logActionUsername" => Session::get('userID')
-                        ]
-                    )]
-                );
+            $reimbursementEntity = [
+                'companyCode' => Session::get('companyCode'),
+                'receiptDate' => $request->receipt_date,
+                'employeeNo' => $request->employee_no,
+                'medicalType1' => $request->medical_type_1,
+                'amountType1' => $request->amount_of_type_1,
+                'medicalType2' => $request->medical_type_2,
+                'amountType2' => $request->amount_of_type_2,
+                'claimTo' => $request->claim_to,
+                'claimFor' => $request->claim_for,
+                'dependentName' => $request->dependent_name,
+                'currency' => $request->currency,
+                'totalClaimAmount' => (int) str_replace(',', '', $request->total_claim_amount),
+                'isWeb' => true,
+                'reimbursementRemarks' => $request->reimbursement_remarks,
+                "sessionID" => 0,
+                "sessionUserID" => Session::get('userID'),
+                "logActionUserID" => Session::get('userID'),
+                "logActionUsername" => Session::get('userID'),
+                "languageCode" => strtoupper(App::getLocale())
+            ];
+
+            if($request->hasFile('attachments')) {
+                $file = $request->file('attachments');
+
+                foreach($file as $f) {
+                    $fileContent = file_get_contents($f->getRealPath());
+                    $fileBase64 = base64_encode($fileContent);
+
+                    $attachmentEntity[] = [
+                        'companyCode' => Session::get('companyCode'),
+                        'reimbursementMedicalAttachment64' => $fileBase64,
+                        "sessionID" => 0,
+                        "sessionUserID" => Session::get('userID'),
+                        "logActionUserID" => Session::get('userID'),
+                        "logActionUsername" => Session::get('userID'),
+                        "languageCode" => strtoupper(App::getLocale())
+                    ];
+                }
+
+                $param['attachmentEntity'] = $attachmentEntity;
             }
+
+            $param = [
+                'reimbursementEntity' => $reimbursementEntity,
+            ];
+
+            if($request->hasFile('attachments')) {
+                $param['attachmentEntity'] = $attachmentEntity;
+            }
+
+            // dd(json_encode($param));
+
+            $response = $client->post(env('API_URL') . '/mobile/ReimbursementMedical/InsertReimbursementRequest',
+                ['body' => json_encode($param)]
+            );
         } catch (RequestException $e) {
             $response = $e->getResponse();
             // var_dump($response);
@@ -2273,6 +2268,121 @@ class MedicalController extends Controller
                 );
             }
 
+
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function prosesVaccinationScheduleMD(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            foreach($request->detailVaccine as $detail){
+                $detailVaccine[] = [
+                    'companyCode' => Session::get('companyCode'),
+                    'dose' => (int) $detail['dose'],
+                    'date' => $detail['date'] . 'T' . $detail['time'],
+                    'address' => $detail['address'],
+                    'description' => $detail['description'],
+                    "languageCode" => App::getLocale(),
+                    "changedNo" => 0,
+                    "createdDate" => date("Y-m-d\TH:i:s"),
+                    "createdBy" => Session::get('userID'),
+                    "changedDate" => date("Y-m-d\TH:i:s"),
+                    "changedBy" => Session::get('userID'),
+                ];
+            }
+
+            // dd($detailVaccine);
+
+            foreach($request->employee_no as $employeeNo){
+                $param[] = [
+                    'companyCode' => Session::get('companyCode'),
+                    'employeeNo' => $employeeNo,
+                    'address' => $request['name_of_places'],
+                    'code' => $request['vaccine_type'],
+                    'description' => $request['description'],
+                    'type' => 'V',
+                    'detailVaccine' => $detailVaccine,
+                    "languageCode" => App::getLocale(),
+                    "sessionID" => 0,
+                    "sessionUserID" => Session::get('userID'),
+                    "logActionUserID" => Session::get('userID'),
+                    "logActionUsername" => Session::get('userID')
+                ];
+            }
+
+            // dd(json_encode($param));
+
+            $response = $client->post(env('API_URL') . '/personel/HealthActivities/InsertHealthActivities',
+                ['body' => json_encode($param)]
+            );
+
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function prosesMedicalCheckupScheduleMD(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            foreach($request->employee_no as $employeeNo){
+                $param[] = [
+                    'companyCode' => Session::get('companyCode'),
+                    'employeeNo' => $employeeNo,
+                    'address' => $request['name_of_places'],
+                    'description' => $request['description'],
+                    'date' => $request['medical_checkup_date'] . 'T' . $request['medical_checkup_time'],
+                    'type' => 'MCU',
+                    "languageCode" => App::getLocale(),
+                    "sessionID" => 0,
+                    "sessionUserID" => Session::get('userID'),
+                    "logActionUserID" => Session::get('userID'),
+                    "logActionUsername" => Session::get('userID')
+                ];
+            }
+
+            // dd(json_encode($param));
+
+            $response = $client->post(env('API_URL') . '/personel/HealthActivities/InsertHealthActivities',
+                ['body' => json_encode($param)]
+            );
 
         } catch (RequestException $e) {
             $response = $e->getResponse();
@@ -3462,5 +3572,15 @@ class MedicalController extends Controller
         $arrResult = json_decode($response->getBody()->getContents());
 
         return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function downloadTemplateVaccinationScheduleMD(Request $request)
+    {
+        return Excel::download(new VaccinationScheduleTemplateExport, "Vaccination Schedule Template.xlsx");
+    }
+
+    public function downloadTemplateMedicalCheckupScheduleMD(Request $request)
+    {
+        return Excel::download(new VaccinationScheduleTemplateExport, "Medical Checkup Schedule Template.xlsx");
     }
 }
