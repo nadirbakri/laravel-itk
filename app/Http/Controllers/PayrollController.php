@@ -1121,7 +1121,7 @@ class PayrollController extends Controller
             $arrResult_tm = json_decode($response_tm->getBody()->getContents());
 
             if($arrResult_tm->dataListSet == null){
-                return response()->json(['status' => false, 'message' =>  'No Data Reference Time Management']);
+                return Datatables::of([])->make(true);
             }else{
                 $response = $client->post(env('API_URL') . '/payroll/getPrSalaryMaster',
                     ['body' => json_encode(
@@ -1212,7 +1212,7 @@ class PayrollController extends Controller
             $arrResult_tm = json_decode($response_tm->getBody()->getContents());
 
             if($arrResult_tm->dataListSet == null){
-                return response()->json(['status' => false, 'message' =>  'No Data Reference Time Management']);
+                return Datatables::of([])->make(true);
             }else{
                 $response = $client->post(env('API_URL') . '/payroll/getPrTariffMaster',
                     ['body' => json_encode(
@@ -8567,6 +8567,8 @@ public function dataDetailReportFormatPY(Request $request)
             ]);
 
             $arrResult = json_decode($response->getBody()->getContents());
+
+            // dd($arrResult->dataListSet[0]->coretaX_XML_FORMAT);
 
             if(!empty($arrResult->dataListSet)){
                 return response($arrResult->dataListSet[0]->coretaX_XML_FORMAT, 200)
