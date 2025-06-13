@@ -7381,6 +7381,9 @@ public function dataDetailReportFormatPY(Request $request)
         }else if($data->companyCode == 'MMI'){
             $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_mmi';
             $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_mmi';
+        }else if($data->companyCode == 'MCA' || $data->companyCode == 'MCAJU'){
+            $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_ipn';
+            $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_mca';
         }else if($companyCode == 'MCA' || $companyCode == 'MCAJU'){
             $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_ipn';
             $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_mca';
@@ -7629,7 +7632,6 @@ public function dataDetailReportFormatPY(Request $request)
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
-        // dd($arrResult->dataListSet);
 
         $firstDayOfPreviousMonth = date("01-M-Y", strtotime($request->period));
         $lastDayOfPreviousMonth = date("t-M-Y", strtotime($request->period));
@@ -7670,6 +7672,9 @@ public function dataDetailReportFormatPY(Request $request)
             $companyCode == 'IVT' || $companyCode == 'IPNJT'){
             $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_ipn';
             $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_ipn';
+        }else if($companyCode == 'MCA' || $companyCode == 'MCAJU'){
+            $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_ipn';
+            $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_mca';
         }else if($companyCode == 'CII' || $companyCode == 'CORI'){
             $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_cori';
             $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_cori';
