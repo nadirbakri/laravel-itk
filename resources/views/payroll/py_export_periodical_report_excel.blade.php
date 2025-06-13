@@ -806,10 +806,10 @@
                                 $totalKey = $field->field . '_' . $j;
                                 $globalKey = $field->tableName;
 
-                                if (!is_string($value) && in_array($field->dataFormat, ['#,##0', '#,##0.00'])) {
+                                if (!is_string($value)) {
                                     $total[$globalKey] += $value;
                                     $globalTotal[$globalKey] = ($globalTotal[$globalKey] ?? 0) + $value;
-                                    $formatted = number_format((float)$value, $field->dataFormat === '#,##0.00' ? 2 : 0, ',', '.');
+                                    $formatted = number_format((float)$value, $field->dataFormat === '#,##0.00' ? 2 : 0, '.', ',');
                                     $dataFormatAttr = 'data-format="' . $field->dataFormat . '"';
                                 } else {
                                     $formatted = is_string($value) ? $value : number_format($value);
@@ -866,7 +866,14 @@
                             echo '</tr></thead><tbody><tr><td style="border:1px solid #000; font-weight: bold; background-color:yellow;">Grand Total Level ' . $level->levelDesription . ' : ' . $level->levelName . '</td><td style="border:1px solid #000;"></td><td style="border:1px solid #000;"></td>';
 
                             foreach ($levelTotals as $val) {
-                                echo '<td style="text-align:right; border: 1px solid #000;">' . (is_numeric($val) ? number_format($val, 0, ',', '.') : '') . '</td>';
+                                if (is_numeric($val)) {
+                                    $numericVal = (int) str_replace('.', '', $val);
+                                    $formatted = number_format($numericVal, 0, '.', ',');
+                                    echo '<td data-format="#,##0" style="text-align:right; border: 1px solid #000;">' . $val . '</td>';
+                                }
+                                else {
+                                    echo '<td style="text-align:right; border: 1px solid #000;"> </td>';
+                                }
                             }
 
                             echo '</tr></tbody></table>';
@@ -1002,7 +1009,7 @@
                     <tr>
                         <td style="text-align:center; border:1px solid #000; font-weight: bold;  background-color: yellow;">Grand Total</td>
                         @foreach($globalTotal as $key => $value)
-                            <td style="text-align:right; border:1px solid #000;">{{ number_format($value, 0, '.', ',') }}</td>
+                            <td data-format="#,##0" style="text-align:right; border:1px solid #000;">{{ $value }}</td>
                         @endforeach
                     </tr>
                 </tbody>
