@@ -879,8 +879,6 @@ Route::get('medical/payment_per_rank/table', 'MedicalController@tablePaymentPerR
 Route::get('medical/employee_list/table', 'MedicalController@tableEmployeeList');
 Route::get('medical/vaccine_master/table', 'MedicalController@tableVaccineMasterMD');
 
-Route::get('medical/vaccine_master/remove', 'MedicalController@removeVaccineMasterMD');
-
 /* Route untuk Detail Tabel Transaction */
 Route::get('transaction/list/table', 'TransactionController@tableDetailTransactionList');
 Route::get('trans/medical_list/table', 'TransactionController@tableDetailTransactionMedical');
@@ -953,8 +951,12 @@ Route::post('medical/claim_transaction/proses', 'MedicalController@prosesClaimTr
 Route::post('medical/payment/proses', 'MedicalController@prosesPaymentMD');
 Route::post('medical/payment_per_rank/proses', 'MedicalController@prosesPaymentPerRankMD');
 Route::post('medical/vaccine_master/proses', 'MedicalController@prosesVaccineMasterMD');
+Route::post('medical/vaccine_master_detail/proses', 'MedicalController@prosesVaccineMasterDetailMD');
 Route::post('medical/vaccination_schedule/proses', 'MedicalController@prosesVaccinationScheduleMD');
 Route::post('medical/medical_checkup_schedule/proses', 'MedicalController@prosesMedicalCheckupScheduleMD');
+
+Route::get('medical/vaccine_master/remove', 'MedicalController@removeVaccineMasterMD');
+Route::get('medical/vaccine_master_detail/remove', 'MedicalController@removeVaccineMasterDetailMD');
 
 Route::post('medical/medical_facility_used_report/print', 'MedicalController@printMedicalFacilityUsedReport');
 Route::post('medical/medical_facility_used_report/print/excel', 'MedicalController@printMedicalFacilityUsedReportExcel');

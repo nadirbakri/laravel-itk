@@ -12,6 +12,7 @@ use App\Exports\TransferPaymentToExcelMonthlyExport;
 use App\Exports\TransferPaymentToExcelRemainingLimitExport;
 use App\Exports\VaccinationScheduleTemplateExport;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
@@ -655,7 +656,7 @@ class MedicalController extends Controller
                     [
                         'companyCode' => Session::get('companyCode'),
                         'recordStatus' => 'A',
-                        'type' => 'V',
+                        'activityType' => 'V',
                         'sessionID' => 0,
                         'sessionUserID' => Session::get('userID'),
                         'userID' => Session::get('userID'),
@@ -1215,9 +1216,8 @@ class MedicalController extends Controller
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
-                        'batch' => $request->batch,
-                        'code' => $request->code,
-                        'type' => 'V',
+                        'activityCode' => $request->activityCode,
+                        'activityType' => 'V',
                         'languageCode' => strtoupper(App::getLocale()),
                         'userID' => Session::get('userID'),
                         'logActionUserID' => Session::get('userID'),
@@ -2242,13 +2242,12 @@ class MedicalController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $param[] = [
+            $param = [
                 'companyCode' => Session::get('companyCode'),
                 'recordStatus' => 'A',
-                'batch' => $request->batch_code,
-                'code' => $request->vaccine_code,
-                'name' => $request->vaccine_name,
-                'type' => 'V',
+                'activityCode' => $request->vaccine_code,
+                'activityName' => $request->vaccine_name,
+                'activityType' => 'V',
                 'sessionID' => 0,
                 'sessionUserID' => Session::get('userID'),
                 'logActionUserID' => Session::get('userID'),
@@ -2260,10 +2259,67 @@ class MedicalController extends Controller
 
             if($request->record_function == 'New'){
                 $response = $client->post(env('API_URL') . '/personel/HealthActivities/InsertHealthActivitiesMaster',
-                    ['body' => json_encode($param)]
+                    ['body' => json_encode([$param])]
                 );
             }else{
                 $response = $client->post(env('API_URL') . '/personel/HealthActivities/UpdateHealthActivitiesMaster',
+                    ['body' => json_encode($param)]
+                );
+            }
+
+
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function prosesVaccineMasterDetailMD(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $param = [
+                'companyCode' => Session::get('companyCode'),
+                'activityCode' => $request->vaccine_code,
+                'activityType' => 'V',
+                'batchCode' => $request->batch_code,
+                'capacity' => $request->capacity,
+                'sequence' => (int) $request->dose,
+                'date' => $request->batch_date,
+                'description' => 'Dose ' . $request->dose . ' - ' . Carbon::parse($request->batch_date)->translatedFormat('d F Y'),
+                // 'expiredDate' => $request->expired_date,
+                // 'serialNumber' => $request->serial_number,
+                'sessionID' => 0,
+                'sessionUserID' => Session::get('userID'),
+                'logActionUserID' => Session::get('userID'),
+                'logActionUsername' => Session::get('userName'),
+                "languageCode" => App::getLocale()
+            ];
+
+            // dd(json_encode([$param]));
+
+            if($request->record_function_detail == 'New'){
+                $response = $client->post(env('API_URL') . '/personel/HealthActivities/InsertHealthActivitiesDetail',
+                    ['body' => json_encode([$param])]
+                );
+            }else{
+                $response = $client->post(env('API_URL') . '/personel/HealthActivities/UpdateHealthActivitiesDetail',
                     ['body' => json_encode($param)]
                 );
             }
@@ -3543,10 +3599,8 @@ class MedicalController extends Controller
             foreach($request->data as $value){
                 $param[] = [
                     'companyCode' => Session::get('companyCode'),
-                    'recordStatus' => 'D',
-                    'batch' => $value['batch'],
-                    'code' => $value['code'],
-                    'type' => 'V',
+                    'activityCode' => $value['activityCode'],
+                    'activityType' => 'V',
                     "languageCode" => App::getLocale(),
                     "sessionID" => 0,
                     "sessionUserID" => Session::get('userID'),
@@ -3555,7 +3609,54 @@ class MedicalController extends Controller
                 ];
             }
 
-            $response = $client->post(env('API_URL') . '/personel/HealthActivities/UpdateHealthActivitiesMaster',
+            // dd(json_encode($param));
+
+            $response = $client->post(env('API_URL') . '/personel/HealthActivities/DeleteHealthActivitiesMaster',
+                ['body' => json_encode($param)]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function removeVaccineMasterDetailMD(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            foreach($request->data as $value){
+                $param[] = [
+                    'companyCode' => Session::get('companyCode'),
+                    'activityCode' => $value['activityCode'],
+                    'activityType' => 'V',
+                    'batchCode' => $value['batchCode'],
+                    "languageCode" => App::getLocale(),
+                    "sessionID" => 0,
+                    "sessionUserID" => Session::get('userID'),
+                    "logActionUserID" => Session::get('userID'),
+                    "logActionUsername" => Session::get('userID')
+                ];
+            }
+
+            // dd(json_encode($param));
+
+            $response = $client->post(env('API_URL') . '/personel/HealthActivities/DeleteHealthActivitiesDetail',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {

@@ -87,21 +87,12 @@
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="batch_code">{{ __('md_vaccine_master.label_batch_code') }}</label>
-                            <span class="required">*</span>
-                            <input type="text" class="form-control" id="batch_code" name="batch_code" placeholder="{{ __('md_vaccine_master.label_vaccine_code') }}">
-                        </div>
-                        <input type="hidden" class="form-control" id="record_function" name="record_function">
-                    </div>
-                    <div class="col-6">
-                        <div class="form-group">
                             <label for="vaccine_code">{{ __('md_vaccine_master.label_vaccine_code') }}</label>
                             <span class="required">*</span>
                             <input type="text" class="form-control" id="vaccine_code" name="vaccine_code" placeholder="{{ __('md_vaccine_master.label_vaccine_code') }}">
+                            <input type="hidden" class="form-control" id="record_function" name="record_function">
                         </div>
                     </div>
-                </div>
-                <div class="row">
                     <div class="col-6">
                         <div class="form-group">
                             <label for="vaccine_name">{{ __('md_vaccine_master.label_vaccine_name') }}</label>
@@ -219,14 +210,12 @@
 
         if (func == 'new') {
             $('#record_function').val("New");
-            $('#batch_code').val("");
             $('#vaccine_code').val("");
             $('#vaccine_name').val("");
         } else if (func == 'edit') {
             $('#record_function').val("Edit");
-            $('#batch_code').val(arrData[0].batch);
-            $('#vaccine_code').val(arrData[0].code);
-            $('#vaccine_name').val(arrData[0].name);
+            $('#vaccine_code').val(arrData[0].activityCode);
+            $('#vaccine_name').val(arrData[0].activityName);
         }
 
         $('#notification_success').on('hide.bs.modal', function () {
@@ -244,9 +233,6 @@
         if ($("#vaccine_master_form").length > 0) {
             $("#vaccine_master_form").validate({
                 rules: {
-                    batch_code: {
-                        required: true,
-                    },
                     vaccine_code: {
                         required: true,
                     },
@@ -255,9 +241,6 @@
                     }
                 },
                 messages: {
-                    batch_code: {
-                        required: "{{ __('md_vaccine_master.batch_code_required') }}",
-                    },
                     vaccine_code: {
                         required: "{{ __('md_vaccine_master.vaccine_code_required') }}",
                     },

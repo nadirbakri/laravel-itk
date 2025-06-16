@@ -325,3 +325,25 @@ tr.shown td.details-control {
     color: #ffffff;
     width: 100%;
 }
+.btn-secondary, .btn-secondary:active, .btn-secondary:focus {
+    border: 1px solid #007BFF;
+    color: #007BFF;
+    background-color: #ffffff;
+    box-shadow: none;
+}
+.btn-secondary:hover {
+    border: 1px solid #007BFF;
+    color: #ffffff;
+    background-color: #007BFF;
+}
+.btn-error, .btn-error:active, .btn-error:focus {
+    border: 1px solid #FE3440;
+    color: #FE3440;
+    background-color: #ffffff;
+    box-shadow: none;
+}
+.btn-error:hover {
+    border: 1px solid #FE3440;
+    color: #ffffff;
+    background-color: #FE3440;
+}
