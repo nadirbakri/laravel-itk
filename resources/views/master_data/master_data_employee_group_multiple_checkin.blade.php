@@ -266,19 +266,19 @@
                     <div class="col-3">
                         <button type="button" class="btn btn-primary" name="btn-list" id="btn-list"
                         style="width: 100%;" data-toggle="modal" data-target="#modal_list_group">
-                        <i class="fa fa-plus"></i> {{ __('trans_medical.btn_list') }}
+                        <i class="fa fa-plus"></i> {{ __('data_employee_groupleave.btn_list') }}
                         </button>
                     </div>   
                     <div class="col-3">
                         <button type="button" class="btn btn-primary" name="btn-save" id="btn-save"
                             style="width: 100%;">
-                            <i class="fa fa-floppy-o"></i> {{ __('md_claim_transaction.btn_save') }}
+                            <i class="fa fa-floppy-o"></i> {{ __('data_employee_groupleave.btn_save') }}
                         </button>
                     </div>  
                     <div class="col-3">
                         <button type="button" class="btn btn-outline-primary"
                         onClick="window.location.reload();" value="preview" style="width: 100%;">
-                            <i class="fa fa-times"></i> {{ __('admin_main_menu_news_master.cancel') }}
+                            <i class="fa fa-times"></i> {{ __('data_employee_groupleave.btn_cancel') }}
                         </button>   
                     </div>        
                 </div>  
