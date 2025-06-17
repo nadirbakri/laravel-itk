@@ -3027,7 +3027,16 @@
             $('#group_authorize_payroll').val(null).trigger('change');
 
             $('#bpjs_number_tenaga_kerja').val("");
-            $('#join_tenaga_kerja').prop('checked', true);
+            $('#bpjs_number_tenaga_kerja').prop('disabled', true);
+            pickerJoiningDateBPJSTenagaKerja._input.setAttribute("disabled", "disabled");
+            pickerPaymentPeriodStartDateBPJSTenagaKerja._input.setAttribute("disabled", "disabled");
+            $('#non_accidental_death_insurance_tenaga_kerja').prop('disabled', true);
+            $('#pension_by_employer_tenaga_kerja').prop('disabled', true);
+            $('#work_related_accident_insurance_tenaga_kerja').prop('disabled', true);
+            $('#pension_by_employee_tenaga_kerja').prop('disabled', true);
+            $('#work_related_accident_insurance_two_tenaga_kerja').prop('disabled', true);
+            $('#pension_insurance_tenaga_kerja').prop('disabled', true);
+            $('#work_related_accident_insurance_three_tenaga_kerja').prop('disabled', true);
             $('#non_accidental_death_insurance_tenaga_kerja').prop('checked', false);
             $('#pension_by_employer_tenaga_kerja').prop('checked', false);
             $('#work_related_accident_insurance_tenaga_kerja').prop('checked', false);
