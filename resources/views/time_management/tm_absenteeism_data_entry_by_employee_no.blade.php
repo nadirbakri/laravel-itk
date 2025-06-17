@@ -82,6 +82,30 @@
             margin-left: 0.5%;
         }
 
+        #loading {
+			display: none;
+			position: absolute;
+			/* top: 0;
+			left: 0; */
+			width: 100%;
+			height: 100%;
+			background-color: rgba(255, 255, 255, 0.8);
+			z-index: 9999;
+		}
+
+		.spinner {
+            position: absolute;
+			margin-left: 45%;
+			margin-top: 5%;
+			border-radius: 50%;
+			width: 50px;
+			height: 50px;
+			border-radius: 50%;
+			border: 5px solid #ccc;
+			border-top-color: #333;
+			animation: spin 1s infinite linear;
+		}
+
         .select2-results__option[aria-selected=true] {
             display: none;
         }
@@ -220,6 +244,9 @@
         </div>
         <form id="absenteeism_data_entry_by_employee_no_table_form" method="post">
             <div class="div-table" width="100%">
+                <div id="loading">
+                    <div class="spinner"></div>
+                </div>
                 <table id="absenteeism_data_entry_by_employee_no_table" class="table hover" style="font-size: 0.8rem;">
                     <thead>
                         <tr>
@@ -431,38 +458,58 @@
 
         load_data_table_absenteeism_data_entry_by_employee_no();
 
-        $('#employee_no, #period').on("select2:select, change", function (e) {
-            load_data();
+        $('#employee_no, #period').on("select2:select", function (e) {
+            var data = $('#employee_no').select2('data');
+            var data2 = $('#period').val();
+            load_data(data, data2);
         });
 
-        function load_data(){
+        $('#period').on("change", function (e) {
             var data = $('#employee_no').select2('data');
-            // console.log(data[0]);
             var data2 = $('#period').val();
-            $('#employee_name').val(htmlDecode(data[0].title));
-            $('#ranking').val(data[0].data.rankingName);
-            $('#position').val(data[0].data.positionName);
-            $('#location').val(data[0].data.locationName);
-            $('#work_pattern').val(data[0].data.patternCodeDescription);
-            $('#cost_center').val(data[0].data.costCenterDescription);
-            $('#level1').val(data[0].data.levelName1);
-            // console.log(data);
+            load_data(data, data2);
+        });
+
+        $('#employee_no').on("select2:unselecting", function (e) {
+            $('#employee_name').val('');
+            $('#ranking').val('');
+            $('#position').val('');
+            $('#level1').val('');
+            $('#location').val('');
+            $('#cost_center').val('');
+            $('#work_pattern').val('');
+            table.clear().draw();
+
+            // load_data(null, data2)
+        });
+
+        function load_data(data, data2){
+            if (data) {
+                $('#employee_name').val(htmlDecode(data[0].title));
+                $('#ranking').val(data[0].data.rankingName);
+                $('#position').val(data[0].data.positionName);
+                $('#location').val(data[0].data.locationName);
+                $('#work_pattern').val(data[0].data.patternCodeDescription);
+                $('#cost_center').val(data[0].data.costCenterDescription);
+                $('#level1').val(data[0].data.levelName1);
+            }
 
             // var filter_employee_no_table = $('#employee_no').val();
+            $('#loading').show();
             table.clear().draw();
 
             $.ajax({
                 url: "{{ url('time_management/absenteeism_data_entry_by_employee_no/table') }}",
                 type: "GET",
                 data: {
-                    'employeeNo': data[0].id,
+                    'employeeNo': data ? data[0].id : '',
                     'period': data2
                 },
                 success: function (response) {
                     if(!isEmpty(response)){
                         $.each(response, function(k, v) {
                             table.row.add([
-                                '<input type="hidden" class="form-control employee_no_table" name="employee_no_table[]" id="employee_no_table" value="'+ data[0].id +'"><input type="text" class="form-control absent_date" name="absent_date[]" id="absent_date" value="'+ ((typeof v.absentDate !== 'undefined' && v.absentDate !== null) ? moment(v.absentDate).format('YYYY-MM-DD') : '') +'" readonly>',
+                                '<input type="hidden" class="form-control employee_no_table" name="employee_no_table[]" id="employee_no_table" value="'+ (v.employeeNo || '') +'"><input type="text" class="form-control absent_date" name="absent_date[]" id="absent_date" value="'+ ((typeof v.absentDate !== 'undefined' && v.absentDate !== null) ? moment(v.absentDate).format('YYYY-MM-DD') : '') +'" readonly>',
                                 '<input type="text" class="form-control seq_no" name="seq_no[]" id="seq_no" value="'+ ((typeof v.seqNo !== 'undefined' && v.seqNo !== null) ? v.seqNo : '') +'" readonly>',
                                 '<select class="form-control select2 select_day" name="day[]" id="day'+ (k+1) +'" data-no="'+ (k+1) +'" disabled></select><input type="hidden" class="form-control" name="day_det[]" id="day_det'+ (k+1) +'">',
                                 '<select class="form-control select2 select_shift_code" name="shift_code[]" id="shift_code'+ (k+1) +'" data-no="'+ (k+1) +'" disabled></select><input type="hidden" class="form-control" name="shift_code_det[]" id="shift_code_det'+ (k+1) +'">',
@@ -654,8 +701,13 @@
                             pickrNormalHourOut[k].setDate(((typeof v.normalDateOut !== 'undefined' && v.normalDateOut !== null) ? moment(v.normalDateOut).format('HH:mm:ss') : ''));
                             pickrNormalOvertimeBefore[k].setDate(((typeof v.ovtBefore !== 'undefined' && v.ovtBefore !== null) ? moment(v.ovtBefore).format('HH:mm:ss') : ''));
                             pickrNormalOvertimeAfter[k].setDate(((typeof v.ovtAfter !== 'undefined' && v.ovtAfter !== null) ? moment(v.ovtAfter).format('HH:mm:ss') : ''));
+
+                            $('#loading').hide(); 
                         });
                     }
+                },
+                error: function (xhr) {
+                    $('#loading').hide();
                 }
             })
         }
@@ -687,17 +739,6 @@
             // $('.select_location').prop('disabled', false);
             // $('.select_grade').prop('disabled', false);
             $('#btn-save').prop('disabled', false);
-        });
-
-        $('#employee_no').on("select2:unselecting", function (e) {
-            $('#employee_name').val('');
-            $('#ranking').val('');
-            $('#position').val('');
-            $('#level1').val('');
-            $('#location').val('');
-            $('#cost_center').val('');
-            $('#work_pattern').val('');
-            $('#absenteeism_data_entry_by_employee_no_table').DataTable().destroy();
         });
 
         loadDataEmployeeNo();
