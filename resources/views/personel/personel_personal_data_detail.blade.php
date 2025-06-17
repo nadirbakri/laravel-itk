@@ -1529,7 +1529,7 @@
                                                 <label for="join_tenaga_kerja">&nbsp;</label>
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="checkbox"
-                                                        id="join_tenaga_kerja" name="join_tenaga_kerja" value="true">
+                                                        id="join_tenaga_kerja" name="join_tenaga_kerja" value="false">
                                                     <label class="form-check-label"
                                                         for="join_tenaga_kerja">{{ __('personel_personal_data.label_join') }}</label>
                                                 </div>
@@ -1687,7 +1687,7 @@
                                                 <label for="join_kesehatan">&nbsp;</label>
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="checkbox" id="join_kesehatan"
-                                                        name="join_kesehatan" value="true">
+                                                        name="join_kesehatan" value="false">
                                                     <label class="form-check-label"
                                                         for="join_kesehatan">{{ __('personel_personal_data.label_join') }}</label>
                                                 </div>
@@ -3027,6 +3027,7 @@
             $('#group_authorize_payroll').val(null).trigger('change');
 
             $('#bpjs_number_tenaga_kerja').val("");
+            $('#join_tenaga_kerja').prop('checked', false);
             $('#bpjs_number_tenaga_kerja').prop('disabled', true);
             pickerJoiningDateBPJSTenagaKerja._input.setAttribute("disabled", "disabled");
             pickerPaymentPeriodStartDateBPJSTenagaKerja._input.setAttribute("disabled", "disabled");
@@ -3046,7 +3047,10 @@
             $('#work_related_accident_insurance_three_tenaga_kerja').prop('checked', false);
 
             $('#bpjs_number_kesehatan').val("");
-            $('#join_kesehatan').prop('checked', true);
+            $('#join_kesehatan').prop('checked', false);
+            $('#bpjs_number_kesehatan').prop('disabled', true);
+            pickerJoiningDateBPJSKesehatan._input.setAttribute("disabled", "disabled");
+            pickerPaymentPeriodStartDateBPJSKesehatan._input.setAttribute("disabled", "disabled");
 
             $('#company_bank_code_primary').val(null).trigger('change');
             $('#employee_bank_code_primary').val(null).trigger('change');

@@ -20,6 +20,8 @@ return [
     'dose_required' => 'Dosis harus diisi',
     'vaccine_date_required' => 'Tanggal Vaksin harus diisi',
     'vaccine_time_required' => 'Waktu Vaksin harus diisi',
+    'serial_number_required' => 'Nomor Seri harus diisi',
+    'expired_date_required' => 'Tanggal Kadaluwarsa harus diisi',
     'btn_save' => 'Simpan',
     'btn_cancel' => 'Batal',
     'btn_add' => 'Tambah',

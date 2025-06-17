@@ -2301,8 +2301,7 @@ class MedicalController extends Controller
                 'batchCode' => $request->batch_code,
                 'capacity' => $request->capacity,
                 'sequence' => (int) $request->dose,
-                'date' => $request->vaccine_date . "T" . $request->vaccine_time,
-                'description' => 'Dose ' . $request->dose . ' - ' . Carbon::parse($request->vaccine_date)->translatedFormat('d F Y'),
+                'description' => $request->batch_description,
                 // 'expiredDate' => $request->expired_date,
                 // 'serialNumber' => $request->serial_number,
                 'sessionID' => 0,
@@ -2312,7 +2311,7 @@ class MedicalController extends Controller
                 "languageCode" => App::getLocale()
             ];
 
-            // dd(json_encode([$param]));
+            // dd(json_encode($param), $request->record_function_detail);
 
             if($request->record_function_detail == 'New'){
                 $response = $client->post(env('API_URL') . '/personel/HealthActivities/InsertHealthActivitiesDetail',

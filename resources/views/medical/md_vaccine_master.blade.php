@@ -160,10 +160,10 @@
                 <div class="modal-body table-responsive">
                     <div class="row">
                         <div class="col-12" style="display: flex; justify-content: flex-end; gap: 10px;">
-                            <button type="button" class="btn btn-primary" id="btn-add" style="width: 100px" data-toggle="modal" data-target="#vaccine_master_detail_modal">
+                            <button type="button" class="btn btn-primary" id="btn-add" style="width: 100px">
                                 <i class="fa fa-plus"></i> {{ __('md_vaccine_master.btn_add') }}
                             </button>
-                            <button type="button" class="btn btn-secondary" id="btn-edit" style="width: 100px" data-toggle="modal" data-target="#vaccine_master_detail_modal">
+                            <button type="button" class="btn btn-secondary" id="btn-edit" style="width: 100px">
                                 <i class="fa fa-pencil"></i> {{ __('md_vaccine_master.btn_edit') }}
                             </button>
                             <button type="button" class="btn btn-error" id="btn-remove" style="width: 100px">
@@ -181,7 +181,6 @@
                                         <th>Capacity</th>
                                         <th>Dose</th>
                                         <th>Batch Description</th>
-                                        <th>Time</th>
                                         {{-- <th>Serial Number</th> --}}
                                         {{-- <th>Expired</th> --}}
                                     </tr>
@@ -208,7 +207,7 @@
                 <form id="vaccine_master_detail_form" method="post">
                     <div class="modal-body table-responsive">
                         <div class="row">
-                            <div class="col-4">
+                            <div class="col-6">
                                 <div class="form-group">
                                     <label for="batch_code">{{ __('md_vaccine_master.label_batch_code') }}</label>
                                     <span class="required">*</span>
@@ -217,52 +216,37 @@
                                     <input type="hidden" class="form-control" id="record_function_detail" name="record_function_detail">
                                 </div>
                             </div>
-                            <div class="col-4">
+                            <div class="col-6">
                                 <div class="form-group">
                                     <label for="capacity">{{ __('md_vaccine_master.label_capacity') }}</label>
                                     <input type="number" class="form-control" id="capacity" name="capacity" placeholder="{{ __('md_vaccine_master.label_capacity') }}">
                                 </div>
                             </div>
-                            <div class="col-4">
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
                                 <div class="form-group">
                                     <label for="dose">{{ __('md_vaccine_master.label_dose') }}</label>
                                     <span class="required">*</span>
                                     <input type="number" class="form-control" id="dose" name="dose" placeholder="{{ __('md_vaccine_master.label_dose') }}">
                                 </div>
                             </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="batch_description">{{ __('md_vaccine_master.label_batch_description') }}</label>
+                                    <input type="text" class="form-control" id="batch_description" name="batch_description" placeholder="{{ __('md_vaccine_master.label_batch_description') }}">
+                                </div>
+                            </div>
                         </div>
                         <div class="row">
-                            <div class="col-4">
-                                <div class="form-group">
-                                    <label for="vaccine_date form-check-label">{{ __('md_vaccine_master.label_vaccine_date') }}</label>
-                                    <span class="required">*</span>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" id="vaccine_date" name="vaccine_date"
-                                            placeholder="{{ __('md_vaccine_master.label_vaccine_date') }}">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text" id="vaccine_date_calendar"><span class="fa fa-calendar"></span></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="form-group">
-                                    <label for="vaccine_time">{{ __('md_vaccine_master.label_vaccine_time') }}</label>
-                                    <span class="required">*</span>
-                                    <input type="time" class="form-control" id="vaccine_time" name="vaccine_time"
-                                        placeholder="{{ __('md_vaccine_master.label_vaccine_time') }}">
-                                </div>
-                            </div>
-                            <div class="col-4">
+                            <div class="col-6">
                                 <div class="form-group">
                                     <label for="serial_number">{{ __('md_vaccine_master.label_serial_number') }}</label>
                                     <span class="required">*</span>
                                     <input type="text" class="form-control" id="serial_number" name="serial_number" placeholder="{{ __('md_vaccine_master.label_serial_number') }}">
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-4">
+                            <div class="col-6">
                                 <div class="form-group">
                                     <label for="expired_date form-check-label">{{ __('md_vaccine_master.label_expired_date') }}</label>
                                     <span class="required">*</span>
@@ -363,21 +347,6 @@
         let dataDetail = null;
         $('.div-navbar a.disabled').attr('onclick', 'return false;');
 
-        let vaccineDate = $('#vaccine_date').flatpickr({
-            altInput: true,
-            allowInput: true,
-            altFormat: "d-M-Y",
-            dateFormat: "Y-m-d",
-            defaultDate: "today",
-            onReady: function () {
-                var flatPickrInstance = this;
-                var $flatPickrInput = $(flatPickrInstance.element);
-                $flatPickrInput.siblings("#vaccine_date_calendar").click(function () {
-                    flatPickrInstance.toggle();
-                });
-            }
-        });
-
         let expiredDate = $('#expired_date').flatpickr({
             altInput: true,
             allowInput: true,
@@ -391,19 +360,6 @@
                     flatPickrInstance.toggle();
                 });
             }
-        });
-
-        const vaccineTime = $('#vaccine_time').flatpickr({
-            enableTime: true,
-            noCalendar: true,
-            altInput: true,
-            // static: true,
-            allowInput: true,
-            time_24hr: true,
-            minuteIncrement: 5,
-            defaultDate: "today",
-            altFormat: "H:i",
-            dateFormat: "H:i:ss"
         });
         
         $('#vaccine_master_table thead tr').clone(true).appendTo('#vaccine_master_table thead');
@@ -495,11 +451,6 @@
                     {data: 'capacity', name: 'capacity'},
                     {data: 'sequence', name: 'sequence'},
                     {data: 'description', name: 'description'},
-                    {data: 'date', name: 'date',
-                        render: function (data, type, row) {
-                            return moment(data).format('HH:mm')
-                        }
-                    },
                     // {data: 'handPhone', name: 'handPhone'},
                     // {data: 'expiredDate', name: 'expiredDate',
                     //     render: function (data, type, row) {
@@ -546,37 +497,26 @@
 
             $('#btn-add').on('click', function(e) {
                 $('#record_function_detail').val('New')
-                $('#modal-title-detail').html(`Add Batch for ${data.activityName}`)
+                getValue(data, null, 'Add')
             })
 
             $('#btn-edit').on('click', function(e) {
                 const value = table_detail.rows('.selected').data()[0];
-
                 $('#record_function_detail').val('Edit')
-                $('#modal-title-detail').html(`Edit Batch for ${data.activityName}`)
 
-                $('#batch_code').val(value.batchCode)
-                $('#capacity').val(value.capacity)
-                $('#dose').val(value.sequence)
-                vaccineDate.setDate(value.date)
-                const formattedTime = moment(value.date || '').format('HH:mm:ss');
-                vaccineTime.setDate(formattedTime)
+                if (value) {
+                    getValue(data, value, 'Edit')
+                }
+                else {
+                    $('#notification_error').modal('show');
+                    $('#message-notification-error').html('No Data Selected');
+                }
             })
 
             $('#vaccine_master_detail_table tbody').on('click', 'tr td:not(:first-child)', function () {
                 const value = table_detail.row(this).data();
-
-                $('#vaccine_master_detail_modal').modal('show')
-
                 $('#record_function_detail').val('Edit')
-                $('#modal-title-detail').html(`Edit Batch for ${data.activityName}`)
-
-                $('#batch_code').val(value.batchCode)
-                $('#capacity').val(value.capacity)
-                $('#dose').val(value.sequence)
-                vaccineDate.setDate(value.date)
-                const formattedTime = moment(value.date || '').format('HH:mm:ss');
-                vaccineTime.setDate(formattedTime)
+                getValue(data, value, 'Edit')
             });
 
             $("#btn-remove").on('click', function() {
@@ -622,6 +562,17 @@
             });
         }
 
+        function getValue (data, dataDetail, func) {
+            $('#vaccine_master_detail_modal').modal('show')
+            $('#modal-title-detail').html(`${func} Batch for ${data.activityName}`)
+            $('#batch_code').prop('readonly', func === 'Add' ? false : true)
+
+            $('#batch_code').val(dataDetail ? dataDetail.batchCode : '')
+            $('#capacity').val(dataDetail ? dataDetail.capacity : '')
+            $('#dose').val(dataDetail ? dataDetail.sequence : '')
+            $('#batch_description').val(dataDetail ? dataDetail.description : '')
+        }
+
         $('#vaccine_master_table tbody').on('click', 'input[type="checkbox"]', function(e){
             var $row = $(this).closest('tr');
 
@@ -642,9 +593,9 @@
             window.location = "{{ url('medical/vaccine_master') }}";
         })
 
-        $('#notification_error').on('hide.bs.modal', function () {
-            window.location = "{{ url('medical/vaccine_master') }}";
-        })
+        // $('#notification_error').on('hide.bs.modal', function () {
+        //     window.location = "{{ url('medical/vaccine_master') }}";
+        // })
 
         $("#toolbar-new").on('click', function() {
             $.redirect("{{ url('medical/vaccine_master/detail_data') }}", { 'activityCode' : null, 'func': 'new' }, "GET", "iframe_dashboard");
@@ -724,12 +675,9 @@
                     dose: {
                         required: true,
                     },
-                    vaccine_date: {
-                        required: true,
-                    },
-                    vaccine_time: {
-                        required: true,
-                    }
+                    // serial_number: {
+                    //     required: true,
+                    // },
                 },
                 messages: {
                     batch_code: {
@@ -738,12 +686,9 @@
                     dose: {
                         required: "{{ __('md_vaccine_master.dose_required') }}",
                     },
-                    vaccine_date: {
-                        required: "{{ __('md_vaccine_master.vaccine_date_required') }}",
+                    serial_number: {
+                        required: "{{ __('md_vaccine_master.serial_number_required') }}",
                     },
-                    vaccine_time: {
-                        required: "{{ __('md_vaccine_master.vaccine_time_required') }}",
-                    }
                 },
                 highlight: function (element) {
                     $(element).addClass('is-invalid');

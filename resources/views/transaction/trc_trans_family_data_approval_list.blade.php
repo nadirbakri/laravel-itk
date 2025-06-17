@@ -507,7 +507,7 @@
                         .message);
                     setTimeout(function () {
                         window.location =
-                            "{{ url('transaction/transaction_family_data_approval') }}";
+                            "{{ url('transaction/transaction_family_data_approval_list') }}";
                     }, 3000);
                 } else {
                     $(element).prop("disabled", false);
@@ -632,8 +632,8 @@
 
         const result = [];
 
-        for (let i = dataArray.length - 1; i > 0; i--) {
-            const prev = dataArray[i - 1];
+        for (let i = 0; i < dataArray.length - 1; i++) {
+            const prev = dataArray[i + 1];
             const curr = dataArray[i];
 
             result.unshift({
@@ -650,15 +650,15 @@
         }
 
         result.unshift({
-            changedDate: moment(dataArray[0].changedDate).format("DD MMM YYYY"),
-            familyName: dataArray[0].familyName,
-            birthDate: dataArray[0].birthDate,
-            genderName: dataArray[0].genderName,
-            relationName: dataArray[0].relationName,
-            handPhone: dataArray[0].handPhone,
-            emergencyContact: formatBooleanChange(dataArray[0].emergencyContact),
-            fullTimeStudent: formatBooleanChange(dataArray[0].fullTimeStudent),
-            disability: formatBooleanChange(dataArray[0].disability),
+            changedDate: moment(dataArray[dataArray.length - 1].changedDate).format("DD MMM YYYY"),
+            familyName: dataArray[dataArray.length - 1].familyName,
+            birthDate: dataArray[dataArray.length - 1].birthDate,
+            genderName: dataArray[dataArray.length - 1].genderName,
+            relationName: dataArray[dataArray.length - 1].relationName,
+            handPhone: dataArray[dataArray.length - 1].handPhone,
+            emergencyContact: formatBooleanChange(dataArray[dataArray.length - 1].emergencyContact),
+            fullTimeStudent: formatBooleanChange(dataArray[dataArray.length - 1].fullTimeStudent),
+            disability: formatBooleanChange(dataArray[dataArray.length - 1].disability),
         });
 
         return result
@@ -683,7 +683,7 @@
         }
 
         return `
-            <div class="d-flex"><s>${display(prevVal)}</s><span>${display(currVal)}</span></div>
+            <div class="d-flex"><s>${display(prevVal)} </s><span> ${display(currVal)}</span></div>
         `;
     }
 
@@ -694,11 +694,11 @@
     });
 
     $('#notification_success').on('hide.bs.modal', function () {
-        window.location = "{{ url('transaction/transaction_family_data_approval') }}";
+        window.location = "{{ url('transaction/transaction_family_data_approval_list') }}";
     })
 
     $('#notification_error').on('hide.bs.modal', function () {
-        window.location = "{{ url('transaction/transaction_family_data_approval') }}";
+        window.location = "{{ url('transaction/transaction_family_data_approval_list') }}";
     })
     
   });

@@ -20,6 +20,8 @@ return [
     'dose_required' => 'Dose is required',
     'vaccine_date_required' => 'Vaccine Date is required',
     'vaccine_time_required' => 'Vaccine Time is required',
+    'serial_number_required' => 'Serial Number is required',
+    'expired_date_required' => 'Expired Date is required',
     'btn_save' => 'Save',
     'btn_cancel' => 'Cancel',
     'btn_add' => 'Add',
