@@ -61,36 +61,39 @@
 			</tr>
 		</thead>
 		<tbody>
-			@foreach($data as $value)
+			<?php 
+				$no = 1; 
+			?>
+			@foreach($data as $key => $value)
 			<tr>
-                <td>{{ $value->no }}</td>
-				<td>{{ $value->employeeno }}</td>
-				<td>{{ $value->employeename }}</td>
-				<td>{{ $value->normaldays }}</td>
-				<td>{{ $value->normalhours->totalHours }}</td>
-              	<td>{{ $value->actualdays }}</td>
-				<td>{{ $value->actualhours->totalHours }}</td>
-				<td>{{ $value->vanDays }}</td>
-				<td>{{ $value->vanDaysP }}</td>
-				<td>{{ $value->vanHours->totalHours }}</td>
-				<td>{{ $value->vanHoursP }}</td>
-				<td>{{ $value->overtimeDays }}</td>
-				<td>{{ $value->overtimeDaysP }}</td>
-				<td>{{ $value->overtimeHours->totalHours }}</td>
-				<td>{{ $value->overtimeHoursP }}</td>
-				<td>{{ $value->overtimeConvert }}</td>
-				<td>{{ $value->absentDays }}</td>
-				<td>{{ $value->absentHours->totalHours }}</td>
-				<td>{{ $value->othersDays }}</td>
-				<td>{{ $value->othersHours->totalHours }}</td>
-				<td>{{ $value->leavePermitDays }}</td>
-				<td>{{ $value->leavePermitHours->totalHours }}</td>
-				<td>{{ $value->totalAbsentDays }}</td>
-				<td>{{ $value->totalAbsentHours->totalHours }}</td>
-				<td>{{ $value->ewDays }}</td>
-				<td>{{ $value->ewDaysP }}</td>
-				<td>{{ $value->ewHours->totalHours }}</td>			
-				<td>{{ $value->ewHoursP }}</td>
+                <td>{{ $no++ }}</td>
+				<td style="text-align: left;">{{ $value->employeeNo }}</td>
+				<td>{{ $value->employeeName }}</td>
+				<td>{{ $value->normal->days }}</td>
+				<td>{{ $value->normal->hours }}</td>
+              	<td>{{ $value->actual->days }}</td>
+				<td>{{ $value->actual->hours }}</td>
+				<td>{{ $value->varianceActualWithNormal->days }}</td>
+				<td>{{ $value->varianceActualWithNormal->daysPercentage }}</td>
+				<td>{{ $value->varianceActualWithNormal->hours }}</td>
+				<td>{{ $value->varianceActualWithNormal->hoursPercentage }}</td>
+				<td>{{ $value->overtime->days }}</td>
+				<td>{{ $value->overtime->daysPercentage }}</td>
+				<td>{{ $value->overtime->hours }}</td>
+				<td>{{ $value->overtime->hoursPercentage }}</td>
+				<td>{{ $value->overtime->convert }}</td>
+				<td>{{ $value->absent->days }}</td>
+				<td>{{ $value->absent->hours }}</td>
+				<td>{{ $value->others->days }}</td>
+				<td>{{ $value->others->hours }}</td>
+				<td>{{ $value->leavePermit->days }}</td>
+				<td>{{ $value->leavePermit->hours }}</td>
+				<td>{{ $value->totalAbsent->days }}</td>
+				<td>{{ $value->totalAbsent->hours }}</td>
+				<td>{{ $value->effectiveHours->days }}</td>
+				<td>{{ $value->effectiveHours->daysPercentage }}</td>
+				<td>{{ $value->effectiveHours->hours }}</td>			
+				<td>{{ $value->effectiveHours->hoursPercentage }}</td>
 			</tr>
 			@endforeach
 		</tbody>

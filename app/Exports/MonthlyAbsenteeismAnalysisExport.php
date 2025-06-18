@@ -13,11 +13,14 @@ use App;
 
 class MonthlyAbsenteeismAnalysisExport implements FromView, ShouldAutoSize
 {
-    public function __construct($employeeNoFrom, $employeeNoTo, $period, $includeResign, $groupAuthorizeFrom, $groupAuthorizeTo, $position, $ranking, $location, $dataLevel)
+    public function __construct($employeeNoFrom, $employeeNoTo, $range, $period, $absentDateFrom, $absentDateTo, $includeResign, $groupAuthorizeFrom, $groupAuthorizeTo, $position, $ranking, $location, $dataLevel)
     {
         $this->employeeNoFrom = $employeeNoFrom;
         $this->employeeNoTo = $employeeNoTo;
+        $this->range = $range;
         $this->period = $period;
+        $this->absentDateFrom = $absentDateFrom;
+        $this->absentDateTo = $absentDateTo;
         $this->includeResign = $includeResign;
         $this->groupAuthorizeFrom = $groupAuthorizeFrom;
         $this->groupAuthorizeTo = $groupAuthorizeTo;
@@ -40,7 +43,8 @@ class MonthlyAbsenteeismAnalysisExport implements FromView, ShouldAutoSize
                 'languageCode' => App::getLocale(), 
                 'sessionID' => 0, 
                 'sessionUserID' => Session::get('userID'),
-                'includeResign' => $this->includeResign
+                'includeResign' => $this->includeResign,
+                'range' => $this->range
             ];
 
             if(!empty($this->employeeNoFrom) || !empty($this->employeeNoTo)){
@@ -50,6 +54,14 @@ class MonthlyAbsenteeismAnalysisExport implements FromView, ShouldAutoSize
 
             if(!empty($this->period) || !empty($this->period)){
                 $param['period'] = $this->period;
+            }
+
+            if(!empty($this->absentDateFrom) || !empty($this->absentDateTo)){
+                $param['absentDateFrom'] = $this->absentDateFrom;
+                $param['absentDateTo'] = $this->absentDateTo;
+            }else{
+                $param['absentDateFrom'] = null;
+                $param['absentDateTo'] = null;
             }
 
             if(!empty($this->groupAuthorizeFrom) || !empty($this->groupAuthorizeTo)){
@@ -92,16 +104,16 @@ class MonthlyAbsenteeismAnalysisExport implements FromView, ShouldAutoSize
                 $param['levelMaster'] = $data_level;
             }
 
-            // var_dump(json_encode($param));
+            // dd(json_encode($param));
 
             // var_dump($param['levelMaster']);
 
-            $response = $client->post(env('API_URL') . '/mobile/TmAbsentEmployee/GetMonthlyAbsenteeismAnalysisReport',
+            $response = $client->post(env('API_URL') . '/mobile/MonthlyAbsenteeismAnalysis/getMonthlyAbsenteeismAnalysisReport',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            // var_dump($response);
+            // dd($response);
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
@@ -113,7 +125,7 @@ class MonthlyAbsenteeismAnalysisExport implements FromView, ShouldAutoSize
 
         $arrResult = json_decode($response->getBody()->getContents());
 
-        // var_dump($arrResult->dataListSet);
+        // dd($arrResult->dataListSet);
 
         if($arrResult->dataListSet == null){
             return view('time_management.tm_export_monthly_absenteeism_analysis', [
@@ -121,7 +133,7 @@ class MonthlyAbsenteeismAnalysisExport implements FromView, ShouldAutoSize
             ]);
         }else{
             return view('time_management.tm_export_monthly_absenteeism_analysis', [
-                'data' => $arrResult->dataListSet
+                'data' => $arrResult->dataListSet[0]
             ]);
         }
     }

@@ -23,6 +23,12 @@ return [
     'label_position' => 'Jabatan',
     'label_ranking' => 'Peringkat',
     'label_location' => 'Lokasi',
+    'label_get_employee' => 'Tipe Data Karyawan',
+    'label_all' => 'Semua',
+    'label_range' => 'Rentang',
+    'label_absent_date_from' => 'Dari Tanggal Absensi',
+    'label_absent_date_to' => 'Sampai Tanggal Absensi',
+    'label_date_type' => 'Tipe Tanggal',
     'btn_print' => 'Cetak',
     'judul_export' => 'Laporan Analisis Absensi Bulanan'
 

@@ -23,6 +23,12 @@ return [
     'label_position' => 'Position',
     'label_ranking' => 'Ranking',
     'label_location' => 'Location',
+    'label_get_employee' => 'Employee Data Type',
+    'label_all' => 'All',
+    'label_range' => 'Range',
+    'label_absent_date_from' => 'Absent Date From',
+    'label_absent_date_to' => 'Absent Date To',
+    'label_date_type' => 'Date Type',
     'btn_print' => 'Print',
     'judul_export' => 'Monthly Absenteeism Analysis',
 

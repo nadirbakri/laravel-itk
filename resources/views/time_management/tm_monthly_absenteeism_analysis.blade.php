@@ -59,25 +59,63 @@
             <form id="monthly_absenteeism_analysis_form" method="post">
                 @csrf
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-2">
                         <div class="form-group">
-                            <label
-                                for="employee_no_from">{{ __('tm_monthly_absenteeism_analysis.label_employee_no_from') }}</label>
-                            <select class="form-control select2" id="employee_no_from" name="employee_no_from"></select>
+                            <label for="get_employee form-check-label">{{ __('tm_monthly_absenteeism_analysis.label_get_employee') }}</label>
                         </div>
                     </div>
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="employee_no_to">{{ __('tm_monthly_absenteeism_analysis.label_employee_no_to') }}</label>
-                            <select class="form-control select2" id="employee_no_to" name="employee_no_to"></select>
+                    <div class="col-1">
+                        <div class="form-check">
+                            <input type="radio" id="get_employee_all" name="get_employee" value="ALL" checked>
+                            <label for="get_employee_all">{{ __('tm_monthly_absenteeism_analysis.label_all') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-check">
+                            <input type="radio" id="get_employee_range" name="get_employee" value="RANGE">
+                            <label for="get_employee_range">{{ __('tm_monthly_absenteeism_analysis.label_range') }}</label>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
+                            <label
+                                for="employee_no_from">{{ __('tm_monthly_absenteeism_analysis.label_employee_no_from') }}</label>
+                            <select class="form-control select2" id="employee_no_from" name="employee_no_from" disabled></select>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="employee_no_to">{{ __('tm_monthly_absenteeism_analysis.label_employee_no_to') }}</label>
+                            <select class="form-control select2" id="employee_no_to" name="employee_no_to" disabled></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label for="date_type form-check-label">{{ __('tm_monthly_absenteeism_analysis.label_date_type') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="form-check">
+                            <input type="radio" id="date_type_period" name="date_type" value="PERIOD" checked>
+                            <label for="date_type_period">{{ __('tm_monthly_absenteeism_analysis.label_period') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-check">
+                            <input type="radio" id="date_type_range" name="date_type" value="RANGE">
+                            <label for="date_type_range">{{ __('tm_monthly_absenteeism_analysis.label_range') }}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" id="div_period">
+                    <div class="col-6">
+                        <div class="form-group">
                             <label for="period">{{ __('tm_monthly_absenteeism_analysis.label_period') }}</label>
-                            <div class='input-group'>
+                            <div class='input-group input-month'>
                                 <input type="text" class="form-control" id="period" name="period"
                                     placeholder="{{ __('tm_monthly_absenteeism_analysis.label_period') }}">
                                 <div class="input-group-prepend">
@@ -86,6 +124,34 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="row" id="div_absent_date" style="display: none;">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="absent_date_from">{{ __('tm_monthly_absenteeism_analysis.label_absent_date_from') }}</label>
+                            <div class='input-group input-date'>
+                                <input type="text" class="form-control input-day" id="absent_date_from" name="absent_date_from"
+                                    placeholder="{{ __('tm_monthly_absenteeism_analysis.label_absent_date_from') }}">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="absent_date_to">{{ __('tm_monthly_absenteeism_analysis.label_absent_date_to') }}</label>
+                            <div class='input-group input-date'>
+                                <input type="text" class="form-control input-day" id="absent_date_to" name="absent_date_to"
+                                    placeholder="{{ __('tm_monthly_absenteeism_analysis.label_absent_date_to') }}">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>    
+                <div class="row">
                     <div class="col-6">
                         <div class="form-group">
                             <label for="include_resign">&nbsp;</label>
@@ -210,7 +276,7 @@
     });
 
     function initDatePicker() {
-        $('.input-group input').flatpickr({
+        $('.input-month input').flatpickr({
             altInput: true,
             allowInput: true,
             altFormat: "d-M-Y",
@@ -223,6 +289,21 @@
                     altFormat: "F Y", //defaults to "F Y"
                 })
             ],
+            onReady: function () {
+                var flatPickrInstance = this;
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
+
+        $('.input-date input').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "d-M-Y",
+            dateFormat: "Y-m-d",
+            defaultDate: "today",
             onReady: function () {
                 var flatPickrInstance = this;
                 var $flatPickrInput = $(flatPickrInstance.element);
@@ -291,6 +372,34 @@
         //     '</div>';
         //     $('.select2-search--dropdown').append(html);
         // });
+
+        $('input[name=get_employee]').on("change", function (e) {
+            var data = $(this).val();
+            if(data == "ALL"){
+                $('#employee_no_from').prop('disabled', true);
+                $('#employee_no_to').prop('disabled', true);
+            }else{
+                $('#employee_no_from').prop('disabled', false);
+                $('#employee_no_to').prop('disabled', false);
+            }
+        });
+
+        $('input[name=date_type]').on("change", function (e) {
+            var data = $(this).val();
+            if(data == "PERIOD"){
+                $('#div_period').show();
+                $('#div_absent_date').hide();
+                $('#period').prop('disabled', false);
+                $('#absent_date_from').prop('disabled', true);
+                $('#absent_date_to').prop('disabled', true);
+            }else{
+                $('#div_period').hide();
+                $('#div_absent_date').show();
+                $('#period').prop('disabled', true);
+                $('#absent_date_from').prop('disabled', false);
+                $('#absent_date_to').prop('disabled', false);
+            }
+        });
 
         $('#select').focus(function (event) {
             var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');

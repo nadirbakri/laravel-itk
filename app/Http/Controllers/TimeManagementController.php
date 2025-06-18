@@ -1376,12 +1376,17 @@ class TimeManagementController extends Controller
     public function printMonthlyAbsenteeismAnalysis(Request $request)
     {
         $dataLevel = [];
+        $range = false;
 
         for($i = 0; $i < $request->level_format; $i++){
             $dataLevel[] = $request->{'level' . ($i+1)};
         }
 
-        return Excel::download(new MonthlyAbsenteeismAnalysisExport($request->employee_no_from, $request->employee_no_to, $request->period, isset($request->include_resign) ? (bool) $request->include_resign : false, $request->group_authorize_from, $request->group_authorize_to, $request->position, $request->ranking, $request->location, $dataLevel), 'Monthly Absenteeism Analysis.xlsx');
+        if($request->get_employee == "RANGE"){
+            $range = true;
+        }
+
+        return Excel::download(new MonthlyAbsenteeismAnalysisExport($request->employee_no_from, $request->employee_no_to, $range, $request->period, $request->absent_date_from, $request->absent_date_to, isset($request->include_resign) ? (bool) $request->include_resign : false, $request->group_authorize_from, $request->group_authorize_to, $request->position, $request->ranking, $request->location, $dataLevel), 'Monthly Absenteeism Analysis.xlsx');
     }
 
     public function printDetailAbsenteeismReport(Request $request)
