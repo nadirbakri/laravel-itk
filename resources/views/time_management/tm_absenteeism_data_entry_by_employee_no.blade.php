@@ -82,7 +82,7 @@
             margin-left: 0.5%;
         }
 
-        #loading {
+        #loading-background {
 			display: none;
 			position: absolute;
 			/* top: 0;
@@ -104,6 +104,10 @@
 			border: 5px solid #ccc;
 			border-top-color: #333;
 			animation: spin 1s infinite linear;
+		}
+
+        @keyframes spin {
+		    to { transform: rotate(360deg); }
 		}
 
         .select2-results__option[aria-selected=true] {
@@ -244,7 +248,7 @@
         </div>
         <form id="absenteeism_data_entry_by_employee_no_table_form" method="post">
             <div class="div-table" width="100%">
-                <div id="loading">
+                <div id="loading-background">
                     <div class="spinner"></div>
                 </div>
                 <table id="absenteeism_data_entry_by_employee_no_table" class="table hover" style="font-size: 0.8rem;">
@@ -377,6 +381,8 @@
     
     $(document).ready(function () {
         var table = null;
+        let dataEmployeeNo = null
+        let dataPeriod = null
 
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
@@ -459,15 +465,15 @@
         load_data_table_absenteeism_data_entry_by_employee_no();
 
         $('#employee_no, #period').on("select2:select", function (e) {
-            var data = $('#employee_no').select2('data');
-            var data2 = $('#period').val();
-            load_data(data, data2);
+            dataEmployeeNo = $('#employee_no').select2('data');
+            dataPeriod = $('#period').val();
+            load_data(dataEmployeeNo, dataPeriod);
         });
 
         $('#period').on("change", function (e) {
-            var data = $('#employee_no').select2('data');
-            var data2 = $('#period').val();
-            load_data(data, data2);
+            dataEmployeeNo = $('#employee_no').select2('data');
+            dataPeriod = $('#period').val();
+            load_data(dataEmployeeNo, dataPeriod);
         });
 
         $('#employee_no').on("select2:unselecting", function (e) {
@@ -483,27 +489,27 @@
             // load_data(null, data2)
         });
 
-        function load_data(data, data2){
-            if (data) {
-                $('#employee_name').val(htmlDecode(data[0].title));
-                $('#ranking').val(data[0].data.rankingName);
-                $('#position').val(data[0].data.positionName);
-                $('#location').val(data[0].data.locationName);
-                $('#work_pattern').val(data[0].data.patternCodeDescription);
-                $('#cost_center').val(data[0].data.costCenterDescription);
-                $('#level1').val(data[0].data.levelName1);
+        function load_data(dataEmployeeNo, dataPeriod){
+            if (dataEmployeeNo) {
+                $('#employee_name').val(htmlDecode(dataEmployeeNo[0].title));
+                $('#ranking').val(dataEmployeeNo[0].data.rankingName);
+                $('#position').val(dataEmployeeNo[0].data.positionName);
+                $('#location').val(dataEmployeeNo[0].data.locationName);
+                $('#work_pattern').val(dataEmployeeNo[0].data.patternCodeDescription);
+                $('#cost_center').val(dataEmployeeNo[0].data.costCenterDescription);
+                $('#level1').val(dataEmployeeNo[0].data.levelName1);
             }
 
             // var filter_employee_no_table = $('#employee_no').val();
-            $('#loading').show();
+            $('#loading-background').show();
             table.clear().draw();
 
             $.ajax({
                 url: "{{ url('time_management/absenteeism_data_entry_by_employee_no/table') }}",
                 type: "GET",
                 data: {
-                    'employeeNo': data ? data[0].id : '',
-                    'period': data2
+                    'employeeNo': dataEmployeeNo ? dataEmployeeNo[0].id : '',
+                    'period': dataPeriod
                 },
                 success: function (response) {
                     if(!isEmpty(response)){
@@ -702,12 +708,12 @@
                             pickrNormalOvertimeBefore[k].setDate(((typeof v.ovtBefore !== 'undefined' && v.ovtBefore !== null) ? moment(v.ovtBefore).format('HH:mm:ss') : ''));
                             pickrNormalOvertimeAfter[k].setDate(((typeof v.ovtAfter !== 'undefined' && v.ovtAfter !== null) ? moment(v.ovtAfter).format('HH:mm:ss') : ''));
 
-                            $('#loading').hide(); 
+                            $('#loading-background').hide(); 
                         });
                     }
                 },
                 error: function (xhr) {
-                    $('#loading').hide();
+                    $('#loading-background').hide();
                 }
             })
         }
@@ -1652,7 +1658,8 @@
                             if (response.status == "true") {
                                 $('#absenteeism_data_entry_by_employee_no_table').DataTable().destroy();
                                 load_data_table_absenteeism_data_entry_by_employee_no();
-                                load_data();
+                                load_data(dataEmployeeNo, dataPeriod);
+                                $('#loading-background').hide()
                                 
                                 $('#notification_success').modal('show');
                                 $('#message-notification-success').html(response
@@ -1677,6 +1684,8 @@
                                     '<i class="fa fa-floppy-o"></i> {{ __("tm_absenteeism_data_entry_by_employee_no.btn_save") }}'
                                 );
 
+                                $('#loading-background').hide()
+
                                 $('#notification_error').modal('show');
                                 if (response.message == null || response.message ==
                                     '') {
@@ -1698,6 +1707,7 @@
                             $("#btn-save").html(
                                 '<i class="fa fa-print"></i> {{ __("tm_absenteeism_data_entry_by_employee_no.btn_save") }}'
                             );
+                            $('#loading-background').hide()
                             $('#notification_error').modal('show');
                             $('#message-notification-error').html(response);
                         }
