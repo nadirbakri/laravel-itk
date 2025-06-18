@@ -7384,7 +7384,7 @@ public function dataDetailReportFormatPY(Request $request)
         }else if($data->companyCode == 'MCA' || $data->companyCode == 'MCAJU'){
             $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_ipn';
             $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_mca';
-        }else if($companyCode == 'MCA' || $companyCode == 'MCAJU'){
+        }else if($data->companyCode == 'MCA' || $data->companyCode == 'MCAJU'){
             $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_ipn';
             $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_mca';
         }else if($data->companyCode == 'IPN' || $data->companyCode == 'UPM' || $data->companyCode == 'IGT' ||
