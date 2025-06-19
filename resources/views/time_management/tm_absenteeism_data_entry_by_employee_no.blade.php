@@ -234,6 +234,18 @@
         </div>
         <div class="row">
             <div class="col-2">
+                <button type="button" class="btn btn-primary form-control-xs" name="btn-previous-employee" id="btn-previous-employee"
+                    style="width: 100%;" disabled>
+                    {{ __('tm_absenteeism_data_entry_by_employee_no.btn_previous_employee') }}
+                </button>
+            </div>
+            <div class="col-2">
+                <button type="button" class="btn btn-primary form-control-xs" name="btn-next-employee" id="btn-next-employee"
+                    style="width: 100%;" disabled>
+                    {{ __('tm_absenteeism_data_entry_by_employee_no.btn_next_employee') }}
+                </button>
+            </div>
+            <div class="col-2">
                 <button type="submit" class="btn btn-primary" name="btn-edit" id="btn-edit"
                     style="width: 100%;">
                     <i class="fa fa-pencil"></i> {{ __('tm_absenteeism_data_entry_by_employee_no.btn_edit') }}
@@ -383,6 +395,7 @@
         var table = null;
         let dataEmployeeNo = null
         let dataPeriod = null
+        let selectEmployeeNo = []
 
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
@@ -465,13 +478,16 @@
         load_data_table_absenteeism_data_entry_by_employee_no();
 
         $('#employee_no, #period').on("select2:select", function (e) {
-            dataEmployeeNo = $('#employee_no').select2('data');
+            dataEmployeeNo = $('#employee_no').select2('data')[0].data;
             dataPeriod = $('#period').val();
             load_data(dataEmployeeNo, dataPeriod);
+
+            $('#btn-previous-employee').prop('disabled', false)
+            $('#btn-next-employee').prop('disabled', false)
         });
 
         $('#period').on("change", function (e) {
-            dataEmployeeNo = $('#employee_no').select2('data');
+            dataEmployeeNo = $('#employee_no').select2('data')[0].data;
             dataPeriod = $('#period').val();
             load_data(dataEmployeeNo, dataPeriod);
         });
@@ -484,73 +500,149 @@
             $('#location').val('');
             $('#cost_center').val('');
             $('#work_pattern').val('');
+            $('#btn-previous-employee').prop('disabled', true)
+            $('#btn-next-employee').prop('disabled', true)
             table.clear().draw();
-
-            // load_data(null, data2)
         });
+
+        $('#btn-previous-employee').on('click', function () {
+            const currEmployeeNo = $('#employee_no').val()
+            let prevEmployeeNo = ''
+
+            if (selectEmployeeNo.length > 0) {
+                selectEmployeeNo.map((e, i) => {
+                    if (e.employeeNo === currEmployeeNo) {
+                        if (i === 0) {
+                            prevEmployeeNo = selectEmployeeNo[selectEmployeeNo.length - 1].employeeNo
+                            dataEmployeeNo = selectEmployeeNo[selectEmployeeNo.length - 1]
+                        }
+                        else {
+                            prevEmployeeNo = selectEmployeeNo[i - 1].employeeNo
+                            dataEmployeeNo = selectEmployeeNo[i - 1]
+                        }
+                    }
+                })
+                const optionEmployeeNo = new Option(prevEmployeeNo, prevEmployeeNo, true, true);
+                $('#employee_no').append(optionEmployeeNo).trigger('change');
+                $('#employee_no').val(prevEmployeeNo);
+
+                load_data(dataEmployeeNo, dataPeriod)
+            }
+        })
+
+        $('#btn-next-employee').on('click', function () {
+            const currEmployeeNo = $('#employee_no').val()
+            let nextEmployeeNo = ''
+
+            if (selectEmployeeNo.length > 0) {
+                selectEmployeeNo.map((e, i) => {
+                    if (e.employeeNo === currEmployeeNo) {
+                        if (i === selectEmployeeNo.length - 1) {
+                            nextEmployeeNo = selectEmployeeNo[0].employeeNo
+                            dataEmployeeNo = selectEmployeeNo[0]
+                        }
+                        else {
+                            nextEmployeeNo = selectEmployeeNo[i + 1].employeeNo
+                            dataEmployeeNo = selectEmployeeNo[i + 1]
+                        }
+                    }
+                })
+                const optionEmployeeNo = new Option(nextEmployeeNo, nextEmployeeNo, true, true);
+                $('#employee_no').append(optionEmployeeNo).trigger('change');
+                $('#employee_no').val(nextEmployeeNo);
+
+                load_data(dataEmployeeNo, dataPeriod)
+            }
+        })
 
         function load_data(dataEmployeeNo, dataPeriod){
             if (dataEmployeeNo) {
-                $('#employee_name').val(htmlDecode(dataEmployeeNo[0].title));
-                $('#ranking').val(dataEmployeeNo[0].data.rankingName);
-                $('#position').val(dataEmployeeNo[0].data.positionName);
-                $('#location').val(dataEmployeeNo[0].data.locationName);
-                $('#work_pattern').val(dataEmployeeNo[0].data.patternCodeDescription);
-                $('#cost_center').val(dataEmployeeNo[0].data.costCenterDescription);
-                $('#level1').val(dataEmployeeNo[0].data.levelName1);
+                $('#employee_name').val(htmlDecode(dataEmployeeNo.title || dataEmployeeNo.fullName));
+                $('#ranking').val(dataEmployeeNo.rankingName);
+                $('#position').val(dataEmployeeNo.positionName);
+                $('#location').val(dataEmployeeNo.locationName);
+                $('#work_pattern').val(dataEmployeeNo.patternCodeDescription);
+                $('#cost_center').val(dataEmployeeNo.costCenterDescription);
+                $('#level1').val(dataEmployeeNo.levelName1);
             }
 
             // var filter_employee_no_table = $('#employee_no').val();
             $('#loading-background').show();
             table.clear().draw();
+            table.order([0, 'asc']).draw();
 
             $.ajax({
                 url: "{{ url('time_management/absenteeism_data_entry_by_employee_no/table') }}",
                 type: "GET",
                 data: {
-                    'employeeNo': dataEmployeeNo ? dataEmployeeNo[0].id : '',
+                    'employeeNo': dataEmployeeNo ? dataEmployeeNo.id || dataEmployeeNo.employeeNo : '',
                     'period': dataPeriod
                 },
                 success: function (response) {
                     if(!isEmpty(response)){
                         $.each(response, function(k, v) {
                             table.row.add([
-                                '<input type="hidden" class="form-control employee_no_table" name="employee_no_table[]" id="employee_no_table" value="'+ (v.employeeNo || '') +'"><input type="text" class="form-control absent_date" name="absent_date[]" id="absent_date" value="'+ ((typeof v.absentDate !== 'undefined' && v.absentDate !== null) ? moment(v.absentDate).format('YYYY-MM-DD') : '') +'" readonly>',
-                                '<input type="text" class="form-control seq_no" name="seq_no[]" id="seq_no" value="'+ ((typeof v.seqNo !== 'undefined' && v.seqNo !== null) ? v.seqNo : '') +'" readonly>',
-                                '<select class="form-control select2 select_day" name="day[]" id="day'+ (k+1) +'" data-no="'+ (k+1) +'" disabled></select><input type="hidden" class="form-control" name="day_det[]" id="day_det'+ (k+1) +'">',
-                                '<select class="form-control select2 select_shift_code" name="shift_code[]" id="shift_code'+ (k+1) +'" data-no="'+ (k+1) +'" disabled></select><input type="hidden" class="form-control" name="shift_code_det[]" id="shift_code_det'+ (k+1) +'">',
+                                '<span style="display:none;">' + v.absentDate + '</span>' +
+                                    '<input type="hidden" class="form-control employee_no_table" name="employee_no_table[]" id="employee_no_table" value="'+ (v.employeeNo || '') +'"><input type="text" class="form-control absent_date" name="absent_date[]" id="absent_date" value="'+ ((typeof v.absentDate !== 'undefined' && v.absentDate !== null) ? moment(v.absentDate).format('YYYY-MM-DD') : '') +'" readonly>',
+                                '<span style="display:none;">' + v.seqNo + '</span>' +
+                                    '<input type="text" class="form-control seq_no" name="seq_no[]" id="seq_no" value="'+ ((typeof v.seqNo !== 'undefined' && v.seqNo !== null) ? v.seqNo : '') +'" readonly>',
+                                '<span style="display:none;">' + v.day + '</span>' +
+                                    '<select class="form-control select2 select_day" name="day[]" id="day'+ (k+1) +'" data-no="'+ (k+1) +'" disabled></select><input type="hidden" class="form-control" name="day_det[]" id="day_det'+ (k+1) +'">',
+                                '<span style="display:none;">' + v.shiftCode + '</span>' +
+                                    '<select class="form-control select2 select_shift_code" name="shift_code[]" id="shift_code'+ (k+1) +'" data-no="'+ (k+1) +'" disabled></select><input type="hidden" class="form-control" name="shift_code_det[]" id="shift_code_det'+ (k+1) +'">',
                                 // '<select class="form-control select2 select_cost_center_code" name="cost_center_code[]" id="cost_center_code'+ (k+1) +'" disabled></select>',
-                                '<div class="input-group">' +
-                                    '<input type="text" class="form-control actual_date_in" id="actual_date_in'+ (k+1) +'" name="actual_date_in[]" disabled>' +  
-                                    '<div class="input-group-prepend" id="actual_date_in_calendar">' +
-                                        '<span class="input-group-text"><span class="fa fa-calendar"></span></span>' +
-                                    '</div>' +
-                                '</div>',
-                                '<input type="text" class="form-control actual_time_in" name="actual_time_in[]" id="actual_time_in'+ (k+1) +'" data-no="'+ (k+1) +'" disabled>',
-                                '<div class="input-group date">' +
-                                    '<input type="text" class="form-control actual_date_out" id="actual_date_out" name="actual_date_out[]" disabled>' +  
-                                    '<div class="input-group-prepend date" id="actual_date_in_calendar">' +
-                                        '<span class="input-group-text"><span class="fa fa-calendar"></span></span>' +
-                                    '</div>' +
-                                '</div>',
-                                '<input type="text" class="form-control actual_time_out" name="actual_time_out[]" id="actual_time_out'+ (k+1) +'" data-no="'+ (k+1) +'" disabled>',
-                                '<input type="text" class="form-control total_actual_hour" name="total_actual_hour[]" id="total_actual_hour" readonly>',
-                                '<select class="form-control select2 select_overtime_code" name="overtime_code[]" id="overtime_code'+ (k+1) +'" data-no="'+ (k+1) +'" disabled></select><input type="hidden" class="form-control" name="overtime_code_det[]" id="overtime_code_det'+ (k+1) +'">',
-                                '<input type="text" class="form-control overtime_before" name="overtime_before[]" id="overtime_before" readonly>',
-                                '<input type="text" class="form-control overtime_start" name="overtime_start[]" id="overtime_start" readonly>',
-                                '<input type="text" class="form-control overtime_finish" name="overtime_finish[]" id="overtime_finish" readonly>',
-                                '<input type="text" class="form-control overtime_hour" name="overtime_hour[]" id="overtime_hour" readonly>',
-                                '<input type="text" class="form-control overtime_convert" name="overtime_convert[]" id="overtime_convert" value="'+ ((typeof v.hourOvtCvt !== 'undefined' && v.hourOvtCvt !== null) ? v.hourOvtCvt : '') +'" readonly>',
-                                '<input type="text" class="form-control overtime_bot" name="overtime_bot[]" id="overtime_bot" readonly>',
-                                '<input type="text" class="form-control overtime_description" name="overtime_description[]" id="overtime_description" value="'+ ((typeof v.descriptionOvt !== 'undefined' && v.descriptionOvt !== null) ? v.descriptionOvt : '') +'" readonly>',
-                                '<select class="form-control select2 select_absent_code" name="absent_code[]" id="absent_code'+ (k+1) +'" data-no="'+ (k+1) +'" disabled></select><input type="hidden" class="form-control" name="absent_code_det[]" id="absent_code_det'+ (k+1) +'">',
-                                '<input type="text" class="form-control absent_hour" name="absent_hour[]" id="absent_hour" readonly>',
-                                '<input type="text" class="form-control absent_description" name="absent_description[]" id="absent_description" value="'+ ((typeof v.descriptionAbsent !== 'undefined' && v.descriptionAbsent !== null) ? v.descriptionAbsent : '') +'" readonly>',
-                                '<input type="text" class="form-control normal_hour_in" name="normal_hour_in[]" id="normal_hour_in" readonly>',
-                                '<input type="text" class="form-control normal_hour_out" name="normal_hour_out[]" id="normal_hour_out" readonly>',
-                                '<input type="text" class="form-control total_normal_hour" name="total_normal_hour[]" id="total_normal_hour" readonly>',
-                                '<input type="text" class="form-control normal_overtime_before" name="normal_overtime_before[]" id="normal_overtime_before" readonly>',
-                                '<input type="text" class="form-control normal_overtime_after" name="normal_overtime_after[]" id="normal_overtime_after" readonly>',
+                                '<span style="display:none;">' + v.actualDateIn + '</span>' +
+                                    '<div class="input-group">' +
+                                        '<input type="text" class="form-control actual_date_in" id="actual_date_in'+ (k+1) +'" name="actual_date_in[]" disabled>' +  
+                                        '<div class="input-group-prepend" id="actual_date_in_calendar">' +
+                                            '<span class="input-group-text"><span class="fa fa-calendar"></span></span>' +
+                                        '</div>' +
+                                    '</div>',
+                                '<span style="display:none;">' + v.actualDateIn + '</span>' +
+                                    '<input type="text" class="form-control actual_time_in" name="actual_time_in[]" id="actual_time_in'+ (k+1) +'" data-no="'+ (k+1) +'" disabled>',
+                                '<span style="display:none;">' + v.actualDateOut + '</span>' +
+                                    '<div class="input-group date">' +
+                                        '<input type="text" class="form-control actual_date_out" id="actual_date_out" name="actual_date_out[]" disabled>' +  
+                                        '<div class="input-group-prepend date" id="actual_date_in_calendar">' +
+                                            '<span class="input-group-text"><span class="fa fa-calendar"></span></span>' +
+                                        '</div>' +
+                                    '</div>',
+                                '<span style="display:none;">' + v.totalActualHour + '</span>' +
+                                    '<input type="text" class="form-control actual_time_out" name="actual_time_out[]" id="actual_time_out'+ (k+1) +'" data-no="'+ (k+1) +'" disabled>',
+                                '<span style="display:none;">' + v.hourOvt + '</span>' +
+                                    '<input type="text" class="form-control total_actual_hour" name="total_actual_hour[]" id="total_actual_hour" readonly>',
+                                '<span style="display:none;">' + v.ovtCode + '</span>' +
+                                    '<select class="form-control select2 select_overtime_code" name="overtime_code[]" id="overtime_code'+ (k+1) +'" data-no="'+ (k+1) +'" disabled></select><input type="hidden" class="form-control" name="overtime_code_det[]" id="overtime_code_det'+ (k+1) +'">',
+                                '<span style="display:none;">' + v.ovtBeforeIn + '</span>' +
+                                    '<input type="text" class="form-control overtime_before" name="overtime_before[]" id="overtime_before" readonly>',
+                                '<span style="display:none;">' + v.ovtIn + '</span>' +
+                                    '<input type="text" class="form-control overtime_start" name="overtime_start[]" id="overtime_start" readonly>',
+                                '<span style="display:none;">' + v.ovtOut + '</span>' +
+                                    '<input type="text" class="form-control overtime_finish" name="overtime_finish[]" id="overtime_finish" readonly>',
+                                '<span style="display:none;">' + v.hourOvt + '</span>' +
+                                    '<input type="text" class="form-control overtime_hour" name="overtime_hour[]" id="overtime_hour" readonly>',
+                                '<span style="display:none;">' + v.hourOvtCvt + '</span>' +
+                                    '<input type="text" class="form-control overtime_convert" name="overtime_convert[]" id="overtime_convert" value="'+ ((typeof v.hourOvtCvt !== 'undefined' && v.hourOvtCvt !== null) ? v.hourOvtCvt : '') +'" readonly>',
+                                '<span style="display:none;">' + v.buildInOvt + '</span>' +
+                                    '<input type="text" class="form-control overtime_bot" name="overtime_bot[]" id="overtime_bot" readonly>',
+                                '<span style="display:none;">' + v.descriptionOvt + '</span>' +
+                                    '<input type="text" class="form-control overtime_description" name="overtime_description[]" id="overtime_description" value="'+ ((typeof v.descriptionOvt !== 'undefined' && v.descriptionOvt !== null) ? v.descriptionOvt : '') +'" readonly>',
+                                '<span style="display:none;">' + v.absentCode + '</span>' +
+                                    '<select class="form-control select2 select_absent_code" name="absent_code[]" id="absent_code'+ (k+1) +'" data-no="'+ (k+1) +'" disabled></select><input type="hidden" class="form-control" name="absent_code_det[]" id="absent_code_det'+ (k+1) +'">',
+                                '<span style="display:none;">' + v.hourAbsent + '</span>' +
+                                    '<input type="text" class="form-control absent_hour" name="absent_hour[]" id="absent_hour" readonly>',
+                                '<span style="display:none;">' + v.descriptionAbsent + '</span>' +
+                                    '<input type="text" class="form-control absent_description" name="absent_description[]" id="absent_description" value="'+ ((typeof v.descriptionAbsent !== 'undefined' && v.descriptionAbsent !== null) ? v.descriptionAbsent : '') +'" readonly>',
+                                '<span style="display:none;">' + v.normalDateIn + '</span>' +
+                                    '<input type="text" class="form-control normal_hour_in" name="normal_hour_in[]" id="normal_hour_in" readonly>',
+                                '<span style="display:none;">' + v.normalDateOut + '</span>' +
+                                    '<input type="text" class="form-control normal_hour_out" name="normal_hour_out[]" id="normal_hour_out" readonly>',
+                                '<span style="display:none;">' + v.totalNormalHour + '</span>' +
+                                    '<input type="text" class="form-control total_normal_hour" name="total_normal_hour[]" id="total_normal_hour" readonly>',
+                                '<span style="display:none;">' + v.ovtBefore + '</span>' +
+                                    '<input type="text" class="form-control normal_overtime_before" name="normal_overtime_before[]" id="normal_overtime_before" readonly>',
+                                '<span style="display:none;">' + v.ovtAfter + '</span>' +
+                                    '<input type="text" class="form-control normal_overtime_after" name="normal_overtime_after[]" id="normal_overtime_after" readonly>',
                                 // '<select class="form-control select2 select_finger_absent_code" name="finger_absent_code[]" id="finger_absent_code'+ (k+1) +'" disabled></select>',
                                 // '<input type="text" class="form-control finger_absent_hour" name="finger_absent_hour[]" id="finger_absent_hour'+ (k+1) +'" readonly>',
                                 // '<input type="text" class="form-control finger_absent_description" name="finger_absent_description[]" id="finger_absent_description" value="'+ ((typeof v.descriptionAbsent !== 'undefined' && v.descriptionAbsent !== null) ? v.descriptionAbsent : '') +'" readonly>',
@@ -863,6 +955,7 @@
                         };
                     },
                     processResults: function (data) {
+                        selectEmployeeNo = data
                         return {
                             results: $.map(data, function (item) {
                                 return {

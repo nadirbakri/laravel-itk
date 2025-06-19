@@ -14,6 +14,8 @@ return [
     'label_level1' => 'Nama Level 1',
     'btn_edit' => 'Ubah',
     'btn_save' => 'Simpan',
+    'btn_previous_preview' => 'Previous Preview',
+    'btn_next_preview' => 'Pratinjau Berikutnya',
     'alert_success' => 'Sukses'
 ]
 

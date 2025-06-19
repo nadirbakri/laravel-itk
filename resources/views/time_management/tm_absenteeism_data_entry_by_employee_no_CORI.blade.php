@@ -143,12 +143,12 @@
         }
 
         table.dataTable thead th, table.dataTable thead td {
-            padding: 1px 3px;
+            padding: 8px 15px;
             border-bottom: 1px solid #111;
         }
 
         table.dataTable tbody th, table.dataTable tbody td {
-            padding: 1px 3px;
+            padding: 2px 3px;
         }
 
         .table th{
@@ -158,13 +158,13 @@
         .table th, .table td {
             white-space: nowrap;
             padding: 0.3rem;
-            font-size: 0.85em;
+            /* font-size: 0.6em; */
             text-align: center !important;
             vertical-align: middle !important;
         }
 
         .table input {
-            font-size: 0.5em;
+            font-size: 0.7em;
             padding: 0;
             width: 100%;
             min-width: 2vw;
@@ -178,15 +178,32 @@
         }
 
         .table .select2-container .select2-selection--single {
-            height: 22px !important;
-            font-size: 9px;
-            padding: 1px 2px;
-            max-width: 20px;
+            /* height: 22px !important; */
+            font-size: 0.9em;
+            /* padding: 1px 2px; */
+            max-width: 50px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            display: block;
         }
 
         .table .select2-container--default .select2-selection--single .select2-selection__rendered {
-            line-height: 17px !important;
-            font-size: 0.7em;
+            /* line-height: 17px !important; */
+            font-size: 0.9em;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .table .select2-container--default .select2-selection--single {
+            /* padding-right: 20px !important; */
+            /* min-height: 22px; */
+            font-size: 0.9em;
+            position: relative;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
         }
 
         .table .select2-container--default .select2-selection--single .select2-selection__arrow {
@@ -201,13 +218,6 @@
             font-size: 12px;
             color: #999;
             cursor: pointer;
-        }
-
-        .table .select2-container--default .select2-selection--single {
-            padding-right: 20px !important;
-            min-height: 22px;
-            font-size: 9px;
-            position: relative;
         }
 
         #loading-background {
@@ -294,6 +304,20 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-2">
+                        <button type="button" class="btn btn-primary form-control-xs" name="btn-previous-employee" id="btn-previous-employee"
+                            style="width: 100%;" disabled>
+                            {{ __('tm_absenteeism_data_entry_by_employee_no.btn_previous_employee') }}
+                        </button>
+                    </div>
+                    <div class="col-2">
+                        <button type="button" class="btn btn-primary form-control-xs" name="btn-next-employee" id="btn-next-employee"
+                            style="width: 100%;" disabled>
+                            {{ __('tm_absenteeism_data_entry_by_employee_no.btn_next_employee') }}
+                        </button>
                     </div>
                 </div>
             </form>
@@ -440,6 +464,7 @@
         var table = null;
         let dataEmployeeNo = null
         let dataPeriod = null
+        let selectEmployeeNo = []
 
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         var companyCode = "{{ Session::get('companyCode') }}";
@@ -523,13 +548,16 @@
         load_data_table_absenteeism_data_entry_by_employee_no();
 
         $('#employee_no').on("select2:select", function (e) {
-            dataEmployeeNo = $('#employee_no').select2('data');
+            dataEmployeeNo = $('#employee_no').select2('data')[0];
             dataPeriod = $('#period').val();
             load_data(dataEmployeeNo, dataPeriod);
+
+            $('#btn-previous-employee').prop('disabled', false)
+            $('#btn-next-employee').prop('disabled', false)
         });
 
         $('#period').on("change", function (e) {
-            dataEmployeeNo = $('#employee_no').select2('data');
+            dataEmployeeNo = $('#employee_no').select2('data')[0];
             dataPeriod = $('#period').val();
             load_data(dataEmployeeNo, dataPeriod);
         });
@@ -542,29 +570,111 @@
             $('#location').val('');
             $('#cost_center').val('');
             $('#work_pattern').val('');
+            $('#btn-previous-employee').prop('disabled', true)
+            $('#btn-next-employee').prop('disabled', true)
             table.clear().draw();
         });
 
+        $('#btn-edit').on('click', function () {
+            $('.select_day').prop('disabled', false);
+            $('.select_shift_code').prop('disabled', false);
+            // $('.select_cost_center_code').prop('disabled', false);
+            $('.actual_date_in').prop('disabled', false);
+            $('.actual_time_in').prop('disabled', false);
+            $('.actual_date_out').prop('disabled', false);
+            $('.actual_time_out').prop('disabled', false);
+            $('.total_actual_hour').prop('readonly', false);
+            // $('.select_finger_absent_code').prop('disabled', false);
+            // $('.finger_absent_hour').prop('readonly', false);
+            // $('.finger_absent_description').prop('readonly', false);
+            $('.select_absent_code').prop('disabled', false);
+            $('.absent_hour').prop('readonly', false);
+            $('.absent_description').prop('readonly', false);
+            $('.select_overtime_code').prop('disabled', false);
+            $('.overtime_before').prop('readonly', false);
+            $('.overtime_start').prop('readonly', false);
+            $('.overtime_finish').prop('readonly', false);
+            $('.overtime_hour').prop('readonly', false);
+            $('.overtime_convert').prop('readonly', false);
+            $('.overtime_bot').prop('readonly', false);
+            $('.overtime_description').prop('readonly', false);
+            // $('.select_position').prop('disabled', false);
+            // $('.select_location').prop('disabled', false);
+            // $('.select_grade').prop('disabled', false);
+            $('#btn-save').prop('disabled', false);
+        });
+
+        $('#btn-previous-employee').on('click', function () {
+            const currEmployeeNo = $('#employee_no').val()
+            let prevEmployeeNo = ''
+
+            if (selectEmployeeNo.length > 0) {
+                selectEmployeeNo.map((e, i) => {
+                    if (e.employeeNo === currEmployeeNo) {
+                        if (i === 0) {
+                            prevEmployeeNo = selectEmployeeNo[selectEmployeeNo.length - 1].employeeNo
+                            dataEmployeeNo = selectEmployeeNo[selectEmployeeNo.length - 1]
+                        }
+                        else {
+                            prevEmployeeNo = selectEmployeeNo[i - 1].employeeNo
+                            dataEmployeeNo = selectEmployeeNo[i - 1]
+                        }
+                    }
+                })
+                const optionEmployeeNo = new Option(prevEmployeeNo, prevEmployeeNo, true, true);
+                $('#employee_no').append(optionEmployeeNo).trigger('change');
+                $('#employee_no').val(prevEmployeeNo);
+
+                load_data(dataEmployeeNo, dataPeriod)
+            }
+        })
+
+        $('#btn-next-employee').on('click', function () {
+            const currEmployeeNo = $('#employee_no').val()
+            let nextEmployeeNo = ''
+
+            if (selectEmployeeNo.length > 0) {
+                selectEmployeeNo.map((e, i) => {
+                    if (e.employeeNo === currEmployeeNo) {
+                        if (i === selectEmployeeNo.length - 1) {
+                            nextEmployeeNo = selectEmployeeNo[0].employeeNo
+                            dataEmployeeNo = selectEmployeeNo[0]
+                        }
+                        else {
+                            nextEmployeeNo = selectEmployeeNo[i + 1].employeeNo
+                            dataEmployeeNo = selectEmployeeNo[i + 1]
+                        }
+                    }
+                })
+                const optionEmployeeNo = new Option(nextEmployeeNo, nextEmployeeNo, true, true);
+                $('#employee_no').append(optionEmployeeNo).trigger('change');
+                $('#employee_no').val(nextEmployeeNo);
+
+                load_data(dataEmployeeNo, dataPeriod)
+            }
+        })
+
         function load_data(dataEmployeeNo, dataPeriod){
             if (dataEmployeeNo) {
-                $('#employee_name').val(htmlDecode(dataEmployeeNo[0].title));
-                $('#ranking').val(dataEmployeeNo[0].data.rankingName);
-                $('#position').val(dataEmployeeNo[0].data.positionName);
-                $('#location').val(dataEmployeeNo[0].data.locationName);
-                $('#work_pattern').val(dataEmployeeNo[0].data.patternCodeDescription);
-                $('#cost_center').val(dataEmployeeNo[0].data.costCenterDescription);
-                $('#level1').val(dataEmployeeNo[0].data.levelName1);
+                $('#employee_name').val(htmlDecode(dataEmployeeNo.title || dataEmployeeNo.fullName));
+                // $('#ranking').val(dataEmployeeNo.data.rankingName);
+                // $('#position').val(dataEmployeeNo.data.positionName);
+                // $('#location').val(dataEmployeeNo.data.locationName);
+                // $('#work_pattern').val(dataEmployeeNo.data.patternCodeDescription);
+                // $('#cost_center').val(dataEmployeeNo.data.costCenterDescription);
+                // $('#level1').val(dataEmployeeNo.data.levelName1);
             }
 
             // var filter_employee_no_table = $('#employee_no').val();
             $('#loading-background').show();
             table.clear().draw();
+            table.order([0, 'asc']).draw();
 
             $.ajax({
                 url: "{{ url('time_management/absenteeism_data_entry_by_employee_no/table') }}",
                 type: "GET",
                 data: {
-                    'employeeNo': dataEmployeeNo ? dataEmployeeNo[0].id : '',
+                    'employeeNo': dataEmployeeNo ? dataEmployeeNo.id || dataEmployeeNo.employeeNo : '',
                     'period': dataPeriod
                 },
                 success: function (response) {
@@ -791,35 +901,6 @@
             })
         }
 
-        $('#btn-edit').on('click', function () {
-            $('.select_day').prop('disabled', false);
-            $('.select_shift_code').prop('disabled', false);
-            // $('.select_cost_center_code').prop('disabled', false);
-            $('.actual_date_in').prop('disabled', false);
-            $('.actual_time_in').prop('disabled', false);
-            $('.actual_date_out').prop('disabled', false);
-            $('.actual_time_out').prop('disabled', false);
-            $('.total_actual_hour').prop('readonly', false);
-            // $('.select_finger_absent_code').prop('disabled', false);
-            // $('.finger_absent_hour').prop('readonly', false);
-            // $('.finger_absent_description').prop('readonly', false);
-            $('.select_absent_code').prop('disabled', false);
-            $('.absent_hour').prop('readonly', false);
-            $('.absent_description').prop('readonly', false);
-            $('.select_overtime_code').prop('disabled', false);
-            $('.overtime_before').prop('readonly', false);
-            $('.overtime_start').prop('readonly', false);
-            $('.overtime_finish').prop('readonly', false);
-            $('.overtime_hour').prop('readonly', false);
-            $('.overtime_convert').prop('readonly', false);
-            $('.overtime_bot').prop('readonly', false);
-            $('.overtime_description').prop('readonly', false);
-            // $('.select_position').prop('disabled', false);
-            // $('.select_location').prop('disabled', false);
-            // $('.select_grade').prop('disabled', false);
-            $('#btn-save').prop('disabled', false);
-        });
-
         loadDataEmployeeNo();
 
         function load_data_table_absenteeism_data_entry_by_employee_no(filter_employee_no_table = '') {
@@ -836,7 +917,7 @@
                 paging: false,
                 "sDom": 'lrtip',
                 scrollY: false,
-                scrollX: false,
+                scrollX: true,
                 scrollCollapse: true,
                 ordering: true,
                 searching: false,
@@ -907,6 +988,7 @@
                         };
                     },
                     processResults: function (data) {
+                        selectEmployeeNo = data
                         return {
                             results: $.map(data, function (item) {
                                 return {

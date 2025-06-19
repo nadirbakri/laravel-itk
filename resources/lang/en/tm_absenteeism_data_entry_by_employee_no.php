@@ -14,6 +14,8 @@ return [
     'label_level1' => 'Level 1 Name',
     'btn_edit' => 'Edit',
     'btn_save' => 'Save',
+    'btn_previous_employee' => 'Previous Employee',
+    'btn_next_employee' => 'Next Employee',
     'alert_success' => 'Success'
 ]
 
