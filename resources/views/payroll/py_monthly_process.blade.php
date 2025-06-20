@@ -291,6 +291,28 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="increment_absenteeism" name="increment_absenteeism" value="true" style="margin-top: 7px;">
+                                                <label class="form-check-label font-label" for="increment_absenteeism" style=" font-family: 'Montserrat-Regular';">{{ __('payroll_absenteeism_overtime_calculation_process.label_increment') }}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label for="increment_date_absenteeism">{{ __('payroll_absenteeism_overtime_calculation_process.label_increment_date') }}</label>
+                                                <div class='input-group input-date'>
+                                                    <input type="text" class="form-control input-day" id="increment_date_absenteeism" name="increment_date_absenteeism"
+                                                        placeholder="{{ __('payroll_absenteeism_overtime_calculation_process.label_increment_date') }}" disabled>
+                                                    <div class="input-group-prepend" id="increment_date_absenteeism_calendar">
+                                                        <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="row mt-2">
                                         <div class="col-6">
                                             <button type="submit" class="btn btn-primary btn-sm btn-block" name="btn-process-absenteeism" id="btn-process-absenteeism">
@@ -391,6 +413,20 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label for="group_authorized_code_from_salary form-check-label">{{ __('payroll_salary_calculation_process.label_group_authorized_code_from') }}</label>
+                                                <select class="form-control select2" id="group_authorized_code_from_salary" name="group_authorized_code_from_salary"></select>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label for="group_authorized_code_to_salary form-check-label">{{ __('payroll_salary_calculation_process.label_group_authorized_code_to') }}</label>
+                                                <select class="form-control select2" id="group_authorized_code_to_salary" name="group_authorized_code_to_salary"></select>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="row mt-2">
                                         <div class="col-6">
                                             <button type="submit" class="btn btn-primary btn-block btn-sm" name="btn-process-salary" id="btn-process-salary">
@@ -458,6 +494,20 @@
                                             <div class="form-group">
                                                 <label class="font-label" for="employee_no_to">{{ __('payroll_tax_calculation_process.label_employee_no_to') }}</label>
                                                 <select class="form-control select2" id="employee_no_to" name="employee_no_to" disabled></select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label for="group_authorized_code_from form-check-label">{{ __('payroll_tax_calculation_process.label_group_authorized_code_from') }}</label>
+                                                <select class="form-control select2" id="group_authorized_code_from" name="group_authorized_code_from"></select>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label for="group_authorized_code_to form-check-label">{{ __('payroll_tax_calculation_process.label_group_authorized_code_to') }}</label>
+                                                <select class="form-control select2" id="group_authorized_code_to" name="group_authorized_code_to"></select>
                                             </div>
                                         </div>
                                     </div>
@@ -611,6 +661,21 @@
     $(document).ready(function() {
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
+        let pickerIncrementDate = $('#increment_date_absenteeism').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "d-M-Y",
+            dateFormat: "Y-m-d",
+            defaultDate: null,
+            onReady: function () {
+                var flatPickrInstance = this;
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings("#increment_date_absenteeism_calendar").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
+
         var arrData = @json($data);
         var arrData2 = @json($data);
         var arrayMinutesRounded = [];
@@ -704,6 +769,16 @@
             }
         });
 
+        $('#increment_absenteeism').on('change', function () {
+            if ($('#increment_absenteeism').is(':checked')) {
+                pickerIncrementDate._input.removeAttribute('disabled');
+                $('#increment_date_absenteeism').prop('disabled', false);
+            } else {
+                pickerIncrementDate._input.setAttribute('disabled', 'disabled');
+                $('#increment_date_absenteeism').prop('disabled', true);
+            }
+        });
+
         $('#range').on('change', function () {
             if ($('#range').is(':checked')) {
                 $('#employee_no_from').prop('disabled', false);
@@ -790,6 +865,30 @@
         loadDataEmployeeNo('#employee_no_to_salary');
         loadDataEmployeeNo('#employee_no_from');
         loadDataEmployeeNo('#employee_no_to');
+        loadDataGroupAuthorize('#group_authorized_code_from_salary');
+        loadDataGroupAuthorize('#group_authorized_code_to_salary');
+        loadDataGroupAuthorize('#group_authorized_code_from');
+        loadDataGroupAuthorize('#group_authorized_code_to');
+
+        loadDataFirstLastAllGroupAuthorize('#group_authorized_code_from_salary', 'First');
+        loadDataFirstLastAllGroupAuthorize('#group_authorized_code_to_salary', 'Last');
+        loadDataFirstLastAllGroupAuthorize('#group_authorized_code_from', 'First');
+        loadDataFirstLastAllGroupAuthorize('#group_authorized_code_to', 'Last');
+
+        function loadDataFirstLastAllGroupAuthorize(field = '', func = '') {
+            $.ajax({
+                type: 'GET',
+                url: "{{ url('/group_authorize/func/api') }}",
+                data: {
+                    'func': func,
+                    'module': 'PY'
+                }
+            }).then(function (data) {
+                var $newOption = $("<option selected='selected'></option>").val(data.groupAuthorizeCode)
+                    .text(data.groupAuthorizeDesc);
+                $(field).append($newOption).trigger('change');
+            });
+        }
 
         function loadDataEmployeeNo(field = '') {
             function formatSelect(data) {
@@ -853,6 +952,80 @@
                                     text: item.fullName + ' - ' + item.employeeNo,
                                     id: item.employeeNo,
                                     title: item.fullName,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataGroupAuthorize(field = '') {
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' +
+                        '<div class="col-6">' + data.data.groupAuthorizeCode + '</div>' +
+                        '<div class="col-6">' + data.data.groupAuthorizeDesc + '</div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var headerIsAppend = false;
+            $(field).on('select2:open', function (e) {
+                if (!headerIsAppend) {
+                    html = '<div class="row">' +
+                        '<div class="col-6"><b>Group Authorize Code</b></div>' +
+                        '<div class="col-6"><b>Group Authorize Desc</b></div>' +
+                        '</div>';
+                    $('.select2-search--dropdown').append(html);
+                    headerIsAppend = true;
+                }
+            });
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $(field).select2({
+                width: '100%',
+                placeholder: 'Choose Group Authorize Code',
+                allowClear: true,
+                closeOnSelect: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: "{{ url('/group_authorize/api') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term,
+                            module: 'PY',
+                            isRange: false,
+                            isModule: false
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.groupAuthorizeDesc,
+                                    id: item.groupAuthorizeCode,
                                     data: item
                                 }
                             })

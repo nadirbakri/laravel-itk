@@ -9,6 +9,8 @@ return [
     'label_range_employee_no' => 'Range',
     'label_employee_no_from' => 'Employee No From',
     'label_employee_no_to' => 'Employee No To',
+    'label_increment' => 'Update Salary Increment',
+    'label_increment_date' => 'Effective Increment Date',
     'btn_process' => 'Process',
     'btn_cancel' => 'Cancel',
     'alert_success' => 'Success !',

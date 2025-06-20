@@ -368,7 +368,7 @@
             $('#max_limit_per_month').val("{{ isset($data[0]->maxLimitPerMonth) ? $data[0]->maxLimitPerMonth : '' }}");
             $('#employee_no').attr("disabled", true); 
             $('#claim_code').attr("disabled", true); 
-            pickerExpiredDate._input.setAttribute('disabled', 'disalbed');
+            pickerExpiredDate._input.setAttribute('disabled', 'disabled');
         }
 
         $('input[name=input_type]').on("change", function (e) {

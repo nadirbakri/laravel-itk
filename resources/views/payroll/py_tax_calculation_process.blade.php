@@ -167,6 +167,20 @@
                     </div>
                 </div>
                 <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="group_authorized_code_from form-check-label">{{ __('payroll_tax_calculation_process.label_group_authorized_code_from') }}</label>
+                            <select class="form-control select2" id="group_authorized_code_from" name="group_authorized_code_from"></select>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="group_authorized_code_to form-check-label">{{ __('payroll_tax_calculation_process.label_group_authorized_code_to') }}</label>
+                            <select class="form-control select2" id="group_authorized_code_to" name="group_authorized_code_to"></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col-3">
                         <button type="submit" class="btn btn-primary" name="btn-process" id="btn-process" style="width: 100%;">
                             <i class="fa fa-play-circle-o"></i> {{ __('payroll_tax_calculation_process.btn_process') }}
@@ -289,6 +303,26 @@
 
         loadDataEmployeeNo('#employee_no_from');
         loadDataEmployeeNo('#employee_no_to');
+        loadDataGroupAuthorize('#group_authorized_code_from');
+        loadDataGroupAuthorize('#group_authorized_code_to');
+
+        loadDataFirstLastAllGroupAuthorize('#group_authorized_code_from', 'First');
+        loadDataFirstLastAllGroupAuthorize('#group_authorized_code_to', 'Last');
+
+        function loadDataFirstLastAllGroupAuthorize(field = '', func = '') {
+            $.ajax({
+                type: 'GET',
+                url: "{{ url('/group_authorize/func/api') }}",
+                data: {
+                    'func': func,
+                    'module': 'PY'
+                }
+            }).then(function (data) {
+                var $newOption = $("<option selected='selected'></option>").val(data.groupAuthorizeCode)
+                    .text(data.groupAuthorizeDesc);
+                $(field).append($newOption).trigger('change');
+            });
+        }
 
         function loadDataEmployeeNo(field = '') {
             function formatSelect(data) {
@@ -352,6 +386,80 @@
                                     text: item.fullName,
                                     id: item.employeeNo,
                                     title: item.fullName,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataGroupAuthorize(field = '') {
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' +
+                        '<div class="col-6">' + data.data.groupAuthorizeCode + '</div>' +
+                        '<div class="col-6">' + data.data.groupAuthorizeDesc + '</div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var headerIsAppend = false;
+            $(field).on('select2:open', function (e) {
+                if (!headerIsAppend) {
+                    html = '<div class="row">' +
+                        '<div class="col-6"><b>Group Authorize Code</b></div>' +
+                        '<div class="col-6"><b>Group Authorize Desc</b></div>' +
+                        '</div>';
+                    $('.select2-search--dropdown').append(html);
+                    headerIsAppend = true;
+                }
+            });
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $(field).select2({
+                width: '100%',
+                placeholder: 'Choose Group Authorize Code',
+                allowClear: true,
+                closeOnSelect: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: "{{ url('/group_authorize/api') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term,
+                            module: 'PY',
+                            isRange: false,
+                            isModule: false
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.groupAuthorizeDesc,
+                                    id: item.groupAuthorizeCode,
                                     data: item
                                 }
                             })

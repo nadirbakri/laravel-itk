@@ -9,6 +9,8 @@ return [
     'label_range_employee_no' => 'Jangkauan',
     'label_employee_no_from' => 'No Karyawan Dari',
     'label_employee_no_to' => 'No Karyawan Sampai',
+    'label_increment' => 'Perubahan Kenaikan Gaji',
+    'label_increment_date' => 'Tanggal Efektif Kenaikan',
     'btn_process' => 'Process',
     'btn_cancel' => 'Cancel',
     'alert_success' => 'Sukses !',

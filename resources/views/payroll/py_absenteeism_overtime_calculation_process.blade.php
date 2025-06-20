@@ -188,6 +188,28 @@
                 </div>
                 <div class="row">
                     <div class="col-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="increment_absenteeism" name="increment_absenteeism" value="true">
+                            <label for="increment_absenteeism">{{ __('payroll_absenteeism_overtime_calculation_process.label_increment') }}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="increment_date_absenteeism">{{ __('payroll_absenteeism_overtime_calculation_process.label_increment_date') }}</label>
+                            <div class='input-group input-date'>
+                                <input type="text" class="form-control input-day" id="increment_date_absenteeism" name="increment_date_absenteeism"
+                                    placeholder="{{ __('payroll_absenteeism_overtime_calculation_process.label_increment_date') }}" disabled>
+                                <div class="input-group-prepend" id="increment_date_absenteeism_calendar">
+                                    <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-3">
                         <button type="submit" class="btn btn-process" name="btn-process" id="btn-process">
                             <i class="fa fa-play-circle-o"></i> {{ __('payroll_absenteeism_overtime_calculation_process.btn_process') }}
                         </button>
@@ -284,6 +306,21 @@
 
         var arrData = @json($data);
 
+        let pickerIncrementDate = $('#increment_date_absenteeism').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "d-M-Y",
+            dateFormat: "Y-m-d",
+            defaultDate: null,
+            onReady: function () {
+                var flatPickrInstance = this;
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings("#increment_date_absenteeism_calendar").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
+
         if (arrData) {
             $('#process_period_month').val(moment('2023-' + arrData[0].periodMonth.toString() + '-01').format('MMMM'));
             $('#process_period_absenteeism_month_hidden').val((typeof arrData[0].periodMonth !== 'undefined') ? arrData[0].periodMonth : '');
@@ -297,6 +334,16 @@
             } else {
                 $('#employee_no_from_absenteeism').prop('disabled', true);
                 $('#employee_no_to_absenteeism').prop('disabled', true);
+            }
+        });
+
+        $('#increment_absenteeism').on('change', function () {
+            if ($('#increment_absenteeism').is(':checked')) {
+                pickerIncrementDate._input.removeAttribute('disabled');
+                $('#increment_date_absenteeism').prop('disabled', false);
+            } else {
+                pickerIncrementDate._input.setAttribute('disabled', 'disabled');
+                $('#increment_date_absenteeism').prop('disabled', true);
             }
         });
 
