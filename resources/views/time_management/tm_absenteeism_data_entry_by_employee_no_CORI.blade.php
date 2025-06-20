@@ -688,49 +688,49 @@
                                 '<span style="display:none;">' + v.shiftCode + '</span>' +
                                     '<select class="form-control form-control-sm select2 select_shift_code" name="shift_code[]" id="shift_code'+ (k+1) +'" data-no="'+ (k+1) +'" disabled></select><input type="hidden" class="form-control" name="shift_code_det[]" id="shift_code_det'+ (k+1) +'">',
                                 // '<select class="form-control select2 select_cost_center_code" name="cost_center_code[]" id="cost_center_code'+ (k+1) +'" disabled></select>',
-                                '<span style="display:none;">' + v.actualDateIn + '</span>' +
+                                '<span style="display:none;">' + moment(v.actualDateIn).format('YYYY-MM-DD') + '</span>' +
                                     '<div class="input-group">' +
                                         '<input type="text" class="form-control form-control-sm actual_date_in" id="actual_date_in'+ (k+1) +'" name="actual_date_in[]" style="text-align: center;" disabled>' + 
                                     '</div>',
-                                '<span style="display:none;">' + v.actualDateIn + '</span>' +
+                                '<span style="display:none;">' + moment(v.actualDateIn).format('HH:mm:ss') + '</span>' +
                                     '<input type="text" class="form-control form-control-sm actual_time_in" name="actual_time_in[]" id="actual_time_in'+ (k+1) +'" data-no="'+ (k+1) +'" style="text-align: center;" disabled>',
-                                '<span style="display:none;">' + v.actualDateOut + '</span>' +
+                                '<span style="display:none;">' + moment(v.actualDateOut).format('YYYY-MM-DD') + '</span>' +
                                     '<div class="input-group date">' +
                                         '<input type="text" class="form-control form-control-sm actual_date_out" id="actual_date_out" name="actual_date_out[]" style="text-align: center;" disabled>' + 
                                     '</div>',
-                                '<span style="display:none;">' + v.actualDateOut + '</span>' +
+                                '<span style="display:none;">' + moment(v.actualDateOut).format('HH:mm:ss') + '</span>' +
                                     '<input type="text" class="form-control form-control-sm actual_time_out" name="actual_time_out[]" id="actual_time_out'+ (k+1) +'" data-no="'+ (k+1) +'" style="text-align: center;" disabled>',
-                                '<span style="display:none;">' + v.totalActualHour + '</span>' +
+                                '<span style="display:none;">' + moment(v.totalActualHour).format('HH:mm:ss') + '</span>' +
                                     '<input type="text" class="form-control form-control-sm total_actual_hour" name="total_actual_hour[]" id="total_actual_hour" style="text-align: center;" readonly>',
-                                '<span style="display:none;">' + v.hourOvt + '</span>' +
+                                '<span style="display:none;">' + moment(v.hourOvt).format('HH:mm:ss') + '</span>' +
                                     '<input type="text" class="form-control form-control-sm overtime_hour" name="overtime_hour[]" id="overtime_hour" style="text-align: center;" readonly>',
                                 '<span style="display:none;">' + v.hourOvtCvt + '</span>' +
                                     '<input type="text" class="form-control form-control-sm overtime_convert" name="overtime_convert[]" id="overtime_convert" value="'+ ((typeof v.hourOvtCvt !== 'undefined' && v.hourOvtCvt !== null) ? v.hourOvtCvt : '') +'" style="text-align: center;" readonly>',
                                 '<span style="display:none;">' + v.absentCode + '</span>' +
                                     '<select class="form-control form-control-sm select2 select_absent_code" name="absent_code[]" id="absent_code'+ (k+1) +'" data-no="'+ (k+1) +'" style="text-align: center;" disabled></select><input type="hidden" class="form-control" name="absent_code_det[]" id="absent_code_det'+ (k+1) +'">',
-                                '<span style="display:none;">' + v.hourAbsent + '</span>' +
+                                '<span style="display:none;">' + moment(v.hourAbsent).format('HH:mm:ss') + '</span>' +
                                     '<input type="text" class="form-control form-control-sm absent_hour" name="absent_hour[]" id="absent_hour" style="text-align: center;" readonly>',
                                 '<span style="display:none;">' + v.descriptionAbsent + '</span>' +
                                     '<input type="text" class="form-control form-control-sm absent_description" name="absent_description[]" id="absent_description" value="'+ ((typeof v.descriptionAbsent !== 'undefined' && v.descriptionAbsent !== null) ? v.descriptionAbsent : '') +'" style="text-align: center;" readonly>',
-                                '<span style="display:none;">' + v.normalDateIn + '</span>' +
+                                '<span style="display:none;">' + moment(v.normalDateIn).format('HH:mm:ss') + '</span>' +
                                     '<input type="text" class="form-control form-control-sm normal_hour_in" name="normal_hour_in[]" id="normal_hour_in" style="text-align: center;" readonly>',
-                                '<span style="display:none;">' + v.normalDateOut + '</span>' +
+                                '<span style="display:none;">' + moment(v.normalDateOut).format('HH:mm:ss') + '</span>' +
                                     '<input type="text" class="form-control form-control-sm normal_hour_out" name="normal_hour_out[]" id="normal_hour_out" style="text-align: center;" readonly>',
-                                '<span style="display:none;">' + v.totalNormalHour + '</span>' +
+                                '<span style="display:none;">' + moment(v.totalNormalHour).format('HH:mm:ss') + '</span>' +
                                     '<input type="text" class="form-control form-control-sm total_normal_hour" name="total_normal_hour[]" id="total_normal_hour" style="text-align: center;" readonly>',
-                                '<span style="display:none;">' + v.ovtBefore + '</span>' +
+                                '<span style="display:none;">' + moment(v.ovtBefore).format('HH:mm:ss') + '</span>' +
                                     '<input type="text" class="form-control form-control-sm normal_overtime_before" name="normal_overtime_before[]" id="normal_overtime_before" style="text-align: center;" readonly>',
-                                '<span style="display:none;">' + v.ovtAfter + '</span>' +
+                                '<span style="display:none;">' + moment(v.ovtAfter).format('HH:mm:ss') + '</span>' +
                                     '<input type="text" class="form-control form-control-sm normal_overtime_after" name="normal_overtime_after[]" id="normal_overtime_after" style="text-align: center;" readonly>',
                                 '<span style="display:none;">' + v.ovtCode + '</span>' +
                                     '<select class="form-control form-control-sm select2 select_overtime_code" name="overtime_code[]" id="overtime_code'+ (k+1) +'" data-no="'+ (k+1) +'" style="text-align: center;" disabled></select><input type="hidden" class="form-control" name="overtime_code_det[]" id="overtime_code_det'+ (k+1) +'">',
-                                '<span style="display:none;">' + v.ovtBeforeIn + '</span>' +
+                                '<span style="display:none;">' + moment(v.ovtBeforeIn).format('HH:mm:ss') + '</span>' +
                                     '<input type="text" class="form-control form-control-sm overtime_before" name="overtime_before[]" id="overtime_before" style="text-align: center;" readonly>',
-                                '<span style="display:none;">' + v.ovtIn + '</span>' +
+                                '<span style="display:none;">' + moment(v.ovtIn).format('HH:mm:ss') + '</span>' +
                                     '<input type="text" class="form-control form-control-sm overtime_start" name="overtime_start[]" id="overtime_start" style="text-align: center;" readonly>',
-                                '<span style="display:none;">' + v.ovtOut + '</span>' +
+                                '<span style="display:none;">' + moment(v.ovtOut).format('HH:mm:ss') + '</span>' +
                                     '<input type="text" class="form-control form-control-sm overtime_finish" name="overtime_finish[]" id="overtime_finish" style="text-align: center;" readonly>',
-                                '<span style="display:none;">' + v.buildInOvt + '</span>' +
+                                '<span style="display:none;">' + moment(v.buildInOvt).format('HH:mm:ss') + '</span>' +
                                     '<input type="text" class="form-control form-control-sm overtime_bot" name="overtime_bot[]" id="overtime_bot" style="text-align: center;" readonly>',
                                 '<span style="display:none;">' + v.descriptionOvt + '</span>' +
                                     '<input type="text" class="form-control form-control-sm overtime_description" name="overtime_description[]" id="overtime_description" value="'+ ((typeof v.descriptionOvt !== 'undefined' && v.descriptionOvt !== null) ? v.descriptionOvt : '') +'" style="text-align: center;" readonly>',

@@ -131,7 +131,7 @@
                             <label for="absent_date_from">{{ __('tm_monthly_absenteeism_analysis.label_absent_date_from') }}</label>
                             <div class='input-group input-date'>
                                 <input type="text" class="form-control input-day" id="absent_date_from" name="absent_date_from"
-                                    placeholder="{{ __('tm_monthly_absenteeism_analysis.label_absent_date_from') }}">
+                                    placeholder="{{ __('tm_monthly_absenteeism_analysis.label_absent_date_from') }}" disabled>
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><span class="fa fa-calendar"></span></span>
                                 </div>
@@ -143,7 +143,7 @@
                             <label for="absent_date_to">{{ __('tm_monthly_absenteeism_analysis.label_absent_date_to') }}</label>
                             <div class='input-group input-date'>
                                 <input type="text" class="form-control input-day" id="absent_date_to" name="absent_date_to"
-                                    placeholder="{{ __('tm_monthly_absenteeism_analysis.label_absent_date_to') }}">
+                                    placeholder="{{ __('tm_monthly_absenteeism_analysis.label_absent_date_to') }}" disabled>
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><span class="fa fa-calendar"></span></span>
                                 </div>
@@ -297,8 +297,13 @@
                 });
             }
         });
+    }
 
-        $('.input-date input').flatpickr({
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        let pickerAbsentDateFrom = $('#absent_date_from').flatpickr({
             altInput: true,
             allowInput: true,
             altFormat: "d-M-Y",
@@ -307,17 +312,27 @@
             onReady: function () {
                 var flatPickrInstance = this;
                 var $flatPickrInput = $(flatPickrInstance.element);
-                $flatPickrInput.siblings(".input-group-prepend").click(function () {
+                $flatPickrInput.siblings("#absent_date_from_calendar").click(function () {
                     flatPickrInstance.toggle();
                 });
             }
         });
-    }
 
-</script>
+        let pickerAbsentDateTo = $('#absent_date_to').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "d-M-Y",
+            dateFormat: "Y-m-d",
+            defaultDate: "today",
+            onReady: function () {
+                var flatPickrInstance = this;
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings('#absent_date_to_calendar').click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
 
-<script type="text/javascript">
-    $(document).ready(function () {
         $.ajax({
             url: "{{ url('personnel/report/level/check') }}",
             type: "GET",
@@ -390,12 +405,16 @@
                 $('#div_period').show();
                 $('#div_absent_date').hide();
                 $('#period').prop('disabled', false);
+                pickerAbsentDateFrom._input.setAttribute('disabled', 'disabled');
+                pickerAbsentDateTo._input.setAttribute('disabled', 'disabled');
                 $('#absent_date_from').prop('disabled', true);
                 $('#absent_date_to').prop('disabled', true);
             }else{
                 $('#div_period').hide();
                 $('#div_absent_date').show();
                 $('#period').prop('disabled', true);
+                pickerAbsentDateFrom._input.removeAttribute('disabled');
+                pickerAbsentDateTo._input.removeAttribute('disabled');
                 $('#absent_date_from').prop('disabled', false);
                 $('#absent_date_to').prop('disabled', false);
             }

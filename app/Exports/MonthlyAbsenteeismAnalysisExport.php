@@ -54,6 +54,8 @@ class MonthlyAbsenteeismAnalysisExport implements FromView, ShouldAutoSize
 
             if(!empty($this->period) || !empty($this->period)){
                 $param['period'] = $this->period;
+            }else{
+                $param['period'] = null;
             }
 
             if(!empty($this->absentDateFrom) || !empty($this->absentDateTo)){
