@@ -313,6 +313,20 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label for="group_authorized_code_from_absenteeism form-check-label">{{ __('payroll_absenteeism_overtime_calculation_process.label_group_authorized_code_from') }}</label>
+                                                <select class="form-control select2" id="group_authorized_code_from_absenteeism" name="group_authorized_code_from_absenteeism"></select>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label for="group_authorized_code_to_absenteeism form-check-label">{{ __('payroll_absenteeism_overtime_calculation_process.label_group_authorized_code_to') }}</label>
+                                                <select class="form-control select2" id="group_authorized_code_to_absenteeism" name="group_authorized_code_to_absenteeism"></select>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="row mt-2">
                                         <div class="col-6">
                                             <button type="submit" class="btn btn-primary btn-sm btn-block" name="btn-process-absenteeism" id="btn-process-absenteeism">
@@ -865,11 +879,15 @@
         loadDataEmployeeNo('#employee_no_to_salary');
         loadDataEmployeeNo('#employee_no_from');
         loadDataEmployeeNo('#employee_no_to');
+        loadDataGroupAuthorize('#group_authorized_code_from_absenteeism');
+        loadDataGroupAuthorize('#group_authorized_code_to_absenteeism');
         loadDataGroupAuthorize('#group_authorized_code_from_salary');
         loadDataGroupAuthorize('#group_authorized_code_to_salary');
         loadDataGroupAuthorize('#group_authorized_code_from');
         loadDataGroupAuthorize('#group_authorized_code_to');
 
+        loadDataFirstLastAllGroupAuthorize('#group_authorized_code_from_absenteeism', 'First');
+        loadDataFirstLastAllGroupAuthorize('#group_authorized_code_to_absenteeism', 'Last');
         loadDataFirstLastAllGroupAuthorize('#group_authorized_code_from_salary', 'First');
         loadDataFirstLastAllGroupAuthorize('#group_authorized_code_to_salary', 'Last');
         loadDataFirstLastAllGroupAuthorize('#group_authorized_code_from', 'First');

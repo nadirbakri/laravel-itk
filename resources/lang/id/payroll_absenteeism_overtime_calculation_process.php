@@ -11,6 +11,8 @@ return [
     'label_employee_no_to' => 'No Karyawan Sampai',
     'label_increment' => 'Perubahan Kenaikan Gaji',
     'label_increment_date' => 'Tanggal Efektif Kenaikan',
+    'label_group_authorized_code_from' => 'Otorisasi Grup Dari',
+    'label_group_authorized_code_to' => 'Otorisasi Grup Sampai',
     'btn_process' => 'Process',
     'btn_cancel' => 'Cancel',
     'alert_success' => 'Sukses !',

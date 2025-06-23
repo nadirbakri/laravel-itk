@@ -6416,6 +6416,8 @@ public function dataDetailReportFormatPY(Request $request)
                         "range" => isset($request->range_employee_no_absenteeism) ? (bool) $request->range_employee_no_absenteeism : false,
                         "isIncrement" => isset($request->increment_absenteeism) ? (bool) $request->increment_absenteeism : false,
                         "incrementDate" => $request->increment_date_absenteeism,
+                        "groupAuthorizeFrom" => intval($request->group_authorized_code_from_absenteeism),
+                        "groupAuthorizeTo" => intval($request->group_authorized_code_to_absenteeism),
                         "languageCode" => App::getLocale(),
                         "changedBy" => Session::get('userID'),
                         "changedDate" => date("Y-m-d\TH:i:s"),
