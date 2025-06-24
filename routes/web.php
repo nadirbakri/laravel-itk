@@ -864,6 +864,8 @@ Route::get('medical/payment_per_rank', 'MedicalController@pagePaymentPerRank');
 Route::get('medical/vaccine_master', 'MedicalController@pageVaccineMaster');
 Route::get('medical/vaccination_schedule', 'MedicalController@pageVaccinationSchedule');
 Route::get('medical/medical_checkup_schedule', 'MedicalController@pageMedicalCheckupSchedule');
+Route::get('medical/vaccination_schedule_history', 'MedicalController@pageVaccinationScheduleHistory');
+Route::get('medical/medical_checkup_master', 'MedicalController@pageMedicalCheckupMaster');
 
 /* Route untuk tabel Medical */
 Route::get('medical/claim_code/table', 'MedicalController@tableClaimCodeMD');
@@ -878,6 +880,8 @@ Route::get('medical/payment/table', 'MedicalController@tablePaymentMD');
 Route::get('medical/payment_per_rank/table', 'MedicalController@tablePaymentPerRankMD');
 Route::get('medical/employee_list/table', 'MedicalController@tableEmployeeList');
 Route::get('medical/vaccine_master/table', 'MedicalController@tableVaccineMasterMD');
+Route::get('medical/vaccination_schedule_history/table', 'MedicalController@tableVaccinationScheduleHistoryMD');
+Route::get('medical/medical_checkup_master/table', 'MedicalController@tableMCUMasterMD');
 
 /* Route untuk Detail Tabel Transaction */
 Route::get('transaction/list/table', 'TransactionController@tableDetailTransactionList');
@@ -935,6 +939,7 @@ Route::get('medical/payment/detail_data', 'MedicalController@dataDetailPaymentMD
 Route::get('medical/payment_per_rank/detail_data', 'MedicalController@dataDetailPaymentPerRankMD');
 Route::get('medical/payment_per_rank/claim/detail_data', 'MedicalController@dataDetailPaymentPerRankClaimDetailMD');
 Route::get('medical/vaccine_master/detail_data', 'MedicalController@dataDetailVaccineMasterMD');
+Route::get('medical/medical_checkup_master/detail_data', 'MedicalController@dataDetailMCUMasterMD');
 
 /*Route untuk Proses Medical*/
 Route::post('medical/medical_reference/proses', 'MedicalController@prosesMedicalReferenceMD');
@@ -954,9 +959,13 @@ Route::post('medical/vaccine_master/proses', 'MedicalController@prosesVaccineMas
 Route::post('medical/vaccine_master_detail/proses', 'MedicalController@prosesVaccineMasterDetailMD');
 Route::post('medical/vaccination_schedule/proses', 'MedicalController@prosesVaccinationScheduleMD');
 Route::post('medical/medical_checkup_schedule/proses', 'MedicalController@prosesMedicalCheckupScheduleMD');
+Route::post('medical/medical_checkup_master/proses', 'MedicalController@prosesMCUMasterMD');
+Route::post('medical/medical_checkup_master_detail/proses', 'MedicalController@prosesMCUMasterDetailMD');
 
 Route::get('medical/vaccine_master/remove', 'MedicalController@removeVaccineMasterMD');
 Route::get('medical/vaccine_master_detail/remove', 'MedicalController@removeVaccineMasterDetailMD');
+Route::get('medical/medical_checkup_master/remove', 'MedicalController@removeMCUMasterMD');
+Route::get('medical/medical_checkup_master_detail/remove', 'MedicalController@removeMCUMasterDetailMD');
 
 Route::post('medical/medical_facility_used_report/print', 'MedicalController@printMedicalFacilityUsedReport');
 Route::post('medical/medical_facility_used_report/print/excel', 'MedicalController@printMedicalFacilityUsedReportExcel');
@@ -972,6 +981,7 @@ Route::post('medical/transfer_payment_to_excel/monthly/print/excel', 'MedicalCon
 Route::post('medical/transfer_payment_to_excel/remaining_limit/print/excel', 'MedicalController@printTransferPaymentToExcelRemainingLimitExcel');
 Route::post('medical/vaccination_schedule/download_template', 'MedicalController@downloadTemplateVaccinationScheduleMD');
 Route::post('medical/medical_checkup_schedule/download_template', 'MedicalController@downloadTemplateVaccinationScheduleMD');
+Route::post('medical/vaccination_schedule/import', 'MedicalController@importVaccinationScheduleMD');
 
 /* Route untuk status Medical */
 Route::get('medical/claim_code/status', 'MedicalController@statusClaimCodeMD');
@@ -1488,6 +1498,7 @@ Route::get('medical_service_code/api', 'DataController@dataMedicalServiceCodeAPI
 Route::get('medical_service_code/ranking/api', 'DataController@dataMedicalServiceCodeRankingAPI');
 Route::get('medical_service_code/paid_type/api', 'DataController@dataMedicalServiceCodePaidTypeAPI');
 Route::get('vaccine_master/api', 'DataController@dataVaccineMasterAPI');
+Route::get('vaccine_master_detail/api', 'DataController@dataVaccineMasterDetailAPI');
 Route::get('medical_type/api', 'DataController@dataMedicalTypeAPI');
 Route::get('dependent_name/api', 'DataController@dataDependentNameAPI');
 

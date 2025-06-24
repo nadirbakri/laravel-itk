@@ -12,6 +12,8 @@ use App\Exports\TransferPaymentToExcelMonthlyExport;
 use App\Exports\TransferPaymentToExcelRemainingLimitExport;
 use App\Exports\VaccinationScheduleTemplateExport;
 
+use App\Imports\VaccinationScheduleImport;
+
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
@@ -218,6 +220,11 @@ class MedicalController extends Controller
         return view('medical.md_vaccination_schedule');
     }
 
+    public function pageVaccinationScheduleHistory()
+    {
+        return view('medical.md_vaccination_schedule_history');
+    }
+
     public function pageVaccineMaster()
     {
         return view('medical.md_vaccine_master');
@@ -226,6 +233,11 @@ class MedicalController extends Controller
     public function pageMedicalCheckupSchedule()
     {
         return view('medical.md_medical_checkup_schedule');
+    }
+
+    public function pageMedicalCheckupMaster()
+    {
+        return view('medical.md_medical_checkup_master');
     }
 
     public function tableClaimCodeMD()
@@ -657,6 +669,94 @@ class MedicalController extends Controller
                         'companyCode' => Session::get('companyCode'),
                         'recordStatus' => 'A',
                         'activityType' => 'V',
+                        'sessionID' => 0,
+                        'sessionUserID' => Session::get('userID'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        'languageCode' => strtoupper(App::getLocale())
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
+        }
+    }
+
+    public function tableVaccinationScheduleHistoryMD(Request $request)
+    {
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/personel/HealthActivities/GetMdHealthActivities',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'recordStatus' => 'A',
+                        'activityType' => 'V',
+                        'sessionID' => 0,
+                        'sessionUserID' => Session::get('userID'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        'languageCode' => strtoupper(App::getLocale())
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
+        }
+    }
+
+    public function tableMCUMasterMD(Request $request)
+    {
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/personel/HealthActivities/GetHealthActivitiesMaster',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'recordStatus' => 'A',
+                        'activityType' => 'MCU',
                         'sessionID' => 0,
                         'sessionUserID' => Session::get('userID'),
                         'userID' => Session::get('userID'),
@@ -1245,6 +1345,50 @@ class MedicalController extends Controller
         }
 
         return view('medical.md_vaccine_master_detail', ['data' => $data, 'func' => $request->func]);
+    }
+
+    public function dataDetailMCUMasterMD(Request $request)
+    {
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/personel/HealthActivities/GetHealthActivitiesMaster',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'activityCode' => $request->activityCode,
+                        'activityType' => 'MCU',
+                        'languageCode' => strtoupper(App::getLocale()),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+        
+        if($arrResult->dataListSet == null){
+            $data = [];
+        }else{
+            $data = $arrResult->dataListSet;
+        }
+
+        return view('medical.md_medical_checkup_master_detail', ['data' => $data, 'func' => $request->func]);
     }
 
     public function prosesClaimCodeMD(Request $request)
@@ -2274,6 +2418,10 @@ class MedicalController extends Controller
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
                 return view('error.not_found');
+            }else if ($response->getStatusCode() == 400) {
+                $body = json_decode($response->getBody()->getContents());
+                $message = isset($body->message) ? $body->message : 'Bad Request';
+                return response()->json(['status' => false, 'message' => $message]);
             }else{
                 return view('error.bad_request');
             }
@@ -2311,8 +2459,6 @@ class MedicalController extends Controller
                 "languageCode" => App::getLocale()
             ];
 
-            // dd(json_encode($param), $request->record_function_detail);
-
             if($request->record_function_detail == 'New'){
                 $response = $client->post(env('API_URL') . '/personel/HealthActivities/InsertHealthActivitiesDetail',
                     ['body' => json_encode([$param])]
@@ -2330,6 +2476,10 @@ class MedicalController extends Controller
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
                 return view('error.not_found');
+            }else if ($response->getStatusCode() == 400) {
+                $body = json_decode($response->getBody()->getContents());
+                $message = isset($body->message) ? $body->message : 'Bad Request';
+                return response()->json(['status' => false, 'message' => $message]);
             }else{
                 return view('error.bad_request');
             }
@@ -2350,33 +2500,27 @@ class MedicalController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            foreach($request->detailVaccine as $detail){
-                $detailVaccine[] = [
-                    'companyCode' => Session::get('companyCode'),
-                    'dose' => (int) $detail['dose'],
-                    'date' => $detail['date'] . 'T' . $detail['time'],
-                    'address' => $detail['address'],
-                    'description' => $detail['description'],
-                    "languageCode" => App::getLocale(),
-                    "changedNo" => 0,
-                    "createdDate" => date("Y-m-d\TH:i:s"),
-                    "createdBy" => Session::get('userID'),
-                    "changedDate" => date("Y-m-d\TH:i:s"),
-                    "changedBy" => Session::get('userID'),
-                ];
-            }
-
-            // dd($detailVaccine);
+            $detailActivities[] = [
+                'sequence' => (int) $request['number_of_dose'],
+                'activityType' => 'V',
+                'batchCode' => $request['batch_code_hidden'],
+                'address' => $request['description'],
+                'date' => $request['vaccine_date'] . 'T' . $request['vaccine_time'],
+                'amount' => (int) count($request->employee_no),
+                'address' => $request['name_of_places'],
+                'description' => $request['description']
+            ];
 
             foreach($request->employee_no as $employeeNo){
                 $param[] = [
                     'companyCode' => Session::get('companyCode'),
                     'employeeNo' => $employeeNo,
                     'address' => $request['name_of_places'],
-                    'code' => $request['vaccine_type'],
-                    'description' => $request['description'],
+                    'code' => $request['vaccine_name'],
+                    'description' => $request['title'],
                     'type' => 'V',
-                    'detailVaccine' => $detailVaccine,
+                    'date' => $request['vaccine_date'] . 'T' . $request['vaccine_time'],
+                    'detailActivities' => $detailActivities,
                     "languageCode" => App::getLocale(),
                     "sessionID" => 0,
                     "sessionUserID" => Session::get('userID'),
@@ -2393,10 +2537,128 @@ class MedicalController extends Controller
 
         } catch (RequestException $e) {
             $response = $e->getResponse();
+            if ($response->getStatusCode() == 401) {
+                return view('error.login');
+            } else if ($response->getStatusCode() == 404) {
+                return view('error.not_found');
+            } else if ($response->getStatusCode() == 400) {
+                $body = json_decode($response->getBody()->getContents());
+                $message = isset($body->message) ? $body->message : 'Bad Request';
+                return response()->json(['status' => false, 'message' => $message]);
+            } else {
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function prosesMCUMasterMD(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $param = [
+                'companyCode' => Session::get('companyCode'),
+                'recordStatus' => 'A',
+                'activityCode' => $request->mcu_code,
+                'activityName' => $request->mcu_name,
+                'activityType' => 'MCU',
+                'sessionID' => 0,
+                'sessionUserID' => Session::get('userID'),
+                'logActionUserID' => Session::get('userID'),
+                'logActionUsername' => Session::get('userName'),
+                "languageCode" => App::getLocale()
+            ];
+
+            // dd(json_encode($param));
+
+            if($request->record_function == 'New'){
+                $response = $client->post(env('API_URL') . '/personel/HealthActivities/InsertHealthActivitiesMaster',
+                    ['body' => json_encode([$param])]
+                );
+            }else{
+                $response = $client->post(env('API_URL') . '/personel/HealthActivities/UpdateHealthActivitiesMaster',
+                    ['body' => json_encode($param)]
+                );
+            }
+
+
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
             if($response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
                 return view('error.not_found');
+            }else if ($response->getStatusCode() == 400) {
+                $body = json_decode($response->getBody()->getContents());
+                $message = isset($body->message) ? $body->message : 'Bad Request';
+                return response()->json(['status' => false, 'message' => $message]);
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function prosesMCUMasterDetailMD(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $param = [
+                'companyCode' => Session::get('companyCode'),
+                'activityCode' => $request->mcu_code,
+                'activityType' => 'MCU',
+                'batchCode' => $request->batch_code,
+                'capacity' => $request->capacity,
+                'sequence' => (int) $request->stage,
+                'description' => $request->batch_description,
+                // 'expiredDate' => $request->expired_date,
+                // 'serialNumber' => $request->serial_number,
+                'sessionID' => 0,
+                'sessionUserID' => Session::get('userID'),
+                'logActionUserID' => Session::get('userID'),
+                'logActionUsername' => Session::get('userName'),
+                "languageCode" => App::getLocale()
+            ];
+
+            if($request->record_function_detail == 'New'){
+                $response = $client->post(env('API_URL') . '/personel/HealthActivities/InsertHealthActivitiesDetail',
+                    ['body' => json_encode([$param])]
+                );
+            }else{
+                $response = $client->post(env('API_URL') . '/personel/HealthActivities/UpdateHealthActivitiesDetail',
+                    ['body' => json_encode($param)]
+                );
+            }
+
+
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else if ($response->getStatusCode() == 400) {
+                $body = json_decode($response->getBody()->getContents());
+                $message = isset($body->message) ? $body->message : 'Bad Request';
+                return response()->json(['status' => false, 'message' => $message]);
             }else{
                 return view('error.bad_request');
             }
@@ -3619,6 +3881,10 @@ class MedicalController extends Controller
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
                 return view('error.not_found');
+            }else if ($response->getStatusCode() == 400) {
+                $body = json_decode($response->getBody()->getContents());
+                $message = isset($body->message) ? $body->message : 'Bad Request';
+                return response()->json(['status' => false, 'message' => $message]);
             }else{
                 return view('error.bad_request');
             }
@@ -3664,6 +3930,107 @@ class MedicalController extends Controller
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
                 return view('error.not_found');
+            }else if ($response->getStatusCode() == 400) {
+                $body = json_decode($response->getBody()->getContents());
+                $message = isset($body->message) ? $body->message : 'Bad Request';
+                return response()->json(['status' => false, 'message' => $message]);
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function removeMCUMasterMD(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            foreach($request->data as $value){
+                $param[] = [
+                    'companyCode' => Session::get('companyCode'),
+                    'activityCode' => $value['activityCode'],
+                    'activityType' => 'MCU',
+                    "languageCode" => App::getLocale(),
+                    "sessionID" => 0,
+                    "sessionUserID" => Session::get('userID'),
+                    "logActionUserID" => Session::get('userID'),
+                    "logActionUsername" => Session::get('userID')
+                ];
+            }
+
+            // dd(json_encode($param));
+
+            $response = $client->post(env('API_URL') . '/personel/HealthActivities/DeleteHealthActivitiesMaster',
+                ['body' => json_encode($param)]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else if ($response->getStatusCode() == 400) {
+                $body = json_decode($response->getBody()->getContents());
+                $message = isset($body->message) ? $body->message : 'Bad Request';
+                return response()->json(['status' => false, 'message' => $message]);
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
+    public function removeMCUMasterDetailMD(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            foreach($request->data as $value){
+                $param[] = [
+                    'companyCode' => Session::get('companyCode'),
+                    'activityCode' => $value['activityCode'],
+                    'activityType' => 'MCU',
+                    'batchCode' => $value['batchCode'],
+                    "languageCode" => App::getLocale(),
+                    "sessionID" => 0,
+                    "sessionUserID" => Session::get('userID'),
+                    "logActionUserID" => Session::get('userID'),
+                    "logActionUsername" => Session::get('userID')
+                ];
+            }
+
+            // dd(json_encode($param));
+
+            $response = $client->post(env('API_URL') . '/personel/HealthActivities/DeleteHealthActivitiesDetail',
+                ['body' => json_encode($param)]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else if ($response->getStatusCode() == 400) {
+                $body = json_decode($response->getBody()->getContents());
+                $message = isset($body->message) ? $body->message : 'Bad Request';
+                return response()->json(['status' => false, 'message' => $message]);
             }else{
                 return view('error.bad_request');
             }
@@ -3682,5 +4049,26 @@ class MedicalController extends Controller
     public function downloadTemplateMedicalCheckupScheduleMD(Request $request)
     {
         return Excel::download(new VaccinationScheduleTemplateExport, "Medical Checkup Schedule Template.xlsx");
+    }
+
+    public function importVaccinationScheduleMD(Request $request)
+    {
+        $file = $request->file;
+        try{
+            $import = new VaccinationScheduleImport();
+            Excel::import($import, $file->getRealPath(), null, \Maatwebsite\Excel\Excel::XLSX);
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            $failures = $e->failures();
+            $objError = (object) ['status' => false, 'message' => $failures[0]->errors()[0]];
+            return array(0 => $objError);
+        }
+
+        if(empty($import->getArrResult())){
+            $objError = (object) ['status' => false, 'message' => "The Uploaded File Doesn't Match The Template"];
+            return array(0 => $objError);
+        }else{
+            $arrResult = $import->getArrResult()[0];
+            return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+        }
     }
 }
