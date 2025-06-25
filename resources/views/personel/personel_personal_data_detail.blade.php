@@ -1987,12 +1987,12 @@
                                     <input type="hidden" id="get_employee_no" name="get_employee_no" value="">
                                 </button>
                             </div>
-                            <div class="col-3">
+                            <!-- <div class="col-3">
                                 <button type="button" class="btn btn-warning" name="btn-edit-family-dependent-data"
                                     id="btn-edit-family-dependent-data" style="width: 100%;">
                                     <i class="fa fa-pencil"></i> {{ __('personel_personal_data.btn_edit') }}
                                 </button>
-                            </div>
+                            </div> -->
                             <div class="col-3">
                                 <button type="button" class="btn btn-danger" name="btn-remove-family-dependent-data"
                                     id="btn-remove-family-dependent-data" style="width: 100%;">

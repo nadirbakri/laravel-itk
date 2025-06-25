@@ -251,12 +251,6 @@
                     bank_name: {
                         required: true,
                     },
-                    bi_code: {
-                        required: true,
-                    },
-                    account_format: {
-                        required: true,
-                    },
                 },
                 messages: {
                     bank_code: {
@@ -264,12 +258,6 @@
                     },
                     bank_name: {
                         required: "{{ __('personel_bank_code.bank_name_required') }}",
-                    },
-                    bi_code: {
-                        required: "{{ __('personel_bank_code.bi_code_required') }}",
-                    },
-                    account_format: {
-                        required: "{{ __('personel_bank_code.account_format_required') }}",
                     },
                 },
                 highlight: function (element) {
