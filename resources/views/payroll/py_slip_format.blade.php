@@ -390,6 +390,8 @@
     }
     
     $(document).ready(function () {
+        $.fn.modal.Constructor.prototype._enforceFocus = function() {};
+        
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         var table = null;
         var arraySlipFormat = [];
