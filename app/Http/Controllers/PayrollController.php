@@ -7390,10 +7390,7 @@ public function dataDetailReportFormatPY(Request $request)
             $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_mmi';
             $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_mmi';
         }else if($data->companyCode == 'MCA' || $data->companyCode == 'MCAJU'){
-            $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_ipn';
-            $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_mca';
-        }else if($data->companyCode == 'MCA' || $data->companyCode == 'MCAJU'){
-            $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_ipn';
+            $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_mca';
             $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_mca';
         }else if($data->companyCode == 'IPN' || $data->companyCode == 'UPM' || $data->companyCode == 'IGT' ||
             $data->companyCode == 'IVT' || $data->companyCode == 'IPNJT'){
@@ -7405,6 +7402,9 @@ public function dataDetailReportFormatPY(Request $request)
         }else if($data->companyCode == 'RSPIK'){
             $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_rspik';
             $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_rspik';
+        }else if($data->companyCode == 'SBS'){
+            $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_sbs';
+            $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_sbs';
         }else{
             $viewNamePortrait = 'payroll.py_export_payment_slip_portrait';
             $viewNameLandscape = 'payroll.py_export_payment_slip_landscape';
@@ -7681,7 +7681,7 @@ public function dataDetailReportFormatPY(Request $request)
             $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_ipn';
             $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_ipn';
         }else if($companyCode == 'MCA' || $companyCode == 'MCAJU'){
-            $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_ipn';
+            $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_mca';
             $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_mca';
         }else if($companyCode == 'CII' || $companyCode == 'CORI'){
             $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_cori';
@@ -7689,10 +7689,15 @@ public function dataDetailReportFormatPY(Request $request)
         }else if($companyCode == 'RSPIK'){
             $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_rspik';
             $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_rspik';
+        }else if($companyCode == 'SBS'){
+            $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_sbs';
+            $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_sbs';
         }else{
             $viewNamePortrait = 'payroll.py_export_payment_slip_portrait';
             $viewNameLandscape = 'payroll.py_export_payment_slip_landscape';
         }
+
+        // dd($arrResult->dataListSet);
 
         if($arrResult->dataListSet == null){
             if($request->format_type == "portrait"){
@@ -7899,9 +7904,15 @@ public function dataDetailReportFormatPY(Request $request)
         }else if($companyCode == 'CII' || $companyCode == 'CORI'){
             $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_cori';
             $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_cori';
+        }else if($companyCode == 'MCA' || $companyCode == 'MCAJU'){
+            $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_mca';
+            $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_mca';
         }else if($companyCode == 'RSPIK'){
             $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_rspik';
             $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_rspik';
+        }else if($companyCode == 'SBS'){
+            $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_sbs';
+            $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_sbs';
         }else{
             $viewNamePortrait = 'payroll.py_export_payment_slip_portrait';
             $viewNameLandscape = 'payroll.py_export_payment_slip_landscape';

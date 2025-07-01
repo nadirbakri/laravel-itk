@@ -241,18 +241,6 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-12">
-                        <div class="form-group">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="check_grouping"
-                                    name="check_grouping" value="true">
-                                <label
-                                    for="check_grouping">{{ __('payroll_periodical_report.label_data_grouping') }}</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
                     <div class="col-2">
                         <div class="form-group">
                             <label for="report_status">{{ __('payroll_periodical_report.label_report_status') }}</label>
