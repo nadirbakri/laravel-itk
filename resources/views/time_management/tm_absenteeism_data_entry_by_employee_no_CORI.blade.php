@@ -964,7 +964,7 @@
 
             $('#employee_no').select2({
                 width: '100%',
-                placeholder: 'Choose Employee',
+                placeholder: 'Choose Employee No',
                 allowClear: true,
                 // tags: true,
                 closeOnSelect: true,
@@ -1210,7 +1210,7 @@
 
             $(field).select2({
                 width: '100%',
-                placeholder: 'Choose Day',
+                placeholder: '',
                 allowClear: true,
                 // multiple: true,
                 // tags: true,
@@ -1283,7 +1283,7 @@
 
             $(field).select2({
                 width: '100%',
-                placeholder: 'Choose Shift',
+                placeholder: '',
                 allowClear: true,
                 // tags: true,
                 closeOnSelect: true,
@@ -1355,7 +1355,7 @@
 
             $(field).select2({
                 width: '100%',
-                placeholder: 'Choose Cost Center Code',
+                placeholder: '',
                 allowClear: true,
                 // multiple: true,
                 // tags: true,
@@ -1428,7 +1428,7 @@
 
             $(field).select2({
                 width: '100%',
-                placeholder: 'Choose Absent Code',
+                placeholder: '',
                 allowClear: true,
                 // multiple: true,
                 // tags: true,
@@ -1501,7 +1501,7 @@
 
             $(field).select2({
                 width: '100%',
-                placeholder: 'Choose Overtime Code',
+                placeholder: '',
                 allowClear: true,
                 // multiple: true,
                 // tags: true,
@@ -1574,7 +1574,7 @@
 
             $(field).select2({
                 width: '100%',
-                placeholder: 'Choose Position Code',
+                placeholder: '',
                 allowClear: true,
                 // multiple: true,
                 // tags: true,
@@ -1647,7 +1647,7 @@
 
             $(field).select2({
                 width: '100%',
-                placeholder: 'Choose Location Code',
+                placeholder: '',
                 allowClear: true,
                 // multiple: true,
                 // tags: true,
@@ -1724,7 +1724,7 @@
 
             $(field).select2({
                 width: '100%',
-                placeholder: 'Choose Grade Code',
+                placeholder: '',
                 allowClear: true,
                 // multiple: true,
                 // tags: true,
