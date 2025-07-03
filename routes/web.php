@@ -510,6 +510,7 @@ Route::get('time_management/detail_absenteeism_report', 'TimeManagementControlle
 Route::get('time_management/detail_rate_overtime_report', 'TimeManagementController@pageDetailRateOvertimeReport');
 Route::get('time_management/detail_absenteeism_reason_report', 'TimeManagementController@pageDetailAbsenteeismReasonReport');
 Route::get('time_management/leave_process', 'TimeManagementController@pageLeaveProcess');
+Route::get('time_management/absenteeism_report', 'TimeManagementController@pageAbsenteeismReport');
 
 /* Route untuk Tabel Time Management */
 Route::get('time_management/input_balance_leave/table', 'TimeManagementController@tableInputBalanceLeave');
@@ -592,6 +593,7 @@ Route::post('time_management/detail_absenteeism_reason_report/excel/print', 'Tim
 Route::post('time_management/detail_absenteeism_reason_report/print', 'TimeManagementController@printDetailAbsenteeismReasonReportPDF');
 Route::post('time_management/detail_rate_overtime_report/print', 'TimeManagementController@printDetailRateOvertimeReport');
 Route::post('time_management/absenteeism_overtime_report/print', 'TimeManagementController@printAbsenteeismOvertimeReport');
+Route::post('time_management/absenteeism_report/print', 'TimeManagementController@printAbsenteeismReport');
 
 Route::post('time_management/update_absenteeism_data/import', 'TimeManagementController@importUpdateAbsenteeismData');
 Route::post('time_management/update_absenteeism_data/download', 'TimeManagementController@templateUpdateAbsenteeismData');
@@ -866,6 +868,7 @@ Route::get('medical/vaccination_schedule', 'MedicalController@pageVaccinationSch
 Route::get('medical/medical_checkup_schedule', 'MedicalController@pageMedicalCheckupSchedule');
 Route::get('medical/vaccination_schedule_history', 'MedicalController@pageVaccinationScheduleHistory');
 Route::get('medical/medical_checkup_master', 'MedicalController@pageMedicalCheckupMaster');
+Route::get('medical/medical_checkup_schedule_history', 'MedicalController@pageMedicalCheckupScheduleHistory');
 
 /* Route untuk tabel Medical */
 Route::get('medical/claim_code/table', 'MedicalController@tableClaimCodeMD');
@@ -980,7 +983,7 @@ Route::post('medical/outstanding_claim_report/print/excel', 'MedicalController@p
 Route::post('medical/transfer_payment_to_excel/monthly/print/excel', 'MedicalController@printTransferPaymentToExcelMonthlyExcel');
 Route::post('medical/transfer_payment_to_excel/remaining_limit/print/excel', 'MedicalController@printTransferPaymentToExcelRemainingLimitExcel');
 Route::post('medical/vaccination_schedule/download_template', 'MedicalController@downloadTemplateVaccinationScheduleMD');
-Route::post('medical/medical_checkup_schedule/download_template', 'MedicalController@downloadTemplateVaccinationScheduleMD');
+Route::post('medical/medical_checkup_schedule/download_template', 'MedicalController@downloadTemplateMedicalCheckupScheduleMD');
 Route::post('medical/vaccination_schedule/import', 'MedicalController@importVaccinationScheduleMD');
 
 /* Route untuk status Medical */
@@ -1499,6 +1502,8 @@ Route::get('medical_service_code/ranking/api', 'DataController@dataMedicalServic
 Route::get('medical_service_code/paid_type/api', 'DataController@dataMedicalServiceCodePaidTypeAPI');
 Route::get('vaccine_master/api', 'DataController@dataVaccineMasterAPI');
 Route::get('vaccine_master_detail/api', 'DataController@dataVaccineMasterDetailAPI');
+Route::get('medical_checkup_master/api', 'DataController@dataMCUMasterAPI');
+Route::get('medical_checkup_master_detail/api', 'DataController@dataMCUMasterDetailAPI');
 Route::get('medical_type/api', 'DataController@dataMedicalTypeAPI');
 Route::get('dependent_name/api', 'DataController@dataDependentNameAPI');
 

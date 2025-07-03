@@ -20,6 +20,7 @@ use App\Exports\ChangeDataShiftTemplateExcel;
 use App\Exports\PeMasterLeaveExport;
 use App\Exports\PlafonExport;
 use App\Exports\AbsentCodeTemplateExport;
+use App\Exports\AbsenteeismReportExport;
 
 use App\Imports\UpdateAbsenteeismDataImport;
 use App\Imports\ChangeDataShiftImport;
@@ -363,6 +364,11 @@ class TimeManagementController extends Controller
     public function pageDetailRateOvertimeReport()
     {
         return view ('time_management.tm_detail_rate_overtime_report');
+    }
+
+    public function pageAbsenteeismReport()
+    {
+        return view ('time_management.tm_absenteeism_report');
     }
 
     public function tableCompanyWorkingCalendar()
@@ -1634,6 +1640,11 @@ class TimeManagementController extends Controller
         }
 
         return Excel::download(new AbsenteeismOvertimeReportExport($request->employee_no_from, $request->employee_no_to, $request->absent_date_from, $request->absent_date_to, $request->group_authorize_from, $request->group_authorize_to, $request->report_type, isset($request->include_resign) ? (bool) $request->include_resign : false, $request->position, $request->ranking, $request->location, $dataLevel), $nama_file);
+    }
+
+    public function printAbsenteeismReport(Request $request)
+    {
+        return Excel::download(new AbsenteeismReportExport($request->start_date, $request->end_date), 'Absenteeism Report.xlsx');
     }
 
     public function importUpdateAbsenteeismData(Request $request)
