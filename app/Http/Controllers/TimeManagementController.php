@@ -21,6 +21,7 @@ use App\Exports\PeMasterLeaveExport;
 use App\Exports\PlafonExport;
 use App\Exports\AbsentCodeTemplateExport;
 use App\Exports\AbsenteeismReportExport;
+use App\Exports\OvertimeReportExport;
 
 use App\Imports\UpdateAbsenteeismDataImport;
 use App\Imports\ChangeDataShiftImport;
@@ -369,6 +370,41 @@ class TimeManagementController extends Controller
     public function pageAbsenteeismReport()
     {
         return view ('time_management.tm_absenteeism_report');
+    }
+
+    public function pageOvertimeReport()
+    {
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/mobile/ReferenceTM/getReferenceTM',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            // var_dump($response);
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents()); 
+
+        // dd($arrResult->dataListSet);
+
+        return view('time_management.tm_overtime_report', ['data' => $arrResult->dataListSet]);
     }
 
     public function tableCompanyWorkingCalendar()
@@ -1645,6 +1681,11 @@ class TimeManagementController extends Controller
     public function printAbsenteeismReport(Request $request)
     {
         return Excel::download(new AbsenteeismReportExport($request->start_date, $request->end_date), 'Absenteeism Report.xlsx');
+    }
+
+    public function printOvertimeReport(Request $request)
+    {
+        return Excel::download(new OvertimeReportExport($request->period), 'Overtime Report.xlsx');
     }
 
     public function importUpdateAbsenteeismData(Request $request)

@@ -511,6 +511,7 @@ Route::get('time_management/detail_rate_overtime_report', 'TimeManagementControl
 Route::get('time_management/detail_absenteeism_reason_report', 'TimeManagementController@pageDetailAbsenteeismReasonReport');
 Route::get('time_management/leave_process', 'TimeManagementController@pageLeaveProcess');
 Route::get('time_management/absenteeism_report', 'TimeManagementController@pageAbsenteeismReport');
+Route::get('time_management/overtime_report', 'TimeManagementController@pageOvertimeReport');
 
 /* Route untuk Tabel Time Management */
 Route::get('time_management/input_balance_leave/table', 'TimeManagementController@tableInputBalanceLeave');
@@ -594,6 +595,7 @@ Route::post('time_management/detail_absenteeism_reason_report/print', 'TimeManag
 Route::post('time_management/detail_rate_overtime_report/print', 'TimeManagementController@printDetailRateOvertimeReport');
 Route::post('time_management/absenteeism_overtime_report/print', 'TimeManagementController@printAbsenteeismOvertimeReport');
 Route::post('time_management/absenteeism_report/print', 'TimeManagementController@printAbsenteeismReport');
+Route::post('time_management/overtime_report/print', 'TimeManagementController@printOvertimeReport');
 
 Route::post('time_management/update_absenteeism_data/import', 'TimeManagementController@importUpdateAbsenteeismData');
 Route::post('time_management/update_absenteeism_data/download', 'TimeManagementController@templateUpdateAbsenteeismData');
