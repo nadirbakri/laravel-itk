@@ -465,6 +465,7 @@
         let dataEmployeeNo = null
         let dataPeriod = null
         let selectEmployeeNo = []
+        let arrNotLeave = []
 
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         var companyCode = "{{ Session::get('companyCode') }}";
@@ -587,7 +588,7 @@
             // $('.select_finger_absent_code').prop('disabled', false);
             // $('.finger_absent_hour').prop('readonly', false);
             // $('.finger_absent_description').prop('readonly', false);
-            $('.select_absent_code').prop('disabled', false);
+            // $('.select_absent_code').prop('disabled', false);
             $('.absent_hour').prop('readonly', false);
             $('.absent_description').prop('readonly', false);
             $('.select_overtime_code').prop('disabled', false);
@@ -602,6 +603,14 @@
             // $('.select_location').prop('disabled', false);
             // $('.select_grade').prop('disabled', false);
             $('#btn-save').prop('disabled', false);
+
+            console.log(arrNotLeave);
+
+            $('.select_absent_code').prop('disabled', true);
+            arrNotLeave.forEach(index => {
+                $(`#absent_code${index}`).prop('disabled', false);
+                const value = $(`#absent_code${index}`).val();
+            });
         });
 
         $('#btn-previous-employee').on('click', function () {
@@ -655,6 +664,7 @@
         })
 
         function load_data(dataEmployeeNo, dataPeriod){
+            arrNotLeave = []
             if (dataEmployeeNo) {
                 $('#employee_name').val(htmlDecode(dataEmployeeNo.title || dataEmployeeNo.fullName));
                 // $('#ranking').val(dataEmployeeNo.data.rankingName);
@@ -680,6 +690,11 @@
                 success: function (response) {
                     if(!isEmpty(response)){
                         $.each(response, function(k, v) {
+                            const desc = (v.absentCodeDescription || '').toLowerCase();
+                            if (!desc.includes('leave') && !desc.includes('cuti')) {
+                                arrNotLeave.push(k+1);
+                            }
+
                             table.row.add([
                                 '<input type="hidden" class="employee_no_table" name="employee_no_table[]" id="employee_no_table" value="'+ (v.employeeNo || '') +'"><input type="hidden" class="absent_date" name="absent_date[]" id="absent_date" value="'+ ((typeof v.absentDate !== 'undefined' && v.absentDate !== null) ? moment(v.absentDate).format('YYYY-MM-DD') : '') +'" style="width: 50px; text-align: center;" readonly>' + ((typeof v.absentDate !== 'undefined' && v.absentDate !== null) ? moment(v.absentDate).format('YYYY-MM-DD') : ''),
                                 '<input type="hidden" class="seq_no" name="seq_no[]" id="seq_no" value="'+ ((typeof v.seqNo !== 'undefined' && v.seqNo !== null) ? v.seqNo : '') +'" style="text-align: center;" readonly>' + ((typeof v.seqNo !== 'undefined' && v.seqNo !== null) ? v.seqNo : ''),
@@ -708,6 +723,7 @@
                                     '<input type="text" class="form-control form-control-sm overtime_convert" name="overtime_convert[]" id="overtime_convert" value="'+ ((typeof v.hourOvtCvt !== 'undefined' && v.hourOvtCvt !== null) ? v.hourOvtCvt : '') +'" style="text-align: center;" readonly>',
                                 '<span style="display:none;">' + v.absentCode + '</span>' +
                                     '<select class="form-control form-control-sm select2 select_absent_code" name="absent_code[]" id="absent_code'+ (k+1) +'" data-no="'+ (k+1) +'" style="text-align: center;" disabled></select><input type="hidden" class="form-control" name="absent_code_det[]" id="absent_code_det'+ (k+1) +'">',
+                                // '<input type="hidden" class="absent_code_hidden" name="absent_code_hidden[]" id="absent_code_hidden" value="'+ ((typeof v.absentCode !== 'undefined' && v.absentCode !== null) ? v.absentCode : '') +'" style="text-align: center;" readonly>',
                                 '<span style="display:none;">' + moment(v.hourAbsent).format('HH:mm:ss') + '</span>' +
                                     '<input type="text" class="form-control form-control-sm absent_hour" name="absent_hour[]" id="absent_hour" style="text-align: center;" readonly>',
                                 '<span style="display:none;">' + v.descriptionAbsent + '</span>' +
@@ -1449,7 +1465,8 @@
                     data: function (params) {
                         return {
                             _token: CSRF_TOKEN,
-                            search: params.term
+                            search: params.term,
+                            feature: 'AbsenteeismCORI'
                         };
                     },
                     processResults: function (data) {

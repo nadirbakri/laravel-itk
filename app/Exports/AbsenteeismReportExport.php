@@ -15,8 +15,12 @@ use Maatwebsite\Excel\Events\AfterSheet;
 
 class AbsenteeismReportExport implements FromView, ShouldAutoSize
 {
-    public function __construct($startDate, $endDate)
+    public function __construct($employeeType, $employeeNoFrom, $employeeNoTo, $employeeNoList, $startDate, $endDate)
     {
+        $this->employeeType = $employeeType;
+        $this->employeeNoFrom = $employeeNoFrom;
+        $this->employeeNoTo = $employeeNoTo;
+        $this->employeeNoList = $employeeNoList;
         $this->startDate = $startDate;
         $this->endDate = $endDate;
     }
@@ -31,9 +35,15 @@ class AbsenteeismReportExport implements FromView, ShouldAutoSize
 
             $param = [
                 'companyCode' => Session::get('companyCode'),
+                'range' => $this->employeeType === 'RANGE' ? true : false,
+                'employeeNoFrom' => $this->employeeNoFrom,
+                'employeeNoTo' => $this->employeeNoTo,
+                'employeeList' => $this->employeeType === 'ALL' || $this->employeeType === 'RANGE' ? [] : $this->employeeNoList,
                 'startDate' => $this->startDate,
                 'endDate' => $this->endDate
             ];
+
+            // dd(json_encode($param));
 
             $response = $client->post(env('API_URL') . '/mobile/getAbsenteeismReport',
                 ['body' => json_encode($param)]

@@ -43,8 +43,8 @@
 				<td style="text-align: left;">{{ $value->absentDate ? date('Y-m-d', strtotime($value->absentDate)) : '' }}</td>
 				<td style="text-align: left;">{{ $value->day ?? '' }}</td>
                 <td style="text-align: left;">{{ $value->shiftCode ?? '' }}</td>
-                <td style="text-align: left;">{{ $value->actualDateIn ? date('Y-m-d', strtotime($value->actualDateIn)) : '' }}</td>
-                <td style="text-align: left;">{{ $value->actualDateOut ? date('Y-m-d', strtotime($value->actualDateOut)) : '' }}</td>
+                <td style="text-align: left;">{{ $value->actualDateIn ? date('Y-m-d H:i:s', strtotime($value->actualDateIn)) : '' }}</td>
+                <td style="text-align: left;">{{ $value->actualDateOut ? date('Y-m-d H:i:s', strtotime($value->actualDateOut)) : '' }}</td>
 				<td style="text-align: left;">{{ $value->absentCode }}</td>
 				<td style="text-align: left;">{{ $value->descriptionAbsent }}</td>
                 <td style="text-align: left;">{{ $value->hourOvt }}</td>

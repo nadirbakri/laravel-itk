@@ -62,7 +62,47 @@
         </div>
         <div class="div-form">
             <form id="absenteeism_report_form" method="post">
-                @csrf    
+                @csrf   
+                <div class="row d-flex gap-4">
+                    <div class="form-group" style="padding-left: 15px">
+                        <label for="get_employee form-check-label">{{ __('tm_absenteeism_report.label_get_employee') }}</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" id="get_employee_all" name="get_employee" value="ALL" checked>
+                        <label for="get_employee_all">{{ __('tm_absenteeism_report.label_all') }}</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" id="get_employee_range" name="get_employee" value="RANGE">
+                        <label for="get_employee_range">{{ __('tm_absenteeism_report.label_range') }}</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" id="get_employee_list" name="get_employee" value="LIST">
+                        <label for="get_employee_list">{{ __('tm_absenteeism_report.label_list') }}</label>
+                    </div>
+                </div>
+                <div class="row" id="employee_range">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label
+                                for="employee_no_from">{{ __('tm_absenteeism_report.label_employee_no_from') }}</label>
+                            <select class="form-control select2" id="employee_no_from" name="employee_no_from" disabled></select>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="employee_no_to">{{ __('tm_absenteeism_report.label_employee_no_to') }}</label>
+                            <select class="form-control select2" id="employee_no_to" name="employee_no_to" disabled></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" id="employee_list">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="employee_no_list">{{ __('tm_absenteeism_report.label_employee_no_list') }}</label>
+                            <select class="form-control select2" id="employee_no_list" name="employee_no_list[]" multiple="multiple" disabled></select>
+                        </div>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
@@ -179,6 +219,125 @@
 <script type="text/javascript">
     $(document).ready(function () {
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+        loadDataEmployeeNo('#employee_no_from');
+        loadDataEmployeeNo('#employee_no_to');
+        loadDataEmployeeNo('#employee_no_list');
+        loadDataFirstLastAllEmployeeNo('#employee_no_from', 'First');
+        loadDataFirstLastAllEmployeeNo('#employee_no_to', 'Last');
+
+        $('#employee_list').hide();
+
+        $('input[name=get_employee]').on("change", function (e) {
+            var data = $(this).val();
+            if(data == "ALL"){
+                $('#employee_range').show();
+                $('#employee_list').hide();
+                $('#employee_no_from').prop('disabled', true);
+                $('#employee_no_to').prop('disabled', true);
+                $('#employee_no_list').prop('disabled', true);
+            } 
+            else if (data === "RANGE") {
+                $('#employee_range').show();
+                $('#employee_list').hide();
+                $('#employee_no_from').prop('disabled', false);
+                $('#employee_no_to').prop('disabled', false);
+                $('#employee_no_list').prop('disabled', true);
+            } 
+            else {
+                $('#employee_range').hide();
+                $('#employee_list').show();
+                $('#employee_no_from').prop('disabled', true);
+                $('#employee_no_to').prop('disabled', true);
+                $('#employee_no_list').prop('disabled', false);
+            }
+        });
+
+        function loadDataEmployeeNo(field = '') {
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' +
+                        '<div class="col-6">' + data.data.employeeNo + '</div>' +
+                        '<div class="col-6">' + data.data.fullName + '</div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var headerIsAppend = false;
+            $(field).on('select2:open', function (e) {
+                if (!headerIsAppend) {
+                    html = '<div class="row">' +
+                        '<div class="col-6"><b>Employee No</b></div>' +
+                        '<div class="col-6"><b>Full Name</b></div>' +
+                        '</div>';
+                    $('.select2-search--dropdown').append(html);
+                    headerIsAppend = true;
+                }
+            });
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            var $employeeNo = $(field).select2({
+                width: '100%',
+                placeholder: 'Choose Employee',
+                allowClear: true,
+                // tags: true,
+                closeOnSelect: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: "{{ url('/employee_no/api') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.fullName,
+                                    id: item.employeeNo,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataFirstLastAllEmployeeNo(field = '', func = '') {
+            $.ajax({
+                type: 'GET',
+                url: "{{ url('/employee_no/func/api') }}",
+                data: {
+                    'func': func
+                }
+            }).then(function (data) {
+                var $newOption = $("<option selected='selected'></option>").val(data.employeeNo).text(
+                    data.fullName);
+                $(field).append($newOption).trigger('change');
+            });
+        }
 
         $("#btn-print").click(function () {
             $(this).prop("disabled", true);

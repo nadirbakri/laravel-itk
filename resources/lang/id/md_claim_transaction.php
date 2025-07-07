@@ -43,10 +43,11 @@ return [
     'claim_for_required' => 'Klaim Untuk harus diisi',
     'reimbursement_remarks_required' => 'Catatan Penggantian Biaya harus diisi',
     'attachment_required' => 'Lampiran harus diisi',
-    'btn_save' => 'Simpan',
+    'btn_submit' => 'Kirim',
+    'btn_show' => 'Tampilkan',
     'btn_add_to_list' => 'Tambahkan ke List',
+    'btn_save' => 'Simpan',
     'btn_clear' => 'Bersihkan',
-    'btn_show' => 'Lihat',
     'btn_cancel' => 'Batal',
     'alert_success' => 'Sukses !'
 

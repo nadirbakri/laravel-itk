@@ -7250,20 +7250,38 @@ class DataController extends Controller
 
 	    $arrResult = json_decode($response->getBody()->getContents());
 
-		if($search == ''){
-	    	$absent = $arrResult->dataListSet;
-	    }else{
-	    	$absent = array_filter(
-	    		$arrResult->dataListSet,
-	    		function($value) use ($search){
-	    			if(preg_match('/' . $search . '/i', $value->absentCode)){
-	    				return preg_match('/' . $search . '/i', $value->absentCode);
-	    			}else if(preg_match('/' . $search . '/i', $value->description)){
-						return preg_match('/' . $search . '/i', $value->description);
+		if ($request->feature === 'AbsenteeismCORI') {
+			$absent = array_filter($arrResult->dataListSet, function ($item) use ($search) {
+				if (stripos($item->description ?? '', 'leave') !== false || stripos($item->description ?? '', 'cuti') !== false) {
+					return false;
+				}
+
+				if ($search) {
+					return stripos($item->absentCode, $search) !== false ||
+						stripos($item->description, $search) !== false;
+				}
+
+				return true;
+			});
+		}
+		else {
+			if($search == ''){
+	    		$absent = $arrResult->dataListSet;
+			}else{
+				$absent = array_filter(
+					$arrResult->dataListSet,
+					function($value) use ($search){
+						if(preg_match('/' . $search . '/i', $value->absentCode)){
+							return preg_match('/' . $search . '/i', $value->absentCode);
+						}else if(preg_match('/' . $search . '/i', $value->description)){
+							return preg_match('/' . $search . '/i', $value->description);
+						}
 					}
-	    		}
-	    	);
-	    }
+				);
+			}
+		}
+
+		// dd($absent);
 
         return response()->json($absent);
 	}
@@ -12709,7 +12727,7 @@ class DataController extends Controller
 					[
 						'companyCode' => Session::get('companyCode'),
 						"recordStatus" => 'A',
-						"type" => 'V',
+						"activityType" => 'V',
 						"languageCode" => strtoupper(App::getLocale())
 					]
 				)]);
@@ -12736,6 +12754,161 @@ class DataController extends Controller
 					function($value) use ($search){
 						if(preg_match('/' . $search . '/i', $value->name)){
 							return preg_match('/' . $search . '/i', $value->name);
+						}
+					}
+				);
+			}
+		}
+		return response()->json($data);
+	}
+
+	public function dataVaccineMasterDetailAPI(Request $request)
+	{
+		$search = $request->search;
+		$data = [];
+
+		try {
+			$client = new Client([
+                'verify' => false,
+				'headers' => [ 'Content-Type' => 'application/json',
+								'Authorization' => 'Bearer ' . Session::get('token') ]
+			]);
+			$response = $client->post(env('API_URL') . '/personel/HealthActivities/GetHealthActivitiesDetail',
+				['body' => json_encode(
+					[
+						'companyCode' => Session::get('companyCode'),
+						"recordStatus" => 'A',
+						"activityType" => 'V',
+						"activityCode" => $request->activityCode,
+						"languageCode" => strtoupper(App::getLocale())
+					]
+				)]);
+			} catch (RequestException $e) {
+				$response = $e->getResponse();
+				if($response->getStatusCode() == 401){
+					return view('error.login');
+				}else if($response->getStatusCode() == 404){
+					return view('error.not_found');
+				}else{
+					return view('error.bad_request');
+				}
+			}
+			
+			$arrResult = json_decode($response->getBody()->getContents());
+			
+			if($arrResult->dataListSet !== null){
+				if($search == ''){
+					$data = array_merge($data, $arrResult->dataListSet);
+				}else{
+					$data = array_merge($data, $arrResult->dataListSet);
+					$data = array_filter(
+					$data,
+					function($value) use ($search){
+						if(preg_match('/' . $search . '/i', $value->description)){
+							return preg_match('/' . $search . '/i', $value->description);
+						}
+					}
+				);
+			}
+		}
+		return response()->json($data);
+	}
+
+	public function dataMCUMasterAPI(Request $request)
+	{
+		$search = $request->search;
+		$data = [];
+
+		try {
+			$client = new Client([
+                'verify' => false,
+				'headers' => [ 'Content-Type' => 'application/json',
+								'Authorization' => 'Bearer ' . Session::get('token') ]
+			]);
+			$response = $client->post(env('API_URL') . '/personel/HealthActivities/GetHealthActivitiesMaster',
+				['body' => json_encode(
+					[
+						'companyCode' => Session::get('companyCode'),
+						"recordStatus" => 'A',
+						"activityType" => 'MCU',
+						"languageCode" => strtoupper(App::getLocale())
+					]
+				)]);
+			} catch (RequestException $e) {
+				$response = $e->getResponse();
+				if($response->getStatusCode() == 401){
+					return view('error.login');
+				}else if($response->getStatusCode() == 404){
+					return view('error.not_found');
+				}else{
+					return view('error.bad_request');
+				}
+			}
+			
+			$arrResult = json_decode($response->getBody()->getContents());
+			
+			if($arrResult->dataListSet !== null){
+				if($search == ''){
+					$data = array_merge($data, $arrResult->dataListSet);
+				}else{
+					$data = array_merge($data, $arrResult->dataListSet);
+					$data = array_filter(
+					$data,
+					function($value) use ($search){
+						if(preg_match('/' . $search . '/i', $value->name)){
+							return preg_match('/' . $search . '/i', $value->name);
+						}
+					}
+				);
+			}
+		}
+		return response()->json($data);
+	}
+
+	public function dataMCUMasterDetailAPI(Request $request)
+	{
+		$search = $request->search;
+		$data = [];
+
+		try {
+			$client = new Client([
+                'verify' => false,
+				'headers' => [ 'Content-Type' => 'application/json',
+								'Authorization' => 'Bearer ' . Session::get('token') ]
+			]);
+			$response = $client->post(env('API_URL') . '/personel/HealthActivities/GetHealthActivitiesDetail',
+				['body' => json_encode(
+					[
+						'companyCode' => Session::get('companyCode'),
+						"recordStatus" => 'A',
+						"activityType" => 'MCU',
+						"activityCode" => $request->activityCode,
+						"languageCode" => strtoupper(App::getLocale())
+					]
+				)]);
+			} catch (RequestException $e) {
+				$response = $e->getResponse();
+				if($response->getStatusCode() == 401){
+					return view('error.login');
+				}else if($response->getStatusCode() == 404){
+					return view('error.not_found');
+				}else{
+					return view('error.bad_request');
+				}
+			}
+			
+			$arrResult = json_decode($response->getBody()->getContents());
+			
+			if($arrResult->dataListSet !== null){
+				if($search == ''){
+					$data = array_merge($data, $arrResult->dataListSet);
+				}else{
+					$data = array_merge($data, $arrResult->dataListSet);
+					$data = array_filter(
+					$data,
+					function($value) use ($search){
+						if(preg_match('/' . $search . '/i', $value->description)){
+							return preg_match('/' . $search . '/i', $value->description);
 						}
 					}
 				);

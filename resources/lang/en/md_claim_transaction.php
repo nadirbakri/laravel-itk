@@ -46,6 +46,7 @@ return [
     'btn_submit' => 'Submit',
     'btn_show' => 'Show',
     'btn_add_to_list' => 'Add to List',
+    'btn_save' => 'Save',
     'btn_clear' => 'Clear',
     'btn_cancel' => 'Cancel',
     'alert_success' => 'Success !'

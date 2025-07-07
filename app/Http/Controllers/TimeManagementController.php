@@ -1680,7 +1680,7 @@ class TimeManagementController extends Controller
 
     public function printAbsenteeismReport(Request $request)
     {
-        return Excel::download(new AbsenteeismReportExport($request->start_date, $request->end_date), 'Absenteeism Report.xlsx');
+        return Excel::download(new AbsenteeismReportExport($request->get_employee, $request->employee_no_from, $request->employee_no_to, $request->employee_no_list, $request->start_date, $request->end_date), 'Absenteeism Report.xlsx');
     }
 
     public function printOvertimeReport(Request $request)
