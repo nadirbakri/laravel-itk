@@ -938,6 +938,24 @@
                     element.closest('.form-group').append(error);
                 },
                 submitHandler: function (form) {
+                    const fileInput = $('#attachment_input');
+                    const files = fileInput.get(0).files;
+
+                    if (files.length === 0) {
+                        fileInput.addClass('is-invalid');
+
+                        if (fileInput.next('span.invalid-feedback').length === 0) {
+                            fileInput.after('<span class="invalid-feedback d-block">{{ __("md_claim_transaction.attachment_required") }}</span>');
+                        }
+
+                        $("#btn-submit").prop("disabled", false);
+                        $("#btn-submit").html(
+                            '<i class="fa fa-floppy-o"></i> {{ __("md_claim_transaction.btn_submit") }}'
+                        );
+
+                        return false;
+                    }
+
                     $.ajaxSetup({
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
