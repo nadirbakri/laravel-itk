@@ -343,12 +343,12 @@
         </tr>
         <tr>
             <td  style="font-size: 9px;">15.</td>
-            <td  style="font-size: 9px;">JUMLAH PENGHASILAN NETO UNTUK PERHITUNGAN PPh PASAL 21 (SETAHUN/DISETAHUNKAN)</td>
+            <td  style="font-size: 9px;">PENGHASILAN TIDAK KENA PAJAK (PTKP)</td>
 			<td  style="font-size: 9px; text-align: right;"> {{ number_format($value->c15, 0, ',', '.') }}</td>
         </tr>
         <tr>
             <td  style="font-size: 9px;">16.</td>
-            <td  style="font-size: 9px;">PENGHASILAN TIDAK KENA PAJAK (PTKP)</td>
+            <td  style="font-size: 9px;">JUMLAH PENGHASILAN NETO UNTUK PERHITUNGAN PPh PASAL 21 (SETAHUN/DISETAHUNKAN)</td>
 			<td  style="font-size: 9px; text-align: right;"> {{ number_format($value->c16, 0, ',', '.') }}</td>
         </tr>
         <tr>
