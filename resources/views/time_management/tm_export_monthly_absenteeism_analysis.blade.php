@@ -19,6 +19,12 @@
 	<table style="width: 100%; font-size: 14px;" >
 		<thead>
 			<tr>
+				<th colspan="28" style="text-align: center; font-size: 16px; font-weight: bold;">Monthly Absenteeism Analysis Report</th>
+			</tr>
+			<tr>
+				<th colspan="28" style="text-align: center; font-size: 16px; font-weight: bold;">{{ date('F Y', strtotime($period)) }}</th>
+			</tr>
+			<tr>
 				<th rowspan="2">No</th>
 				<th rowspan="2">Employee No</th>
 				<th rowspan="2">Employee Name</th>
@@ -63,8 +69,78 @@
 		<tbody>
 			<?php 
 				$no = 1; 
+				$totals = [
+					'normal_days' => 0,
+					'normal_hours' => '00:00',
+					'actual_days' => 0,
+					'actual_hours' => '00:00',
+					'variance_days' => 0,
+					'variance_days_percentage' => 0,
+					'variance_hours' => '00:00',
+					'variance_hours_percentage' => 0,
+					'overtime_days' => 0,
+					'overtime_days_percentage' => 0,
+					'overtime_hours' => '00:00',
+					'overtime_hours_percentage' => 0,
+					'overtime_convert' => 0,
+					'absent_days' => 0,
+					'absent_hours' => '00:00',
+					'others_days' => 0,
+					'others_hours' => '00:00',
+					'leave_permit_days' => 0,
+					'leave_permit_hours' => '00:00',
+					'total_absent_days' => 0,
+					'total_absent_hours' => '00:00',
+					'effective_days' => 0,
+					'effective_days_percentage' => 0,
+					'effective_hours' => '00:00',
+					'effective_hours_percentage' => 0
+				];
+
+				function timeToSeconds($time) {
+					if (!$time || !str_contains($time, ':')) return 0;
+					
+					list($h, $i) = explode(':', $time);
+					return $h * 3600 + $i * 60;
+				}
+
+				function secondsToTime($seconds) {
+					$h = floor($seconds / 3600);
+					$m = floor(($seconds % 3600) / 60);
+					$s = $seconds % 60;
+					return sprintf('%02d:%02d:%02d', $h, $m, $s);
+				}
 			?>
 			@foreach($data as $key => $value)
+			<?php
+				$totals['normal_days'] += $value->normal->days;
+				$totals['normal_hours'] += timeToSeconds($value->normal->hours);
+				$totals['actual_days'] += $value->actual->days;
+				$totals['actual_hours'] += timeToSeconds($value->actual->hours);
+				$totals['variance_days'] += $value->varianceActualWithNormal->days;
+				$totals['variance_days_percentage'] += $value->varianceActualWithNormal->daysPercentage;
+				$totals['variance_hours'] += timeToSeconds($value->varianceActualWithNormal->hours);
+				$totals['variance_hours_percentage'] += $value->varianceActualWithNormal->hoursPercentage;
+				$totals['overtime_days'] += $value->overtime->days;
+				$totals['overtime_days_percentage'] += $value->overtime->daysPercentage;
+				$totals['overtime_hours'] += timeToSeconds($value->overtime->hours);
+				$totals['overtime_hours_percentage'] += $value->overtime->hoursPercentage;
+				$totals['overtime_convert'] += $value->overtime->convert;
+				$totals['absent_days'] += $value->absent->days;
+				$totals['absent_hours'] += timeToSeconds($value->absent->hours);
+				$totals['others_days'] += $value->others->days;
+				$totals['others_hours'] += timeToSeconds($value->others->hours);
+				$totals['leave_permit_days'] += $value->leavePermit->days;
+				$totals['leave_permit_hours'] += timeToSeconds($value->leavePermit->hours);
+				$totals['total_absent_days'] += $value->totalAbsent->days;
+				$totals['total_absent_hours'] += timeToSeconds($value->totalAbsent->hours);
+				$totals['effective_days'] += $value->effectiveHours->days;
+				$totals['effective_days_percentage'] += $value->effectiveHours->daysPercentage;
+				$totals['effective_hours'] += timeToSeconds($value->effectiveHours->hours);
+				$totals['effective_hours_percentage'] += $value->effectiveHours->hoursPercentage;
+
+				// $total_normal_hours_seconds += timeToSeconds($value->normal->hours);
+			?>
 			<tr>
                 <td>{{ $no++ }}</td>
 				<td style="text-align: left;">{{ $value->employeeNo }}</td>
@@ -96,6 +172,34 @@
 				<td>{{ $value->effectiveHours->hoursPercentage }}</td>
 			</tr>
 			@endforeach
+			<tr style="font-weight: bold;">
+				<td colspan="3" style="font-weight: bold; text-align: center;">Grand Total</td>
+				<td style="font-weight: bold;">{{ $totals['normal_days'] }}</td>
+				<td style="font-weight: bold;">{{ secondsToTime($totals['normal_hours']) }}</td>
+				<td style="font-weight: bold;">{{ $totals['actual_days'] }}</td>
+				<td style="font-weight: bold;">{{ secondsToTime($totals['actual_hours']) }}</td>
+				<td style="font-weight: bold;">{{ $totals['variance_days'] }}</td>
+				<td style="font-weight: bold;">{{ $totals['variance_days_percentage'] }}</td>
+				<td style="font-weight: bold;">{{ secondsToTime($totals['variance_hours']) }}</td>
+				<td style="font-weight: bold;">{{ $totals['variance_hours_percentage'] }}</td>
+				<td style="font-weight: bold;">{{ $totals['overtime_days'] }}</td>
+				<td style="font-weight: bold;">{{ $totals['overtime_days_percentage'] }}</td>
+				<td style="font-weight: bold;">{{ secondsToTime($totals['overtime_hours']) }}</td>
+				<td style="font-weight: bold;">{{ $totals['overtime_hours_percentage'] }}</td>
+				<td style="font-weight: bold;">{{ $totals['overtime_convert'] }}</td>
+				<td style="font-weight: bold;">{{ $totals['absent_days'] }}</td>
+				<td style="font-weight: bold;">{{ secondsToTime($totals['absent_hours']) }}</td>
+				<td style="font-weight: bold;">{{ $totals['others_days'] }}</td>
+				<td style="font-weight: bold;">{{ secondsToTime($totals['others_hours']) }}</td>
+				<td style="font-weight: bold;">{{ $totals['leave_permit_days'] }}</td>
+				<td style="font-weight: bold;">{{ secondsToTime($totals['leave_permit_hours']) }}</td>
+				<td style="font-weight: bold;">{{ $totals['total_absent_days'] }}</td>
+				<td style="font-weight: bold;">{{ secondsToTime($totals['total_absent_hours']) }}</td>
+				<td style="font-weight: bold;">{{ $totals['effective_days'] }}</td>
+				<td style="font-weight: bold;">{{ $totals['effective_days_percentage'] }}</td>
+				<td style="font-weight: bold;">{{ secondsToTime($totals['effective_hours']) }}</td>			
+				<td style="font-weight: bold;">{{ $totals['effective_hours_percentage'] }}</td>
+			</tr>
 		</tbody>
 	</table>
 </body>

@@ -131,10 +131,12 @@ class MonthlyAbsenteeismAnalysisExport implements FromView, ShouldAutoSize
 
         if($arrResult->dataListSet == null){
             return view('time_management.tm_export_monthly_absenteeism_analysis', [
+                'period' => $this->period,
                 'data' => []
             ]);
         }else{
             return view('time_management.tm_export_monthly_absenteeism_analysis', [
+                'period' => $this->period,
                 'data' => $arrResult->dataListSet[0]
             ]);
         }
