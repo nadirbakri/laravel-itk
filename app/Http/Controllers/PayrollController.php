@@ -7692,6 +7692,9 @@ public function dataDetailReportFormatPY(Request $request)
         }else if($companyCode == 'SBS'){
             $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_sbs';
             $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_sbs';
+        }else if($companyCode == 'DEMO'){
+            $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_demo';
+            $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_demo';
         }else{
             $viewNamePortrait = 'payroll.py_export_payment_slip_portrait';
             $viewNameLandscape = 'payroll.py_export_payment_slip_landscape';
