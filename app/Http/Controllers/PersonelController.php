@@ -4394,14 +4394,9 @@ class PersonelController extends Controller
                 'verify' => false,
                 'headers' => [ 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . Session::get('token') ]
-            ]);  
+            ]);
 
-            $data = [
-                'employeeNo' => $request->employeeNo,
-                'employeeName' => $request->employeeName,
-            ];
-
-            return view('personel.personel_family_dependent_detail_table', ['employeeNo' => $request->employeeNo ?? null]);
+            return view('personel.personel_family_dependent_detail', ['data' => $request->data, 'func' => $request->func]);
         } catch (RequestException $e) {
             $response = $e->getResponse();
             if($response->getStatusCode() == 401){
@@ -12528,6 +12523,69 @@ class PersonelController extends Controller
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function prosesFamilyDependentPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $param = [
+                'companyCode' => Session::get('companyCode'),
+                'employeeNo' => $request->employee_no,
+                'familyName' => $request->full_name,
+                'birthDate' => $request->birth_date,
+                'birthPlace' => $request->birth_place,
+                'gender' => $request->gender,
+                'occupation' => $request->occupation,
+                'bloodType' => $request->blood_type,
+                'familyCardNumber' => $request->family_card_number,
+                'relationCode' => $request->relationship,
+                'handPhone' => $request->phone_number,
+                'emergencyContact' => $request->emergency_contact ? (bool) $request->emergency_contact : false,
+                'disability' => $request->persons_with_disabilities ? (bool) $request->persons_with_disabilities : false,
+                'flagPayroll' => $request->include_tax ? (bool) $request->include_tax : false,
+                'fullTimeStudent' => $request->full_time_student ? (bool) $request->full_time_student : false,
+                'flagMedical' => $request->include_medical ? (bool) $request->include_medical : false,
+                'sessionUserID' => Session::get('userID'),
+                'sessionID' => 0,
+                'logActionUserID' => Session::get('userID'),
+                'logActionUsername' => Session::get('userName'),
+                "languageCode" => App::getLocale()
+            ];
+
+            // dd(json_encode($param));
+
+            if($request->record_function == 'New'){
+                $response = $client->post(env('API_URL') . '/personel/PeMaster/InsertPeMasterFamilyAdmin',
+                    ['body' => json_encode($param)]
+                );
+            }else{
+                $response = $client->post(env('API_URL') . '/personel/PeMaster/UpdatePeMasterFamilyAdmin',
+                    ['body' => json_encode($param)]
+                );
+            }
+
+
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
         return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
     }
 

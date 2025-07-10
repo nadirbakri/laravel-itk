@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon"/>
+        <style type="text/css">
+            * { box-sizing: border-box; }
+            body{
+                margin-left: 30px;
+                margin-right: 30px;
+                margin-bottom: 25px;
+                margin-top: 25px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <table style="width: 100%; font-size: 14px;" class="table table-bordered table-hover responsive">
+            <thead>
+                <tr>
+                    <th>Employee No *</th>
+                    <th>Title *</th>
+                    <th>MCU Code *</th>
+                    <th>Batch Code *</th>
+                    <th>Number of Stage *</th>
+                    <th>MCU Date *</th>
+                    <th>MCU Time *</th>
+                    <th>Address *</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+        </table>
+    </body>
+</html>

@@ -1,0 +1,40 @@
+<?php
+
+return [
+    'judul' => 'Penjadwalan Pemeriksaan Kesehatan',
+    'judul_history' => 'Riwayat Penjadwalan Pemeriksaan Kesehatan',
+    'list' => 'Daftar Menu Kesehatan',
+    'label_import' => 'Impor',
+    'label_manual_input' => 'Masukkan Manual',
+    'label_file' => 'Lampiran',
+    'label_employee_no' => 'No Karyawan',
+    'label_title' => 'Judul',
+    'label_mcu_name' => 'Nama MCU',
+    'label_batch_description' => 'Deskripsi Batch',
+    'label_number_of_stage' => 'Jumlah Tahap',
+    'label_name_of_places' => 'Nama Tempat',
+    'label_mcu_date' => 'Tanggal Pemeriksaan Kesehatan',
+    'label_mcu_time' => 'Waktu Pemeriksaan Kesehatan',
+    'label_description' => 'Deskripsi',
+    'employee_list' => 'Daftar Karyawan',
+    'employee_id' => 'ID Karyawan',
+    'fullname' => 'Nama Lengkap',
+    'division' => 'Divisi',
+    'ranking' => 'Peringkat',
+    'label_employee_no_required' => 'No Karyawan harus diisi',
+    'label_title_required' => 'Judul harus diisi',
+    'label_name_of_places_required' => 'Nama Tempat harus diisi',
+    'label_mcu_date_required' => 'Tanggal Pemeriksaan Kesehatan harus diisi',
+    'label_mcu_time_required' => 'Waktu Pemeriksaan Kesehatan harus diisi',
+    'label_description_required' => 'Deskripsi harus diisi',
+    'btn_employee_list' => 'Daftar Karyawan',
+    'btn_download_template' => 'Unduh Templat',
+    'btn_process' => 'Proses',
+    'btn_submit' => 'Kirim',
+    'btn_cancel' => 'Batal',
+    'btn_save' => 'Simpan',
+    'btn_history' => 'Riwayat',
+    'alert_success' => 'Sukses !'
+]
+
+?>

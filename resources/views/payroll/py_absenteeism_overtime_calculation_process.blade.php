@@ -223,6 +223,18 @@
                     </div>
                 </div>
                 <div class="row">
+                    <div class="col-12">
+                        <table id="work_pattern_table" class="table hover">
+                            <thead>
+                                <tr>
+                                    <th>{{ __('payroll_absenteeism_overtime_calculation_process.label_work_pattern_code') }}</th>
+                                    <th>{{ __('payroll_absenteeism_overtime_calculation_process.label_working_days') }}</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col-3">
                         <button type="submit" class="btn btn-process" name="btn-process" id="btn-process">
                             <i class="fa fa-play-circle-o"></i> {{ __('payroll_absenteeism_overtime_calculation_process.btn_process') }}
@@ -319,6 +331,10 @@
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
         var arrData = @json($data);
+        var arrData2 = @json($data2);
+        let table = [];
+
+        loadDataWorkPattern();
 
         let pickerIncrementDate = $('#increment_date_absenteeism').flatpickr({
             altInput: true,
@@ -339,6 +355,21 @@
             $('#process_period_month').val(moment('2023-' + arrData[0].periodMonth.toString() + '-01').format('MMMM'));
             $('#process_period_absenteeism_month_hidden').val((typeof arrData[0].periodMonth !== 'undefined') ? arrData[0].periodMonth : '');
             $('#process_period_absenteeism_year_hidden').val((typeof arrData[0].periodYear !== 'undefined') ? arrData[0].periodYear : '');
+        }
+
+        function loadDataWorkPattern() {
+            table = $('#work_pattern_table').DataTable({
+                "sDom": 'lrtip',
+                "bPaginate": false
+            });
+            if (arrData2) {
+                arrData2.forEach((element, index) => {
+                    table.row.add([
+                        `<input type="hidden" class="form-control" name="pattern_code[]" id="pattern_code'+ (index+1) +'" value="${element.patternCode}" /><input type="hidden" class="form-control" name="description[]" id="description'+ (index+1) +'" value="${element.description}" /><input type="hidden" class="form-control" name="holiday_flag[]" id="holiday_flag'+ (index+1) +'" value="${element.holidayFlag}" /><input type="hidden" class="form-control" name="no_of_day[]" id="no_of_day'+ (index+1) +'" value="${element.noOfDay}" />` + element.patternCode,
+                        `<input type="number" class="form-control" name="working_days[]" id="working_days'+ (index+1) +'" value="${element.workingDays || 0}" />`
+                    ]).draw()
+                });
+            }
         }
 
         $('#range_employee_no_absenteeism').on('change', function () {

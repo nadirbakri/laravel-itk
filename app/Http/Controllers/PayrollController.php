@@ -760,38 +760,8 @@ class PayrollController extends Controller
                     ]
                 )]
             );
-        } catch (RequestException $e) {
-            $response = $e->getResponse();
-            if($response->getStatusCode() == 401){
-                return view('error.login');
-            }else if($response->getStatusCode() == 404){
-                return view('error.not_found');
-            }else{
-                return view('error.bad_request');
-            }
-        }
 
-        $arrResult = json_decode($response->getBody()->getContents());
-
-        if($arrResult->dataListSet == null){
-            $data = [];
-        }else{
-            $data = $arrResult->dataListSet;
-        }
-
-        return view ('payroll.py_absenteeism_overtime_calculation_process', ['data' => $data]);
-    }
-
-    public function pageMonthlyProcess()
-    {
-        try {
-            $client = new Client([
-                'verify' => false,
-                'headers' => [ 'Content-Type' => 'application/json',
-                'Authorization' => 'Bearer ' . Session::get('token') ]
-            ]);
-
-            $response = $client->post(env('API_URL') . '/mobile/ReferenceTM/getReferenceTM',
+            $response_work_pattern = $client->post(env('API_URL') . '/mobile/TmWorkPattern/getTmWorkPatternService',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
@@ -813,14 +783,72 @@ class PayrollController extends Controller
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
+        $arrResultPC = json_decode($response_work_pattern->getBody()->getContents());
 
         if($arrResult->dataListSet == null){
             $data = [];
+            $data2 = [];
         }else{
             $data = $arrResult->dataListSet;
+            $data2 = $arrResultPC->dataListSet;
         }
 
-        return view ('payroll.py_monthly_process', ['data' => $data]);
+        return view ('payroll.py_absenteeism_overtime_calculation_process', ['data' => $data, 'data2' => $data2]);
+    }
+
+    public function pageMonthlyProcess()
+    {
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/mobile/ReferenceTM/getReferenceTM',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+
+            $response_work_pattern = $client->post(env('API_URL') . '/mobile/TmWorkPattern/getTmWorkPatternService',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+        $arrResultPC = json_decode($response_work_pattern->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            $data = [];
+            $data2 = [];
+        }else{
+            $data = $arrResult->dataListSet;
+            $data2 = $arrResultPC->dataListSet;
+        }
+
+        return view ('payroll.py_monthly_process', ['data' => $data, 'data2' => $data2]);
     }
 
     public function pageDUMTK()
@@ -6405,6 +6433,18 @@ public function dataDetailReportFormatPY(Request $request)
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
+            foreach ($request->pattern_code as $key => $value) {
+                $workPatternList[] = [
+                    "recordStatus" => "A",
+                    "companyCode" => Session::get('companyCode'),
+                    "patternCode" => $value,
+                    "description" => $request->description[$key],
+                    "holidayFlag" => (bool) $request->holiday_flag[$key],
+                    "noOfDay" => $request->no_of_day[$key],
+                    "workingDays" => $request->working_days[$key],
+                ];
+            }
+
             $response = $client->post(env('API_URL') . '/payroll/insertTmFixedComponent',
                 ['body' => json_encode(
                     [
@@ -6418,6 +6458,7 @@ public function dataDetailReportFormatPY(Request $request)
                         "incrementDate" => $request->increment_date_absenteeism,
                         "groupAuthorizeFrom" => intval($request->group_authorized_code_from_absenteeism),
                         "groupAuthorizeTo" => intval($request->group_authorized_code_to_absenteeism),
+                        "workPatternList" => $workPatternList,
                         "languageCode" => App::getLocale(),
                         "changedBy" => Session::get('userID'),
                         "changedDate" => date("Y-m-d\TH:i:s"),

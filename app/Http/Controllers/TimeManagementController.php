@@ -2080,6 +2080,7 @@ class TimeManagementController extends Controller
                 'description' => $request->description,
                 'holidayFlag' => isset($request->check_work_on_holiday) ? (bool) $request->check_work_on_holiday : false,
                 'noOfDay' => (int) $request->no_of_day,
+                'workingDays' => (int) $request->working_days,
                 "changedNo" => 0,
                 "createdDate" => date("Y-m-d\TH:i:s"),
                 "createdBy" => Session::get('userID'),

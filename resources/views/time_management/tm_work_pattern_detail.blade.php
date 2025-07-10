@@ -146,6 +146,18 @@
                     </div>
                 </div>
                 <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label
+                                for="working_days">{{ __('tm_work_pattern.label_working_days') }}</label>
+                            <span class="required">*</span>
+                            <input type="number" min="0" class="form-control" id="working_days"
+                                name="working_days"
+                                placeholder="{{ __('tm_work_pattern.label_working_days') }}">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col-8">
                         <div class="div-table">
                             <table id="work_pattern_detail_table" class="table hover">
@@ -260,6 +272,7 @@
             $('#description').val("");
             $('#check_work_on_holiday').prop('checked', false);
             $('#no_of_day').val("");
+            $('#working_days').val(0);
             $('#work_pattern_detail_table').DataTable().destroy();
             load_table_detail_work_pattern();
         } else if (func == 'edit') {
@@ -276,11 +289,11 @@
                 $('#check_work_on_holiday').prop('checked', false)
             }
             $('#no_of_day').val(((typeof arrData[0].noOfDay !== 'undefined') ? arrData[0].noOfDay : ''));
+            $('#working_days').val(arrData[0].workingDays ?? 0);
             load_table_detail_work_pattern();
             // console.log(arrData[0]);
             if (typeof arrData[0].noOfDay !== 'undefined') {
                 for (var i = 0; i < arrData[0].workPatternDetailList.length; i++) {
-                    console.log(arrData[0].workPatternDetailList[i].seqNo);
                     table.row.add([
                         '<input type="hidden" class="form-control" name="seq_no[]" value="'+ ((typeof arrData[0].workPatternDetailList[i].seqNo !== 'undefined') ? arrData[0].workPatternDetailList[i].seqNo : i) +'">' + ((typeof arrData[0].workPatternDetailList[i].seqNo !== 'undefined') ? arrData[0].workPatternDetailList[i].seqNo : (i+1)),
                         '<select class="form-control select2 day_code" id="day_code'+ (i+1) +'" name="day_code[]">',
@@ -325,7 +338,6 @@
                     dayCode : dayCode
                 }
             }).then(function (data) {
-                console.log(data);
                 if (!$(field).find('option:contains(' + data[0].value + ')').length) {
                     $(field).append($('<option>').val(data[0].comGenCode).text(data[0].value));
                 }
@@ -542,6 +554,9 @@
                     no_of_day: {
                         required: true,
                     },
+                    working_days: {
+                        required: true,
+                    },
                 },
                 messages: {
                     work_pattern_code: {
@@ -552,6 +567,9 @@
                     },
                     no_of_day: {
                         required: "{{ __('tm_work_pattern.no_of_day_required') }}",
+                    },
+                    working_days: {
+                        required: "{{ __('tm_work_pattern.working_days_required') }}",
                     },
                 },
                 highlight: function (element) {

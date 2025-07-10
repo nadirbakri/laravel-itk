@@ -327,6 +327,18 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <table id="work_pattern_table" class="table hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>{{ __('payroll_absenteeism_overtime_calculation_process.label_work_pattern_code') }}</th>
+                                                        <th>{{ __('payroll_absenteeism_overtime_calculation_process.label_working_days') }}</th>
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                    </div>
                                     <div class="row mt-2">
                                         <div class="col-6">
                                             <button type="submit" class="btn btn-primary btn-sm btn-block" name="btn-process-absenteeism" id="btn-process-absenteeism">
@@ -691,10 +703,13 @@
         });
 
         var arrData = @json($data);
-        var arrData2 = @json($data);
+        var arrData2 = @json($data2);
         var arrayMinutesRounded = [];
+        let table = []
 
-        if (arrData2) {
+        loadDataWorkPattern()
+
+        if (arrData) {
             let processStatus = arrData[0].statusProcess
 
             if (processStatus == "1") {
@@ -758,6 +773,21 @@
             var date_period = moment(arrData[0].periodYear + "-" + arrData[0].periodMonth + "-01").format('YYYY-MM-DD');
             $('#process_period').val(month_year);
             $('#process_period_det').val(date_period);
+        }
+
+        function loadDataWorkPattern() {
+            table = $('#work_pattern_table').DataTable({
+                "sDom": 'lrtip',
+                "bPaginate": false
+            });
+            if (arrData2) {
+                arrData2.forEach((element, index) => {
+                    table.row.add([
+                        `<input type="hidden" class="form-control" name="pattern_code[]" id="pattern_code'+ (index+1) +'" value="${element.patternCode}" /><input type="hidden" class="form-control" name="description[]" id="description'+ (index+1) +'" value="${element.description}" /><input type="hidden" class="form-control" name="holiday_flag[]" id="holiday_flag'+ (index+1) +'" value="${element.holidayFlag}" /><input type="hidden" class="form-control" name="no_of_day[]" id="no_of_day'+ (index+1) +'" value="${element.noOfDay}" />` + element.patternCode,
+                        `<input type="number" class="form-control" name="working_days[]" id="working_days'+ (index+1) +'" value="${element.workingDays || 0}" />`
+                    ]).draw()
+                });
+            }
         }
 
         $('#range_employee_no_absenteeism').on('change', function () {

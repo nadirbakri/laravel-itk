@@ -1,0 +1,40 @@
+<?php
+
+return [
+    'judul' => 'Medical Checkup Schedule',
+    'judul_history' => 'Medical Checkup Schedule History',
+    'list' => 'Medical Menu List',
+    'label_import' => 'Import',
+    'label_manual_input' => 'Manual Input',
+    'label_file' => 'File',
+    'label_employee_no' => 'Employee No',
+    'label_title' => 'Title',
+    'label_mcu_name' => 'MCU Name',
+    'label_batch_description' => 'Batch Description',
+    'label_number_of_stage' => 'Number of Stage',
+    'label_name_of_places' => 'Name of Places',
+    'label_mcu_date' => 'MCU Date',
+    'label_mcu_time' => 'MCU Time',
+    'label_description' => 'Description',
+    'employee_list' => 'Employee List',
+    'employee_id' => 'Employee ID',
+    'fullname' => 'Fullname',
+    'division' => 'Division',
+    'ranking' => 'Ranking',
+    'label_employee_no_required' => 'Employee No is Required',
+    'label_title_required' => 'Title is Required',
+    'label_name_of_places_required' => 'Name of Places is Required',
+    'label_mcu_date_required' => 'MCU Date is Required',
+    'label_mcu_time_required' => 'MCU Time is Required',
+    'label_description_required' => 'Description is Required',
+    'btn_employee_list' => 'Employee List',
+    'btn_download_template' => 'Download Template',
+    'btn_process' => 'Process',
+    'btn_submit' => 'Submit',
+    'btn_cancel' => 'Cancel',
+    'btn_save' => 'Save',
+    'btn_history' => 'History',
+    'alert_success' => 'Success !'
+]
+
+?>

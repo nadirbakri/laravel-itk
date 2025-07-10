@@ -11,6 +11,8 @@ use App\Exports\OutstandingClaimReportExport;
 use App\Exports\TransferPaymentToExcelMonthlyExport;
 use App\Exports\TransferPaymentToExcelRemainingLimitExport;
 use App\Exports\VaccinationScheduleTemplateExport;
+use App\Exports\VaccinationScheduleExport;
+use App\Exports\MedicalCheckupScheduleTemplateExport;
 
 use App\Imports\VaccinationScheduleImport;
 
@@ -238,6 +240,11 @@ class MedicalController extends Controller
     public function pageMedicalCheckupMaster()
     {
         return view('medical.md_medical_checkup_master');
+    }
+
+    public function pageMedicalCheckupScheduleHistory()
+    {
+        return view('medical.md_medical_checkup_schedule_history');
     }
 
     public function tableClaimCodeMD()
@@ -4043,12 +4050,12 @@ class MedicalController extends Controller
 
     public function downloadTemplateVaccinationScheduleMD(Request $request)
     {
-        return Excel::download(new VaccinationScheduleTemplateExport, "Vaccination Schedule Template.xlsx");
+        return Excel::download(new VaccinationScheduleExport, "Vaccination Schedule Template.xlsx");
     }
 
     public function downloadTemplateMedicalCheckupScheduleMD(Request $request)
     {
-        return Excel::download(new VaccinationScheduleTemplateExport, "Medical Checkup Schedule Template.xlsx");
+        return Excel::download(new MedicalCheckupScheduleTemplateExport, "Medical Checkup Schedule Template.xlsx");
     }
 
     public function importVaccinationScheduleMD(Request $request)
