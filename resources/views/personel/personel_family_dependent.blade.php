@@ -78,7 +78,7 @@
 						<th>Employee No</th>
 						<th>Employee Name</th>
 						<th>Position</th>
-                        <th>Phone Number</th>
+                        {{-- <th>Phone Number</th> --}}
 					</tr>
 				</thead>
 			</table>
@@ -192,9 +192,9 @@
                     }
                 },
                 {data: 'employeeNo', name: 'employeeNo'},
-                {data: 'familyName', name: 'familyName'},
-                {data: 'occupation', name: 'occupation'},
-                {data: 'handPhone', name: 'handPhone'},
+                {data: 'fullName', name: 'fullName'},
+                {data: 'positionName', name: 'positionName'},
+                // {data: 'handPhone', name: 'handPhone'},
             ],
             select: {
                 style:    'multi',

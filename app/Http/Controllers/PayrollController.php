@@ -5894,7 +5894,7 @@ public function dataDetailReportFormatPY(Request $request)
                 $request->column_l,
                 $request->column_l2
             );
-            Excel::import($import, $file->getRealPath(), null, \Maatwebsite\Excel\Excel::XLSX);
+            Excel::import($import, $file->getRealPath(), null);
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             $failures = $e->failures();
             $objError = (object) ['status' => false, 'message' => $failures[0]->errors()[0]];
@@ -5909,7 +5909,7 @@ public function dataDetailReportFormatPY(Request $request)
         try{
             $file = $request->file('import_file');
             $import = new PayrollBonusTHRDataImport;
-            Excel::import($import, $file->getRealPath(), null, \Maatwebsite\Excel\Excel::XLSX);
+            Excel::import($import, $file->getRealPath(), null);
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             $failures = $e->failures();
             $objError = (object) ['status' => false, 'message' => $failures[0]->errors()[0]];
@@ -9499,10 +9499,10 @@ public function dataDetailReportFormatPY(Request $request)
 
         if($arrResult->dataListSet != null){
             unlink(public_path() . '/' . $arrResult->dataListSet[0]->filenamezip . '.zip');
-            $file1 = Excel::raw(new ExportSIPPOnlineFile1Export($arrResult->dataListSet[0]->file1), \Maatwebsite\Excel\Excel::XLSX);
-            $file2 = Excel::raw(new ExportSIPPOnlineFile2Export($arrResult->dataListSet[0]->file2), \Maatwebsite\Excel\Excel::XLSX);
-            $file3 = Excel::raw(new ExportSIPPOnlineFile3Export($arrResult->dataListSet[0]->file3), \Maatwebsite\Excel\Excel::XLSX);
-            $file4 = Excel::raw(new ExportSIPPOnlineFile4Export($arrResult->dataListSet[0]->file4), \Maatwebsite\Excel\Excel::XLSX);
+            $file1 = Excel::raw(new ExportSIPPOnlineFile1Export($arrResult->dataListSet[0]->file1));
+            $file2 = Excel::raw(new ExportSIPPOnlineFile2Export($arrResult->dataListSet[0]->file2));
+            $file3 = Excel::raw(new ExportSIPPOnlineFile3Export($arrResult->dataListSet[0]->file3));
+            $file4 = Excel::raw(new ExportSIPPOnlineFile4Export($arrResult->dataListSet[0]->file4));
             $zip = Zip::create($arrResult->dataListSet[0]->filenamezip . '.zip');
             $zip->addFromString($arrResult->dataListSet[0]->file1name . '.xlsx', $file1);
             $zip->addFromString($arrResult->dataListSet[0]->file2name . '.xlsx', $file2);
@@ -9695,7 +9695,7 @@ public function dataDetailReportFormatPY(Request $request)
 
         try{
             $import = new SalaryComponentImport();
-            Excel::import($import, $file->getRealPath(), null, \Maatwebsite\Excel\Excel::XLSX);
+            Excel::import($import, $file->getRealPath(), null);
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             $failures = $e->failures();
             $objError = (object) ['status' => false, 'message' => $failures[0]->errors()[0]];

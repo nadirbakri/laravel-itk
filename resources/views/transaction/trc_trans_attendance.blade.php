@@ -249,6 +249,7 @@
                                 <th>#</th>
                                 <th>{{ __('trans_attendance.adate') }}</th>
                                 <th>{{ __('trans_attendance.enom') }}</th>
+                                <th>{{ __('trans_attendance.ename') }}</th>
                                 <th>{{ __('trans_attendance.ati') }}</th>
                                 <th>{{ __('trans_attendance.ato') }}</th>
                                 <th>{{ __('trans_attendance.desc') }}</th>
@@ -554,6 +555,7 @@
                     }
                 },
                 {data: 'employeeNo', name: 'employeeNo'},
+                {data: 'employeeName', name: 'employeeName'},
                 {data: 'checkInDate', name: 'checkInDate',
                     render: function (data, type, row){
                         if(data == null){

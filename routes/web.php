@@ -232,6 +232,7 @@ Route::get('personnel/relation_code/table', 'PersonelController@tableRelationCod
 Route::get('personnel/employee_termination/table', 'PersonelController@tableEmployeeTerminationPersonel');
 Route::get('personnel/insurance/table', 'PersonelController@tableInsurancePersonel');
 Route::get('personnel/family_dependent/table', 'PersonelController@tableFamilyDependentPersonel');
+Route::get('personnel/family_dependent_detail/table', 'PersonelController@tableDetailFamilyDependentPersonel');
 
 Route::get('personnel/personal_data/detail_data', 'PersonelController@dataDetailPersonalDataPersonel');
 Route::get('personnel/performance/detail_data', 'PersonelController@dataDetailPerformancePersonel');

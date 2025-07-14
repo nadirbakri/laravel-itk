@@ -9,6 +9,7 @@ return [
     'btn_list' => 'List',
     'adate' => 'Attendance Date',
     'enom' => 'Employee No',
+    'ename' => 'Employee Name',
     'ati' => 'Attendance Time In',
     'ato' => 'Attendance Time Out',
     'desc' => 'Description',

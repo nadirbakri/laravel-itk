@@ -3649,7 +3649,7 @@
                         'rankingCode': ((typeof arrData2[0].rankingCode !== 'undefined') ? arrData2[0].rankingCode : ''),
                     }
                 }).then(function (data) {
-                    var option = new Option(data[0].rankingName, data[0].rankingCode, true, true);
+                    var option = new Option(`${data[0].rankingCode} - ${data[0].rankingName}`, data[0].rankingCode, true, true);
 
                     $('#ranking_code_employment').append(option).trigger('change');
 
@@ -3657,7 +3657,7 @@
                         type: 'select2:select',
                         params: {
                             id: data[0].rankingCode,
-                            text: data[0].rankingName,
+                            text: `${data[0].rankingCode} - ${data[0].rankingName}`,
                             data: data[0]
                         }
                     });
@@ -5789,7 +5789,7 @@
 
                 if (data.id) {
                     var $result2 = $('<div class="row">' + 
-                        '<div class="col-12">' + data.data.rankingName + '<div>' +
+                        '<div class="col-12">' + data.data.rankingCode + ' - ' + data.data.rankingName + '<div>' +
                         '</div>');
 
                     return $result2;
@@ -5828,7 +5828,7 @@
                         return {
                             results: $.map(data, function (item) {
                                 return {
-                                    text: item.rankingName,
+                                    text: `${item.rankingCode} - ${item.rankingName}`,
                                     id: item.rankingCode,
                                     data: item
                                 }

@@ -1971,7 +1971,7 @@ class MasterDataController extends Controller
         try{
             $file = $request->file('import_export');
             $import = new EmployeeGroupImport($request->type);
-            Excel::import($import, $file->getRealPath(), null, \Maatwebsite\Excel\Excel::XLSX);
+            Excel::import($import, $file->getRealPath(), null);
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             $failures = $e->failures();
             $objError = (object) ['status' => false, 'message' => $failures[0]->errors()[0]];
@@ -1996,7 +1996,7 @@ class MasterDataController extends Controller
         try{
             $file = $request->file('import_export');
             $import = new EmployeeGroupMemberImport();
-            Excel::import($import, $file->getRealPath(), null, \Maatwebsite\Excel\Excel::XLSX);
+            Excel::import($import, $file->getRealPath(), null);
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             $failures = $e->failures();
             $objError = (object) ['status' => false, 'message' => $failures[0]->errors()[0]];

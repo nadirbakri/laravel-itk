@@ -10,6 +10,7 @@ return [
     'btn_list' => 'Daftar',
     'adate' => 'Tanggal Kehadiran',
     'enom' => 'ID Karyawan',
+    'ename' => 'Nama Karyawan',
     'ati' => 'Jam Masuk',
     'ato' => 'Jam Pulang',
     'desc' => 'Catatan',

@@ -140,11 +140,9 @@
 		</div>
 
         <div class="div-form px-5">
-            <div class="row">
-                <div class="col-2 d-flex align-items-center" style="gap: 12px">
-                    <p class="div-employee-name mb-0" id="employee_name"></p>
-                    <span class="div-employee-no" id="employee_no"></span>
-                </div>
+            <div class="d-flex align-items-center" style="gap: 12px">
+                <p class="div-employee-name mb-0" id="employee_name"></p>
+                <span class="div-employee-no" id="employee_no"></span>
             </div>
         </div>
 
@@ -239,7 +237,7 @@
     const arrData = @json($data[0]);
     $('.div-navbar a.disabled').attr('onclick', 'return false;');
 
-    $('#employee_name').html(arrData.familyName)
+    $('#employee_name').html(arrData.fullName)
     $('#employee_no').html(arrData.employeeNo)
   	
     $('#family_dependent_table_detail thead tr').clone(true).appendTo('#family_dependent_table_detail thead');
@@ -262,10 +260,16 @@
             processing: true,
             // serverSide: true,
             orderCellsTop: true,
-            data: arrData.peMasterFamilyTemp,
-            // error: function(jqXHR, ajaxOptions, thrownError) {
-            //     alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
-            // },
+            ajax: {
+                url: "{{ url('personnel/family_dependent_detail/table') }}",
+                type: "GET",
+                data: {
+                    employeeNo: arrData.employeeNo
+                }
+            },
+            error: function(jqXHR, ajaxOptions, thrownError) {
+                alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
+            },
             "sDom": 'lrtip',
             'sPaginationType': 'full_numbers',
             "order": [[ 1, "asc" ]],
@@ -282,7 +286,7 @@
                 {data: 'familyName', name: 'familyName'},
                 {data: 'birthDate', name: 'birthDate',
                     render: function (data, type, row) {
-                        return moment(data).format('DD-MMM-YYYY');
+                        return data ? moment(data).format('DD-MMM-YYYY') : '';
                     }
                 },
                 {data: 'birthPlace', name: 'birthPlace'},
