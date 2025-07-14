@@ -132,6 +132,64 @@
                     </div>
                 </div>
                 <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="include_resign">&nbsp;</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="include_resign"
+                                    name="include_resign" value="true">
+                                <label class="form-check-label"
+                                    for="include_resign">{{ __('tm_absenteeism_report.label_include_resign') }}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label
+                                for="group_authorize_from">{{ __('tm_absenteeism_report.label_group_authorize_from') }}</label>
+                            <select class="form-control select2" id="group_authorize_from"
+                                name="group_authorize_from"></select>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label
+                                for="group_authorize_to">{{ __('tm_absenteeism_report.label_group_authorize_to') }}</label>
+                            <select class="form-control select2" id="group_authorize_to"
+                                name="group_authorize_to"></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="position">{{ __('tm_absenteeism_report.label_position') }}</label>
+                            <select class="form-control select2 select2-hidden-accessible" id="position"
+                                name="position[]" multiple="multiple">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="ranking">{{ __('tm_absenteeism_report.label_ranking') }}</label>
+                            <select class="form-control select2" id="ranking" name="ranking[]"
+                                multiple="multiple"></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" id="div-level">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="location">{{ __('tm_absenteeism_report.label_location') }}</label>
+                            <select class="form-control select2" id="location" name="location[]"
+                                multiple="multiple"></select>
+                        </div>
+                        <input type="hidden" class="form-control" id="level_format" name="level_format">
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col-3">
                         <button type="submit" class="btn btn-primary" name="btn-print" id="btn-print"
                             style="width: 100%;">
@@ -222,9 +280,20 @@
 
         loadDataEmployeeNo('#employee_no_from');
         loadDataEmployeeNo('#employee_no_to');
+        loadDataGroupAuthorize('#group_authorize_from');
+        loadDataGroupAuthorize('#group_authorize_to');
         loadDataEmployeeNo('#employee_no_list');
+        loadDataPositionCode();
+        loadDataLocationCode();
+        loadDataRankingCode();
+
         loadDataFirstLastAllEmployeeNo('#employee_no_from', 'First');
         loadDataFirstLastAllEmployeeNo('#employee_no_to', 'Last');
+        loadDataFirstLastAllGroupAuthorize('#group_authorize_from', 'First');
+        loadDataFirstLastAllGroupAuthorize('#group_authorize_to', 'Last');
+        loadDataFirstLastAllPosition();
+        loadDataFirstLastAllLocation();
+        loadDataFirstLastAllRanking();
 
         $('#employee_list').hide();
 
@@ -250,6 +319,32 @@
                 $('#employee_no_from').prop('disabled', true);
                 $('#employee_no_to').prop('disabled', true);
                 $('#employee_no_list').prop('disabled', false);
+            }
+        });
+
+        $.ajax({
+            url: "{{ url('personnel/report/level/check') }}",
+            type: "GET",
+            success: function (response) {
+                $('#level_format').val(response.data[0].levelFormat);
+                for (var i = 1; i <= response.data[0].levelFormat; i++) {
+                    $('#div-level').append(
+                        '<div class="col-6">' +
+                        '<div class="form-group">' +
+                        '<label for="level' + i + '">' + response.data_level[i - 1]
+                        .levelDescription + '</label>' +
+                        '<select class="form-control select2" id="level' + i + '" name="level' +
+                        i + '[]" multiple="multiple"></select>' +
+                        '</div></div>'
+                    );
+
+                    loadDataLevelCode('#level' + i, i);
+                    loadDataFirstLastAllLevel('#level' + i, i);
+                }
+            },
+            error: function (response) {
+                $('#notification_error').modal('show');
+                $('#message-notification-error').html(response);
             }
         });
 
@@ -325,6 +420,363 @@
             });
         }
 
+        function loadDataGroupAuthorize(field = '') {
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' +
+                        '<div class="col-6">' + data.data.groupAuthorizeCode + '</div>' +
+                        '<div class="col-6">' + data.data.groupAuthorizeDesc + '</div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var headerIsAppend = false;
+            $(field).on('select2:open', function (e) {
+                if (!headerIsAppend) {
+                    html = '<div class="row">' +
+                        '<div class="col-6"><b>Group Authorize Code</b></div>' +
+                        '<div class="col-6"><b>Group Authorize Desc</b></div>' +
+                        '</div>';
+                    $('.select2-search--dropdown').append(html);
+                    headerIsAppend = true;
+                }
+            });
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $(field).select2({
+                width: '100%',
+                placeholder: 'Choose Group Authorize',
+                allowClear: true,
+                closeOnSelect: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: "{{ url('/group_authorize/api') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term,
+                            module: 'TM',
+                            isRange: false,
+                            isModule: false
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.groupAuthorizeDesc,
+                                    id: item.groupAuthorizeCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataPositionCode() {
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' +
+                        '<div class="col-6">' + data.data.positionCode + '</div>' +
+                        '<div class="col-6">' + data.data.positionName + '</div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var headerIsAppend = false;
+            $('#position').on('select2:open', function (e) {
+                if (!headerIsAppend) {
+                    html = '<div class="row">' +
+                        '<div class="col-6"><b>Position Code</b></div>' +
+                        '<div class="col-6"><b>Position Name</b></div>' +
+                        '</div>';
+                    $('.select2-search--dropdown').append(html);
+                    headerIsAppend = true;
+                }
+            });
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $('#position').select2({
+                width: '100%',
+                placeholder: 'Choose Position',
+                allowClear: true,
+                multiple: true,
+                tags: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: "{{ url('/position/all/api') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.positionName,
+                                    id: item.positionCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataLocationCode() {
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' +
+                        '<div class="col-6">' + data.data.locationCode + '</div>' +
+                        '<div class="col-6">' + data.data.locationName + '</div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var headerIsAppend = false;
+            $('#location').on('select2:open', function (e) {
+                if (!headerIsAppend) {
+                    html = '<div class="row">' +
+                        '<div class="col-6"><b>Location Code</b></div>' +
+                        '<div class="col-6"><b>Location Name</b></div>' +
+                        '</div>';
+                    $('.select2-search--dropdown').append(html);
+                    headerIsAppend = true;
+                }
+            });
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $('#location').select2({
+                width: '100%',
+                placeholder: 'Choose Location',
+                allowClear: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: "{{ url('/location/all/api') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.locationName,
+                                    id: item.locationCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataRankingCode() {
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' +
+                        '<div class="col-6">' + data.data.rankingCode + '</div>' +
+                        '<div class="col-6">' + data.data.rankingName + '</div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var headerIsAppend = false;
+            $('#ranking').on('select2:open', function (e) {
+                if (!headerIsAppend) {
+                    html = '<div class="row">' +
+                        '<div class="col-6"><b>Ranking Code</b></div>' +
+                        '<div class="col-6"><b>Ranking Name</b></div>' +
+                        '</div>';
+                    $('.select2-search--dropdown').append(html);
+                    headerIsAppend = true;
+                }
+            });
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $('#ranking').select2({
+                width: '100%',
+                placeholder: 'Choose Ranking',
+                allowClear: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: "{{ url('/ranking/all/api') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.rankingName,
+                                    id: item.rankingCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataLevelCode(field = '', levelType = '') {
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' +
+                        '<div class="col-6">' + data.data.levelCode + '</div>' +
+                        '<div class="col-6">' + data.data.levelName + '</div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var headerIsAppend = false;
+            $(field).on('select2:open', function (e) {
+                if (!headerIsAppend) {
+                    html = '<div class="row">' +
+                        '<div class="col-6"><b>Level Code</b></div>' +
+                        '<div class="col-6"><b>Level Name</b></div>' +
+                        '</div>';
+                    $('.select2-search--dropdown').append(html);
+                    headerIsAppend = true;
+                }
+            });
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $(field).select2({
+                width: '100%',
+                placeholder: 'Choose Level',
+                allowClear: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: "{{ url('/level/all/api') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term,
+                            levelType: levelType
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.levelName,
+                                    id: item.levelCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
         function loadDataFirstLastAllEmployeeNo(field = '', func = '') {
             $.ajax({
                 type: 'GET',
@@ -336,6 +788,75 @@
                 var $newOption = $("<option selected='selected'></option>").val(data.employeeNo).text(
                     data.fullName);
                 $(field).append($newOption).trigger('change');
+            });
+        }
+
+        function loadDataFirstLastAllGroupAuthorize(field = '', func = '') {
+            $.ajax({
+                type: 'GET',
+                url: "{{ url('/group_authorize/func/api') }}",
+                data: {
+                    'func': func,
+                    'module': 'TM'
+                }
+            }).then(function (data) {
+                var $newOption = $("<option selected='selected'></option>").val(data.groupAuthorizeCode)
+                    .text(data.groupAuthorizeDesc);
+                $(field).append($newOption).trigger('change');
+            });
+        }
+
+        function loadDataFirstLastAllPosition() {
+            $('#position').addClass('spinner-border');
+
+            $.ajax({
+                type: 'GET',
+                url: "{{ url('/position/func/api') }}",
+            }).then(function (data) {
+                if (!$('#position').find('option:contains(' + data.positionName + ')').length) {
+                    $('#position').append($('<option>').val(data.positionCode).text(data.positionName));
+                }
+                $('#position').val(data.positionCode);
+                $('#position').removeClass('loading');
+            });
+        }
+
+        function loadDataFirstLastAllLocation() {
+            $.ajax({
+                type: 'GET',
+                url: "{{ url('/location/func/api') }}",
+            }).then(function (data) {
+                if (!$('#location').find('option:contains(' + data.locationName + ')').length) {
+                    $('#location').append($('<option>').val(data.locationCode).text(data.locationName));
+                }
+                $('#location').val(data.locationCode);
+            });
+        }
+
+        function loadDataFirstLastAllRanking() {
+            $.ajax({
+                type: 'GET',
+                url: "{{ url('/ranking/func/api') }}",
+            }).then(function (data) {
+                if (!$('#ranking').find('option:contains(' + data.rankingName + ')').length) {
+                    $('#ranking').append($('<option>').val(data.rankingCode).text(data.rankingName));
+                }
+                $('#ranking').val(data.rankingCode);
+            });
+        }
+
+        function loadDataFirstLastAllLevel(field = '', levelType = '') {
+            $.ajax({
+                type: 'GET',
+                url: "{{ url('/level/func/api') }}",
+                data: {
+                    'levelType': levelType
+                }
+            }).then(function (data) {
+                if (!$(field).find('option:contains(' + data.levelName + ')').length) {
+                    $(field).append($('<option>').val(data.levelCode).text(data.levelName));
+                }
+                $(field).val(data.levelCode);
             });
         }
 

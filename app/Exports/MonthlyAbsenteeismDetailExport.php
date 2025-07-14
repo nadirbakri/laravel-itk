@@ -43,6 +43,7 @@ class MonthlyAbsenteeismDetailExport implements FromView, ShouldAutoSize
                 'languageCode' => App::getLocale(), 
                 'sessionID' => 0, 
                 'sessionUserID' => Session::get('userID'),
+                'userID' => Session::get('userID'),
                 // 'incResign' => $this->includeResign,
                 // 'changeHeader' => $this->changeHeader
             ];

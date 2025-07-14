@@ -15,9 +15,11 @@ use Maatwebsite\Excel\Events\AfterSheet;
 
 class OvertimeReportExport implements FromView, ShouldAutoSize
 {
-    public function __construct($period)
+    public function __construct($period, $groupAuthorizeFrom, $groupAuthorizeTo)
     {
         $this->period = $period;
+        $this->groupAuthorizeFrom = $groupAuthorizeFrom;
+        $this->groupAuthorizeTo = $groupAuthorizeTo;
     }
     public function view(): View
     {
@@ -31,6 +33,8 @@ class OvertimeReportExport implements FromView, ShouldAutoSize
             $param = [
                 'companyCode' => Session::get('companyCode'),
                 'period' => $this->period,
+                'groupAuthorizeFrom' => (int) $this->groupAuthorizeFrom,
+                'groupAuthorizeTo' => (int) $this->groupAuthorizeTo,
                 'groupAuthorizeCode' => (string) Session::get('groupAuthorizeTimeManagement'),
             ];
 

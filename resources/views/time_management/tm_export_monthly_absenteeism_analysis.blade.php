@@ -71,44 +71,54 @@
 				$no = 1; 
 				$totals = [
 					'normal_days' => 0,
-					'normal_hours' => '00:00',
+					'normal_hours' => 0,
 					'actual_days' => 0,
-					'actual_hours' => '00:00',
+					'actual_hours' => 0,
 					'variance_days' => 0,
 					'variance_days_percentage' => 0,
-					'variance_hours' => '00:00',
+					'variance_hours' => 0,
 					'variance_hours_percentage' => 0,
 					'overtime_days' => 0,
 					'overtime_days_percentage' => 0,
-					'overtime_hours' => '00:00',
+					'overtime_hours' => 0,
 					'overtime_hours_percentage' => 0,
 					'overtime_convert' => 0,
 					'absent_days' => 0,
-					'absent_hours' => '00:00',
+					'absent_hours' => 0,
 					'others_days' => 0,
-					'others_hours' => '00:00',
+					'others_hours' => 0,
 					'leave_permit_days' => 0,
-					'leave_permit_hours' => '00:00',
+					'leave_permit_hours' => 0,
 					'total_absent_days' => 0,
-					'total_absent_hours' => '00:00',
+					'total_absent_hours' => 0,
 					'effective_days' => 0,
 					'effective_days_percentage' => 0,
-					'effective_hours' => '00:00',
+					'effective_hours' => 0,
 					'effective_hours_percentage' => 0
 				];
 
 				function timeToSeconds($time) {
-					if (!$time || !str_contains($time, ':')) return 0;
-					
+					if (!$time || !is_string($time) || !str_contains($time, ':')) return 0;
+
+					$isNegative = str_starts_with($time, '-');
+					$time = ltrim($time, '-');
+
 					list($h, $i) = explode(':', $time);
-					return $h * 3600 + $i * 60;
+
+					if (!is_numeric($h) || !is_numeric($i)) return 0;
+
+					$seconds = ((int)$h * 3600) + ((int)$i * 60);
+					return $isNegative ? -$seconds : $seconds;
 				}
 
 				function secondsToTime($seconds) {
+					$isNegative = $seconds < 0;
+					$seconds = abs($seconds);
+
 					$h = floor($seconds / 3600);
 					$m = floor(($seconds % 3600) / 60);
-					$s = $seconds % 60;
-					return sprintf('%02d:%02d:%02d', $h, $m, $s);
+					$s = floor($seconds % 60);
+					return ($isNegative ? '-' : '') . sprintf('%02d:%02d:%02d', $h, $m, $s);
 				}
 			?>
 			@foreach($data as $key => $value)

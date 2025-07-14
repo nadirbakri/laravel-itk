@@ -555,6 +555,7 @@
 
             $('#btn-previous-employee').prop('disabled', false)
             $('#btn-next-employee').prop('disabled', false)
+            $('#btn-save').prop('disabled', true)
         });
 
         $('#period').on("change", function (e) {
@@ -604,8 +605,6 @@
             // $('.select_grade').prop('disabled', false);
             $('#btn-save').prop('disabled', false);
 
-            console.log(arrNotLeave);
-
             $('.select_absent_code').prop('disabled', true);
             arrNotLeave.forEach(index => {
                 $(`#absent_code${index}`).prop('disabled', false);
@@ -614,6 +613,7 @@
         });
 
         $('#btn-previous-employee').on('click', function () {
+            $('#btn-save').prop('disabled', true)
             const currEmployeeNo = $('#employee_no').val()
             let prevEmployeeNo = ''
 
@@ -639,6 +639,7 @@
         })
 
         $('#btn-next-employee').on('click', function () {
+            $('#btn-save').prop('disabled', true)
             const currEmployeeNo = $('#employee_no').val()
             let nextEmployeeNo = ''
 

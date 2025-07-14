@@ -79,6 +79,24 @@
                     </div>
                 </div>
                 <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label
+                                for="group_authorize_from">{{ __('tm_overtime_report.label_group_authorize_from') }}</label>
+                            <select class="form-control select2" id="group_authorize_from"
+                                name="group_authorize_from"></select>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label
+                                for="group_authorize_to">{{ __('tm_overtime_report.label_group_authorize_to') }}</label>
+                            <select class="form-control select2" id="group_authorize_to"
+                                name="group_authorize_to"></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col-3">
                         <button type="submit" class="btn btn-primary" name="btn-print" id="btn-print"
                             style="width: 100%;">
@@ -163,6 +181,101 @@
         });
 
         pickerPeriod.setDate(arrData[0].periodYear + "-" + moment().month(arrData[0].periodMonth - 1).format('MM') + "-01");
+
+        loadDataGroupAuthorize('#group_authorize_from');
+        loadDataGroupAuthorize('#group_authorize_to');
+
+        loadDataFirstLastAllGroupAuthorize('#group_authorize_from', 'First');
+        loadDataFirstLastAllGroupAuthorize('#group_authorize_to', 'Last');
+
+        function loadDataGroupAuthorize(field = '') {
+            function formatSelect(data) {
+                if (data.loading) {
+                    return $search
+                }
+
+                if (data.id) {
+                    var $result2 = $('<div class="row">' +
+                        '<div class="col-6">' + data.data.groupAuthorizeCode + '</div>' +
+                        '<div class="col-6">' + data.data.groupAuthorizeDesc + '</div>' +
+                        '</div>');
+
+                    return $result2;
+                }
+            }
+
+            var headerIsAppend = false;
+            $(field).on('select2:open', function (e) {
+                if (!headerIsAppend) {
+                    html = '<div class="row">' +
+                        '<div class="col-6"><b>Group Authorize Code</b></div>' +
+                        '<div class="col-6"><b>Group Authorize Desc</b></div>' +
+                        '</div>';
+                    $('.select2-search--dropdown').append(html);
+                    headerIsAppend = true;
+                }
+            });
+
+            var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
+
+            $(field).select2({
+                width: '100%',
+                placeholder: 'Choose Group Authorize',
+                allowClear: true,
+                closeOnSelect: true,
+                language: {
+                    errorLoading: function () {
+                        return $search;
+                    },
+                    searching: function () {
+                        return $search;
+                    }
+                },
+                ajax: {
+                    url: "{{ url('/group_authorize/api') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        return {
+                            _token: CSRF_TOKEN,
+                            search: params.term,
+                            module: 'TM',
+                            isRange: false,
+                            isModule: false
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.groupAuthorizeDesc,
+                                    id: item.groupAuthorizeCode,
+                                    data: item
+                                }
+                            })
+                        };
+                    },
+                    cache: true,
+                },
+                templateResult: formatSelect
+            });
+        }
+
+        function loadDataFirstLastAllGroupAuthorize(field = '', func = '') {
+            $.ajax({
+                type: 'GET',
+                url: "{{ url('/group_authorize/func/api') }}",
+                data: {
+                    'func': func,
+                    'module': 'TM'
+                }
+            }).then(function (data) {
+                var $newOption = $("<option selected='selected'></option>").val(data.groupAuthorizeCode)
+                    .text(data.groupAuthorizeDesc);
+                $(field).append($newOption).trigger('change');
+            });
+        }
 
         $("#btn-print").click(function () {
             $(this).prop("disabled", true);

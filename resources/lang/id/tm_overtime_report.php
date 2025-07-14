@@ -15,6 +15,8 @@ return [
     'judul' => 'Laporan Lembur',
     'list' => 'Daftar Menu Manajemen Waktu',
     'label_period' => 'Periode',
+    'label_group_authorize_from' => 'Dari Grup Otorisasi',
+    'label_group_authorize_to' => 'Sampai Grup Otorisasi',
     'period_required' => 'Periode harus diisi',
     'btn_print' => 'Print',
 ];
