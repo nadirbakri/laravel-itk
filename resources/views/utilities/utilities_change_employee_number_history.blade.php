@@ -97,34 +97,9 @@
                     </div>
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="employee_name">{{ __('utilities_change_employee_number.label_employee_name') }}</label>
-                            <input type="text" class="form-control" id="employee_name" name="employee_name"
-                                placeholder="{{ __('utilities_change_employee_number.label_employee_name') }}" disabled>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="employee_no_new">{{ __('utilities_change_employee_number.label_employee_no_new') }}</label>
-                            <input type="text" class="form-control" id="employee_no_new" name="employee_no_new"
-                                placeholder="{{ __('utilities_change_employee_number.label_employee_no_new') }}">
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="form-group">
                             <label for="change_reason_code">{{ __('utilities_change_employee_number.label_change_reason_code') }}</label>
                             <span class="required">*</span>
                             <select class="form-control select2" id="change_reason_code" name="change_reason_code"></select>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-12">
-                        <div class="form-group">
-                            <label for="change_remarks">{{ __('utilities_change_employee_number.label_change_remarks') }}</label>
-                            <span class="required">*</span>
-                            <textarea rows="4" type="text" class="form-control" id="change_remarks" name="change_remarks" placeholder="{{ __('utilities_change_employee_number.label_change_remarks') }}"></textarea>
                         </div>
                     </div>
                 </div>
@@ -136,10 +111,28 @@
                         </button>
                     </div>
                     <div class="col-3">
-                        <a class="btn btn-outline-primary" href="{{ url('utilities') }}" target="iframe_dashboard"
+                        <a class="btn btn-outline-primary" href="{{ url('utilities/change_employee_no') }}" target="iframe_dashboard"
                             name="btn-cancel" id="btn-cancel" style="width: 100%;">
                             <i class="fa fa-times-circle"></i> {{ __('utilities_change_employee_number.btn_cancel') }}
                         </a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="div-table">
+                            <table id="change_employee_number_table" class="table hover">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Employee No Before</th>
+                                        <th>Employee No After</th>
+                                        <th>Change Reason Code</th>
+                                        <th>Change Remarks</th>
+                                        <th>Change Date</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </form>
@@ -218,6 +211,21 @@
     
   $(document).ready(function() {
     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+    $('#change_employee_no_history_table thead tr').clone(true).appendTo('#change_employee_no_history_table thead');
+    $('#change_employee_no_history_table thead tr:eq(1) th:not(:first-child)').each( function (i) {
+        var title = $(this).text();
+        $(this).html('<input class="form-control" type="text" placeholder="'+title+'" />');
+
+        $('input', this).on('keyup change', function () {
+            if (table.column(i + 1).search() !== this.value) {
+                table
+                    .column(i + 1)
+                    .search(this.value)
+                    .draw();
+            }
+        } );
+    });
 
     loadDataEmployeeNo();
     loadDataChangeReasonCode();
@@ -365,6 +373,43 @@
                 cache: true,
             },
             templateResult: formatSelect
+        });
+    }
+    
+    function load_data_change_employee_no_history() {
+        table = $('#change_employee_no_history_table').DataTable({
+            processing: true,
+            serverSide: true,
+            orderCellsTop: true,
+            ajax: "{{ url('medical/vaccine_master/table') }}",
+            error: function(jqXHR, ajaxOptions, thrownError) {
+                alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
+            },
+            "sDom": 'lrtip',
+            'sPaginationType': 'full_numbers',
+            "order": [[ 1, "asc" ]],
+            columns: [
+                {
+                    orderable: false,
+                    targets: 0, 
+                    "defaultContent": '',
+                    render: function(data, type) {
+                        return type === 'display'? '<input class="chk-select" type="checkbox">' : '';
+                    }
+                },
+                {data: 'activityCode', name: 'activityCode'},
+                {data: 'activityCode', name: 'activityCode'},
+                {data: 'activityName', name: 'activityName'},
+                {name: 'details',
+                    render: function (data, type, row) {
+                        return `<button type="button" class="btn btn-primary" style="display: inline-block; width: auto;" data-toggle="modal" data-target="#vaccine_master_table_detail_modal" onclick="vaccineMasterDetail(this)">Details</button>`
+                    }
+                },
+            ],
+            select: {
+                style:    'multi',
+                selector: 'td:first-child'
+            }
         });
     }
 

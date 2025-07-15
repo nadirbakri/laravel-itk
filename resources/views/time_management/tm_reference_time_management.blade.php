@@ -288,6 +288,42 @@
                     </div>
                 </div>
                 <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="permit_no_in_code">{{ __('tm_reference_time_management.label_permit_no_in_code') }}</label>
+                            <select class="form-control select2" id="permit_no_in_code" name="permit_no_in_code" disabled></select>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="permit_no_out_code">{{ __('tm_reference_time_management.label_permit_no_out_code') }}</label>
+                            <select class="form-control select2" id="permit_no_out_code" name="permit_no_out_code" disabled></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="permit_late_code">{{ __('tm_reference_time_management.label_permit_late_code') }}</label>
+                            <select class="form-control select2" id="permit_late_code" name="permit_late_code" disabled></select>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="permit_early_back_code">{{ __('tm_reference_time_management.label_permit_early_back_code') }}</label>
+                            <select class="form-control select2" id="permit_early_back_code" name="permit_early_back_code" disabled></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="permit_out_of_office_code">{{ __('tm_reference_time_management.label_permit_out_of_office_code') }}</label>
+                            <select class="form-control select2" id="permit_out_of_office_code" name="permit_out_of_office_code" disabled></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col-3">
                         <div class="form-group">
                             <h5
@@ -1140,6 +1176,72 @@
                     .absentCode).text(data2[0].absentCode);
                 $("#overtime").append($newOption).trigger('change');
             });
+            $.ajax({
+                type: 'GET',
+                url: "{{ url('/absent_code/func/api') }}",
+                data: {
+                    'absentCode' : arrData[0].permitNoInCode
+                }
+            }).then(function (data2) {
+                var $newOption = $("<option selected='selected'></option>").val(data2[0]
+                    .absentCode).text(data2[0].absentCode);
+                $("#permit_no_in_code").append($newOption).trigger('change');
+            });
+            $.ajax({
+                type: 'GET',
+                url: "{{ url('/absent_code/func/api') }}",
+                data: {
+                    'absentCode' : arrData[0].permitNoOutCode
+                }
+            }).then(function (data2) {
+                var $newOption = $("<option selected='selected'></option>").val(data2[0]
+                    .absentCode).text(data2[0].absentCode);
+                $("#permit_no_out_code").append($newOption).trigger('change');
+            });
+            $.ajax({
+                type: 'GET',
+                url: "{{ url('/absent_code/func/api') }}",
+                data: {
+                    'absentCode' : arrData[0].permitNoOutCode
+                }
+            }).then(function (data2) {
+                var $newOption = $("<option selected='selected'></option>").val(data2[0]
+                    .absentCode).text(data2[0].absentCode);
+                $("#permit_no_out_code").append($newOption).trigger('change');
+            });
+            $.ajax({
+                type: 'GET',
+                url: "{{ url('/absent_code/func/api') }}",
+                data: {
+                    'absentCode' : arrData[0].permitLateCode
+                }
+            }).then(function (data2) {
+                var $newOption = $("<option selected='selected'></option>").val(data2[0]
+                    .absentCode).text(data2[0].absentCode);
+                $("#permit_late_code").append($newOption).trigger('change');
+            });
+            $.ajax({
+                type: 'GET',
+                url: "{{ url('/absent_code/func/api') }}",
+                data: {
+                    'absentCode' : arrData[0].permitEBCode
+                }
+            }).then(function (data2) {
+                var $newOption = $("<option selected='selected'></option>").val(data2[0]
+                    .absentCode).text(data2[0].absentCode);
+                $("#permit_early_back_code").append($newOption).trigger('change');
+            });
+            $.ajax({
+                type: 'GET',
+                url: "{{ url('/absent_code/func/api') }}",
+                data: {
+                    'absentCode' : arrData[0].permitOutofOfficeCode
+                }
+            }).then(function (data2) {
+                var $newOption = $("<option selected='selected'></option>").val(data2[0]
+                    .absentCode).text(data2[0].absentCode);
+                $("#permit_out_of_office_code").append($newOption).trigger('change');
+            });
             if (typeof arrData[0].calculateLateHour !== 'undefined') {
                 if(arrData[0].calculateLateHour.toLowerCase() == "normal") {
                     $('#late_hour_normal_in').prop('checked', true).trigger('change');
@@ -1311,7 +1413,7 @@
             }
 
             var headerIsAppend = false;
-            $('#not_clock_in, #not_clock_out, #late, #early_back, #not_clock_in_early_back, #late_early_back, #not_clock_out_late, #unpaid_leave, #absent, #overtime').on('select2:open', function (e) {
+            $('#not_clock_in, #not_clock_out, #late, #early_back, #not_clock_in_early_back, #late_early_back, #not_clock_out_late, #unpaid_leave, #absent, #overtime, #permit_no_in_code, #permit_no_out_code, #permit_late_code, #permit_early_back_code, #permit_out_of_office_code').on('select2:open', function (e) {
                 if (!headerIsAppend) {
                     html = '<div class="row">' +
                         '<div class="col-6"><b>Absent Code</b></div>' +
@@ -1324,7 +1426,7 @@
 
             var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
 
-            $('#not_clock_in, #not_clock_out, #late, #early_back, #not_clock_in_early_back, #late_early_back, #not_clock_out_late, #unpaid_leave, #absent, #overtime').select2({
+            $('#not_clock_in, #not_clock_out, #late, #early_back, #not_clock_in_early_back, #late_early_back, #not_clock_out_late, #unpaid_leave, #absent, #overtime, #permit_no_in_code, #permit_no_out_code, #permit_late_code, #permit_early_back_code, #permit_out_of_office_code').select2({
                 width: '100%',
                 placeholder: 'Choose Absent',
                 allowClear: true,
@@ -1641,6 +1743,11 @@
             $('#unpaid_leave').prop('disabled', false);
             $('#absent').prop('disabled', false);
             $('#overtime').prop('disabled', false);
+            $('#permit_no_in_code').prop('disabled', false);
+            $('#permit_no_out_code').prop('disabled', false);
+            $('#permit_late_code').prop('disabled', false);
+            $('#permit_early_back_code').prop('disabled', false);
+            $('#permit_out_of_office_code').prop('disabled', false);
             $('#late_hour_normal_in').prop('disabled', false).trigger('change');
             $('#late_hour_tolerance').prop('disabled', false).trigger('change');
             $('#early_back_normal_out').prop('disabled', false).trigger('change');
@@ -1817,6 +1924,11 @@
                                 $('#unpaid_leave').prop('disabled', false);
                                 $('#absent').prop('disabled', false);
                                 $('#overtime').prop('disabled', false);
+                                $('#permit_no_in_code').prop('disabled', false);
+                                $('#permit_no_out_code').prop('disabled', false);
+                                $('#permit_late_code').prop('disabled', false);
+                                $('#permit_early_back_code').prop('disabled', false);
+                                $('#permit_out_of_office_code').prop('disabled', false);
                                 $('#late_hour_normal_in').prop('disabled', false).trigger('change');
                                 $('#late_hour_tolerance').prop('disabled', false).trigger('change');
                                 $('#early_back_normal_out').prop('disabled', false).trigger('change');

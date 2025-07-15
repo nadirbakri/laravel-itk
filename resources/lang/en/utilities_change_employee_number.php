@@ -17,6 +17,8 @@ return [
     'label_employee_no' => 'Employee No',
     'label_employee_name' => 'Employee Name',
     'label_employee_no_new' => 'New Employee No',
+    'label_change_reason_code' => 'Change Reason Code',
+    'label_change_remarks' => 'Change Remarks',
     'btn_process' => 'Process',
     'btn_cancel' => 'Cancel',
     'alert_success' => 'Success !',

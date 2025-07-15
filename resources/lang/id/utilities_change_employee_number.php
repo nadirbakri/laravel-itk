@@ -17,6 +17,8 @@ return [
     'label_employee_no' => 'No Karyawan',
     'label_employee_name' => 'Nama Karyawan',
     'label_employee_no_new' => 'No Karyawan Baru',
+    'label_change_reason_code' => 'Kode Alasan Penggantian',
+    'label_change_remarks' => 'Catatan Penggantian',
     'btn_process' => 'Proses',
     'btn_cancel' => 'Batal',
     'alert_success' => 'Sukses !',

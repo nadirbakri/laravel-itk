@@ -2942,8 +2942,8 @@ class TimeManagementController extends Controller
                 'permitNoInCode' => isset($arrData['permit_no_in_code']) ? $arrData['permit_no_in_code'] : null,
                 'permitNoOutCode' => isset($arrData['permit_no_out_code']) ? $arrData['permit_no_out_code'] : null,
                 'permitLateCode' => isset($arrData['permit_late_code']) ? $arrData['permit_late_code'] : null,
-                'permitEarlyBackCode' => isset($arrData['permit_early_back_code']) ? $arrData['permit_early_back_code'] : null,
-                'permitOutOfOfficeCode' => isset($arrData['permit_out_office_code']) ? $arrData['permit_out_office_code'] : null,
+                'permitEBCode' => isset($arrData['permit_early_back_code']) ? $arrData['permit_early_back_code'] : null,
+                'permitOutOfOfficeCode' => isset($arrData['permit_out_of_office_code']) ? $arrData['permit_out_of_office_code'] : null,
                 'slipDateMobile' =>  isset($arrData['slip_date_mobile']) ? $arrData['slip_date_mobile'] : null,
                 "changedNo" => 0,
                 "createdDate" => date("Y-m-d\TH:i:s"),
@@ -2977,7 +2977,7 @@ class TimeManagementController extends Controller
                 $param['ovtRounded'] = null;
             }
 
-            dd(json_encode($param));
+            // dd(json_encode($param));
 
             if($arrData['record_function'] == 'New'){
                 $response = $client->post(env('API_URL') . '/mobile/ReferenceTM',

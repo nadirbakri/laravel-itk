@@ -1427,6 +1427,46 @@ class UtilitiesController extends Controller
         }
     }
 
+    public function tableChangeEmployeeNoUtilities(Request $request)
+    {
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/personel/PeChangeEmployeeNo/GetChangeHistory',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'menuID' => $request->menuID,
+                        "languageCode" => strtoupper(App::getLocale()),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if(!isset($arrResult->dataListSet[0]->menuChild) && empty($arrResult)){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet[0]->menuChild)->make(true);
+        }
+    }
+
     public function statusAuthorizationCodeGroupUtilities(Request $request)
     {
         date_default_timezone_set('Asia/Jakarta');
@@ -2314,12 +2354,15 @@ class UtilitiesController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->put(env('API_URL') . '/personel/ChangeEmployeeNo/UpdateChangeEmployeeNo',
+            $response = $client->post(env('API_URL') . '/personel/PeChangeEmployeeNo/changeEmployeeNoProcess',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
-                        'employeeNoOld' => $request->employee_no,
-                        'employeeNoNew' => $request->employee_no_new,
+                        'employeeNoBefore' => $request->employee_no,
+                        'employeeNoAfter' => $request->employee_no_new,
+                        'changeReasonCode' => $request->change_reason_code,
+                        'changeRemarks' => $request->change_reason_code,
+                        'date' => date("Y-m-d\TH:i:s"),
                         "sessionID" => 0,
                         'sessionUserID' => Session::get('userID'),
                         'logActionUserID' => Session::get('userID'),
