@@ -4063,7 +4063,7 @@ class MedicalController extends Controller
         $file = $request->file;
         try{
             $import = new VaccinationScheduleImport();
-            Excel::import($import, $file->getRealPath(), null);
+            Excel::import($import, $file->getRealPath(), null, \Maatwebsite\Excel\Excel::XLSX);
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             $failures = $e->failures();
             $objError = (object) ['status' => false, 'message' => $failures[0]->errors()[0]];

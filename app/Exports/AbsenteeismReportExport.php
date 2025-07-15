@@ -48,7 +48,7 @@ class AbsenteeismReportExport implements FromView, ShouldAutoSize
                 'employeeList' => $this->employeeType === 'ALL' || $this->employeeType === 'RANGE' ? [] : $this->employeeNoList,
                 'startDate' => $this->startDate,
                 'endDate' => $this->endDate,
-                'includeResign' => $this->includeResign,
+                'includeResign' => $this->includeResign ?? false,
                 'groupAuthorizeFrom' => (int) $this->groupAuthorizeFrom,
                 'groupAuthorizeTo' => (int) $this->groupAuthorizeTo,
                 'userID' => Session::get('userID'),

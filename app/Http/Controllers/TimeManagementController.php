@@ -1698,8 +1698,32 @@ class TimeManagementController extends Controller
     {
         try{
             $file = $request->file('file_location');
-            $import = new UpdateAbsenteeismDataImport;
-            Excel::import($import, $file->getRealPath());
+            $extension = strtolower($file->getClientOriginalExtension());
+
+            $import = new UpdateAbsenteeismDataImport();
+
+            if ($extension === 'xlsx') {
+                Excel::import($import, $file->getRealPath(), null, \Maatwebsite\Excel\Excel::XLSX);
+            } else if ($extension === 'xls') {
+                Excel::import($import, $file->getRealPath(), null, \Maatwebsite\Excel\Excel::XLS);
+            } else {
+                return [(object)[
+                    'status' => false,
+                    'message' => 'File format not supported. Please upload .xls or .xlsx file.',
+                ]];
+            }
+
+            $results = $import->getArrResult();
+
+            if (empty($results)) {
+                return [(object)[
+                    'status' => false,
+                    'message' => "The Uploaded File Doesn't Match The Template"
+                ]];
+            }
+
+            return $results;
+
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             $failures = $e->failures();
             $objError = (object) ['status' => false, 'message' => $failures[0]->errors()[0]];
@@ -1734,7 +1758,7 @@ class TimeManagementController extends Controller
         try{
             $file = $request->file('import_file');
             $import = new AbsentCodeImport;
-            Excel::import($import, $file->getRealPath(), null);
+            Excel::import($import, $file->getRealPath(), null, \Maatwebsite\Excel\Excel::XLSX);
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             $failures = $e->failures();
             $objError = (object) ['status' => false, 'message' => $failures[0]->errors()[0]];
@@ -1754,7 +1778,7 @@ class TimeManagementController extends Controller
         try{
             $file = $request->file('file_location');
             $import = new ChangeDataShiftImport;
-            Excel::import($import, $file->getRealPath(), null);
+            Excel::import($import, $file->getRealPath(), null, \Maatwebsite\Excel\Excel::XLSX);
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             $failures = $e->failures();
             $objError = (object) ['status' => false, 'message' => $failures[0]->errors()[0]];
@@ -1784,7 +1808,7 @@ class TimeManagementController extends Controller
         try{
             $file = $request->file('import_leave');
             $import = new PeMasterLeaveImport;
-            Excel::import($import, $file->getRealPath(), null);
+            Excel::import($import, $file->getRealPath(), null, \Maatwebsite\Excel\Excel::XLSX);
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             $failures = $e->failures();
             $objError = (object) ['status' => false, 'message' => $failures[0]->errors()[0]];
@@ -1809,7 +1833,7 @@ class TimeManagementController extends Controller
         try{
             $file = $request->file('import_plafon');
             $import = new PlafonImport;
-            Excel::import($import, $file->getRealPath(), null);
+            Excel::import($import, $file->getRealPath(), null, \Maatwebsite\Excel\Excel::XLSX);
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             $failures = $e->failures();
             $objError = (object) ['status' => false, 'message' => $failures[0]->errors()[0]];
@@ -2660,7 +2684,7 @@ class TimeManagementController extends Controller
 
             if ($extension === 'xlsx' || $extension === 'xls') {
                 $import = new TimeRecordingImport($request->automatic);
-                Excel::import($import, $file->getRealPath(), null);
+                Excel::import($import, $file->getRealPath(), null, \Maatwebsite\Excel\Excel::XLSX);
 
                 if(empty($import->getArrResult())){
                     $objError = (object) ['status' => false, 'message' => "The Uploaded File Doesn't Match The Template"];
@@ -2915,6 +2939,11 @@ class TimeManagementController extends Controller
                 'noTimeOutCode' => isset($arrData['not_clock_out']) ? $arrData['not_clock_out'] : null,
                 'noTimeInEarlybackCode' => isset($arrData['not_clock_in_early_back']) ? $arrData['not_clock_in_early_back'] : null,
                 'lateNoTimeOutCode' => isset($arrData['not_clock_out_late']) ? $arrData['not_clock_out_late'] : null,
+                'permitNoInCode' => isset($arrData['permit_no_in_code']) ? $arrData['permit_no_in_code'] : null,
+                'permitNoOutCode' => isset($arrData['permit_no_out_code']) ? $arrData['permit_no_out_code'] : null,
+                'permitLateCode' => isset($arrData['permit_late_code']) ? $arrData['permit_late_code'] : null,
+                'permitEarlyBackCode' => isset($arrData['permit_early_back_code']) ? $arrData['permit_early_back_code'] : null,
+                'permitOutOfOfficeCode' => isset($arrData['permit_out_office_code']) ? $arrData['permit_out_office_code'] : null,
                 'slipDateMobile' =>  isset($arrData['slip_date_mobile']) ? $arrData['slip_date_mobile'] : null,
                 "changedNo" => 0,
                 "createdDate" => date("Y-m-d\TH:i:s"),
@@ -2948,7 +2977,7 @@ class TimeManagementController extends Controller
                 $param['ovtRounded'] = null;
             }
 
-            // dd(json_encode($param));
+            dd(json_encode($param));
 
             if($arrData['record_function'] == 'New'){
                 $response = $client->post(env('API_URL') . '/mobile/ReferenceTM',

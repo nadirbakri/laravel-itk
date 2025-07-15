@@ -911,6 +911,9 @@
                             $('#loading-background').hide(); 
                         });
                     }
+                    else {
+                        $('#loading-background').hide(); 
+                    }
                 },
                 error: function (xhr) {
                     $('#loading-background').hide();
