@@ -1443,7 +1443,7 @@ class TimeManagementController extends Controller
             $dataLevel[] = $arrData['level' . ($i+1)];
         }
 
-        return Excel::download(new DetailAbsenteeismReportExport($arrData['employee_no_from'],$arrData['employee_no_to'], $arrData['absent_date_from'], $arrData['absent_date_to'], $arrData['group_authorize_from'], $arrData['group_authorize_to'], isset($arrData['include_resign']) ? (bool) $arrData['include_resign'] : false, $arrData['position'], $arrData['ranking'], $arrData['location'], $dataLevel, $arrData2), 'Detail Absenteeism Report.xlsx');
+        return Excel::download(new DetailAbsenteeismReportExport($arrData['get_employee'], $arrData['employee_no_from'] ?? null, $arrData['employee_no_to'] ?? null, $arrData['employee_no_list'] ?? null, $arrData['absent_date_from'], $arrData['absent_date_to'], $arrData['group_authorize_from'], $arrData['group_authorize_to'], isset($arrData['include_resign']) ? (bool) $arrData['include_resign'] : false, $arrData['position'], $arrData['ranking'], $arrData['location'], $dataLevel, $arrData2), 'Detail Absenteeism Report.xlsx');
     }
 
     public function printDetailAbsenteeismReasonReport(Request $request)
@@ -1675,7 +1675,7 @@ class TimeManagementController extends Controller
             $nama_file = 'Absenteeism & Overtime Report.xlsx';
         }
 
-        return Excel::download(new AbsenteeismOvertimeReportExport($request->employee_no_from, $request->employee_no_to, $request->absent_date_from, $request->absent_date_to, $request->group_authorize_from, $request->group_authorize_to, $request->report_type, isset($request->include_resign) ? (bool) $request->include_resign : false, $request->position, $request->ranking, $request->location, $dataLevel), $nama_file);
+        return Excel::download(new AbsenteeismOvertimeReportExport($request->get_employee, $request->employee_no_from, $request->employee_no_to, $request->employee_no_list, $request->absent_date_from, $request->absent_date_to, $request->group_authorize_from, $request->group_authorize_to, $request->report_type, isset($request->include_resign) ? (bool) $request->include_resign : false, $request->position, $request->ranking, $request->location, $dataLevel), $nama_file);
     }
 
     public function printAbsenteeismReport(Request $request)

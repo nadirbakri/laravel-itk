@@ -15,10 +15,12 @@ use Maatwebsite\Excel\Events\AfterSheet;
 
 class AbsenteeismOvertimeReportExport implements FromView, ShouldAutoSize
 {
-    public function __construct($employeeNoFrom, $employeeNoTo, $absentDateFrom, $absentDateTo, $groupAuthorizeFrom, $groupAuthorizeTo, $reportType, $includeResign, $position, $ranking, $location, $dataLevel)
+    public function __construct($employeeType, $employeeNoFrom, $employeeNoTo, $employeeNoList, $absentDateFrom, $absentDateTo, $groupAuthorizeFrom, $groupAuthorizeTo, $reportType, $includeResign, $position, $ranking, $location, $dataLevel)
     {
+        $this->employeeType = $employeeType;
         $this->employeeNoFrom = $employeeNoFrom;
         $this->employeeNoTo = $employeeNoTo;
+        $this->employeeNoList = $employeeNoList;
         $this->absentDateFrom = $absentDateFrom;
         $this->absentDateTo = $absentDateTo;
         $this->groupAuthorizeFrom = $groupAuthorizeFrom;
@@ -39,85 +41,84 @@ class AbsenteeismOvertimeReportExport implements FromView, ShouldAutoSize
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            if($this->reportType == "overtime"){
-                $viewFile = 'time_management.tm_export_absenteeism_overtime_report';
+            $param = [
+                'companyCode' => Session::get('companyCode'),
+                'range' => $this->employeeType === 'RANGE' ? true : false,
+                'employeeNoFrom' => $this->employeeNoFrom,
+                'employeeNoTo' => $this->employeeNoTo,
+                'employeeList' => $this->employeeType === 'ALL' || $this->employeeType === 'RANGE' ? [] : $this->employeeNoList,
+                'absentDateFrom' => $this->absentDateFrom,
+                'absentDateTo' => $this->absentDateTo,
+                'groupAuthorizeFrom' => (int) $this->groupAuthorizeFrom,
+                'groupAuthorizeTo' => (int) $this->groupAuthorizeTo,
+                'includeResign' => $this->includeResign ?? false,
+                'userID' => Session::get('userID'),
+            ];
 
-                $param = [ 
-                    'companyCode' => Session::get('companyCode')
-                ];
-
-                if(!empty($this->absentDateFrom) || !empty($this->absentDateTo)){
-                    $param['overtimeDateFrom'] = $this->absentDateFrom;
-                    $param['overtimeDateTo'] = $this->absentDateTo;
+            if(!empty($request->position) && !is_null($request->position[0])){
+                foreach($request->position as $value){
+                    $data_position[] = $value;
                 }
+                $param['position'] = $data_position;
+            }
 
-                $response = $client->post(env('API_URL') . '/mobile/TmOvertime/GetOvertimeReport',
+            if(!empty($request->location) && !is_null($request->location[0])){
+                foreach($request->location as $value){
+                    $data_location[] = $value;
+                }
+                $param['location'] = $data_location;
+            }
+
+            if(!empty($request->ranking) && !is_null($request->ranking[0])){
+                foreach($request->ranking as $value){
+                    $data_ranking[] = $value;
+                }
+                $param['ranking'] = $data_ranking;
+            }
+
+            if(!empty($this->dataLevel) && !is_null($this->dataLevel[0])){
+                foreach($this->dataLevel as $key => $value){
+                    $data_level_detail = [];
+                    foreach($this->dataLevel[$key] as $value2){
+                        $data_level_detail[] = $value2;
+                    }
+                    $data_level[] = [
+                        "levelType" => (string) ($key + 1),
+                        "levelCode" => $data_level_detail
+                    ];
+                }
+                $param['levelMaster'] = $data_level;
+            }
+
+            // dd(json_encode($param));
+
+            if($this->reportType == "overtime"){
+                // $viewFile = 'time_management.tm_export_absenteeism_overtime_report';
+                $viewFile = 'time_management.tm_export_absenteeism_overtime_new_report';
+
+                // $response = $client->post(env('API_URL') . '/mobile/TmOvertime/GetOvertimeReport',
+                //     ['body' => json_encode($param)]
+                // );
+
+                // $response = $client->post(env('API_URL') . '/mobile/absenteeismOvertimeReport/getOvertimeAbsenteeismReportByDate',
+                //     ['body' => json_encode($param)]
+                // );
+
+                $response = $client->post('https://f5769e56691c.ngrok-free.app/absenteeismOvertimeReport/getOvertimeAbsenteeismReportByDate',
                     ['body' => json_encode($param)]
                 );
             }else{
-                $viewFile = 'time_management.tm_export_absenteeism_absent_report';
-
-                $param = [ 
-                    'companyCode' => Session::get('companyCode'), 
-                    'languageID' => App::getLocale(), 
-                    'sessionID' => 0, 
-                    'sessionUserID' => Session::get('userID'),
-                    'incResign' => $this->includeResign
-                ];
-
-                if(!empty($this->employeeNoFrom) || !empty($this->employeeNoTo)){
-                    $param['employeeNoFrom'] = $this->employeeNoFrom;
-                    $param['employeeNoTo'] = $this->employeeNoTo;
-                }
-
-                if(!empty($this->absentDateFrom) || !empty($this->absentDateTo)){
-                    $param['absenDateFrom'] = $this->absentDateFrom;
-                    $param['absenDateTo'] = $this->absentDateTo;
-                }
-
-                if(!empty($this->groupAuthorizeFrom) || !empty($this->groupAuthorizeTo)){
-                    $param['groupAuthorizeFrom'] = $this->groupAuthorizeFrom;
-                    $param['groupAuthorizeTo'] = $this->groupAuthorizeTo;
-                }
-
-                if(!empty($request->position) && !is_null($request->position[0])){
-                    foreach($request->position as $value){
-                        $data_position[] = $value;
-                    }
-                    $param['position'] = $data_position;
-                }
-
-                if(!empty($request->location) && !is_null($request->location[0])){
-                    foreach($request->location as $value){
-                        $data_location[] = $value;
-                    }
-                    $param['location'] = $data_location;
-                }
-
-                if(!empty($request->ranking) && !is_null($request->ranking[0])){
-                    foreach($request->ranking as $value){
-                        $data_ranking[] = $value;
-                    }
-                    $param['ranking'] = $data_ranking;
-                }
-
-                if(!empty($this->dataLevel) && !is_null($this->dataLevel[0])){
-                    foreach($this->dataLevel as $key => $value){
-                        $data_level_detail = [];
-                        foreach($this->dataLevel[$key] as $value2){
-                            $data_level_detail[] = $value2;
-                        }
-                        $data_level[] = [
-                            "levelType" => (string) ($key + 1),
-                            "levelCode" => $data_level_detail
-                        ];
-                    }
-                    $param['levelMaster'] = $data_level;
-                }
-
-                // dd(json_encode($param));
+                // $viewFile = 'time_management.tm_export_absenteeism_absent_report';
+                $viewFile = 'time_management.tm_export_absenteeism_absent_new_report';
+                            
+                // $response = $client->post(env('API_URL') . '/absentovertimereport/getabsenteeismreport',
+                //     ['body' => json_encode($param)]
+                // );
             
-                $response = $client->post(env('API_URL') . '/absentovertimereport/getabsenteeismreport',
+                // $response = $client->post(env('API_URL') . '/mobile/absenteeismOvertimeReport/getAbsenteeismReportByDate',
+                //     ['body' => json_encode($param)]
+                // );
+                $response = $client->post('https://f5769e56691c.ngrok-free.app/absenteeismOvertimeReport/getAbsenteeismReportByDate',
                     ['body' => json_encode($param)]
                 );
             }
@@ -135,15 +136,13 @@ class AbsenteeismOvertimeReportExport implements FromView, ShouldAutoSize
 
         $arrResult = json_decode($response->getBody()->getContents());
 
-        // dd($arrResult->dataListSet);
-
         if($arrResult->dataListSet == null){
             return view($viewFile, [
-                'data' => []
+                'data' => [],
             ]); 
         }else{
             return view($viewFile, [
-                'data' => $arrResult->dataListSet
+                'data' => $arrResult->dataListSet,
             ]);
         }
     }

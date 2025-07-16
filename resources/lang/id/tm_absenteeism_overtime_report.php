@@ -14,8 +14,13 @@ return [
 
     'judul' => 'Laporan Absensi dan Lembur',
     'list' => 'Daftar Menu Manajemen Waktu',
+    'label_get_employee' => 'Tipe Data Karyawan',
+    'label_all' => 'Semua',
+    'label_range' => 'Rentang',
+    'label_list' => 'Daftar',
     'label_employee_no_from' => 'Dari No Karyawan',
     'label_employee_no_to' => 'Sampai No Karyawan',
+    'label_employee_no_list' => 'Daftar No Karyawan',
     'label_absent_date_from' => 'Tanggal Absensi Dari',
     'label_absent_date_to' => 'Tanggal Absensi Ke',
     'label_report_type' => 'Tipe Laporan :',

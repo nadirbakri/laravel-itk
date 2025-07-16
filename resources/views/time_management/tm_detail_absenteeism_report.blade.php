@@ -60,18 +60,43 @@
         <div class="div-form">
             <form id="tm_detail_absenteeism_report_form" method="post">
                 @csrf
-                <div class="row">
+                <div class="row d-flex gap-4">
+                    <div class="form-group" style="padding-left: 15px">
+                        <label for="get_employee form-check-label">{{ __('tm_detail_absenteeism_report.label_get_employee') }}</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" id="get_employee_all" name="get_employee" value="ALL" checked>
+                        <label for="get_employee_all">{{ __('tm_detail_absenteeism_report.label_all') }}</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" id="get_employee_range" name="get_employee" value="RANGE">
+                        <label for="get_employee_range">{{ __('tm_detail_absenteeism_report.label_range') }}</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" id="get_employee_list" name="get_employee" value="LIST">
+                        <label for="get_employee_list">{{ __('tm_detail_absenteeism_report.label_list') }}</label>
+                    </div>
+                </div>
+                <div class="row" id="employee_range">
                     <div class="col-6">
                         <div class="form-group">
                             <label
                                 for="employee_no_from">{{ __('tm_detail_absenteeism_report.label_employee_no_from') }}</label>
-                            <select class="form-control select2" id="employee_no_from" name="employee_no_from"></select>
+                            <select class="form-control select2" id="employee_no_from" name="employee_no_from" disabled></select>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group">
                             <label for="employee_no_to">{{ __('tm_detail_absenteeism_report.label_employee_no_to') }}</label>
-                            <select class="form-control select2" id="employee_no_to" name="employee_no_to"></select>
+                            <select class="form-control select2" id="employee_no_to" name="employee_no_to" disabled></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" id="employee_list">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="employee_no_list">{{ __('tm_detail_absenteeism_report.label_employee_no_list') }}</label>
+                            <select class="form-control select2" id="employee_no_list" name="employee_no_list[]" multiple="multiple" disabled></select>
                         </div>
                     </div>
                 </div>
@@ -304,6 +329,33 @@
     $(document).ready(function () {
         var table = null;
 
+        $('#employee_list').hide();
+
+        $('input[name=get_employee]').on("change", function (e) {
+            var data = $(this).val();
+            if(data == "ALL"){
+                $('#employee_range').show();
+                $('#employee_list').hide();
+                $('#employee_no_from').prop('disabled', true);
+                $('#employee_no_to').prop('disabled', true);
+                $('#employee_no_list').prop('disabled', true);
+            } 
+            else if (data === "RANGE") {
+                $('#employee_range').show();
+                $('#employee_list').hide();
+                $('#employee_no_from').prop('disabled', false);
+                $('#employee_no_to').prop('disabled', false);
+                $('#employee_no_list').prop('disabled', true);
+            } 
+            else {
+                $('#employee_range').hide();
+                $('#employee_list').show();
+                $('#employee_no_from').prop('disabled', true);
+                $('#employee_no_to').prop('disabled', true);
+                $('#employee_no_list').prop('disabled', false);
+            }
+        });
+
         $.ajax({
             url: "{{ url('personnel/report/level/check') }}",
             type: "GET",
@@ -332,6 +384,7 @@
 
         loadDataEmployeeNo('#employee_no_from');
         loadDataEmployeeNo('#employee_no_to');
+        loadDataEmployeeNo('#employee_no_list');
         loadDataGroupAuthorize('#group_authorize_from');
         loadDataGroupAuthorize('#group_authorize_to');
         loadDataPositionCode();

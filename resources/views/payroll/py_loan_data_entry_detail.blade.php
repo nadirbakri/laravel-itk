@@ -1054,6 +1054,28 @@
                         $('#total_payment').val(parseFloat(totalPayment).toFixed(2));
                         
                         sumInterest += parseFloat($('#interest_table' + i).val());
+
+                        $(`#interest_table${i}`).on('input', function() {
+                            const seq = parseInt($(this).attr('data-seq'))
+
+                            for (var a = seq; a <= noOfInstallment; a++) {
+                                payment_table = parseFloat($('#payment_table' + seq).val()) || 0;
+                                interest_table = parseFloat($('#interest_table' + seq).val()) || 0;
+                                principalTable = payment_table - interest_table;
+                                $('#principal_table' + seq).val(principalTable.toFixed(2));
+
+                                principal_table = parseFloat($('#principal_table' + a).val()) || 0;
+                                const outstandingPrev = a !== 0 ? parseFloat($('#outstanding_table' + (a - 1)).val()) : parseFloat(loanAmount);
+                                const outstanding = outstandingPrev - principal_table;
+                                $('#outstanding_table' + a).val(outstanding.toFixed(2));
+
+                                outstanding_table = parseFloat($('#outstanding_table' + a).val()) || 0;
+                                interestTable = outstanding_table / parseFloat(ratePerYear)
+                                // console.log(interestTable)
+                                $(`#interest_table${a + 1}`).val(interestTable.toFixed(2))
+                            }
+                        })
+
                     } 
                     else {
                         // $('#interest').val("");

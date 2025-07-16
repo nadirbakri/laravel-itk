@@ -15,10 +15,12 @@ use App;
 
 class DetailAbsenteeismReportExport implements FromView, ShouldAutoSize
 {
-    public function __construct($employeeNoFrom, $employeeNoTo, $absentDateFrom, $absentDateTo, $groupAuthorizeFrom, $groupAuthorizeTo, $includeResign, $position, $ranking, $location, $dataLevel, $dataField)
+    public function __construct($employeeType, $employeeNoFrom, $employeeNoTo, $employeeNoList, $absentDateFrom, $absentDateTo, $groupAuthorizeFrom, $groupAuthorizeTo, $includeResign, $position, $ranking, $location, $dataLevel, $dataField)
     {
+        $this->employeeType = $employeeType;
         $this->employeeNoFrom = $employeeNoFrom;
         $this->employeeNoTo = $employeeNoTo;
+        $this->employeeNoList = $employeeNoList;
         $this->absentDateFrom = $absentDateFrom;
         $this->absentDateTo = $absentDateTo;
         $this->groupAuthorizeFrom = $groupAuthorizeFrom;
@@ -40,28 +42,19 @@ class DetailAbsenteeismReportExport implements FromView, ShouldAutoSize
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $param = [ 
-                'companyCode' => Session::get('companyCode'), 
-                'languageID' => App::getLocale(), 
-                'sessionID' => 0, 
-                'sessionUserID' => Session::get('userID'),
-                'includeResign' => $this->includeResign
+            $param = [
+                'companyCode' => Session::get('companyCode'),
+                'range' => $this->employeeType === 'RANGE' ? true : false,
+                'employeeNoFrom' => $this->employeeNoFrom,
+                'employeeNoTo' => $this->employeeNoTo,
+                'employeeList' => $this->employeeType === 'ALL' || $this->employeeType === 'RANGE' ? [] : $this->employeeNoList,
+                'absentDateFrom' => $this->absentDateFrom,
+                'absentDateTo' => $this->absentDateTo,
+                'groupAuthorizeFrom' => (int) $this->groupAuthorizeFrom,
+                'groupAuthorizeTo' => (int) $this->groupAuthorizeTo,
+                'includeResign' => $this->includeResign ?? false,
+                'userID' => Session::get('userID'),
             ];
-
-            if(!empty($this->employeeNoFrom) || !empty($this->employeeNoTo)){
-                $param['employeeNoFrom'] = $this->employeeNoFrom;
-                $param['employeeNoTo'] = $this->employeeNoTo;
-            }
-
-            if(!empty($this->absentDateFrom) || !empty($this->absentDateTo)){
-                $param['absentDateFrom'] = $this->absentDateFrom;
-                $param['absentDateTo'] = $this->absentDateTo;
-            }
-
-            if(!empty($this->groupAuthorizeFrom) || !empty($this->groupAuthorizeTo)){
-                $param['groupAuthorizeFrom'] = $this->groupAuthorizeFrom;
-                $param['groupAuthorizeTo'] = $this->groupAuthorizeTo;
-            }
 
             if(!empty($this->position) && !is_null($this->position[0])){
                 foreach($this->position as $value){
@@ -105,7 +98,9 @@ class DetailAbsenteeismReportExport implements FromView, ShouldAutoSize
                 $param['absentCode'] = $data_field;
             }
 
-            $response = $client->post(env('API_URL') . '/dailydetailabsenteeismreport/getdailydetailabsenteeismreport',
+            dd(json_encode($param));
+
+            $response = $client->post(env('API_URL') . '/AbsenteeismDetailReport/getAbsenteeismDetailReport',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {
