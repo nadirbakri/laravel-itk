@@ -3025,7 +3025,7 @@ public function dataDetailReportFormatPY(Request $request)
                         "sessionID" => 0,
                         "sessionUserID" => Session::get('userID'),
                         "logActionUserID" => Session::get('userID'),
-                        "logActionUsername" => Session::get('userID')
+                        "logActionUsername" => Session::get('userName')
                     ]
                 )]
             );
@@ -3086,7 +3086,7 @@ public function dataDetailReportFormatPY(Request $request)
                 "sessionID" => 0,
                 "sessionUserID" => Session::get('userID'),
                 "logActionUserID" => Session::get('userID'),
-                "logActionUsername" => Session::get('userID')
+                "logActionUsername" => Session::get('userName')
             ];
 
             if(isset($request->field_name)) {
@@ -3338,7 +3338,7 @@ public function dataDetailReportFormatPY(Request $request)
             //         "sessionID" => 0,
             //         "sessionUserID" => Session::get('userID'),
             //         "logActionUserID" => Session::get('userID'),
-            //         "logActionUsername" => Session::get('userID')
+            //         "logActionUsername" => Session::get('userName')
             //     ]
             //     ));
 
@@ -3364,7 +3364,7 @@ public function dataDetailReportFormatPY(Request $request)
                             "sessionID" => 0,
                             "sessionUserID" => Session::get('userID'),
                             "logActionUserID" => Session::get('userID'),
-                            "logActionUsername" => Session::get('userID')
+                            "logActionUsername" => Session::get('userName')
                         ]
                     )]
                 );
@@ -3391,7 +3391,7 @@ public function dataDetailReportFormatPY(Request $request)
                             "sessionID" => 0,
                             "sessionUserID" => Session::get('userID'),
                             "logActionUserID" => Session::get('userID'),
-                            "logActionUsername" => Session::get('userID')
+                            "logActionUsername" => Session::get('userName')
                         ]
                     )]
                 );
@@ -3523,7 +3523,7 @@ public function dataDetailReportFormatPY(Request $request)
                 "sessionID" => 0,
                 "sessionUserID" => Session::get('userID'),
                 "logActionUserID" => Session::get('userID'),
-                "logActionUsername" => Session::get('userID')
+                "logActionUsername" => Session::get('userName')
             ];
 
             if(isset($request->field_name)) {
@@ -3585,7 +3585,7 @@ public function dataDetailReportFormatPY(Request $request)
                 "sessionID" => 0,
                 "sessionUserID" => Session::get('userID'),
                 "logActionUserID" => Session::get('userID'),
-                "logActionUsername" => Session::get('userID')
+                "logActionUsername" => Session::get('userName')
             ];
 
             if(isset($request->field_name)) {
@@ -3652,7 +3652,7 @@ public function dataDetailReportFormatPY(Request $request)
                             "sessionID" => 0,
                             "sessionUserID" => Session::get('userID'),
                             "logActionUserID" => Session::get('userID'),
-                            "logActionUsername" => Session::get('userID')
+                            "logActionUsername" => Session::get('userName')
                         ]
                     )]
                 );
@@ -3677,7 +3677,7 @@ public function dataDetailReportFormatPY(Request $request)
                             "sessionID" => 0,
                             "sessionUserID" => Session::get('userID'),
                             "logActionUserID" => Session::get('userID'),
-                            "logActionUsername" => Session::get('userID')
+                            "logActionUsername" => Session::get('userName')
                         ]
                     )]
                 );
@@ -3728,7 +3728,7 @@ public function dataDetailReportFormatPY(Request $request)
                             "sessionID" => 0,
                             "sessionUserID" => Session::get('userID'),
                             "logActionUserID" => Session::get('userID'),
-                            "logActionUsername" => Session::get('userID')
+                            "logActionUsername" => Session::get('userName')
                         ]
                     )]
                 );
@@ -3754,7 +3754,7 @@ public function dataDetailReportFormatPY(Request $request)
                             "sessionID" => 0,
                             "sessionUserID" => Session::get('userID'),
                             "logActionUserID" => Session::get('userID'),
-                            "logActionUsername" => Session::get('userID')
+                            "logActionUsername" => Session::get('userName')
                         ]
                     )]
                 );
@@ -3806,7 +3806,7 @@ public function dataDetailReportFormatPY(Request $request)
                             "sessionID" => 0,
                             "sessionUserID" => Session::get('userID'),
                             "logActionUserID" => Session::get('userID'),
-                            "logActionUsername" => Session::get('userID')
+                            "logActionUsername" => Session::get('userName')
                         ]
                     )]
                 );
@@ -3829,7 +3829,7 @@ public function dataDetailReportFormatPY(Request $request)
                     "sessionID" => 0,
                     "sessionUserID" => Session::get('userID'),
                     "logActionUserID" => Session::get('userID'),
-                    "logActionUsername" => Session::get('userID')
+                    "logActionUsername" => Session::get('userName')
                 ];
 
                 $response = $client->put(env('API_URL') . '/payroll/UpdatePrBonusTHR',
@@ -3879,7 +3879,7 @@ public function dataDetailReportFormatPY(Request $request)
                         "sessionID" => 0,
                         "sessionUserID" => Session::get('userID'),
                         "logActionUserID" => Session::get('userID'),
-                        "logActionUsername" => Session::get('userID')
+                        "logActionUsername" => Session::get('userName')
                     ]
                 )]
             );
@@ -3925,7 +3925,7 @@ public function dataDetailReportFormatPY(Request $request)
                         "sessionID" => 0,
                         "sessionUserID" => Session::get('userID'),
                         "logActionUserID" => Session::get('userID'),
-                        "logActionUsername" => Session::get('userID')
+                        "logActionUsername" => Session::get('userName')
                     ]
                 )]
             );
@@ -3977,7 +3977,7 @@ public function dataDetailReportFormatPY(Request $request)
                             "sessionID" => 0,
                             "sessionUserID" => Session::get('userID'),
                             "logActionUserID" => Session::get('userID'),
-                            "logActionUsername" => Session::get('userID')
+                            "logActionUsername" => Session::get('userName')
                         ]
                     )]
                 );
@@ -4003,7 +4003,7 @@ public function dataDetailReportFormatPY(Request $request)
                             "sessionID" => 0,
                             "sessionUserID" => Session::get('userID'),
                             "logActionUserID" => Session::get('userID'),
-                            "logActionUsername" => Session::get('userID')
+                            "logActionUsername" => Session::get('userName')
                         ]
                     )]
                 );
@@ -4088,7 +4088,7 @@ public function dataDetailReportFormatPY(Request $request)
                             "sessionID" => 0,
                             "sessionUserID" => Session::get('userID'),
                             "logActionUserID" => Session::get('userID'),
-                            "logActionUsername" => Session::get('userID')
+                            "logActionUsername" => Session::get('userName')
                         ]
                     )]
                 );
@@ -4146,7 +4146,7 @@ public function dataDetailReportFormatPY(Request $request)
                             "sessionID" => 0,
                             "sessionUserID" => Session::get('userID'),
                             "logActionUserID" => Session::get('userID'),
-                            "logActionUsername" => Session::get('userID')
+                            "logActionUsername" => Session::get('userName')
                         ]
                     )]
                 );
@@ -4202,7 +4202,7 @@ public function dataDetailReportFormatPY(Request $request)
                             "sessionID" => 0,
                             "sessionUserID" => Session::get('userID'),
                             "logActionUserID" => Session::get('userID'),
-                            "logActionUsername" => Session::get('userID')
+                            "logActionUsername" => Session::get('userName')
                         ];
                     }
                 } else {
@@ -4244,7 +4244,7 @@ public function dataDetailReportFormatPY(Request $request)
                             "sessionID" => 0,
                             "sessionUserID" => Session::get('userID'),
                             "logActionUserID" => Session::get('userID'),
-                            "logActionUsername" => Session::get('userID')
+                            "logActionUsername" => Session::get('userName')
                         ]
                     )]
                 );
@@ -4274,7 +4274,7 @@ public function dataDetailReportFormatPY(Request $request)
                             "sessionID" => 0,
                             "sessionUserID" => Session::get('userID'),
                             "logActionUserID" => Session::get('userID'),
-                            "logActionUsername" => Session::get('userID')
+                            "logActionUsername" => Session::get('userName')
                         ];
                     }
                 } else {
@@ -4315,7 +4315,7 @@ public function dataDetailReportFormatPY(Request $request)
                 //         "sessionID" => 0,
                 //         "sessionUserID" => Session::get('userID'),
                 //         "logActionUserID" => Session::get('userID'),
-                //         "logActionUsername" => Session::get('userID')
+                //         "logActionUsername" => Session::get('userName')
                 //     ]
                 //     ));
 
@@ -4354,7 +4354,7 @@ public function dataDetailReportFormatPY(Request $request)
                             "sessionID" => 0,
                             "sessionUserID" => Session::get('userID'),
                             "logActionUserID" => Session::get('userID'),
-                            "logActionUsername" => Session::get('userID')
+                            "logActionUsername" => Session::get('userName')
                         ]
                     )]
                 );
@@ -4403,7 +4403,7 @@ public function dataDetailReportFormatPY(Request $request)
                             "sessionID" => 0,
                             "sessionUserID" => Session::get('userID'),
                             "logActionUserID" => Session::get('userID'),
-                            "logActionUsername" => Session::get('userID')
+                            "logActionUsername" => Session::get('userName')
                         ];
                     }
                 }
@@ -4425,7 +4425,7 @@ public function dataDetailReportFormatPY(Request $request)
                     "sessionID" => 0,
                     "sessionUserID" => Session::get('userID'),
                     "logActionUserID" => Session::get('userID'),
-                    "logActionUsername" => Session::get('userID')
+                    "logActionUsername" => Session::get('userName')
                 ];
                 $param['detail'] = $data_detail;
             }
@@ -4447,7 +4447,7 @@ public function dataDetailReportFormatPY(Request $request)
                             "sessionID" => 0,
                             "sessionUserID" => Session::get('userID'),
                             "logActionUserID" => Session::get('userID'),
-                            "logActionUsername" => Session::get('userID')
+                            "logActionUsername" => Session::get('userName')
                         ];
                     }
                 }
@@ -4469,7 +4469,7 @@ public function dataDetailReportFormatPY(Request $request)
                     "sessionID" => 0,
                     "sessionUserID" => Session::get('userID'),
                     "logActionUserID" => Session::get('userID'),
-                    "logActionUsername" => Session::get('userID')
+                    "logActionUsername" => Session::get('userName')
                 ];
                 $param['detail'] = $data_detail;
             }
@@ -4994,7 +4994,7 @@ public function dataDetailReportFormatPY(Request $request)
                         "sessionID" => 0,
                         "sessionUserID" => Session::get('userID'),
                         "logActionUserID" => Session::get('userID'),
-                        "logActionUsername" => Session::get('userID')
+                        "logActionUsername" => Session::get('userName')
                     ]
                 )]
             );
@@ -5094,7 +5094,7 @@ public function dataDetailReportFormatPY(Request $request)
                         "sessionID" => 0,
                         "sessionUserID" => Session::get('userID'),
                         "logActionUserID" => Session::get('userID'),
-                        "logActionUsername" => Session::get('userID')
+                        "logActionUsername" => Session::get('userName')
                     ]
                 )]
             );
@@ -5535,8 +5535,8 @@ public function dataDetailReportFormatPY(Request $request)
                             "languageCode" => App::getLocale(),
                             "sessionID" => 0,
                             "sessionUserID" => Session::get('userID'),
-                            "logActionUsername" => Session::get('userID'),
-                            "logActionUserID" => Session::get('userName')
+                            "logActionUsername" => Session::get('userName'),
+                            "logActionUserID" => Session::get('userID')
                         ]
                     )]
                 );
@@ -5729,8 +5729,8 @@ public function dataDetailReportFormatPY(Request $request)
                             "createdDate" => date("Y-m-d\TH:i:s"),
                             "sessionID" => 0,
                             "sessionUserID" => Session::get('userID'),
-                            "logActionUsername" => Session::get('userID'),
-                            "logActionUserID" => Session::get('userName')
+                            "logActionUsername" => Session::get('userName'),
+                            "logActionUserID" => Session::get('userID')
                         ]
                     )]
                 );
@@ -5779,8 +5779,8 @@ public function dataDetailReportFormatPY(Request $request)
                         "createdDate" => date("Y-m-d\TH:i:s"),
                         "sessionID" => 0,
                         "sessionUserID" => Session::get('userID'),
-                        "logActionUsername" => Session::get('userID'),
-                        "logActionUserID" => Session::get('userName')
+                        "logActionUsername" => Session::get('userName'),
+                        "logActionUserID" => Session::get('userID')
                     ]
                 )]
             );
@@ -5842,8 +5842,8 @@ public function dataDetailReportFormatPY(Request $request)
                             "createdDate" => date("Y-m-d\TH:i:s"),
                             "sessionID" => 0,
                             "sessionUserID" => Session::get('userID'),
-                            "logActionUsername" => Session::get('userID'),
-                            "logActionUserID" => Session::get('userName')
+                            "logActionUsername" => Session::get('userName'),
+                            "logActionUserID" => Session::get('userID')
                         ]
                     )]
                 );
@@ -6041,7 +6041,7 @@ public function dataDetailReportFormatPY(Request $request)
                             "sessionID" => 0,
                             "sessionUserID" => Session::get('userID'),
                             "logActionUserID" => Session::get('userID'),
-                            "logActionUsername" => Session::get('userID')
+                            "logActionUsername" => Session::get('userName')
                         ];
                     }
                 }
@@ -6055,7 +6055,7 @@ public function dataDetailReportFormatPY(Request $request)
                     "sessionID" => 0,
                     "sessionUserID" => Session::get('userID'),
                     "logActionUserID" => Session::get('userID'),
-                    "logActionUsername" => Session::get('userID')
+                    "logActionUsername" => Session::get('userName')
                 ];
                 $param['slipList'] = $data_detail;
             }
@@ -6079,7 +6079,7 @@ public function dataDetailReportFormatPY(Request $request)
                             "sessionID" => 0,
                             "sessionUserID" => Session::get('userID'),
                             "logActionUserID" => Session::get('userID'),
-                            "logActionUsername" => Session::get('userID')
+                            "logActionUsername" => Session::get('userName')
                         ];
                     }
                 }
@@ -6093,7 +6093,7 @@ public function dataDetailReportFormatPY(Request $request)
                     "sessionID" => 0,
                     "sessionUserID" => Session::get('userID'),
                     "logActionUserID" => Session::get('userID'),
-                    "logActionUsername" => Session::get('userID')
+                    "logActionUsername" => Session::get('userName')
                 ];
                 $param['slipList'] = $data_detail;
             }
@@ -6402,8 +6402,8 @@ public function dataDetailReportFormatPY(Request $request)
                         "createdDate" => date("Y-m-d\TH:i:s"),
                         "sessionID" => 0,
                         "sessionUserID" => Session::get('userID'),
-                        "logActionUsername" => Session::get('userID'),
-                        "logActionUserID" => Session::get('userName')
+                        "logActionUsername" => Session::get('userName'),
+                        "logActionUserID" => Session::get('userID')
                     ]
                 )]
             );
@@ -6466,8 +6466,8 @@ public function dataDetailReportFormatPY(Request $request)
                         "createdDate" => date("Y-m-d\TH:i:s"),
                         "sessionID" => 0,
                         "sessionUserID" => Session::get('userID'),
-                        "logActionUsername" => Session::get('userID'),
-                        "logActionUserID" => Session::get('userName')
+                        "logActionUsername" => Session::get('userName'),
+                        "logActionUserID" => Session::get('userID')
                     ]
                 )]
             );
@@ -6513,8 +6513,8 @@ public function dataDetailReportFormatPY(Request $request)
                         "createdDate" => date("Y-m-d\TH:i:s"),
                         "sessionID" => 0,
                         "sessionUserID" => Session::get('userID'),
-                        "logActionUsername" => Session::get('userID'),
-                        "logActionUserID" => Session::get('userName')
+                        "logActionUsername" => Session::get('userName'),
+                        "logActionUserID" => Session::get('userID')
                     ]
                 )]
             );
@@ -6616,8 +6616,8 @@ public function dataDetailReportFormatPY(Request $request)
                         "languageCode" => App::getLocale(),
                         "sessionID" => 0,
                         "sessionUserID" => Session::get('userID'),
-                        "logActionUsername" => Session::get('userID'),
-                        "logActionUserID" => Session::get('userName')
+                        "logActionUsername" => Session::get('userName'),
+                        "logActionUserID" => Session::get('userID')
                     ]
                 )]
             );
@@ -6662,8 +6662,8 @@ public function dataDetailReportFormatPY(Request $request)
                         "changedBy" => Session::get('userID'),
                         "sessionID" => 0,
                         "sessionUserID" => Session::get('userID'),
-                        "logActionUsername" => Session::get('userID'),
-                        "logActionUserID" => Session::get('userName')
+                        "logActionUserID" => Session::get('userID'),
+                        "logActionUsername" => Session::get('userName')
                     ]
                 )]
             );
@@ -6702,8 +6702,8 @@ public function dataDetailReportFormatPY(Request $request)
             //         "languageCode" => App::getLocale(),
             //         "sessionID" => 0,
             //         "sessionUserID" => Session::get('userID'),
-            //         "logActionUsername" => Session::get('userID'),
-            //         "logActionUserID" => Session::get('userName')
+            //         "logActionUserID" => Session::get('userID'),
+            //         "logActionUsername" => Session::get('userName')
             //     ]
             // ));
 
@@ -6717,8 +6717,8 @@ public function dataDetailReportFormatPY(Request $request)
                         "languageCode" => App::getLocale(),
                         "sessionID" => 0,
                         "sessionUserID" => Session::get('userID'),
-                        "logActionUsername" => Session::get('userID'),
-                        "logActionUserID" => Session::get('userName')
+                        "logActionUserID" => Session::get('userID'),
+                        "logActionUsername" => Session::get('userName')
                     ]
                 )]
             );
@@ -6763,8 +6763,8 @@ public function dataDetailReportFormatPY(Request $request)
                         "languageCode" => App::getLocale(),
                         "sessionID" => 0,
                         "sessionUserID" => Session::get('userID'),
-                        "logActionUsername" => Session::get('userID'),
-                        "logActionUserID" => Session::get('userName')
+                        "logActionUserID" => Session::get('userID'),
+                        "logActionUsername" => Session::get('userName')
                     ]
                 )]
             );
