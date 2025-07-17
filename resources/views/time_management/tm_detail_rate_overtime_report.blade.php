@@ -60,22 +60,74 @@
         <div class="div-form">
             <form id="tm_detail_rate_overtime_report_form" method="post">
                 @csrf
-                <div class="row">
+                <div class="row d-flex gap-4">
+                    <div class="form-group" style="padding-left: 15px">
+                        <label for="get_employee form-check-label">{{ __('tm_detail_rate_overtime_report.label_get_employee') }}</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" id="get_employee_all" name="get_employee" value="ALL" checked>
+                        <label for="get_employee_all">{{ __('tm_detail_rate_overtime_report.label_all') }}</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" id="get_employee_range" name="get_employee" value="RANGE">
+                        <label for="get_employee_range">{{ __('tm_detail_rate_overtime_report.label_range') }}</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" id="get_employee_list" name="get_employee" value="LIST">
+                        <label for="get_employee_list">{{ __('tm_detail_rate_overtime_report.label_list') }}</label>
+                    </div>
+                </div>
+                <div class="row" id="employee_range">
                     <div class="col-6">
                         <div class="form-group">
                             <label
                                 for="employee_no_from">{{ __('tm_detail_rate_overtime_report.label_employee_no_from') }}</label>
-                            <select class="form-control select2" id="employee_no_from" name="employee_no_from"></select>
+                            <select class="form-control select2" id="employee_no_from" name="employee_no_from" disabled></select>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group">
                             <label for="employee_no_to">{{ __('tm_detail_rate_overtime_report.label_employee_no_to') }}</label>
-                            <select class="form-control select2" id="employee_no_to" name="employee_no_to"></select>
+                            <select class="form-control select2" id="employee_no_to" name="employee_no_to" disabled></select>
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row" id="employee_list">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="employee_no_list">{{ __('tm_detail_rate_overtime_report.label_employee_no_list') }}</label>
+                            <select class="form-control select2" id="employee_no_list" name="employee_no_list[]" multiple="multiple" disabled></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row d-flex gap-4">
+                    <div class="form-group" style="padding-left: 15px">
+                        <label for="get_date form-check-label">{{ __('tm_detail_rate_overtime_report.label_get_date') }}</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" id="get_date_period" name="get_date" value="PERIOD" checked>
+                        <label for="get_date_period">{{ __('tm_detail_rate_overtime_report.label_period') }}</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" id="get_date_range" name="get_date" value="RANGE_DATE">
+                        <label for="get_date_range">{{ __('tm_detail_rate_overtime_report.label_range') }}</label>
+                    </div>
+                </div>
+                <div class="row" id="date_period">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="period">{{ __('tm_detail_rate_overtime_report.label_period') }}</label>
+                            <div class='input-group'>
+                                <input type="text" class="form-control" id="period" name="period"
+                                    placeholder="{{ __('tm_detail_rate_overtime_report.label_period') }}">
+                                <div class="input-group-prepend" id="period-calendar">
+                                    <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" id="date_range">
                     <div class="col-6">
                         <div class="form-group">
                             <label for="absent_date_from">{{ __('tm_detail_rate_overtime_report.label_absent_date_from') }}</label>
@@ -119,7 +171,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                {{-- <div class="row">
                     <div class="col-3">
                         <div class="form-group">
                             <label
@@ -165,7 +217,7 @@
                             <textarea class="form-control" id="selected_overtime_code" rows="15"></textarea>
                         </div>
                     </div>
-                </div>
+                </div> --}}
                 <div class="row">
                     <div class="form-group ml-4">
                         <label for="include_resign">&nbsp;</label>
@@ -268,7 +320,7 @@
     }
     
     $(function () {
-        initDatePicker();
+        // initDatePicker();
     });
 
     function initDatePicker() {
@@ -299,6 +351,112 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        var arrData = @json($data);
+
+        $('#employee_list').hide();
+        $('#date_range').hide();
+
+        let pickerPeriod = $('#period').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "d-M-Y",
+            dateFormat: "Y-m-d",
+            defaultDate: "today",
+            plugins: [
+                new monthSelectPlugin({
+                    shorthand: true, //defaults to false
+                    dateFormat: "Y-m-01", //defaults to "F Y"
+                    altFormat: "F Y", //defaults to "F Y"
+                })
+            ],
+            onReady: function () {
+                var flatPickrInstance = this;
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings("#period-calendar").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
+
+        let pickerAbsentDateFrom = $('#absent_date_from').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "d-M-Y",
+            dateFormat: "Y-m-d",
+            defaultDate: "today",
+            onReady: function () {
+                var flatPickrInstance = this;
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings("#absent_date_from_calendar").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
+
+        let pickerAbsentDateTo = $('#absent_date_to').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "d-M-Y",
+            dateFormat: "Y-m-d",
+            defaultDate: "today",
+            onReady: function () {
+                var flatPickrInstance = this;
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings('#absent_date_to_calendar').click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
+
+        pickerPeriod.setDate(arrData[0].periodYear + "-" + moment().month(arrData[0].periodMonth - 1).format('MM') + "-01");
+
+        $('input[name=get_employee]').on("change", function (e) {
+            var data = $(this).val();
+            if(data == "ALL"){
+                $('#employee_range').show();
+                $('#employee_list').hide();
+                $('#employee_no_from').prop('disabled', true);
+                $('#employee_no_to').prop('disabled', true);
+                $('#employee_no_list').prop('disabled', true);
+            } 
+            else if (data === "RANGE") {
+                $('#employee_range').show();
+                $('#employee_list').hide();
+                $('#employee_no_from').prop('disabled', false);
+                $('#employee_no_to').prop('disabled', false);
+                $('#employee_no_list').prop('disabled', true);
+            } 
+            else {
+                $('#employee_range').hide();
+                $('#employee_list').show();
+                $('#employee_no_from').prop('disabled', true);
+                $('#employee_no_to').prop('disabled', true);
+                $('#employee_no_list').prop('disabled', false);
+            }
+        });
+
+        $('input[name=get_date]').on("change", function (e) {
+            var data = $(this).val();
+            if(data == "PERIOD") {
+                $('#date_period').show();
+                $('#date_range').hide();
+                $('#period').prop('disabled', false);
+                pickerAbsentDateFrom._input.setAttribute('disabled', 'disabled');
+                pickerAbsentDateTo._input.setAttribute('disabled', 'disabled');
+                $('#absent_date_from').prop('disabled', true);
+                $('#absent_date_to').prop('disabled', true);
+            } 
+            else {
+                $('#date_range').show();
+                $('#date_period').hide();
+                $('#period').prop('disabled', true);
+                pickerAbsentDateFrom._input.removeAttribute('disabled', 'disabled');
+                pickerAbsentDateTo._input.removeAttribute('disabled', 'disabled');
+                $('#absent_date_from').prop('disabled', false);
+                $('#absent_date_to').prop('disabled', false);
+            }
+        });
+
         $.ajax({
             url: "{{ url('personnel/report/level/check') }}",
             type: "GET",
@@ -327,6 +485,7 @@
 
         loadDataEmployeeNo('#employee_no_from');
         loadDataEmployeeNo('#employee_no_to');
+        loadDataEmployeeNo('#employee_no_list');
         loadDataGroupAuthorize('#group_authorize_from');
         loadDataGroupAuthorize('#group_authorize_to');
         loadDataPositionCode();
@@ -341,165 +500,165 @@
         loadDataFirstLastAllLocation();
         loadDataFirstLastAllRanking();
 
-        load_data_overtime_code();
+        // load_data_overtime_code();
 
-        $('#detail_rate_overtime_report_table thead tr').clone(true).appendTo('#detail_rate_overtime_report_table thead');
-        $('#detail_rate_overtime_report_table thead tr:eq(1) th:not(:first-child)').each( function (i) {
-            var title = $(this).text();
-            $(this).html('<input class="form-control" type="text" placeholder="'+title+'" />');
+        // $('#detail_rate_overtime_report_table thead tr').clone(true).appendTo('#detail_rate_overtime_report_table thead');
+        // $('#detail_rate_overtime_report_table thead tr:eq(1) th:not(:first-child)').each( function (i) {
+        //     var title = $(this).text();
+        //     $(this).html('<input class="form-control" type="text" placeholder="'+title+'" />');
     
-            $('input', this).on('keyup change', function () {
-                if (table.column(i + 1).search() !== this.value) {
-                    table
-                        .column(i + 1)
-                        .search(this.value)
-                        .draw();
-                }
-            } );
-        });
+        //     $('input', this).on('keyup change', function () {
+        //         if (table.column(i + 1).search() !== this.value) {
+        //             table
+        //                 .column(i + 1)
+        //                 .search(this.value)
+        //                 .draw();
+        //         }
+        //     } );
+        // });
 
-        function load_data_overtime_code() {
-            table = $('#detail_rate_overtime_report_table').DataTable({
-                processing: true,
-                serverSide: true,
-                orderCellsTop: true,
-                ajax: "{{ url('time_management/overtime_code/table') }}",
-                error: function(jqXHR, ajaxOptions, thrownError) {
-                    alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
-                },
-                "sDom": 'lrtip',
-                'sPaginationType': 'full_numbers',
-                "order": [[ 1, "asc" ]],
-                columns: [
-                    {
-                        orderable: false,
-                        targets: 0, 
-                        "defaultContent": '',
-                        render: function(data, type, row) {
-                            return type === 'display'? '<input class="chk-select" type="checkbox" name="check_overtime_code[' + $("<div />").text(row.absentCode).html() + ']" value="1">' : ''
-                        }
-                    },
-                    {data: 'absentCode', name: 'absentCode',
-                        render: function (data, type, row) {
-                            return '<input type="hidden" class="form-control" name="absentCode[' + $("<div />").text(row.absentCode).html() + ']" value="' +
-                                $('<div />').text(row.absentCode).html() + '">' + 
-                                $('<div />').text(row.absentCode).html();
-                        }},
-                    {data: 'description', name: 'description',
-                        render: function (data, type, row) {
-                            return '<input type="hidden" class="form-control" name="description[' + $("<div />").text(row.description).html() + ']" value="' +
-                                $('<div />').text(row.description).html() + '">' + 
-                                $('<div />').text(row.description).html();
-                        }},
-                ],
-                select: {
-                    style:    'multi',
-                    selector: 'td:first-child'
-                }
-            });
-        }
+        // function load_data_overtime_code() {
+        //     table = $('#detail_rate_overtime_report_table').DataTable({
+        //         processing: true,
+        //         serverSide: true,
+        //         orderCellsTop: true,
+        //         ajax: "{{ url('time_management/overtime_code/table') }}",
+        //         error: function(jqXHR, ajaxOptions, thrownError) {
+        //             alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
+        //         },
+        //         "sDom": 'lrtip',
+        //         'sPaginationType': 'full_numbers',
+        //         "order": [[ 1, "asc" ]],
+        //         columns: [
+        //             {
+        //                 orderable: false,
+        //                 targets: 0, 
+        //                 "defaultContent": '',
+        //                 render: function(data, type, row) {
+        //                     return type === 'display'? '<input class="chk-select" type="checkbox" name="check_overtime_code[' + $("<div />").text(row.absentCode).html() + ']" value="1">' : ''
+        //                 }
+        //             },
+        //             {data: 'absentCode', name: 'absentCode',
+        //                 render: function (data, type, row) {
+        //                     return '<input type="hidden" class="form-control" name="absentCode[' + $("<div />").text(row.absentCode).html() + ']" value="' +
+        //                         $('<div />').text(row.absentCode).html() + '">' + 
+        //                         $('<div />').text(row.absentCode).html();
+        //                 }},
+        //             {data: 'description', name: 'description',
+        //                 render: function (data, type, row) {
+        //                     return '<input type="hidden" class="form-control" name="description[' + $("<div />").text(row.description).html() + ']" value="' +
+        //                         $('<div />').text(row.description).html() + '">' + 
+        //                         $('<div />').text(row.description).html();
+        //                 }},
+        //         ],
+        //         select: {
+        //             style:    'multi',
+        //             selector: 'td:first-child'
+        //         }
+        //     });
+        // }
 
-        $('#detail_rate_overtime_report_table tbody').on('click', 'input[type="checkbox"]', function(e){
-            var $row = $(this).closest('tr');
+        // $('#detail_rate_overtime_report_table tbody').on('click', 'input[type="checkbox"]', function(e){
+        //     var $row = $(this).closest('tr');
 
-            if(this.checked){
-                $row.addClass('selected');
-            } else {
-                $row.removeClass('selected');
-            }
+        //     if(this.checked){
+        //         $row.addClass('selected');
+        //     } else {
+        //         $row.removeClass('selected');
+        //     }
 
-            // Prevent click event from propagating to parent
-            e.stopPropagation();
-        });
+        //     // Prevent click event from propagating to parent
+        //     e.stopPropagation();
+        // });
 
-        $('#detail_rate_overtime_report_table').on('click', 'tr td:first-child', function(e){
-            $(this).parent().find('input[type="checkbox"]').trigger('click');
-        });
+        // $('#detail_rate_overtime_report_table').on('click', 'tr td:first-child', function(e){
+        //     $(this).parent().find('input[type="checkbox"]').trigger('click');
+        // });
 
-        $('input[name="overtime_code"]').on('change', function () {
-            $('input[name="' + this.name + '"]').not(this).prop('checked', false);
-            var rows = table.rows({ 'search': 'applied' }).nodes();
-            var data = table.rows({ 'search': 'applied' }).data().toArray();
-            var result = [];
-            if ($('#all_overtime_code').is(':checked')) {
-                table.rows().select();
-                $('.chk-select', rows).prop('checked', true);
-            }
-            else {
-                data = [];
-                table.rows().deselect();
-                $('.chk-select', rows).prop('checked', false);
-            }
+        // $('input[name="overtime_code"]').on('change', function () {
+        //     $('input[name="' + this.name + '"]').not(this).prop('checked', false);
+        //     var rows = table.rows({ 'search': 'applied' }).nodes();
+        //     var data = table.rows({ 'search': 'applied' }).data().toArray();
+        //     var result = [];
+        //     if ($('#all_overtime_code').is(':checked')) {
+        //         table.rows().select();
+        //         $('.chk-select', rows).prop('checked', true);
+        //     }
+        //     else {
+        //         data = [];
+        //         table.rows().deselect();
+        //         $('.chk-select', rows).prop('checked', false);
+        //     }
 
-            $.each(data, function(key, value) {
-                result.push(value.absentCode + " - " + value.description);
-            });
+        //     $.each(data, function(key, value) {
+        //         result.push(value.absentCode + " - " + value.description);
+        //     });
 
-            var textarea = document.getElementById("selected_overtime_code");
-            textarea.value = result.join("\n");
-        });
+        //     var textarea = document.getElementById("selected_overtime_code");
+        //     textarea.value = result.join("\n");
+        // });
 
-        $('#detail_rate_overtime_report_table tbody').on('click', '.chk-select', function (e) {     
-            var data = table.rows('.selected').data().toArray();
-            var data2 = table.row(this.closest('tr')).data();
-            var $row = $(this).closest('tr');
-            var result = [];
+        // $('#detail_rate_overtime_report_table tbody').on('click', '.chk-select', function (e) {     
+        //     var data = table.rows('.selected').data().toArray();
+        //     var data2 = table.row(this.closest('tr')).data();
+        //     var $row = $(this).closest('tr');
+        //     var result = [];
             
-            if(!this.checked){
-                $row.removeClass('selected');
-                data = data.filter(obj => obj.absentCode !== data2.absentCode);
-                var all = $('#all_overtime_code').get(0);
-                var selection = $('#selection_overtime_code').get(0);
-                if(all && all.checked && ('checked' in all)){
-                    all.checked = false;
-                    selection.checked = true;
-                }
-            } else  {
-                $row.addClass('selected');
-                data.push(data2);
-                var all = $('#all_overtime_code').get(0);
-                var selection = $('#selection_overtime_code').get(0);
-                if(selection && selection.checked && ('checked' in selection) && ($('.chk-select:checked').length == $('.chk-select').length)){
-                    all.checked = true;
-                    selection.checked = false;
-                }
-            }
+        //     if(!this.checked){
+        //         $row.removeClass('selected');
+        //         data = data.filter(obj => obj.absentCode !== data2.absentCode);
+        //         var all = $('#all_overtime_code').get(0);
+        //         var selection = $('#selection_overtime_code').get(0);
+        //         if(all && all.checked && ('checked' in all)){
+        //             all.checked = false;
+        //             selection.checked = true;
+        //         }
+        //     } else  {
+        //         $row.addClass('selected');
+        //         data.push(data2);
+        //         var all = $('#all_overtime_code').get(0);
+        //         var selection = $('#selection_overtime_code').get(0);
+        //         if(selection && selection.checked && ('checked' in selection) && ($('.chk-select:checked').length == $('.chk-select').length)){
+        //             all.checked = true;
+        //             selection.checked = false;
+        //         }
+        //     }
 
-            $.each(data, function(key, value) {
-                result.push(value.absentCode + " - " + value.description);
-            });
+        //     $.each(data, function(key, value) {
+        //         result.push(value.absentCode + " - " + value.description);
+        //     });
 
-            var textarea = document.getElementById("selected_overtime_code");
-            textarea.value = result.join("\n");
+        //     var textarea = document.getElementById("selected_overtime_code");
+        //     textarea.value = result.join("\n");
 
-            e.stopPropagation();
-        });
+        //     e.stopPropagation();
+        // });
 
-        $('#detail_rate_overtime_report_table').on('click', 'tr td:first-child', function(e){
-            $(this).parent().find('.chk-select').trigger('click');
-        });
+        // $('#detail_rate_overtime_report_table').on('click', 'tr td:first-child', function(e){
+        //     $(this).parent().find('.chk-select').trigger('click');
+        // });
 
-        $('#detail_rate_overtime_report_table tbody').on('change', '.chk-select', function(){
-            var $row = $(this).closest('tr');
+        // $('#detail_rate_overtime_report_table tbody').on('change', '.chk-select', function(){
+        //     var $row = $(this).closest('tr');
 
-            if(!this.checked){
-                $row.removeClass('selected');
-                var all = $('#all_overtime_code').get(0);
-                var selection = $('#selection_overtime_code').get(0);
-                if(all && all.checked && ('checked' in all)){
-                    all.checked = false;
-                    selection.checked = true;
-                }
-            } else  {
-                $row.addClass('selected');
-                var all = $('#all_overtime_code').get(0);
-                var selection = $('#selection_overtime_code').get(0);
-                if(selection && selection.checked && ('checked' in selection) && ($('.chk-select:checked').length == $('.chk-select').length)){
-                    selection.checked = false;
-                    all.checked = true;
-                }
-            }
-        });
+        //     if(!this.checked){
+        //         $row.removeClass('selected');
+        //         var all = $('#all_overtime_code').get(0);
+        //         var selection = $('#selection_overtime_code').get(0);
+        //         if(all && all.checked && ('checked' in all)){
+        //             all.checked = false;
+        //             selection.checked = true;
+        //         }
+        //     } else  {
+        //         $row.addClass('selected');
+        //         var all = $('#all_overtime_code').get(0);
+        //         var selection = $('#selection_overtime_code').get(0);
+        //         if(selection && selection.checked && ('checked' in selection) && ($('.chk-select:checked').length == $('.chk-select').length)){
+        //             selection.checked = false;
+        //             all.checked = true;
+        //         }
+        //     }
+        // });
         
         $('#select').focus(function (event) {
             var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
@@ -1115,7 +1274,7 @@
                     element.closest('.form-group').append(error);
                 },
                 submitHandler: function (form) {
-                    var arrData = table.rows('.selected').data().toArray();
+                    // var arrData = table.rows('.selected').data().toArray();
 
                     $.ajaxSetup({
                         headers: {
@@ -1128,7 +1287,10 @@
                         },
                         url: "{{ url('time_management/detail_rate_overtime_report/print') }}",
                         type: "POST",
-                        data: { 'field' : $('#tm_detail_rate_overtime_report_form').serialize(), 'field_name' : JSON.stringify(arrData) },
+                        data: { 
+                            'field' : $('#tm_detail_rate_overtime_report_form').serialize(), 
+                            // 'field_name' : JSON.stringify(arrData) 
+                        },
                         success: function (result, status, xhr) {
                             $("#btn-print-data").prop("disabled", false);
                             $("#btn-print-data").html(

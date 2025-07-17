@@ -21,6 +21,8 @@ return [
     'label_employee_no_from' => 'Dari No Karyawan',
     'label_employee_no_to' => 'Sampai No Karyawan',
     'label_employee_no_list' => 'Daftar No Karyawan',
+    'label_get_date' => 'Tipe Tanggal',
+    'label_period' => 'Periode',
     'label_absent_date_from' => 'Tanggal Absensi Dari',
     'label_absent_date_to' => 'Tanggal Absensi Ke',
     'label_group_authorize_from' => 'Dari Grup Otorisasi',

@@ -14,9 +14,17 @@ return [
 
     'judul' => 'Unpaid Leave Report',
     'list' => 'Time Management Menu List',
+    'label_get_employee' => 'Employee Data Type',
+    'label_all' => 'All',
+    'label_range' => 'Range',
+    'label_list' => 'List',
     'label_employee_no_from' => 'Employee No From',
     'label_employee_no_to' => 'Employee No To',
-    'label_period' => 'As of Period',
+    'label_employee_no_list' => 'Employee No List',
+    'label_get_date' => 'Date Type',
+    'label_period' => 'Period',
+    'label_absent_date_from' => 'Absent Date From',
+    'label_absent_date_to' => 'Absent Date To',
     'label_include_resign' => 'Include Resign',
     'label_group_authorize_from' => 'Group Authorize From',
     'label_group_authorize_to' => 'Group Authorize To',
@@ -26,5 +34,4 @@ return [
     'btn_print' => 'Print',
     'employee_no_from_required' => 'Employee No From Required',
     'employee_no_to_required' => 'Employee No To Required'
-
 ];

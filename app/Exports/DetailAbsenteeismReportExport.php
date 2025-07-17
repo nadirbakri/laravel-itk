@@ -2,7 +2,8 @@
 
 namespace App\Exports;
 
-ini_set('max_execution_time', 180);
+set_time_limit(0);
+ini_set('memory_limit', '1024M');
 
 use Maatwebsite\Excel\Concerns\FromView;
 use Illuminate\Contracts\View\View;
@@ -15,12 +16,14 @@ use App;
 
 class DetailAbsenteeismReportExport implements FromView, ShouldAutoSize
 {
-    public function __construct($employeeType, $employeeNoFrom, $employeeNoTo, $employeeNoList, $absentDateFrom, $absentDateTo, $groupAuthorizeFrom, $groupAuthorizeTo, $includeResign, $position, $ranking, $location, $dataLevel, $dataField)
+    public function __construct($employeeType, $employeeNoFrom, $employeeNoTo, $employeeNoList, $dateType, $period, $absentDateFrom, $absentDateTo, $groupAuthorizeFrom, $groupAuthorizeTo, $includeResign, $position, $ranking, $location, $dataLevel, $dataField)
     {
         $this->employeeType = $employeeType;
         $this->employeeNoFrom = $employeeNoFrom;
         $this->employeeNoTo = $employeeNoTo;
         $this->employeeNoList = $employeeNoList;
+        $this->dateType = $dateType;
+        $this->period = $period;
         $this->absentDateFrom = $absentDateFrom;
         $this->absentDateTo = $absentDateTo;
         $this->groupAuthorizeFrom = $groupAuthorizeFrom;
@@ -48,8 +51,9 @@ class DetailAbsenteeismReportExport implements FromView, ShouldAutoSize
                 'employeeNoFrom' => $this->employeeNoFrom,
                 'employeeNoTo' => $this->employeeNoTo,
                 'employeeList' => $this->employeeType === 'ALL' || $this->employeeType === 'RANGE' ? [] : $this->employeeNoList,
-                'absentDateFrom' => $this->absentDateFrom,
-                'absentDateTo' => $this->absentDateTo,
+                'period' => $this->dateType === 'PERIOD' ? $this->period : null,
+                'absentDateFrom' => $this->dateType === 'RANGE_DATE' ? $this->absentDateFrom : null,
+                'absentDateTo' => $this->dateType === 'RANGE_DATE' ? $this->absentDateTo : null,
                 'groupAuthorizeFrom' => (int) $this->groupAuthorizeFrom,
                 'groupAuthorizeTo' => (int) $this->groupAuthorizeTo,
                 'includeResign' => $this->includeResign ?? false,
@@ -98,9 +102,9 @@ class DetailAbsenteeismReportExport implements FromView, ShouldAutoSize
                 $param['absentCode'] = $data_field;
             }
 
-            dd(json_encode($param));
+            // dd(json_encode($param));
 
-            $response = $client->post(env('API_URL') . '/AbsenteeismDetailReport/getAbsenteeismDetailReport',
+            $response = $client->post(env('API_URL') . '/mobile/AbsenteeismDetailReport/getAbsenteeismDetailReport',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {

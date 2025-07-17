@@ -41,10 +41,13 @@
 			</tr>
 		</thead>
 		<tbody>
-            <?php $no = 1; ?>
+            <?php 
+				$no = 1; 
+				$total = []; 
+			?>
 			@foreach($data as $value)
 				<tr>
-					<td style="text-align: left; border: 1px solid black">{{ $no++ }}</td>
+					<td style="text-align: center; border: 1px solid black">{{ $no++ }}</td>
 					<td style="text-align: left; border: 1px solid black">{{ $value->{'Employee No'} ?? '' }}</td>
 					<td style="text-align: left; border: 1px solid black">{{ $value->{'Employee Name'} ?? '' }}</td>
 					@foreach ((array) $value->{'Date'} as $val)

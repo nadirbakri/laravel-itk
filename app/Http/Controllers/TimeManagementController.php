@@ -324,7 +324,35 @@ class TimeManagementController extends Controller
 
     public function pageUnpaidLeaveReport()
     {
-        return view ('time_management.tm_unpaid_leave_report');
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/mobile/ReferenceTM/getReferenceTM',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            // var_dump($response);
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents()); 
+
+        return view ('time_management.tm_unpaid_leave_report', ['data' => $arrResult->dataListSet]);
     }
 
     public function pagePostponeLeaveReport()
@@ -344,7 +372,35 @@ class TimeManagementController extends Controller
 
     public function pageDetailAbsenteeismReport()
     {
-        return view ('time_management.tm_detail_absenteeism_report');
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/mobile/ReferenceTM/getReferenceTM',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            // var_dump($response);
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents()); 
+
+        return view ('time_management.tm_detail_absenteeism_report', ['data' => $arrResult->dataListSet]);
     }
 
     public function pageMonthlyAbsenteeismDetail()
@@ -359,12 +415,68 @@ class TimeManagementController extends Controller
 
     public function pageAbsenteeismOvertimeReport()
     {
-        return view ('time_management.tm_absenteeism_overtime_report');
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/mobile/ReferenceTM/getReferenceTM',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            // var_dump($response);
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents()); 
+
+        return view ('time_management.tm_absenteeism_overtime_report', ['data' => $arrResult->dataListSet]);
     }
 
     public function pageDetailRateOvertimeReport()
     {
-        return view ('time_management.tm_detail_rate_overtime_report');
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/mobile/ReferenceTM/getReferenceTM',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            // var_dump($response);
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents()); 
+
+        return view ('time_management.tm_detail_rate_overtime_report', ['data' => $arrResult->dataListSet]);
     }
 
     public function pageAbsenteeismReport()
@@ -1390,7 +1502,7 @@ class TimeManagementController extends Controller
             $dataLevel[] = $request->{'level' . ($i+1)};
         }
 
-        return Excel::download(new UnpaidLeaveReportExport($request->employee_no_from, $request->employee_no_to, $request->period, isset($request->include_resign) ? (bool) $request->include_resign : false, $request->group_authorize_from, $request->group_authorize_to, $request->position, $request->ranking, $request->location, $dataLevel), 'Unpaid Leave Report.xlsx');
+        return Excel::download(new UnpaidLeaveReportExport($request->get_employee, $request->employee_no_from, $request->employee_no_to, $request->get_date, $request->period, $request->absent_date_from, $request->absent_date_to, isset($request->include_resign) ? (bool) $request->include_resign : false, $request->group_authorize_from, $request->group_authorize_to, $request->position, $request->ranking, $request->location, $dataLevel), 'Unpaid Leave Report.xlsx');
     }
 
     public function printPostponeLeaveReport(Request $request)
@@ -1443,7 +1555,7 @@ class TimeManagementController extends Controller
             $dataLevel[] = $arrData['level' . ($i+1)];
         }
 
-        return Excel::download(new DetailAbsenteeismReportExport($arrData['get_employee'], $arrData['employee_no_from'] ?? null, $arrData['employee_no_to'] ?? null, $arrData['employee_no_list'] ?? null, $arrData['absent_date_from'], $arrData['absent_date_to'], $arrData['group_authorize_from'], $arrData['group_authorize_to'], isset($arrData['include_resign']) ? (bool) $arrData['include_resign'] : false, $arrData['position'], $arrData['ranking'], $arrData['location'], $dataLevel, $arrData2), 'Detail Absenteeism Report.xlsx');
+        return Excel::download(new DetailAbsenteeismReportExport($arrData['get_employee'], $arrData['employee_no_from'] ?? null, $arrData['employee_no_to'] ?? null, $arrData['employee_no_list'] ?? null, $arrData['get_date'], $arrData['period'] ?? null, $arrData['absent_date_from'] ?? null, $arrData['absent_date_to'] ?? null, $arrData['group_authorize_from'], $arrData['group_authorize_to'], isset($arrData['include_resign']) ? (bool) $arrData['include_resign'] : false, $arrData['position'], $arrData['ranking'], $arrData['location'], $dataLevel, $arrData2), 'Detail Absenteeism Report.xlsx');
     }
 
     public function printDetailAbsenteeismReasonReport(Request $request)
@@ -1545,13 +1657,13 @@ class TimeManagementController extends Controller
 
         parse_str($request->field, $arrData);
 
-        $arrData2 = json_decode($request->field_name);  
+        // $arrData2 = json_decode($request->field_name);  
 
         for($i = 0; $i < $arrData['level_format']; $i++){
             $dataLevel[] = $arrData['level' . ($i+1)];
         }
 
-        return Excel::download(new DetailRateOvertimeReportExport($arrData['employee_no_from'],$arrData['employee_no_to'], $arrData['absent_date_from'], $arrData['absent_date_to'], $arrData['group_authorize_from'], $arrData['group_authorize_to'], isset($arrData['include_resign']) ? (bool) $arrData['include_resign'] : false, $arrData['position'], $arrData['ranking'], $arrData['location'], $dataLevel, $arrData2), 'Detail Rate Overtime Report.xlsx');
+        return Excel::download(new DetailRateOvertimeReportExport($arrData['get_employee'], $arrData['employee_no_from'] ?? null, $arrData['employee_no_to'] ?? null, $arrData['employee_no_list'] ?? null, $arrData['get_date'], $arrData['period'] ?? null, $arrData['absent_date_from'] ?? null, $arrData['absent_date_to'] ?? null, $arrData['group_authorize_from'], $arrData['group_authorize_to'], isset($arrData['include_resign']) ? (bool) $arrData['include_resign'] : false, $arrData['position'], $arrData['ranking'], $arrData['location'], $dataLevel), 'Detail Rate Overtime Report.xlsx');
     }
 
     public function printMonthlyAbsenteeismDetail(Request $request)
@@ -1675,7 +1787,7 @@ class TimeManagementController extends Controller
             $nama_file = 'Absenteeism & Overtime Report.xlsx';
         }
 
-        return Excel::download(new AbsenteeismOvertimeReportExport($request->get_employee, $request->employee_no_from, $request->employee_no_to, $request->employee_no_list, $request->absent_date_from, $request->absent_date_to, $request->group_authorize_from, $request->group_authorize_to, $request->report_type, isset($request->include_resign) ? (bool) $request->include_resign : false, $request->position, $request->ranking, $request->location, $dataLevel), $nama_file);
+        return Excel::download(new AbsenteeismOvertimeReportExport($request->get_employee, $request->employee_no_from, $request->employee_no_to, $request->employee_no_list, $request->get_date, $request->period, $request->absent_date_from, $request->absent_date_to, $request->group_authorize_from, $request->group_authorize_to, $request->report_type, isset($request->include_resign) ? (bool) $request->include_resign : false, $request->position, $request->ranking, $request->location, $dataLevel), $nama_file);
     }
 
     public function printAbsenteeismReport(Request $request)

@@ -2,6 +2,9 @@
 
 namespace App\Exports;
 
+set_time_limit(0);
+ini_set('memory_limit', '1024M');
+
 use Maatwebsite\Excel\Concerns\FromView;
 use Illuminate\Contracts\View\View;
 use GuzzleHttp\Client;
@@ -15,12 +18,14 @@ use Maatwebsite\Excel\Events\AfterSheet;
 
 class AbsenteeismOvertimeReportExport implements FromView, ShouldAutoSize
 {
-    public function __construct($employeeType, $employeeNoFrom, $employeeNoTo, $employeeNoList, $absentDateFrom, $absentDateTo, $groupAuthorizeFrom, $groupAuthorizeTo, $reportType, $includeResign, $position, $ranking, $location, $dataLevel)
+    public function __construct($employeeType, $employeeNoFrom, $employeeNoTo, $employeeNoList, $dateType, $period, $absentDateFrom, $absentDateTo, $groupAuthorizeFrom, $groupAuthorizeTo, $reportType, $includeResign, $position, $ranking, $location, $dataLevel)
     {
         $this->employeeType = $employeeType;
         $this->employeeNoFrom = $employeeNoFrom;
         $this->employeeNoTo = $employeeNoTo;
         $this->employeeNoList = $employeeNoList;
+        $this->dateType = $dateType;
+        $this->period = $period;
         $this->absentDateFrom = $absentDateFrom;
         $this->absentDateTo = $absentDateTo;
         $this->groupAuthorizeFrom = $groupAuthorizeFrom;
@@ -47,8 +52,9 @@ class AbsenteeismOvertimeReportExport implements FromView, ShouldAutoSize
                 'employeeNoFrom' => $this->employeeNoFrom,
                 'employeeNoTo' => $this->employeeNoTo,
                 'employeeList' => $this->employeeType === 'ALL' || $this->employeeType === 'RANGE' ? [] : $this->employeeNoList,
-                'absentDateFrom' => $this->absentDateFrom,
-                'absentDateTo' => $this->absentDateTo,
+                'period' => $this->dateType === 'PERIOD' ? $this->period : null,
+                'absentDateFrom' => $this->dateType === 'RANGE_DATE' ? $this->absentDateFrom : null,
+                'absentDateTo' => $this->dateType === 'RANGE_DATE' ? $this->absentDateTo : null,
                 'groupAuthorizeFrom' => (int) $this->groupAuthorizeFrom,
                 'groupAuthorizeTo' => (int) $this->groupAuthorizeTo,
                 'includeResign' => $this->includeResign ?? false,
@@ -100,11 +106,7 @@ class AbsenteeismOvertimeReportExport implements FromView, ShouldAutoSize
                 //     ['body' => json_encode($param)]
                 // );
 
-                // $response = $client->post(env('API_URL') . '/mobile/absenteeismOvertimeReport/getOvertimeAbsenteeismReportByDate',
-                //     ['body' => json_encode($param)]
-                // );
-
-                $response = $client->post('https://f5769e56691c.ngrok-free.app/absenteeismOvertimeReport/getOvertimeAbsenteeismReportByDate',
+                $response = $client->post(env('API_URL') . '/mobile/absenteeismOvertimeReport/getOvertimeAbsenteeismReportByDate',
                     ['body' => json_encode($param)]
                 );
             }else{
@@ -115,10 +117,7 @@ class AbsenteeismOvertimeReportExport implements FromView, ShouldAutoSize
                 //     ['body' => json_encode($param)]
                 // );
             
-                // $response = $client->post(env('API_URL') . '/mobile/absenteeismOvertimeReport/getAbsenteeismReportByDate',
-                //     ['body' => json_encode($param)]
-                // );
-                $response = $client->post('https://f5769e56691c.ngrok-free.app/absenteeismOvertimeReport/getAbsenteeismReportByDate',
+                $response = $client->post(env('API_URL') . '/mobile/absenteeismOvertimeReport/getAbsenteeismReportByDate',
                     ['body' => json_encode($param)]
                 );
             }

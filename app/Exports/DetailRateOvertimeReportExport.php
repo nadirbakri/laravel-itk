@@ -2,6 +2,9 @@
 
 namespace App\Exports;
 
+set_time_limit(0);
+ini_set('memory_limit', '1024M');
+
 use Maatwebsite\Excel\Concerns\FromView;
 use Illuminate\Contracts\View\View;
 use GuzzleHttp\Client;
@@ -13,10 +16,14 @@ use App;
 
 class DetailRateOvertimeReportExport implements FromView, ShouldAutoSize
 {
-    public function __construct($employeeNoFrom, $employeeNoTo, $absentDateFrom, $absentDateTo, $groupAuthorizeFrom, $groupAuthorizeTo, $includeResign, $position, $ranking, $location, $dataLevel, $dataField)
+    public function __construct($employeeType, $employeeNoFrom, $employeeNoTo, $employeeNoList, $dateType, $period, $absentDateFrom, $absentDateTo, $groupAuthorizeFrom, $groupAuthorizeTo, $includeResign, $position, $ranking, $location, $dataLevel)
     {
+        $this->employeeType = $employeeType;
         $this->employeeNoFrom = $employeeNoFrom;
         $this->employeeNoTo = $employeeNoTo;
+        $this->employeeNoList = $employeeNoList;
+        $this->dateType = $dateType;
+        $this->period = $period;
         $this->absentDateFrom = $absentDateFrom;
         $this->absentDateTo = $absentDateTo;
         $this->groupAuthorizeFrom = $groupAuthorizeFrom;
@@ -26,7 +33,7 @@ class DetailRateOvertimeReportExport implements FromView, ShouldAutoSize
         $this->ranking = $ranking;
         $this->location = $location;
         $this->dataLevel = $dataLevel;
-        $this->dataField = $dataField;
+        // $this->dataField = $dataField;
     }
 
     public function view(): View
@@ -38,28 +45,20 @@ class DetailRateOvertimeReportExport implements FromView, ShouldAutoSize
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $param = [ 
-                'companyCode' => Session::get('companyCode'), 
-                'languageID' => App::getLocale(), 
-                'sessionID' => 0, 
-                'sessionUserID' => Session::get('userID'),
-                'incResign' => $this->includeResign
+            $param = [
+                'companyCode' => Session::get('companyCode'),
+                'range' => $this->employeeType === 'RANGE' ? true : false,
+                'employeeNoFrom' => $this->employeeNoFrom,
+                'employeeNoTo' => $this->employeeNoTo,
+                'employeeList' => $this->employeeType === 'ALL' || $this->employeeType === 'RANGE' ? [] : $this->employeeNoList,
+                'period' => $this->dateType === 'PERIOD' ? $this->period : null,
+                'startDate' => $this->dateType === 'RANGE_DATE' ? $this->absentDateFrom : null,
+                'endDate' => $this->dateType === 'RANGE_DATE' ? $this->absentDateTo : null,
+                'groupAuthorizeFrom' => (int) $this->groupAuthorizeFrom,
+                'groupAuthorizeTo' => (int) $this->groupAuthorizeTo,
+                'includeResign' => $this->includeResign ?? false,
+                'userID' => Session::get('userID'),
             ];
-
-            if(!empty($this->employeeNoFrom) || !empty($this->employeeNoTo)){
-                $param['employeeNoFrom'] = $this->employeeNoFrom;
-                $param['employeeNoTo'] = $this->employeeNoTo;
-            }
-
-            if(!empty($this->absentDateFrom) || !empty($this->absentDateTo)){
-                $param['absentDateFrom'] = $this->absentDateFrom;
-                $param['absentDateTo'] = $this->absentDateTo;
-            }
-
-            if(!empty($this->groupAuthorizeFrom) || !empty($this->groupAuthorizeTo)){
-                $param['groupAuthorizeCodeFrom'] = $this->groupAuthorizeFrom;
-                $param['groupAuthorizeCodeTo'] = $this->groupAuthorizeTo;
-            }
 
             if(!empty($this->position) && !is_null($this->position[0])){
                 foreach($this->position as $value){
@@ -96,14 +95,16 @@ class DetailRateOvertimeReportExport implements FromView, ShouldAutoSize
                 $param['levelMaster'] = $data_level;
             }
 
-            if(!empty($this->dataField) && !is_null($this->dataField[0])){
-                foreach($this->dataField as $key => $value){
-                    $data_field[] = $value->absentCode;
-                }
-                $param['overtimeCode'] = $data_field;
-            }
+            // if(!empty($this->dataField) && !is_null($this->dataField[0])){
+            //     foreach($this->dataField as $key => $value){
+            //         $data_field[] = $value->absentCode;
+            //     }
+            //     $param['overtimeCode'] = $data_field;
+            // }
 
-            $response = $client->post(env('API_URL') . '/detailrateovertimereport/getdetailrateovertimereport',
+            // dd(json_encode($param));
+
+            $response = $client->post(env('API_URL') . '/mobile/detailRateOvertimeReport',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {

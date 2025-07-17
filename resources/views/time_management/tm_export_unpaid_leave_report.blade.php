@@ -19,28 +19,30 @@
 	<table style="width: 100%; font-size: 14px;" class="table table-bordered table-hover responsive">
 		<thead>
 			<tr>
-				<th rowspan="2">No</th>
-				<th rowspan="2">Employee No</th>
-				<th rowspan="2">Employee Name</th>
-				<th colspan="2">Unpaid Leave Date</th>
-                <th rowspan="2">Description</th>
+				<th colspan="6" style="text-align: center; font-size: 16px; font-weight: bold;">Unpaid Leave Report</th>
 			</tr>
 			<tr>
-				<th>From</th>
-				<th>To</th>
+				<th style="text-align: center; border: 1px solid black" rowspan="2">No</th>
+				<th style="text-align: center; border: 1px solid black" rowspan="2">Employee No</th>
+				<th style="text-align: center; border: 1px solid black" rowspan="2">Employee Name</th>
+				<th style="text-align: center; border: 1px solid black" colspan="2">Unpaid Leave Date</th>
+                <th style="text-align: center; border: 1px solid black" rowspan="2">Description</th>
+			</tr>
+			<tr>
+				<th style="text-align: center; border: 1px solid black">From</th>
+				<th style="text-align: center; border: 1px solid black">To</th>
 			</tr>
 		</thead>
 		<tbody>
             <?php $no = 1; ?>
 			@foreach($data as $value)
 			<tr>
-                <td>{{ $no++ }}</td>
-				<td>{{ $value->employeeNo }}</td>
-				<td>{{ $value->fullName }}</td>
-				<td>{{ date('Y-m-d', strtotime($value->leaveDateFrom)) }}</td>
-				<td>{{ date('Y-m-d', strtotime($value->leaveDateTo)) }}</td>
-                <td>{{ $value->leaveRemarks }}</td>
-				
+                <td style="text-align: center; border: 1px solid black">{{ $no++ }}</td>
+				<td style="text-align: left; border: 1px solid black">{{ $value->employeeNo }}</td>
+				<td style="text-align: left; border: 1px solid black">{{ $value->employeeName }}</td>
+				<td style="text-align: left; border: 1px solid black">{{ date('Y-m-d', strtotime($value->dateFrom)) }}</td>
+				<td style="text-align: left; border: 1px solid black">{{ date('Y-m-d', strtotime($value->dateTo)) }}</td>
+                <td style="text-align: left; border: 1px solid black">{{ $value->description }}</td>
 			</tr>
 			@endforeach
 		</tbody>

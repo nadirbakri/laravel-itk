@@ -99,7 +99,34 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row d-flex gap-4">
+                    <div class="form-group" style="padding-left: 15px">
+                        <label for="get_date form-check-label">{{ __('tm_absenteeism_overtime_report.label_get_date') }}</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" id="get_date_period" name="get_date" value="PERIOD" checked>
+                        <label for="get_date_period">{{ __('tm_absenteeism_overtime_report.label_period') }}</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" id="get_date_range" name="get_date" value="RANGE_DATE">
+                        <label for="get_date_range">{{ __('tm_absenteeism_overtime_report.label_range') }}</label>
+                    </div>
+                </div>
+                <div class="row" id="date_period">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="period">{{ __('tm_absenteeism_overtime_report.label_period') }}</label>
+                            <div class='input-group'>
+                                <input type="text" class="form-control" id="period" name="period"
+                                    placeholder="{{ __('tm_absenteeism_overtime_report.label_period') }}">
+                                <div class="input-group-prepend" id="period-calendar">
+                                    <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" id="date_range">
                     <div class="col-6">
                         <div class="form-group">
                             <label for="absent_date_from">{{ __('tm_absenteeism_overtime_report.label_absent_date_from') }}</label>
@@ -271,40 +298,69 @@
     window.onload = function() {
         savePreviousURL();
     }
-    
-    $(function () {
-        initDatePicker();
-    });
-
-    function initDatePicker() {
-        $('.input-group input').flatpickr({
-            altInput: true,
-            allowInput: true,
-            altFormat: "d-M-Y",
-            dateFormat: "Y-m-d",
-            defaultDate: "today",
-            // plugins: [
-            //     new monthSelectPlugin({
-            //         shorthand: true, //defaults to false
-            //         dateFormat: "Y-m-01", //defaults to "F Y"
-            //         altFormat: "F Y", //defaults to "F Y"
-            //     })
-            // ],
-            onReady: function () {
-                var flatPickrInstance = this;
-                var $flatPickrInput = $(flatPickrInstance.element);
-                $flatPickrInput.siblings(".input-group-prepend").click(function () {
-                    flatPickrInstance.toggle();
-                });
-            }
-        });
-    }
 
 </script>
 
 <script type="text/javascript">
     $(document).ready(function () {
+        var arrData = @json($data);
+
         $('#employee_list').hide();
+        $('#date_range').hide();
+
+        let pickerPeriod = $('#period').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "d-M-Y",
+            dateFormat: "Y-m-d",
+            defaultDate: "today",
+            plugins: [
+                new monthSelectPlugin({
+                    shorthand: true, //defaults to false
+                    dateFormat: "Y-m-01", //defaults to "F Y"
+                    altFormat: "F Y", //defaults to "F Y"
+                })
+            ],
+            onReady: function () {
+                var flatPickrInstance = this;
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings("#period-calendar").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
+
+        let pickerAbsentDateFrom = $('#absent_date_from').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "d-M-Y",
+            dateFormat: "Y-m-d",
+            defaultDate: "today",
+            onReady: function () {
+                var flatPickrInstance = this;
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings("#absent_date_from_calendar").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
+
+        let pickerAbsentDateTo = $('#absent_date_to').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "d-M-Y",
+            dateFormat: "Y-m-d",
+            defaultDate: "today",
+            onReady: function () {
+                var flatPickrInstance = this;
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings('#absent_date_to_calendar').click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
+
+        pickerPeriod.setDate(arrData[0].periodYear + "-" + moment().month(arrData[0].periodMonth - 1).format('MM') + "-01");
 
         $('input[name=get_employee]').on("change", function (e) {
             var data = $(this).val();
@@ -328,6 +384,28 @@
                 $('#employee_no_from').prop('disabled', true);
                 $('#employee_no_to').prop('disabled', true);
                 $('#employee_no_list').prop('disabled', false);
+            }
+        });
+
+        $('input[name=get_date]').on("change", function (e) {
+            var data = $(this).val();
+            if(data == "PERIOD") {
+                $('#date_period').show();
+                $('#date_range').hide();
+                $('#period').prop('disabled', false);
+                pickerAbsentDateFrom._input.setAttribute('disabled', 'disabled');
+                pickerAbsentDateTo._input.setAttribute('disabled', 'disabled');
+                $('#absent_date_from').prop('disabled', true);
+                $('#absent_date_to').prop('disabled', true);
+            } 
+            else {
+                $('#date_range').show();
+                $('#date_period').hide();
+                $('#period').prop('disabled', true);
+                pickerAbsentDateFrom._input.removeAttribute('disabled', 'disabled');
+                pickerAbsentDateTo._input.removeAttribute('disabled', 'disabled');
+                $('#absent_date_from').prop('disabled', false);
+                $('#absent_date_to').prop('disabled', false);
             }
         });
 

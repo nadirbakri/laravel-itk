@@ -7,12 +7,12 @@ return [
     | Time Management - Monthly Absenteeism Analysis Page Language Lines
     |--------------------------------------------------------------------------
     |
-    | Pengaturan Halaman Time Management - Monthly Absenteeism Analysis Menggunakan Locale Bahasa Inggris. Akses di file
+    | Pengaturan Halaman Time Management - Monthly Absenteeism Analysis Menggunakan Locale Bahasa Indonesia. Akses di file
     | tm_report_monthly_absenteeism_analysis.blade.php
     |
     */
 
-    'judul' => 'Laporan Absensi dan Lembur',
+    'judul' => 'Laporan Tarif Lembur Terperinci',
     'list' => 'Daftar Menu Manajemen Waktu',
     'label_get_employee' => 'Tipe Data Karyawan',
     'label_all' => 'Semua',

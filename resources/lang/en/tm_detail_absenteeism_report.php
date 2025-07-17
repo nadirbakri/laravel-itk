@@ -21,6 +21,8 @@ return [
     'label_employee_no_from' => 'Employee No From',
     'label_employee_no_to' => 'Employee No To',
     'label_employee_no_list' => 'Employee No List',
+    'label_get_date' => 'Date Type',
+    'label_period' => 'Period',
     'label_absent_date_from' => 'Absent Date From',
     'label_absent_date_to' => 'Absent Date To',
     'label_group_authorize_from' => 'Group Authorize From',

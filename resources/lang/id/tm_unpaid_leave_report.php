@@ -12,9 +12,9 @@ return [
     |
     */
 
-    'judul' => 'Laporan Absensi dan Lembur',
+    'judul' => 'Laporan Cuti Tidak Dibayar',
     'list' => 'Daftar Menu Manajemen Waktu',
-    'label_get_employee' => 'Tipe Data Karyawan',
+   'label_get_employee' => 'Tipe Data Karyawan',
     'label_all' => 'Semua',
     'label_range' => 'Rentang',
     'label_list' => 'Daftar',
@@ -25,9 +25,6 @@ return [
     'label_period' => 'Periode',
     'label_absent_date_from' => 'Tanggal Absensi Dari',
     'label_absent_date_to' => 'Tanggal Absensi Ke',
-    'label_report_type' => 'Tipe Laporan :',
-    'label_absent' => 'Absensi',
-    'label_overtime' => 'Lembur',
     'label_include_resign' => 'Termasuk Karyawan Mengundurkan Diri',
     'label_group_authorize_from' => 'Dari Grup Otorisasi',
     'label_group_authorize_to' => 'Sampai Grup Otorisasi',
@@ -35,7 +32,6 @@ return [
     'label_ranking' => 'Peringkat',
     'label_location' => 'Lokasi',
     'btn_print' => 'Cetak',
-    'absent_date_from_required' => 'Tanggal Absensi Dari Wajib Diisi',
-    'absent_date_to_required' => 'Tanggal Absensi Ke Wajib Diisi',
-
+    'employee_no_from_required' => 'No Karyawan Dari harus diisi',
+    'employee_no_to_required' => 'No Karyawan Sampai harus diisi'
 ];
