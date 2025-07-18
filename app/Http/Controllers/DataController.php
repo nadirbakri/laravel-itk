@@ -7252,7 +7252,8 @@ class DataController extends Controller
 
 		if ($request->feature === 'AbsenteeismCORI') {
 			$absent = array_filter($arrResult->dataListSet, function ($item) use ($search) {
-				if (stripos($item->description ?? '', 'leave') !== false || stripos($item->description ?? '', 'cuti') !== false) {
+				// dd($item);
+				if ($item->absentType === 'A') {
 					return false;
 				}
 

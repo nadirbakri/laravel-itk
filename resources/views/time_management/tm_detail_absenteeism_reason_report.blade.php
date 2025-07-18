@@ -340,11 +340,11 @@
                     );
 
                     loadDataLevelCode('#level' + i, i);
-                    // loadDataFirstLastAllLevel('#level' + i, i);
+                    loadDataFirstLastAllLevel('#level' + i, i);
 
                     previousValues[`level${i}`] = null;
 
-                    loadDataLevelCode('#level' + i, i);
+                    // loadDataLevelCode('#level' + i, i);
                     // loadDataFirstLastAllLevel('#level' + i, i);
 
                     ((index) => {

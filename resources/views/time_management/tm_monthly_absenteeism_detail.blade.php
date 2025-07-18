@@ -419,7 +419,7 @@
                     previousValues[`level${i}`] = null;
 
                     loadDataLevelCode('#level' + i, i);
-                    // loadDataFirstLastAllLevel('#level' + i, i);
+                    loadDataFirstLastAllLevel('#level' + i, i);
 
                     ((index) => {
                         $(`#level${index}`).on('change', function () {

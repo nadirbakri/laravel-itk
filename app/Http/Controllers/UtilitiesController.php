@@ -1172,9 +1172,16 @@ class UtilitiesController extends Controller
 
         $arrResult = json_decode($response->getBody()->getContents());
 
-        if(isset($arrResult->dataListSet[0]->data)){
-            return Datatables::of($arrResult->dataListSet[0]->data)->make(true);
-        }else{
+        if (isset($arrResult->dataListSet[0]->data)) {
+            $combined = [];
+
+            foreach ($arrResult->dataListSet as $value) {
+                if (is_array($value->data)) {
+                    $combined = array_merge($combined, $value->data);
+                }
+            }
+            return Datatables::of($combined)->make(true);
+        } else {
             return Datatables::of([])->make(true);
         }
     }
