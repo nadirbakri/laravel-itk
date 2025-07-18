@@ -43,20 +43,62 @@
 		<tbody>
             <?php 
 				$no = 1; 
-				$total = []; 
+				$total = [];
+				$totalTimeSeconds = [];
+				$totalInt = [];
+
+				function timeToSeconds($time) {
+					[$h, $m] = explode(':', $time);
+					return ((int)$h * 3600) + ((int)$m * 60);
+				}
+
+				function secondsToTime($seconds) {
+					$h = floor($seconds / 3600);
+					$m = floor(($seconds % 3600) / 60);
+					return sprintf('%02d:%02d', $h, $m);
+				}
 			?>
 			@foreach($data as $value)
 				<tr>
 					<td style="text-align: center; border: 1px solid black">{{ $no++ }}</td>
 					<td style="text-align: left; border: 1px solid black">{{ $value->{'Employee No'} ?? '' }}</td>
 					<td style="text-align: left; border: 1px solid black">{{ $value->{'Employee Name'} ?? '' }}</td>
-					@foreach ((array) $value->{'Date'} as $val)
+					@foreach ((array) $value->{'Date'} as $key => $val)
+						<?php
+							[$timePart, $intPart] = explode('|', $val . '|');
+							$timePart = trim($timePart);
+							$intPart = trim($intPart);
+
+							$seconds = timeToSeconds($timePart);
+							$intVal = is_numeric($intPart) ? (float) $intPart : 0;
+
+							$totalTimeSeconds[$key] = ($totalTimeSeconds[$key] ?? 0) + $seconds;
+							$totalInt[$key] = ($totalInt[$key] ?? 0) + $intVal;
+						?>
 						<td style="text-align: left; border: 1px solid black">{{ $val ?? '' }}</td>
 					@endforeach
 					<td style="text-align: left; border: 1px solid black">{{ $value->{'Total Actual'} ?? '' }}</td>
 					<td style="text-align: left; border: 1px solid black">{{ $value->{'Total Convert'} ?? '' }}</td>
 				</tr>
 			@endforeach
+			<tr>
+				<td colspan="3" style="text-align: center; border: 1px solid black; font-weight: bold">Grand Total</td>
+
+				@foreach ($totalTimeSeconds as $key => $totalSec)
+					<?php
+						$timeStr = secondsToTime($totalSec);
+						$intStr = number_format($totalInt[$key], 3);
+					?>
+					<td style="text-align: left; border: 1px solid black; font-weight: bold">{{ $timeStr }} | {{ $intStr }}</td>
+				@endforeach
+
+				<td style="text-align: left; border: 1px solid black; font-weight: bold">
+					{{ array_sum(array_column($data, 'Total Actual')) }} jam
+				</td>
+				<td style="text-align: left; border: 1px solid black; font-weight: bold">
+					{{ array_sum(array_column($data, 'Total Convert')) }}
+				</td>
+			</tr>
 		</tbody>
 	</table>
 </body>

@@ -67,7 +67,7 @@
 								if (!isset($total[$key])) {
 									$total[$key] = 0;
 								}
-								$total[$key] += (float) $val; 
+								$total[$key] += !is_string($val) ? (int) $val : 0; 
 							?>
 							<td style="text-align: left; border: 1px solid black">{{ $val ?? '' }}</td>
 						@endforeach
@@ -76,7 +76,7 @@
 				<tr>
 					<td style="font-weight: bold; text-align: center; border: 1px solid black" colspan="{{ $mergeColumnGrandTotal }}">Grand Total</td>
 					@foreach ($total as $grandTotal)
-						<td style="font-weight: bold; text-align: right; border: 1px solid black">{{ number_format($grandTotal, 2) }}</td>
+						<td style="font-weight: bold; text-align: right; border: 1px solid black">{{ $grandTotal }}</td>
 					@endforeach
 				</tr>
 			</tbody>
