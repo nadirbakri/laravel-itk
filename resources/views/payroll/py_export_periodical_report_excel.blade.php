@@ -30,13 +30,10 @@
 </head>
 <body>
     @if(count($data) > 0 && (count($data[0]->detail) > 0))
-        <?php
-            $countcolspan = count($data[0]->detail[0]->field) + 3;
-        ?>
         <table>
             <thead>
                 <tr>
-                    <th colspan="{{ $countcolspan }}">
+                    <th>
                         @if($company == 'NMDI' || $company == 'CITROEN')
                         {{ ($level1[0] == "ALL") ? $data_company[0]->companyName : 'PT ' . $data[0]->detail[0]->companyName }}
                         @else
@@ -45,7 +42,7 @@
                     </th>
                 </tr>
                 <tr>
-                    <th colspan="{{ $countcolspan }}">
+                    <th>
                         @if($company == 'NMDI' || $company == 'CITROEN')
                         {{ ($level1[0] == "ALL") ? $data_company[0]->address : $data[0]->detail[0]->companyLocation }}
                         @else
@@ -54,10 +51,10 @@
                     </th>
                 </tr>
                 <tr>
-                    <th colspan="{{ $countcolspan }}" style="text-align:left; font-weight:bold;">{{ $report_name }}</th>
+                    <th style="text-align:left; font-weight:bold;">{{ $report_name }}</th>
                 </tr>
                 <tr>
-                    <th colspan="{{ $countcolspan }}" style="text-align:left; font-weight:bold;"><pre>Periode   :    {{ date('F Y', strtotime($data_period)) }}</pre></th>
+                    <th style="text-align:left; font-weight:bold;"><pre>Periode   :    {{ date('F Y', strtotime($data_period)) }}</pre></th>
                 </tr>
                 <tr></tr>
             </thead>
@@ -204,13 +201,10 @@
             $total = [];
             $totalEmployee = 0;
         ?>
-        <?php
-            $countcolspan = count($data[0]->departementGroup[0]->data[0]->field) + 3;
-        ?>
         <table>
             <thead>
                 <tr>
-                    <th colspan="{{ $countcolspan }}">
+                    <th>
                         @if($company == 'NMDI' || $company == 'CITROEN')
                         {{ ($level1[0] == "ALL") ? $data_company[0]->companyName : 'PT ' . $data[0]->departementGroup[0]->data[0]->companyName }}
                         @else
@@ -219,7 +213,7 @@
                     </th>
                 </tr>
                 <tr>
-                    <th colspan="{{ $countcolspan }}">
+                    <th>
                         @if($company == 'NMDI' || $company == 'CITROEN')
                         {{ ($level1[0] == "ALL") ? $data_company[0]->address : $data[0]->departementGroup[0]->data[0]->companyLocation }}
                         @else
@@ -228,10 +222,10 @@
                     </th>
                 </tr>
                 <tr>
-                    <th colspan="{{ $countcolspan }}" style="text-align:left; font-weight:bold;">{{ $report_name }}</th>
+                    <th style="text-align:left; font-weight:bold;">{{ $report_name }}</th>
                 </tr>
                 <tr>
-                    <th colspan="{{ $countcolspan }}" style="text-align:left; font-weight:bold;"><pre>Periode   :    {{ date('F Y', strtotime($data_period)) }}</pre></th>
+                    <th style="text-align:left; font-weight:bold;"><pre>Periode   :    {{ date('F Y', strtotime($data_period)) }}</pre></th>
                 </tr>
                 <tr></tr>
             </thead>
@@ -566,7 +560,6 @@
 
                 $total = [];
                 $totalJumlah = 0;
-                $countcolspan = count($data[0]->summary[0]->data[0]->field) + 4;
             ?>
             @if(!empty($dataTable->data))
                 @if($company == 'IPN' || $company == 'UPM' || $company == 'IGT' || $company == 'IVT' || $company == 'IPNJT')
@@ -579,7 +572,7 @@
                             <th style="text-align:left; font-weight:bold;"><pre>Periode   :    {{ $data_period }}</pre></th>
                         </tr> --}}
                         <tr>
-                            <th colspan="{{ $countcolspan }}">
+                            <th>
                                 @if($company == 'NMDI' || $company == 'CITROEN')
                                 {{ ($level1[0] == "ALL") ? $data_company[0]->companyName : 'PT ' . $data[0]->summary[0]->data[0]->companyName }}
                                 @else
@@ -588,7 +581,7 @@
                             </th>
                         </tr>
                         <tr>
-                            <th colspan="{{ $countcolspan }}">
+                            <th>
                                 @if($company == 'NMDI' || $company == 'CITROEN')
                                 {{ ($level1[0] == "ALL") ? $data_company[0]->address : $data[0]->summary[0]->data[0]->companyLocation }}
                                 @else
@@ -597,10 +590,10 @@
                             </th>
                         </tr>
                         <tr>
-                            <th colspan="{{ $countcolspan }}" style="text-align:left; font-weight:bold;">{{ $report_name }}</th>
+                            <th style="text-align:left; font-weight:bold;">{{ $report_name }}</th>
                         </tr>
                         <tr>
-                            <th colspan="{{ $countcolspan }}" style="text-align:left; font-weight:bold;"><pre>Periode   :    {{ date('F Y', strtotime($data_period)) }}</pre></th>
+                            <th style="text-align:left; font-weight:bold;"><pre>Periode   :    {{ date('F Y', strtotime($data_period)) }}</pre></th>
                         </tr>
                         <tr></tr>
                     </thead>
