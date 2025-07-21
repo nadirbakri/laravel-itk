@@ -65,9 +65,14 @@
 					<td style="text-align: left; border: 1px solid black">{{ $value->{'Employee Name'} ?? '' }}</td>
 					@foreach ((array) $value->{'Date'} as $key => $val)
 						<?php
-							[$timePart, $intPart] = explode('|', $val . '|');
-							$timePart = trim($timePart);
-							$intPart = trim($intPart);
+							if (empty($val) || strpos($val, '|') === false) {
+								$timePart = "00:00";
+								$intPart = "0";
+							} else {
+								$parts = explode('|', $val . '|');
+								$timePart = trim($parts[0] ?? '00:00');
+								$intPart = trim($parts[1] ?? '0');
+							}
 
 							$seconds = timeToSeconds($timePart);
 							$intVal = is_numeric($intPart) ? (float) $intPart : 0;
