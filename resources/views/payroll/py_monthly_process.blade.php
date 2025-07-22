@@ -420,6 +420,14 @@
                                         </div>
                                         <div class="col-6">
                                             <div class="form-check">
+                                                <input class="form-check-input" style="margin-top: 7px;" type="checkbox" id="medical_process_salary" name="medical_process_salary" value="true">
+                                                <label class="font-label" for="medical_process_salary" style="font-family: 'Montserrat-Regular'">{{ __('payroll_salary_calculation_process.label_medical_process') }}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-check">
                                                 <input class="form-check-input" style="margin-top: 7px;" type="checkbox" id="range_salary" name="range_salary" value="true">
                                                 <label class="font-label" for="range_salary" style="font-family: 'Montserrat-Regular'">{{ __('payroll_salary_calculation_process.label_range') }}</label>
                                             </div>

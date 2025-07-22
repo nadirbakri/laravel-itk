@@ -6391,7 +6391,7 @@ public function dataDetailReportFormatPY(Request $request)
                         "retroactive" => (int) $request->retroactive_salary,
                         "includeProbationPerod" => isset($request->include_probation_period_salary) ? (bool) $request->include_probation_period_salary : false,
                         "includeJamsostekRetroactive" => isset($request->include_jamsostek_retroactive_salary) ? (bool) $request->include_jamsostek_retroactive_salary : false,
-                        "medicalProcess" => isset($request->medical_process) ? (bool) $request->medical_process : false,
+                        "medicalProcess" => isset($request->medical_process_salary) ? (bool) $request->medical_process_salary : false,
                         "range" => isset($request->range_salary) ? (bool) $request->range_salary : false,
                         "groupAuthorizeFrom" => intval($request->group_authorized_code_from_salary),
                         "groupAuthorizeTo" => intval($request->group_authorized_code_to_salary),
