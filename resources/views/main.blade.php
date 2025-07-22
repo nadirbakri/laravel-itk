@@ -347,7 +347,7 @@
 	</div>
 </body>
 
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -452,7 +452,7 @@
 			"GET", "iframe_dashboard");
         });
 
-		$('#iframe_dashboard').load(function() {
+		$('#iframe_dashboard').on('load', function(){
 			$.ajax({
 				url: "{{ url('home/breadcrumbs') }}",
 				type: "GET",
