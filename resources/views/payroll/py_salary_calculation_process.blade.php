@@ -193,16 +193,16 @@
                 <div class="row">
                     <div class="col-3">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="rounded_jamsostek_amount" name="rounded_jamsostek_amount" value="true">
-                            <label for="rounded_jamsostek_amount">{{ __('payroll_salary_calculation_process.label_rounded_jamsostek_amount') }}</label>
+                            <input class="form-check-input" type="checkbox" id="rounded_jamsostek_amount_salary" name="rounded_jamsostek_amount_salary" value="true">
+                            <label for="rounded_jamsostek_amount_salary">{{ __('payroll_salary_calculation_process.label_rounded_jamsostek_amount') }}</label>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-3">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="medical_process" name="medical_process" value="true">
-                            <label for="medical_process">{{ __('payroll_salary_calculation_process.label_medical_process') }}</label>
+                            <input class="form-check-input" type="checkbox" id="medical_process_salary" name="medical_process_salary" value="true">
+                            <label for="medical_process_salary">{{ __('payroll_salary_calculation_process.label_medical_process') }}</label>
                         </div>
                     </div>
                 </div>
@@ -310,7 +310,7 @@
 <script src="https://cdn.datatables.net/select/1.3.3/js/dataTables.select.min.js"></script>
 <script src="https://cdn.datatables.net/plug-ins/1.10.24/pagination/ellipses.js"></script>
 <script src="{{ asset('js/jquery.redirect.js') }}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script src="{{ asset('js/flatpickr.js') }}"></script>
 <script src="{{ asset('js/flatpickr.monthselect.js') }}"></script>

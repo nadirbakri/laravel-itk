@@ -420,6 +420,14 @@
                                         </div>
                                         <div class="col-6">
                                             <div class="form-check">
+                                                <input class="form-check-input" style="margin-top: 7px;" type="checkbox" id="medical_process_salary" name="medical_process_salary" value="true">
+                                                <label class="font-label" for="medical_process_salary" style="font-family: 'Montserrat-Regular'">{{ __('payroll_salary_calculation_process.label_medical_process') }}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-check">
                                                 <input class="form-check-input" style="margin-top: 7px;" type="checkbox" id="range_salary" name="range_salary" value="true">
                                                 <label class="font-label" for="range_salary" style="font-family: 'Montserrat-Regular'">{{ __('payroll_salary_calculation_process.label_range') }}</label>
                                             </div>
@@ -657,7 +665,7 @@
 <script src="https://cdn.datatables.net/select/1.7.0/js/dataTables.select.min.js"></script>
 <script src="https://cdn.datatables.net/plug-ins/1.13.2/pagination/ellipses.js"></script>
 <script src="{{ asset('js/jquery.redirect.js') }}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script src="{{ asset('js/flatpickr.js') }}"></script>
 <script src="{{ asset('js/flatpickr.monthselect.js') }}"></script>

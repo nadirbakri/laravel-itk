@@ -365,7 +365,7 @@
 <script src="https://cdn.datatables.net/select/1.3.3/js/dataTables.select.min.js"></script>
 <script src="https://cdn.datatables.net/plug-ins/1.10.24/pagination/ellipses.js"></script>
 <script src="{{ asset('js/jquery.redirect.js') }}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
 <script src="{{ asset('js/jquery.inputpicker.js') }}"></script>
 
 <script type="text/javascript">
@@ -441,7 +441,6 @@
                 }
             }).then(function (data) {
                 arrayMenuMaster = data;
-                console.log(arrayMenuMaster);
                 $('#menu_master_table').DataTable().destroy();
                 load_table_menu_master();
                 $('#loading').hide();
