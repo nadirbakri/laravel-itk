@@ -18,6 +18,8 @@ return [
     'label_time_in' => 'Time In',
     'label_time_out' => 'Time Out',
     'label_flexy' => 'Flexy',
+    'label_total_hour' => 'Total Hour',
+    'label_cross_day' => 'Cross Day',
     'label_record_status' => 'Record Status',
     'shift_code_required' => 'Shift Code Required',
     'btn_save' => 'Save',

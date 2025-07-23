@@ -181,8 +181,8 @@
                                         <th>Capacity</th>
                                         <th>Dose</th>
                                         <th>Batch Description</th>
-                                        {{-- <th>Serial Number</th> --}}
-                                        {{-- <th>Expired</th> --}}
+                                        <th>Serial Number</th>
+                                        <th>Expired</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -414,7 +414,7 @@
                         }
                     },
                     {data: 'activityCode', name: 'activityCode'},
-                    {data: 'activityCode', name: 'activityCode'},
+                    {data: 'totalBatch', name: 'totalBatch'},
                     {data: 'activityName', name: 'activityName'},
                     {name: 'details',
                         render: function (data, type, row) {
@@ -451,12 +451,12 @@
                     {data: 'capacity', name: 'capacity'},
                     {data: 'sequence', name: 'sequence'},
                     {data: 'description', name: 'description'},
-                    // {data: 'handPhone', name: 'handPhone'},
-                    // {data: 'expiredDate', name: 'expiredDate',
-                    //     render: function (data, type, row) {
-                    //         return data ? `<p class="chip-green">Yes</p>` : `<p class="chip-red">No</p>`;
-                    //     }
-                    // },
+                    {data: 'serialNUmber', name: 'serialNUmber'},
+                    {data: 'expiredDate', name: 'expiredDate',
+                        render: function (data, type, row) {
+                            return data ? moment(data).format('DD MMMM YYYY') : '';
+                        }
+                    },
                 ],
                 select: {
                     style:    'multi',
@@ -571,6 +571,8 @@
             $('#capacity').val(dataDetail ? dataDetail.capacity : '')
             $('#dose').val(dataDetail ? dataDetail.sequence : '')
             $('#batch_description').val(dataDetail ? dataDetail.description : '')
+            $('#serial_number').val(dataDetail ? dataDetail.serialNUmber : '')
+            expiredDate.setDate(dataDetail ? dataDetail.expiredDate : '');
         }
 
         $('#vaccine_master_table tbody').on('click', 'input[type="checkbox"]', function(e){
@@ -675,9 +677,9 @@
                     dose: {
                         required: true,
                     },
-                    // serial_number: {
-                    //     required: true,
-                    // },
+                    serial_number: {
+                        required: true,
+                    },
                 },
                 messages: {
                     batch_code: {

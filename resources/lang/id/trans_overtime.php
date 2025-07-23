@@ -10,6 +10,7 @@ return [
     'label_processed_date' => 'Processed Date',
     'label_business_unit' => 'Business Unit',
     'label_status' => 'Status',
+    'label_compensation' => 'Kompensasi',
     'label_reimbursement_type' => 'Tipe Pengajuan',
     'label_bu' => 'Unit Bisnis',
     'label_overtime_status' => 'Status Lembur',

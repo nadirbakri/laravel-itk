@@ -1356,6 +1356,7 @@ class TransactionController extends Controller
                     'logActionUserID' => Session::get('userID'),
                     'logActionUsername' => Session::get('userName'),
                     'approvalRemarks' => $request->approvalRemarks,
+                    'isPayroll' => $request->compensation === 'PAID' ? true : false,
                     'languageCode' => App::getLocale()
                 ];
             }

@@ -124,13 +124,6 @@
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="group_shift">{{ __('tm_shift_master_code.label_group_shift') }}</label>
-                            <select class="form-control" id="group_shift" name="group_shift"
-                                placeholder="{{ __('tm_shift_master_code.label_group_shift') }}"> </select>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="form-group">
                             <label for="flexy">&nbsp;</label>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="check_flexy"
@@ -138,6 +131,33 @@
                                 <label
                                     for="check_flexy">{{ __('tm_shift_master_code.label_flexy') }}</label>
                             </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="group_shift">{{ __('tm_shift_master_code.label_group_shift') }}</label>
+                            <select class="form-control" id="group_shift" name="group_shift"
+                                placeholder="{{ __('tm_shift_master_code.label_group_shift') }}"> </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="cross_day">&nbsp;</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="check_cross_day"
+                                    name="check_cross_day" value="true">
+                                <label
+                                    for="check_cross_day">{{ __('tm_shift_master_code.label_cross_day') }}</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="total_hour">{{ __('tm_shift_master_code.label_total_hour') }}</label>
+                            <input type="number" class="form-control" id="total_hour" name="total_hour"
+                                placeholder="{{ __('tm_shift_master_code.label_total_hour') }}" readonly>
                         </div>
                     </div>
                 </div>
@@ -1604,6 +1624,11 @@
                 $('#check_flexy').prop('checked', false)
             }
         }
+
+        $('#check_cross_day').on('change', function() {
+            const isChecked = this.checked
+            $('#total_hour').prop('readonly', !isChecked)
+        })
 
         function htmlDecode(value) {
             return $("<textarea/>").html(value).text();

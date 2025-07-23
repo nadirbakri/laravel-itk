@@ -1292,7 +1292,6 @@
                             }
                         },
                         error: function (response) {
-                            console.log(response);
                             $("#btn-submit").prop("disabled", false);
                             $("#btn-submit").html('<span> {{ __('md_vaccination_schedule.btn_submit') }} </span>');                    
                             $('#notification_error').modal('show');

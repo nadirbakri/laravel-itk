@@ -10,6 +10,7 @@ return [
     'label_processed_date' => 'Processed Date',
     'label_business_unit' => 'Business Unit',
     'label_status' => 'Status',
+    'label_compensation' => 'Compensation',
     'label_reimbursement_type' => 'Reimbursement Type',
     'label_bu' => 'Business Unit',
     'label_overtime_status' => 'Overtime Status',

@@ -204,7 +204,7 @@
                 <div class="row">
                     <div class="col-5">
                         <div class="form-group">
-                            <label for="status_overtime form-check-label">{{ __('trans_overtime.label_overtime_status') }}</label>
+                            <label for="status_overtime" class="form-check-label">{{ __('trans_overtime.label_overtime_status') }}</label>
                         </div>
                         <select class="form-control select2" id="status_overtime" name="status_overtime"></select>
                     </div>
@@ -446,6 +446,8 @@
                                     </div>
                                 </div>
                             </div>
+                            <div id="compensation_row">
+                            </div>
                             <div class="row">
                                 <div class="col-6">
                                     <div class="form-group">
@@ -463,7 +465,13 @@
                                         </div>
                                         <br>
                                         <label for="expired_date" style="color: gray; margin-bottom: 0;">{{ __('trans_overtime.label_expired_date') }}</label>
-                                        <input type="text" name="expired_date" id="expired_date" class="form-control" readonly>
+                                        <div class='input-group'>
+                                            <input type="text" class="form-control" id="expired_date" name="expired_date"
+                                                placeholder="{{ __('payroll_loan_report.label_period') }}">
+                                            <div class="input-group-prepend" id="expired-date-calendar">
+                                                <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -633,6 +641,8 @@
     var companyCode = "{{ Session::get('companyCode') }}";
     var arrayOvertime = [];
 
+    load_compensation_field();
+
     function load_data_overtime(claim_date_from, claim_date_to, business_unit, direct_superior, reimbursement_type, status){
         $.ajax({
             type: 'GET',
@@ -746,13 +756,48 @@
             load_data_overtime(claim_date_from, claim_date_to, business_unit, direct_superior, reimbursement_type, status);
     })
 
+    function load_compensation_field() {
+        if (companyCode === 'RSPIK') {
+            $('#compensation_row').append(
+                `<div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="compensation form-check-label" style="color: gray; margin-bottom: 0;">{{ __('trans_overtime.label_compensation') }}</label>
+                            <select class="form-control select2" id="compensation" name="compensation">
+                                <option value="LIEU DAY">Lieu Day</option>
+                                <option value="PAID">Paid</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>`
+            )
+        }
+    }
+
+    $('#overtime_status').on('change', function() {
+        if ($(this).val() !== 'APPROVED') {
+            $('#compensation').prop('disabled', true);
+        }
+        else {
+            $('#compensation').prop('disabled', false);
+        }
+    })
+
     $('#check_extend_expired_date').on('change', function() {
+        const fp = window.pickerExpiredDate;
+
         if (this.checked) {
             $('#expired_date').prop('readonly', false);
+            if (fp && fp._input) {
+                fp._input.setAttribute('readonly', 'readonly');
+            }
             $('#overtime_status').prop('disabled', true);
             $('#approval_remarks').prop('readonly', true);
         }else{
             $('#expired_date').prop('readonly', true);
+            if (fp && fp._input) {
+                fp._input.removeAttribute('readonly');
+            }
             $('#overtime_status').prop('disabled', false);
             $('#approval_remarks').prop('readonly', false);
         }
@@ -799,6 +844,25 @@
         var data = table.row($(element).parents('tr')).data().overtimeEntity;
         var duration = moment.duration(data.ovtDuration)
 
+        if (window.pickerExpiredDate) {
+            window.pickerExpiredDate.destroy();
+        }
+
+        window.pickerExpiredDate = flatpickr("#expired_date", {
+            altInput: true,
+            allowInput: true,
+            altFormat: "d-M-Y",
+            dateFormat: "Y-m-d",
+            defaultDate: "today",
+            onReady: function () {
+                var flatPickrInstance = this;
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings("#expired-date-calendar").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
+
         $('#request_date').html(moment(data.createdDate).format('YYYY-MM-DD'))
         $('#overtime_date').html(moment(data.overtimeDate).format('YYYY-MM-DD'))
         $('#overtime_ticket_no').val(data.ticketNo)
@@ -816,6 +880,7 @@
         $('#description').html(data.overtimeRemarks)
         $('#customer').html(data.customerName)
         $('#overtime_status').val(data.status).trigger('change')
+        $('#compensation').val(data.isPayroll ? 'PAID' : 'LIEU DAY')
         if(data.status == 'NEW' || data.changedDate == null){
             $('#last_approval_date').val('')
         }else{
@@ -823,7 +888,8 @@
         }
         $('#approval_remarks').val(data.approvalRemarks)
         
-        $('#expired_date').val(moment(data.offSubstituteExpDate).format('YYYY-MM-DD'))
+        // $('#expired_date').val(moment(data.offSubstituteExpDate).format('YYYY-MM-DD'))
+        window.pickerExpiredDate.setDate(((typeof data.offSubstituteExpDate !== 'undefined') ? data.offSubstituteExpDate : new Date()));
         $('#check_extend_expired_date').prop('checked', false).trigger('change');
     }
 
@@ -849,9 +915,10 @@
             checkExtendExpiredDate = false;
         }   
         let expiredDate = $("#expired_date").val();
+        let compensation = $("#compensation").val();
 
         // $('.close').click();
-        update_data(status, ticketNo, directSuperior, approvalRemarks, checkExtendExpiredDate, expiredDate)
+        update_data(status, ticketNo, directSuperior, approvalRemarks, checkExtendExpiredDate, expiredDate, compensation)
     })
 
     function updateOvertimeStatus(status, ticketNo, directSuperior, approvalRemarks, checkExtendExpiredDate, expiredDate) {
@@ -870,7 +937,7 @@
         }
     }
 
-    function update_data(status, ticketNo, directSuperior, approvalRemarks, checkExtendExpiredDate, expiredDate){
+    function update_data(status, ticketNo, directSuperior, approvalRemarks, checkExtendExpiredDate, expiredDate, compensation){
         $.ajax({
             url: "{{ url('trans/update_overtime/table') }}",
             type: "get",
@@ -881,7 +948,8 @@
                 'directSuperior' : directSuperior,
                 'approvalRemarks' : approvalRemarks,
                 'checkExtendExpiredDate' : checkExtendExpiredDate,
-                'expiredDate' : expiredDate
+                'expiredDate' : expiredDate,
+                'compensation' : compensation,
             },
             success: function (response) {
                 // console.log(response);
