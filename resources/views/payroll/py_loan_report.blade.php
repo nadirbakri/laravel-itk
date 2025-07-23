@@ -366,7 +366,7 @@
     function savePreviousURL() {
         if(!sessionStorage.getItem('previousURL')){
             const previousURL = document.referrer;
-            sessionStorage.setItem('previousURL', previousURL);
+            sessionStorage.setItem('previousURL', previousURL);1.21.0
         }
     }
 
