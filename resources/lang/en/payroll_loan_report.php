@@ -14,6 +14,7 @@ return [
     'label_detail_report' => 'Detail Report',
     'label_loan_schedule' => 'Loan Schedule',
     'label_include_resign' => 'Include Resign',
+    'label_period' => 'Period',
     'label_position' => 'Position',
     'label_ranking' => 'Ranking',
     'label_location' => 'Location',

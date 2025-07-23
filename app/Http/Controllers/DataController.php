@@ -8297,6 +8297,106 @@ class DataController extends Controller
         return response()->json($loan);
 	}
 
+	public function dataLoanCodeAllAPI(Request $request)
+    {
+    	$search = $request->search;
+
+		$loan[] = (object) [
+    		'loanCode' => 'ALL',
+    		'loanDescription' => 'ALL'
+    	];
+
+    	try {
+	    	$client = new Client([
+                'verify' => false,
+	    		'headers' => [ 'Content-Type' => 'application/json',
+	    						'Authorization' => 'Bearer ' . Session::get('token') ]
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/payroll/getLoanMaster',
+	    		['body' => json_encode(
+	    			[
+	    				'recordStatus' => 'A',
+	    				'companyCode' => Session::get('companyCode')
+	    			]
+	    		)]
+	    	);
+	    } catch (RequestException $e) {
+	    	$response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+
+		if($arrResult->dataListSet !== null){
+			if($search == ''){
+				$loan = array_merge($loan, $arrResult->dataListSet);
+			}else{
+				$loan = array_merge($loan, $arrResult->dataListSet);
+				$loan = array_filter(
+					$loan,
+					function($value) use ($search){
+						if(preg_match('/' . $search . '/i', $value->loanDescription)){
+							return preg_match('/' . $search . '/i', $value->loanDescription);
+						}else if(preg_match('/' . $search . '/i', $value->loanCode)){
+							return preg_match('/' . $search . '/i', $value->loanCode);
+						}
+					}
+				);
+			}
+		}
+
+        return response()->json($loan);
+	}
+
+	public function dataLoanCodeFunctionAPI(Request $request)
+    {
+    	$loan[] = (object) [
+    		'loanCode' => 'ALL',
+    		'loanDescription' => 'ALL'
+		];
+
+    	try {
+	    	$client = new Client([
+                'verify' => false,
+	    		'headers' => [ 'Content-Type' => 'application/json',
+	    						'Authorization' => 'Bearer ' . Session::get('token') ]
+	    	]);
+
+	    	$response = $client->post(env('API_URL') . '/payroll/getLoanMaster',
+	    		['body' => json_encode(
+	    			[
+	    				'recordStatus' => 'A',
+	    				'companyCode' => Session::get('companyCode')
+	    			]
+	    		)]
+	    	);
+	    } catch (RequestException $e) {
+	    	$response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+	    }
+
+	    $arrResult = json_decode($response->getBody()->getContents());
+		
+		if($arrResult->dataListSet !== null){
+	    	$loan = array_merge($loan, $arrResult->dataListSet);
+		}
+
+        return response()->json($loan[0]);
+	}
+
 	public function dataLoanCodeFuncAPI(Request $request)
     {
     	try {

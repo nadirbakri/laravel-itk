@@ -114,7 +114,7 @@ class LoanReportExport implements FromView, ShouldAutoSize
 
             // var_dump(json_encode($param));
 
-            $response = $client->post(env('API_URL').'/payroll/PrLoanReport', [
+            $response = $client->post(env('API_URL').'/payroll/LoanReport', [
                 'body' => json_encode($param)
             ]);
 
@@ -138,7 +138,7 @@ class LoanReportExport implements FromView, ShouldAutoSize
         // var_dump($arrResult->dataListSet);
 
         if($arrResult->dataListSet == null){
-            if($this->reportType == "L"){
+            if($this->reportType == "LOAN_RPT"){
                 return view('payroll.py_export_loan_report_loan_report_excel', [
                     'data' => [], 'data_company' => $arrCompany->dataListSet
                 ]);
@@ -161,7 +161,7 @@ class LoanReportExport implements FromView, ShouldAutoSize
                 ]);
             }
         }else{
-            if($this->reportType == "L"){
+            if($this->reportType == "LOAN_RPT"){
                 return view('payroll.py_export_loan_report_loan_report_excel', [
                     'data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet
                 ]);

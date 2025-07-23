@@ -137,19 +137,11 @@
                 <div class="row">
                     <div class="col-2">
                         <div class="form-group">
-                            <label for="loan_type_from form-check-label">{{ __('payroll_loan_report.label_loan_type') }}</label>
+                            <label for="loan_type form-check-label">{{ __('payroll_loan_report.label_loan_type') }}</label>
                         </div>
                     </div>
                     <div class="col-4">
-                        <select class="form-control select2" id="loan_type_from" name="loan_type_from"></select>
-                    </div>
-                    <div class="col-0.5">
-                        <div class="form-group">
-                            <label for="loan_type_to form-check-label">{{ __('payroll_loan_report.label_to') }}</label>
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <select class="form-control select2" id="loan_type_to" name="loan_type_to"></select>
+                        <select class="form-control select2" id="loan_type" name="loan_type" multiple="multiple"></select>
                     </div>
                 </div>
                 <div class="row">
@@ -160,7 +152,7 @@
                     </div>
                     <div class="col-3">
                         <div class="form-check">
-                            <input type="radio" id="type_loan_report" name="report_type" value="L" checked>
+                            <input type="radio" id="type_loan_report" name="report_type" value="LOAN_RPT" checked>
                             <label for="type_loan_report">{{ __('payroll_loan_report.label_loan_report') }}</label>
                         </div>
                     </div>
@@ -203,20 +195,18 @@
                         </div>
                     </div>
                 </div>
-                <div class="row" id="div_loan_type">
-                    <div class="col-2">
+                <div class="row">
+                    <div class="col-6">
                         <div class="form-group">
-                            <label for="loan_type_one form-check-label">{{ __('payroll_loan_report.label_loan_type') }}</label>
+                            <label for="period">{{ __('payroll_loan_report.label_period') }}</label>
+                            <div class='input-group'>
+                                <input type="text" class="form-control" id="period" name="period"
+                                    placeholder="{{ __('payroll_loan_report.label_period') }}">
+                                <div class="input-group-prepend" id="period-calendar">
+                                    <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-3">
-                        <select class="form-control select2" id="loan_type_one" name="loan_type_one"></select>
-                    </div>
-                    <div class="col-3">
-                        <select class="form-control select2" id="loan_type_two" name="loan_type_two"></select>
-                    </div>
-                    <div class="col-3">
-                        <select class="form-control select2" id="loan_type_three" name="loan_type_three"></select>
                     </div>
                 </div>
                 <div class="row">
@@ -394,16 +384,12 @@
     }
     
     $(document).ready(function () {
-
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+        var arrData = @json($data);
 
         loadDataEmployeeNo('#employee_no_from');
         loadDataEmployeeNo('#employee_no_to');
-        loadDataLoanCode('#loan_type_from');
-        loadDataLoanCode('#loan_type_to');
-        loadDataLoanCode('#loan_type_one');
-        loadDataLoanCode('#loan_type_two');
-        loadDataLoanCode('#loan_type_three');
+        loadDataLoanCode();
         loadDataGroupAuthorize('#group_authorized_code_from');
         loadDataGroupAuthorize('#group_authorized_code_to');
         loadDataPositionCode();
@@ -412,13 +398,36 @@
 
         loadDataFirstLastAllEmployeeNo('#employee_no_from', 'First');
         loadDataFirstLastAllEmployeeNo('#employee_no_to', 'Last'); 
-        loadDataFirstLastAllLoanCode('#loan_type_from', 'First');
-        loadDataFirstLastAllLoanCode('#loan_type_to', 'Last'); 
+        loadDataFirstLastAllLoanCode();
         loadDataFirstLastAllGroupAuthorize('#group_authorized_code_from', 'First');
         loadDataFirstLastAllGroupAuthorize('#group_authorized_code_to', 'Last');
         loadDataFirstLastAllPosition();
         loadDataFirstLastAllLocation();
         loadDataFirstLastAllRanking();
+
+        let pickerPeriod = $('#period').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "d-M-Y",
+            dateFormat: "Y-m-d",
+            defaultDate: "today",
+            plugins: [
+                new monthSelectPlugin({
+                    shorthand: true, //defaults to false
+                    dateFormat: "Y-m-01", //defaults to "F Y"
+                    altFormat: "F Y", //defaults to "F Y"
+                })
+            ],
+            onReady: function () {
+                var flatPickrInstance = this;
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings("#period-calendar").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
+
+        pickerPeriod.setDate(arrData[0].periodYear + "-" + moment().month(arrData[0].periodMonth - 1).format('MM') + "-01");
 
         $.ajax({
             url: "{{ url('personnel/report/level/check') }}",
@@ -466,17 +475,6 @@
 
         $('select').on('select2:close', function (e) {
             $('.header-select').remove();
-        });
-
-        $('#div_loan_type').hide();
-
-        $('input[type=radio][name=report_type]').change(function() {
-            if (this.value == 'S') {
-                $('#div_loan_type').show();
-            }
-            else{
-                $('#div_loan_type').hide();
-            }
         });
 
         function loadDataEmployeeNo(field = '') {
@@ -565,7 +563,7 @@
             });
         }
 
-        function loadDataLoanCode(field = '') {
+        function loadDataLoanCode() {
             function formatSelect(data) {
                 if (data.loading) {
                     return $search
@@ -582,7 +580,7 @@
             }
 
             var headerIsAppend = false;
-            $(field).on('select2:open', function (e) {
+            $('#loan_type').on('select2:open', function (e) {
                 if (!headerIsAppend) {
                     html = '<div class="row">' +
                         '<div class="col-6"><b>Loan Code</b></div>' +
@@ -595,7 +593,7 @@
 
             var $search = $('<div class="spinner-border spinner-border-sm"></div><span> Updating...</span>');
 
-            $(field).select2({
+            $('#loan_type').select2({
                 width: '100%',
                 placeholder: 'Choose Loan Code',
                 allowClear: true,
@@ -608,7 +606,7 @@
                     }
                 },
                 ajax: {
-                    url: "{{ url('/loan_code/api') }}",
+                    url: "{{ url('/loan_code/all/api') }}",
                     dataType: 'json',
                     delay: 250,
                     type: "GET",
@@ -638,14 +636,11 @@
         function loadDataFirstLastAllLoanCode(field = '', func = '') {
             $.ajax({
                 type: 'GET',
-                url: "{{ url('/loan_code/func/api') }}",
-                data: {
-                    'func': func
-                }
+                url: "{{ url('/loan_code/function/api') }}",
             }).then(function (data) {
                 var $newOption = $("<option selected='selected'></option>").val(data.loanCode).text(
                     data.loanDescription);
-                $(field).append($newOption).trigger('change');
+                $('#loan_type').append($newOption).trigger('change');
             });
         }
 
