@@ -432,7 +432,7 @@
                                 .message);
                             setTimeout(function () {
                                 window.location =
-                                    "{{ url('payroll/change_employee_no') }}";
+                                    "{{ url('utilities/change_employee_no') }}";
                             }, 3000);
                         } else {
                             $("#btn-process").prop("disabled", false);

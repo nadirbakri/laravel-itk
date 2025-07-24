@@ -85,17 +85,17 @@
 			</a>
 		</div>
 		<div class="div-form">
-            <form id="change_employee_no_form" method="post">
+            <form id="change_employee_no_history_form" method="post">
                 @csrf   
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-4">
                         <div class="form-group">
                             <label for="employee_no">{{ __('utilities_change_employee_number.label_employee_no') }}</label>
                             <span class="required">*</span>
                             <select class="form-control select2" id="employee_no" name="employee_no"></select>
                         </div>
                     </div>
-                    <div class="col-6">
+                    <div class="col-4">
                         <div class="form-group">
                             <label for="change_reason_code">{{ __('utilities_change_employee_number.label_change_reason_code') }}</label>
                             <span class="required">*</span>
@@ -105,22 +105,22 @@
                 </div>
                 <div class="row">
                     <div class="col-3">
-                        <button type="submit" class="btn btn-primary" name="btn-process" id="btn-process"
+                        <button type="button" class="btn btn-primary" name="btn-search" id="btn-search"
                             style="width: 100%;">
-                            <i class="fa fa-floppy-o"></i> {{ __('utilities_change_employee_number.btn_process') }}
+                            <img src="{{ url('icons/mob/button/button-search.svg') }}" alt="search"> {{ __('utilities_change_employee_number.btn_search') }}
                         </button>
                     </div>
-                    <div class="col-3">
-                        <a class="btn btn-outline-primary" href="{{ url('utilities/change_employee_no') }}" target="iframe_dashboard"
-                            name="btn-cancel" id="btn-cancel" style="width: 100%;">
-                            <i class="fa fa-times-circle"></i> {{ __('utilities_change_employee_number.btn_cancel') }}
-                        </a>
+                </div>
+                <div class="row">
+                    <div class="title" style="display: flex; justify-content: space-between; width: 100%; align-items: center; margin-inline: 20px">
+                        <h6>{{ __('utilities_change_employee_number.judul_history') }}</h6>
+                        <input style="width: 180px;" type="text" class="form-control" id="search-bar" name="search-bar" placeholder="{{ __('utilities_change_employee_number.btn_search') }}" />
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-12">
                         <div class="div-table">
-                            <table id="change_employee_number_table" class="table hover">
+                            <table id="change_employee_number_history_table" class="table hover">
                                 <thead>
                                     <tr>
                                         <th></th>
@@ -211,6 +211,10 @@
     
   $(document).ready(function() {
     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+    let table = null;
+
+    loadDataEmployeeNo();
+    loadDataChangeReasonCode();
 
     $('#change_employee_no_history_table thead tr').clone(true).appendTo('#change_employee_no_history_table thead');
     $('#change_employee_no_history_table thead tr:eq(1) th:not(:first-child)').each( function (i) {
@@ -227,17 +231,46 @@
         } );
     });
 
-    loadDataEmployeeNo();
-    loadDataChangeReasonCode();
+    $('#btn-search').on('click', function () {
+        $("#btn-search").prop("disabled", true);
+        $("#btn-search").html(
+            '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+        );
 
-    $('#employee_no').on('select2:select', function (e) {
-        var data = $('#employee_no').select2('data');
-        $('#employee_name').val(htmlDecode(data[0].title));
-    });
+        load_table_change_employee_number_history ()
+    })
 
-    $('#employee_no').on('select2:unselecting', function (e) {
-        $('#employee_name').val('');
-    });
+    function load_table_change_employee_number_history () {
+        table = $('#change_employee_no_history_table').DataTable({
+            processing: true,
+            // serverSide: true,
+            orderCellsTop: true,
+            ajax: "{{ url('utilities/change_employee_no_history/table') }}",
+            data: $('#change_employee_no_history_form').serialize(),
+            error: function(jqXHR, ajaxOptions, thrownError) {
+                alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
+            },
+            "sDom": 'lfrtip',
+            'sPaginationType': 'full_numbers',
+            "order": [[ 1, "asc" ]],
+            columns: [
+                {data: 'employeeNoBefore', name: 'employeeNoBefore'},
+                {data: 'employeeNoAfter', name: 'employeeNoAfter'},
+                {data: 'changeReasonName', name: 'changeReasonName'},
+                {data: 'changeRemarks', name: 'changeRemarks'},
+                {data: 'date', name: 'date', 
+                    render: function (data, type, row){
+                        return moment(data).format('YYYY-MM-DD');
+                    }
+                },
+            ],
+        });
+
+        $("#btn-search").prop("disabled", false);
+        $("#btn-search").html(
+            "<img src={{ url('icons/mob/button/button-search.svg') }} alt='export'> {{ __('utilities_change_employee_number.btn_search') }}"
+        );
+    }
 
     function htmlDecode(value) {
         return $("<textarea/>").html(value).text();

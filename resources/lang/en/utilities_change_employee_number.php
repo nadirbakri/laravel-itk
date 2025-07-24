@@ -12,7 +12,8 @@ return [
     |
     */
 
-    'judul' => 'Change Employee Number Page',
+    'judul' => 'Change Employee No Page',
+    'judul_history' => 'Change Employee No History',
     'list' => 'Utilities Menu List',
     'label_employee_no' => 'Employee No',
     'label_employee_name' => 'Employee Name',
@@ -21,6 +22,7 @@ return [
     'label_change_remarks' => 'Change Remarks',
     'btn_process' => 'Process',
     'btn_cancel' => 'Cancel',
+    'btn_search' => 'Search',
     'alert_success' => 'Success !',
     'field_mandatory' => 'This Field is Mandatory'
 

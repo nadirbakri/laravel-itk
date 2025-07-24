@@ -12,7 +12,8 @@ return [
     |
     */
 
-    'judul' => 'Halaman Ganti Nomor Pegawai',
+    'judul' => 'Halaman Ganti Nomor Karyawan',
+    'judul_history' => 'Riwayat Ganti Nomor Karyawan',
     'list' => 'Daftar Menu Utilities',
     'label_employee_no' => 'No Karyawan',
     'label_employee_name' => 'Nama Karyawan',
@@ -21,6 +22,7 @@ return [
     'label_change_remarks' => 'Catatan Penggantian',
     'btn_process' => 'Proses',
     'btn_cancel' => 'Batal',
+    'btn_search' => 'Pencarian',
     'alert_success' => 'Sukses !',
     'field_mandatory' => 'Field ini Harus Diisi'
 

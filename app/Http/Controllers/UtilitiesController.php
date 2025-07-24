@@ -202,6 +202,11 @@ class UtilitiesController extends Controller
     	return view('utilities.utilities_reference_mobile');
     }
 
+    public function pageChangeEmployeeNumberHistoryUtilities()
+    {
+    	return view('utilities.utilities_change_employee_number_history');
+    }
+
     public function tableUserSecurityMaintenanceUtilities(Request $request)
     {
         try {
@@ -1434,7 +1439,7 @@ class UtilitiesController extends Controller
         }
     }
 
-    public function tableChangeEmployeeNoUtilities(Request $request)
+    public function tableChangeEmployeeNoHistoryUtilities(Request $request)
     {
         try {
             $client = new Client([
@@ -1443,11 +1448,23 @@ class UtilitiesController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
+            dd(json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'employeeNo' => $request->employeeNo,
+                        'changeReasonCode' => $request->changeReasonCode,
+                        "languageCode" => strtoupper(App::getLocale()),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName')
+                    ]
+                    ));
+
             $response = $client->post(env('API_URL') . '/personel/PeChangeEmployeeNo/GetChangeHistory',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
-                        'menuID' => $request->menuID,
+                        'employeeNo' => $request->employeeNo,
+                        'changeReasonCode' => $request->changeReasonCode,
                         "languageCode" => strtoupper(App::getLocale()),
                         'logActionUserID' => Session::get('userID'),
                         'logActionUsername' => Session::get('userName')
@@ -1467,10 +1484,10 @@ class UtilitiesController extends Controller
 
         $arrResult = json_decode($response->getBody()->getContents());
 
-        if(!isset($arrResult->dataListSet[0]->menuChild) && empty($arrResult)){
+        if(!isset($arrResult->dataListSet[0]->employeeData[0]->historyData) && empty($arrResult)){
             return Datatables::of([])->make(true);
         }else{
-            return Datatables::of($arrResult->dataListSet[0]->menuChild)->make(true);
+            return Datatables::of($arrResult->dataListSet[0]->employeeData[0]->historyData)->make(true);
         }
     }
 
