@@ -24,6 +24,8 @@ return [
     'btn_cancel' => 'Batal',
     'btn_search' => 'Pencarian',
     'alert_success' => 'Sukses !',
-    'field_mandatory' => 'Field ini Harus Diisi'
-
+    'employee_no_required' => 'No Karyawan harus diisi',
+    'employee_no_new_required' => 'No Karyawan Baru harus diisi',
+    'change_reason_code_required' => 'Kode Alasan Penggantian harus diisi',
+    'change_remarks_required' => 'Catatan Penggantian harus diisi',
 ];

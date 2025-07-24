@@ -24,6 +24,8 @@ return [
     'btn_cancel' => 'Cancel',
     'btn_search' => 'Search',
     'alert_success' => 'Success !',
-    'field_mandatory' => 'This Field is Mandatory'
-
+    'employee_no_required' => 'Employee No is required',
+    'employee_no_new_required' => 'Employee No New is required',
+    'change_reason_code_required' => 'Change Reason Code is required',
+    'change_remarks_required' => 'Change Remarks is required',
 ];

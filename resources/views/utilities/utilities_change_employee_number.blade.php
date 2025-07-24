@@ -385,13 +385,25 @@
                 employee_no_new: {
                     required: true,
                 },
+                change_reason_code: {
+                    required: true,
+                },
+                change_remarks: {
+                    required: true,
+                },
             },
             messages: {
                 employee_no: {
-                    required: "{{ __('utilities_change_employee_number.field_mandatory') }}",
+                    required: "{{ __('utilities_change_employee_number.employee_no_required') }}",
                 },
                 employee_no_new: {
-                    required: "{{ __('utilities_change_employee_number.field_mandatory') }}",
+                    required: "{{ __('utilities_change_employee_number.employee_no_new_required') }}",
+                },
+                change_reason_code: {
+                    required: "{{ __('utilities_change_employee_number.change_reason_code_required') }}",
+                },
+                change_remarks: {
+                    required: "{{ __('utilities_change_employee_number.change_remarks_required') }}",
                 },
             },
             highlight: function (element) {

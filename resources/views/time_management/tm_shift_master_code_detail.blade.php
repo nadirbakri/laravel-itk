@@ -155,9 +155,9 @@
                     </div>
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="total_hour">{{ __('tm_shift_master_code.label_total_hour') }}</label>
-                            <input type="number" class="form-control" id="total_hour" name="total_hour"
-                                placeholder="{{ __('tm_shift_master_code.label_total_hour') }}" readonly>
+                            <label for="cross_hour_tolerance">{{ __('tm_shift_master_code.label_cross_hour_tolerance') }}</label>
+                            <input type="number" class="form-control" id="cross_hour_tolerance" name="cross_hour_tolerance"
+                                placeholder="{{ __('tm_shift_master_code.label_cross_hour_tolerance') }}" readonly>
                         </div>
                     </div>
                 </div>
@@ -1480,10 +1480,13 @@
             $('#omt_holiday_on_saturday_and_on_factorx').val("");
             
         } else if (func == 'edit') {
+            console.log(arrData[0])
             $('#record_status').val(((typeof arrData[0].recordStatus !== 'undefined') ? arrData[0].recordStatus : ''));
             $('#record_function').val("Edit");
             $('#shift_code').val(((typeof arrData[0].shiftCode !== 'undefined') ? arrData[0].shiftCode : '')).prop('readonly', true);
             $('#description').val(htmlDecode(((typeof arrData[0].shiftName !== 'undefined') ? arrData[0].shiftName : '')));
+            $('#cross_day').val(htmlDecode(((typeof arrData[0].flagCrossDay !== 'undefined') ? arrData[0].flagCrossDay : '')));
+            $('#cross_hour_tolerance').val(htmlDecode(((typeof arrData[0].crossHourTolerance !== 'undefined') ? arrData[0].crossHourTolerance : '')));
 
             var flexy_work_hour = moment(((typeof arrData[0].flexyTime !== 'undefined') ? arrData[0].flexyTime : '')).format('HH:mm:ss');
             // console.log(flexy_work);
@@ -1627,7 +1630,7 @@
 
         $('#check_cross_day').on('change', function() {
             const isChecked = this.checked
-            $('#total_hour').prop('readonly', !isChecked)
+            $('#cross_hour_tolerance').prop('readonly', !isChecked)
         })
 
         function htmlDecode(value) {

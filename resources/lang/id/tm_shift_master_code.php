@@ -17,7 +17,7 @@ return [
     'label_time_in' => 'Waktu Masuk',
     'label_time_out' => 'Waktu Keluar',
     'label_flexy' => 'Fleksibel',
-    'label_total_hour' => 'Total Jam',
+    'label_cross_hour_tolerance' => 'Toleransi Lintas Jam',
     'label_cross_day' => 'Lintas Hari',
     'label_record_status' => 'Rekam Status',
     'shift_code_required' => 'Kode Shift Harus Diisi',

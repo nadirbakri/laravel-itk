@@ -161,6 +161,7 @@ Route::get('personnel/employee_turn_over_report', 'PersonelController@pageEmploy
 Route::get('personnel/employee_termination', 'PersonelController@pageEmployeeTerminationPersonel');
 Route::get('personnel/insurance', 'PersonelController@pageInsurancePersonel');
 Route::get('personnel/family_dependent', 'PersonelController@pageFamilyDependentPersonel');
+Route::get('personnel/employee_ess_configuration', 'PersonelController@pageEmployeeESSConfigurationPersonel');
 
 Route::get('personnel/personal_data/table', 'PersonelController@tablePersonalDataPersonel');
 Route::get('personnel/performance/table', 'PersonelController@tablePerformancePersonel');
@@ -1009,6 +1010,7 @@ Route::get('utilities/menu_master_mobile_setting', 'UtilitiesController@pageMenu
 Route::get('utilities/group_authorization', 'UtilitiesController@pageAuthorizationCodeGroupUtilities');
 Route::get('utilities/group_user_access', 'UtilitiesController@pageUserAccessGroupUtilities');
 Route::get('utilities/change_employee_no', 'UtilitiesController@pageChangeEmployeeNumberUtilities');
+Route::get('utilities/change_employee_no_history', 'UtilitiesController@pageChangeEmployeeNumberHistoryUtilities');
 Route::get('utilities/user_log', 'UtilitiesController@pageUserLogUtilities');
 Route::get('utilities/audit_trail', 'UtilitiesController@pageAuditTrailUtilities');
 Route::get('utilities/export_personal_data', 'UtilitiesController@pageExportPersonalDataUtilities');
@@ -1056,6 +1058,7 @@ Route::get('utilities/user_security_maintenance/level_authorization/table', 'Uti
 Route::get('utilities/group_user_access/user/table', 'UtilitiesController@tableUserAccessGroupUserUtilities');
 Route::get('utilities/menu_master/configure_menu/table', 'UtilitiesController@tableMenuMasterConfigureMenuUtilities');
 Route::get('utilities/menu_master_mobile/child/table', 'UtilitiesController@tableMenuMasterMobileChildUtilities');
+Route::get('utilities/change_employee_no_history/table', 'UtilitiesController@tableChangeEmployeeNoHistoryUtilities');
 
 Route::get('utilities/group_authorization/status', 'UtilitiesController@statusAuthorizationCodeGroupUtilities');
 Route::get('utilities/group_user_access/status', 'UtilitiesController@statusUserAccessGroupUtilities');

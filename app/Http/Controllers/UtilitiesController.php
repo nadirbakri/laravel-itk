@@ -1448,17 +1448,6 @@ class UtilitiesController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            dd(json_encode(
-                    [
-                        'companyCode' => Session::get('companyCode'),
-                        'employeeNo' => $request->employeeNo,
-                        'changeReasonCode' => $request->changeReasonCode,
-                        "languageCode" => strtoupper(App::getLocale()),
-                        'logActionUserID' => Session::get('userID'),
-                        'logActionUsername' => Session::get('userName')
-                    ]
-                    ));
-
             $response = $client->post(env('API_URL') . '/personel/PeChangeEmployeeNo/GetChangeHistory',
                 ['body' => json_encode(
                     [
@@ -1484,7 +1473,7 @@ class UtilitiesController extends Controller
 
         $arrResult = json_decode($response->getBody()->getContents());
 
-        if(!isset($arrResult->dataListSet[0]->employeeData[0]->historyData) && empty($arrResult)){
+        if(empty($arrResult) || count($arrResult->dataListSet) === 0){
             return Datatables::of([])->make(true);
         }else{
             return Datatables::of($arrResult->dataListSet[0]->employeeData[0]->historyData)->make(true);
@@ -2385,7 +2374,7 @@ class UtilitiesController extends Controller
                         'employeeNoBefore' => $request->employee_no,
                         'employeeNoAfter' => $request->employee_no_new,
                         'changeReasonCode' => $request->change_reason_code,
-                        'changeRemarks' => $request->change_reason_code,
+                        'changeRemarks' => $request->change_remarks,
                         'date' => date("Y-m-d\TH:i:s"),
                         "sessionID" => 0,
                         'sessionUserID' => Session::get('userID'),

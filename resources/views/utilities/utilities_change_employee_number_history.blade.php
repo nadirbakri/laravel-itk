@@ -73,6 +73,34 @@
         .required {
             color: red;
         }
+
+        #loading {
+			display: none;
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(255, 255, 255, 0.8);
+			z-index: 9999;
+		}
+
+		.spinner {
+            position: absolute;
+			margin-left: 45%;
+			margin-top: 10%;
+			border-radius: 50%;
+			width: 50px;
+			height: 50px;
+			border-radius: 50%;
+			border: 5px solid #ccc;
+			border-top-color: #333;
+			animation: spin 1s infinite linear;
+		}
+
+        @keyframes spin {
+		    to { transform: rotate(360deg); }
+		}
 	</style>
 </head>
 
@@ -105,22 +133,24 @@
                 </div>
                 <div class="row">
                     <div class="col-3">
-                        <button type="button" class="btn btn-primary" name="btn-search" id="btn-search"
+                        <button class="btn btn-primary" name="btn-search" id="btn-search"
                             style="width: 100%;">
                             <img src="{{ url('icons/mob/button/button-search.svg') }}" alt="search"> {{ __('utilities_change_employee_number.btn_search') }}
                         </button>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="title" style="display: flex; justify-content: space-between; width: 100%; align-items: center; margin-inline: 20px">
+                    <div class="col-12 mt-4">
                         <h6>{{ __('utilities_change_employee_number.judul_history') }}</h6>
-                        <input style="width: 180px;" type="text" class="form-control" id="search-bar" name="search-bar" placeholder="{{ __('utilities_change_employee_number.btn_search') }}" />
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-12">
+                        <div id="loading">
+                            <div class="spinner"></div>
+                        </div>
                         <div class="div-table">
-                            <table id="change_employee_number_history_table" class="table hover">
+                            <table id="change_employee_no_history_table" class="table hover">
                                 <thead>
                                     <tr>
                                         <th></th>
@@ -212,6 +242,7 @@
   $(document).ready(function() {
     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
     let table = null;
+    let arrayData = []
 
     loadDataEmployeeNo();
     loadDataChangeReasonCode();
@@ -231,22 +262,85 @@
         } );
     });
 
-    $('#btn-search').on('click', function () {
+    $("#change_employee_no_history_form").submit((e)=>{
+        e.preventDefault();
+
         $("#btn-search").prop("disabled", true);
         $("#btn-search").html(
             '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+
         );
 
-        load_table_change_employee_number_history ()
-    })
+        $('#loading').show();
 
-    function load_table_change_employee_number_history () {
+        const employee_no = $("#employee_no").val();
+        const change_reason_code = $("#change_reason_code").val();
+        
+        if (!$("#change_employee_no_history_form").data('validator')) {
+            $("#change_employee_no_history_form").validate({
+                rules: {
+                    employee_no: {
+                        required: true,
+                    },
+                    change_reason_code: {
+                        required: true,
+                    },
+                },
+                messages: {
+                    employee_no: {
+                        required: "{{ __('utilities_change_employee_number.employee_no_required') }}",
+                    },
+                    change_reason_code: {
+                        required: "{{ __('utilities_change_employee_number.change_reason_code_required') }}",
+                    },
+                },
+                highlight: function (element) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function (element) {
+                    $(element).removeClass('is-invalid');
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').append(error);
+                },
+            });
+        }
+
+        if ($("#change_employee_no_history_form").valid()) {
+            load_data_change_employee_number_history(employee_no, change_reason_code);
+        } else {
+            $("#btn-search").prop("disabled", false);
+            $("#btn-search").html(
+                "<img src={{ url('icons/mob/button/button-search.svg') }} alt='export'> {{ __('utilities_change_employee_number.btn_search') }}"
+            );
+            $('#loading').hide();
+        }
+    });
+
+    function load_data_change_employee_number_history(employee_no, change_reason_code){
+        $.ajax({
+            type: 'GET',
+            url: "{{ url('/utilities/change_employee_no_history/table') }}",
+            data: {
+                'employeeNo': employee_no,
+                'changeReasonCode': change_reason_code,
+            }
+        }).then(function (data) {
+            arrayData = data.data;
+            $('#change_employee_no_history_table').DataTable().destroy();
+            load_table_change_employee_number_history();
+            $('#loading').hide();
+        });
+    }
+
+    function load_table_change_employee_number_history(employee_no, change_reason_code) {
         table = $('#change_employee_no_history_table').DataTable({
             processing: true,
             // serverSide: true,
             orderCellsTop: true,
-            ajax: "{{ url('utilities/change_employee_no_history/table') }}",
-            data: $('#change_employee_no_history_form').serialize(),
+            data: arrayData,
             error: function(jqXHR, ajaxOptions, thrownError) {
                 alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
             },
@@ -254,13 +348,21 @@
             'sPaginationType': 'full_numbers',
             "order": [[ 1, "asc" ]],
             columns: [
+                {
+                    orderable: false,
+                    targets: 0, 
+                    "defaultContent": '',
+                    render: function(data, type, row) {
+                        return type === 'display'? '<input class="chk-select" type="checkbox">' : '';
+                    }
+                },
                 {data: 'employeeNoBefore', name: 'employeeNoBefore'},
                 {data: 'employeeNoAfter', name: 'employeeNoAfter'},
                 {data: 'changeReasonName', name: 'changeReasonName'},
                 {data: 'changeRemarks', name: 'changeRemarks'},
                 {data: 'date', name: 'date', 
                     render: function (data, type, row){
-                        return moment(data).format('YYYY-MM-DD');
+                        return moment(data).format('DD MMM YYYY');
                     }
                 },
             ],
@@ -444,104 +546,6 @@
                 selector: 'td:first-child'
             }
         });
-    }
-
-    $("#btn-process").click(function () {
-        $(this).prop("disabled", true);
-        $(this).html(
-            '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
-        );
-        $("#change_employee_no_form").submit();
-    });
-
-    if ($("#change_employee_no_form").length > 0) {
-        $("#change_employee_no_form").validate({
-        rules: {
-                employee_no: {
-                    required: true,
-                },
-                employee_no_new: {
-                    required: true,
-                },
-            },
-            messages: {
-                employee_no: {
-                    required: "{{ __('utilities_change_employee_number.field_mandatory') }}",
-                },
-                employee_no_new: {
-                    required: "{{ __('utilities_change_employee_number.field_mandatory') }}",
-                },
-            },
-            highlight: function (element) {
-                $(element).addClass('is-invalid');
-            },
-            unhighlight: function (element) {
-                $(element).removeClass('is-invalid');
-            },
-            errorElement: 'span',
-            errorPlacement: function (error, element) {
-                $("#btn-process").prop("disabled", false);
-                $("#btn-process").html(
-                    '<i class="fa fa-floppy-o"></i> {{ __("utilities_change_employee_number.btn_process") }}'
-                );
-
-                error.addClass('invalid-feedback');
-                element.closest('.form-group').append(error);
-            },
-            submitHandler: function (form) {
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                $.ajax({
-                    url: "{{ url('utilities/change_employee_no/proses') }}",
-                    type: "POST",
-                    data: $('#change_employee_no_form').serialize(),
-                    success: function (response) {
-                        if (response.status == "true") {
-                            $("#btn-process").prop("disabled", false);
-                            $("#btn-process").html(
-                                '<i class="fa fa-floppy-o"></i> {{ __("utilities_change_employee_number.btn_process") }}'
-                            );
-                            
-                            $('#notification_success').modal('show');
-                            $('#message-notification-success').html(response
-                                .message);
-                            setTimeout(function () {
-                                window.location =
-                                    "{{ url('payroll/change_employee_no') }}";
-                            }, 3000);
-                        } else {
-                            $("#btn-process").prop("disabled", false);
-                            $("#btn-process").html(
-                                '<i class="fa fa-floppy-o"></i> {{ __("utilities_change_employee_number.btn_process") }}'
-                            );
-
-                            $('#notification_error').modal('show');
-                            if (response.message == null || response.message ==
-                                '') {
-                                $('#message-notification-error').html(
-                                    "{{ __('login.error') }}");
-                            } else {
-                                $('#message-notification-error').html(response
-                                    .message);
-                            }
-                        }
-                    },
-                    error: function (response) {
-                        $("#btn-process").prop("disabled", false);
-                        $("#btn-process").html(
-                            '<i class="fa fa-floppy-o"></i> {{ __("utilities_change_employee_number.btn_process") }}'
-                        );
-
-                        $('#notification_error').modal('show');
-                        $('#message-notification-error').html(response);
-                    }
-
-                });
-            }
-        })
     }
   });
 </script>

@@ -675,7 +675,7 @@ class MedicalController extends Controller
                     [
                         'companyCode' => Session::get('companyCode'),
                         'recordStatus' => 'A',
-                        'activityType' => 'V',
+                        'activityType' => 'VACCINE',
                         'sessionID' => 0,
                         'sessionUserID' => Session::get('userID'),
                         'userID' => Session::get('userID'),
@@ -719,7 +719,7 @@ class MedicalController extends Controller
                     [
                         'companyCode' => Session::get('companyCode'),
                         'recordStatus' => 'A',
-                        'activityType' => 'V',
+                        'activityType' => 'VACCINE',
                         'sessionID' => 0,
                         'sessionUserID' => Session::get('userID'),
                         'userID' => Session::get('userID'),
@@ -1324,7 +1324,7 @@ class MedicalController extends Controller
                     [
                         'companyCode' => Session::get('companyCode'),
                         'activityCode' => $request->activityCode,
-                        'activityType' => 'V',
+                        'activityType' => 'VACCINE',
                         'languageCode' => strtoupper(App::getLocale()),
                         'userID' => Session::get('userID'),
                         'logActionUserID' => Session::get('userID'),
@@ -2398,7 +2398,7 @@ class MedicalController extends Controller
                 'recordStatus' => 'A',
                 'activityCode' => $request->vaccine_code,
                 'activityName' => $request->vaccine_name,
-                'activityType' => 'V',
+                'activityType' => 'VACCINE',
                 'sessionID' => 0,
                 'sessionUserID' => Session::get('userID'),
                 'logActionUserID' => Session::get('userID'),
@@ -2452,19 +2452,22 @@ class MedicalController extends Controller
             $param = [
                 'companyCode' => Session::get('companyCode'),
                 'activityCode' => $request->vaccine_code,
-                'activityType' => 'V',
+                'activityType' => 'VACCINE',
                 'batchCode' => $request->batch_code,
                 'capacity' => $request->capacity,
                 'sequence' => (int) $request->dose,
                 'description' => $request->batch_description,
-                // 'expiredDate' => $request->expired_date,
-                // 'serialNumber' => $request->serial_number,
+                'expiredDate' => $request->expired_date,
+                'serialNUmber' => $request->serial_number,
                 'sessionID' => 0,
                 'sessionUserID' => Session::get('userID'),
                 'logActionUserID' => Session::get('userID'),
                 'logActionUsername' => Session::get('userName'),
                 "languageCode" => App::getLocale()
             ];
+
+
+            // dd(json_encode([$param]));
 
             if($request->record_function_detail == 'New'){
                 $response = $client->post(env('API_URL') . '/personel/HealthActivities/InsertHealthActivitiesDetail',
@@ -2509,7 +2512,8 @@ class MedicalController extends Controller
 
             $detailActivities[] = [
                 'sequence' => (int) $request['number_of_dose'],
-                'activityType' => 'V',
+                'activityType' => 'VACCINE',
+                'activityCode' => $request['vaccine_name'],
                 'batchCode' => $request['batch_code_hidden'],
                 'address' => $request['description'],
                 'date' => $request['vaccine_date'] . 'T' . $request['vaccine_time'],
@@ -2519,12 +2523,15 @@ class MedicalController extends Controller
             ];
 
             foreach($request->employee_no as $employeeNo){
+                $dataEmployeeNo[] = $employeeNo;
+
                 $param[] = [
                     'companyCode' => Session::get('companyCode'),
                     'employeeNo' => $employeeNo,
+                    'activitiesName' => $request['title'],
                     'address' => $request['name_of_places'],
                     'code' => $request['vaccine_name'],
-                    'description' => $request['title'],
+                    'description' => $request['description'],
                     'type' => 'V',
                     'date' => $request['vaccine_date'] . 'T' . $request['vaccine_time'],
                     'detailActivities' => $detailActivities,
@@ -2536,10 +2543,28 @@ class MedicalController extends Controller
                 ];
             }
 
+            $param_sequence = [
+                'companyCode' => Session::get('companyCode'),
+                'activityType' => 'VACCINE',
+                'activityCode' => $request['vaccine_name'],
+                'employeeToRegister' => $dataEmployeeNo,
+                'nextBatchCode' => $request['batch_code_hidden'],
+                'nextSequence' => $request['batch_code_hidden'],
+                "languageCode" => App::getLocale(),
+                "sessionID" => 0,
+                "sessionUserID" => Session::get('userID'),
+                "logActionUserID" => Session::get('userID'),
+                "logActionUsername" => Session::get('userID')
+            ];
+
             // dd(json_encode($param));
 
             $response = $client->post(env('API_URL') . '/personel/HealthActivities/InsertHealthActivities',
                 ['body' => json_encode($param)]
+            );
+
+            $response2 = $client->post(env('API_URL') . '/personel/HealthActivities/UpdateSequenceAcitivity',
+                ['body' => json_encode($param_sequence)]
             );
 
         } catch (RequestException $e) {
@@ -3868,7 +3893,7 @@ class MedicalController extends Controller
                 $param[] = [
                     'companyCode' => Session::get('companyCode'),
                     'activityCode' => $value['activityCode'],
-                    'activityType' => 'V',
+                    'activityType' => 'VACCINE',
                     "languageCode" => App::getLocale(),
                     "sessionID" => 0,
                     "sessionUserID" => Session::get('userID'),
@@ -3916,7 +3941,7 @@ class MedicalController extends Controller
                 $param[] = [
                     'companyCode' => Session::get('companyCode'),
                     'activityCode' => $value['activityCode'],
-                    'activityType' => 'V',
+                    'activityType' => 'VACCINE',
                     'batchCode' => $value['batchCode'],
                     "languageCode" => App::getLocale(),
                     "sessionID" => 0,

@@ -290,6 +290,10 @@ class DashboardController extends Controller
             return response()->json(['totalEmployee' => 0, 'openPosition' => 0, 'maleEmployee' => 0, 'femaleEmployee' => 0, 'ageFirst' => 0, 'ageSecond' => 0, 'ageThird' => 0, 'ageFourth' => 0, 'ageFifth' => 0, 'joinFirst' => 0, 'joinSecond' => 0, 'joinThird' => 0, 'joinFourth' => 0,
             'endContractData' => [], 'endContractMonth' => 0, 'birthdayData' => [], 'birthdayMonth' => 0, 'endProbationData' => [], 'endProbationMonth' => 0, 'joinData' => [], 'joinMonth' => 0, 'hireData' => [], 'hireMonth' => 0, 'resignData' => [], 'resignMonth' => 0, 'dataAbsent' => []]);
         }else{
+            $totalEmployee = array_filter($arrResult->dataListSet, function($obj){
+                if ($obj->terminationDate == null) return true;
+                return false;
+            });
             $maleEmployee = array_filter($arrResult->dataListSet, function($obj){
                 if(isset($obj->gender)){
                     if ($obj->gender == 'M' && $obj->terminationDate == null) return true;
@@ -430,11 +434,11 @@ class DashboardController extends Controller
             });
 
             if($arrResult2->dataListSet == null){
-                return response()->json(['totalEmployee' => count($arrResult->dataListSet), 'openPosition' => 0, 'maleEmployee' => count($maleEmployee), 'femaleEmployee' => count($femaleEmployee), 'ageFirst' => count($ageFirst), 'ageSecond' => count($ageSecond), 'ageThird' => count($ageThird),
+                return response()->json(['totalEmployee' => count($totalEmployee), 'openPosition' => 0, 'maleEmployee' => count($maleEmployee), 'femaleEmployee' => count($femaleEmployee), 'ageFirst' => count($ageFirst), 'ageSecond' => count($ageSecond), 'ageThird' => count($ageThird),
                 'ageFourth' => count($ageFourth), 'ageFifth' => count($ageFifth), 'joinFirst' => count($joinFirst), 'joinSecond' => count($joinSecond), 'joinThird' => count($joinThird), 'joinFourth' => count($joinFourth), 'endContractData' => $endContractMonth, 'endContractMonth' => count($endContractMonth), 
                 'birthdayData' => $birthdayMonth, 'birthdayMonth' => count($birthdayMonth), 'endProbationData' => $endProbationMonth, 'endProbationMonth' => count($endProbationMonth), 'joinData' => $joinMonth, 'joinMonth' => count($joinMonth), 'resignData' => $resignMonth, 'resignMonth' => count($resignMonth), 'dataAbsent' => []]);
             }else{
-                return response()->json(['totalEmployee' => count($arrResult->dataListSet), 'openPosition' => 0, 'maleEmployee' => count($maleEmployee), 'femaleEmployee' => count($femaleEmployee), 'ageFirst' => count($ageFirst), 'ageSecond' => count($ageSecond), 'ageThird' => count($ageThird),
+                return response()->json(['totalEmployee' => count($totalEmployee), 'openPosition' => 0, 'maleEmployee' => count($maleEmployee), 'femaleEmployee' => count($femaleEmployee), 'ageFirst' => count($ageFirst), 'ageSecond' => count($ageSecond), 'ageThird' => count($ageThird),
                 'ageFourth' => count($ageFourth), 'ageFifth' => count($ageFifth), 'joinFirst' => count($joinFirst), 'joinSecond' => count($joinSecond), 'joinThird' => count($joinThird), 'joinFourth' => count($joinFourth), 'endContractData' => $endContractMonth, 'endContractMonth' => count($endContractMonth), 
                 'birthdayData' => $birthdayMonth, 'birthdayMonth' => count($birthdayMonth), 'endProbationData' => $endProbationMonth, 'endProbationMonth' => count($endProbationMonth), 'joinData' => $joinMonth, 'joinMonth' => count($joinMonth), 'resignData' => $resignMonth, 'resignMonth' => count($resignMonth), 'dataAbsent' => $arrResult2->dataListSet[0]->summaryAmount]);
             }

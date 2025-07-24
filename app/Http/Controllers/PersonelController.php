@@ -621,6 +621,11 @@ class PersonelController extends Controller
         return view('personel.personel_family_dependent');
     }
 
+    public function pageEmployeeESSConfigurationPersonel()
+    {
+        return view('personel.personel_employee_ess_configuration');
+    }
+
     public function tablePersonalDataPersonel(Request $request)
     {
         try {
