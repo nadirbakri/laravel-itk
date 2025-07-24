@@ -410,7 +410,35 @@ class TimeManagementController extends Controller
 
     public function pageDetailAbsenteeismReasonReport()
     {
-        return view ('time_management.tm_detail_absenteeism_reason_report');
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/mobile/ReferenceTM/getReferenceTM',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            // var_dump($response);
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents()); 
+
+        return view ('time_management.tm_detail_absenteeism_reason_report', ['data'=>$arrResult->dataListSet]);
     }
 
     public function pageAbsenteeismOvertimeReport()
@@ -1498,8 +1526,16 @@ class TimeManagementController extends Controller
     {
         $dataLevel = [];
 
-        for($i = 0; $i < $request->level_format; $i++){
-            $dataLevel[] = $request->{'level' . ($i+1)};
+        if (intval($request->level_format) > 0) {
+            for($i = 0; $i < $request->level_format; $i++){
+                $key = 'level' . ($i + 1);
+                if (isset($request[$key])) {
+                    $dataLevel[] = [
+                        'levelType' => (string) ($i + 1),
+                        'levelCode' => $request[$key]
+                    ];
+                }
+            }
         }
 
         return Excel::download(new UnpaidLeaveReportExport($request->get_employee, $request->employee_no_from, $request->employee_no_to, $request->get_date, $request->period, $request->absent_date_from, $request->absent_date_to, isset($request->include_resign) ? (bool) $request->include_resign : false, $request->group_authorize_from, $request->group_authorize_to, $request->position, $request->ranking, $request->location, $dataLevel), 'Unpaid Leave Report.xlsx');
@@ -1532,8 +1568,16 @@ class TimeManagementController extends Controller
         $dataLevel = [];
         $range = false;
 
-        for($i = 0; $i < $request->level_format; $i++){
-            $dataLevel[] = $request->{'level' . ($i+1)};
+        if (intval($request->level_format) > 0) {
+            for($i = 0; $i < $request->level_format; $i++){
+                $key = 'level' . ($i + 1);
+                if (isset($request[$key])) {
+                    $dataLevel[] = [
+                        'levelType' => (string) ($i + 1),
+                        'levelCode' => $request[$key]
+                    ];
+                }
+            }
         }
 
         if($request->get_employee == "RANGE"){
@@ -1551,8 +1595,16 @@ class TimeManagementController extends Controller
 
         $arrData2 = json_decode($request->field_name);
 
-        for($i = 0; $i < $arrData['level_format']; $i++){
-            $dataLevel[] = $arrData['level' . ($i+1)];
+        if (intval($arrData['level_format']) > 0) {
+            for($i = 0; $i < $arrData['level_format']; $i++){
+                $key = 'level' . ($i + 1);
+                if (isset($arrData[$key])) {
+                    $dataLevel[] = [
+                        'levelType' => (string) ($i + 1),
+                        'levelCode' => $arrData[$key]
+                    ];
+                }
+            }
         }
 
         return Excel::download(new DetailAbsenteeismReportExport($arrData['get_employee'], $arrData['employee_no_from'] ?? null, $arrData['employee_no_to'] ?? null, $arrData['employee_no_list'] ?? null, $arrData['get_date'], $arrData['period'] ?? null, $arrData['absent_date_from'] ?? null, $arrData['absent_date_to'] ?? null, $arrData['group_authorize_from'], $arrData['group_authorize_to'], isset($arrData['include_resign']) ? (bool) $arrData['include_resign'] : false, $arrData['position'], $arrData['ranking'], $arrData['location'], $dataLevel, $arrData2), 'Detail Absenteeism Report.xlsx');
@@ -1566,11 +1618,19 @@ class TimeManagementController extends Controller
 
         $arrData2 = json_decode($request->field_name);
 
-        for($i = 0; $i < $arrData['level_format']; $i++){
-            $dataLevel[] = $arrData['level' . ($i+1)];
+        if (intval($arrData['level_format']) > 0) {
+            for($i = 0; $i < $arrData['level_format']; $i++){
+                $key = 'level' . ($i + 1);
+                if (isset($arrData[$key])) {
+                    $dataLevel[] = [
+                        'levelType' => (string) ($i + 1),
+                        'levelCode' => $arrData[$key]
+                    ];
+                }
+            }
         }
 
-        return Excel::download(new DetailAbsenteeismReasonReportExport($arrData['employee_no_from'],$arrData['employee_no_to'], $arrData['absent_date_from'], $arrData['absent_date_to'], $arrData['group_authorize_from'], $arrData['group_authorize_to'], isset($arrData['include_resign']) ? (bool) $arrData['include_resign'] : false, $arrData['position'], $arrData['ranking'], $arrData['location'], $dataLevel, $arrData2), 'Detail Absenteeism Reason Report.xlsx');    
+        return Excel::download(new DetailAbsenteeismReasonReportExport($arrData['get_employee'], $arrData['employee_no_from'] ?? null, $arrData['employee_no_to'] ?? null, $arrData['employee_no_list'] ?? null, $arrData['get_date'], $arrData['period'] ?? null, $arrData['absent_date_from'] ?? null, $arrData['absent_date_to'] ?? null, $arrData['group_authorize_from'], $arrData['group_authorize_to'], isset($arrData['include_resign']) ? (bool) $arrData['include_resign'] : false, $arrData['position'], $arrData['ranking'], $arrData['location'], $dataLevel, $arrData2), 'Detail Absenteeism Reason Report.xlsx');    
     }
 
     public function printDetailAbsenteeismReasonReportPDF(Request $request){
@@ -1590,34 +1650,58 @@ class TimeManagementController extends Controller
 
             if (intval($arrData['level_format']) > 0) {
                 for($i = 0; $i < $arrData['level_format']; $i++){
-                    $dataLevel[] = $arrData['level' . ($i+1)];
+                    $key = 'level' . ($i + 1);
+                    if (isset($arrData[$key])) {
+                        $dataLevel[] = [
+                            'levelType' => (string) ($i + 1),
+                            'levelCode' => $arrData[$key]
+                        ];
+                    }
                 }
             }
 
             $param = [
                 'companyCode' => Session::get('companyCode'), 
-                'absentDateFrom' => $arrData['absent_date_from'],
-                'absentDateTo' => $arrData['absent_date_to'],
+                'range' => $arrData['get_employee'] === 'RANGE' ? true : false,
+                'employeeNoFrom' => $arrData['employee_no_from'] ?? null,
+                'employeeNoTo' => $arrData['employee_no_to'] ?? null,
+                'employeeList' => $arrData['employee_no_list'] ?? [],
+                'period' => $arrData['get_date'] === 'PERIOD' ? $arrData['period'] : null,
+                'absentDateFrom' => $arrData['get_date'] === 'RANGE_DATE' ? $arrData['absent_date_from'] : null,
+                'absentDateTo' => $arrData['get_date'] === 'RANGE_DATE' ? $arrData['absent_date_to'] : null,
+                'groupAuthorizeFrom' => (int) $arrData['group_authorize_from'],
+                'groupAuthorizeTo' => (int) $arrData['group_authorize_to'],
+                'includeResign' => $arrData['include_resign'] ?? false,
+                'userID' => Session::get('userID'),
                 'languageID' => App::getLocale(), 
                 'sessionID' => 0, 
                 'sessionUserID' => Session::get('userID')
             ];
 
-            if(!empty($dataLevel) && !is_null($dataLevel[0])){
-                foreach($dataLevel as $key => $value){
-                    $data_level_detail = [];
-                    foreach($dataLevel[$key] as $value2){
-                        $data_level_detail[] = $value2;
-                    }
-                    $data_level[] = [
-                        "levelType" => (string) ($key + 1),
-                        "levelCode" => $data_level_detail
-                    ];
+            if(!empty($arrData['position']) && !is_null($arrData['position'][0])){
+                foreach($arrData['position'] as $value){
+                    $data_position[] = $value;
                 }
-                $param['levelMaster'] = $data_level;
+                $param['position'] = $data_position;
             }
 
-            // dd($arrData2);
+            if(!empty($arrData['location']) && !is_null($arrData['location'][0])){
+                foreach($arrData['location'] as $value){
+                    $data_location[] = $value;
+                }
+                $param['location'] = $data_location;
+            }
+
+            if(!empty($arrData['ranking']) && !is_null($arrData['ranking'][0])){
+                foreach($arrData['ranking'] as $value){
+                    $data_ranking[] = $value;
+                }
+                $param['ranking'] = $data_ranking;
+            }
+
+            if(!empty($dataLevel) && !is_null($dataLevel[0])){
+                $param['levelMaster'] = $dataLevel;
+            }
 
             if(!empty($arrData2) && !is_null($arrData2[0])){
                 foreach($arrData2 as $key => $value){
@@ -1638,6 +1722,10 @@ class TimeManagementController extends Controller
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
                 return view('error.not_found');
+            }else if ($response->getStatusCode() == 400) {
+                $body = json_decode($response->getBody()->getContents());
+                $message = isset($body->message) ? $body->message : 'Bad Request';
+                return response()->json(['status' => false, 'message' => $message]);
             }else{
                 return view('error.bad_request');
             }
@@ -1659,8 +1747,16 @@ class TimeManagementController extends Controller
 
         // $arrData2 = json_decode($request->field_name);  
 
-        for($i = 0; $i < $arrData['level_format']; $i++){
-            $dataLevel[] = $arrData['level' . ($i+1)];
+        if (intval($request->level_format) > 0) {
+            for($i = 0; $i < $request->level_format; $i++){
+                $key = 'level' . ($i + 1);
+                if (isset($request[$key])) {
+                    $dataLevel[] = [
+                        'levelType' => (string) ($i + 1),
+                        'levelCode' => $request[$key]
+                    ];
+                }
+            }
         }
 
         return Excel::download(new DetailRateOvertimeReportExport($arrData['get_employee'], $arrData['employee_no_from'] ?? null, $arrData['employee_no_to'] ?? null, $arrData['employee_no_list'] ?? null, $arrData['get_date'], $arrData['period'] ?? null, $arrData['absent_date_from'] ?? null, $arrData['absent_date_to'] ?? null, $arrData['group_authorize_from'], $arrData['group_authorize_to'], isset($arrData['include_resign']) ? (bool) $arrData['include_resign'] : false, $arrData['position'], $arrData['ranking'], $arrData['location'], $dataLevel), 'Detail Rate Overtime Report.xlsx');
@@ -1775,8 +1871,16 @@ class TimeManagementController extends Controller
     {
         $dataLevel = [];
 
-        for($i = 0; $i < $request->level_format; $i++){
-            $dataLevel[] = $request->{'level' . ($i+1)};
+        if (intval($request->level_format) > 0) {
+            for($i = 0; $i < $request->level_format; $i++){
+                $key = 'level' . ($i + 1);
+                if (isset($request[$key])) {
+                    $dataLevel[] = [
+                        'levelType' => (string) ($i + 1),
+                        'levelCode' => $request[$key]
+                    ];
+                }
+            }
         }
 
         if($request->report_type == 'absent'){
@@ -1794,8 +1898,16 @@ class TimeManagementController extends Controller
     {
         $dataLevel = [];
 
-        for($i = 0; $i < $request->level_format; $i++){
-            $dataLevel[] = $request->{'level' . ($i+1)};
+        if (intval($request->level_format) > 0) {
+            for($i = 0; $i < $request->level_format; $i++){
+                $key = 'level' . ($i + 1);
+                if (isset($request[$key])) {
+                    $dataLevel[] = [
+                        'levelType' => (string) ($i + 1),
+                        'levelCode' => $request[$key]
+                    ];
+                }
+            }
         }
 
         return Excel::download(new AbsenteeismReportExport($request->get_employee, $request->employee_no_from, $request->employee_no_to, $request->employee_no_list, $request->start_date, $request->end_date, $request->include_resign, $request->group_authorize_from, $request->group_authorize_to, $request->position, $request->ranking, $request->location, $dataLevel), 'Absenteeism Report.xlsx');
@@ -2669,6 +2781,8 @@ class TimeManagementController extends Controller
                 'shiftName' => $request->description,
                 'groupShift' => $request->group_shift,
                 'flexyFlag' => isset($request->check_flexy) ? (bool) $request->check_flexy : false,
+                'crossDayFlag' => isset($request->check_cross_day) ? (bool) $request->check_cross_day : false,
+                'totalHour' => $request->total_hour,
                 'flexyTime' => isset($request->flexy_work_hour) ? '1753-01-01T'.$request->flexy_work_hour : null,
                 'flexyOvtAfter' => isset($request->flexy_overtime_after) ? '1753-01-01T'.$request->flexy_overtime_after : null,
                 'toleranceInFrom' => isset($request->tolerance_in_from) ? '1753-01-01T'.$request->tolerance_in_from : null,

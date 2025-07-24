@@ -59,22 +59,74 @@
         <div class="div-form">
             <form id="tm_detail_absenteeism_reason_report_form" method="post">
                 @csrf
-                <div class="row">
+                <div class="row d-flex gap-4">
+                    <div class="form-group" style="padding-left: 15px">
+                        <label for="get_employee form-check-label">{{ __('tm_detail_absenteeism_reason_report.label_get_employee') }}</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" id="get_employee_all" name="get_employee" value="ALL" checked>
+                        <label for="get_employee_all">{{ __('tm_detail_absenteeism_reason_report.label_all') }}</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" id="get_employee_range" name="get_employee" value="RANGE">
+                        <label for="get_employee_range">{{ __('tm_detail_absenteeism_reason_report.label_range') }}</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" id="get_employee_list" name="get_employee" value="LIST">
+                        <label for="get_employee_list">{{ __('tm_detail_absenteeism_reason_report.label_list') }}</label>
+                    </div>
+                </div>
+                <div class="row" id="employee_range">
                     <div class="col-6">
                         <div class="form-group">
                             <label
                                 for="employee_no_from">{{ __('tm_detail_absenteeism_reason_report.label_employee_no_from') }}</label>
-                            <select class="form-control select2" id="employee_no_from" name="employee_no_from"></select>
+                            <select class="form-control select2" id="employee_no_from" name="employee_no_from" disabled></select>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group">
                             <label for="employee_no_to">{{ __('tm_detail_absenteeism_reason_report.label_employee_no_to') }}</label>
-                            <select class="form-control select2" id="employee_no_to" name="employee_no_to"></select>
+                            <select class="form-control select2" id="employee_no_to" name="employee_no_to" disabled></select>
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row" id="employee_list">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="employee_no_list">{{ __('tm_detail_absenteeism_reason_report.label_employee_no_list') }}</label>
+                            <select class="form-control select2" id="employee_no_list" name="employee_no_list[]" multiple="multiple" disabled></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row d-flex gap-4">
+                    <div class="form-group" style="padding-left: 15px">
+                        <label for="get_date form-check-label">{{ __('tm_detail_absenteeism_reason_report.label_get_date') }}</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" id="get_date_period" name="get_date" value="PERIOD" checked>
+                        <label for="get_date_period">{{ __('tm_detail_absenteeism_reason_report.label_period') }}</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" id="get_date_range" name="get_date" value="RANGE_DATE">
+                        <label for="get_date_range">{{ __('tm_detail_absenteeism_reason_report.label_range') }}</label>
+                    </div>
+                </div>
+                <div class="row" id="date_period">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="period">{{ __('tm_detail_absenteeism_reason_report.label_period') }}</label>
+                            <div class='input-group'>
+                                <input type="text" class="form-control" id="period" name="period"
+                                    placeholder="{{ __('tm_detail_absenteeism_reason_report.label_period') }}">
+                                <div class="input-group-prepend" id="period-calendar">
+                                    <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" id="date_range">
                     <div class="col-6">
                         <div class="form-group">
                             <label for="absent_date_from">{{ __('tm_detail_absenteeism_reason_report.label_absent_date_from') }}</label>
@@ -316,18 +368,117 @@
 <script type="text/javascript">
     $(document).ready(function () {
         var table = null;
+        var arrData = @json($data);
+
+        $('#employee_list').hide();
+        $('#date_range').hide();
+
+        let pickerPeriod = $('#period').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "d-M-Y",
+            dateFormat: "Y-m-d",
+            defaultDate: "today",
+            plugins: [
+                new monthSelectPlugin({
+                    shorthand: true, //defaults to false
+                    dateFormat: "Y-m-01", //defaults to "F Y"
+                    altFormat: "F Y", //defaults to "F Y"
+                })
+            ],
+            onReady: function () {
+                var flatPickrInstance = this;
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings("#period-calendar").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
+
+        let pickerAbsentDateFrom = $('#absent_date_from').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "d-M-Y",
+            dateFormat: "Y-m-d",
+            defaultDate: "today",
+            onReady: function () {
+                var flatPickrInstance = this;
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings("#absent_date_from_calendar").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
+
+        let pickerAbsentDateTo = $('#absent_date_to').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "d-M-Y",
+            dateFormat: "Y-m-d",
+            defaultDate: "today",
+            onReady: function () {
+                var flatPickrInstance = this;
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings('#absent_date_to_calendar').click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
+
+        pickerPeriod.setDate(arrData[0].periodYear + "-" + moment().month(arrData[0].periodMonth - 1).format('MM') + "-01");
+
+        $('input[name=get_employee]').on("change", function (e) {
+            var data = $(this).val();
+            if(data == "ALL"){
+                $('#employee_range').show();
+                $('#employee_list').hide();
+                $('#employee_no_from').prop('disabled', true);
+                $('#employee_no_to').prop('disabled', true);
+                $('#employee_no_list').prop('disabled', true);
+            } 
+            else if (data === "RANGE") {
+                $('#employee_range').show();
+                $('#employee_list').hide();
+                $('#employee_no_from').prop('disabled', false);
+                $('#employee_no_to').prop('disabled', false);
+                $('#employee_no_list').prop('disabled', true);
+            } 
+            else {
+                $('#employee_range').hide();
+                $('#employee_list').show();
+                $('#employee_no_from').prop('disabled', true);
+                $('#employee_no_to').prop('disabled', true);
+                $('#employee_no_list').prop('disabled', false);
+            }
+        });
+
+        $('input[name=get_date]').on("change", function (e) {
+            var data = $(this).val();
+            if(data == "PERIOD") {
+                $('#date_period').show();
+                $('#date_range').hide();
+                $('#period').prop('disabled', false);
+                pickerAbsentDateFrom._input.setAttribute('disabled', 'disabled');
+                pickerAbsentDateTo._input.setAttribute('disabled', 'disabled');
+                $('#absent_date_from').prop('disabled', true);
+                $('#absent_date_to').prop('disabled', true);
+            } 
+            else {
+                $('#date_range').show();
+                $('#date_period').hide();
+                $('#period').prop('disabled', true);
+                pickerAbsentDateFrom._input.removeAttribute('disabled', 'disabled');
+                pickerAbsentDateTo._input.removeAttribute('disabled', 'disabled');
+                $('#absent_date_from').prop('disabled', false);
+                $('#absent_date_to').prop('disabled', false);
+            }
+        });
 
         $.ajax({
             url: "{{ url('personnel/report/level/check') }}",
             type: "GET",
             success: function (response) {
-                let levelFormat = response.data[0].levelFormat;
-
-                let updatedLevelFormat = 0;
-                $('#level_format').val(updatedLevelFormat);
-
-                const previousValues = {};
-                
+                $('#level_format').val(response.data[0].levelFormat);
                 for (var i = 1; i <= response.data[0].levelFormat; i++) {
                     $('#div-level').append(
                         '<div class="col-6">' +
@@ -341,27 +492,6 @@
 
                     loadDataLevelCode('#level' + i, i);
                     loadDataFirstLastAllLevel('#level' + i, i);
-
-                    previousValues[`level${i}`] = null;
-
-                    // loadDataLevelCode('#level' + i, i);
-                    // loadDataFirstLastAllLevel('#level' + i, i);
-
-                    ((index) => {
-                        $(`#level${index}`).on('change', function () {
-                            const currentValues = $(this).val();
-                            const previous = previousValues[`level${index}`];
-
-                            if ((!previous || previous.length === 0) && currentValues && currentValues.length > 0) {
-                                updatedLevelFormat++;
-                            } else if (previous && previous.length > 0 && (!currentValues || currentValues.length === 0)) {
-                                updatedLevelFormat--;
-                            }
-
-                            previousValues[`level${index}`] = currentValues;
-                            $('#level_format').val(updatedLevelFormat);
-                        });
-                    })(i);
                 }
             },
             error: function (response) {
@@ -372,6 +502,7 @@
 
         loadDataEmployeeNo('#employee_no_from');
         loadDataEmployeeNo('#employee_no_to');
+        loadDataEmployeeNo('#employee_no_list');
         loadDataGroupAuthorize('#group_authorize_from');
         loadDataGroupAuthorize('#group_authorize_to');
         loadDataPositionCode();

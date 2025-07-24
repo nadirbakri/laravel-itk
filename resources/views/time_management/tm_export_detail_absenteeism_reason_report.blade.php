@@ -63,7 +63,7 @@
 								<?php 
 									$totalDays += $listDetail->day;
 
-									list($hours, $minutes) = explode(':', $listDetail->hour);
+									list($hours, $minutes) = explode(':', $listDetail->hour ?? '00:00:00');
 									$totalHours += (int)$hours;
 									$totalMinutes += (int)$minutes;
 								?>

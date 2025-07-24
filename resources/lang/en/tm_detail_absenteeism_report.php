@@ -38,6 +38,13 @@ return [
     'label_position' => 'Position',
     'label_ranking' => 'Ranking',
     'label_location' => 'Location',
-    'btn_print' => 'Print'
+    'btn_print' => 'Print',
+    'employee_no_from_required' => 'Employee No From Required',
+    'employee_no_to_required' => 'Employee No To Required',
+    'group_authorize_from_required' => 'Group Authorize From Required',
+    'group_authorize_to_required' => 'Group Authorize To Required',
+    'absent_date_from_required' => 'Absent Date From Required',
+    'absent_date_to_required' => 'Absent Date To Required',
+    'absent_code_required' => 'Absent Code Required',
 
 ];

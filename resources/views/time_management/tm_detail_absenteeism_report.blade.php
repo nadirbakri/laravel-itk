@@ -102,24 +102,24 @@
                 </div>
                 <div class="row d-flex gap-4">
                     <div class="form-group" style="padding-left: 15px">
-                        <label for="get_date form-check-label">{{ __('tm_absenteeism_overtime_report.label_get_date') }}</label>
+                        <label for="get_date form-check-label">{{ __('tm_detail_absenteeism_report.label_get_date') }}</label>
                     </div>
                     <div class="form-check">
                         <input type="radio" id="get_date_period" name="get_date" value="PERIOD" checked>
-                        <label for="get_date_period">{{ __('tm_absenteeism_overtime_report.label_period') }}</label>
+                        <label for="get_date_period">{{ __('tm_detail_absenteeism_report.label_period') }}</label>
                     </div>
                     <div class="form-check">
                         <input type="radio" id="get_date_range" name="get_date" value="RANGE_DATE">
-                        <label for="get_date_range">{{ __('tm_absenteeism_overtime_report.label_range') }}</label>
+                        <label for="get_date_range">{{ __('tm_detail_absenteeism_report.label_range') }}</label>
                     </div>
                 </div>
                 <div class="row" id="date_period">
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="period">{{ __('tm_absenteeism_overtime_report.label_period') }}</label>
+                            <label for="period">{{ __('tm_detail_absenteeism_report.label_period') }}</label>
                             <div class='input-group'>
                                 <input type="text" class="form-control" id="period" name="period"
-                                    placeholder="{{ __('tm_absenteeism_overtime_report.label_period') }}">
+                                    placeholder="{{ __('tm_detail_absenteeism_report.label_period') }}">
                                 <div class="input-group-prepend" id="period-calendar">
                                     <span class="input-group-text"><span class="fa fa-calendar"></span></span>
                                 </div>
@@ -215,7 +215,7 @@
                     <div class="col-6">
                         <div class="form-group">
                             <label for="selected_absent_code">* Selected Items</label>
-                            <textarea class="form-control" id="selected_absent_code" rows="15"></textarea>
+                            <textarea class="form-control" id="selected_absent_code" name="selected_absent_code" rows="15"></textarea>
                         </div>
                     </div>
                 </div>
@@ -1241,19 +1241,25 @@
                     group_authorize_to: {
                         required: true,
                     },
+                    selected_absent_code: {
+                        required: true
+                    }
                 },
                 messages: {
                     employee_no_from: {
-                        required: "{{ __('personel_employee_list.field_required') }}",
+                        required: "{{ __('tm_detail_absenteeism_report.employee_no_from_required') }}",
                     },
                     employee_no_to: {
-                        required: "{{ __('personel_employee_list.field_required') }}",
+                        required: "{{ __('tm_detail_absenteeism_report.employee_no_to_required') }}",
                     },
                     group_authorize_from: {
-                        required: "{{ __('personel_employee_list.field_required') }}",
+                        required: "{{ __('tm_detail_absenteeism_report.group_authorize_from_required') }}",
                     },
                     group_authorize_to: {
-                        required: "{{ __('personel_employee_list.field_required') }}",
+                        required: "{{ __('tm_detail_absenteeism_report.group_authorize_to_required') }}",
+                    },
+                    selected_absent_code: {
+                        required: "{{ __('tm_detail_absenteeism_report.absent_code_required') }}",
                     },
                 },
                 highlight: function (element) {
@@ -1266,7 +1272,7 @@
                 errorPlacement: function (error, element) {
                     $("#btn-print-data").prop("disabled", false);
                     $("#btn-print-data").html(
-                        '<i class="fa fa-floppy-o"></i> {{ __("personel_employee_list.btn_print") }}'
+                        '<i class="fa fa-floppy-o"></i> {{ __("tm_detail_absenteeism_report.btn_print") }}'
                     );
 
                     error.addClass('invalid-feedback');

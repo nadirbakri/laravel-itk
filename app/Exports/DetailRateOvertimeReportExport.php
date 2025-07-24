@@ -82,17 +82,7 @@ class DetailRateOvertimeReportExport implements FromView, ShouldAutoSize
             }
 
             if(!empty($this->dataLevel) && !is_null($this->dataLevel[0])){
-                foreach($this->dataLevel as $key => $value){
-                    $data_level_detail = [];
-                    foreach($this->dataLevel[$key] as $value2){
-                        $data_level_detail[] = $value2;
-                    }
-                    $data_level[] = [
-                        "levelType" => (string) ($key + 1),
-                        "levelCode" => $data_level_detail
-                    ];
-                }
-                $param['levelMaster'] = $data_level;
+                $param['levelMaster'] = $this->dataLevel;
             }
 
             // if(!empty($this->dataField) && !is_null($this->dataField[0])){
