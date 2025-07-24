@@ -934,7 +934,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="div-title-notification">
+                    <div class="div-title-notification">1.21.0
                         <img src="{{ url('/pictures/checklist-green-confirm-password.svg') }}" alt="Password">
                         <span class="title-text-notification">{{ __('tm_shift_master_code.alert_success') }}</span>
                     </div>
