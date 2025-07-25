@@ -79,6 +79,8 @@ class TimeManagementController extends Controller
             }
 	    }
 
+        Session::put('module', 'TM');
+
 	    $arrResult = json_decode($response->getBody()->getContents());
 
         // dd($arrResult->dataListSet);

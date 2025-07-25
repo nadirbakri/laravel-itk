@@ -4068,6 +4068,8 @@ class MedicalController extends Controller
             }
         }
 
+        Session::put('module', 'MD');
+
         $arrResult = json_decode($response->getBody()->getContents());
 
         return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);

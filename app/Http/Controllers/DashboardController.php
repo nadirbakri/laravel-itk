@@ -16,6 +16,7 @@ class DashboardController extends Controller
     public function pageHomeDashboard()
     {
     	if(Session::has('token')){
+        	Session::put('module', 'HOME');
     		return view('home_dashboard');
     	}
     }

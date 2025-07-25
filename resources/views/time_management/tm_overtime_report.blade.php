@@ -240,9 +240,9 @@
                         return {
                             _token: CSRF_TOKEN,
                             search: params.term,
-                            module: 'TM',
-                            isRange: false,
-                            isModule: false
+                            module: 'PY',
+                            isRange: true,
+                            isModule: true
                         };
                     },
                     processResults: function (data) {

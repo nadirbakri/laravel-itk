@@ -50,6 +50,8 @@ class UtilitiesController extends Controller
             }
 	    }
 
+        Session::put('module', 'UTI');
+
 	    $arrResult = json_decode($response->getBody()->getContents());
 
         if($arrResult->dataListSet == null){

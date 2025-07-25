@@ -11,6 +11,7 @@ class HomeController extends Controller
     public function pageMain()
     {
         if(Session::has('token')){
+        	Session::put('module', 'HOME');
     		return view('main');
     	}else{
     		return redirect()->route('login');

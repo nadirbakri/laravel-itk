@@ -35,7 +35,7 @@ class OvertimeReportExport implements FromView, ShouldAutoSize
                 'period' => $this->period,
                 'groupAuthorizeFrom' => (int) $this->groupAuthorizeFrom,
                 'groupAuthorizeTo' => (int) $this->groupAuthorizeTo,
-                'groupAuthorizeCode' => (string) Session::get('groupAuthorizeTimeManagement'),
+                'groupAuthorizeCode' => (string) Session::get('groupAuthorizePayroll'),
             ];
 
             // dd(json_encode($param));

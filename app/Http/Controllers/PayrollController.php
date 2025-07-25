@@ -99,6 +99,8 @@ class PayrollController extends Controller
             }
 	    }
 
+        Session::put('module', 'PY');
+
 	    $arrResult = json_decode($response->getBody()->getContents());
 
         // dd($arrResult->dataListSet);

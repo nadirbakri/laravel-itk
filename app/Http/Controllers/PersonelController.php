@@ -109,6 +109,8 @@ class PersonelController extends Controller
             }
 	    }
 
+        Session::put('module', 'PE');
+
 	    $arrResult = json_decode($response->getBody()->getContents());
 
         // dd($arrResult->dataListSet);
@@ -5550,6 +5552,91 @@ class PersonelController extends Controller
                         'languageCode' => App::getLocale()
                     ]
                 )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            return Datatables::of($arrResult->dataListSet)->make(true);
+        }
+    }
+
+    public function tableEmployeeESSConfigurationPersonel(Request $request)
+    {
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            if (intval($request->level_format) > 0) {
+                for($i = 0; $i < $request->level_format; $i++){
+                    $key = 'level' . ($i + 1);
+                    if (isset($request->$key)) {
+                        $dataLevel[] = [
+                            'levelType' => (string) ($i + 1),
+                            'levelCode' => $request->$key
+                        ];
+                    }
+                }
+            }
+
+            $param = [
+                'companyCode' => Session::get('companyCode'), 
+                'range' => $request->get_employee === 'RANGE' ? true : false,
+                'employeeNoFrom' => $request->employee_no_from ?? null,
+                'employeeNoTo' => $request->employee_no_to ?? null,
+                'employeeList' => $request->employee_no_list ?? [],
+                'groupAuthorizeFrom' => (int) $request->group_authorize_from,
+                'groupAuthorizeTo' => (int) $request->group_authorize_to,
+                'userID' => Session::get('userID'),
+                'languageID' => App::getLocale(), 
+                'sessionID' => 0, 
+                'sessionUserID' => Session::get('userID')
+            ];
+
+            if(!empty($request->position) && !is_null($request->position[0])){
+                foreach($request->position as $value){
+                    $data_position[] = $value;
+                }
+                $param['position'] = $data_position;
+            }
+
+            if(!empty($request->location) && !is_null($request->location[0])){
+                foreach($request->location as $value){
+                    $data_location[] = $value;
+                }
+                $param['location'] = $data_location;
+            }
+
+            if(!empty($request->ranking) && !is_null($request->ranking[0])){
+                foreach($request->ranking as $value){
+                    $data_ranking[] = $value;
+                }
+                $param['ranking'] = $data_ranking;
+            }
+
+            if(!empty($dataLevel) && !is_null($dataLevel[0])){
+                $param['levelMaster'] = $dataLevel;
+            }
+
+            dd(json_encode($param));
+
+            $response = $client->post(env('API_URL') . '/personel/GetEESSEmployees',
+                ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {
             $response = $e->getResponse();

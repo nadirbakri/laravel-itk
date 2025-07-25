@@ -57,6 +57,8 @@ class MasterDataController extends Controller
             }
 	    }
 
+        Session::put('module', 'MOBILE');
+
 	    $arrResult = json_decode($response->getBody()->getContents());
 
         // dd($arrResult->dataListSet);

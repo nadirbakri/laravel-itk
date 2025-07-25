@@ -2854,9 +2854,39 @@ class DataController extends Controller
 				'isRange' => (bool) $request->isRange
 			];
 
-			if(isset($request->isRange) && $request->isRange == true && $request->isModule == false){
-				$param['groupAuthorizeCode'] = Session::get('groupAuthorizeUtilities');
-			}
+			function getGroupAuthorize($module) {				
+				if ($module === 'HOME') {
+					return Session::get('groupAuthorizeHome');
+				}
+				else if ($module === 'UTI') {
+					return Session::get('groupAuthorizeUtilities');
+				}
+				else if ($module === 'PE') {
+					return Session::get('groupAuthorizePersonnel');
+				}
+				else if ($module === 'TM') {
+					return Session::get('groupAuthorizeTimeManagement');
+				}
+				else if ($module === 'PY') {
+					return Session::get('groupAuthorizePayroll');
+				}
+				else if ($module === 'MD') {
+					return Session::get('groupAuthorizeMedical');
+				}
+				else if ($module === 'EXPORT') {
+					return Session::get('groupAuthorizeExport');
+				}
+				else if ($module === 'TRX') {
+					return Session::get('groupAuthorizeTransaction');
+				}
+				else if ($module === 'MOBILE') {
+					return Session::get('groupAuthorizeMasterData');
+				}
+			};
+
+			$getModule = $request->isModule ? $request->module : Session::get('module');
+			$groupAuthorizeCode = getGroupAuthorize($getModule);
+			$param['groupAuthorizeCode'] = $groupAuthorizeCode;
 
 	    	$response = $client->post(env('API_URL') . '/personel/GroupAuthorize/getGroupAuthorize',
 	    		['body' => json_encode($param)]

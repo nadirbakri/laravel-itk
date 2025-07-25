@@ -68,6 +68,8 @@ class ExportController extends Controller
             }
 	    }
 
+        Session::put('module', 'EXPORT');
+
 	    $arrResult = json_decode($response->getBody()->getContents());
 
         // dd($arrResult->dataListSet);

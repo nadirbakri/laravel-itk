@@ -56,6 +56,8 @@ class TransactionController extends Controller
             }
 	    }
 
+        Session::put('module', 'TRX');
+
 	    $arrResult = json_decode($response->getBody()->getContents());
 
         // dd($arrResult->dataListSet);
