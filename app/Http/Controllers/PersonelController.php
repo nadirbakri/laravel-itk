@@ -5633,7 +5633,7 @@ class PersonelController extends Controller
                 $param['levelMaster'] = $dataLevel;
             }
 
-            dd(json_encode($param));
+            // dd(json_encode($param));
 
             $response = $client->post(env('API_URL') . '/personel/GetEESSEmployees',
                 ['body' => json_encode($param)]
@@ -12706,6 +12706,57 @@ class PersonelController extends Controller
                     ['body' => json_encode($param)]
                 );
             }
+
+
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+    }
+
+    public function prosesEmployeeESSConfigurationPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            foreach($request->all() as $row) {
+                $param[] = [
+                    'companyCode' => Session::get('companyCode'),
+                    'employeeNo' => $row['employeeNo'],
+                    'permitEgb' => $row['permitEgb'],
+                    'leaveEgb' => $row['leaveEgb'],
+                    'overtimeEgb' => $row['overtimeEgb'],
+                    'bstEgb' => $row['bstEgb'],
+                    'multiCheckInEgb' => $row['multiCheckInEgb'],
+                    'reimbEgb' => $row['reimbEgb'],
+                    "changedBy" => Session::get('userID'),
+                    "changedDate" => date("Y-m-d\TH:i:s"),
+                    "createdBy" => Session::get('userID'),
+                    "createdDate" => date("Y-m-d\TH:i:s"),
+                    "languageID" => App::getLocale(),
+                ];
+            }
+
+            dd(json_encode($param));
+
+            $response = $client->post(env('API_URL') . '/personel/UpdateBulkPeMasterESS',
+                ['body' => json_encode($param)]
+            );
 
 
         } catch (RequestException $e) {

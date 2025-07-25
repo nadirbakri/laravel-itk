@@ -234,6 +234,7 @@ Route::get('personnel/employee_termination/table', 'PersonelController@tableEmpl
 Route::get('personnel/insurance/table', 'PersonelController@tableInsurancePersonel');
 Route::get('personnel/family_dependent/table', 'PersonelController@tableFamilyDependentPersonel');
 Route::get('personnel/family_dependent_detail/table', 'PersonelController@tableDetailFamilyDependentPersonel');
+Route::get('personnel/employee_ess_configuration/table', 'PersonelController@tableEmployeeESSConfigurationPersonel');
 
 Route::get('personnel/personal_data/detail_data', 'PersonelController@dataDetailPersonalDataPersonel');
 Route::get('personnel/performance/detail_data', 'PersonelController@dataDetailPerformancePersonel');
@@ -422,6 +423,7 @@ Route::post('personnel/employee_termination/proses', 'PersonelController@prosesE
 Route::post('personnel/insurance/proses', 'PersonelController@prosesInsurancePersonel');
 Route::post('personnel/employee_multiple_location/proses', 'PersonelController@prosesEmployeeMultipleLocationPersonel');
 Route::post('personnel/family_dependent/proses', 'PersonelController@prosesFamilyDependentPersonel');
+Route::post('personnel/employee_ess_configuration/proses', 'PersonelController@prosesEmployeeESSConfigurationPersonel');
 
 Route::get('personnel/final_performance_result/remove', 'PersonelController@removeFinalPerformanceResultPersonel');
 Route::get('personnel/evaluation_form/evaluated_aspect/remove', 'PersonelController@removeEvaluationFormEvaluatedAspectPersonel');

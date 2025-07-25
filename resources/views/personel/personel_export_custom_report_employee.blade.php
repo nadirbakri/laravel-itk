@@ -30,7 +30,7 @@
 			<tr>
 				<td>{{ $index + 1 }}</td>
 				@foreach($value as $item)
-					<td>{{ $item }}</td>
+					<td style="text-align: left;">{{ $item }}</td>
 				@endforeach
 			</tr>
 			@endforeach

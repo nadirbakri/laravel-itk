@@ -26,7 +26,9 @@ return [
     'label_position' => 'Jabatan',
     'label_ranking' => 'Peringkat',
     'label_location' => 'Lokasi',
-    'field_required' => 'Data Harus Diisi',
-    'btn_search' => 'Pencarian'
-
+    'btn_search' => 'Pencarian',
+    'btn_edit' => 'Ubah',
+    'btn_save' => 'Simpan',
+    'btn_cancel' => 'Batal',
+    'alert_success' => 'Sukses !',
 ];

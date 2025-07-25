@@ -26,7 +26,9 @@ return [
     'label_position' => 'Position',
     'label_ranking' => 'Ranking',
     'label_location' => 'Location',
-    'field_required' => 'Field is Required',
-    'btn_search' => 'Search'
-
+    'btn_search' => 'Search',
+    'btn_edit' => 'Edit',
+    'btn_save' => 'Save',
+    'btn_cancel' => 'Cancel',
+    'alert_success' => 'Success !',
 ];

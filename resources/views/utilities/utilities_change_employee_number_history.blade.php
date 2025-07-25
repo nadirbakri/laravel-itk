@@ -510,43 +510,6 @@
             templateResult: formatSelect
         });
     }
-    
-    function load_data_change_employee_no_history() {
-        table = $('#change_employee_no_history_table').DataTable({
-            processing: true,
-            serverSide: true,
-            orderCellsTop: true,
-            ajax: "{{ url('medical/vaccine_master/table') }}",
-            error: function(jqXHR, ajaxOptions, thrownError) {
-                alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
-            },
-            "sDom": 'lrtip',
-            'sPaginationType': 'full_numbers',
-            "order": [[ 1, "asc" ]],
-            columns: [
-                {
-                    orderable: false,
-                    targets: 0, 
-                    "defaultContent": '',
-                    render: function(data, type) {
-                        return type === 'display'? '<input class="chk-select" type="checkbox">' : '';
-                    }
-                },
-                {data: 'activityCode', name: 'activityCode'},
-                {data: 'activityCode', name: 'activityCode'},
-                {data: 'activityName', name: 'activityName'},
-                {name: 'details',
-                    render: function (data, type, row) {
-                        return `<button type="button" class="btn btn-primary" style="display: inline-block; width: auto;" data-toggle="modal" data-target="#vaccine_master_table_detail_modal" onclick="vaccineMasterDetail(this)">Details</button>`
-                    }
-                },
-            ],
-            select: {
-                style:    'multi',
-                selector: 'td:first-child'
-            }
-        });
-    }
   });
 </script>
 

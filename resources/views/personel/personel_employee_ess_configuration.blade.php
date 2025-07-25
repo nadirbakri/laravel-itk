@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/select/1.3.3/css/select.dataTables.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/flatpickr.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/flatpickr.monthselect.css') }}">
@@ -22,16 +23,8 @@
             /*margin-top: 1%;*/
         }
 
-        .loading {
-            background-color: #ffffff;
-            background-image: url("https://c.tenor.com/tEBoZu1ISJ8AAAAC/spinning-loading.gif");
-            background-size: 60px 40px;
-            background-position: right center;
-            background-repeat: no-repeat;
-        }
-
         .modal-header-notification-error {
-            border-bottom: 1px solid #eee;
+            border-bottom:1px solid #eee;
             background-color: #f44336;
             -webkit-border-top-left-radius: 1rem;
             -webkit-border-top-right-radius: 1rem;
@@ -40,10 +33,75 @@
             border-top-left-radius: 1rem;
             border-top-right-radius: 1rem;
         }
+        .modal-header-notification-success {
+            border-bottom:1px solid #eee;
+            background-color: #00a862;
+            -webkit-border-top-left-radius: 1rem;
+            -webkit-border-top-right-radius: 1rem;
+            -moz-border-radius-topleft: 1rem;
+            -moz-border-radius-topright: 1rem;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
+        }
+        .div-title-notification {
+            margin: 1.5%;
+            margin-top: 2%;
+            margin-bottom: 5%;
+            font-family: Monserrat;
+            text-decoration: none;
+            display: flex;
+            align-items:center;
+            justify-content: center;
+        }
+        .div-title-notification img {
+            max-width: 100%;
+            height: 6vh;
+            margin-right: 5%;
+        }
+        .title-text-notification {
+            font-family: Inter;
+            font-weight: 700;
+            font-size: 2.5vw;
+            margin-left: 0.5%;
+        }
 
         .select2-results__option[aria-selected=true] {
             display: none;
         }
+
+        th,
+        td {
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        #loading {
+			display: none;
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(255, 255, 255, 0.8);
+			z-index: 9999;
+		}
+
+		.spinner {
+            position: absolute;
+			margin-left: 45%;
+			margin-top: 10%;
+			border-radius: 50%;
+			width: 50px;
+			height: 50px;
+			border-radius: 50%;
+			border: 5px solid #ccc;
+			border-top-color: #333;
+			animation: spin 1s infinite linear;
+		}
+
+        @keyframes spin {
+		    to { transform: rotate(360deg); }
+		}
 
     </style>
 </head>
@@ -146,14 +204,22 @@
                 </div>
                 <div class="row">
                     <div class="col-3">
-                        <button type="button" class="btn btn-primary" name="btn-search" id="btn-search"
-                            style="width: 100%;">
+                        <button class="btn btn-primary" name="btn-search" id="btn-search" style="width: 100%;">
                             <img src="{{ url('icons/mob/button/button-search.svg') }}" alt="search"> {{ __('personel_employee_ess_configuration.btn_search') }}
                         </button>
                     </div>
                 </div>
-            </form>
-            <form id="employee_ess_configuration_table_form" method="POST">
+                <div class="d-flex flex-row justify-content-end align-items-center px-4" style="gap: 12px">
+                    <button type="button" class="btn btn-primary" name="btn-edit" id="btn-edit" style="width: 100px;">
+                        <i class="fa fa-pencil"></i> {{ __('personel_employee_ess_configuration.btn_edit') }}
+                    </button>
+                    <button type="button" class="btn btn-primary" name="btn-cancel" id="btn-cancel" style="width: 100px;" hidden>
+                        <i class="fa fa-times"></i> {{ __('personel_employee_ess_configuration.btn_cancel') }}
+                    </button>
+                    <button type="submit" class="btn btn-primary" name="btn-save" id="btn-save" style="width: 100px;" disabled>
+                        <i class="fa fa-floppy-o"></i> {{ __('personel_employee_ess_configuration.btn_save') }}
+                    </button>
+                </div>
                 <div class="row">
                     <div class="col-12">
                         <div id="loading">
@@ -162,16 +228,27 @@
                         <table id="employee_ess_configuration_table" class="table hover">
                             <thead>
                                 <tr>
+                                    <th></th>
                                     <th>Employee No</th>
-                                    <th>Employee Name</th>
-                                    <th>Permit</th>
-                                    <th>Leave</th>
-                                    <th>Overtime</th>
-                                    <th>Business Trip</th>
-                                    <th>Multiple Check In</th>
-                                    <th>Reimbursement</th>
+                                    {{-- <th>Employee Name</th> --}}
+                                    <th><input type="checkbox" class="form-check-input" id="select_all_permit_eligible" name="select_all_permit_eligible" disabled> Permit</th>
+                                    <th><input type="checkbox" class="form-check-input" id="select_all_leave_eligible" name="select_all_leave_eligible" disabled> Leave</th>
+                                    <th><input type="checkbox" class="form-check-input" id="select_all_overtime_eligible" name="select_all_overtime_eligible" disabled> Overtime</th>
+                                    <th><input type="checkbox" class="form-check-input" id="select_all_business_trip_eligible" name="select_all_business_trip_eligible" disabled> Business Trip</th>
+                                    <th><input type="checkbox" class="form-check-input" id="select_all_multiple_check_in_eligible" name="select_all_multiple_check_in_eligible" disabled> Multiple Check In</th>
+                                    <th><input type="checkbox" class="form-check-input" id="select_all_reimbursement_eligible" name="select_all_reimbursement_eligible" disabled> Reimbursement</th>
                                 </tr>
                             </thead>
+                            <tbody>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -193,6 +270,26 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" role="dialog" id="notification_success">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-header-notification-success">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="div-title-notification">
+                        <img src="{{ url('/pictures/checklist-green-confirm-password.svg') }}" alt="Password">
+                        <span class="title-text-notification">{{ __('personel_employee_ess_configuration.alert_success') }}</span>
+                    </div>
+                    <div class="div-title-notification">
+                        <span id="message-notification-success"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -200,6 +297,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/select/1.3.3/js/dataTables.select.min.js"></script>
 <script src="https://cdn.datatables.net/plug-ins/1.10.24/pagination/ellipses.js"></script>
 <script src="{{ asset('js/jquery.redirect.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
@@ -239,6 +337,9 @@
     
     $(document).ready(function () {
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+        let table = []
+        let arrData = []
+        let isEditMode = false
 
         $.ajax({
             url: "{{ url('personnel/report/level/check') }}",
@@ -283,25 +384,6 @@
         loadDataFirstLastAllLocation();
         loadDataFirstLastAllRanking();
 
-        $('#select').focus(function (event) {
-            var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
-            $searchfield.prop('disabled', true);
-        });
-
-        $('#select').click(function (event) {
-            var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
-            $searchfield.prop('disabled', true);
-        });
-
-        $('#select').change(function (event) {
-            var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
-            $searchfield.prop('disabled', true);
-        });
-
-        $('select').on('select2:close', function (e) {
-            $('.header-select').remove();
-        });
-
         $('#employee_list').hide();
 
         $('input[name=get_employee]').on("change", function (e) {
@@ -329,105 +411,216 @@
             }
         });
 
-        $("#btn-search").click(function () {
-            $(this).prop("disabled", true);
-            $(this).html(
+        $('#employee_ess_configuration_form').submit((e) => {
+            $('#btn-edit').removeAttr('hidden');
+            $('#btn-cancel').attr('hidden', true);
+
+            e.preventDefault()
+
+            $("#btn-search").prop("disabled", true);
+            $("#btn-search").html(
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
-            load_table_employee_ess_configuration()
+
+            $('#loading').show()
+
+            load_data_employee_ess_configuration()
+
+            $('#btn-edit').on('click', function () {
+                isEditMode = true;
+                $(this).attr('hidden', true);
+                $('#btn-cancel').removeAttr('hidden');
+                $('.form-check-input').prop('disabled', false)
+                $('#btn-save').prop('disabled', false)
+
+                enableAllCheckboxes()
+            })
+        })
+
+        $('#btn-cancel').on('click', function() {
+            isEditMode = false
+            $(this).attr('hidden', true);
+            $('#btn-edit').removeAttr('hidden');
+            $('.form-check-input').prop('disabled', true)
+            $('#btn-save').prop('disabled', true)
+
+            load_data_employee_ess_configuration()
+        })
+
+        $('#select_all_permit_eligible').on('click', function() {
+            $('.permit_eligible').prop('checked', $(this).is(':checked') ? true : false)
+        })
+
+        $('#select_all_leave_eligible').on('click', function() {
+            $('.leave_eligible').prop('checked', $(this).is(':checked') ? true : false)
+        })
+
+        $('#select_all_overtime_eligible').on('click', function() {
+            $('.overtime_eligible').prop('checked', $(this).is(':checked') ? true : false)
+        })
+
+        $('#select_all_business_trip_eligible').on('click', function() {
+            $('.business_trip_eligible').prop('checked', $(this).is(':checked') ? true : false)
+        })
+
+        $('#select_all_multiple_check_in_eligible').on('click', function() {
+            $('.multiple_check_in_eligible').prop('checked', $(this).is(':checked') ? true : false)
+        })
+
+        $('#select_all_reimbursement_eligible').on('click', function() {
+            $('.reimbursement_eligible').prop('checked', $(this).is(':checked') ? true : false)
+        })
+
+        $(document).on('change', '.permit_eligible', function () {
+            updateSelectAllStatus('#select_all_permit_eligible', 'permit_eligible');
         });
 
+        $(document).on('change', '.leave_eligible', function () {
+            updateSelectAllStatus('#select_all_leave_eligible', 'leave_eligible');
+        });
+
+        $(document).on('change', '.overtime_eligible', function () {
+            updateSelectAllStatus('#select_all_overtime_eligible', 'overtime_eligible');
+        });
+
+        $(document).on('change', '.business_trip_eligible', function () {
+            updateSelectAllStatus('#select_all_business_trip_eligible', 'business_trip_eligible');
+        });
+
+        $(document).on('change', '.multiple_check_in_eligible', function () {
+            updateSelectAllStatus('#select_all_multiple_check_in_eligible', 'multiple_check_in_eligible');
+        });
+
+        $(document).on('change', '.reimbursement_eligible', function () {
+            updateSelectAllStatus('#select_all_reimbursement_eligible', 'reimbursement_eligible');
+        });
+
+        $('#employee_ess_configuration_table').on('draw.dt', function () {
+            if (isEditMode) {
+                enableAllCheckboxes();
+            }
+        });
+
+        function updateSelectAllStatus(selector, checkboxClass) {
+            const allChecked = $(`.${checkboxClass}`).length === $(`.${checkboxClass}:checked`).length;
+            $(selector).prop('checked', allChecked);
+        }
+
+        function enableAllCheckboxes() {
+            $('.form-check-input').prop('disabled', false)
+        }
+
+        function load_data_employee_ess_configuration() {
+            $.ajax({
+                type: 'GET',
+                url: "{{ url('/personnel/employee_ess_configuration/table') }}",
+                data: $('#employee_ess_configuration_form').serializeArray(),
+            }).then(function (data) {
+                arrData = data.data
+                $('#employee_ess_configuration_table').DataTable().destroy();
+                load_table_employee_ess_configuration()
+                setTimeout(() => {
+                    updateSelectAllStatus('#select_all_permit_eligible', 'permit_eligible');
+                    updateSelectAllStatus('#select_all_leave_eligible', 'leave_eligible');
+                    updateSelectAllStatus('#select_all_overtime_eligible', 'overtime_eligible');
+                    updateSelectAllStatus('#select_all_business_trip_eligible', 'business_trip_eligible');
+                    updateSelectAllStatus('#select_all_multiple_check_in_eligible', 'multiple_check_in_eligible');
+                    updateSelectAllStatus('#select_all_reimbursement_eligible', 'reimbursement_eligible');
+                }, 500);
+                $("#btn-search").prop("disabled", false);
+                $("#btn-search").html(
+                    "<img src={{ url('icons/mob/button/button-search.svg') }} alt='export'> {{ __('personel_employee_ess_configuration.btn_search') }}"
+                );
+                $('#loading').hide()
+            })
+        }
+
         function load_table_employee_ess_configuration() {
-            console.log($('#employee_ess_configuration_form').serialize())
-            // table = $('#employee_ess_configuration_table').DataTable({
-            //     processing: true,
-            //     serverSide: true,
-            //     orderCellsTop: true,
-            //     ajax: {
-            //         url: "{{ url('utilities/menu_master/configure_menu/table') }}",
-            //         data: $("#employee_ess_configuration_form").serialize()
-            //     },
-            //     error: function (jqXHR, ajaxOptions, thrownError) {
-            //         alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText +
-            //             "\r\n" + ajaxOptions.responseText);
-            //     },
-            //     "paging": false,
-            //     "sDom": 'lrtip',
-            //     'sPaginationType': 'full_numbers',
-            //     columns: [{
-            //             orderable: false,
-            //             targets: 0,
-            //             "defaultContent": '',
-            //             render: function (data, type, row) {
-            //                 return type === 'display' ?
-            //                     '<input class="chk-select selected_configure_menu" type="checkbox" name="selected_configure_menu[' +
-            //                     $('<div />').text(row.menuID).html() + ']" value="1">' : '';
-            //             }
-            //         },
-            //         {
-            //             data: 'moduleName',
-            //             name: 'moduleName',
-            //             render: function (data, type, row) {
-            //                 return '<input type="hidden" class="form-control" name="menu_id_configure_menu[]" value="' +
-            //                     $('<div />').text(row.menuID).html() +
-            //                     '"><input type="hidden" class="form-control" name="group_id_configure_menu[]" value="' +
-            //                     $('<div />').text(row.groupAccessID).html() +
-            //                     '"><input type="hidden" class="form-control" name="module_id_configure_menu[]" value="' +
-            //                     $('<div />').text(row.moduleID).html() + '">' + 
-            //                     $('<div />').text(row.moduleName).html();
-            //             }
-            //         },
-            //         // {data: 'subModuleName', name: 'subModuleName'},
-            //         {
-            //             data: 'menuName',
-            //             name: 'menuName'
-            //         },
-            //         {
-            //             orderable: false,
-            //             data: 'allowAccess',
-            //             name: 'allowAccess',
-            //             render: function (data, type, row) {
-            //                 return '<input type="checkbox" class="allow_access_configure_menu form-check-input" name="allow_access_configure_menu[' +
-            //                     $('<div />').text(row.menuID).html() + ']" value="Y">';
-            //             }
-            //         },
-            //         {
-            //             orderable: false,
-            //             data: 'allowAdd',
-            //             name: 'allowAdd',
-            //             render: function (data, type, row) {
-            //                 return '<input type="checkbox" class="form-check-input allow_add_configure_menu" name="allow_add_configure_menu[' +
-            //                     $('<div />').text(row.menuID).html() + ']" value="Y">';
-            //             }
-            //         },
-            //         {
-            //             orderable: false,
-            //             data: 'allowEdit',
-            //             name: 'allowEdit',
-            //             render: function (data, type, row) {
-            //                 return '<input type="checkbox" class="form-check-input allow_edit_configure_menu" name="allow_edit_configure_menu[' +
-            //                     $('<div />').text(row.menuID).html() + ']" value="Y">';
-            //             }
-            //         }
-            //     ],
-            //     select: {
-            //         style: 'multi',
-            //         selector: 'td:first-child'
-            //     },
-            //     'rowCallback': function (row, data, dataIndex) {
-            //         var rowId = data[0];
-
-            //         if ($.inArray(rowId, rows_configure_menu_selected) !== -1) {
-            //             $(row).find('input[type="checkbox"]').prop('checked', true);
-            //             $(row).addClass('selected');
-            //         }
-            //     }
-            // });
-
-            $("#btn-search").prop("disabled", false);
-            $("#btn-search").html(
-                "<img src={{ url('icons/mob/button/button-search.svg') }} alt='export'> {{ __('trans_transport.btn_search') }}"
-            );
+            table = $('#employee_ess_configuration_table').DataTable({
+                processing: true,
+                // serverSide: true,
+                orderCellsTop: true,
+                data: arrData,
+                error: function (jqXHR, ajaxOptions, thrownError) {
+                    alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText +
+                        "\r\n" + ajaxOptions.responseText);
+                },
+                "sDom": 'lfrtip',
+                'sPaginationType': 'full_numbers',
+                columns: [{
+                        orderable: false,
+                        targets: 0,
+                        "defaultContent": '',
+                        render: function (data, type, row) {
+                            return type === 'display' ?
+                                '<input class="chk-select selected_employee" type="checkbox" name="selected_employee">' : '';
+                        }
+                    },
+                    { data: 'employeeNo', name: 'employeeNo',
+                        render: function (data, type, row) {
+                            return '<input type="hidden" name="employee_no[]" value='+ data + ' />'+ data + '';
+                        }
+                    },
+                    {
+                        orderable: false,
+                        data: 'permitEgb',
+                        name: 'permitEgb',
+                        render: function (data, type, row) {
+                            const isChecked = data ? 'checked' : ''
+                            return '<input type="checkbox" class="form-check-input permit_eligible" name="permit_eligible[]" value='+ data + ' ' + isChecked +' disabled />';
+                        }
+                    },
+                    {
+                        orderable: false,
+                        data: 'leaveEgb',
+                        name: 'leaveEgb',
+                        render: function (data, type, row) {
+                            const isChecked = data ? 'checked' : ''
+                            return '<input type="checkbox" class="form-check-input leave_eligible" name="leave_eligible[]" value='+ data + ' ' + isChecked +' disabled />';
+                        }
+                    },
+                    {
+                        orderable: false,
+                        data: 'overtimeEgb',
+                        name: 'overtimeEgb',
+                        render: function (data, type, row) {
+                            const isChecked = data ? 'checked' : ''
+                            return '<input type="checkbox" class="form-check-input overtime_eligible" name="overtime_eligible[]" value='+ data + ' ' + isChecked +' disabled />';
+                        }
+                    },
+                    {
+                        orderable: false,
+                        data: 'bstEgb',
+                        name: 'bstEgb',
+                        render: function (data, type, row) {
+                            const isChecked = data ? 'checked' : ''
+                            return '<input type="checkbox" class="form-check-input business_trip_eligible" name="business_trip_eligible[]" value='+ data + ' ' + isChecked +' disabled />';
+                        }
+                    },
+                    {
+                        orderable: false,
+                        data: 'multiCheckInEgb',
+                        name: 'multiCheckInEgb',
+                        render: function (data, type, row) {
+                            const isChecked = data ? 'checked' : ''
+                            return '<input type="checkbox" class="form-check-input multiple_check_in_eligible" name="multiple_check_in_eligible[]" value='+ data + ' ' + isChecked +' disabled />';
+                        }
+                    },
+                    {
+                        orderable: false,
+                        data: 'reimbEgb',
+                        name: 'reimbEgb',
+                        render: function (data, type, row) {
+                            const isChecked = data ? 'checked' : ''
+                            return '<input type="checkbox" class="form-check-input reimbursement_eligible" name="reimbursement_eligible[]" value='+ data + ' ' + isChecked +' disabled />';
+                        }
+                    },
+                ],
+                select: {
+                    style: 'multi',
+                    selector: 'td:first-child'
+                },
+            });
         }
 
         function loadDataFirstLastAllEmployeeNo(field = '', func = '') {
@@ -638,7 +831,7 @@
                             _token: CSRF_TOKEN,
                             search: params.term,
                             module: 'PE',
-                            isRange: false,
+                            isRange: true,
                             isModule: false
                         };
                     },
@@ -942,109 +1135,72 @@
             });
         }
 
-        $("#btn-print-data").click(function () {
-            $(this).prop("disabled", true);
-            $(this).html(
-                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
-            );
-            $("#employee_list_form").submit();
-        });
+        $('#btn-save').on('click', function () {
+            var rows = table.rows().nodes();
+            var serializedData = [];
 
-        if ($("#employee_list_form").length > 0) {
-            $("#employee_list_form").validate({
-                rules: {
-                    employee_no_from: {
-                        required: true,
-                    },
-                    employee_no_to: {
-                        required: true,
-                    },
-                    group_authorize_from: {
-                        required: true,
-                    },
-                    group_authorize_to: {
-                        required: true,
-                    },
+            $(rows).each(function () {
+                serializedData.push({
+                    employeeNo: $(this).find('input[name="employee_no[]"]').val(),
+                    permitEgb: Boolean($(this).find('input[name="permit_eligible[]"]').val() === 'true' ? true : false),
+                    leaveEgb: Boolean($(this).find('input[name="leave_eligible[]"]').val() === 'true' ? true : false),
+                    overtimeEgb: Boolean($(this).find('input[name="overtime_eligible[]"]').val() === 'true' ? true : false),
+                    bstEgb: Boolean($(this).find('input[name="business_trip_eligible[]"]').val() === 'true' ? true : false),
+                    multiCheckInEgb: Boolean($(this).find('input[name="multiple_check_in_eligible[]"]').val() === 'true' ? true : false),
+                    reimbEgb: Boolean($(this).find('input[name="reimbursement_eligible[]"]').val() === 'true' ? true : false),
+                });
+            });
+
+            $.ajax({
+                type: "POST",
+                url: "{{ url('personnel/employee_ess_configuration/proses') }}",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                messages: {
-                    employee_no_from: {
-                        required: "{{ __('personel_employee_ess_configuration.field_required') }}",
-                    },
-                    employee_no_to: {
-                        required: "{{ __('personel_employee_ess_configuration.field_required') }}",
-                    },
-                    group_authorize_from: {
-                        required: "{{ __('personel_employee_ess_configuration.field_required') }}",
-                    },
-                    group_authorize_to: {
-                        required: "{{ __('personel_employee_ess_configuration.field_required') }}",
-                    },
+                contentType: 'application/json',
+                dataType: 'json',
+                data: JSON.stringify(serializedData),
+                success: function (response) {
+                    if (response.status == "true") {
+                        $("#btn-save").prop("disabled", false);
+                        $("#btn-save").html(
+                            '<i class="fa fa-floppy-o"></i> {{ __("personel_employee_ess_configuration.btn_save") }}'
+                        );
+
+                        $('#notification_success').modal('show');
+                        $('#message-notification-success-detail').html(response.message);
+                        setTimeout(function () {
+                            $('#notification_success').modal('hide');
+                            window.location = "{{ url('personnel/employee_ess_configuration') }}";
+                        }, 3000);
+                    } else {
+                        $("#btn-save").prop("disabled", false);
+                        $("#btn-save").html(
+                            '<i class="fa fa-floppy-o"></i> {{ __("personel_employee_ess_configuration.btn_save") }}'
+                        );
+
+                        $('#notification_error').modal('show');
+                        if (response.message == null || response.message == '') {
+                            $('#message-notification-error').html(
+                            "{{ __('login.error') }}");
+                        } else {
+                            $('#message-notification-error').html(response.message);
+                        }
+                    }
                 },
-                highlight: function (element) {
-                    $(element).addClass('is-invalid');
-                },
-                unhighlight: function (element) {
-                    $(element).removeClass('is-invalid');
-                },
-                errorElement: 'span',
-                errorPlacement: function (error, element) {
-                    $("#btn-print-data").prop("disabled", false);
-                    $("#btn-print-data").html(
-                        '<i class="fa fa-floppy-o"></i> {{ __("personel_employee_ess_configuration.btn_print") }}'
+                error: function (response) {
+                    $("#btn-save").prop("disabled",
+                    false);
+                    $("#btn-save").html(
+                        '<i class="fa fa-floppy-o"></i> {{ __("personel_employee_ess_configuration.btn_save") }}'
                     );
-
-                    error.addClass('invalid-feedback');
-                    element.closest('.form-group').append(error);
-                },
-                submitHandler: function (form) {
-                    $.ajaxSetup({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        }
-                    });
-                    $.ajax({
-                        xhrFields: {
-                            responseType: 'blob',
-                        },
-                        url: "{{ url('personnel/employee_list/print') }}",
-                        type: "POST",
-                        data: $('#employee_list_form').serialize(),
-                        success: function (result, status, xhr) {
-                            $("#btn-print-data").prop("disabled", false);
-                            $("#btn-print-data").html(
-                                '<i class="fa fa-print"></i> {{ __("personel_employee_ess_configuration.btn_print") }}'
-                            );
-                            var disposition = xhr.getResponseHeader(
-                                'content-disposition');
-                            var matches = /"([^"]*)"/.exec(disposition);
-                            var filename = (matches != null && matches[1] ? matches[1] :
-                                'noname_file.xlsx');
-
-                            // The actual download
-                            var blob = new Blob([result], {
-                                type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-                            });
-                            var link = document.createElement('a');
-                            link.href = window.URL.createObjectURL(blob);
-                            link.download = filename;
-
-                            document.body.appendChild(link);
-
-                            link.click();
-                            document.body.removeChild(link);
-                        },
-                        error: function (response) {
-                            $("#btn-print-data").prop("disabled", false);
-                            $("#btn-print-data").html(
-                                '<i class="fa fa-print"></i> {{ __("personel_employee_ess_configuration.btn_print") }}'
-                            );
-                            $('#notification_error').modal('show');
-                            $('#message-notification-error').html(response);
-                        }
-                    });
+                    $('#notification_error').modal('show');
+                    $('#message-notification-error').html(response);
                 }
-            })
-        }
+            });
+
+            return false;
+        });
     });
 
 </script>
