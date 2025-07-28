@@ -13,19 +13,16 @@ use App;
 
 class LoanReportExport implements FromView, ShouldAutoSize
 {
-    public function __construct($employeeNoFrom, $employeeNoTo, $loanTypeFrom, $loanTypeTo, $reportType, $loanTypeOne, $loanTypeTwo, $loanTypeThree, $includeResign, $groupAuthorizedCodeFrom, $groupAuthorizedCodeTo, $position, $ranking, $location, $dataLevel)
+    public function __construct($employeeNoFrom, $employeeNoTo, $loanType, $reportType, $period, $includeResign, $groupAuthorizeCodeFrom, $groupAuthorizeCodeTo, $position, $ranking, $location, $dataLevel)
     {
         $this->employeeNoFrom = $employeeNoFrom;
         $this->employeeNoTo = $employeeNoTo;
-        $this->loanTypeFrom = $loanTypeFrom;
-        $this->loanTypeTo = $loanTypeTo;
+        $this->loanType = $loanType;
         $this->reportType = $reportType;
-        $this->loanTypeOne = $loanTypeOne;
-        $this->loanTypeTwo = $loanTypeTwo;
-        $this->loanTypeThree = $loanTypeThree;
+        $this->period = $period;
         $this->includeResign = $includeResign;
-        $this->groupAuthorizedCodeFrom = $groupAuthorizedCodeFrom;
-        $this->groupAuthorizedCodeTo = $groupAuthorizedCodeTo;
+        $this->groupAuthorizeCodeFrom = $groupAuthorizeCodeFrom;
+        $this->groupAuthorizeCodeTo = $groupAuthorizeCodeTo;
         $this->position = $position;
         $this->ranking = $ranking;
         $this->location = $location;
@@ -43,10 +40,13 @@ class LoanReportExport implements FromView, ShouldAutoSize
 
             $param = [
                 'companyCode' => Session::get('companyCode'),
+                "employeeNoFrom" => $this->employeeNoFrom,
+                "employeeNoTo" => $this->employeeNoTo,
                 "reportType" => $this->reportType,
-                "loanType1" => $this->loanTypeOne, 
-                "loanType2" => $this->loanTypeTwo, 
-                "loanType3" => $this->loanTypeThree,
+                "periodMonth" => (int) date('m', strtotime($this->period)),
+                "periodYear" => (int) date('Y', strtotime($this->period)),
+                "groupAuthorizeCodeFrom" => $this->groupAuthorizeCodeFrom,
+                "groupAuthorizeCodeTo" => $this->groupAuthorizeCodeTo,
                 "includeResign" => $this->includeResign,
                 "languageID" => App::getLocale(),
                 "sessionID" => 0,
@@ -62,57 +62,45 @@ class LoanReportExport implements FromView, ShouldAutoSize
                 'sessionUserID' => Session::get('userID')
             ];
 
-            if(!empty($this->employeeNoFrom) || !empty($this->employeeNoTo)){
-                $param['employeeNoFrom'] = $this->employeeNoFrom;
-                $param['employeeNoTo'] = $this->employeeNoTo;
-            }
-
-            if(!empty($this->loanTypeFrom) || !empty($this->loanTypeTo)){
-                $param['loanTypeFrom'] = $this->loanTypeFrom;
-                $param['loanTypeTo'] = $this->loanTypeTo;
-            }
-
-            if(!empty($this->groupAuthorizedCodeFrom) || !empty($this->groupAuthorizedCodeTo)){
-                $param['groupAuthorizeCodeFrom'] = $this->groupAuthorizedCodeFrom;
-                $param['groupAuthorizeCodeTo'] = $this->groupAuthorizedCodeTo;
+            if(!empty($this->loanType) && !is_null($this->loanType[0])){
+                foreach($this->loanType as $value){
+                    $data_loan_type[] = $value;
+                }
+                $param['loanTypeList'] = $data_loan_type;
             }
 
             if(!empty($this->position) && !is_null($this->position[0])){
                 foreach($this->position as $value){
-                    $data_position[] = $value;
+                    $data_position[] = [
+                        'positionCode' => $value
+                    ];
                 }
                 $param['position'] = $data_position;
             }
 
             if(!empty($this->location) && !is_null($this->location[0])){
                 foreach($this->location as $value){
-                    $data_location[] = $value;
+                    $data_location[] = [
+                        'locationCode' => $value
+                    ];
                 }
                 $param['location'] = $data_location;
             }
 
             if(!empty($this->ranking) && !is_null($this->ranking[0])){
                 foreach($this->ranking as $value){
-                    $data_ranking[] = $value;
+                    $data_ranking[] = [
+                        'rankingCode' => $value
+                    ];
                 }
                 $param['ranking'] = $data_ranking;
             }
 
             if(!empty($this->dataLevel) && !is_null($this->dataLevel[0])){
-                foreach($this->dataLevel as $key => $value){
-                    $data_level_detail = [];
-                    foreach($this->dataLevel[$key] as $value2){
-                        $data_level_detail[] = $value2;
-                    }
-                    $data_level[] = [
-                        "levelType" => (string) ($key + 1),
-                        "levelCode" => $data_level_detail
-                    ];
-                }
-                $param['levelMaster'] = $data_level;
+                $param['levelMaster'] = $this->dataLevel;
             }
 
-            // var_dump(json_encode($param));
+            // dd(json_encode($param));
 
             $response = $client->post(env('API_URL').'/payroll/LoanReport', [
                 'body' => json_encode($param)
@@ -142,22 +130,22 @@ class LoanReportExport implements FromView, ShouldAutoSize
                 return view('payroll.py_export_loan_report_loan_report_excel', [
                     'data' => [], 'data_company' => $arrCompany->dataListSet
                 ]);
-            }else if($this->reportType == "P"){
+            }else if($this->reportType == "PAY_RPT"){
                 return view('payroll.py_export_loan_report_loan_payment_excel', [
                     'data' => [], 'data_company' => $arrCompany->dataListSet
                 ]);
-            }else if($this->reportType == "D"){
+            }else if($this->reportType == "DTL"){
                 return view('payroll.py_export_loan_report_detail_report_excel', [
                     'data' => [], 'data_company' => $arrCompany->dataListSet
                 ]);
-            }else if($this->reportType == "C"){
+            }else if($this->reportType == "SCH"){
                 return view('payroll.py_export_loan_report_loan_schedule_excel', [
                     'data' => [], 'data_company' => $arrCompany->dataListSet
                 ]);
-            }else if($this->reportType == "S"){
+            }else if($this->reportType == "SUM"){
                 return view('payroll.py_export_loan_report_summary_report_excel', [
                     'data' => [], 'data_company' => $arrCompany->dataListSet, 
-                    'loanDesc1' => $this->loanTypeOne, 'loanDesc2' => $this->loanTypeTwo, 'loanDesc3' => $this->loanTypeThree
+                    'period' => $this->period
                 ]);
             }
         }else{
@@ -165,22 +153,22 @@ class LoanReportExport implements FromView, ShouldAutoSize
                 return view('payroll.py_export_loan_report_loan_report_excel', [
                     'data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet
                 ]);
-            }else if($this->reportType == "P"){
+            }else if($this->reportType == "PAY_RPT"){
                 return view('payroll.py_export_loan_report_loan_payment_excel', [
                     'data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet
                 ]);
-            }else if($this->reportType == "D"){
+            }else if($this->reportType == "DTL"){
                 return view('payroll.py_export_loan_report_detail_report_excel', [
                     'data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet
                 ]);
-            }else if($this->reportType == "C"){
+            }else if($this->reportType == "SCH"){
                 return view('payroll.py_export_loan_report_loan_schedule_excel', [
                     'data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet
                 ]);
-            }else if($this->reportType == "S"){
+            }else if($this->reportType == "SUM"){
                 return view('payroll.py_export_loan_report_summary_report_excel', [
                     'data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet,
-                    'loanDesc1' => $this->loanTypeOne, 'loanDesc2' => $this->loanTypeTwo, 'loanDesc3' => $this->loanTypeThree
+                    'period' => $this->period
                 ]);
             }
         }

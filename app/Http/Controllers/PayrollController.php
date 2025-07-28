@@ -7308,11 +7308,47 @@ public function dataDetailReportFormatPY(Request $request)
 
     public function printLoanReportPayrollExcel(Request $request){
         $dataLevel = [];
+        $reportName = '';
 
-        for($i = 0; $i < $request->level_format; $i++){
-            $dataLevel[] = $request->{'level' . ($i+1)};
+        if (intval($request->level_format) > 0) {
+            for ($i = 0; $i < $request->level_format; $i++) {
+                $key = 'level' . ($i + 1);
+
+                if (isset($request[$key]) && is_array($request[$key])) {
+                    $dataLevelDetail = [];
+
+                    foreach ($request[$key] as $value) {
+                        $dataLevelDetail[] = [
+                            'levelCode' => $value
+                        ];
+                    }
+
+                    $dataLevel[] = [
+                        'companyCode' => Session::get('companyCode'),
+                        'levelType' => (string) ($i + 1),
+                        'level' => $dataLevelDetail
+                    ];
+                }
+            }
         }
-        return Excel::download(new LoanReportExport($request->employee_no_from, $request->employee_no_to, $request->loan_type_from, $request->loan_type_to, $request->report_type, $request->loan_type_one, $request->loan_type_two, $request->loan_type_three, isset($request->include_resign) ? (bool) $request->include_resign : false, $request->group_authorized_code_from, $request->group_authorized_code_to, $request->position, $request->ranking, $request->location, $dataLevel), 'Loan Report.xlsx');
+
+        if ($request->report_type === 'LOAN_RPT') {
+            $reportName = 'Loan Report';
+        }
+        else if ($request->report_type === 'PAY_RPT') {
+            $reportName = 'Loan Payment Report';
+        }
+        else if ($request->report_type === 'SUM') {
+            $reportName = 'Loan Summary Report';
+        }
+        else if ($request->report_type === 'DTL') {
+            $reportName = 'Loan Detail Report';
+        }
+        else {
+            $reportName = 'Loan Schedule Report';
+        }
+
+        return Excel::download(new LoanReportExport($request->employee_no_from, $request->employee_no_to, $request->loan_type, $request->report_type, $request->period, isset($request->include_resign) ? (bool) $request->include_resign : false, $request->group_authorized_code_from, $request->group_authorized_code_to, $request->position, $request->ranking, $request->location, $dataLevel), $reportName . '.xlsx');
     }
 
     public function getPaymentSlipPayroll(Request $request){

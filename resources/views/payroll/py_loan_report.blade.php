@@ -141,7 +141,7 @@
                         </div>
                     </div>
                     <div class="col-4">
-                        <select class="form-control select2" id="loan_type" name="loan_type" multiple="multiple"></select>
+                        <select class="form-control select2" id="loan_type" name="loan_type[]" multiple="multiple"></select>
                     </div>
                 </div>
                 <div class="row">
@@ -158,7 +158,7 @@
                     </div>
                     <div class="col-2">
                         <div class="form-check">
-                            <input type="radio" id="type_loan_payment" name="report_type" value="P">
+                            <input type="radio" id="type_loan_payment" name="report_type" value="PAY_RPT">
                             <label for="type_loan_payment">{{ __('payroll_loan_report.label_loan_payment') }}</label>
                         </div>
                     </div>
@@ -171,13 +171,13 @@
                     </div>
                     <div class="col-3">
                         <div class="form-check">
-                            <input type="radio" id="type_summary_report" name="report_type" value="S">
+                            <input type="radio" id="type_summary_report" name="report_type" value="SUM">
                             <label for="type_summary_report">{{ __('payroll_loan_report.label_summary_report') }}</label>
                         </div>
                     </div>
                     <div class="col-2">
                         <div class="form-check">
-                            <input type="radio" id="type_detail_report" name="report_type" value="D">
+                            <input type="radio" id="type_detail_report" name="report_type" value="DTL">
                             <label for="type_detail_report">{{ __('payroll_loan_report.label_detail_report') }}</label>
                         </div>
                     </div>
@@ -190,7 +190,7 @@
                     </div>
                     <div class="col-3">
                         <div class="form-check">
-                            <input type="radio" id="type_loan_schedule" name="report_type" value="C">
+                            <input type="radio" id="type_loan_schedule" name="report_type" value="SCH">
                             <label for="type_loan_schedule">{{ __('payroll_loan_report.label_loan_schedule') }}</label>
                         </div>
                     </div>
@@ -366,7 +366,7 @@
     function savePreviousURL() {
         if(!sessionStorage.getItem('previousURL')){
             const previousURL = document.referrer;
-            sessionStorage.setItem('previousURL', previousURL);1.21.0
+            sessionStorage.setItem('previousURL', previousURL);
         }
     }
 
@@ -1206,9 +1206,17 @@
                                 }
                             },
                             error: function(response){
-                                $('#btn-send-to').prop("disabled", false);
-                                $('#btn-send-to').html(
+                                $('#btn-send').prop("disabled", false);
+                                $('#btn-send').html(
                                     '<i class="fa fa-print"></i> {{ __("payroll_loan_report.btn_send_to") }}'
+                                );
+                                $('#btn-send-to-report').prop("disabled", false);
+                                $('#btn-send-to-report').html(
+                                    '<i class="fa fa-print"></i> {{ __("payroll_loan_report.btn_send_to") }}'
+                                );
+                                $('#btn-preview').prop("disabled", false);
+                                $('#btn-preview').html(
+                                    '<i class="fa fa-eye"></i> {{ __("payroll_loan_report.btn_preview") }}'
                                 );
                                 $('#notification_error').modal('show');
                                 $('#message-notification-error').html(response);
