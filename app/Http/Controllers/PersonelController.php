@@ -12752,7 +12752,7 @@ class PersonelController extends Controller
                 ];
             }
 
-            dd(json_encode($param));
+            // dd(json_encode($param));
 
             $response = $client->post(env('API_URL') . '/personel/UpdateBulkPeMasterESS',
                 ['body' => json_encode($param)]

@@ -448,27 +448,27 @@
         })
 
         $('#select_all_permit_eligible').on('click', function() {
-            $('.permit_eligible').prop('checked', $(this).is(':checked') ? true : false)
+            table.$('.permit_eligible').prop('checked', $(this).is(':checked') ? true : false)
         })
 
         $('#select_all_leave_eligible').on('click', function() {
-            $('.leave_eligible').prop('checked', $(this).is(':checked') ? true : false)
+            table.$('.leave_eligible').prop('checked', $(this).is(':checked') ? true : false)
         })
 
         $('#select_all_overtime_eligible').on('click', function() {
-            $('.overtime_eligible').prop('checked', $(this).is(':checked') ? true : false)
+            table.$('.overtime_eligible').prop('checked', $(this).is(':checked') ? true : false)
         })
 
         $('#select_all_business_trip_eligible').on('click', function() {
-            $('.business_trip_eligible').prop('checked', $(this).is(':checked') ? true : false)
+            table.$('.business_trip_eligible').prop('checked', $(this).is(':checked') ? true : false)
         })
 
         $('#select_all_multiple_check_in_eligible').on('click', function() {
-            $('.multiple_check_in_eligible').prop('checked', $(this).is(':checked') ? true : false)
+            table.$('.multiple_check_in_eligible').prop('checked', $(this).is(':checked') ? true : false)
         })
 
         $('#select_all_reimbursement_eligible').on('click', function() {
-            $('.reimbursement_eligible').prop('checked', $(this).is(':checked') ? true : false)
+            table.$('.reimbursement_eligible').prop('checked', $(this).is(':checked') ? true : false)
         })
 
         $(document).on('change', '.permit_eligible', function () {
@@ -502,7 +502,10 @@
         });
 
         function updateSelectAllStatus(selector, checkboxClass) {
-            const allChecked = $(`.${checkboxClass}`).length === $(`.${checkboxClass}:checked`).length;
+            const allCheckboxes = table.$(`.${checkboxClass}`);
+            const checkedCheckboxes = table.$(`.${checkboxClass}:checked`);
+            
+            const allChecked = allCheckboxes.length > 0 && allCheckboxes.length === checkedCheckboxes.length;
             $(selector).prop('checked', allChecked);
         }
 
@@ -1142,12 +1145,12 @@
             $(rows).each(function () {
                 serializedData.push({
                     employeeNo: $(this).find('input[name="employee_no[]"]').val(),
-                    permitEgb: Boolean($(this).find('input[name="permit_eligible[]"]').val() === 'true' ? true : false),
-                    leaveEgb: Boolean($(this).find('input[name="leave_eligible[]"]').val() === 'true' ? true : false),
-                    overtimeEgb: Boolean($(this).find('input[name="overtime_eligible[]"]').val() === 'true' ? true : false),
-                    bstEgb: Boolean($(this).find('input[name="business_trip_eligible[]"]').val() === 'true' ? true : false),
-                    multiCheckInEgb: Boolean($(this).find('input[name="multiple_check_in_eligible[]"]').val() === 'true' ? true : false),
-                    reimbEgb: Boolean($(this).find('input[name="reimbursement_eligible[]"]').val() === 'true' ? true : false),
+                    permitEgb: $(this).find('input[name="permit_eligible[]"]').is(':checked'),
+                    leaveEgb: $(this).find('input[name="leave_eligible[]"]').is(':checked'),
+                    overtimeEgb: $(this).find('input[name="overtime_eligible[]"]').is(':checked'),
+                    bstEgb: $(this).find('input[name="business_trip_eligible[]"]').is(':checked'),
+                    multiCheckInEgb: $(this).find('input[name="multiple_check_in_eligible[]"]').is(':checked'),
+                    reimbEgb: $(this).find('input[name="reimbursement_eligible[]"]').is(':checked'),
                 });
             });
 
@@ -1168,7 +1171,7 @@
                         );
 
                         $('#notification_success').modal('show');
-                        $('#message-notification-success-detail').html(response.message);
+                        $('#message-notification-success').html(response.message);
                         setTimeout(function () {
                             $('#notification_success').modal('hide');
                             window.location = "{{ url('personnel/employee_ess_configuration') }}";
