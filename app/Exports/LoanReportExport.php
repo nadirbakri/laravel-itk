@@ -42,7 +42,7 @@ class LoanReportExport implements FromView, ShouldAutoSize
                 'companyCode' => Session::get('companyCode'),
                 "employeeNoFrom" => $this->employeeNoFrom,
                 "employeeNoTo" => $this->employeeNoTo,
-                "reportType" => $this->reportType,
+                "reportType" => $this->reportType === 'OTH_SUM' ? 'DTL' : $this->reportType,
                 "periodMonth" => (int) date('m', strtotime($this->period)),
                 "periodYear" => (int) date('Y', strtotime($this->period)),
                 "groupAuthorizeCodeFrom" => $this->groupAuthorizeCodeFrom,
@@ -136,7 +136,8 @@ class LoanReportExport implements FromView, ShouldAutoSize
                 ]);
             }else if($this->reportType == "DTL"){
                 return view('payroll.py_export_loan_report_detail_report_excel', [
-                    'data' => [], 'data_company' => $arrCompany->dataListSet
+                    'data' => [], 'data_company' => $arrCompany->dataListSet,
+                    'period' => $this->period
                 ]);
             }else if($this->reportType == "SCH"){
                 return view('payroll.py_export_loan_report_loan_schedule_excel', [
@@ -144,6 +145,12 @@ class LoanReportExport implements FromView, ShouldAutoSize
                 ]);
             }else if($this->reportType == "SUM"){
                 return view('payroll.py_export_loan_report_summary_report_excel', [
+                    'data' => [], 'data_company' => $arrCompany->dataListSet, 
+                    'period' => $this->period
+                ]);
+            }
+            else if($this->reportType == "OTH_SUM"){
+                return view('payroll.py_export_loan_report_other_loan_summary_report_excel', [
                     'data' => [], 'data_company' => $arrCompany->dataListSet, 
                     'period' => $this->period
                 ]);
@@ -159,7 +166,8 @@ class LoanReportExport implements FromView, ShouldAutoSize
                 ]);
             }else if($this->reportType == "DTL"){
                 return view('payroll.py_export_loan_report_detail_report_excel', [
-                    'data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet
+                    'data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet,
+                    'period' => $this->period
                 ]);
             }else if($this->reportType == "SCH"){
                 return view('payroll.py_export_loan_report_loan_schedule_excel', [
@@ -167,6 +175,12 @@ class LoanReportExport implements FromView, ShouldAutoSize
                 ]);
             }else if($this->reportType == "SUM"){
                 return view('payroll.py_export_loan_report_summary_report_excel', [
+                    'data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet,
+                    'period' => $this->period
+                ]);
+            }
+            else if($this->reportType == "OTH_SUM"){
+                return view('payroll.py_export_loan_report_other_loan_summary_report_excel', [
                     'data' => $arrResult->dataListSet, 'data_company' => $arrCompany->dataListSet,
                     'period' => $this->period
                 ]);

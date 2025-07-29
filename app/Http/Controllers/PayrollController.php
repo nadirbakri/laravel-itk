@@ -7342,7 +7342,10 @@ public function dataDetailReportFormatPY(Request $request)
             $reportName = 'Loan Summary Report';
         }
         else if ($request->report_type === 'DTL') {
-            $reportName = 'Loan Detail Report';
+            $reportName = 'Other Loan Detail Report';
+        }
+        else if ($request->report_type === 'OTH_SUM') {
+            $reportName = 'Other Loan Summary Report';
         }
         else {
             $reportName = 'Loan Schedule Report';
@@ -7802,6 +7805,9 @@ public function dataDetailReportFormatPY(Request $request)
         }else if($companyCode == 'DEMO'){
             $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_demo';
             $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_demo';
+        }else if($companyCode == 'TVMI'){
+            $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_tvmi';
+            $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_tvmi';
         }else{
             $viewNamePortrait = 'payroll.py_export_payment_slip_portrait';
             $viewNameLandscape = 'payroll.py_export_payment_slip_landscape';

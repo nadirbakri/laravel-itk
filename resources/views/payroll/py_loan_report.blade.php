@@ -150,7 +150,7 @@
                             <label for="report_type form-check-label">{{ __('payroll_loan_report.label_report_type') }}</label>
                         </div>
                     </div>
-                    <div class="col-3">
+                    <div class="col-2">
                         <div class="form-check">
                             <input type="radio" id="type_loan_report" name="report_type" value="LOAN_RPT" checked>
                             <label for="type_loan_report">{{ __('payroll_loan_report.label_loan_report') }}</label>
@@ -159,7 +159,7 @@
                     <div class="col-2">
                         <div class="form-check">
                             <input type="radio" id="type_loan_payment" name="report_type" value="PAY_RPT">
-                            <label for="type_loan_payment">{{ __('payroll_loan_report.label_loan_payment') }}</label>
+                            <label for="type_loan_payment">{{ __('payroll_loan_report.label_loan_payment_report') }}</label>
                         </div>
                     </div>
                 </div>
@@ -169,16 +169,16 @@
                             <label for="report_type form-check-label">&nbsp;</label>
                         </div>
                     </div>
-                    <div class="col-3">
+                    <div class="col-2">
                         <div class="form-check">
                             <input type="radio" id="type_summary_report" name="report_type" value="SUM">
-                            <label for="type_summary_report">{{ __('payroll_loan_report.label_summary_report') }}</label>
+                            <label for="type_summary_report">{{ __('payroll_loan_report.label_loan_summary_report') }}</label>
                         </div>
                     </div>
                     <div class="col-2">
                         <div class="form-check">
                             <input type="radio" id="type_detail_report" name="report_type" value="DTL">
-                            <label for="type_detail_report">{{ __('payroll_loan_report.label_detail_report') }}</label>
+                            <label for="type_detail_report">{{ __('payroll_loan_report.label_other_loan_detail_report') }}</label>
                         </div>
                     </div>
                 </div>
@@ -188,10 +188,16 @@
                             <label for="report_type form-check-label">&nbsp;</label>
                         </div>
                     </div>
-                    <div class="col-3">
+                    <div class="col-2">
                         <div class="form-check">
                             <input type="radio" id="type_loan_schedule" name="report_type" value="SCH">
-                            <label for="type_loan_schedule">{{ __('payroll_loan_report.label_loan_schedule') }}</label>
+                            <label for="type_loan_schedule">{{ __('payroll_loan_report.label_loan_schedule_report') }}</label>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="form-check">
+                            <input type="radio" id="type_detail_report" name="report_type" value="OTH_SUM">
+                            <label for="type_detail_report">{{ __('payroll_loan_report.label_other_loan_summary_report') }}</label>
                         </div>
                     </div>
                 </div>

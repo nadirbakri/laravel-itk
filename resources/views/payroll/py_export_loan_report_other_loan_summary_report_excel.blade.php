@@ -18,16 +18,16 @@
     <table>
         <thead>
             <tr>
-                <th colspan="8" style="font-size:14px; font-weight:bold;">{{ $data_company[0]->companyName }}</th>
+                <th colspan="7" style="font-size:14px; font-weight:bold;">{{ $data_company[0]->companyName }}</th>
             </tr>
             <tr>
-                <th colspan="8" style="font-size:14px; font-weight:bold;">{{ $data_company[0]->address }}</th>
+                <th colspan="7" style="font-size:14px; font-weight:bold;">{{ $data_company[0]->address }}</th>
             </tr>
             <tr>
-                <th colspan="8" style="text-align:center; font-size:14px; font-weight:bold;">OTHER LOAN DETAIL REPORT</th>
+                <th colspan="7" style="text-align:center; font-size:14px; font-weight:bold;">OTHER LOAN SUMMARY REPORT</th>
             </tr>
             <tr>
-                <th colspan="8" style="text-align:center;">Month : {{date('F Y', strtotime($period))}}</th>
+                <th colspan="7" style="text-align:center;">Month : {{date('F Y', strtotime($period))}}</th>
             </tr>
         </thead>
     </table>
@@ -36,7 +36,6 @@
             <tr>
                 <th rowspan="2" style="border:1px solid #000; padding:4px; background-color:#84c2e0; font-weight: bold; text-align: center; vertical-align: middle;">No</th>
                 <th colspan="2" style="border:1px solid #000; padding:4px; background-color:#84c2e0; font-weight: bold; text-align: center; vertical-align: middle;">Employee</th>
-                <th rowspan="2" style="border:1px solid #000; padding:4px; background-color:#84c2e0; font-weight: bold; text-align: center; vertical-align: middle;">Loan Type</th>
                 <th style="border:1px solid #000; padding:4px; background-color:#84c2e0; font-weight: bold; text-align: center; vertical-align: middle;">Outstanding Balance</th>
                 <th colspan="2" style="border:1px solid #000; padding:4px; background-color:#84c2e0; font-weight: bold; text-align: center; vertical-align: middle;">Installment</th>
                 <th rowspan="2" style="border:1px solid #000; padding:4px; background-color:#84c2e0; font-weight: bold; text-align: center; vertical-align: middle;">Total Payment</th>
@@ -56,7 +55,6 @@
                     <td style="border:1px solid #000; text-align:center; padding:4px;">{{ $key2 + 1 }}</td>
                     <td style="border:1px solid #000; text-align:center; padding:4px;">{{$value2->employeeNo}}</td>
                     <td style="border:1px solid #000; text-align:left; padding:4px;">{{$value2->employeeName}}</td>
-                    <td style="border:1px solid #000; text-align:center; padding:4px;">{{$value2->loanCode}}</td>
                     <td data-format="#,##0.00" style="border:1px solid #000; text-align:right; padding:4px;">{{$value2->principalInterest}}</td>
                     <td data-format="#,##0.00" style="border:1px solid #000; text-align:right; padding:4px;">{{$value2->installmentPerMonth}}</td>
                     <td data-format="#,##0.00" style="border:1px solid #000; text-align:right; padding:4px;">{{$value2->interest}}</td>
@@ -66,7 +64,7 @@
             @endforeach
             @if(isset($value))
                 <tr>
-                    <td colspan="4" style="border:1px solid #000; text-align:center; padding:4px; font-weight:bold;">Grand Total</td>
+                    <td colspan="3" style="border:1px solid #000; text-align:center; padding:4px; font-weight:bold;">Grand Total</td>
                     <td data-format="#,##0.00" style="border:1px solid #000; font-weight:bold; text-align:right; padding:4px;">{{$value->grandTotalPrincipalInterest}}</td>
                     <td data-format="#,##0.00" style="border:1px solid #000; font-weight:bold; text-align:right; padding:4px;">{{$value->grandTotalInstallment}}</td>
                     <td data-format="#,##0.00" style="border:1px solid #000; font-weight:bold; text-align:right; padding:4px;">{{$value->grandTotalInterest}}</td>

@@ -100,7 +100,7 @@
 					<td style="text-align: left; border: 1px solid black">{{ $value->actualDateOut ? date('H:i',strtotime($value->actualDateOut)) : '' }}</td>
 					<td style="text-align: left; border: 1px solid black">{{ $value->hourOvt ? date('H:i',strtotime($value->hourOvt)) : ''}}</td>
 					<td style="text-align: left; border: 1px solid black">{{ $value->absentCode ?? '' }}</td>
-					<td style="text-align: left; border: 1px solid black">{{ $value->description ?? '' }}</td>
+					<td style="text-align: left; border: 1px solid black">{{ $value->descriptionAbsent ?? '' }}</td>
 				</tr>
 			@endforeach
 			{{-- <tr>
