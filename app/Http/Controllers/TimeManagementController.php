@@ -2955,14 +2955,14 @@ class TimeManagementController extends Controller
                         $time = $hour . ":" . $minute . ':00';
                         $status = trim(substr($line, ($data->codeInOutStart - 1), $data->codeInOutLong));
 
-                        if($status === $data->inCode){
+                        if($status === $data->inCode && !empty($hour)){
                             $result[] = [
                                 'employeeNo' => $employeeNo,
                                 'absentDate' => $date,
                                 'time' => $time,
                                 'type' => 'I'
                             ];
-                        }else if($status === $data->outCode){
+                        }else if($status === $data->outCode && !empty($hour)){
                             $result[] = [
                                 'employeeNo' => $employeeNo,
                                 'absentDate' => $date,
