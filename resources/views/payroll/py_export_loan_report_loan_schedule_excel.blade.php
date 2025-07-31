@@ -56,7 +56,7 @@
             <tbody>
                 @foreach($value->peminjaman as $key2 => $value2)
                     <tr>
-                        <td style="border:1px solid #000; background-color:#84c2e0; font-weight: bold; border:1px solid #000; text-align:left;">Source Document</td>
+                        <td style="border:1px solid #000; background-color:#84c2e0; font-weight: bold; text-align:left;">Source Document</td>
                         <td style="border:1px solid #000; text-align:right;">{{$value2->sourceDocument}}</td>
                         <td style="border:1px solid #000;">&nbsp;</td>
                         <td>&nbsp;</td>
@@ -74,7 +74,7 @@
                     <tr>
                         <td style="border:1px solid #000; background-color:#84c2e0; font-weight: bold; text-align:left;">Interest</td>
                         <td style="border:1px solid #000; text-align:right;">{{$value2->currencyCode}}</td>
-                        <td data-format="#,##0.00" style="border:1px solid #000; border:1px solid #000; text-align:right;">{{$value2->interest}}</td>
+                        <td data-format="#,##0.00" style="border:1px solid #000; text-align:right;">{{$value2->interest}}</td>
                         <td>&nbsp;</td>
                         <td style="border:1px solid #000; background-color:#84c2e0; font-weight: bold; text-align:left;">Rate / Year</td>
                         <td style="border:1px solid #000; text-align:right;">{{$value2->ratePerYear}} %</td>

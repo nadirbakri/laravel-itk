@@ -7306,6 +7306,212 @@ public function dataDetailReportFormatPY(Request $request)
         return Excel::download(new AnnualReportExcel($request->year, $request->report_name, ($request->report_status == "annualy") ? true : false, ($request->report_type == "summary") ? true : false, $request->employee_no_from, $request->employee_no_to, $request->group_authorized_code_from, $request->group_authorized_code_to, $request->position, $request->ranking, $request->location, $dataLevel), 'Annual Report.xlsx');
     }
 
+    public function printLoanReportPayroll(Request $request){
+        $dataLevel = [];
+        $reportName = '';
+
+        if (intval($request->level_format) > 0) {
+            for ($i = 0; $i < $request->level_format; $i++) {
+                $key = 'level' . ($i + 1);
+
+                if (isset($request[$key]) && is_array($request[$key])) {
+                    $dataLevelDetail = [];
+
+                    foreach ($request[$key] as $value) {
+                        $dataLevelDetail[] = [
+                            'levelCode' => $value
+                        ];
+                    }
+
+                    $dataLevel[] = [
+                        'companyCode' => Session::get('companyCode'),
+                        'levelType' => (string) ($i + 1),
+                        'level' => $dataLevelDetail
+                    ];
+                }
+            }
+        }
+
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $param = [
+                'companyCode' => Session::get('companyCode'),
+                "employeeNoFrom" => $request->employee_no_from,
+                "employeeNoTo" => $request->employee_no_to,
+                "reportType" => $request->report_type === 'OTH_SUM' ? 'DTL' : $request->report_type,
+                "periodMonth" => (int) date('m', strtotime($request->period)),
+                "periodYear" => (int) date('Y', strtotime($request->period)),
+                "groupAuthorizeCodeFrom" => $request->group_authorized_code_from,
+                "groupAuthorizeCodeTo" => $request->group_authorized_code_to,
+                "includeResign" => isset($request->include_resign) ? (bool) $request->include_resign : false,
+                "languageID" => App::getLocale(),
+                "sessionID" => 0,
+                "sessionUserID" => Session::get('userID'),
+                "logActionUsername" => Session::get('userName'),
+                "logActionUserID" => Session::get('userID')
+            ];
+
+            $paramGetCompany = [
+                'companyCode' => Session::get('companyCode'),
+                'languageID' =>App::getLocale(),
+                'sessionID' => 0,
+                'sessionUserID' => Session::get('userID')
+            ];
+
+            if(!empty($request->loan_type) && !is_null($request->loan_type[0])){
+                foreach($request->loan_type as $value){
+                    $data_loan_type[] = $value;
+                }
+                $param['loanTypeList'] = $data_loan_type;
+            }
+
+            if(!empty($request->position) && !is_null($request->position[0])){
+                foreach($request->position as $value){
+                    $data_position[] = [
+                        'positionCode' => $value
+                    ];
+                }
+                $param['position'] = $data_position;
+            }
+
+            if(!empty($request->location) && !is_null($request->location[0])){
+                foreach($request->location as $value){
+                    $data_location[] = [
+                        'locationCode' => $value
+                    ];
+                }
+                $param['location'] = $data_location;
+            }
+
+            if(!empty($request->ranking) && !is_null($request->ranking[0])){
+                foreach($request->ranking as $value){
+                    $data_ranking[] = [
+                        'rankingCode' => $value
+                    ];
+                }
+                $param['ranking'] = $data_ranking;
+            }
+
+            if(!empty($dataLevel) && !is_null($dataLevel[0])){
+                $param['levelMaster'] = $dataLevel;
+            }
+
+            // dd(json_encode($param));
+
+            $response = $client->post(env('API_URL').'/payroll/LoanReport', [
+                'body' => json_encode($param)
+            ]);
+
+            $responseGetCompany = $client->post(env('API_URL').'/personel/Company/getcompany', [
+                'body' => json_encode($paramGetCompany)
+            ]);
+        }catch (RequestException $e){
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+        $arrCompany = json_decode($responseGetCompany->getBody()->getContents());
+
+        $customPaper = array(0,0,792.00,1224.00);
+
+        if($request->report_type == "LOAN_RPT"){
+           $pdf = PDF::loadView('payroll.py_export_loan_report_loan_report', [
+                'data' => $arrResult->dataListSet ?? [],
+                'data_company' => $arrCompany->dataListSet,
+                'request' => $request
+            ])
+            ->setPaper($customPaper, 'landscape')
+            ->setOptions([
+                'defaultFont' => 'arial',
+                'isHtml5ParserEnabled' => true,
+                'isPhpEnabled' => true,
+            ]);
+            return $pdf->stream('Loan Report.pdf');
+        }else if($request->report_type == "PAY_RPT"){
+            $pdf = PDF::loadView('payroll.py_export_loan_report_loan_payment', [
+                'data' => $arrResult->dataListSet ?? [],
+                'data_company' => $arrCompany->dataListSet,
+                'request' => $request
+            ])
+            ->setPaper($customPaper, 'landscape')
+            ->setOptions([
+                'defaultFont' => 'arial',
+                'isHtml5ParserEnabled' => true,
+                'isPhpEnabled' => true,
+            ]);
+            return $pdf->stream('Loan Payment Report.pdf');
+        }else if($request->report_type == "DTL"){
+            $pdf = PDF::loadView('payroll.py_export_loan_report_detail_report', [
+                'data' => $arrResult->dataListSet ?? [],
+                'data_company' => $arrCompany->dataListSet,
+                'period' => $request->period,
+                'request' => $request
+            ])
+            ->setPaper($customPaper, 'landscape')
+            ->setOptions([
+                'defaultFont' => 'arial',
+                'isHtml5ParserEnabled' => true,
+                'isPhpEnabled' => true,
+            ]);
+            return $pdf->stream('Other Loan Detail Report.pdf');
+        }else if($request->report_type == "SCH"){
+            $pdf = PDF::loadView('payroll.py_export_loan_report_loan_schedule', [
+                'data' => $arrResult->dataListSet ?? [],
+                'data_company' => $arrCompany->dataListSet,
+                'period' => $request->period,
+                'request' => $request
+            ])
+            ->setPaper($customPaper, 'landscape')
+            ->setOptions([
+                'defaultFont' => 'arial',
+                'isHtml5ParserEnabled' => true,
+                'isPhpEnabled' => true,
+            ]);
+            return $pdf->stream('Loan Schedule Report.pdf');
+        }else if($request->report_type == "SUM"){
+            $pdf = PDF::loadView('payroll.py_export_loan_report_summary_report', [
+                'data' => $arrResult->dataListSet ?? [],
+                'data_company' => $arrCompany->dataListSet,
+                'period' => $request->period,
+                'request' => $request
+            ])
+            ->setPaper($customPaper, 'landscape')
+            ->setOptions([
+                'defaultFont' => 'arial',
+                'isHtml5ParserEnabled' => true,
+                'isPhpEnabled' => true,
+            ]);
+            return $pdf->stream('Loan Summary Report.pdf');
+        }
+        else if($request->report_type == "OTH_SUM"){
+            $pdf = PDF::loadView('payroll.py_export_loan_report_other_loan_summary_report', [
+                'data' => $arrResult->dataListSet ?? [],
+                'data_company' => $arrCompany->dataListSet,
+                'period' => $request->period,
+                'request' => $request
+            ])
+            ->setPaper($customPaper, 'landscape')
+            ->setOptions([
+                'defaultFont' => 'arial',
+                'isHtml5ParserEnabled' => true,
+                'isPhpEnabled' => true,
+            ]);
+            return $pdf->stream('Other Loan Summary Report.pdf');
+        }
+    }
+
     public function printLoanReportPayrollExcel(Request $request){
         $dataLevel = [];
         $reportName = '';

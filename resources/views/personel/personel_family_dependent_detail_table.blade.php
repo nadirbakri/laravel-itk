@@ -305,6 +305,18 @@
 
     load_data_table_family_dependent();
 
+    $('#family_dependent_table_detail tbody').on('click', 'input[type="checkbox"]', function(e){
+        var $row = $(this).closest('tr');
+
+        if(this.checked){
+            $row.addClass('selected');
+        } else {
+            $row.removeClass('selected');
+        }
+
+        e.stopPropagation();
+    });
+
     $('#family_dependent_table_detail').on('click', 'tr td:first-child', function(e){
         $(this).parent().find('input[type="checkbox"]').trigger('click');
     });
@@ -328,13 +340,55 @@
     $("#toolbar-edit").on('click', function() {
         var data = table.rows('.selected').data();
         const dataDetail = {
-            employeeNo : arrData.employeeNo,
-            employeeName : arrData.familyName,
-            ...data
+            employeeNo : data[0].employeeNo,
+            employeeName : data[0].familyName,
+            ...data[0]
         }
         if(data.count() > 0){
             $.redirect("{{ url('personnel/family_dependent/detail_table/detail_data') }}", { data: dataDetail, 'func' : 'edit' }, "GET", "iframe_dashboard");
         }else{
+            $('#notification_error').modal('show');
+            $('#message-notification-error').html('No Data Selected');
+        }
+    });
+
+    $("#toolbar-delete").on('click', function() {
+        var data = table.rows('.selected').data().toArray();
+
+        if(data.length > 0){
+            $.ajax({
+                url: "{{ url('personnel/family_dependent/remove') }}",
+                type: "GET",
+                data: {
+                    'data' : data
+                },
+                success: function (response) {
+                    if (response.status == "true") {
+                        $('#notification_success').modal('show');
+                        $('#message-notification-success').html(response
+                            .message);
+                        $('#family_dependent_table_detail').DataTable().destroy();
+                        load_data_table_family_dependent()
+                        setTimeout(function () {
+                            $('#notification_success').modal('hide');
+                        }, 3000);
+                    } else {
+                        $('#notification_error').modal('show');
+                        if (response.message == null || response.message == '') {
+                            $('#message-notification-error').html(
+                                "{{ __('login.error') }}");
+                        } else {
+                            $('#message-notification-error').html(response.message);
+                        }
+                    }
+                },
+                error: function (response) {
+                    $('#notification_error').modal('show');
+                    $('#message-notification-error').html(response);
+                }
+            });
+        }
+        else{
             $('#notification_error').modal('show');
             $('#message-notification-error').html('No Data Selected');
         }

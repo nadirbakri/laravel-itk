@@ -50,68 +50,70 @@
                 <th colspan="2" style="border:1px solid #000; padding:4px; background-color:#84c2e0; font-weight: bold; text-align: center; vertical-align: middle;">Name</th>
             </tr>
         </thead>
-        <tbody>
-            @foreach($data[0]->loanReportData as $key => $value)
-                <tr>
-                    <td colspan="2" style="border:1px solid #000; font-weight:bold; text-align:center; padding:4px;">Loan Type</td>
-                    <td style="border:1px solid #000; font-weight:bold; text-align:center; padding:4px;">{{$value->loanCode}}</td>
-                    <td style="border:1px solid #000; font-weight:bold; text-align:center; padding:4px;">{{$value->loanDescription}}</td>
-                    <td style="border:1px solid #000; text-align:center; padding:4px;">&nbsp;</td>
-                    <td style="border:1px solid #000; text-align:center; padding:4px;">&nbsp;</td>
-                    <td style="border:1px solid #000; text-align:center; padding:4px;">&nbsp;</td>
-                    <td style="border:1px solid #000; text-align:center; padding:4px;">&nbsp;</td>
-                    <td style="border:1px solid #000; text-align:center; padding:4px;">&nbsp;</td>
-                    <td style="border:1px solid #000; text-align:center; padding:4px;">&nbsp;</td>
-                    <td style="border:1px solid #000; text-align:center; padding:4px;">&nbsp;</td>
-                    <td style="border:1px solid #000; text-align:center; padding:4px;">&nbsp;</td>
-                    <td style="border:1px solid #000; text-align:center; padding:4px;">&nbsp;</td>
-                    <td style="border:1px solid #000; text-align:center; padding:4px;">&nbsp;</td>
-                    <td style="border:1px solid #000; text-align:center; padding:4px;">&nbsp;</td>
-                </tr>
-                @foreach($value->listData as $key2 => $value2)
-                <tr>
-                    <td style="border:1px solid #000; text-align:center; padding:4px;">{{ $key2 + 1 }}</td>
-                    <td style="border:1px solid #000; text-align:center; padding:4px;">{{$value2->employeeNo}}</td>
-                    <td colspan="2" style="border:1px solid #000; text-align:left; padding:4px;">{{$value2->fullName}}</td>
-                    <td style="border:1px solid #000; text-align:center; padding:4px;">{{$value2->loanNo}}</td>
-                    <td style="border:1px solid #000; text-align:center; padding:4px;">{{$value2->sourceDocument}}</td>
-                    <td style="border:1px solid #000; text-align:center; padding:4px;">{{date('d M Y', strtotime($value2->loanDate))}}</td>
-                    <td style="border:1px solid #000; text-align:center; padding:4px;">{{date('d M Y', strtotime($value2->firstPaymentDate))}}</td>
-                    <td style="border:1px solid #000; text-align:center; padding:4px;">{{$value2->currencyCode}}</td>
-                    <td data-format="#,##0.00" style="border:1px solid #000; text-align:right; padding:4px;">{{$value2->loanAmount}}</td>
-                    <td style="border:1px solid #000; text-align:right; padding:4px;">{{$value2->noOfInstallment}}</td>
-                    <td style="border:1px solid #000; text-align:right; padding:4px;">{{$value2->ratePerYear}}</td>
-                    <td data-format="#,##0.00" style="border:1px solid #000; text-align:right; padding:4px;">{{$value2->paymentInterest}}</td>
-                    <td data-format="#,##0.00" style="border:1px solid #000; text-align:right; padding:4px;">{{$value2->installmentPerMonth}}</td>
-                    <td style="border:1px solid #000; text-align:left; padding:4px;">{{$value2->description}}</td>
-                </tr>
+        @if(count($data) > 0)
+            <tbody>
+                @foreach($data[0]->loanReportData as $key => $value)
+                    <tr>
+                        <td colspan="2" style="border:1px solid #000; font-weight:bold; text-align:center; padding:4px;">Loan Type</td>
+                        <td style="border:1px solid #000; font-weight:bold; text-align:center; padding:4px;">{{$value->loanCode}}</td>
+                        <td style="border:1px solid #000; font-weight:bold; text-align:center; padding:4px;">{{$value->loanDescription}}</td>
+                        <td style="border:1px solid #000; text-align:center; padding:4px;">&nbsp;</td>
+                        <td style="border:1px solid #000; text-align:center; padding:4px;">&nbsp;</td>
+                        <td style="border:1px solid #000; text-align:center; padding:4px;">&nbsp;</td>
+                        <td style="border:1px solid #000; text-align:center; padding:4px;">&nbsp;</td>
+                        <td style="border:1px solid #000; text-align:center; padding:4px;">&nbsp;</td>
+                        <td style="border:1px solid #000; text-align:center; padding:4px;">&nbsp;</td>
+                        <td style="border:1px solid #000; text-align:center; padding:4px;">&nbsp;</td>
+                        <td style="border:1px solid #000; text-align:center; padding:4px;">&nbsp;</td>
+                        <td style="border:1px solid #000; text-align:center; padding:4px;">&nbsp;</td>
+                        <td style="border:1px solid #000; text-align:center; padding:4px;">&nbsp;</td>
+                        <td style="border:1px solid #000; text-align:center; padding:4px;">&nbsp;</td>
+                    </tr>
+                    @foreach($value->listData as $key2 => $value2)
+                    <tr>
+                        <td style="border:1px solid #000; text-align:center; padding:4px;">{{ $key2 + 1 }}</td>
+                        <td style="border:1px solid #000; text-align:center; padding:4px;">{{$value2->employeeNo}}</td>
+                        <td colspan="2" style="border:1px solid #000; text-align:left; padding:4px;">{{$value2->fullName}}</td>
+                        <td style="border:1px solid #000; text-align:center; padding:4px;">{{$value2->loanNo}}</td>
+                        <td style="border:1px solid #000; text-align:center; padding:4px;">{{$value2->sourceDocument}}</td>
+                        <td style="border:1px solid #000; text-align:center; padding:4px;">{{date('d M Y', strtotime($value2->loanDate))}}</td>
+                        <td style="border:1px solid #000; text-align:center; padding:4px;">{{date('d M Y', strtotime($value2->firstPaymentDate))}}</td>
+                        <td style="border:1px solid #000; text-align:center; padding:4px;">{{$value2->currencyCode}}</td>
+                        <td data-format="#,##0.00" style="border:1px solid #000; text-align:right; padding:4px;">{{$value2->loanAmount}}</td>
+                        <td style="border:1px solid #000; text-align:right; padding:4px;">{{$value2->noOfInstallment}}</td>
+                        <td style="border:1px solid #000; text-align:right; padding:4px;">{{$value2->ratePerYear}}%</td>
+                        <td data-format="#,##0.00" style="border:1px solid #000; text-align:right; padding:4px;">{{$value2->paymentInterest}}</td>
+                        <td data-format="#,##0.00" style="border:1px solid #000; text-align:right; padding:4px;">{{$value2->installmentPerMonth}}</td>
+                        <td style="border:1px solid #000; text-align:left; padding:4px;">{{$value2->description}}</td>
+                    </tr>
+                    @endforeach
+                    <tr>
+                        <td colspan="2" style="border:1px solid #000; font-weight:bold; text-align:left; padding:4px;">Total Loan</td>
+                        <td style="border:1px solid #000; font-weight:bold; text-align:center; padding:4px;">{{$value->loanCode}}</td>
+                        <td style="border:1px solid #000; font-weight:bold; text-align:center; padding:4px;">{{$value->loanDescription}}</td>
+                        <td style="border:1px solid #000; text-align:center; padding:4px;">&nbsp;</td>
+                        <td style="border:1px solid #000; text-align:center; padding:4px;">&nbsp;</td>
+                        <td style="border:1px solid #000; text-align:center; padding:4px;">&nbsp;</td>
+                        <td style="border:1px solid #000; text-align:center; padding:4px;">&nbsp;</td>
+                        <td style="border:1px solid #000; text-align:center; padding:4px;">&nbsp;</td>
+                        <td data-format="#,##0.00" style="border:1px solid #000; font-weight:bold; text-align:right; padding:4px;">{{$value->totalLoan}}</td>
+                        <td colspan="2" style="border:1px solid #000; text-align:center; padding:4px;">&nbsp;</td>
+                        <td data-format="#,##0.00" style="border:1px solid #000; font-weight:bold; text-align:right; padding:4px;">{{$value->totalInterest}}</td>
+                        <td data-format="#,##0.00" style="border:1px solid #000; font-weight:bold; text-align:right; padding:4px;">{{$value->totalInstallment}}</td>
+                        <td style="border:1px solid #000; text-align:center; padding:4px;">&nbsp;</td>
+                    </tr>
                 @endforeach
                 <tr>
-                    <td colspan="2" style="border:1px solid #000; font-weight:bold; text-align:center; padding:4px;">Total Loan</td>
-                    <td style="border:1px solid #000; font-weight:bold; text-align:center; padding:4px;">{{$value->loanCode}}</td>
-                    <td style="border:1px solid #000; font-weight:bold; text-align:center; padding:4px;">{{$value->loanDescription}}</td>
+                    <td colspan="9" style="border:1px solid #000; text-align:left; padding:4px; font-weight:bold;">Grand Total</td>
+                    <td data-format="#,##0.00" style="border:1px solid #000; font-weight:bold; text-align:right; padding:4px;">{{$data[0]->grandTotalLoan ?? 0}}</td>
                     <td style="border:1px solid #000; text-align:center; padding:4px;">&nbsp;</td>
                     <td style="border:1px solid #000; text-align:center; padding:4px;">&nbsp;</td>
-                    <td style="border:1px solid #000; text-align:center; padding:4px;">&nbsp;</td>
-                    <td style="border:1px solid #000; text-align:center; padding:4px;">&nbsp;</td>
-                    <td style="border:1px solid #000; text-align:center; padding:4px;">&nbsp;</td>
-                    <td data-format="#,##0.00" style="border:1px solid #000; font-weight:bold; text-align:right; padding:4px;">{{$value->totalLoan}}</td>
-                    <td colspan="2" style="border:1px solid #000; text-align:center; padding:4px;">&nbsp;</td>
-                    <td data-format="#,##0.00" style="border:1px solid #000; font-weight:bold; text-align:right; padding:4px;">{{$value->totalInterest}}</td>
-                    <td data-format="#,##0.00" style="border:1px solid #000; font-weight:bold; text-align:right; padding:4px;">{{$value->totalInstallment}}</td>
+                    <td data-format="#,##0.00" style="border:1px solid #000; font-weight:bold; text-align:right; padding:4px;">{{$data[0]->grandTotalInterest ?? 0}}</td>
+                    <td data-format="#,##0.00" style="border:1px solid #000; font-weight:bold; text-align:right; padding:4px;">{{$data[0]->grandTotalInstallment ?? 0}}</td>
                     <td style="border:1px solid #000; text-align:center; padding:4px;">&nbsp;</td>
                 </tr>
-            @endforeach
-            <tr>
-                <td colspan="9" style="border:1px solid #000; text-align:left; padding:4px; font-weight:bold;">Grand Total</td>
-                <td data-format="#,##0.00" style="border:1px solid #000; font-weight:bold; text-align:right; padding:4px;">{{$data[0]->grandTotalLoan ?? 0}}</td>
-                <td style="border:1px solid #000; text-align:center; padding:4px;">&nbsp;</td>
-                <td style="border:1px solid #000; text-align:center; padding:4px;">&nbsp;</td>
-                <td data-format="#,##0.00" style="border:1px solid #000; font-weight:bold; text-align:right; padding:4px;">{{$data[0]->grandTotalInterest ?? 0}}</td>
-                <td data-format="#,##0.00" style="border:1px solid #000; font-weight:bold; text-align:right; padding:4px;">{{$data[0]->grandTotalInstallment ?? 0}}</td>
-                <td style="border:1px solid #000; text-align:center; padding:4px;">&nbsp;</td>
-            </tr>
-        </tbody>
+            </tbody>
+        @endif
     </table>
 </body>
 </html>

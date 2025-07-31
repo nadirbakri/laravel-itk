@@ -451,7 +451,7 @@
                     {data: 'capacity', name: 'capacity'},
                     {data: 'sequence', name: 'sequence'},
                     {data: 'description', name: 'description'},
-                    {data: 'serialNUmber', name: 'serialNUmber'},
+                    {data: 'serialNumber', name: 'serialNumber'},
                     {data: 'expiredDate', name: 'expiredDate',
                         render: function (data, type, row) {
                             return data ? moment(data).format('DD MMMM YYYY') : '';

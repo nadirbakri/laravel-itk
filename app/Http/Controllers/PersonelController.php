@@ -11284,6 +11284,51 @@ class PersonelController extends Controller
         return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
     }
 
+    public function removeFamilyDependentPersonel(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            foreach($request->data as $value){
+                $param[] = [
+                    'companyCode' => Session::get('companyCode'),
+                    'employeeNo' => $value['employeeNo'],
+                    'familyName' => $value['familyName'],
+                    'seqNo' => $value['seqNo'],
+                    'languageCode' => App::getLocale(),
+                    'sessionID' => 0,
+                    'sessionUserID' => Session::get('userID'),
+                    'logActionUserID' => Session::get('userID'),
+                    'logActionUsername' => Session::get('userID')
+                ];
+            }
+
+            // dd(json_encode($param));
+
+            $response = $client->put(env('API_URL') . '/personel/PeMaster/DeactivePeMasterFamilyAdmin',
+                ['body' => json_encode($param)]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        return response()->json(['status' => $arrResult->status, 'message' =>  $arrResult->message]);
+    }
+
     public function checkNumberPersonel(Request $request)
     {
         try {
@@ -12714,6 +12759,10 @@ class PersonelController extends Controller
                 return view('error.login');
             }else if($response->getStatusCode() == 404){
                 return view('error.not_found');
+            }else if ($response->getStatusCode() == 400) {
+                $body = json_decode($response->getBody()->getContents());
+                $message = isset($body->message) ? $body->message : 'Bad Request';
+                return response()->json(['status' => false, 'message' => $message]);
             }else{
                 return view('error.bad_request');
             }

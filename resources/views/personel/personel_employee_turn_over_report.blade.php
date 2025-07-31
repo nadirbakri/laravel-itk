@@ -648,7 +648,7 @@
                 }
 
                 if (data.id) {
-                    var $result2 = $(''<div class="row">' +
+                    var $result2 = $('<div class="row">' +
                         '<div class="col-6">' + data.data.locationCode + '</div>' +
                         '<div class="col-6">' + data.data.locationName + '</div>' +
                         '</div>');

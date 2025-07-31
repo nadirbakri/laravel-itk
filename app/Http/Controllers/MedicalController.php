@@ -2458,7 +2458,7 @@ class MedicalController extends Controller
                 'sequence' => (int) $request->dose,
                 'description' => $request->batch_description,
                 'expiredDate' => $request->expired_date,
-                'serialNUmber' => $request->serial_number,
+                'serialNumber' => $request->serial_number,
                 'sessionID' => 0,
                 'sessionUserID' => Session::get('userID'),
                 'logActionUserID' => Session::get('userID'),

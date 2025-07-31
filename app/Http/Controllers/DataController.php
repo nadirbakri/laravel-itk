@@ -12858,7 +12858,7 @@ class DataController extends Controller
 					[
 						'companyCode' => Session::get('companyCode'),
 						"recordStatus" => 'A',
-						"activityType" => 'V',
+						"activityType" => 'VACCINE',
 						"languageCode" => strtoupper(App::getLocale())
 					]
 				)]);
@@ -12909,7 +12909,7 @@ class DataController extends Controller
 					[
 						'companyCode' => Session::get('companyCode'),
 						"recordStatus" => 'A',
-						"activityType" => 'V',
+						"activityType" => 'VACCINE',
 						"activityCode" => $request->activityCode,
 						"languageCode" => strtoupper(App::getLocale())
 					]

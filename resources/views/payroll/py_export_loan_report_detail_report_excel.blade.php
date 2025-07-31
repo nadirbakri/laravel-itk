@@ -27,7 +27,7 @@
                 <th colspan="8" style="text-align:center; font-size:14px; font-weight:bold;">OTHER LOAN DETAIL REPORT</th>
             </tr>
             <tr>
-                <th colspan="8" style="text-align:center;">Month : {{date('F Y', strtotime($period))}}</th>
+                <th colspan="8" style="text-align:center;">Period : {{date('F Y', strtotime($period))}}</th>
             </tr>
         </thead>
     </table>

@@ -442,6 +442,7 @@ Route::post('personnel/competency/training_list/remove', 'PersonelController@rem
 Route::post('personnel/employee_attachment/remove', 'PersonelController@removeEmployeeAttachmentPersonel');
 Route::post('personnel/loan_bank/remove', 'PersonelController@removeLoanBankPersonel');
 Route::get('personnel/insurance/remove', 'PersonelController@removeInsurancePersonel');
+Route::get('personnel/family_dependent/remove', 'PersonelController@removeFamilyDependentPersonel');
 
 Route::get('personnel/number/check', 'PersonelController@checkNumberPersonel');
 Route::get('personel_data_detail/number/check', 'PersonelController@checkNumberPersonelDataDetail');
