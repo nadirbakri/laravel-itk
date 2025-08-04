@@ -892,6 +892,7 @@ Route::get('medical/employee_list/table', 'MedicalController@tableEmployeeList')
 Route::get('medical/vaccine_master/table', 'MedicalController@tableVaccineMasterMD');
 Route::get('medical/vaccination_schedule_history/table', 'MedicalController@tableVaccinationScheduleHistoryMD');
 Route::get('medical/medical_checkup_master/table', 'MedicalController@tableMCUMasterMD');
+Route::get('medical/medical_checkup_schedule_history/table', 'MedicalController@tableMCUScheduleHistoryMD');
 
 /* Route untuk Detail Tabel Transaction */
 Route::get('transaction/list/table', 'TransactionController@tableDetailTransactionList');

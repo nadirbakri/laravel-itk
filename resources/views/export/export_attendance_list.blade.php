@@ -22,6 +22,7 @@
 				<th>No</th>
 				<th>Employee No</th>
 				<th>Full Name</th>
+				<th>Business Unit</th>
                 <th>AbsenceType</th>
                 <th>ShiftCode</th>
 				<th>Date</th>
@@ -36,17 +37,18 @@
             <?php $no = 1; ?>
 			@foreach($data as $value)
 			<tr>
-                <td>{{ $no++ }}</td>
-                <td>{{ $value->employeeNo}}</td>
-				<td>{{ $value->fullName}}</td>
-                <td>{{ $value->absenceType}}</td>
-                <td>{{ $value->shiftCode}}</td>
-				<td>{{ $value->date ? \Carbon\Carbon::parse($value->date)->format('Y-m-d') : '' }}</td>
-				<td>{{ $value->duration }}</td>
-				<td>{{ $value->checkInDate ? date('Y-m-d H:i:s', strtotime($value->checkInDate)) : '' }}</td>
-				<td>{{ $value->checkOutDate ? date('Y-m-d H:i:s', strtotime($value->checkOutDate)) : '' }}</td>
-				<td>{{ $value->address }}</td>
-				<td>{{ $value->addressOut }}</td>
+                <td style="text-align: center;">{{ $no++ }}</td>
+                <td style="text-align: left;">{{ $value->employeeNo}}</td>
+				<td style="text-align: left;">{{ $value->fullName}}</td>
+				<td style="text-align: left;">{{ $value->businessUnit}}</td>
+                <td style="text-align: left;">{{ $value->absenceType}}</td>
+                <td style="text-align: left;">{{ $value->shiftCode}}</td>
+				<td style="text-align: left;">{{ $value->date ? \Carbon\Carbon::parse($value->date)->format('Y-m-d') : '' }}</td>
+				<td style="text-align: left;">{{ $value->duration }}</td>
+				<td style="text-align: left;">{{ $value->checkInDate ? date('Y-m-d H:i:s', strtotime($value->checkInDate)) : '' }}</td>
+				<td style="text-align: left;">{{ $value->checkOutDate ? date('Y-m-d H:i:s', strtotime($value->checkOutDate)) : '' }}</td>
+				<td style="text-align: left;">{{ $value->address }}</td>
+				<td style="text-align: left;">{{ $value->addressOut }}</td>
 			</tr>
 			@endforeach
 		</tbody>

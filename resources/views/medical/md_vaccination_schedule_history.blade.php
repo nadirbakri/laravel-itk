@@ -75,6 +75,9 @@
         .required {
             color: red;
         }
+        .table_detail {
+            table-layout: auto;
+        }
 	</style>
 </head>
 
@@ -88,19 +91,20 @@
         </div>
 
 		<div class="div-table">
-			<table id="vaccination_schedule_history_table" class="table hover">
+			<table id="vaccination_schedule_history_table" class="table hover table_detail">
 				<thead>
 					<tr>
-                        <th></th>
-						<th>No</th>
-						<th>Created Date</th>
-						<th>Title</th>
-						<th>Vaccine Name</th>
-						<th>Number of Dose</th>
-						<th>Batch Description</th>
-						<th>Vaccine Date</th>
-						<th>Vaccine Time</th>
-						<th>Employee Name</th>
+						<th style="white-space: nowrap">No</th>
+						{{-- <th>Created Date</th> --}}
+						<th style="white-space: nowrap">Title</th>
+						<th style="white-space: nowrap">Vaccine Name</th>
+						<th style="white-space: nowrap">Number of Dose</th>
+						<th style="white-space: nowrap">Batch Description</th>
+						<th style="white-space: nowrap">Vaccine Date</th>
+						<th style="white-space: nowrap">Vaccine Time</th>
+						<th style="min-width: 415px;" >Employee Name</th>
+						<th style="white-space: nowrap">Name of Places</th>
+						<th>Description</th>
 					</tr>
 				</thead>
 			</table>
@@ -200,14 +204,14 @@
         });
         
         $('#vaccination_schedule_history_table thead tr').clone(true).appendTo('#vaccination_schedule_history_table thead');
-        $('#vaccination_schedule_history_table thead tr:eq(1) th:not(:first-child)').each( function (i) {
+        $('#vaccination_schedule_history_table thead tr:eq(1) th').each( function (i) {
             var title = $(this).text();
             $(this).html('<input class="form-control" type="text" placeholder="'+title+'" />');
     
             $('input', this).on('keyup change', function () {
-                if (table.column(i + 1).search() !== this.value) {
+                if (table.column(i).search() !== this.value) {
                     table
-                        .column(i + 1)
+                        .column(i)
                         .search(this.value)
                         .draw();
                 }
@@ -228,16 +232,39 @@
                 "order": [[ 1, "asc" ]],
                 columns: [
                     {
+                        data: null,
                         orderable: false,
-                        targets: 0, 
-                        "defaultContent": '',
-                        render: function(data, type) {
-                            return type === 'display'? '<input class="chk-select" type="checkbox">' : '';
+                        searchable: false,
+                        render: function (data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
                         }
                     },
-                    {data: 'activityCode', name: 'activityCode'},
-                    {data: 'activityCode', name: 'activityCode'},
-                    {data: 'activityName', name: 'activityName'},
+                    {data: 'title', name: 'title'},
+                    {data: 'vaccineName', name: 'vaccineName'},
+                    {data: 'numberofDoses', name: 'numberofDoses'},
+                    {data: 'batchDescription', name: 'batchDescription'},
+                    {data: 'vaccineDate', name: 'vaccineDate',
+                        render: function (data, type, row) {
+                            return data ? moment(data).format('D MMM YYYY') : '';
+                        }
+                    },
+                    {data: 'vaccineDate', name: 'vaccineDate',
+                        render: function (data, type, row) {
+                            return data ? moment(data).format('HH:mm') : '';
+                        }
+                    },
+                    {data: 'employees', name: 'employees',
+                        render: function (data, type, row) {
+                            if (!Array.isArray(data)) return '';
+                            return data.map(employee => {
+                                const capitalizedEmployee = employee.toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
+                                return `<p class="employees" style="display: inline-block; margin: 4px; border: 1px solid #D4D4D4; border-radius: 4px; padding: 6px 12px; white-space: nowrap;">${capitalizedEmployee}</p>`
+                            }
+                            ).join('');;
+                        }
+                    },
+                    {data: 'nameOfPlace', name: 'nameOfPlace'},
+                    {data: 'description', name: 'description'},
                 ],
                 select: {
                     style:    'multi',
@@ -246,7 +273,7 @@
             });
         }
 
-        // load_data_vaccination_schedule_history()
+        load_data_vaccination_schedule_history()
 
         $('#vaccination_schedule_history_table').on('click', 'tr td:first-child', function(e){
             $(this).parent().find('input[type="checkbox"]').trigger('click');

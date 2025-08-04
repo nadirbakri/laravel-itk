@@ -429,6 +429,7 @@
             allowInput: true,
             altFormat: "d-M-Y",
             dateFormat: "Y-m-d",
+            defaultDate: "today",
             onReady: function () {
                 var flatPickrInstance = this;
                 var $flatPickrInput = $(flatPickrInstance.element);
@@ -902,7 +903,7 @@
                                     .message);
                                 setTimeout(function () {
                                     window.location =
-                                        "{{ url('medical/medical_checkup') }}";
+                                        "{{ url('medical/medical_checkup_schedule') }}";
                                 }, 3000);
                             } else {
                                 $("#btn-submit").prop("disabled", false);

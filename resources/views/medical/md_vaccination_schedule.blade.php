@@ -508,6 +508,7 @@
             allowInput: true,
             altFormat: "d-M-Y",
             dateFormat: "Y-m-d",
+            defaultDate: "today",
             onReady: function () {
                 var flatPickrInstance = this;
                 var $flatPickrInput = $(flatPickrInstance.element);

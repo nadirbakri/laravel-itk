@@ -75,32 +75,36 @@
         .required {
             color: red;
         }
+        .table_detail {
+            table-layout: auto;
+        }
 	</style>
 </head>
 
 <body>
 	<div class="div-medical">
 		<div class="div-title mt-2">
-            <a href="vaccination_schedule" target="iframe_dashboard">
+            <a href="medical_checkup_schedule" target="iframe_dashboard">
                 <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
                 <span class="title-text" style="white-space: nowrap;">{{ __('md_medical_checkup_schedule.judul') }}</span>
             </a>
         </div>
 
 		<div class="div-table">
-			<table id="vaccination_schedule_history_table" class="table hover">
+			<table id="medical_checkup_schedule_history_table" class="table hover table_detail">
 				<thead>
 					<tr>
-                        <th></th>
-						<th>No</th>
-						<th>Created Date</th>
-						<th>Title</th>
-						<th>Vaccine Name</th>
-						<th>Number of Dose</th>
-						<th>Batch Description</th>
-						<th>Vaccine Date</th>
-						<th>Vaccine Time</th>
-						<th>Employee Name</th>
+						<th style="white-space: nowrap">No</th>
+						{{-- <th>Created Date</th> --}}
+						<th style="white-space: nowrap">Title</th>
+						<th style="white-space: nowrap">MCU Name</th>
+						<th style="white-space: nowrap">Number of Stage</th>
+						<th style="white-space: nowrap">Batch Description</th>
+						<th style="white-space: nowrap">MCU Date</th>
+						<th style="white-space: nowrap">MCU Time</th>
+						<th style="min-width: 415px;" >Employee Name</th>
+						<th style="white-space: nowrap">Name of Places</th>
+						<th>Description</th>
 					</tr>
 				</thead>
 			</table>
@@ -199,15 +203,19 @@
             }
         });
         
-        $('#vaccination_schedule_history_table thead tr').clone(true).appendTo('#vaccination_schedule_history_table thead');
-        $('#vaccination_schedule_history_table thead tr:eq(1) th:not(:first-child)').each( function (i) {
+        $('#medical_checkup_schedule_history_table thead tr').clone(true).appendTo('#medical_checkup_schedule_history_table thead');
+        $('#medical_checkup_schedule_history_table thead tr:eq(1) th').each( function (i) {
             var title = $(this).text();
             $(this).html('<input class="form-control" type="text" placeholder="'+title+'" />');
     
             $('input', this).on('keyup change', function () {
-                if (table.column(i + 1).search() !== this.value) {
+                if (table.column(i).search() !== this.value) {
+                    console.log(table
+                        .column(i)
+                        .search(this.value)
+                        .draw())
                     table
-                        .column(i + 1)
+                        .column(i)
                         .search(this.value)
                         .draw();
                 }
@@ -215,11 +223,11 @@
         });
         
         function load_data_vaccination_schedule_history() {
-            table = $('#vaccination_schedule_history_table').DataTable({
+            table = $('#medical_checkup_schedule_history_table').DataTable({
                 processing: true,
                 serverSide: true,
                 orderCellsTop: true,
-                ajax: "{{ url('medical/vaccination_schedule_history/table') }}",
+                ajax: "{{ url('medical/medical_checkup_schedule_history/table') }}",
                 error: function(jqXHR, ajaxOptions, thrownError) {
                     alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
                 },
@@ -228,16 +236,43 @@
                 "order": [[ 1, "asc" ]],
                 columns: [
                     {
+                        data: null,
                         orderable: false,
-                        targets: 0, 
-                        "defaultContent": '',
-                        render: function(data, type) {
-                            return type === 'display'? '<input class="chk-select" type="checkbox">' : '';
+                        searchable: false,
+                        render: function (data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
                         }
                     },
-                    {data: 'activityCode', name: 'activityCode'},
-                    {data: 'activityCode', name: 'activityCode'},
-                    {data: 'activityName', name: 'activityName'},
+                    {data: 'title', name: 'title'},
+                    {data: 'vaccineName', name: 'vaccineName'},
+                    {data: 'numberofDoses', name: 'numberofDoses'},
+                    {data: 'batchDescription', name: 'batchDescription'},
+                    {data: 'vaccineDate', name: 'vaccineDate',
+                        render: function (data, type, row) {
+                            return data ? moment(data).format('D MMM YYYY') : '';
+                        }
+                    },
+                    {data: 'vaccineDate', name: 'vaccineDate',
+                        render: function (data, type, row) {
+                            return data ? moment(data).format('HH:mm') : '';
+                        }
+                    },
+                    {data: 'employees', name: 'employees_string',
+                        render: function (data, type, row) {
+                            if (!Array.isArray(data)) return '';
+                            
+                            if (type === 'display') {
+                                return data.map(employee => {
+                                    const capitalizedEmployee = employee.toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
+                                    return `<p class="employees" style="display: inline-block; margin: 4px; border: 1px solid #D4D4D4; border-radius: 4px; padding: 6px 12px; white-space: nowrap;">${capitalizedEmployee}</p>`
+                                }
+                                ).join('');
+                            }
+                            return row.employees_string ?? '';
+                        }
+                    },
+                    {data: 'nameOfPlace', name: 'nameOfPlace'},
+                    {data: 'description', name: 'description'},
                 ],
                 select: {
                     style:    'multi',
@@ -246,11 +281,7 @@
             });
         }
 
-        // load_data_vaccination_schedule_history()
-
-        $('#vaccination_schedule_history_table').on('click', 'tr td:first-child', function(e){
-            $(this).parent().find('input[type="checkbox"]').trigger('click');
-        });
+        load_data_vaccination_schedule_history()
 
         $('#notification_success').on('hide.bs.modal', function () {
             window.location = "{{ url('medical/vaccination_schedule_history') }}";

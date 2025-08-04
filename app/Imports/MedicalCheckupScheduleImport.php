@@ -15,9 +15,10 @@ use Maatwebsite\Excel\Concerns\WithValidation;
 use Session;
 use App;
 
-class VaccinationScheduleImport implements ToCollection, SkipsEmptyRows, WithStartRow
+class MedicalCheckupScheduleImport implements ToCollection, SkipsEmptyRows, WithStartRow
 {
     private $arrResult = [];
+    private $arrResult2 = [];
 
     public function collection(Collection $rows)
     {
@@ -47,18 +48,18 @@ class VaccinationScheduleImport implements ToCollection, SkipsEmptyRows, WithSta
                 '*.0.not_in' => 'Employee No cannot be Null',
                 '*.1.required' => 'Title is Required',
                 '*.1.not_in' => 'Title cannot be Null',
-                '*.2.required' => 'Vaccine Code is Required',
-                '*.2.not_in' => 'Vaccine Code cannot be Null',
+                '*.2.required' => 'MCU Code is Required',
+                '*.2.not_in' => 'MCU Code cannot be Null',
                 '*.3.required' => 'Batch Code is Required',
                 '*.3.not_in' => 'Batch Code cannot be Null',
                 '*.4.required' => 'Number of Dose is Required',
                 '*.4.not_in' => 'Number of Dose cannot be Null',
-                '*.5.required' => 'Vaccine Date is Required',
-                '*.5.not_in' => 'Vaccine Date cannot be Null',
-                '*.5.date_format' => 'Vaccine Date Format Must Be (2020-01-31). Make Sure to Change Column Format to Text, not Date',
-                '*.6.required' => 'Vaccine Time is Required',
-                '*.6.not_in' => 'Vaccine Time cannot be Null',
-                '*.6.date_format' => 'Vaccine Time Format Must Be (12:00). Make Sure to Change Column Format to Text, not Date',
+                '*.5.required' => 'MCU Date is Required',
+                '*.5.not_in' => 'MCU Date cannot be Null',
+                '*.5.date_format' => 'MCU Date Format Must Be (2020-01-31). Make Sure to Change Column Format to Text, not Date',
+                '*.6.required' => 'MCU Time is Required',
+                '*.6.not_in' => 'MCU Time cannot be Null',
+                '*.6.date_format' => 'MCU Time Format Must Be (12:00). Make Sure to Change Column Format to Text, not Date',
                 '*.7.required' => 'Address is Required',
                 '*.7.not_in' => 'Address cannot be Null',
             ];
@@ -69,7 +70,7 @@ class VaccinationScheduleImport implements ToCollection, SkipsEmptyRows, WithSta
                 $dataEmployeeNo = isset($row[0]) ? (string) $row[0] : null;
                 $param[] = [
                     "companyCode" => Session::get('companyCode'),
-                    "type" => 'V',
+                    "type" => 'MCU',
                     "employeeNo" => isset($row[0]) ? (string) $row[0] : null,
                     "description" => isset($row[1]) ? (string) $row[1] : null,
                     "code" => isset($row[2]) ? (string) $row[2] : null,
@@ -83,7 +84,7 @@ class VaccinationScheduleImport implements ToCollection, SkipsEmptyRows, WithSta
                     "detailActivities" => [
                         [
                             "sequence" => isset($row[4]) ? (string) $row[4] : null,
-                            "activityType" => 'VACCINE',
+                            "activityType" => 'MCU',
                             "batchCode" => isset($row[3]) ? (string) $row[3] : null,
                             "date" => (isset($row[5]) && isset($row[6])) ? (string) $row[5] . 'T' . (string) $row[6] : null,
                             "amount" => (int) count($rows),
@@ -96,8 +97,8 @@ class VaccinationScheduleImport implements ToCollection, SkipsEmptyRows, WithSta
 
             $param_sequence = [
                 'companyCode' => Session::get('companyCode'),
-                'activityType' => 'VACCINE',
-                'activityCode' => $request['vaccine_name'],
+                'activityType' => 'MCU',
+                'activityCode' => $request['mcu_name'],
                 'employeeToRegister' => $dataEmployeeNo,
                 'nextBatchCode' => $request['batch_code_hidden'],
                 'nextSequence' => $request['batch_code_hidden'],
@@ -142,7 +143,7 @@ class VaccinationScheduleImport implements ToCollection, SkipsEmptyRows, WithSta
         }
 
         $this->arrResult[] = json_decode($response->getBody()->getContents());
-        $this->arrResult[] = json_decode($response2->getBody()->getContents());
+        $this->arrResult2[] = json_decode($response2->getBody()->getContents());
     }
 
     public function startRow(): int

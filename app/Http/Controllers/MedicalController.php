@@ -714,12 +714,12 @@ class MedicalController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $response = $client->post(env('API_URL') . '/personel/HealthActivities/GetMdHealthActivities',
+            $response = $client->post(env('API_URL') . '/personel/HealthActivities/GetHealthActivitiesDetailByState',
                 ['body' => json_encode(
                     [
                         'companyCode' => Session::get('companyCode'),
-                        'recordStatus' => 'A',
-                        'activityType' => 'VACCINE',
+                        'type' => 'VACCINE',
+                        'state' => 'all',
                         'sessionID' => 0,
                         'sessionUserID' => Session::get('userID'),
                         'userID' => Session::get('userID'),
@@ -790,6 +790,60 @@ class MedicalController extends Controller
             return Datatables::of([])->make(true);
         }else{
             return Datatables::of($arrResult->dataListSet)->make(true);
+        }
+    }
+
+    public function tableMCUScheduleHistoryMD(Request $request)
+    {
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/personel/HealthActivities/GetHealthActivitiesDetailByState',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'),
+                        'type' => 'MCU',
+                        'state' => 'all',
+                        'sessionID' => 0,
+                        'sessionUserID' => Session::get('userID'),
+                        'userID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        'languageCode' => strtoupper(App::getLocale())
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            $collection = collect($arrResult->dataListSet)->map(function ($item) {
+                if (isset($item->employees) && is_array($item->employees)) {
+                    $item->employees_string = implode(', ', $item->employees);
+                }
+                else {
+                    $item->employees_string = '';
+                }
+                return $item;
+            });
+
+            return Datatables::of($collection)->make(true);
         }
     }
 
@@ -2549,7 +2603,7 @@ class MedicalController extends Controller
                 'activityCode' => $request['vaccine_name'],
                 'employeeToRegister' => $dataEmployeeNo,
                 'nextBatchCode' => $request['batch_code_hidden'],
-                'nextSequence' => $request['batch_code_hidden'],
+                'nextSequence' => (int) $request['number_of_dose'],
                 "languageCode" => App::getLocale(),
                 "sessionID" => 0,
                 "sessionUserID" => Session::get('userID'),
@@ -2557,7 +2611,7 @@ class MedicalController extends Controller
                 "logActionUsername" => Session::get('userID')
             ];
 
-            // dd(json_encode($param));
+            // dd(json_encode($param), json_encode($param_sequence));
 
             $response = $client->post(env('API_URL') . '/personel/HealthActivities/InsertHealthActivities',
                 ['body' => json_encode($param)]
@@ -2569,11 +2623,11 @@ class MedicalController extends Controller
 
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response->getStatusCode() == 401) {
+            if ($response->getStatusCode() == 401 || $response2->getStatusCode() == 401) {
                 return view('error.login');
-            } else if ($response->getStatusCode() == 404) {
+            } else if ($response->getStatusCode() == 404 || $response2->getStatusCode() == 404) {
                 return view('error.not_found');
-            } else if ($response->getStatusCode() == 400) {
+            } else if ($response->getStatusCode() == 400 || $response2->getStatusCode() == 400) {
                 $body = json_decode($response->getBody()->getContents());
                 $message = isset($body->message) ? $body->message : 'Bad Request';
                 return response()->json(['status' => false, 'message' => $message]);
@@ -2711,14 +2765,31 @@ class MedicalController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
+            $detailActivities[] = [
+                'sequence' => (int) $request['number_of_stage'],
+                'activityType' => 'MCU',
+                'activityCode' => $request['mcu_name'],
+                'batchCode' => $request['batch_code_hidden'],
+                'address' => $request['description'],
+                'date' => $request['mcu_date'] . 'T' . $request['mcu_time'],
+                'amount' => (int) count($request->employee_no),
+                'address' => $request['name_of_places'],
+                'description' => $request['description']
+            ];
+
             foreach($request->employee_no as $employeeNo){
+                $dataEmployeeNo[] = $employeeNo;
+
                 $param[] = [
                     'companyCode' => Session::get('companyCode'),
                     'employeeNo' => $employeeNo,
+                    'activitiesName' => $request['title'],
                     'address' => $request['name_of_places'],
+                    'code' => $request['mcu_name'],
                     'description' => $request['description'],
-                    'date' => $request['medical_checkup_date'] . 'T' . $request['medical_checkup_time'],
                     'type' => 'MCU',
+                    'date' => $request['mcu_date'] . 'T' . $request['mcu_time'],
+                    'detailActivities' => $detailActivities,
                     "languageCode" => App::getLocale(),
                     "sessionID" => 0,
                     "sessionUserID" => Session::get('userID'),
@@ -2727,19 +2798,41 @@ class MedicalController extends Controller
                 ];
             }
 
-            // dd(json_encode($param));
+            $param_sequence = [
+                'companyCode' => Session::get('companyCode'),
+                'activityType' => 'MCU',
+                'activityCode' => $request['mcu_name'],
+                'employeeToRegister' => $dataEmployeeNo,
+                'nextBatchCode' => $request['batch_code_hidden'],
+                'nextSequence' => (int) $request['number_of_stage'],
+                "languageCode" => App::getLocale(),
+                "sessionID" => 0,
+                "sessionUserID" => Session::get('userID'),
+                "logActionUserID" => Session::get('userID'),
+                "logActionUsername" => Session::get('userID')
+            ];
+
+            // dd(json_encode($param), json_encode($param_sequence));
 
             $response = $client->post(env('API_URL') . '/personel/HealthActivities/InsertHealthActivities',
                 ['body' => json_encode($param)]
             );
 
+            $response2 = $client->post(env('API_URL') . '/personel/HealthActivities/UpdateSequenceAcitivity',
+                ['body' => json_encode($param_sequence)]
+            );
+
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if($response->getStatusCode() == 401){
+            if ($response->getStatusCode() == 401 || $response2->getStatusCode() == 401) {
                 return view('error.login');
-            }else if($response->getStatusCode() == 404){
+            } else if ($response->getStatusCode() == 404 || $response2->getStatusCode() == 404) {
                 return view('error.not_found');
-            }else{
+            } else if ($response->getStatusCode() == 400 || $response2->getStatusCode() == 400) {
+                $body = json_decode($response->getBody()->getContents());
+                $message = isset($body->message) ? $body->message : 'Bad Request';
+                return response()->json(['status' => false, 'message' => $message]);
+            } else {
                 return view('error.bad_request');
             }
         }
