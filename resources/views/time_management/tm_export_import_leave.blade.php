@@ -127,6 +127,18 @@
                 </div>
             </div>
             <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="flag_include_resign"
+                                name="flag_include_resign" value="true">
+                            <label
+                                for="flag_include_resign">{{ __('tm_export_import_leave.label_include_resign') }}</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-3">
                     <button type="button" class="btn btn-primary" name="btn-export" id="btn-export"
                         style="width: 100%;">

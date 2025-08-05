@@ -5635,7 +5635,7 @@ class PersonelController extends Controller
 
             // dd(json_encode($param));
 
-            $response = $client->post(env('API_URL') . '/personel/GetEESSEmployees',
+            $response = $client->post(env('API_URL') . '/personel/GetESSEmployees',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {

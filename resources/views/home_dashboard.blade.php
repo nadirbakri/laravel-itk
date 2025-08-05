@@ -655,10 +655,17 @@
 				var totalLate = 0;
 				var totalAbsent = 0;
 				var totalLeave = 0;
+				var absentAmount = 0;
+				var presentAmount = 0;
+				var absentPercentage = 0;
+				var presentPercentage = 0;
+
 				if(response.dataAbsent.length > 0){
 					$.each(response.dataAbsent, function (key, val) {
 						if(val.description == "ABSENT"){
 							totalAbsent += val.amount;
+							presentAmount = val.amount;
+							presentPercentage = val.percentage;
 						}
 
 						if(val.description == "LATE"){
@@ -676,21 +683,33 @@
 						if(val.description == "LT+NO"){
 							totalLate += val.amount;
 						}
+
+						if(val.description == "NO IN"){
+							absentAmount = val.amount;
+							absentPercentage = val.percentage;
+						}
 					});
 				}
 
 				if(response.totalEmployee > 0 && response.dataAbsent.length > 0){
 					totalPresent = response.totalEmployee - (totalLate + totalAbsent + totalLeave);
 					
-					$('#persentage_present').html(Math.round((totalPresent / response.totalEmployee) * 100) + '%');
+					// $('#persentage_present').html(Math.round((totalPresent / response.totalEmployee) * 100) + '%');
 					$('#persentage_late').html(Math.round((totalLate / response.totalEmployee) * 100) + '%');
-					$('#persentage_absent').html(Math.round((totalAbsent / response.totalEmployee) * 100) + '%');
+					// $('#persentage_absent').html(Math.round((totalAbsent / response.totalEmployee) * 100) + '%');
 					$('#persentage_leave').html(Math.round((totalLeave / response.totalEmployee) * 100) + '%');
 
-					$('#total_present').html(totalPresent);
+					$('#persentage_present').html(presentPercentage);
+					$('#persentage_absent').html(absentPercentage);
+
+					// $('#total_present').html(totalPresent);
 					$('#total_late').html(totalLate);
-					$('#total_absent').html(totalAbsent);
+					// $('#total_absent').html(totalAbsent);
 					$('#total_leave').html(totalLeave);
+
+					$('#total_present').html(presentAmount);
+					$('#total_absent').html(absentAmount);
+
 				}else{
 					$('#persentage_present').html('0%');
 					$('#persentage_late').html('0%');

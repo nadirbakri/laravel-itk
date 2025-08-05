@@ -1327,7 +1327,7 @@
                 $('#div_personal_email_address_current').hide();
                 $('#div_company_email_address_new').hide();
                 $('#div_company_email_address_current').hide();
-            }else if(this.value == "P" || this.value == "D"){
+            }else if(this.value == "P" || this.value == "D" || this.value == "R"){
                 $("#termination_date_new").removeAttr('required');
                 $("#effective_termination_date_new").removeAttr('required');
                 $('#div_start_date_new').show();
