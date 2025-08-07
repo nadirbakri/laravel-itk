@@ -1439,7 +1439,8 @@
 
             if (data.id) {
                 var $result2 = $('<div class="row">' + 
-                    '<div class="col-12">' + data.id + '<div>' +
+                    '<div class="col-4">' + data.id + '</div>' +
+                    '<div class="col-8">' + data.text + '</div>' +
                     '</div>');
 
                 return $result2;
@@ -1479,8 +1480,8 @@
                     return {
                         results: $.map(data, function (item) {
                             return {
-                                text: item,
-                                id: item,
+                                text: item.desc,
+                                id: item.code,
                                 data: data
                             }
                         })
@@ -1502,10 +1503,10 @@
                 'levelType' : '1'
             },
         }).then(function (data) {
-            if (!$('#business_unit').find('option:contains(' + data + ')').length) {
-                $('#business_unit').append($('<option>').val(data).text(data));
+            if (!$('#business_unit').find('option:contains(' + data.desc + ')').length) {
+                $('#business_unit').append($('<option>').val(data.code).text(data.desc));
             }
-            $('#business_unit').val(data);
+            $('#business_unit').val(data.code);
             $('#business_unit').removeClass('loading');
         });
     }

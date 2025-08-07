@@ -274,7 +274,7 @@
 				<td style="text-align: right;"><b>https://outsource-payroll.intikom.net</b></td>
 			</tr>
 		</table>
-		</div>
+	</div>
 	@if($key != array_key_last($data))
 		<div class="page_break"></div>
 	@endif

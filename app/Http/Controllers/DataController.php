@@ -5212,9 +5212,11 @@ class DataController extends Controller
 	    	$level = array_filter(
 	    		$arrResult->dataListSet[0]->levelCode,
 	    		function($value) use ($search){
-	    			if(preg_match('/' . $search . '/i', $value)){
-	    				return preg_match('/' . $search . '/i', $value);
-	    			}
+	    			if(preg_match('/' . $search . '/i', $value->desc)){
+						return preg_match('/' . $search . '/i', $value->desc);
+					}else if(preg_match('/' . $search . '/i', $value->code)){
+						return preg_match('/' . $search . '/i', $value->code);
+					}
 	    		}
 	    	);
 	    }
@@ -5337,6 +5339,11 @@ class DataController extends Controller
     {
     	$search = $request->search;
 
+		$level[] = (object) [
+    		'code' => 'ALL',
+    		'desc' => 'ALL'
+    	];
+
     	try {
 	    	$client = new Client([
                 'verify' => false,
@@ -5373,21 +5380,23 @@ class DataController extends Controller
             // }else{
             //     return view('error.bad_request');
             // }
-			return "ALL";
+			return $level;
 	    }
 
 	    $arrResult = json_decode($response->getBody()->getContents());
 
 		if($arrResult->dataListSet != null){
 			if($search == ''){
-				$level = array_merge(["ALL"], $arrResult->dataListSet[0]->levelCode);
+				$level = array_merge($level, $arrResult->dataListSet[0]->levelCode);
 			}else{
-				$level = array_merge(["ALL"], $arrResult->dataListSet[0]->levelCode);
+				$level = array_merge($level, $arrResult->dataListSet[0]->levelCode);
 				$level = array_filter(
 					$level,
 					function($value) use ($search){
-						if(preg_match('/' . $search . '/i', $value)){
-							return preg_match('/' . $search . '/i', $value);
+						if(preg_match('/' . $search . '/i', $value->desc)){
+							return preg_match('/' . $search . '/i', $value->desc);
+						}else if(preg_match('/' . $search . '/i', $value->code)){
+							return preg_match('/' . $search . '/i', $value->code);
 						}
 					}
 				);
@@ -5442,6 +5451,11 @@ class DataController extends Controller
 
 	public function dataLevelAccessFunctionAPI(Request $request)
     {
+		$level[] = (object) [
+    		'code' => 'ALL',
+    		'desc' => 'ALL'
+    	];
+
     	try {
 	    	$client = new Client([
                 'verify' => false,
@@ -5478,10 +5492,8 @@ class DataController extends Controller
             // }else{
             //     return view('error.bad_request');
             // }
-			return "ALL";
+			return $level;
 	    }
-
-		$level = ["ALL"];
 
 	    $arrResult = json_decode($response->getBody()->getContents());
 
