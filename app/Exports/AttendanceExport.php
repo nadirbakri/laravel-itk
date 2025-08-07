@@ -36,6 +36,7 @@ class AttendanceExport implements FromView, ShouldAutoSize
                 'startDate' => Carbon::parse($this->claimDateFrom)->format('Y-m-d'),
                 'endDate' => Carbon::parse($this->claimDateTo)->format('Y-m-d'),
                 'companyCode' => Session::get('companyCode'), 
+                'businessUnit' => $this->businessUnit,
                 'isWeb' => true,
                 'languageCode' => App::getLocale(), 
                 'userID' => Session::get('userID'),
@@ -60,6 +61,8 @@ class AttendanceExport implements FromView, ShouldAutoSize
         }
 
         $arrResult = json_decode($response->getBody()->getContents());
+
+        // dd($arrResult->dataListSet);
 
         if($arrResult->dataListSet == null){    
             return view('export.export_attendance_list', [

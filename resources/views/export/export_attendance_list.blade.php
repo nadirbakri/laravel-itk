@@ -40,7 +40,7 @@
                 <td style="text-align: center;">{{ $no++ }}</td>
                 <td style="text-align: left;">{{ $value->employeeNo}}</td>
 				<td style="text-align: left;">{{ $value->fullName}}</td>
-				<td style="text-align: left;">{{ $value->businessUnit}}</td>
+				<td style="text-align: left;">{{ $value->businessUnitCode . " - " . $value->businessUnit }}</td>
                 <td style="text-align: left;">{{ $value->absenceType}}</td>
                 <td style="text-align: left;">{{ $value->shiftCode}}</td>
 				<td style="text-align: left;">{{ $value->date ? \Carbon\Carbon::parse($value->date)->format('Y-m-d') : '' }}</td>

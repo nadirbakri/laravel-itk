@@ -24,7 +24,6 @@
 				<th>Overtime ID</th>
 				<th>Business Unit</th>
 				<th>Employee Name</th>
-				<th>Division</th>
                 <th>Status</th>
 				<th>Start Date</th>
 				<th>Start Time</th>
@@ -53,9 +52,8 @@
                 <td>{{ $no }}</td>
 				<td>{{ isset($value->overtimeEntity->createdDate) ? \Carbon\Carbon::parse($value->overtimeEntity->createdDate)->format('Y-m-d') : ''}}</td>
 				<td>{{ $no }}</td>
-				<td>{{ isset($value->overtimeEntity->businessUnit) ? $value->overtimeEntity->businessUnit : ''}}</td>
+				<td>{{ isset($value->overtimeEntity->businessUnit) ? $value->overtimeEntity->businessUnitCode . " - " . $value->overtimeEntity->businessUnit : ''}}</td>
 				<td>{{ isset($value->overtimeEntity->fullnameRequester) ? $value->overtimeEntity->fullnameRequester : ''}}</td>
-				<td>{{ isset($value->overtimeEntity->businessUnit) ? $value->overtimeEntity->businessUnit : ''}}</td>
 				<td>{{ isset($value->overtimeEntity->status) ? $value->overtimeEntity->status : ''}}</td>
 				<td>{{ isset($value->overtimeEntity->overtimeHourFrom) ? \Carbon\Carbon::parse($value->overtimeEntity->overtimeHourFrom)->format('Y-m-d') : '' }}</td>
 				<td>{{ isset($value->overtimeEntity->overtimeHourFrom) ? \Carbon\Carbon::parse($value->overtimeEntity->overtimeHourFrom)->format('H:i:s') : '' }}</td>
