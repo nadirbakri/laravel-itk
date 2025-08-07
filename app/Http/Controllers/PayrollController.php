@@ -8014,6 +8014,9 @@ public function dataDetailReportFormatPY(Request $request)
         }else if($companyCode == 'TVMI'){
             $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_tvmi';
             $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_tvmi';
+        }else if($companyCode == 'MKP'){
+            $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_mkp';
+            $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_mkp';
         }else{
             $viewNamePortrait = 'payroll.py_export_payment_slip_portrait';
             $viewNameLandscape = 'payroll.py_export_payment_slip_landscape';

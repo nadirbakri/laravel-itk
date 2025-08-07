@@ -4,7 +4,7 @@
         'list' => 'Export Import Leave',
         'label_employee_no' => 'Employee No',
         'label_leave_code' => 'Leave Code',
-        'label_include_resign' => 'Include Resign',
+        'label_employee_status' => 'Employee Status',
         'label_import_leave' => 'Import Leave',
         'label_choose_specific_employee_no' => 'Choose Specific Employee No',
         'label_choose_specific_leave_code' => 'Choose Specific Leave Code',

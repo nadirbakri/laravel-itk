@@ -127,14 +127,14 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-12">
+                <div class="col-5">
                     <div class="form-group">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="flag_include_resign"
-                                name="flag_include_resign" value="true">
-                            <label
-                                for="flag_include_resign">{{ __('tm_export_import_leave.label_include_resign') }}</label>
-                        </div>
+                        <label for="employee_status">{{ __('tm_export_import_leave.label_employee_status') }}</label>
+                        <select class="form-control select2" id="employee_status" name="employee_status">
+                            <option value="ALL">ALL</option>
+                            <option value="ACTIVE">ACTIVE</option>
+                            <option value="DEACTIVE">DEACTIVE</option>
+                        </select>
                     </div>
                 </div>
             </div>

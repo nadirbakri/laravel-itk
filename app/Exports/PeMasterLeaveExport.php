@@ -14,13 +14,13 @@ use App;
 
 class PeMasterLeaveExport implements FromView, ShouldAutoSize
 {
-    public function __construct($chooseSpecificEmployeeNo, $employeeNo, $chooseSpecificLeaveCode, $leaveCode, $includeResign)
+    public function __construct($chooseSpecificEmployeeNo, $employeeNo, $chooseSpecificLeaveCode, $leaveCode, $employeeStatus)
     {
         $this->chooseSpecificEmployeeNo = $chooseSpecificEmployeeNo;
         $this->employeeNo = $employeeNo;
         $this->chooseSpecificLeaveCode = $chooseSpecificLeaveCode;
         $this->leaveCode = $leaveCode;
-        $this->includeResign = $includeResign;
+        $this->employeeStatus = $employeeStatus;
     }
     
     public function view(): View
@@ -37,7 +37,7 @@ class PeMasterLeaveExport implements FromView, ShouldAutoSize
                 'languageCode' => App::getLocale(), 
                 'sessionID' => 0, 
                 'sessionUserID' => Session::get('userID'),
-                "isIncludeResign" => $this->includeResign
+                "employeeStatus" => $this->employeeStatus
             ];
 
             if($this->chooseSpecificEmployeeNo){

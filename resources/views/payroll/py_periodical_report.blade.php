@@ -196,7 +196,7 @@
                     </div>
                     <div class="col-4">
                         <div class="form-group">
-                            <select class="form-control select2" id="cost_center_code_from" name="cost_center_code_from"></select>
+                            <select class="form-control select2" id="cost_center_code_from" name="cost_center_code_from" disabled></select>
                         </div>
                     </div>
                     <div class="col-0.5">
@@ -206,7 +206,7 @@
                     </div>
                     <div class="col-4">
                         <div class="form-group">
-                            <select class="form-control select2" id="cost_center_code_to" name="cost_center_code_to"></select>
+                            <select class="form-control select2" id="cost_center_code_to" name="cost_center_code_to" disabled></select>
                         </div>
                     </div>
                 </div>
@@ -598,6 +598,12 @@
         loadDataFirstLastAllLocation();
         loadDataFirstLastAllRanking();
         loadDataFirstLastAllGroup();
+
+        $('#cost_center').on('click', function() {
+            const isChecked = $(this).prop('checked')
+            $('#cost_center_code_from').prop('disabled', !isChecked)
+            $('#cost_center_code_to').prop('disabled', !isChecked)
+        })
 
         $.ajax({
             url: "{{ url('personnel/report/level/check') }}",

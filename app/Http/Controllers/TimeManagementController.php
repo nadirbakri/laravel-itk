@@ -2026,7 +2026,7 @@ class TimeManagementController extends Controller
 
     public function exportExportImportLeave(Request $request)
     {
-        return Excel::download(new PeMasterLeaveExport(isset($request->choose_specific_employee_no) ? (bool) $request->choose_specific_employee_no : false, $request->employee_no, isset($request->choose_specific_leave_code) ? (bool) $request->choose_specific_leave_code : false, $request->leave_code, isset($request->flag_include_resign) ? (bool) $request->flag_include_resign : false), 'Leave Report.xlsx');
+        return Excel::download(new PeMasterLeaveExport(isset($request->choose_specific_employee_no) ? (bool) $request->choose_specific_employee_no : false, $request->employee_no, isset($request->choose_specific_leave_code) ? (bool) $request->choose_specific_leave_code : false, $request->leave_code, $request->employee_status), 'Leave Report.xlsx');
     }
 
     public function importExportImportLeave(Request $request)
