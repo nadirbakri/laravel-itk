@@ -11299,7 +11299,7 @@ class PersonelController extends Controller
                     'companyCode' => Session::get('companyCode'),
                     'employeeNo' => $value['employeeNo'],
                     'familyName' => $value['familyName'],
-                    'seqNo' => $value['seqNo'],
+                    'seqNo' => (int) $value['seqNo'],
                     'languageCode' => App::getLocale(),
                     'sessionID' => 0,
                     'sessionUserID' => Session::get('userID'),
@@ -12733,11 +12733,16 @@ class PersonelController extends Controller
                 'flagPayroll' => $request->include_tax ? (bool) $request->include_tax : false,
                 'fullTimeStudent' => $request->full_time_student ? (bool) $request->full_time_student : false,
                 'flagMedical' => $request->include_medical ? (bool) $request->include_medical : false,
-                'sessionUserID' => Session::get('userID'),
-                'sessionID' => 0,
+                "changedNo" => 0,
+                "changedBy" => Session::get('userID'),
+                "changedDate" => date("Y-m-d\TH:i:s"),
+                "createdBy" => Session::get('userID'),
+                "createdDate" => date("Y-m-d\TH:i:s"),
                 'logActionUserID' => Session::get('userID'),
                 'logActionUsername' => Session::get('userName'),
-                "languageCode" => App::getLocale()
+                "languageCode" => App::getLocale(),
+                "sessionID" => 0,
+                "sessionUserID" => Session::get('userID')
             ];
 
             // dd(json_encode($param));

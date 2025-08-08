@@ -2586,7 +2586,7 @@ class MedicalController extends Controller
                     'address' => $request['name_of_places'],
                     'code' => $request['vaccine_name'],
                     'description' => $request['description'],
-                    'type' => 'V',
+                    'type' => 'VACCINE',
                     'date' => $request['vaccine_date'] . 'T' . $request['vaccine_time'],
                     'detailActivities' => $detailActivities,
                     "languageCode" => App::getLocale(),

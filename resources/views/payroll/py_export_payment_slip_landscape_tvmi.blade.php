@@ -11,218 +11,150 @@
 	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
 	<style type="text/css">
+		@font-face {
+            font-family: 'Arial Alternates';
+            font-style: normal;
+            font-weight: normal;
+            src: url('fonts/arial.ttf') format('truetype');
+        }
+
+		@font-face {
+            font-family: 'Arial Bold';
+            font-style: normal;
+            font-weight: normal;
+            src: url('fonts/arialbold.ttf') format('truetype');
+        }
+
 		* { box-sizing: border-box; }
+
 		html {
-			margin: 1%;
+			font-family: 'Arial Bold', sans-serif;
+			margin: 50px 70px;
 			font-size: 11px;
 		}
-		.table_detail td{
-			border:1px solid #000;
-			text-align:center;
-            padding:4px;
+		.table {
+			width: 100%;
+			border-collapse: collapse;
 		}
-		.table_detail th{
-			border:1px solid #000;
-            padding:4px;
-            background-color:#84c2e0;
-		}
-		/* .table{
-			border-collapse:collapse;
-		} */
 
 		.page_break { page-break-before: always; }
 	</style>
 </head>
 <body>
 	@foreach($data as $key => $value)
-    <table class="table" style="width:100%; padding-left:1%; padding-right:1%; padding-bottom:1%;">
-		<tr>
-			<td style="padding: 0; margin: 0; text-align:center; font-size: 15px; font-weight: 700;">
-				SLIP GAJI KARYAWAN
-			</td>
-		</tr>
-		<tr>
-			<td style="padding: 0; margin: 0; text-align:center; font-size: 15px; font-weight: 700;">
-				{{ $value->namaPerusahaan }}
-			</td>
-		</tr>
-	</table>
-	<br>
-	<table class="table" style="width:100%; padding-left:1%; padding-right:1%; border-collapse: collapse;">
-		<tr>
-			<td width="20%">NO</td>
-			<td width="1%">:</td>
-			<td width="29%" style="padding-left: 10px;">{{ str_pad(($key+1), 2, '0', STR_PAD_LEFT) }}</td>
-			<td width="20%">NIK</td>
-			<td width="1%">:</td>
-			<td width="29%" colspan="2">{{ $value->employeeNo }}</td>
-		</tr>
-		<tr>
-			<td width="20%">PERIODE</td>
-			<td width="1%">:</td>
-			<td width="29%" style="padding-left: 10px;">{{ $first_day }} {{ $last_day }}</td>
-			<td width="20%">NAMA KARYAWAN</td>
-			<td width="1%">:</td>
-			<td width="29%">{{ $value->employeeName }}</td>
-		</tr>
-		<tr>
-			<td width="20%">TANGGAL TRANSFER</td>
-			<td width="1%">:</td>
-			<td width="29%" style="padding-left: 10px;">{{ $transfer_date }}</td>
-			<td width="20%">RANK</td>
-			<td width="1%">:</td>
-			<td width="29%">{{ $value->rank }}</td>
-		</tr>
-		<tr>
-			<td width="20%">NAMA PERUSAHAAN</td>
-			<td width="1%">:</td>
-			<td width="29%" style="padding-left: 10px;">{{ $value->namaPerusahaan }}</td>
-			<td width="20%">GOLONGAN</td>
-			<td width="1%">:</td>
-			<td width="29%">{{ $value->golongan }}</td>
-		</tr>
-		<tr>
-			<td width="20%">NOMOR REKENING</td>
-			<td width="1%">:</td>
-			<td width="29%" style="padding-left: 10px;">{{ $value->noRekening }}</td>
-			<td width="20%">JABATAN</td>
-			<td width="1%">:</td>
-			<td width="29%">{{ $value->jabatan }}</td>
-		</tr>
-		<tr>
-			<td width="20%">NPWP</td>
-			<td width="1%">:</td>
-			<td width="29%" style="padding-left: 10px;">{{ $value->npwp }}</td>
-			<td width="20%">STATUS PAJAK</td>
-			<td width="1%">:</td>
-			<td width="29%">{{ $value->taxStatus }}</td>
-		</tr>
-	</table>
-	<br>
-	<?php
-	$totalIncome = 0;
-	$totalDeduction = 0;
-	?>
-	<table class="table" style="width:100%; padding-left:1%; padding-right:2%; border-collapse: collapse;">
-    	<tr>
-        	<td style="width:50%; vertical-align: top; border-top: 1px solid black; border-bottom: 1px solid black; border-right: 1px solid black;">
-				<table style="width:100%; padding-bottom: 1%; border-collapse: collapse;">
-					<tr>
-						<td colspan="3" style="text-align: center; padding-bottom: 1%; border-bottom: 1px solid black;">PENERIMAAN</td>
-					</tr>
-					<tr>
-						<td colspan="3">&nbsp;</td>
-					</tr>
-					@foreach($value->a as $key2 => $value2)
-						<?php
-							$totalIncome += (float) $value2->columnValue;
-						?>
+		<table class="table" style="font-size: 15px; font-weight: 700;">
+			<tr>
+				<td style="text-align:left;">
+					{{ $value->namaPerusahaan }}
+				</td>
+				<td>
+					SLIP GAJI
+				</td>
+			</tr>
+		</table>
+		<hr />
+		<?php
+			$totalIncome = 0;
+			$totalDeduction = 0;
+		?>
+		<table class="table" style="margin-bottom: 40px;">
+			<tr style="margin-bottom: 30px;">
+				<td style="width:50%; vertical-align: top; padding-left: 70px; padding-right: 40px;">
+					<table class="table" style="margin: 20px;">
 						<tr>
-							<td width="55%">{{ $value2->columnLabel }}</td>
-							<td width="3%">:</td>
-							<td width="42%" style="text-align:right; padding-right: 10px;">{{ number_format((float) $value2->columnValue, 0, ',', '.')}}</td>
+							<td width="33%">&nbsp;</td>
+							<td width="33%">{{ $value->employeeNo }}</td>
+							<td width="33%">&nbsp;</td>
 						</tr>
-					@endforeach
-				</table>
-			</td>
-			<td style="width:50%; vertical-align: top; border-top: 1px solid black; border-bottom: 1px solid black; border-left: 1px solid black;">
-				<table style="width:100%; border-collapse: collapse;">
-					<tr>
-						<td colspan="3" style="text-align: center; padding-bottom: 1%; border-bottom: 1px solid black;">PEMOTONGAN</td>
-					</tr>
-					<tr>
-						<td colspan="3">&nbsp;</td>
-					</tr>
-					@foreach($value->d as $key2 => $value2)
-						<?php
-							$totalDeduction += (float) $value2->columnValue;
-						?>
 						<tr>
-							<td width="55%" style="padding-left: 10px;">{{ $value2->columnLabel }}</td>
-							<td width="3%">:</td>
-							<td width="42%" style="text-align:right;">{{ number_format((float) $value2->columnValue, 0, ',', '.')}}</td>
+							<td width="33%">&nbsp;</td>
+							<td width="33%">{{ $value->employeeName }}</td>
+							<td width="33%">&nbsp;</td>
 						</tr>
-					@endforeach
-				</table>
-			</td>
-		</tr>
-	</table>
-	<table class="table" style="width:100%; padding-left:1%; padding-right:2%; border-collapse: collapse;">
-    	<tr>
-        	<td style="width:50%; padding-top: 1%; padding-bottom: 1%; vertical-align: top; border-bottom: 1px solid black;">
-				<table style="width:100%; border-collapse: collapse;">
-					<tr>
-						<td width="55%">JUMLAH PENERIMAAN</td>
-						<td width="3%">:</td>
-						<td width="42%" style="text-align: right; padding-right: 10px;">{{ number_format($totalIncome, 0, ',', '.')}}</td>
-					</tr>
-					<tr>
-						<td width="55%">NETTO YANG DIBAYARKAN</td>
-						<td width="3%">:</td>
-						<td width="42%" style="text-align: right; padding-right: 10px;">{{ number_format($totalIncome - $totalDeduction, 0, ',', '.')}}</td>
-					</tr>
-				</table>
-			</td>
-			<td style="width:50%; padding-top: 1%; padding-bottom: 1%; vertical-align: top; border-bottom: 1px solid black;">
-				<table style="width:100%; border-collapse: collapse;">
-					<tr>
-						<td width="55%" style="padding-left: 10px;">JUMLAH POTONGAN</td>
-						<td width="3%">:</td>
-						<td width="42%" style="text-align: right;">{{ number_format($totalDeduction, 0, ',', '.')}}</td>
-					</tr>
-				</table>
-			</td>
-		</tr>
-	</table>
-	<table class="table" style="width:100%; padding-left:1%; padding-right:2%; padding-top: 0.5%; padding-bottom: 1%; border-collapse: collapse;">
-		<tr>
-			<td width="27%" style="padding: 0; margin: 0; font-weight: 600; text-decoration: underline;">KETERANGAN</td>
-			<td width="1.5%" style="margin-left: 10px;">:</td>
-			<td width="70%" style="text-align: left; padding: 0; margin: 0;">0</td>
-		</tr>
-		<tr>
-			<td width="27%" style="padding: 0; margin: 0;">ANGSURAN KE</td>
-			<td width="1.5%" style="margin-left: 10px;">:</td>
-			<td width="70%" style="text-align: left; padding: 0; margin: 0;">0</td>
-		</tr>
-		<tr>
-			<td width="27%" style="padding: 0; margin: 0;">SISA BULAN ANGSURAN</td>
-			<td width="1.5%" style="margin-left: 10px;">:</td>
-			<td width="70%" style="text-align: left; padding: 0; margin: 0;">0</td>
-		</tr>
-		<tr>
-			<td width="27%" style="border-bottom: 1px solid black;">SISA PINJAMAN</td>
-			<td width="1.5%" style="margin-left: 10px; border-bottom: 1px solid black;">:</td>
-			<td width="70%" style="text-align: left; border-bottom: 1px solid black;">0</td>
-		</tr>
-	</table>
-
-    @if($key != array_key_last($data))
-		<div class="page_break"></div>
-	@endif
+						<tr>
+							<td width="33%">&nbsp;</td>
+							<td width="33%">{{ $value->position }}</td>
+							<td width="33%">&nbsp;</td>
+						</tr>
+					</table>
+					<table class="table">
+						@foreach($value->a as $key2 => $value2)
+							<?php
+								$totalIncome += (float) $value2->columnValue;
+							?>
+							<tr>
+								<td width="50%">{{ $value2->columnLabel }}</td>
+								<td width="50%" style="text-align:right; padding-right: 10px;">{{ number_format((float) $value2->columnValue, 0, ',', '.')}}</td>
+							</tr>
+						@endforeach
+					</table>
+				</td>
+				<td style="width:50%; vertical-align: top; padding-left: 40px; padding-right: 70px;">
+					<table class="table" style="margin: 20px;">
+						<tr>
+							<td width="33%">&nbsp;</td>
+							<td width="33%">{{ $value->departemen }} - {{ $value->division }}</td>
+							<td width="33%">&nbsp;</td>
+						</tr>
+						<tr>
+							<td width="33%">&nbsp;</td>
+							<td width="33%">{{ $value->taxStatus }}</td>
+							<td width="33%">&nbsp;</td>
+						</tr>
+						<tr>
+							<td width="33%">&nbsp;</td>
+							<td width="33%">{{ $value->npwp }}</td>
+							<td width="33%">&nbsp;</td>
+						</tr>
+					</table>
+					<table class="table">
+						@foreach($value->d as $key2 => $value2)
+							<?php
+								$totalDeduction += (float) $value2->columnValue;
+							?>
+							<tr>
+								<td width="50%" style="padding-left: 10px;">{{ $value2->columnLabel }}</td>
+								<td width="50%" style="text-align:right;">{{ number_format((float) $value2->columnValue, 0, ',', '.')}}</td>
+							</tr>
+						@endforeach
+					</table>
+				</td>
+			</tr>
+		</table>
+		<hr style="margin: 0px 70px;" />
+		<table class="table">
+			<tr>
+				<td style="width:50%; vertical-align: top; padding-left: 70px; padding-right: 40px;">
+					<table class="table" style="margin-top: 10px;">
+						<tr>
+							<td width="50%">SUB TOTAL</td>
+							<td width="50%" style="text-align:right; padding-right: 10px;">{{ number_format($totalIncome, 0, ',', '.') }}</td>
+						</tr>
+						<tr><td>&nbsp;</td></tr>
+						<tr>
+							<td width="50%">NETT INCOME</td>
+							<td width="50%" style="text-align: right; padding-right: 10px;">{{ number_format($totalIncome - $totalDeduction, 0, ',', '.') }}</td>
+						</tr>
+					</table>
+				</td>
+				<td style="width:50%; vertical-align: top; padding-left: 40px; padding-right: 70px;">
+					<table class="table" style="margin-top: 10px;">
+						<tr>
+							<td width="50%" style="padding-left: 10px;">&nbsp;</td>
+							<td width="50%" style="text-align: right;">{{ number_format($totalDeduction, 0, ',', '.') }}</td>
+						</tr>	
+						<tr><td>&nbsp;</td></tr>
+						<tr>
+							<td width="50%">&nbsp;</td>
+							<td width="50%" style="text-align: right;">Period&nbsp;{{ date('F Y', strtotime($period)) }}</td>
+						</tr>	
+					</table>
+				</td>
+			</tr>
+		</table>
+		@if($key != array_key_last($data))
+			<div class="page_break"></div>
+		@endif
     @endforeach
-    <script type="text/php">
-    if (isset($pdf)) {
-        $pdf->page_script('
-            $text = sprintf(_("Page %d/%d"),  $PAGE_NUM, $PAGE_COUNT);
-            // Uncomment the following line if you use a Laravel-based i18n
-            //$text = __("Page :pageNum/:pageCount", ["pageNum" => $PAGE_NUM, "pageCount" => $PAGE_COUNT]);
-            $font = null;
-            $size = 9;
-            $color = array(0,0,0);
-            $word_space = 0.5;  //  default
-            $char_space = 0.5;  //  default
-            $angle = 0.5;   //  default
-
-            // Compute text width to center correctly
-            $textWidth = $fontMetrics->getTextWidth($text, $font, $size);
-
-            $x = ($pdf->get_width() - $textWidth) / 2;
-            $y = $pdf->get_height() - 35;
-
-            $pdf->text($x, $y, $text, $font, $size, $color, $word_space, $char_space, $angle);
-        '); // End of page_script
-    }
-    </script>
 </body>
 </html>

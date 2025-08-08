@@ -240,10 +240,9 @@
                         </button>
                     </div>
                     <div class="col-3">
-                        <a class="btn btn-outline-primary" href="{{ url('personnel/family_dependent/detail_table') }}" target="iframe_dashboard"
-                            name="btn-cancel" id="btn-cancel" style="width: 100%;">
+                        <button class="btn btn-outline-primary" name="btn-cancel" id="btn-cancel" style="width: 100%;">
                             <i class="fa fa-times-circle"></i> {{ __('personel_family_dependent.btn_cancel') }}
-                        </a>
+                        </button>
                     </div>
                 </div>
             </form>
@@ -452,23 +451,15 @@
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
             $("#family_dependent_form").submit();
-            // var form = $("#family_dependent_form");
-            // var emptyFields = form.find("input").filter(function () {
-            //     return $(this).prop("required") && $(this).val().trim() === "";
-            // });
-
-            // if (emptyFields.length > 0) {
-            //     $('#notification_error').modal('show');
-            //     $('#message-notification-error').html("Some Field Are Required, Please Check Again");
-            // }else{
-            //     $(this).prop("disabled", true);
-            //     $(this).html(
-            //         '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
-            //     );
-
-            //     form.submit();
-            // }
         });
+
+        $("#btn-cancel").click(function () {
+            redirectToPreviousPage()
+        })
+
+        function redirectToPreviousPage() {
+    	    $.redirect("{{ url('personnel/family_dependent/detail_table') }}", { 'employeeNo' : arrData.employeeNo }, "GET", "iframe_dashboard");
+        }
 
         function loadDataBirthPlace(){
             function formatSelect(data) {
@@ -762,11 +753,9 @@
                                     '<i class="fa fa-floppy-o"></i> {{ __("personel_family_dependent.btn_save") }}'
                                 );
                                 $('#notification_success').modal('show');
-                                $('#message-notification-success').html(response
-                                    .message);
+                                $('#message-notification-success').html(`<div style="text-align:center;">${response.message}<br>Go To Transaction Family Dependent List to approve the data</div>`);
                                 setTimeout(function () {
-                                    window.location =
-                                        "{{ url('personnel/family_dependent/detail_table') }}";
+                                    redirectToPreviousPage()
                                 }, 3000);
                             } else {
                                 $("#btn-save").prop("disabled", false);

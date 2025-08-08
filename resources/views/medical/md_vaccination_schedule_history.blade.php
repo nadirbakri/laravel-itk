@@ -95,7 +95,7 @@
 				<thead>
 					<tr>
 						<th style="white-space: nowrap">No</th>
-						{{-- <th>Created Date</th> --}}
+						<th>Created Date</th>
 						<th style="white-space: nowrap">Title</th>
 						<th style="white-space: nowrap">Vaccine Name</th>
 						<th style="white-space: nowrap">Number of Dose</th>
@@ -237,6 +237,11 @@
                         searchable: false,
                         render: function (data, type, row, meta) {
                             return meta.row + meta.settings._iDisplayStart + 1;
+                        }
+                    },
+                    {data: 'createdDate', name: 'createdDate',
+                        render: function (data, type, row) {
+                            return data ? moment(data).format('D MMM YYYY') : '';
                         }
                     },
                     {data: 'title', name: 'title'},
