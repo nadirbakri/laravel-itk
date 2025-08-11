@@ -136,45 +136,45 @@
 <body>
     <div class="div-medical">
         <div class="div-form">
-            <form id="medical_checkup_schedule_form" method="post">
-                @csrf
-                <div style="display: flex; width: 100%; justify-content: space-between; align-items: center; padding: 0px 0px 20px 20px;">
-                    <div style="display: flex; justify-content: flex-start; align-items: center;">
-                        <div class="div-title">
-                            <a href="{{ route('medical', ['moduleID' => 'MD']) }}" target="iframe_dashboard" style="display: flex; align-items: center; text-decoration: none; gap: 10px;">
-                                <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back" style="display: inline-block;">
-                                <span class="title-text" style="white-space: nowrap;">{{ __('md_medical_checkup_schedule.list') }}</span>
-                            </a>
-                        </div>
-                    </div>
-                    <div style="display: flex; justify-content: flex-end; align-items: center;">
-                        <a href="medical_checkup_schedule_history" style="text-decoration: none;">
-                            <button type="button" class="btn btn-secondary" id="btn-history">
-                                <i class="fa fa-history" aria-hidden="true"></i> {{ __('md_vaccination_schedule.btn_history') }}
-                            </button>
+            <div style="display: flex; width: 100%; justify-content: space-between; align-items: center; padding: 0px 0px 20px 20px;">
+                <div style="display: flex; justify-content: flex-start; align-items: center;">
+                    <div class="div-title">
+                        <a href="{{ route('medical', ['moduleID' => 'MD']) }}" target="iframe_dashboard" style="display: flex; align-items: center; text-decoration: none; gap: 10px;">
+                            <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back" style="display: inline-block;">
+                            <span class="title-text" style="white-space: nowrap;">{{ __('md_medical_checkup_schedule.list') }}</span>
                         </a>
                     </div>
                 </div>
-                <div class="tab-input">
-                    <ul class="nav nav-pills" role="tablist">
-                        <li class="nav-item">
-                          <a class="nav-link active" data-toggle="tab" role="tab" aria-controls="import" aria-selected="true" href="#import-tab">{{ __('md_medical_checkup_schedule.label_import') }}</a>
-                        </li>
-                        <li class="nav-item">
-                          <a class="nav-link" data-toggle="tab" role="tab" aria-controls="manual-input" aria-selected="false" href="#manual-input-tab">{{ __('md_medical_checkup_schedule.label_manual_input') }}</a>
-                        </li>
-                    </ul>
+                <div style="display: flex; justify-content: flex-end; align-items: center;">
+                    <a href="medical_checkup_schedule_history" style="text-decoration: none;">
+                        <button type="button" class="btn btn-secondary" id="btn-history">
+                            <i class="fa fa-history" aria-hidden="true"></i> {{ __('md_medical_checkup_schedule.btn_history') }}
+                        </button>
+                    </a>
                 </div>
-                <div class="tab-content" id="tab-content">
-                    <div class="tab-pane fade show active" id="import-tab" role="tabpanel" aria-labelledby="import-tab">
+            </div>
+            <div class="tab-input">
+                <ul class="nav nav-pills" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" role="tab" aria-controls="import" aria-selected="true" href="#import-tab">{{ __('md_medical_checkup_schedule.label_import') }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" role="tab" aria-controls="manual-input" aria-selected="false" href="#manual-input-tab">{{ __('md_medical_checkup_schedule.label_manual_input') }}</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="tab-content" id="tab-content">
+                <div class="tab-pane fade show active" id="import-tab" role="tabpanel" aria-labelledby="import-tab">
+                    <form id="medical_checkup_schedule_import_form" method="post">
+                        @csrf
                         <div class="row">
                             <div class="col-4">
                                 <div class="form-group">
-                                    <label for="import_file">{{ __('md_medical_checkup_schedule.label_file') }}</label>
+                                    <label for="file">{{ __('md_medical_checkup_schedule.label_file') }}</label>
                                     <span class="required">*</span>
                                     <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="import_file" name="import_file">
-                                        <label class="custom-file-label" for="import_file">{{ __('md_medical_checkup_schedule.label_file') }}</label>
+                                        <input type="file" class="custom-file-input" id="file" name="file" onchange="handleFileUpload(this)">
+                                        <label class="custom-file-label" for="file">{{ __('md_medical_checkup_schedule.label_file') }}</label>
                                     </div>
                                 </div>
                             </div>
@@ -191,9 +191,12 @@
                                 </button>
                             </div>
                         </div>
-                    </div>
+                    </form>
+                </div>
 
-                    <div class="tab-pane fade" id="manual-input-tab" role="tabpanel" aria-labelledby="manual-input-tab">
+                <div class="tab-pane fade" id="manual-input-tab" role="tabpanel" aria-labelledby="manual-input-tab">
+                    <form id="medical_checkup_schedule_form" method="post">
+                    @csrf
                         <div class="row">
                             <div class="col-8">
                                 <div class="form-group">
@@ -298,9 +301,9 @@
                                 {{ __('md_medical_checkup_schedule.btn_submit') }}
                             </button>
                         </div>
-                    </div>
+                    </form>
                 </div>
-            </form>
+            </div>
         </div>
         <div class="div-form">
             <div class="modal fade" id="modal_employee_list">
@@ -415,6 +418,21 @@
 
     window.onload = function() {
         savePreviousURL();
+    }
+
+    function handleFileUpload(input) {
+        const file = input.files[0];
+        const allowedExtensions = /(\.xls|\.xlsx|\.xml)$/i;
+        
+        if (file) {
+            if (!allowedExtensions.exec(file.name)) {
+                $('#notification_error').modal('show');
+                $('#message-notification-error').html('Upload file in .xls, .xlsx, or .xml');
+
+                input.value = '';
+                return false;
+            }
+        }
     }
     
     $(document).ready(function () {
@@ -777,11 +795,107 @@
 
         $("#btn-submit").click(function () {
             $(this).prop("disabled", true);
-            // $(this).html(
-            //     '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
-            // );
+            $(this).html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
             $("#medical_checkup_schedule_form").submit();
         });
+
+        $("#btn-process").click(function () {
+            $(this).prop("disabled", true);
+            $(this).html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+            $("#medical_checkup_schedule_import_form").submit();
+        });
+
+        if ($("#medical_checkup_schedule_import_form").length > 0) {
+            $("#medical_checkup_schedule_import_form").validate({
+                rules: {
+                    file: {
+                        required: true,
+                    },
+                },
+                messages: {
+                    file: {
+                        required: "{{ __('md_medical_checkup_schedule.label_file_required') }}",
+                    },
+                },
+                highlight: function (element) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function (element) {
+                    $(element).removeClass('is-invalid');
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                    $("#btn-process").prop("disabled", false);
+                    $("#btn-process").html(
+                       '<i class="fa fa-play-circle-o"></i> {{ __("md_medical_checkup_schedule.btn_process") }}'
+                    );
+
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').append(error);
+                },
+                submitHandler: function (form) {
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+
+                    var myform = document.getElementById("medical_checkup_schedule_import_form");
+                    var formdata = new FormData(myform);
+
+                    $.ajax({
+                        url: "{{ url('medical/medical_checkup_schedule/import') }}",
+                        type: "POST",
+                        processData: false,
+                        contentType: false,
+                        data: formdata,
+                        success: function (response) {
+                            if (response.status == "true") {
+                                $("#btn-process").prop("disabled",
+                                    false);
+                                $("#btn-process").html(
+                                    '<i class="fa fa-play-circle-o"></i> {{ __("md_medical_checkup_schedule.btn_process") }}'
+                                );
+                                $('#notification_success').modal('show');
+                                $('#message-notification-success').html(response
+                                    .message);
+                                setTimeout(function () {
+                                    $('#notification_success').modal('hide');
+                                }, 3000);
+                            } else {
+                                $("#btn-process").prop("disabled",
+                                    false);
+                                $("#btn-process").html(
+                                    '<i class="fa fa-play-circle-o"></i> {{ __("md_medical_checkup_schedule.btn_process") }}'
+                                );
+                                $('#notification_error').modal('show');
+                                if (response.message == null || response.message ==
+                                    '') {
+                                    $('#message-notification-error').html(
+                                        "{{ __('login.error') }}");
+                                } else {
+                                    $('#message-notification-error').html(response
+                                        .message);
+                                }
+                            }
+                        },
+                        error: function (response) {
+                            $("#btn-process").prop("disabled", false);
+                            $("#btn-process").html(
+                                '<i class="fa fa-play-circle-o"></i> {{ __("md_medical_checkup_schedule.btn_process") }}'
+                            );
+                            $('#notification_error').modal('show');
+                            $('#message-notification-error').html(response);
+                        }
+
+                    });
+                }
+            })
+        }
 
         $("#btn-download-template").click(function () {
             $(this).prop("disabled", true);

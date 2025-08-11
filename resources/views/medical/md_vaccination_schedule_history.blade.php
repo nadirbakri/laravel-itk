@@ -231,14 +231,7 @@
                 'sPaginationType': 'full_numbers',
                 "order": [[ 1, "asc" ]],
                 columns: [
-                    {
-                        data: null,
-                        orderable: false,
-                        searchable: false,
-                        render: function (data, type, row, meta) {
-                            return meta.row + meta.settings._iDisplayStart + 1;
-                        }
-                    },
+                    {data: 'no', name: 'no'},
                     {data: 'createdDate', name: 'createdDate',
                         render: function (data, type, row) {
                             return data ? moment(data).format('D MMM YYYY') : '';

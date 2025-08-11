@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Vaccine Master Info</title>
+	<title>Medical Checkup Master Info</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon"/>
 	<style type="text/css">
@@ -19,8 +19,8 @@
 	<table style="width: 100%; font-size: 14px;" class="table table-bordered table-hover responsive">
 		<thead>
 			<tr>
-				<th style="font-weight: bold;">Vaccine Code *</th>
-				<th style="font-weight: bold;">Vaccine Name *</th>
+				<th style="font-weight: bold;">MCU Code *</th>
+				<th style="font-weight: bold;">MCU Name *</th>
 				<th style="font-weight: bold;">Batch Code *</th>
 				<th style="font-weight: bold;">Number of Dose *</th>
 			</tr>

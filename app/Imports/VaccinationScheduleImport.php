@@ -67,14 +67,16 @@ class VaccinationScheduleImport implements ToCollection, SkipsEmptyRows, WithSta
 
             foreach ($rows as $row) {
                 $dataEmployeeNo = isset($row[0]) ? (string) $row[0] : null;
+
                 $param[] = [
                     "companyCode" => Session::get('companyCode'),
-                    "type" => 'V',
+                    "type" => 'VACCINE',
                     "employeeNo" => isset($row[0]) ? (string) $row[0] : null,
-                    "description" => isset($row[1]) ? (string) $row[1] : null,
+                    "activitiesName" => isset($row[1]) ? (string) $row[1] : null,
                     "code" => isset($row[2]) ? (string) $row[2] : null,
                     "date" => (isset($row[5]) && isset($row[6])) ? (string) $row[5] . 'T' . (string) $row[6] : null,
                     "address" => isset($row[7]) ? (string) $row[7] : null,
+                    "description" => isset($row[8]) ? (string) $row[8] : null,
                     "languageCode" => App::getLocale(),
                     "sessionID" => 0,
                     "sessionUserID" => Session::get('userID'),
@@ -86,35 +88,42 @@ class VaccinationScheduleImport implements ToCollection, SkipsEmptyRows, WithSta
                             "activityType" => 'VACCINE',
                             "batchCode" => isset($row[3]) ? (string) $row[3] : null,
                             "date" => (isset($row[5]) && isset($row[6])) ? (string) $row[5] . 'T' . (string) $row[6] : null,
-                            "amount" => (int) count($rows),
+                            // "amount" => (int) count($rows),
                             "address" => isset($row[7]) ? (string) $row[7] : null,
                             "description" => isset($row[8]) ? (string) $row[8] : null,
                         ]
                     ]
                 ];
+
+                $updateHealthActivities[] = [
+                    "activityType" => "VACCINE",
+                    "employeeNo" => isset($row[0]) ? (string) $row[0] : null,
+                    "activityCode" => isset($row[2]) ? (string) $row[2] : null,
+                    "nextBatchCode" => isset($row[3]) ? (string) $row[3] : null,
+                    "nextSequence" => isset($row[4]) ? (string) $row[4] : null,
+                    "date" => (isset($row[5]) && isset($row[6])) ? (string) $row[5] . 'T' . (string) $row[6] : null,
+                    "address" => isset($row[7]) ? (string) $row[7] : null,
+                    "description" => isset($row[8]) ? (string) $row[8] : null,
+                ];
             }
 
             $param_sequence = [
-                'companyCode' => Session::get('companyCode'),
-                'activityType' => 'VACCINE',
-                'activityCode' => $request['vaccine_name'],
-                'employeeToRegister' => $dataEmployeeNo,
-                'nextBatchCode' => $request['batch_code_hidden'],
-                'nextSequence' => $request['batch_code_hidden'],
+                "companyCode" => Session::get('companyCode'),
+                "updateHealthActivities" => $updateHealthActivities,
                 "languageCode" => App::getLocale(),
                 "sessionID" => 0,
                 "sessionUserID" => Session::get('userID'),
                 "logActionUserID" => Session::get('userID'),
-                "logActionUsername" => Session::get('userID')
+                "logActionUsername" => Session::get('userID'),
             ];
 
-            // dd(json_encode($param));
+            // dd(json_encode($param), json_encode($param_sequence));
 
             $response = $client->post(env('API_URL') . '/personel/HealthActivities/InsertHealthActivities',
                 ['body' => json_encode($param)]
             );
 
-            $response2 = $client->post(env('API_URL') . '/personel/HealthActivities/UpdateSequenceAcitivity',
+            $response2 = $client->post(env('API_URL') . '/personel/HealthActivities/UpdateSequenceActivityBulk',
                 ['body' => json_encode($param_sequence)]
             );
 
@@ -125,13 +134,17 @@ class VaccinationScheduleImport implements ToCollection, SkipsEmptyRows, WithSta
             return $this->arrResult;
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response && $response->getStatusCode() == 400) {
-                $body = json_decode($response->getBody()->getContents(), true);
-                $message = $body['message'] ?? 'Bad Request';
+            if (($response && $response->getStatusCode() == 400) ||($response2 && $response2->getStatusCode() == 400)) {
+                if ($response && $response->getStatusCode() == 400) {
+                    $body = json_decode($response->getBody()->getContents(), true);
+                    $message = $body['message'] ?? 'Bad Request';
+                } else {
+                    $body = json_decode($response2->getBody()->getContents(), true);
+                    $message = $body['message'] ?? 'Bad Request';
+                }
                 $this->arrResult[] = (object)['status' => false, 'message' => $message];
                 return $this->arrResult;
             }
-            $this->arrResult[]['message'] = $response;
             if($response && $response->getStatusCode() == 401){
                 return view('error.login');
             }else if($response && $response->getStatusCode() == 404){

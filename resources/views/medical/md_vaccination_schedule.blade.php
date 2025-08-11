@@ -402,7 +402,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary w-25" data-dismiss="modal">{{ __('md_vaccination_schedule.btn_cancel') }}</button>
-                            <button type="button" id="btn-process" class="btn btn-primary w-25" data-dismiss="modal">{{ __('md_vaccination_schedule.btn_save') }}</button>
+                            <button type="button" id="btn-save-list" class="btn btn-primary w-25" data-dismiss="modal">{{ __('md_vaccination_schedule.btn_save') }}</button>
                         </div>
                     </div>                    
                 </div>

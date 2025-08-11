@@ -571,7 +571,7 @@
             $('#capacity').val(dataDetail ? dataDetail.capacity : '')
             $('#dose').val(dataDetail ? dataDetail.sequence : '')
             $('#batch_description').val(dataDetail ? dataDetail.description : '')
-            $('#serial_number').val(dataDetail ? dataDetail.serialNUmber : '')
+            $('#serial_number').val(dataDetail ? dataDetail.serialNumber : '')
             expiredDate.setDate(dataDetail ? dataDetail.expiredDate : '');
         }
 

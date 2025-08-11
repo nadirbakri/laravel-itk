@@ -390,7 +390,7 @@
                         }
                     },
                     {data: 'activityCode', name: 'activityCode'},
-                    {data: 'activityCode', name: 'activityCode'},
+                    {data: 'totalBatch', name: 'totalBatch'},
                     {data: 'activityName', name: 'activityName'},
                     {name: 'details',
                         render: function (data, type, row) {

@@ -23,8 +23,8 @@
                     <th>Vaccine Code *</th>
                     <th>Batch Code *</th>
                     <th>Number of Dose *</th>
-                    <th>Vaccine Date *</th>
-                    <th>Vaccine Time *</th>
+                    <th>Vaccine Date * (YYYY-MM-DD)</th>
+                    <th>Vaccine Time * (HH:MM)</th>
                     <th>Address *</th>
                     <th>Description</th>
                 </tr>

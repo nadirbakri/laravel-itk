@@ -81,8 +81,9 @@
                 <td>Monthly Allow</td>
                 <td>Medical_OP</td>
                 <td>Gym</td>
-                <td>Salary Adjust</td>
-                <td>Salary Adjust</td>
+                <td>Home Internet</td>
+                <td>Salary Adjust Plus</td>
+                <td>Salary Adjust Minus</td>
                 <td>Bonus</td>
                 <td>THR</td>
                 <td>Tax Allowance</td>
@@ -92,8 +93,9 @@
                 <td>JHT Ky</td>
                 <td>BPJS Kes Ky</td>
                 <td>BPJS Pens Ky</td>
-                <td>THP</td>
-                <td>Home Internet</td>
+                <td>THP Salary</td>
+                <td>THP Bonus</td>
+                <td>THP THR</td>
             </tr>
             <tr>
                 <td>&nbsp;</td>
@@ -108,6 +110,7 @@
                 <td data-format="#,##0">{{ $value->january->monthlyAllowance }}</td>
                 <td data-format="#,##0">{{ $value->january->medical_OP }}</td>
                 <td data-format="#,##0">{{ $value->january->gym }}</td>
+                <td data-format="#,##0">{{ $value->january->home_Internet }}</td>
                 <td data-format="#,##0">{{ $value->january->salaryAdjustPlus }}</td>
                 <td data-format="#,##0">{{ $value->january->salaryAdjustMinus }}</td>
                 <td data-format="#,##0">{{ $value->january->bonus }}</td>
@@ -119,8 +122,9 @@
                 <td data-format="#,##0">{{ $value->january->jhT_Karyawan }}</td>
                 <td data-format="#,##0">{{ $value->january->bpjsKes_Karyawan }}</td>
                 <td data-format="#,##0">{{ $value->january->bpjsPensiun_Karyawan }}</td>
-                <td data-format="#,##0">{{ $value->january->thp }}</td>
-                <td data-format="#,##0">{{ $value->january->home_Internet }}</td>
+                <td data-format="#,##0">{{ $value->january->takeHomePaySalary }}</td>
+                <td data-format="#,##0">{{ $value->january->takeHomePayBonus }}</td>
+                <td data-format="#,##0">{{ $value->january->takeHomePayTHR }}</td>
             </tr>
             <tr>
                 <td>&nbsp;</td>
@@ -135,6 +139,7 @@
                 <td data-format="#,##0">{{ $value->february->monthlyAllowance }}</td>
                 <td data-format="#,##0">{{ $value->february->medical_OP }}</td>
                 <td data-format="#,##0">{{ $value->february->gym }}</td>
+                <td data-format="#,##0">{{ $value->february->home_Internet }}</td>
                 <td data-format="#,##0">{{ $value->february->salaryAdjustPlus }}</td>
                 <td data-format="#,##0">{{ $value->february->salaryAdjustMinus }}</td>
                 <td data-format="#,##0">{{ $value->february->bonus }}</td>
@@ -146,8 +151,9 @@
                 <td data-format="#,##0">{{ $value->february->jhT_Karyawan }}</td>
                 <td data-format="#,##0">{{ $value->february->bpjsKes_Karyawan }}</td>
                 <td data-format="#,##0">{{ $value->february->bpjsPensiun_Karyawan }}</td>
-                <td data-format="#,##0">{{ $value->february->thp }}</td>
-                <td data-format="#,##0">{{ $value->february->home_Internet }}</td>
+                <td data-format="#,##0">{{ $value->february->takeHomePaySalary }}</td>
+                <td data-format="#,##0">{{ $value->february->takeHomePayBonus }}</td>
+                <td data-format="#,##0">{{ $value->february->takeHomePayTHR }}</td>
             </tr>
             <tr>
                 <td>&nbsp;</td>
@@ -162,6 +168,7 @@
                 <td data-format="#,##0">{{ $value->march->monthlyAllowance }}</td>
                 <td data-format="#,##0">{{ $value->march->medical_OP }}</td>
                 <td data-format="#,##0">{{ $value->march->gym }}</td>
+                <td data-format="#,##0">{{ $value->march->home_Internet }}</td>
                 <td data-format="#,##0">{{ $value->march->salaryAdjustPlus }}</td>
                 <td data-format="#,##0">{{ $value->march->salaryAdjustMinus }}</td>
                 <td data-format="#,##0">{{ $value->march->bonus }}</td>
@@ -173,8 +180,9 @@
                 <td data-format="#,##0">{{ $value->march->jhT_Karyawan }}</td>
                 <td data-format="#,##0">{{ $value->march->bpjsKes_Karyawan }}</td>
                 <td data-format="#,##0">{{ $value->march->bpjsPensiun_Karyawan }}</td>
-                <td data-format="#,##0">{{ $value->march->thp }}</td>
-                <td data-format="#,##0">{{ $value->march->home_Internet }}</td>
+                <td data-format="#,##0">{{ $value->march->takeHomePaySalary }}</td>
+                <td data-format="#,##0">{{ $value->march->takeHomePayBonus }}</td>
+                <td data-format="#,##0">{{ $value->march->takeHomePayTHR }}</td>
             </tr>
             <tr>
                 <td>&nbsp;</td>
@@ -189,6 +197,7 @@
                 <td data-format="#,##0">{{ $value->april->monthlyAllowance }}</td>
                 <td data-format="#,##0">{{ $value->april->medical_OP }}</td>
                 <td data-format="#,##0">{{ $value->april->gym }}</td>
+                <td data-format="#,##0">{{ $value->april->home_Internet }}</td>
                 <td data-format="#,##0">{{ $value->april->salaryAdjustPlus }}</td>
                 <td data-format="#,##0">{{ $value->april->salaryAdjustMinus }}</td>
                 <td data-format="#,##0">{{ $value->april->bonus }}</td>
@@ -200,8 +209,9 @@
                 <td data-format="#,##0">{{ $value->april->jhT_Karyawan }}</td>
                 <td data-format="#,##0">{{ $value->april->bpjsKes_Karyawan }}</td>
                 <td data-format="#,##0">{{ $value->april->bpjsPensiun_Karyawan }}</td>
-                <td data-format="#,##0">{{ $value->april->thp }}</td>
-                <td data-format="#,##0">{{ $value->april->home_Internet }}</td>
+                <td data-format="#,##0">{{ $value->april->takeHomePaySalary }}</td>
+                <td data-format="#,##0">{{ $value->april->takeHomePayBonus }}</td>
+                <td data-format="#,##0">{{ $value->april->takeHomePayTHR }}</td>
             </tr>
             <tr>
                 <td>&nbsp;</td>
@@ -216,6 +226,7 @@
                 <td data-format="#,##0">{{ $value->may->monthlyAllowance }}</td>
                 <td data-format="#,##0">{{ $value->may->medical_OP }}</td>
                 <td data-format="#,##0">{{ $value->may->gym }}</td>
+                <td data-format="#,##0">{{ $value->may->home_Internet }}</td>
                 <td data-format="#,##0">{{ $value->may->salaryAdjustPlus }}</td>
                 <td data-format="#,##0">{{ $value->may->salaryAdjustMinus }}</td>
                 <td data-format="#,##0">{{ $value->may->bonus }}</td>
@@ -227,8 +238,9 @@
                 <td data-format="#,##0">{{ $value->may->jhT_Karyawan }}</td>
                 <td data-format="#,##0">{{ $value->may->bpjsKes_Karyawan }}</td>
                 <td data-format="#,##0">{{ $value->may->bpjsPensiun_Karyawan }}</td>
-                <td data-format="#,##0">{{ $value->may->thp }}</td>
-                <td data-format="#,##0">{{ $value->may->home_Internet }}</td>
+                <td data-format="#,##0">{{ $value->may->takeHomePaySalary }}</td>
+                <td data-format="#,##0">{{ $value->may->takeHomePayBonus }}</td>
+                <td data-format="#,##0">{{ $value->may->takeHomePayTHR }}</td>
             </tr>
             <tr>
                 <td>&nbsp;</td>
@@ -243,6 +255,7 @@
                 <td data-format="#,##0">{{ $value->june->monthlyAllowance }}</td>
                 <td data-format="#,##0">{{ $value->june->medical_OP }}</td>
                 <td data-format="#,##0">{{ $value->june->gym }}</td>
+                <td data-format="#,##0">{{ $value->june->home_Internet }}</td>
                 <td data-format="#,##0">{{ $value->june->salaryAdjustPlus }}</td>
                 <td data-format="#,##0">{{ $value->june->salaryAdjustMinus }}</td>
                 <td data-format="#,##0">{{ $value->june->bonus }}</td>
@@ -254,8 +267,9 @@
                 <td data-format="#,##0">{{ $value->june->jhT_Karyawan }}</td>
                 <td data-format="#,##0">{{ $value->june->bpjsKes_Karyawan }}</td>
                 <td data-format="#,##0">{{ $value->june->bpjsPensiun_Karyawan }}</td>
-                <td data-format="#,##0">{{ $value->june->thp }}</td>
-                <td data-format="#,##0">{{ $value->june->home_Internet }}</td>
+                <td data-format="#,##0">{{ $value->june->takeHomePaySalary }}</td>
+                <td data-format="#,##0">{{ $value->june->takeHomePayBonus }}</td>
+                <td data-format="#,##0">{{ $value->june->takeHomePayTHR }}</td>
             </tr>
             <tr>
                 <td>&nbsp;</td>
@@ -270,6 +284,7 @@
                 <td data-format="#,##0">{{ $value->july->monthlyAllowance }}</td>
                 <td data-format="#,##0">{{ $value->july->medical_OP }}</td>
                 <td data-format="#,##0">{{ $value->july->gym }}</td>
+                <td data-format="#,##0">{{ $value->july->home_Internet }}</td>
                 <td data-format="#,##0">{{ $value->july->salaryAdjustPlus }}</td>
                 <td data-format="#,##0">{{ $value->july->salaryAdjustMinus }}</td>
                 <td data-format="#,##0">{{ $value->july->bonus }}</td>
@@ -281,8 +296,9 @@
                 <td data-format="#,##0">{{ $value->july->jhT_Karyawan }}</td>
                 <td data-format="#,##0">{{ $value->july->bpjsKes_Karyawan }}</td>
                 <td data-format="#,##0">{{ $value->july->bpjsPensiun_Karyawan }}</td>
-                <td data-format="#,##0">{{ $value->july->thp }}</td>
-                <td data-format="#,##0">{{ $value->july->home_Internet }}</td>
+                <td data-format="#,##0">{{ $value->july->takeHomePaySalary }}</td>
+                <td data-format="#,##0">{{ $value->july->takeHomePayBonus }}</td>
+                <td data-format="#,##0">{{ $value->july->takeHomePayTHR }}</td>
             </tr>
             <tr>
                 <td>&nbsp;</td>
@@ -297,6 +313,7 @@
                 <td data-format="#,##0">{{ $value->august->monthlyAllowance }}</td>
                 <td data-format="#,##0">{{ $value->august->medical_OP }}</td>
                 <td data-format="#,##0">{{ $value->august->gym }}</td>
+                <td data-format="#,##0">{{ $value->august->home_Internet }}</td>
                 <td data-format="#,##0">{{ $value->august->salaryAdjustPlus }}</td>
                 <td data-format="#,##0">{{ $value->august->salaryAdjustMinus }}</td>
                 <td data-format="#,##0">{{ $value->august->bonus }}</td>
@@ -308,8 +325,9 @@
                 <td data-format="#,##0">{{ $value->august->jhT_Karyawan }}</td>
                 <td data-format="#,##0">{{ $value->august->bpjsKes_Karyawan }}</td>
                 <td data-format="#,##0">{{ $value->august->bpjsPensiun_Karyawan }}</td>
-                <td data-format="#,##0">{{ $value->august->thp }}</td>
-                <td data-format="#,##0">{{ $value->august->home_Internet }}</td>
+                <td data-format="#,##0">{{ $value->august->takeHomePaySalary }}</td>
+                <td data-format="#,##0">{{ $value->august->takeHomePayBonus }}</td>
+                <td data-format="#,##0">{{ $value->august->takeHomePayTHR }}</td>
             </tr>
             <tr>
                 <td>&nbsp;</td>
@@ -324,6 +342,7 @@
                 <td data-format="#,##0">{{ $value->september->monthlyAllowance }}</td>
                 <td data-format="#,##0">{{ $value->september->medical_OP }}</td>
                 <td data-format="#,##0">{{ $value->september->gym }}</td>
+                <td data-format="#,##0">{{ $value->september->home_Internet }}</td>
                 <td data-format="#,##0">{{ $value->september->salaryAdjustPlus }}</td>
                 <td data-format="#,##0">{{ $value->september->salaryAdjustMinus }}</td>
                 <td data-format="#,##0">{{ $value->september->bonus }}</td>
@@ -335,8 +354,9 @@
                 <td data-format="#,##0">{{ $value->september->jhT_Karyawan }}</td>
                 <td data-format="#,##0">{{ $value->september->bpjsKes_Karyawan }}</td>
                 <td data-format="#,##0">{{ $value->september->bpjsPensiun_Karyawan }}</td>
-                <td data-format="#,##0">{{ $value->september->thp }}</td>
-                <td data-format="#,##0">{{ $value->september->home_Internet }}</td>
+                <td data-format="#,##0">{{ $value->september->takeHomePaySalary }}</td>
+                <td data-format="#,##0">{{ $value->september->takeHomePayBonus }}</td>
+                <td data-format="#,##0">{{ $value->september->takeHomePayTHR }}</td>
             </tr>
             <tr>
                 <td>&nbsp;</td>
@@ -351,6 +371,7 @@
                 <td data-format="#,##0">{{ $value->october->monthlyAllowance }}</td>
                 <td data-format="#,##0">{{ $value->october->medical_OP }}</td>
                 <td data-format="#,##0">{{ $value->october->gym }}</td>
+                <td data-format="#,##0">{{ $value->october->home_Internet }}</td>
                 <td data-format="#,##0">{{ $value->october->salaryAdjustPlus }}</td>
                 <td data-format="#,##0">{{ $value->october->salaryAdjustMinus }}</td>
                 <td data-format="#,##0">{{ $value->october->bonus }}</td>
@@ -362,8 +383,9 @@
                 <td data-format="#,##0">{{ $value->october->jhT_Karyawan }}</td>
                 <td data-format="#,##0">{{ $value->october->bpjsKes_Karyawan }}</td>
                 <td data-format="#,##0">{{ $value->october->bpjsPensiun_Karyawan }}</td>
-                <td data-format="#,##0">{{ $value->october->thp }}</td>
-                <td data-format="#,##0">{{ $value->october->home_Internet }}</td>
+                <td data-format="#,##0">{{ $value->october->takeHomePaySalary }}</td>
+                <td data-format="#,##0">{{ $value->october->takeHomePayBonus }}</td>
+                <td data-format="#,##0">{{ $value->october->takeHomePayTHR }}</td>
             </tr>
             <tr>
                 <td>&nbsp;</td>
@@ -378,6 +400,7 @@
                 <td data-format="#,##0">{{ $value->november->monthlyAllowance }}</td>
                 <td data-format="#,##0">{{ $value->november->medical_OP }}</td>
                 <td data-format="#,##0">{{ $value->november->gym }}</td>
+                <td data-format="#,##0">{{ $value->november->home_Internet }}</td>
                 <td data-format="#,##0">{{ $value->november->salaryAdjustPlus }}</td>
                 <td data-format="#,##0">{{ $value->november->salaryAdjustMinus }}</td>
                 <td data-format="#,##0">{{ $value->november->bonus }}</td>
@@ -389,8 +412,9 @@
                 <td data-format="#,##0">{{ $value->november->jhT_Karyawan }}</td>
                 <td data-format="#,##0">{{ $value->november->bpjsKes_Karyawan }}</td>
                 <td data-format="#,##0">{{ $value->november->bpjsPensiun_Karyawan }}</td>
-                <td data-format="#,##0">{{ $value->november->thp }}</td>
-                <td data-format="#,##0">{{ $value->november->home_Internet }}</td>
+                <td data-format="#,##0">{{ $value->november->takeHomePaySalary }}</td>
+                <td data-format="#,##0">{{ $value->november->takeHomePayBonus }}</td>
+                <td data-format="#,##0">{{ $value->november->takeHomePayTHR }}</td>
             </tr>
             <tr>
                 <td>&nbsp;</td>
@@ -405,6 +429,7 @@
                 <td data-format="#,##0">{{ $value->december->monthlyAllowance }}</td>
                 <td data-format="#,##0">{{ $value->december->medical_OP }}</td>
                 <td data-format="#,##0">{{ $value->december->gym }}</td>
+                <td data-format="#,##0">{{ $value->december->home_Internet }}</td>
                 <td data-format="#,##0">{{ $value->december->salaryAdjustPlus }}</td>
                 <td data-format="#,##0">{{ $value->december->salaryAdjustMinus }}</td>
                 <td data-format="#,##0">{{ $value->december->bonus }}</td>
@@ -416,8 +441,9 @@
                 <td data-format="#,##0">{{ $value->december->jhT_Karyawan }}</td>
                 <td data-format="#,##0">{{ $value->december->bpjsKes_Karyawan }}</td>
                 <td data-format="#,##0">{{ $value->december->bpjsPensiun_Karyawan }}</td>
-                <td data-format="#,##0">{{ $value->december->thp }}</td>
-                <td data-format="#,##0">{{ $value->december->home_Internet }}</td>
+                <td data-format="#,##0">{{ $value->december->takeHomePaySalary }}</td>
+                <td data-format="#,##0">{{ $value->december->takeHomePayBonus }}</td>
+                <td data-format="#,##0">{{ $value->december->takeHomePayTHR }}</td>
             </tr>
             <tr>
                 <td>&nbsp;</td>
@@ -432,6 +458,7 @@
                 <td data-format="#,##0">{{ $value->total_Medical_OP }}</td>
                 <td data-format="#,##0">{{ $value->total_Insentive_OB }}</td>
                 <td data-format="#,##0">{{ $value->total_Gym }}</td>
+                <td data-format="#,##0">{{ $value->total_Home_Internet }}</td>
                 <td data-format="#,##0">{{ $value->total_SalaryAdjustPlus }}</td>
                 <td data-format="#,##0">{{ $value->total_SalaryAdjustMinus }}</td>
                 <td data-format="#,##0">{{ $value->total_Bonus }}</td>
@@ -443,8 +470,9 @@
                 <td data-format="#,##0">{{ $value->total_JHT_Karyawan }}</td>
                 <td data-format="#,##0">{{ $value->total_BPJSKes_Karyawan }}</td>
                 <td data-format="#,##0">{{ $value->total_BPJSPensiun_Karyawan }}</td>
-                <td data-format="#,##0">{{ $value->total_THP }}</td>
-                <td data-format="#,##0">{{ $value->total_Home_Internet }}</td>
+                <td data-format="#,##0">{{ $value->total_TakeHomePaySalary }}</td>
+                <td data-format="#,##0">{{ $value->total_TakeHomePayBonus }}</td>
+                <td data-format="#,##0">{{ $value->total_TakeHomePayTHR }}</td>
             </tr>
         </table>
         @endforeach
@@ -453,6 +481,8 @@
                 <td>&nbsp;</td>
                 <td colspan="2" style="text-align: right;"><b>Grand Total</b></td>
                 <td data-format="@">&nbsp;</td>
+                <td data-format="#,##0"></td>
+                <td data-format="#,##0"></td>
                 <td data-format="#,##0"></td>
                 <td data-format="#,##0"></td>
                 <td data-format="#,##0"></td>

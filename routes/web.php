@@ -684,6 +684,7 @@ Route::get('payroll/export_sipp_online', 'PayrollController@pageExportSIPPOnline
 Route::get('payroll/pension_fund_report', 'PayrollController@pagePensionFundReport');
 Route::get('payroll/cbi_report', 'PayrollController@pageCBIReport');
 Route::get('payroll/spt_list_report', 'PayrollController@pageSPTListReport');
+Route::get('payroll/overtime_detail_report', 'PayrollController@pageOvertimeDetailReport');
 
 /* Route untuk tabel Payroll */
 Route::get('payroll/account/table', 'PayrollController@tableAccountPY');
@@ -993,6 +994,7 @@ Route::post('medical/transfer_payment_to_excel/remaining_limit/print/excel', 'Me
 Route::post('medical/vaccination_schedule/download_template', 'MedicalController@downloadTemplateVaccinationScheduleMD');
 Route::post('medical/medical_checkup_schedule/download_template', 'MedicalController@downloadTemplateMedicalCheckupScheduleMD');
 Route::post('medical/vaccination_schedule/import', 'MedicalController@importVaccinationScheduleMD');
+Route::post('medical/medical_checkup_schedule/import', 'MedicalController@importMedicalCheckupScheduleMD');
 
 /* Route untuk status Medical */
 Route::get('medical/claim_code/status', 'MedicalController@statusClaimCodeMD');

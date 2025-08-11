@@ -10,11 +10,11 @@ use App\Exports\ClaimPaymentTransactionReportSlipExport;
 use App\Exports\OutstandingClaimReportExport;
 use App\Exports\TransferPaymentToExcelMonthlyExport;
 use App\Exports\TransferPaymentToExcelRemainingLimitExport;
-use App\Exports\VaccinationScheduleTemplateExport;
 use App\Exports\VaccinationScheduleExport;
-use App\Exports\MedicalCheckupScheduleTemplateExport;
+use App\Exports\MedicalCheckupScheduleExport;
 
 use App\Imports\VaccinationScheduleImport;
+use App\Imports\MedicalCheckupScheduleImport;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -4175,7 +4175,7 @@ class MedicalController extends Controller
 
     public function downloadTemplateMedicalCheckupScheduleMD(Request $request)
     {
-        return Excel::download(new MedicalCheckupScheduleTemplateExport, "Medical Checkup Schedule Template.xlsx");
+        return Excel::download(new MedicalCheckupScheduleExport, "Medical Checkup Schedule Template.xlsx");
     }
 
     public function importVaccinationScheduleMD(Request $request)
@@ -4183,6 +4183,27 @@ class MedicalController extends Controller
         $file = $request->file;
         try{
             $import = new VaccinationScheduleImport();
+            Excel::import($import, $file->getRealPath(), null, \Maatwebsite\Excel\Excel::XLSX);
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            $failures = $e->failures();
+            $objError = (object) ['status' => false, 'message' => $failures[0]->errors()[0]];
+            return array(0 => $objError);
+        }
+
+        if(empty($import->getArrResult())){
+            $objError = (object) ['status' => false, 'message' => "The Uploaded File Doesn't Match The Template"];
+            return array(0 => $objError);
+        }else{
+            $arrResult = $import->getArrResult()[0];
+            return response()->json(['status' => $arrResult->status, 'message' => $arrResult->message]);
+        }
+    }
+
+    public function importMedicalCheckupScheduleMD(Request $request)
+    {
+        $file = $request->file;
+        try{
+            $import = new MedicalCheckupScheduleImport();
             Excel::import($import, $file->getRealPath(), null, \Maatwebsite\Excel\Excel::XLSX);
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             $failures = $e->failures();

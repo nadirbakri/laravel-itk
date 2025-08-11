@@ -15,7 +15,7 @@ use Validator;
 use Session;
 use App;
 
-class VaccineSheet extends DefaultValueBinder implements WithCustomValueBinder, FromView, ShouldAutoSize
+class MedicalCheckupSheet extends DefaultValueBinder implements WithCustomValueBinder, FromView, ShouldAutoSize
 {
     public function view(): View
     {
@@ -29,7 +29,7 @@ class VaccineSheet extends DefaultValueBinder implements WithCustomValueBinder, 
             $param = [
                 'companyCode' => Session::get('companyCode'),
                 'recordStatus' => 'A',
-                'activityType' => 'VACCINE',
+                'activityType' => 'MCU',
                 'sessionID' => 0,
                 'sessionUserID' => Session::get('userID'),
                 'userID' => Session::get('userID'),
@@ -56,11 +56,11 @@ class VaccineSheet extends DefaultValueBinder implements WithCustomValueBinder, 
         $arrResult = json_decode($response->getBody()->getContents());
 
         if($arrResult->dataListSet == null){
-            return view('export.exp_medical_vaccine', [
+            return view('export.exp_medical_mcu', [
                 'data' => []
             ]);
         }else{
-            return view('export.exp_medical_vaccine', [
+            return view('export.exp_medical_mcu', [
                 'data' => $arrResult->dataListSet
             ]);
         }

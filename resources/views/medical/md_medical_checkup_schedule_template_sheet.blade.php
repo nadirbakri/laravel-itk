@@ -23,8 +23,8 @@
                     <th>MCU Code *</th>
                     <th>Batch Code *</th>
                     <th>Number of Stage *</th>
-                    <th>MCU Date *</th>
-                    <th>MCU Time *</th>
+                    <th>MCU Date * (YYYY-MM-DD)</th>
+                    <th>MCU Time * (HH:MM)</th>
                     <th>Address *</th>
                     <th>Description</th>
                 </tr>
