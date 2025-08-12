@@ -29,7 +29,12 @@ return [
     'label_position' => 'Position',
     'label_ranking' => 'Ranking',
     'label_location' => 'Location',
-    'btn_print' => 'Print',
-    'field_required' => 'This Field is Required',
+    'btn_preview' => 'Preview',
+    'btn_send_to' => 'Send To',
+    'employee_no_from_required' => 'Employee No From is Required',
+    'employee_no_to_required' => 'Employee No To is Required',
+    'period_required' => 'Period is Required',
+    'group_authorize_from_required' => 'Group Authorize From is Required',
+    'group_authorize_to_required' => 'Group Authorize To is Required',
 
 ];

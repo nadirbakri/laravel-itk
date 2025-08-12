@@ -493,6 +493,7 @@
 
         $('.close').click();
         arrApproval = table2.row($(element).parent()).data().member;
+        console.log(arrApproval)
         load_data_approval_table();
     }
 

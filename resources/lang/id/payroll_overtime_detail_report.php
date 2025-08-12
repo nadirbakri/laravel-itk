@@ -29,7 +29,12 @@ return [
     'label_position' => 'Posisi',
     'label_ranking' => 'Peringkat',
     'label_location' => 'Lokasi',
-    'btn_print' => 'Cetak',
-    'field_required' => 'Bidang Ini Wajib Diisi',
+    'btn_preview' => 'Pratinjau',
+    'btn_send_to' => 'Kirim Ke',
+    'employee_no_from_required' => 'No Karyawan Dari harus diisi',
+    'employee_no_to_required' => 'No Karyawan Sampai harus diisi',
+    'period_required' => 'Periode harus diisi',
+    'group_authorize_from_required' => 'Autorisasi Grup Dari harus diisi',
+    'group_authorize_to_required' => 'Autorisasi Grup Sampai harus diisi',
 
 ];

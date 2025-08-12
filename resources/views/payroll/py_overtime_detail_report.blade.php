@@ -45,6 +45,10 @@
             display: none;
         }
 
+        .required {
+            color: red;
+        }
+
     </style>
 </head>
 
@@ -62,14 +66,15 @@
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
-                            <label
-                                for="employee_no_from">{{ __('payroll_overtime_detail_report.label_employee_no_from') }}</label>
+                            <label for="employee_no_from">{{ __('payroll_overtime_detail_report.label_employee_no_from') }}</label>
+                            <span class="required">*</span>
                             <select class="form-control select2" id="employee_no_from" name="employee_no_from"></select>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group">
                             <label for="employee_no_to">{{ __('payroll_overtime_detail_report.label_employee_no_to') }}</label>
+                            <span class="required">*</span>
                             <select class="form-control select2" id="employee_no_to" name="employee_no_to"></select>
                         </div>
                     </div>
@@ -78,16 +83,17 @@
                     <div class="col-6">
                         <div class="form-group">
                             <label for="period">{{ __('payroll_overtime_detail_report.label_period') }}</label>
+                            <span class="required">*</span>
                             <div class='input-group'>
                                 <input type="text" class="form-control" id="period" name="period"
                                     placeholder="{{ __('personel_evaluation_report.label_period') }}">
-                                <div class="input-group-prepend">
+                                <div class="input-group-prepend" id="period_calendar">
                                     <span class="input-group-text"><span class="fa fa-calendar"></span></span>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-2 mt-4">
+                    <div class="col-2" style="margin-top: 2.5rem;">
                         <div class="form-group">
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="no_overtime"
@@ -97,7 +103,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-2 mt-4">
+                    <div class="col-2" style="margin-top: 2.5rem;">
                         <div class="form-group">
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="hide_tariff"
@@ -107,7 +113,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-2 mt-4">
+                    <div class="col-2" style="margin-top: 2.5rem;">
                         <div class="form-group">
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="order_by_name"
@@ -121,16 +127,16 @@
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
-                            <label
-                                for="group_authorize_from">{{ __('payroll_overtime_detail_report.label_group_authorize_from') }}</label>
+                            <label for="group_authorize_from">{{ __('payroll_overtime_detail_report.label_group_authorize_from') }}</label>
+                            <span class="required">*</span>
                             <select class="form-control select2" id="group_authorize_from"
                                 name="group_authorize_from"></select>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group">
-                            <label
-                                for="group_authorize_to">{{ __('payroll_overtime_detail_report.label_group_authorize_to') }}</label>
+                            <label for="group_authorize_to">{{ __('payroll_overtime_detail_report.label_group_authorize_to') }}</label>
+                            <span class="required">*</span>
                             <select class="form-control select2" id="group_authorize_to"
                                 name="group_authorize_to"></select>
                         </div>
@@ -164,8 +170,8 @@
                             <label for="increment_date">{{ __('payroll_overtime_detail_report.label_increment_date') }}</label>
                             <div class='input-group'>
                                 <input type="text" class="form-control" id="increment_date" name="increment_date"
-                                    placeholder="{{ __('personel_evaluation_report.label_increment_date') }}">
-                                <div class="input-group-prepend">
+                                    placeholder="{{ __('personel_evaluation_report.label_increment_date') }}" disabled>
+                                <div class="input-group-prepend" id="increment_date_calendar">
                                     <span class="input-group-text"><span class="fa fa-calendar"></span></span>
                                 </div>
                             </div>
@@ -174,8 +180,7 @@
                     <div class="col-6">
                         <div class="form-group">
                             <label for="group_by">{{ __('payroll_overtime_detail_report.label_group_by') }}</label>
-                            <select class="form-control select2 select2-hidden-accessible" id="group_by"
-                                name="group_by">
+                            <select class="form-control select2 select2-hidden-accessible" id="group_by" name="group_by" disabled>
                             </select>
                         </div>
                     </div>
@@ -207,12 +212,35 @@
                         <input type="hidden" class="form-control" id="level_format" name="level_format">
                     </div>
                 </div>
-                <div class="row">
+                {{-- <div class="row">
                     <div class="col-3">
-                        <button type="submit" class="btn btn-primary" name="btn-print-data" id="btn-print-data"
+                        <button type="submit" class="btn btn-primary" name="btn-print" id="btn-print"
                             style="width: 100%;">
                             <i class="fa fa-print"></i> {{ __('payroll_overtime_detail_report.btn_print') }}
                         </button>
+                    </div>
+                </div> --}}
+                <div class="row">
+                    <div class="col-3">
+                        <button class="btn btn-primary" name="btn-preview" id="btn-preview" value="preview" style="width: 100%;">
+                            <i class="fa fa-eye"></i> {{ __('payroll_overtime_detail_report.btn_preview') }}
+                        </button>
+                    </div>
+                    <div class="col-3 desc" id="btn-send-to" style="display: none;">
+                        <button class="btn btn-primary" id="btn-send" style="width: 100%;">
+                            <i class="fa fa-print"></i> {{ __('payroll_overtime_detail_report.btn_send_to') }}
+                        </button>
+                    </div>
+                    <div class="col-3 desc" id="send-to-report">
+                        <div class="dropdown">
+                            <button style="width: 100%;" class="btn btn-primary dropdown-toggle" id="btn-send-to-report" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-print"></i> {{ __('payroll_overtime_detail_report.btn_send_to') }}
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="#" id="send-to-pdf">PDF</a>
+                                <a class="dropdown-item" href="#" id="send-to-xls">Excel</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </form>
@@ -301,6 +329,46 @@
     }
     
     $(document).ready(function () {
+        let pickerPeriod = $('#period').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "d-M-Y",
+            dateFormat: "Y-m-d",
+            defaultDate: "today",
+            plugins: [
+                new monthSelectPlugin({
+                    shorthand: true, //defaults to false
+                    dateFormat: "Y-m-01", //defaults to "F Y"
+                    altFormat: "F Y", //defaults to "F Y"
+                })
+            ],
+            onReady: function () {
+                var flatPickrInstance = this;
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings("#period_calendar").click(function () {
+                    flatPickrInstance.toggle();
+                });
+            }
+        });
+
+        let pickerIncrementDate = $('#increment_date').flatpickr({
+            altInput: true,
+            allowInput: true,
+            altFormat: "d-M-Y",
+            dateFormat: "Y-m-d",
+            defaultDate: "today",
+            onReady: function () {
+                var flatPickrInstance = this;
+                var $flatPickrInput = $(flatPickrInstance.element);
+                $flatPickrInput.siblings("#increment_date_calendar").click(function () {
+                    console.log($flatPickrInput)
+                    if (!$flatPickrInput.prop('disabled')) {
+                        flatPickrInstance.toggle();
+                    }
+                });
+            }
+        });
+
         $.ajax({
             url: "{{ url('personnel/report/level/check') }}",
             type: "GET",
@@ -326,6 +394,17 @@
                 $('#message-notification-error').html(response);
             }
         });
+
+        $('#increment').on('change', function () {
+            const isChecked = $(this).is(':checked')
+            !isChecked ? pickerIncrementDate._input.setAttribute('disabled', 'disabled') : pickerIncrementDate._input.removeAttribute('disabled');
+            $('#increment_date').prop('disabled', !isChecked);
+        })
+
+        $('#group').on('change', function () {
+            const isChecked = $(this).is(':checked')
+            $('#group_by').prop('disabled', !isChecked);
+        })
 
         loadDataEmployeeNo('#employee_no_from');
         loadDataEmployeeNo('#employee_no_to');
@@ -989,21 +1068,52 @@
             });
         }
 
-        $("#btn-print-data").click(function () {
+        $('#btn-send').click(function (){
+            $("#btn-send").prop("disabled", true);
+            $("#btn-send").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+            clicked = "DOWNLOAD_PDF";
+            $('#overtime_detail_report_form').submit();
+        });
+
+        $('#send-to-pdf').click(function (){
+            $("#btn-send-to-report").prop("disabled", true);
+            $("#btn-send-to-report").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+            clicked = "DOWNLOAD_PDF";
+            $('#overtime_detail_report_form').submit();
+        });
+
+        $('#send-to-xls').click(function (){
+            $("#btn-send-to-report").prop("disabled", true);
+            $("#btn-send-to-report").html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+            );
+            clicked = "DOWNLOAD_XLS";
+            $('#overtime_detail_report_form').submit();
+        });
+
+        $('#btn-preview').click(function (){
             $(this).prop("disabled", true);
             $(this).html(
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
             );
-            $("#overtime_detail_report_form").submit();
+            clicked = "PREVIEW";
+            $('#overtime_detail_report_form').submit();
         });
 
-        if ($("#overtime_detail_report_form").length > 0) {
-            $("#overtime_detail_report_form").validate({
+        if($('#overtime_detail_report_form').length > 0){
+            $('#overtime_detail_report_form').validate({
                 rules: {
                     employee_no_from: {
                         required: true,
                     },
                     employee_no_to: {
+                        required: true,
+                    },
+                    period: {
                         required: true,
                     },
                     group_authorize_from: {
@@ -1015,16 +1125,19 @@
                 },
                 messages: {
                     employee_no_from: {
-                        required: "{{ __('payroll_overtime_detail_report.field_required') }}",
+                        required: "{{ __('payroll_overtime_detail_report.employee_no_from_required') }}",
                     },
                     employee_no_to: {
-                        required: "{{ __('payroll_overtime_detail_report.field_required') }}",
+                        required: "{{ __('payroll_overtime_detail_report.employee_no_to_required') }}",
+                    },
+                    period: {
+                        required: "{{ __('payroll_overtime_detail_report.period_required') }}",
                     },
                     group_authorize_from: {
-                        required: "{{ __('payroll_overtime_detail_report.field_required') }}",
+                        required: "{{ __('payroll_overtime_detail_report.group_authorize_from_required') }}",
                     },
                     group_authorize_to: {
-                        required: "{{ __('payroll_overtime_detail_report.field_required') }}",
+                        required: "{{ __('payroll_overtime_detail_report.group_authorize_to_required') }}",
                     },
                 },
                 highlight: function (element) {
@@ -1035,61 +1148,165 @@
                 },
                 errorElement: 'span',
                 errorPlacement: function (error, element) {
-                    $("#btn-print-data").prop("disabled", false);
-                    $("#btn-print-data").html(
-                        '<i class="fa fa-floppy-o"></i> {{ __("payroll_overtime_detail_report.btn_print") }}'
+                    $('#btn-send').prop("disabled", false);
+                    $("#btn-send").html(
+                        '<i class="fa fa-print"></i> {{ __("payroll_periodical_report.btn_send_to") }}'
+                    );
+
+                    $('#btn-send-to-report').prop("disabled", false);
+                    $("#btn-send-to-report").html(
+                        '<i class="fa fa-print"></i> {{ __("payroll_periodical_report.btn_send_to") }}'
+                    );
+
+                    $('#btn-preview').prop("disabled", false);
+                    $("#btn-preview").html(
+                        '<i class="fa fa-eye"></i> {{ __("payroll_periodical_report.btn_preview") }}'
                     );
 
                     error.addClass('invalid-feedback');
                     element.closest('.form-group').append(error);
                 },
-                submitHandler: function (form) {
+                submitHandler: function(form){
                     $.ajaxSetup({
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         }
                     });
-                    $.ajax({
-                        xhrFields: {
-                            responseType: 'blob',
-                        },
-                        url: "{{ url('personnel/employee_turn_over_report/print') }}",
-                        type: "POST",
-                        data: $('#overtime_detail_report_form').serialize(),
-                        success: function (result, status, xhr) {
-                            $("#btn-print-data").prop("disabled", false);
-                            $("#btn-print-data").html(
-                                '<i class="fa fa-print"></i> {{ __("payroll_overtime_detail_report.btn_print") }}'
-                            );
-                            
-                            var disposition = xhr.getResponseHeader(
-                                'content-disposition');
-                            var matches = /"([^"]*)"/.exec(disposition);
-                            var filename = (matches != null && matches[1] ? matches[1] :
-                                'noname_file.xlsx');
+                    if(clicked=="DOWNLOAD_XLS"){
+                        $.ajax({
+                            xhrFields: {
+                                responseType: 'blob',
+                            },
+                            url: "{{ url('payroll/overtime_detail_report/print/excel') }}",
+                            type: "POST",
+                            data: $('#overtime_detail_report_form').serialize(),
+                            success: function(result, status, xhr){
+                                $('#btn-send-to-report').prop("disabled", false);
+                                $("#btn-send-to-report").html(
+                                    '<i class="fa fa-print"></i> {{ __("payroll_loan_report.btn_send_to") }}'
+                                );
+                                
+                                if(clicked == "DOWNLOAD_XLS"){
+                                    var disposition = xhr.getResponseHeader('content-disposition');
+                                    var matches = /"([^"]*)"/.exec(disposition);
+                                    var filename = (matches != null && matches[1] ? matches[1] : 'noname_file.xlsx');
 
-                            // The actual download
-                            var blob = new Blob([result], {
-                                type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-                            });
-                            var link = document.createElement('a');
-                            link.href = window.URL.createObjectURL(blob);
-                            link.download = filename;
+                                    var blob = new Blob([result], {
+                                        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                                    });
 
-                            document.body.appendChild(link);
+                                    var link = document.createElement('a');
+                                    link.href = window.URL.createObjectURL(blob);
+                                    link.download = filename;
+                                    
+                                    document.body.appendChild(link);
 
-                            link.click();
-                            document.body.removeChild(link);
-                        },
-                        error: function (response) {
-                            $("#btn-print-data").prop("disabled", false);
-                            $("#btn-print-data").html(
-                                '<i class="fa fa-print"></i> {{ __("payroll_overtime_detail_report.btn_print") }}'
-                            );
-                            $('#notification_error').modal('show');
-                            $('#message-notification-error').html(response);
-                        }
-                    });
+                                    link.click();
+                                    document.body.removeChild(link);
+
+                                    clicked = "";
+                                }
+                            },
+                            error: function(response){
+                                $('#btn-send').prop("disabled", false);
+                                $('#btn-send').html(
+                                    '<i class="fa fa-print"></i> {{ __("payroll_loan_report.btn_send_to") }}'
+                                );
+                                $('#btn-send-to-report').prop("disabled", false);
+                                $('#btn-send-to-report').html(
+                                    '<i class="fa fa-print"></i> {{ __("payroll_loan_report.btn_send_to") }}'
+                                );
+                                $('#btn-preview').prop("disabled", false);
+                                $('#btn-preview').html(
+                                    '<i class="fa fa-eye"></i> {{ __("payroll_loan_report.btn_preview") }}'
+                                );
+                                $('#notification_error').modal('show');
+                                $('#message-notification-error').html(response);
+                            }
+                        });
+                    }
+                    else
+                    {
+                        $.ajax({
+                            xhrFields: {
+                                responseType: 'blob',
+                            },
+                            url: "{{ url('payroll/overtime_detail_report/print') }}",
+                            type: "POST",
+                            data: $('#overtime_detail_report_form').serialize(),
+                            success: function(result, status, xhr){
+                                $('#btn-send').prop("disabled", false);
+                                $("#btn-send").html(
+                                    '<i class="fa fa-print"></i> {{ __("payroll_loan_report.btn_send_to") }}'
+                                );
+
+                                $('#btn-send-to-report').prop("disabled", false);
+                                $("#btn-send-to-report").html(
+                                    '<i class="fa fa-print"></i> {{ __("payroll_loan_report.btn_send_to") }}'
+                                );
+
+                                $('#btn-preview').prop("disabled", false);
+                                $("#btn-preview").html(
+                                    '<i class="fa fa-eye"></i> {{ __("payroll_loan_report.btn_preview") }}'
+                                );
+                                
+                                if(clicked == "DOWNLOAD_PDF"){
+                                    var disposition = xhr.getResponseHeader('content-disposition');
+                                    var matches = /"([^"]*)"/.exec(disposition);
+                                    var filename = (matches != null && matches[1] ? matches[1] : 'noname_file.xlsx');
+
+                                    var blob = new Blob([result], {
+                                        type: 'application/pdf'
+                                    });
+
+                                    var link = document.createElement('a');
+                                    link.href = window.URL.createObjectURL(blob);
+                                    link.download = filename;
+                                    
+                                    document.body.appendChild(link);
+
+                                    link.click();
+                                    document.body.removeChild(link);
+
+                                    clicked = "";
+                                }
+                                else if(clicked == "PREVIEW"){
+                                    var disposition = xhr.getResponseHeader('content-disposition');
+                                    var matches = /"([^"]*)"/.exec(disposition);
+                                    var filename = (matches != null && matches[1] ? matches[1] : 'noname_file.xlsx');
+
+                                    var blob = new Blob([result], {
+                                        type: 'application/pdf'
+                                    });
+
+                                    var link = document.createElement('a');
+                                    const url = URL.createObjectURL(blob);
+                                    link.href = window.open(url, "_blank");
+
+                                    document.body.appendChild(link);
+                                    document.body.removeChild(link);
+
+                                    clicked = "";
+                                }
+                            },
+                            error: function(response){
+                                $('#btn-send').prop("disabled", false);
+                                $('#btn-send').html(
+                                    '<i class="fa fa-print"></i> {{ __("payroll_loan_report.btn_send_to") }}'
+                                );
+                                $('#btn-send-to-report').prop("disabled", false);
+                                $('#btn-send-to-report').html(
+                                    '<i class="fa fa-print"></i> {{ __("payroll_loan_report.btn_send_to") }}'
+                                );
+                                $('#btn-preview').prop("disabled", false);
+                                $('#btn-preview').html(
+                                    '<i class="fa fa-eye"></i> {{ __("payroll_loan_report.btn_preview") }}'
+                                );
+                                $('#notification_error').modal('show');
+                                $('#message-notification-error').html(response);
+                            }
+                        });
+                    }
                 }
             })
         }

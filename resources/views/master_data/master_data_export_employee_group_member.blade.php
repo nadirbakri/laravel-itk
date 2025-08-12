@@ -20,6 +20,7 @@
         <tr>
             <th>Company Code</th>
             <th>Group Code</th>
+            <th>Group Name</th>
             <th>Employee No</th>
         </tr>
     </thead>

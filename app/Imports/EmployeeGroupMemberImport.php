@@ -48,7 +48,8 @@ class EmployeeGroupMemberImport implements ToCollection, SkipsEmptyRows, WithSta
                 $param[] = [
                     "companyCode" => (isset($row[0])) ? trim($row[0]) : null,
                     "groupCode" => (isset($row[1])) ? trim($row[1]) : null,
-                    "employeeID" => (isset($row[2])) ? trim($row[2]) : null,
+                    "groupName" => (isset($row[2])) ? trim($row[2]) : null,
+                    "employeeID" => (isset($row[3])) ? trim($row[3]) : null,
                     "changedNo" => 0,
                     "changedBy" => Session::get('userID'),
                     "changedDate" => date("Y-m-d\TH:i:s"),

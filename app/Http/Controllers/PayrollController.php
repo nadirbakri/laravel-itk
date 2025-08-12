@@ -38,6 +38,7 @@ use App\Exports\DataPesertaAktifPensionFundReportExport;
 use App\Exports\CBIReportMonthlyExport;
 use App\Exports\CBIReportYearlyExport;
 use App\Exports\SalaryComponentTemplateExport;
+use App\Exports\OvertimeDetailReportExport;
 use App\Http\Controllers\Redirect;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Contracts\Encryption\DecryptException;
@@ -9995,6 +9996,162 @@ public function dataDetailReportFormatPY(Request $request)
         // $this->dispatch($processJobs);
 
         // return response()->json(['status' => "true", 'message' => 'Download is in Progress']);
+    }
+
+    public function printOvertimeDetailReportPayroll(Request $request){
+        $dataLevel = [];
+
+        if (intval($request->level_format) > 0) {
+            for ($i = 0; $i < $request->level_format; $i++) {
+                $key = 'level' . ($i + 1);
+
+                if (isset($request[$key]) && is_array($request[$key])) {
+                    $dataLevelDetail = [];
+
+                    foreach ($request[$key] as $value) {
+                        $dataLevelDetail[] = [
+                            'levelCode' => $value
+                        ];
+                    }
+
+                    $dataLevel[] = [
+                        'companyCode' => Session::get('companyCode'),
+                        'levelType' => (string) ($i + 1),
+                        'level' => $dataLevelDetail
+                    ];
+                }
+            }
+        }
+
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $param = [
+                "companyCode" => Session::get("companyCode"),
+                "employeeNoFrom" => $request->employee_no_from,
+                "employeeNoTo" => $request->employee_no_to,
+                "periodMonth" => (int) date('m', strtotime($request->period)),
+                "periodYear" => (int) date('Y', strtotime($request->period)),
+                "isNoOvertime" => $request->no_overtime ?? false,
+                "isHideTariff" => $request->hide_tariff ?? false,
+                "isOrderByName" => $request->order_by_name ?? false,
+                "groupAuthorizeCodeFrom" => $request->group_authorize_from,
+                "groupAuthorizeCodeTo" => $request->group_authorize_to,
+                "isIncrement" => $request->increment ?? false,
+                "isGroup" => $request->group ?? false,
+                "incrementDate" => $request->increment_date,
+                "groupBy" => $request->group_by,
+                "position" => $request->position,
+                "ranking" => $request->ranking,
+                "location" => $request->location,
+                "sessionID" => 0,
+                "sessionUserID" => Session::get('userID'),
+                "logActionUsername" => Session::get('userName'),
+                "logActionUserID" => Session::get('userID'),
+                "languageCode" => strtoupper(App::getLocale()),
+            ];
+
+            if(!empty($request->position) && !is_null($request->position[0])){
+                foreach($request->position as $value){
+                    $data_position[] = [
+                        'positionCode' => $value
+                    ];
+                }
+                $param['position'] = $data_position;
+            }
+
+            if(!empty($request->location) && !is_null($request->location[0])){
+                foreach($request->location as $value){
+                    $data_location[] = [
+                        'locationCode' => $value
+                    ];
+                }
+                $param['location'] = $data_location;
+            }
+
+            if(!empty($request->ranking) && !is_null($request->ranking[0])){
+                foreach($request->ranking as $value){
+                    $data_ranking[] = [
+                        'rankingCode' => $value
+                    ];
+                }
+                $param['ranking'] = $data_ranking;
+            }
+
+            if(!empty($dataLevel) && !is_null($dataLevel[0])){
+                $param['levelMaster'] = $dataLevel;
+            }
+
+            // dd(json_encode($param));
+
+            $response = $client->post(env('API_URL').'/mobile/TmOvertimeReport/getTmOvertimeReport', [
+                'body' => json_encode($param)
+            ]);
+
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        $pdf = PDF::loadView('payroll.py_export_overtime_detail_report', ['data' => $arrResult->dataListSet ?? [], 'period'=> $request->period])->setPaper('a4', 'portrait')->setOptions(['defaultFont' => 'arial']);
+        return $pdf->stream('Overtime Detail Report.pdf');
+    }
+
+    public function printOvertimeDetailReportPayrollExcel(Request $request){
+        $dataLevel = [];
+
+        if (intval($request->level_format) > 0) {
+            for ($i = 0; $i < $request->level_format; $i++) {
+                $key = 'level' . ($i + 1);
+
+                if (isset($request[$key]) && is_array($request[$key])) {
+                    $dataLevelDetail = [];
+
+                    foreach ($request[$key] as $value) {
+                        $dataLevelDetail[] = [
+                            'levelCode' => $value
+                        ];
+                    }
+
+                    $dataLevel[] = [
+                        'companyCode' => Session::get('companyCode'),
+                        'levelType' => (string) ($i + 1),
+                        'level' => $dataLevelDetail
+                    ];
+                }
+            }
+        }
+
+        return Excel::download(new OvertimeDetailReportExport(
+            $request->employee_no_from,
+            $request->employee_no_to,
+            $request->period,
+            (isset($request->no_overtime) ? (bool) $request->no_overtime : false),
+            (isset($request->is_tariff) ? (bool) $request->is_tariff : false),
+            (isset($request->order_by_name) ? (bool) $request->order_by_name : false),
+            $request->group_authorize_from,
+            $request->group_authorize_to,
+            (isset($request->increment) ? (bool) $request->increment : false),
+            (isset($request->group) ? (bool) $request->group : false),
+            $request->increment_date,
+            $request->group_by,
+            $request->position,
+            $request->ranking,
+            $request->location,
+            $dataLevel
+        ), 'Overtime Detail Report.xlsx');
     }
 
     public function importSalaryComponentDataPayroll(Request $request)

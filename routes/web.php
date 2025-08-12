@@ -845,6 +845,8 @@ Route::post('payroll/salary_component_data/import', 'PayrollController@importSal
 Route::post('payroll/spt_list_report/print', 'PayrollController@printSPTListReportPayroll');
 Route::post('payroll/spt_list_report/print/excel', 'PayrollController@printSPTListReportPayrollExcel');
 Route::post('payroll/journal_template/print/excel', 'PayrollController@printJournalTemplatePayrollExcel');
+Route::post('payroll/overtime_detail_report/print', 'PayrollController@printOvertimeDetailReportPayroll');
+Route::post('payroll/overtime_detail_report/print/excel', 'PayrollController@printOvertimeDetailReportPayrollExcel');
 
 /* Route Untuk Menu Medical */
 Route::get('medical', 'MedicalController@pageMedical')->name('medical');
