@@ -53,8 +53,8 @@ class EmployeeSkillReportExport implements FromView, ShouldAutoSize
             }
 
             if(!empty($this->groupAuthorizeFrom) || !empty($this->groupAuthorizeTo)){
-                $param['groupAuthorizeFrom'] = (int) $this->groupAuthorizeFrom;
-                $param['groupAuthorizeTo'] = (int) $this->groupAuthorizeTo;
+                $param['groupAuthorizeFrom'] = $this->groupAuthorizeFrom;
+                $param['groupAuthorizeTo'] = $this->groupAuthorizeTo;
             }
 
             if(!empty($this->position) && !is_null($this->position[0])){
@@ -94,7 +94,7 @@ class EmployeeSkillReportExport implements FromView, ShouldAutoSize
 
             // var_dump($param);
 
-            $response = $client->post(env('API_URL') . '/employeeskillreport/getemployeeskillreport',
+            $response = $client->post(env('API_URL') . '/EmployeeSkillReport/GetReport',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {

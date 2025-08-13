@@ -98,7 +98,7 @@ class EmployeeDependentsExport implements FromView, ShouldAutoSize
 
             // var_dump(json_encode($param));
 
-            $response = $client->post(env('API_URL') . '/reportemployeedependents/getreportemployeedependents',
+            $response = $client->post(env('API_URL') . '/EmployeeDependantReport/GetReport',
                 ['body' => json_encode($param)]
             );
         } catch (RequestException $e) {
