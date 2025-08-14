@@ -8050,6 +8050,9 @@ public function dataDetailReportFormatPY(Request $request)
         }else if($companyCode == 'MKP'){
             $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_mkp';
             $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_mkp';
+        }else if($companyCode == 'GOC' || $companyCode == 'NAC'){
+            $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_goc_nac';
+            $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_goc_nac';
         }else{
             $viewNamePortrait = 'payroll.py_export_payment_slip_portrait';
             $viewNameLandscape = 'payroll.py_export_payment_slip_landscape';
@@ -9698,13 +9701,17 @@ public function dataDetailReportFormatPY(Request $request)
             }else{
                 if(isset($arrResult->dataListSet[0]->detail)){
                     usort($arrResult->dataListSet[0]->detail, function ($a, $b) {
-                        return (int) $a->employeeNo - (int) $b->employeeNo;
+                        if (isset($a->employeeNo) && isset($b->employeeNo)) {
+                            return (int) $a->employeeNo - (int) $b->employeeNo;
+                        }
                     });
                 }
 
                 if(isset($arrResult->dataListSet[0]->summary)){
                     usort($arrResult->dataListSet[0]->summary, function ($a, $b) {
-                        return (int) $a->employeeNo - (int) $b->employeeNo;
+                        if (isset($a->employeeNo) && isset($b->employeeNo)) {
+                            return (int) $a->employeeNo - (int) $b->employeeNo;
+                        }
                     });
                 }
 
@@ -10036,13 +10043,13 @@ public function dataDetailReportFormatPY(Request $request)
                 "employeeNoTo" => $request->employee_no_to,
                 "periodMonth" => (int) date('m', strtotime($request->period)),
                 "periodYear" => (int) date('Y', strtotime($request->period)),
-                "isNoOvertime" => $request->no_overtime ?? false,
-                "isHideTariff" => $request->hide_tariff ?? false,
-                "isOrderByName" => $request->order_by_name ?? false,
+                "isNoOvertime" => isset($request->no_overtime) ? (bool) $request->no_overtime : false,
+                "isHideTariff" => isset($request->hide_tariff) ? (bool) $request->hide_tariff : false,
+                "isOrderByName" => isset($request->order_by_name) ? (bool) $request->order_by_name : false,
                 "groupAuthorizeCodeFrom" => $request->group_authorize_from,
                 "groupAuthorizeCodeTo" => $request->group_authorize_to,
-                "isIncrement" => $request->increment ?? false,
-                "isGroup" => $request->group ?? false,
+                "isIncrement" => isset($request->increment) ? (bool) $request->increment : false,
+                "isGroup" => isset($request->group) ? (bool) $request->group : false,
                 "incrementDate" => $request->increment_date,
                 "groupBy" => $request->group_by,
                 "position" => $request->position,

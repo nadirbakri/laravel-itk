@@ -29,7 +29,8 @@
         <tr>
             <td>{{ $value->companyCode }}</td>
             <td>{{ $value->groupCode }}</td>
-            <td>{{ $value->employeeID }}</td>
+            <td>{{ $value->groupName }}</td>
+            <td style="text-align: left">{{ $value->employeeID }}</td>
         </tr>
         @endforeach
     </tbody>

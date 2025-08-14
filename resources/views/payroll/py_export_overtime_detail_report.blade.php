@@ -6,6 +6,7 @@
         <link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon"/>
         <style type="text/css">
             * { 
+                font-family: 'Arial Bold', sans-serif;
                 box-sizing: border-box; 
                 font-weight: 12px;
             }
@@ -85,12 +86,12 @@
                         ?>
                     @endforeach
                     <tr>
-                        <td colspan="3" style="font-size: 12px; text-align: right; font-weight: bold;">Grand Total</td>
-                        <td style="font-size: 12px; font-weight: bold; text-align: right;">{{ $grandTotalHourOvt }}</td>
-                        <td style="font-size: 12px; font-weight: bold; text-align: right;">{{ $grandTotalHourOvtCvt }}</td>
-                        <td>&nbsp;</td>
-                        <td data-format="#,##0" style="font-size: 12px; font-weight: bold; text-align: right;">{{ number_format($grandTotalOvertimeValue, 0, '.', ',') }}</td>
-                        <td>&nbsp;</td>
+                        <td colspan="3" style="border-top: 1px solid black; font-size: 12px; text-align: right; font-weight: bold;">Grand Total</td>
+                        <td style="border-top: 1px solid black; font-size: 12px; font-weight: bold; text-align: right;">{{ $grandTotalHourOvt }}</td>
+                        <td style="border-top: 1px solid black; font-size: 12px; font-weight: bold; text-align: right;">{{ $grandTotalHourOvtCvt }}</td>
+                        <td style="border-top: 1px solid black;">&nbsp;</td>
+                        <td data-format="#,##0" style="border-top: 1px solid black; font-size: 12px; font-weight: bold; text-align: right;">{{ number_format($grandTotalOvertimeValue, 0, '.', ',') }}</td>
+                        <td style="border-top: 1px solid black;">&nbsp;</td>
                     </tr>
                 @endif
             </tbody>

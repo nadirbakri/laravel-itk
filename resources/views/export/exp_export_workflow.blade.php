@@ -509,7 +509,7 @@ loadDataFirstLastAllStatus();
                     },
                     processResults: function (data) {
                         var filteredData = data.filter(function (item) {
-                            var allowedStatuses = ["NEW", "APPROVED", "CANCELED", "PARTIAL APPROVED", "REJECTED"];
+                            var allowedStatuses = ["ALL", "NEW", "APPROVED", "CANCELED", "PARTIAL APPROVED", "REJECTED"];
                             return allowedStatuses.includes(item.value);
                         });
 

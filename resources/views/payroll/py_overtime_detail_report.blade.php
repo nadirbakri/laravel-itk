@@ -13,10 +13,10 @@
     <link rel="stylesheet" href="{{ asset('css/flatpickr.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/flatpickr.monthselect.css') }}">
     <!-- <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet"> -->
-    <link rel="stylesheet" href="{{ asset('css/personel_detail_data.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/payroll_detail_data.css') }}">
     <link rel="stylesheet" href="{{ asset('css/jquery.inputpicker.css') }}">
     <style type="text/css">
-        .div-personel {
+        .div-payroll {
             max-width: 100%;
             margin: auto;
             /*margin-top: 1%;*/
@@ -53,9 +53,9 @@
 </head>
 
 <body>
-    <div class="div-personel">
+    <div class="div-payroll">
         <div class="div-title">
-            <a href="{{ route('personnel', ['moduleID' => 'PE']) }}" target="iframe_dashboard" id="toolbar-prev-page">
+            <a href="{{ route('payroll', ['moduleID' => 'PY']) }}" target="iframe_dashboard" id="toolbar-prev-page">
                 <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
                 <span class="title-text">{{ __('payroll_overtime_detail_report.list') }}</span>
             </a>

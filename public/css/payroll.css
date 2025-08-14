@@ -14,6 +14,19 @@
     font-family: Montserrat-Regular;
     src: url(../fonts/Montserrat-Regular.ttf);
 }
+@font-face {
+    font-family: 'Arial Alternates';
+    font-style: normal;
+    font-weight: normal;
+    src: url('fonts/arial.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Arial Bold';
+    font-style: normal;
+    font-weight: normal;
+    src: url('fonts/arialbold.ttf') format('truetype');
+}
 ::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.3);
     border-radius: 10px;

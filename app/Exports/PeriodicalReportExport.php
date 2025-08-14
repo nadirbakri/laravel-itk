@@ -434,13 +434,17 @@ class PeriodicalReportExport extends DefaultValueBinder implements WithCustomVal
             }else{
                 if(isset($arrResult->dataListSet[0]->detail)){
                     usort($arrResult->dataListSet[0]->detail, function ($a, $b) {
-                        return (int) $a->employeeNo - (int) $b->employeeNo;
+                        if (isset($a->employeeNo) && isset($b->employeeNo)) {
+                            return (int) $a->employeeNo - (int) $b->employeeNo;
+                        }
                     });
                 }
 
                 if(isset($arrResult->dataListSet[0]->summary)){
                     usort($arrResult->dataListSet[0]->summary, function ($a, $b) {
-                        return (int) $a->employeeNo - (int) $b->employeeNo;
+                        if (isset($a->employeeNo) && isset($b->employeeNo)) {
+                            return (int) $a->employeeNo - (int) $b->employeeNo;
+                        }
                     });
                 }
                 
