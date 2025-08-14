@@ -3158,7 +3158,7 @@ public function dataDetailReportFormatPY(Request $request)
                         "fieldType" => $request->field_type[$key],
                         "fieldName" => $value,
                         "description" => $request->description[$key],
-                        "amount" => (float) $request->amount[$key],
+                        "amount" => (float) str_replace(',', '', $request->amount[$key]),
                         "currencyCode" => $request->currency_code[$key]
                     ];
                 }
@@ -3595,7 +3595,7 @@ public function dataDetailReportFormatPY(Request $request)
                         "fieldType" => $request->field_type[$key],
                         "fieldName" => $value,
                         "description" => $request->description[$key],
-                        "amount" => (float) $request->amount[$key],
+                        "amount" => (float) str_replace(',', '', $request->amount[$key]),
                         "currencyCode" => $request->currency_code[$key]
                     ];
                 }

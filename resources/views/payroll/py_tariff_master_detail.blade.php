@@ -272,7 +272,7 @@
                     '<input type="text" class="form-control" name="description[]" id="description" value="'+ ((typeof v.description !== 'undefined' && v.description !== null) ? v.description : '') +'" readonly>',
                     '<input type="text" class="form-control" name="fixed_component[]" id="fixed_component" value="'+ ((typeof v.fieldType !== 'undefined' && v.fieldType !== null && v.fieldType !== 'T' || v.fieldType !== 'P') ? 'Yes' : 'No') +'" readonly>',
                     '<input type="text" class="form-control" name="currency_code[]" id="currency_code" value="'+ ((typeof v.currencyCode !== 'undefined' && v.currencyCode !== null) ? v.currencyCode : '') +'" readonly>',
-                    '<input type="number" class="form-control" name="amount[]" id="amount" value="'+ ((typeof v.amount !== 'undefined' && v.amount !== null) ? v.amount : '') +'">',
+                    '<input type="text" class="form-control amount" name="amount[]" id="amount" value="'+ ((typeof v.amount !== 'undefined' && v.amount !== null) ? Number(v.amount).toLocaleString('en-US') : '') +'">',
                     '<input type="text" class="form-control" name="field_type[]" id="field_type" value="'+ ((typeof v.fieldType !== 'undefined' && v.fieldType !== null) ? v.fieldType : '') +'" hidden>',
                 ]).draw();
             });
@@ -290,6 +290,13 @@
         $('#employee_no').on('select2:unselecting', function (e) {
             $('#employee_name').val('');
         });
+
+        $('.amount').on('input', function(e) {
+            let val = e.target.value.replace(/,/g, '');
+            if (!isNaN(val) && val !== '') {
+                e.target.value = Number(val).toLocaleString('en-US');
+            }
+        })
 
         loadDataEmployeeNo();
 
