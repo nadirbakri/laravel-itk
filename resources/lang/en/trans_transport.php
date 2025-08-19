@@ -23,6 +23,7 @@ return [
     'name' => 'Name',
     'type' => 'Type',
     'appdate' => 'Approval Date',
+    'appby' => 'Approved By',
     'cname' => 'Customer Name',
     'sloc' => 'Start Location',
     'eloc' => 'End Location',

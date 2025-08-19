@@ -361,6 +361,7 @@
                                         <th>{{ __('trans_business_trip.type') }}</th>
                                         <th>{{ __('trans_business_trip.name') }}</th>
                                         <th>{{ __('trans_business_trip.appdate') }}</th>
+                                        <th>{{ __('trans_business_trip.appby') }}</th>
                                         <th>{{ __('trans_business_trip.status') }}</th>
                                         <th>{{ __('trans_business_trip.destination') }}</th>
                                         <th>{{ __('trans_business_trip.cname') }}</th>
@@ -1081,6 +1082,14 @@
                         }else {
                             return moment(data).format('YYYY-MM-DD');
                         }
+                    }
+                },
+                {data: 'fullNameApprover', name: 'fullNameApprover',
+                    render: function (data, type, row) {
+                        if (!row || !('fullNameApprover' in row) || row.fullNameApprover == null) {
+                            return null;
+                        }
+                        return row.fullNameApprover;
                     }
                 },
                 {data: 'status', name: 'status'},

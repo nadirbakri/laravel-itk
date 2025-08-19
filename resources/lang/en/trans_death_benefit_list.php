@@ -26,6 +26,7 @@ return [
     'paid_amount' => 'Paid Amount',
     'payment_date' => 'Payment Date',
     'remarks' => 'Remarks',
+    'approved_by' => 'Approved By',
 ]
 
 ?>

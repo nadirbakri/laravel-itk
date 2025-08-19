@@ -25,6 +25,7 @@ return [
     'name' => 'Nama',
     'reqdate' => 'Tanggal Permintaan',
     'appdate' => 'Tanggal Disetujui',
+    'appby' => 'Disetujui Oleh',
     'cname' => 'Nama Pelanggan',
     'status' => 'Status',
     'destination' => 'Destinasi',

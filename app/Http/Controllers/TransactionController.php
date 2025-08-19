@@ -130,6 +130,10 @@ class TransactionController extends Controller
         return view('transaction.trc_trans_family_data_approval_list');
     }
 
+    public function pageTransactionMedicalCheckupList(){
+        return view('transaction.trc_trans_medical_checkup_list');
+    }
+
     // public function tableInputTransactionTransport(Request $request)
     // {
     //     try {
@@ -1912,7 +1916,7 @@ class TransactionController extends Controller
         }
     }
 
-    public function tableFamilyDataApprovalTransaction(Request $request)
+    public function tableDetailFamilyDataApproval(Request $request)
     {
         try {
             $client = new Client([
@@ -1950,6 +1954,63 @@ class TransactionController extends Controller
             return Datatables::of([])->make(true);
         }else{
             return Datatables::of($arrResult->dataListSet)->make(true);
+        }
+    }
+
+    public function tableDetailMedicalCheckup(Request $request)
+    {
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/personel/HealthActivities/GetMdHealthActivities',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode'), 
+                        'type' => 'VACCINE',
+                        'status' => $request->status,
+                        'sessionID' => 0, 
+                        'sessionUserID' => Session::get('userID'),
+                        'logActionUserID' => Session::get('userID'),
+                        'logActionUsername' => Session::get('userName'),
+                        'languageCode' => strtoupper(App::getLocale()) 
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents());
+
+        if($arrResult->dataListSet == null){
+            return Datatables::of([])->make(true);
+        }else{
+            $data = []; 
+
+            foreach ($arrResult->dataListSet as $item) {
+                foreach ($item->detailActivities as $detail) {
+                    $detailObj = (object) $detail;
+                    $detailObj->employeeNo = $item->employeeNo;
+                    $detailObj->activitiesName = $item->activitiesName;
+
+                    $data[] = $detailObj;
+                }
+            }
+
+            // dd($data);
+
+            return Datatables::of($data)->make(true);
         }
     }
 

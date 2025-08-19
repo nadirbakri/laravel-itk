@@ -23,6 +23,7 @@ return [
     'ticketno' => 'Ticket No',
     'name' => 'Name',
     'appdate' => 'Approval Date',
+    'appby' => 'Approved By',
     'cname' => 'Customer Name',
     'pname' => 'Project Name',
     'pdate' => 'Payment Date',

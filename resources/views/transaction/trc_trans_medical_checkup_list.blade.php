@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{{ __('trans_salary_complaint_list.judul') }}</title>
+    <title>{{ __('trans_medical_checkup_list.judul') }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="{{ asset('pictures/favicon.png') }}" type="image/x-icon" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -216,63 +216,28 @@
 
 <body>
     <div class="div-form">
-        <form id="salary_complaint_list_form" method="post">
+        <form id="medical_checkup_list_form" method="post">
             @csrf
             <div class="div-trans-medical">
                 <div class="div-title">
                     <a href="{{ route('transaction', ['moduleID' => 'TRX']) }}" target="iframe_dashboard">
                         <img src="{{ url('/pictures/arrow-square-left.png') }}" alt="Back">
-                        <span class="title-text">{{ __('trans_salary_complaint_list.list') }}</span>
+                        <span class="title-text">{{ __('trans_medical_checkup_list.list') }}</span>
                     </a>
                 </div>
                 <div class="row">
                     <div class="col-5">
                         <div class="form-group">
-                            <label for="claim_date_from form-check-label">{{ __('trans_salary_complaint_list.label_claim_date_start') }}</label>
+                            <label for="status form-check-label">{{ __('trans_medical_checkup_list.label_status') }}</label>
                         </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="claim_date_from" name="claim_date_from"
-                                placeholder="{{ __('trans_salary_complaint_list.label_claim_date_start') }}">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="claim_date_from_calendar"><span class="fa fa-calendar"></span></span>
-                            </div>
-                        </div>
-                        <input type="text" class="form-control" id="claim_date_from_hidden" name="claim_date_from_hidden" hidden>
-                    </div>
-                    <div class="col-5">
-                        <div class="form-group">
-                            <label for="claim_date_to form-check-label">{{ __('trans_salary_complaint_list.label_claim_date_end') }}</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="claim_date_to" name="claim_date_to"
-                                placeholder="{{ __('trans_salary_complaint_list.label_claim_date_end') }}">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="claim_date_to_calendar"><span class="fa fa-calendar"></span></span>
-                            </div>
-                        </div>
-                        <input type="text" class="form-control" id="claim_date_to_hidden" name="claim_date_to_hidden" hidden>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-5">
-                        <div class="form-group">
-                            <label for="business_unit form-check-label">{{ __('trans_salary_complaint_list.label_business_unit') }}</label>
-                        </div>
-                        <select class="form-control select2" id="business_unit" name="business_unit"></select>
-                    </div>
-                    <div class="col-5">
-                        <div class="form-group">
-                            <label for="salary_complaint_status_filter form-check-label">{{ __('trans_salary_complaint_list.label_salary_complaint_status') }}</label>
-                        </div>
-                        <select class="form-control select2" id="salary_complaint_status_filter" name="salary_complaint_status_filter"></select>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-5">
-                        <div class="form-group">
-                            <label for="direct_superior form-check-label">{{ __('trans_salary_complaint_list.employee') }}</label>
-                        </div>
-                        <input type="text" class="form-control" id="direct_superior" name="direct_superior" placeholder="{{ __('trans_salary_complaint_list.employee') }}">
+                        <select class="form-control select2" id="status" name="status">
+                            <option value="NEW">NEW</option>
+                            <option value="FAILED">FAILED</option>
+                            <option value="HR CHECK">HR CHECK</option>
+                            <option value="APPROVED">APPROVED</option>
+                            <option value="REJECTED">REJECTED</option>
+                            <option value="CANCELED">CANCELED</option>
+                        </select>
                     </div>
                 </div>
 
@@ -280,13 +245,7 @@
                 <div class="row">
                     <div class="col-3">
                         <button class="btn btn-primary" name="btn-search" id="btn-search" value="preview" style="width: 100%;">
-                        <i class="fa fa-search"></i> {{ __('trans_salary_complaint_list.btn_search') }}
-                        </button>
-                    </div>
-                    <div class="col-3">
-                        <button type="button" class="btn btn-primary" name="btn-list" id="btn-list"
-                        style="width: 100%;" data-toggle="modal" data-target="#modal_list_salary_complaint">
-                        <i class="fa fa-list"></i> {{ __('trans_salary_complaint_list.btn_list') }}
+                        <i class="fa fa-search"></i> {{ __('trans_medical_checkup_list.btn_search') }}
                         </button>
                     </div>
                     {{-- <div class="col-3">
@@ -304,24 +263,27 @@
                     </div>
                     <div class="row">
                         <div class="col-6">
-                            <p><b> {{ __('trans_salary_complaint_list.list_table') }}</b></p>
+                            <p><b> {{ __('trans_medical_checkup_list.list_table') }}</b></p>
                         </div>
                     </div>
                     <div class="row">
                         <div class="table-responsive">
-                            <table id="salary_complaint_list_table" class="display table-striped table-hover dt-responsive display nowrap" cellspacing="10">
+                            <table id="medical_checkup_list_table" class="display table-striped table-hover dt-responsive display nowrap" cellspacing="10">
                                 <thead>
                                     <tr>
-                                        <th>{{ __('trans_salary_complaint_list.detail') }}</th>
-                                        <th>{{ __('trans_salary_complaint_list.complaint_date') }}</th>
-                                        <th>{{ __('trans_salary_complaint_list.complaint_type') }}</th>
-                                        <th>{{ __('trans_salary_complaint_list.status') }}</th>
-                                        <th>{{ __('trans_salary_complaint_list.ticket_no') }}</th>
-                                        <th>{{ __('trans_salary_complaint_list.name') }}</th>
-                                        <th>{{ __('trans_salary_complaint_list.missing_amount') }}</th>
-                                        <th>{{ __('trans_salary_complaint_list.correct_amount') }}</th>
-                                        <th>{{ __('trans_salary_complaint_list.remarks') }}</th>
-                                        <th>{{ __('trans_salary_complaint_list.approved_by') }}</th>
+                                        <th>{{ __('trans_medical_checkup_list.detail') }}</th>
+                                        <th>{{ __('trans_medical_checkup_list.status') }}</th>
+                                        <th>{{ __('trans_medical_checkup_list.ticket_no') }}</th>
+                                        <th>{{ __('trans_medical_checkup_list.name') }}</th>
+                                        <th>{{ __('trans_medical_checkup_list.mcu_name') }}</th>
+                                        <th>{{ __('trans_medical_checkup_list.batch_description') }}</th>
+                                        <th>{{ __('trans_medical_checkup_list.mcu_date') }}</th>
+                                        <th>{{ __('trans_medical_checkup_list.mcu_time') }}</th>
+                                        <th>{{ __('trans_medical_checkup_list.name_of_places') }}</th>
+                                        <th>{{ __('trans_medical_checkup_list.description') }}</th>
+                                        {{-- <th>{{ __('trans_medical_checkup_list.approval_date') }}</th>
+                                        <th>{{ __('trans_medical_checkup_list.approved_by') }}</th>
+                                        <th>{{ __('trans_medical_checkup_list.remarks') }}</th> --}}
                                     </tr>
                                 </thead>
                             </table>
@@ -684,35 +646,31 @@
     var companyCode = "{{ Session::get('companyCode') }}";
     var table = null;
     var table2 = null;
-    var arraySalaryComplaint = [];
+    var arrayMedicalCheckup = [];
     let currentIndex = 0;
     let currentAttachments = [];
 
-    function load_data_salary_complaint_list(claim_date_from, claim_date_to, direct_superior, business_unit, salary_complaint_status){
+    function load_data_medical_checkup_list(status){
         $.ajax({
             type: 'GET',
-            url: "{{ url('/trans/salary_complaint/table') }}",
+            url: "{{ url('/trans/medical_checkup/table') }}",
             data: {
-                'startDate': claim_date_from,
-                'endDate': claim_date_to,
-                'employeeNo' : direct_superior,
-                'businessUnit' : business_unit,
-                'salaryComplaintStatus' : salary_complaint_status
+                'status' : status
             }
         }).then(function (data) {
-            arraySalaryComplaint = data;
-            $('#salary_complaint_list_table').DataTable().destroy();
-            load_data_table_salary_complaint_list();
+            arrayMedicalCheckup = data.data;
+            $('#medical_checkup_list_table').DataTable().destroy();
+            load_data_table_medical_checkup_list();
             $('#loading').hide();
         });
     }
 
-    function load_data_table_salary_complaint_list() {
-        table = $('#salary_complaint_list_table').DataTable({
+    function load_data_table_medical_checkup_list() {
+        table = $('#medical_checkup_list_table').DataTable({
             processing: true,
             // serverSide: true,
             orderCellsTop: true,
-            data: arraySalaryComplaint,
+            data: arrayMedicalCheckup,
             error: function(jqXHR, ajaxOptions, thrownError) {
                 alert(thrownError + "\r\n" + jqXHR.statusText + "\r\n" + jqXHR.responseText + "\r\n" + ajaxOptions.responseText);
             },
@@ -728,34 +686,24 @@
                         return type === 'display'? '<button type="button" title="Detail" class="btn btn-info btn-circle" id="btn-detail" data-toggle="modal" data-target="#modal_list_detail" onclick="klikdetail(this)"><i class="fa fa-file-text"></i></button>' : '';
                     }
                 },
-                {data: 'complainEntity.complainDate', name: 'complainEntity.complainDate', 
+                {data: 'status', name: 'status'},
+                {data: 'ticketNo', name: 'ticketNo'},
+                {data: 'employeeNo', name: 'employeeNo'},
+                {data: 'activitiesName', name: 'activitiesName'},
+                {data: 'description', name: 'description'},
+                {data: 'date', name: 'date',
                     render: function (data, type, row) {
-                        return moment(data).format('YYYY-MM-DD');
+                        return moment(data).format('DD MMM YYYY');
                     }
                 },
-                {data: 'complainEntity.complainTypeValue', name: 'complainEntity.complainTypeValue'},
-                {data: 'complainEntity.status', name: 'complainEntity.status'},
-                {data: 'complainEntity.ticketNo', name: 'complainEntity.ticketNo'},
-                {data: 'complainEntity.fullName', name: 'complainEntity.fullName'},
-                {data: 'complainEntity.missingAmount', name: 'complainEntity.missingAmount',
+                {data: 'date', name: 'date',
                     render: function (data, type, row) {
-                        return data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                        return moment(data).format('HH:mm');
                     }
                 },
-                {data: 'complainEntity.correctAmount', name: 'complainEntity.correctAmount',
-                    render: function (data, type, row) {
-                        return data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-                    }
-                },
-                {data: 'complainEntity.remarks', name: 'complainEntity.remarks'},
-                {data: 'complainEntity.fullNameApprover', name: 'complainEntity.fullNameApprover',
-                    render: function (data, type, row) {
-                        if (!row.overtimeEntity || !('fullNameApprover' in row.overtimeEntity) || row.overtimeEntity.fullNameApprover == null) {
-                            return null;
-                        }
-                        return row.overtimeEntity.fullNameApprover;
-                    }
-                },
+                {data: 'namePlace', name: 'namePlace'},
+                {data: 'description', name: 'description'},
+                // {data: 'description', name: 'description'},
             ]
         });
 
@@ -771,23 +719,14 @@
         );
     }
 
-        $("#salary_complaint_list_form").submit((e)=>{
+        $("#medical_checkup_list_form").submit((e)=>{
             e.preventDefault();
 
-            var claim_date_from = $("#claim_date_from").val();
-            var claim_date_to = $("#claim_date_to").val();
-            var direct_superior = $("#direct_superior").val();
-            var business_unit = $("#business_unit").val();
-            var salary_complaint_status = $("#salary_complaint_status_filter").val();
-
-            // $("#btn-search").prop("disabled", true);
-            // $("#btn-search").html(
-            //     '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
-            // );
+            var status = $("#status").val();
 
             $('#loading').show();
 
-            load_data_salary_complaint_list(claim_date_from, claim_date_to,direct_superior, business_unit, salary_complaint_status);
+            load_data_medical_checkup_list(status);
     })
     const klikdetail = (element) => {
         let data = table.row($(element).parent()).data().complainEntity;
@@ -994,13 +933,13 @@
     })
 
     function updateSalaryComplaintStatus(status, ticketNo, employeeNo, approvalremarks) {
-        var item = arraySalaryComplaint.find(obj => obj.complainEntity && obj.complainEntity.ticketNo === ticketNo);
+        var item = arrayMedicalCheckup.find(obj => obj.complainEntity && obj.complainEntity.ticketNo === ticketNo);
 
         if (item) {
             item.complainEntity.status = status;
             item.complainEntity.approvalRemarks = approvalremarks;
 
-            table.clear().rows.add(arraySalaryComplaint).draw(false);
+            table.clear().rows.add(arrayMedicalCheckup).draw(false);
         }
     }
 
@@ -1029,7 +968,7 @@
                         .message);
 
                     updateSalaryComplaintStatus(status,  ticketNo, employeeNo, approvalremarks);
-                    // var oTable = $('#salary_complaint_list_table').dataTable();
+                    // var oTable = $('#medical_checkup_list_table').dataTable();
                     // oTable.fnDraw(false);
                     // setTimeout(function () {
                     //     window.location =

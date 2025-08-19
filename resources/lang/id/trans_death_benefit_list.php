@@ -26,5 +26,6 @@ return [
     'paid_amount' => 'Jumlah Yang Dibayar',
     'payment_date' => 'Tanggal Pembyaran',
     'remarks' => 'Catatan',
+    'approved_by' => 'Disetujui Oleh',
 ]
 ?>

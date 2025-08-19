@@ -321,6 +321,7 @@
                                             <th>{{ __('trans_transport.name') }}</th>
                                             <th>{{ __('trans_transport.type') }}</th>
                                             <th>{{ __('trans_transport.appdate') }}</th>
+                                            <th>{{ __('trans_transport.appby') }}</th>
                                             <th>{{ __('trans_transport.cname') }}</th>
                                             <th>{{ __('trans_transport.sloc') }}</th>
                                             <th>{{ __('trans_transport.eloc') }}</th>
@@ -863,6 +864,14 @@
                         }else {
                             return moment(data).format('YYYY-MM-DD');
                         }
+                    }
+                },
+                {data: 'fullNameApprover', name: 'fullNameApprover',
+                    render: function (data, type, row) {
+                        if (!row || !('fullNameApprover' in row) || row.fullNameApprover == null) {
+                            return null;
+                        }
+                        return row.fullNameApprover;
                     }
                 },
                 {data: 'customerName', name: 'customerName'},

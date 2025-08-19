@@ -22,6 +22,7 @@ return [
     'ticketno' => 'Nomor Tiket',
     'name' => 'Nama',
     'appdate' => 'Tanggal Disetujui',
+    'appby' => 'Disetujui Oleh',
     'cname' => 'Nama Pelanggan',
     'pname' => 'Nama Proyek',
     'pdate' => 'Tanggal Pembayaran',

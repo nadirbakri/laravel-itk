@@ -10171,6 +10171,8 @@ class PersonelController extends Controller
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
+            $data_level = [];
+
             if(!empty($request->level_type_new)){
                 foreach($request->level_type_new as $key => $value){
                     if(!empty($request->level_new[$key])){

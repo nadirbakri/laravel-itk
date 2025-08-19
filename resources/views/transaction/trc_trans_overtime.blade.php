@@ -258,6 +258,7 @@
                                        <th>{{ __('trans_overtime.tnom') }}</th>
                                        <th>{{ __('trans_overtime.pname') }}</th>
                                        <th>{{ __('trans_overtime.appdate') }}</th>
+                                       <th>{{ __('trans_overtime.appby') }}</th>
                                        <th>{{ __('trans_overtime.odate') }}</th>
                                        <th>{{ __('trans_overtime.ohourfrom') }}</th>
                                        <th>{{ __('trans_overtime.ohourto') }}</th>
@@ -701,6 +702,14 @@
                                     return moment(data).format('YYYY-MM-DD');
                                 }
                             }
+                    },
+                    {data: 'overtimeEntity.fullNameApprover', name: 'overtimeEntity.fullNameApprover',
+                        render: function (data, type, row) {
+                            if (!row.overtimeEntity || !('fullNameApprover' in row.overtimeEntity) || row.overtimeEntity.fullNameApprover == null) {
+                                return null;
+                            }
+                            return row.overtimeEntity.fullNameApprover;
+                        }
                     },
                     {data: 'overtimeEntity.overtimeDate', name: 'overtimeEntity.overtimeDate', 
                             render: function (data, type, row){

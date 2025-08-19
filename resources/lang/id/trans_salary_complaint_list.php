@@ -24,5 +24,6 @@ return [
     'missing_amount' => 'Total Yang Hilang',
     'correct_amount' => 'Total Yang Benar',
     'remarks' => 'Catatan',
+    'approved_by' => 'Disetujui Oleh',
 ]
 ?>

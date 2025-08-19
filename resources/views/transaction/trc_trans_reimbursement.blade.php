@@ -330,6 +330,7 @@
                                         <th>{{ __('trans_reimbursement.ticketno') }}</th>
                                         <th>{{ __('trans_reimbursement.name') }}</th>
                                         <th>{{ __('trans_reimbursement.appdate') }}</th>
+                                        <th>{{ __('trans_reimbursement.appby') }}</th>
                                         <th>{{ __('trans_reimbursement.cname') }}</th>
                                         <th>{{ __('trans_reimbursement.pname') }}</th>
                                         <th>{{ __('trans_reimbursement.pdate') }}</th>
@@ -817,6 +818,14 @@
                             }
                         }
                 },
+                {data: 'reimbursementEntity.fullNameApprover', name: 'reimbursementEntity.fullNameApprover',
+                        render: function (data, type, row) {
+                            if (!row.reimbursementEntity || !('fullNameApprover' in row.reimbursementEntity) || row.reimbursementEntity.fullNameApprover == null) {
+                                return null;
+                            }
+                            return row.reimbursementEntity.fullNameApprover;
+                        }
+                    },
                 {data: 'reimbursementEntity.customerName', name: 'reimbursementEntity.customerName'},
                 {data: 'reimbursementEntity.projectName', name: 'reimbursementEntity.projectName'},
                 {data: 'reimbursementEntity.paymentDate', name: 'reimbursementEntity.paymentDate', 

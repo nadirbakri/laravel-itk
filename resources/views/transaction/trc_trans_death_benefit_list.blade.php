@@ -323,6 +323,7 @@
                                         <th>{{ __('trans_death_benefit_list.paid_amount') }}</th>
                                         <th>{{ __('trans_death_benefit_list.payment_date') }}</th>
                                         <th>{{ __('trans_death_benefit_list.remarks') }}</th>
+                                        <th>{{ __('trans_death_benefit_list.approved_by') }}</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -782,6 +783,14 @@
                     }
                 },
                 {data: 'tunjanganKematianEntity.approvalRemarks', name: 'tunjanganKematianEntity.approvalRemarks'},
+                {data: 'tunjanganKematianEntity.fullNameApprover', name: 'tunjanganKematianEntity.fullNameApprover',
+                    render: function (data, type, row) {
+                        if (!row.overtimeEntity || !('fullNameApprover' in row.overtimeEntity) || row.overtimeEntity.fullNameApprover == null) {
+                            return null;
+                        }
+                        return row.overtimeEntity.fullNameApprover;
+                    }
+                },
             ]
         });
 

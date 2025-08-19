@@ -24,6 +24,7 @@ return [
     'name' => 'Nama',
     'type' => 'Tipe',
     'appdate' => 'Tanggal Disetujui',
+    'appby' => 'Disetujui Oleh',
     'cname' => 'Nama Pelanggan',
     'sloc' => 'Lokasi Awal',
     'eloc' => 'Lokasi Akhir',

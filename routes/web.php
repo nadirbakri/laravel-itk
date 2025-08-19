@@ -927,7 +927,8 @@ Route::get('trans/mass_leave/table', 'TransactionController@tableDetailMassLeave
 Route::get('trans/salary_complaint/table', 'TransactionController@tableDetailSalaryComplaint');
 Route::get('trans/salary_complaint/attachment', 'TransactionController@dataDetailSalaryComplaint');
 Route::get('trans/death_benefit/table', 'TransactionController@tableDetailDeathBenefit');
-Route::get('trans/family_data_approval/table', 'TransactionController@tableFamilyDataApprovalTransaction');
+Route::get('trans/family_data_approval/table', 'TransactionController@tableDetailFamilyDataApproval');
+Route::get('trans/medical_checkup/table', 'TransactionController@tableDetailMedicalCheckup');
 Route::get('adm/checkinlist/table', 'TransactionController@tableDetailCheckinList');
 Route::get('adm/checkinlistmaps/table', 'TransactionController@tableDetailMapsCheckinList');
 Route::get('adm/checkinlist_mapsall/table', 'TransactionController@tableDetailCheckinListAll');
@@ -1159,6 +1160,7 @@ Route::get('transaction/mapscheckin_list', 'TransactionController@pageTransactio
 Route::get('transaction/transaction_salary_complaint_list', 'TransactionController@pageTransactionSalaryComplaintList');
 Route::get('transaction/transaction_death_benefit_list', 'TransactionController@pageTransactionDeathBenefitList');
 Route::get('transaction/transaction_family_data_approval_list', 'TransactionController@pageTransactionFamilyDataApprovalList');
+Route::get('transaction/transaction_medical_checkup_list', 'TransactionController@pageTransactionMedicalCheckupList');
 
 /* Route untuk Menu Master Data MOB */
 Route::get('master_data', 'MasterDataController@pageMasterData')->name('master_data');
