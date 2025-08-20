@@ -1159,6 +1159,8 @@ Route::get('transaction/mapscheckin_list', 'TransactionController@pageTransactio
 Route::get('transaction/transaction_salary_complaint_list', 'TransactionController@pageTransactionSalaryComplaintList');
 Route::get('transaction/transaction_death_benefit_list', 'TransactionController@pageTransactionDeathBenefitList');
 Route::get('transaction/transaction_family_data_approval_list', 'TransactionController@pageTransactionFamilyDataApprovalList');
+Route::get('transaction/transaction_vaccination_list', 'TransactionController@pageTransactionVaccinationList');
+Route::get('transaction/transaction_medical_checkup_list', 'TransactionController@pageTransactionMedicalCheckupList');
 
 /* Route untuk Menu Master Data MOB */
 Route::get('master_data', 'MasterDataController@pageMasterData')->name('master_data');

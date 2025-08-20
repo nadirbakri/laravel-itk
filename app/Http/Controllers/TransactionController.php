@@ -130,6 +130,10 @@ class TransactionController extends Controller
         return view('transaction.trc_trans_family_data_approval_list');
     }
 
+    public function pageTransactionVaccinationList(){
+        return view('transaction.trc_trans_vaccination_list');
+    }
+
     // public function tableInputTransactionTransport(Request $request)
     // {
     //     try {
