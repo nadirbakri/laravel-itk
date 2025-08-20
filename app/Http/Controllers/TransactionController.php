@@ -133,7 +133,7 @@ class TransactionController extends Controller
     public function pageTransactionVaccinationList(){
         return view('transaction.trc_trans_vaccination_list');
     }
-    
+
     public function pageTransactionMedicalCheckupList(){
         return view('transaction.trc_trans_medical_checkup_list');
     }

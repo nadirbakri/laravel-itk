@@ -8053,6 +8053,12 @@ public function dataDetailReportFormatPY(Request $request)
         }else if($companyCode == 'GOC' || $companyCode == 'NAC'){
             $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_goc_nac';
             $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_goc_nac';
+        }else if($companyCode == 'IMAT' || $companyCode == 'IMUR'){
+            $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_imat_imur';
+            $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_imat_imur';
+        }else if($companyCode == 'KUJBC'){
+            $viewNamePortrait = 'payroll.py_export_payment_slip_portrait_kujbc';
+            $viewNameLandscape = 'payroll.py_export_payment_slip_landscape_kujbc';
         }else{
             $viewNamePortrait = 'payroll.py_export_payment_slip_portrait';
             $viewNameLandscape = 'payroll.py_export_payment_slip_landscape';
