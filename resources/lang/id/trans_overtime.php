@@ -22,6 +22,7 @@ return [
     'status' => 'Status',
     'reqdate' => 'Tanggal Pengajuan',
     'appdate' => 'Tanggal Disetujui',
+    'appby' => 'Disetujui Oleh',
     'tnom' => 'Nomor Tiker',
     'pname' => 'Nama Proyek',
     'odate' => 'Tanggal Lembur',

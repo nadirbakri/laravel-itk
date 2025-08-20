@@ -927,7 +927,8 @@ Route::get('trans/mass_leave/table', 'TransactionController@tableDetailMassLeave
 Route::get('trans/salary_complaint/table', 'TransactionController@tableDetailSalaryComplaint');
 Route::get('trans/salary_complaint/attachment', 'TransactionController@dataDetailSalaryComplaint');
 Route::get('trans/death_benefit/table', 'TransactionController@tableDetailDeathBenefit');
-Route::get('trans/family_data_approval/table', 'TransactionController@tableFamilyDataApprovalTransaction');
+Route::get('trans/family_data_approval/table', 'TransactionController@tableDetailFamilyDataApproval');
+Route::get('trans/medical_checkup/table', 'TransactionController@tableDetailMedicalCheckup');
 Route::get('adm/checkinlist/table', 'TransactionController@tableDetailCheckinList');
 Route::get('adm/checkinlistmaps/table', 'TransactionController@tableDetailMapsCheckinList');
 Route::get('adm/checkinlist_mapsall/table', 'TransactionController@tableDetailCheckinListAll');

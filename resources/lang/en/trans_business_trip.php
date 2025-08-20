@@ -25,6 +25,7 @@ return [
     'name' => 'Name',
     'reqdate' => 'Request Date',
     'appdate' => 'Approval Date',
+    'appby' => 'Approved By',
     'cname' => 'Customer Name',
     'status' => 'Status',
     'destination' => 'Destination',

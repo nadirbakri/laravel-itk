@@ -24,6 +24,7 @@ return [
     'missing_amount' => 'Missing Amount',
     'correct_amount' => 'Correct Amount',
     'remarks' => 'Remarks',
+    'approved_by' => 'Approved By',
 ]
 
 ?>

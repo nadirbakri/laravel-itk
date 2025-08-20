@@ -24,6 +24,7 @@ return [
     'status' => 'Status',
     'reqdate' => 'Request Date',
     'appdate' => 'Approval Date',
+    'appby' => 'Approved By',
     'tnom' => 'Ticket Number',
     'pname' => 'Project Name',
     'odate' => 'Overtime Date',
