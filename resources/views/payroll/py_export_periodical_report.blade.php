@@ -195,58 +195,66 @@
         ?>
         <h3>
             @if($company == 'NMDI' || $company == 'CITROEN')
-            {{ ($level1[0] == "ALL") ? $data_company[0]->companyName : 'PT ' . $data[0]->departementGroup[0]->data[0]->companyName }}
+            {{ 
+                ($level1[0] == "ALL") 
+                    ? (isset($data_company[0]) ? $data_company[0]->companyName : '') 
+                    : ((isset($data[0]->departementGroup[0]->data[0]) ? 'PT ' .  $data[0]->departementGroup[0]->data[0]->companyName : ''))
+            }}
             @else
             {{ $data_company[0]->companyName }}
             @endif
         <br> 
             @if($company == 'NMDI' || $company == 'CITROEN')
-            {{ ($level1[0] == "ALL") ? $data_company[0]->address : $data[0]->departementGroup[0]->data[0]->companyLocation }}
+            {{ 
+                ($level1[0] == "ALL") 
+                    ? (isset($data_company[0]) ? $data_company[0]->address : '') 
+                    : ((isset($data[0]->departementGroup[0]->data[0]) ? $data[0]->departementGroup[0]->data[0]->companyLocation : ''))
+            }}
             @else
             {{ $data_company[0]->address }}
             @endif
         </h3>
         <h3 style="text-align:center">{{ $report_name }}</h3>
         <h4 style="text-align:center">Period : {{ date('F Y', strtotime($data_period)) }}</h4>
-        @if($company == 'NMDI' || $company == 'CITROEN')
-        @for($i = 0; $i < count($data[0]->departementGroup); $i++)
-            <?php
-                $dataTable = $data[0]->departementGroup[$i];
-            ?>
-            @if(!empty($dataTable->data))
-            <?php
-                $level = $data[0]->departementGroup[$i]->data[0]->companyName;
-            ?>
-            @break;
-            @endif
-        @endfor
-        <table style='width: 100%; font-size: 8px'>
-            <tr>
-                <td style='width: 8%'><h1 style="font-weight: normal;">Pay Cycle</h1></td>
-                <td style='width: 2%'><h1 style="font-weight: normal;">:</h1></td>
-                <td style='width: 20%'><h1 style="font-weight: normal;">REG - {{ $level }}</h1></td>
-                <td style='width: 20%'><h1 style="font-weight: normal;">Currency : Rupiah</h1></td>
-                <td style='width: 30%'><h1 style="font-weight: normal;">Report Gaji</h1></td>
-                <td style='width: 6%; align-items:right;'><h1 style="font-weight: normal;">Date</h1></td>
-                <td style='width: 2%; align-items:right;'><h1 style="font-weight: normal;">:</h1></td>
-                <td style='width: 12%; align-items:right;'><h1 style="font-weight: normal;">{{ date('d M Y') }}</h1></td>
-            </tr>
-            <tr>
-                <td style='width: 8%'><h1 style="font-weight: normal;">Year / Month</h1></td>
-                <td style='width: 2%'><h1 style="font-weight: normal;">:</h1></td>
-                <td style='width: 20%'><h1 style="font-weight: normal;">{{ $formattedDate }}</h1></td>
-                <td style='width: 20%'><h1 style="font-weight: normal;"></h1></td>
-                <td style='width: 30%'><h1 style="font-weight: normal;"></h1></td>
-                <td style='width: 6%; align-items:right;'><h1 style="font-weight: normal;">Time</h1></td>
-                <td style='width: 2%; align-items:right;'><h1 style="font-weight: normal;">:</h1></td>
-                <td style='width: 12%; align-items:right;'><h1 style="font-weight: normal;">{{ date('H:i:s') }}</h1></td>
-            </tr>
-            <tr>
-                <td><h1 style="font-weight: normal;">Company</h1></td>
-                <td><h1 style="font-weight: normal;">:</h1></td>
-                <td><h1 style="font-weight: normal;">{{ $level }}</h1></td>
-            </tr>
-        </table>
+        @if($company == 'CITROEN')
+            @for($i = 0; $i < count($data[0]->departementGroup); $i++)
+                <?php
+                    $dataTable = $data[0]->departementGroup[$i];
+                ?>
+                @if(!empty($dataTable->data))
+                <?php
+                    $level = $data[0]->departementGroup[$i]->data[0]->companyName;
+                ?>
+                @break;
+                @endif
+            @endfor
+            <table style='width: 100%; font-size: 8px'>
+                <tr>
+                    <td style='width: 8%'><h1 style="font-weight: normal;">Pay Cycle</h1></td>
+                    <td style='width: 2%'><h1 style="font-weight: normal;">:</h1></td>
+                    <td style='width: 20%'><h1 style="font-weight: normal;">REG - {{ $level }}</h1></td>
+                    <td style='width: 20%'><h1 style="font-weight: normal;">Currency : Rupiah</h1></td>
+                    <td style='width: 30%'><h1 style="font-weight: normal;">Report Gaji</h1></td>
+                    <td style='width: 6%; align-items:right;'><h1 style="font-weight: normal;">Date</h1></td>
+                    <td style='width: 2%; align-items:right;'><h1 style="font-weight: normal;">:</h1></td>
+                    <td style='width: 12%; align-items:right;'><h1 style="font-weight: normal;">{{ date('d M Y') }}</h1></td>
+                </tr>
+                <tr>
+                    <td style='width: 8%'><h1 style="font-weight: normal;">Year / Month</h1></td>
+                    <td style='width: 2%'><h1 style="font-weight: normal;">:</h1></td>
+                    <td style='width: 20%'><h1 style="font-weight: normal;">{{ $formattedDate }}</h1></td>
+                    <td style='width: 20%'><h1 style="font-weight: normal;"></h1></td>
+                    <td style='width: 30%'><h1 style="font-weight: normal;"></h1></td>
+                    <td style='width: 6%; align-items:right;'><h1 style="font-weight: normal;">Time</h1></td>
+                    <td style='width: 2%; align-items:right;'><h1 style="font-weight: normal;">:</h1></td>
+                    <td style='width: 12%; align-items:right;'><h1 style="font-weight: normal;">{{ date('H:i:s') }}</h1></td>
+                </tr>
+                <tr>
+                    <td><h1 style="font-weight: normal;">Company</h1></td>
+                    <td><h1 style="font-weight: normal;">:</h1></td>
+                    <td><h1 style="font-weight: normal;">{{ $level }}</h1></td>
+                </tr>
+            </table>
         @endif
         @for($i = 0; $i < count($data[0]->departementGroup); $i++)
             <?php
@@ -254,33 +262,36 @@
                 $branch = null;
             ?>
             @if(!empty($dataTable->data))
-                @if($company == 'NMDI' || $company == 'CITROEN')
-                @if(empty($group_name))
                 <?php
-                    $group_name = "Cost Center";
+                    $level = $data[0]->departementGroup[$i]->data[0]->companyName;
                 ?>
-                @endif
-                <table style="font-size: 8px">
+                @if($company == 'NMDI' || $company == 'CITROEN')
+                    @if(empty($group_name))
                     <?php
-                        foreach($dataTable->data as $key => $dataRow) {
-                            foreach($dataRow->field as $key2 => $dataRow2) {
-                                if($dataRow2->tableName === 'Company') {
-                                    $branch = $dataRow2->value;
+                        $group_name = "Cost Center";
+                    ?>
+                    @endif
+                    <table style="font-size: 8px">
+                        <?php
+                            foreach($dataTable->data as $key => $dataRow) {
+                                foreach($dataRow->field as $key2 => $dataRow2) {
+                                    if($dataRow2->tableName === 'Company') {
+                                        $branch = $dataRow2->value;
+                                    }
                                 }
                             }
-                        }
-                    ?>
-                    <tr>
-                        <td><h1 style="font-weight: normal;">Branch</h1></td>
-                        <td><h1 style="font-weight: normal;">:</h1></td>
-                        <td><h1 style="font-weight: normal;">{{ $level }}</h1></td>
-                    </tr>
-                    <tr>
-                        <td><h1 style="font-weight: normal;">{{ $group_name }}</h1></td>
-                        <td><h1 style="font-weight: normal;">:</h1></td>
-                        <td><h1 style="font-weight: normal;">{{ $dataTable->departement }}</h1></td>
-                    </tr>
-                </table>
+                        ?>
+                        <tr>
+                            <td><h1 style="font-weight: normal;">Branch</h1></td>
+                            <td><h1 style="font-weight: normal;">:</h1></td>
+                            <td><h1 style="font-weight: normal;">{{ $level }}</h1></td>
+                        </tr>
+                        <tr>
+                            <td><h1 style="font-weight: normal;">{{ $group_name }}</h1></td>
+                            <td><h1 style="font-weight: normal;">:</h1></td>
+                            <td><h1 style="font-weight: normal;">{{ $dataTable->departement }}</h1></td>
+                        </tr>
+                    </table>
                 @elseif($company == 'IPN' || $company == 'UPM' || $company == 'IGT' || $company == 'IVT' || $company == 'IPNJT')
                 <table>
                     <?php
@@ -549,48 +560,45 @@
             @if(!empty($dataTable->data))
                 <h3>
                     @if($company == 'NMDI' || $company == 'CITROEN')
-                    {{ ($level1[0] == "ALL") ? $data_company[0]->companyName : 'PT ' . $data[0]->detail[0]->companyName }}
+                        {{ 
+                            ($level1[0] == "ALL") 
+                                ? (isset($data_company[0]) ? $data_company[0]->companyName : '') 
+                                : ((isset($data[0]->departementGroup[0]->data[0]) ? 'PT ' .  $data[0]->departementGroup[0]->data[0]->companyName : ''))
+                        }}
                     @else
-                    {{ $data_company[0]->companyName }}
+                        {{ $data_company[0]->companyName }}
                     @endif
                 <br> 
                     @if($company == 'NMDI' || $company == 'CITROEN')
-                    {{ ($level1[0] == "ALL") ? $data_company[0]->address : $data[0]->detail[0]->companyLocation }}
+                        {{ 
+                            ($level1[0] == "ALL") 
+                                ? (isset($data_company[0]) ? $data_company[0]->address : '') 
+                                : ((isset($data[0]->detail[0]) ? $data[0]->detail[0]->companyLocation : ''))
+                        }}
                     @else
-                    {{ $data_company[0]->address }}
+                        {{ $data_company[0]->address }}
                     @endif
                 </h3>
                 <h3 style="text-align:center">{{ $report_name }}</h3>
                 <h4 style="text-align:center">Period : {{ date('F Y', strtotime($data_period)) }}</h4>
                 @if($company == 'IPN' || $company == 'UPM' || $company == 'IGT' || $company == 'IVT' || $company == 'IPNJT')
-                {{-- <table>
-                    <thead>
+                    <table style='width: 100%'>
                         <tr>
-                            <th style="text-align:left; font-weight:bold;">{{ $report_name }}</th>
+                            <td>Pay Cycle</td>
+                            <td>:</td>
+                            <td>REG - {{ $dataTable->data[0]->companyName }}</td>
                         </tr>
                         <tr>
-                            <th style="text-align:left; font-weight:bold;">Periode   :    {{ $data_period }}</th>
+                            <td>Month / Year</td>
+                            <td>:</td>
+                            <td>{{ $formattedDate }}</td>
                         </tr>
-                    </thead>
-                </table> --}}
-                @else
-                <table style='width: 100%'>
-                    <tr>
-                        <td>Pay Cycle</td>
-                        <td>:</td>
-                        <td>REG - {{ $dataTable->data[0]->companyName }}</td>
-                    </tr>
-                    <tr>
-                        <td>Month / Year</td>
-                        <td>:</td>
-                        <td>{{ $formattedDate }}</td>
-                    </tr>
-                    <tr>
-                        <td>Company</td>
-                        <td>:</td>
-                        <td>{{ $dataTable->data[0]->companyName }}</td>
-                    </tr>
-                </table>
+                        <tr>
+                            <td>Company</td>
+                            <td>:</td>
+                            <td>{{ $dataTable->data[0]->companyName }}</td>
+                        </tr>
+                    </table>
                 @endif
                 <table style="width: 100%;" class="table table-bordered table-hover responsive table_detail">
                     <thead>

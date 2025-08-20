@@ -126,7 +126,6 @@
                     <div class="col-6">
                         <div class="form-group">
                             <label for="performance_result">{{ __('payroll_bonus_data_entry.label_performance_result') }}</label>
-                            <span class="required">*</span>
                             <select class="form-control select2" id="performance_result" name="performance_result" disabled></select>
                         </div>
                     </div>
@@ -677,9 +676,9 @@
                     entry_type: {
                         required: true,
                     },
-                    performance_result: {
-                        required: true,
-                    },
+                    // performance_result: {
+                    //     required: true,
+                    // },
                     service_month: {
                         required: true,
                     },

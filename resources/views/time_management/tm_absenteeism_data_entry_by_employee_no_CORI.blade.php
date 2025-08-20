@@ -605,11 +605,11 @@
             // $('.select_grade').prop('disabled', false);
             $('#btn-save').prop('disabled', false);
 
-            $('.select_absent_code').prop('disabled', true);
-            arrNotLeave.forEach(index => {
-                $(`#absent_code${index}`).prop('disabled', false);
-                const value = $(`#absent_code${index}`).val();
-            });
+            $('.select_absent_code').prop('disabled', false);
+            // arrNotLeave.forEach(index => {
+            //     $(`#absent_code${index}`).prop('disabled', false);
+            //     const value = $(`#absent_code${index}`).val();
+            // });
         });
 
         $('#btn-previous-employee').on('click', function () {
@@ -692,9 +692,9 @@
                     if(!isEmpty(response)){
                         $.each(response, function(k, v) {
                             const desc = (v.absentCodeDescription || '').toLowerCase();
-                            if (!desc.includes('leave') && !desc.includes('cuti')) {
-                                arrNotLeave.push(k+1);
-                            }
+                            // if (!desc.includes('leave') && !desc.includes('cuti')) {
+                            //     arrNotLeave.push(k+1);
+                            // }
 
                             table.row.add([
                                 '<input type="hidden" class="employee_no_table" name="employee_no_table[]" id="employee_no_table" value="'+ (v.employeeNo || '') +'"><input type="hidden" class="absent_date" name="absent_date[]" id="absent_date" value="'+ ((typeof v.absentDate !== 'undefined' && v.absentDate !== null) ? moment(v.absentDate).format('YYYY-MM-DD') : '') +'" style="width: 50px; text-align: center;" readonly>' + ((typeof v.absentDate !== 'undefined' && v.absentDate !== null) ? moment(v.absentDate).format('YYYY-MM-DD') : ''),
