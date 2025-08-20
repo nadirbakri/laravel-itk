@@ -41,34 +41,38 @@
 	@foreach($data as $key => $value)
 		<table class="table" style="width:100%; font-size: 12px; padding-left:1%; padding-right:1%; border-collapse: collapse; font-family: 'Arial Alternates', sans-serif;">
 			<tr>
-				<td width="15%">Nama</td>
-				<td width="1%">:</td>
-				<td width="44%" style="padding-right: 10%">{{ $value->employeeNo }} {{ $value->employeeName }}</td>
-				<td colspan="3" width="40%" style="font-weight: bold; padding-left: 10%">{{ $value->namaPerusahaan }}</td>
+				<td style="width:10%;">Nama</td>
+				<td style="width:2%;">:</td>
+				<td style="width:38%;">{{ $value->employeeNo }} {{ $value->employeeName }}</td>
+
+				<td colspan="3" style="width:50%; font-weight: bold;">{{ $value->namaPerusahaan }}</td>
 			</tr>
 			<tr>
-				<td width="15%">Seksi</td>
-				<td width="1%">:</td>
-				<td width="44%" style="padding-right: 10%">{{ $value->division }}</td>
-				<td width="20%" style="padding-left: 10%">Bank</td>
-				<td width="1%">:</td>
-				<td width="29%">{{ $value->noRekening }}</td>
+				<td>Seksi</td>
+				<td>:</td>
+				<td>{{ $value->division }}</td>
+
+				<td>Bank</td>
+				<td align="center">:</td>
+				<td>{{ $value->noRekening }}</td>
 			</tr>
 			<tr>
-				<td width="15%">Periode</td>
-				<td width="1%">:</td>
-				<td width="44%" style="padding-right: 10%">{{ $value->slipPeriod }}</td>
-				<td width="20%" style="padding-left: 10%">NPWP</td>
-				<td width="1%">:</td>
-				<td width="29%">{{ $value->npwp }}</td>
+				<td>Periode</td>
+				<td>:</td>
+				<td>{{ $value->slipPeriod }}</td>
+
+				<td>NPWP</td>
+				<td align="center">:</td>
+				<td>{{ $value->npwp }}</td>
 			</tr>
 			<tr>
-				<td width="15%">Email</td>
-				<td width="1%">:</td>
-				<td width="44%" style="padding-right: 10%">{{ $value->email }}</td>
-				<td width="20%" style="padding-left: 10%">Status</td>
-				<td width="1%">:</td>
-				<td width="29%">{{ $value->taxStatus }}</td>
+				<td>Email</td>
+				<td>:</td>
+				<td>{{ $value->email }}</td>
+
+				<td>Status</td>
+				<td align="center">:</td>
+				<td>{{ $value->taxStatus }}</td>
 			</tr>
 		</table>
 		<br />
