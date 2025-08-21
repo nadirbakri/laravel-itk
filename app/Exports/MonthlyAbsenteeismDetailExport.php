@@ -13,16 +13,20 @@ use App;
 
 class MonthlyAbsenteeismDetailExport implements FromView, ShouldAutoSize
 {
-    public function __construct($employeeNoFrom, $employeeNoTo, $absentDateFrom, $absentDateTo, $includeResign, $changeHeader, $groupAuthorizeFrom, $groupAuthorizeTo, $position, $ranking, $location, $dataLevel)
+    public function __construct($employeeType, $employeeNoFrom, $employeeNoTo, $employeeNoList, $dateType, $period, $absentDateFrom, $absentDateTo, $groupAuthorizeFrom, $groupAuthorizeTo, $includeResign, $changeHeader, $position, $ranking, $location, $dataLevel)
     {
+        $this->employeeType = $employeeType;
         $this->employeeNoFrom = $employeeNoFrom;
         $this->employeeNoTo = $employeeNoTo;
+        $this->employeeNoList = $employeeNoList;
+        $this->dateType = $dateType;
+        $this->period = $period;
         $this->absentDateFrom = $absentDateFrom;
         $this->absentDateTo = $absentDateTo;
-        $this->includeResign = $includeResign;
-        $this->changeHeader = $changeHeader;
         $this->groupAuthorizeFrom = $groupAuthorizeFrom;
         $this->groupAuthorizeTo = $groupAuthorizeTo;
+        $this->includeResign = $includeResign;
+        $this->changeHeader = $changeHeader;
         $this->position = $position;
         $this->ranking = $ranking;
         $this->location = $location;
@@ -38,45 +42,24 @@ class MonthlyAbsenteeismDetailExport implements FromView, ShouldAutoSize
                 'Authorization' => 'Bearer ' . Session::get('token') ]
             ]);
 
-            $param = [ 
+            $param = [
                 'companyCode' => Session::get('companyCode'), 
-                'languageCode' => App::getLocale(), 
-                'sessionID' => 0, 
-                'sessionUserID' => Session::get('userID'),
+                'range' => $this->employeeType === 'RANGE' ? true : false,
+                'employeeNoFrom' => $this->employeeNoFrom,
+                'employeeNoTo' => $this->employeeNoTo,
+                'employeeList' => $this->employeeNoList,
+                'period' => $this->dateType === 'PERIOD' ? $this->period : null,
+                'absentDateFrom' => $this->dateType === 'RANGE_DATE' ? $this->absentDateFrom : null,
+                'absentDateTo' => $this->dateType === 'RANGE_DATE' ? $this->absentDateTo : null,
+                'groupAuthorizeFrom' => (int) $this->groupAuthorizeFrom,
+                'groupAuthorizeTo' => (int) $this->groupAuthorizeTo,
+                'includeResign' => $this->includeResign,
+                'changeHeader' => $this->changeHeader,
                 'userID' => Session::get('userID'),
-                // 'incResign' => $this->includeResign,
-                // 'changeHeader' => $this->changeHeader
+                'languageID' => App::getLocale(),
+                'sessionID' => 0,
+                'sessionUserID' => Session::get('userID')
             ];
-
-            // if(!empty($this->employeeNoFrom) || !empty($this->employeeNoTo)){
-            //     $param['employeeNoFrom'] = $this->employeeNoFrom;
-            //     $param['employeeNoTo'] = $this->employeeNoTo;
-            // }
-
-            if(!empty($this->absentDateFrom) || !empty($this->absentDateFrom)){
-                $param['absentDateFrom'] = $this->absentDateFrom;
-                $param['absentDateTo'] = $this->absentDateTo;
-            }
-
-            // if(!empty($this->dataDetail) && !is_null($this->dataDetail[0])){
-            //     foreach($this->dataDetail as $key => $value){
-            //         $data_detail[] = $value->absentCode;
-            //     }
-            //     $param['absenCode'] = $data_detail;
-            // }else{
-            //     $this->dataDetail = null;
-            //     $param['dataDetail'] = null;
-            // }
-
-            // if(!empty($this->hourOut) || !empty($this->hourOut)){
-            //     $param['hourOut'] = date('Y-m-d') . "T" . $this->hourOut;
-            //     $param['hourOutTo'] = date('Y-m-d') . "T" . $this->hourTo;
-            // }
-
-            // if(!empty($this->groupAuthorizeFrom) || !empty($this->groupAuthorizeTo)){
-            //     $param['groupAuthorizeFrom'] = (int) $this->groupAuthorizeFrom;
-            //     $param['groupAuthorizeTo'] = (int) $this->groupAuthorizeTo;
-            // }
 
             if(!empty($this->position) && !is_null($this->position[0])){
                 foreach($this->position as $value){

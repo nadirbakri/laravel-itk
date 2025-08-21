@@ -407,7 +407,35 @@ class TimeManagementController extends Controller
 
     public function pageMonthlyAbsenteeismDetail()
     {
-        return view ('time_management.tm_monthly_absenteeism_detail');
+        try {
+            $client = new Client([
+                'verify' => false,
+                'headers' => [ 'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . Session::get('token') ]
+            ]);
+
+            $response = $client->post(env('API_URL') . '/mobile/ReferenceTM/getReferenceTM',
+                ['body' => json_encode(
+                    [
+                        'companyCode' => Session::get('companyCode')
+                    ]
+                )]
+            );
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            // var_dump($response);
+            if($response->getStatusCode() == 401){
+                return view('error.login');
+            }else if($response->getStatusCode() == 404){
+                return view('error.not_found');
+            }else{
+                return view('error.bad_request');
+            }
+        }
+
+        $arrResult = json_decode($response->getBody()->getContents()); 
+
+        return view ('time_management.tm_monthly_absenteeism_detail', ['data' => $arrResult->dataListSet]);
     }
 
     public function pageDetailAbsenteeismReasonReport()
@@ -1779,7 +1807,7 @@ class TimeManagementController extends Controller
 
         // dd($dataLevel);
 
-        return Excel::download(new MonthlyAbsenteeismDetailExport($arrData['employee_no_from'], $arrData['employee_no_to'], $arrData['absent_date_from'], $arrData['absent_date_to'], isset($arrData['include_resign']) ? (bool) $arrData['include_resign'] : false, isset($arrData['change_header']) ? (bool) $arrData['change_header'] : false, $arrData['group_authorize_from'], $arrData['group_authorize_to'], $arrData['position'], $arrData['ranking'], $arrData['location'], $dataLevel), 'Monthly Absenteeism Detail.xlsx');
+        return Excel::download(new MonthlyAbsenteeismDetailExport($arrData['get_employee'], $arrData['employee_no_from'] ?? null, $arrData['employee_no_to'] ?? null, $arrData['employee_no_list'] ?? null, $arrData['get_date'], $arrData['period'] ?? null, $arrData['absent_date_from'] ?? null, $arrData['absent_date_to'] ?? null, $arrData['group_authorize_from'], $arrData['group_authorize_to'], isset($arrData['include_resign']) ? (bool) $arrData['include_resign'] : false, isset($arrData['change_header']) ? (bool) $arrData['change_header'] : false, $arrData['position'], $arrData['ranking'], $arrData['location'], $dataLevel), 'Monthly Absenteeism Detail.xlsx');
     }
 
     public function printMonthlyAbsenteeismDetailPDF(Request $request){
@@ -1802,8 +1830,18 @@ class TimeManagementController extends Controller
 
             $param = [
                 'companyCode' => Session::get('companyCode'), 
-                'absentDateFrom' => $request->absent_date_from,
-                'absentDateTo' => $request->absent_date_to,
+                'range' => $request->get_employee === 'RANGE' ? true : false,
+                'employeeNoFrom' => $request->employee_no_from,
+                'employeeNoTo' => $request->employee_no_to,
+                'employeeList' => $request->employee_no_list,
+                'period' => $request->get_date === 'PERIOD' ? $request->period : null,
+                'absentDateFrom' => $request->get_date === 'RANGE_DATE' ? $request->absent_date_from : null,
+                'absentDateTo' => $request->get_date === 'RANGE_DATE' ? $request->absent_date_to : null,
+                'groupAuthorizeFrom' => (int) $request->group_authorize_from,
+                'groupAuthorizeTo' => (int) $request->group_authorize_to,
+                'includeResign' => $request->include_resign,
+                'changeHeader' => $request->change_header,
+                'userID' => Session::get('userID'),
                 'languageID' => App::getLocale(), 
                 'sessionID' => 0, 
                 'sessionUserID' => Session::get('userID')

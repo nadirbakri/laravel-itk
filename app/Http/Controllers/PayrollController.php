@@ -4786,7 +4786,7 @@ public function dataDetailReportFormatPY(Request $request)
                 foreach($array as $key => $value){
                     if($request->source_bank == 'BCA' && $request->transfer_type == "2"){
                         $arrayTwo = explode("|", $value);
-                    }else if($request->source_bank == 'CIMB'){
+                    }else if($request->source_bank == 'CIMB' || $request->source_bank == 'INA'){
                         $arrayTwo = explode(";", $value);
                     }else{
                         $arrayTwo = explode(",", $value);
@@ -4812,10 +4812,12 @@ public function dataDetailReportFormatPY(Request $request)
                     }, $array);
                 }
 
+                $delimiter = (Session::get('companyCode') === 'SBS') ? ';' : ',';
+
                 foreach ($array as $row) {
                     $row = array_pad($row, count($csvHeader), '');
 
-                    fputcsv($tempFile, $row);
+                    fputcsv($tempFile, $row, $delimiter);
                 }
 
                 rewind($tempFile);
