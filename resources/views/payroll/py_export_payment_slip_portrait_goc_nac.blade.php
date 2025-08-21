@@ -73,32 +73,34 @@
 		<?php
 			$totalIncome = 0;
 			$totalDeduction = 0;
-			function terbilang($angka) {
-				$angka = abs($angka);
-				$baca = ["", "Satu", "Dua", "Tiga", "Empat", "Lima", "Enam", "Tujuh", "Delapan", "Sembilan", "Sepuluh", "Sebelas"];
-				$hasil = "";
+			if (!function_exists('terbilang')) {
+				function terbilang($angka) {
+					$angka = abs($angka);
+					$baca = ["", "Satu", "Dua", "Tiga", "Empat", "Lima", "Enam", "Tujuh", "Delapan", "Sembilan", "Sepuluh", "Sebelas"];
+					$hasil = "";
 
-				if ($angka < 12) {
-					$hasil = " " . $baca[$angka];
-				} elseif ($angka < 20) {
-					$hasil = terbilang($angka - 10) . " Belas ";
-				} elseif ($angka < 100) {
-					$hasil = terbilang($angka / 10) . " Puluh " . terbilang($angka % 10);
-				} elseif ($angka < 200) {
-					$hasil = " Seratus " . terbilang($angka - 100);
-				} elseif ($angka < 1000) {
-					$hasil = terbilang($angka / 100) . " Ratus " . terbilang($angka % 100);
-				} elseif ($angka < 2000) {
-					$hasil = " Seribu " . terbilang($angka - 1000);
-				} elseif ($angka < 1000000) {
-					$hasil = terbilang($angka / 1000) . " Ribu " . terbilang($angka % 1000);
-				} elseif ($angka < 1000000000) {
-					$hasil = terbilang($angka / 1000000) . " Juta " . terbilang($angka % 1000000);
-				} elseif ($angka < 1000000000000) {
-					$hasil = terbilang($angka / 1000000000) . " Miliar " . terbilang($angka % 1000000000);
+					if ($angka < 12) {
+						$hasil = " " . $baca[$angka];
+					} elseif ($angka < 20) {
+						$hasil = terbilang($angka - 10) . " Belas ";
+					} elseif ($angka < 100) {
+						$hasil = terbilang($angka / 10) . " Puluh " . terbilang($angka % 10);
+					} elseif ($angka < 200) {
+						$hasil = " Seratus " . terbilang($angka - 100);
+					} elseif ($angka < 1000) {
+						$hasil = terbilang($angka / 100) . " Ratus " . terbilang($angka % 100);
+					} elseif ($angka < 2000) {
+						$hasil = " Seribu " . terbilang($angka - 1000);
+					} elseif ($angka < 1000000) {
+						$hasil = terbilang($angka / 1000) . " Ribu " . terbilang($angka % 1000);
+					} elseif ($angka < 1000000000) {
+						$hasil = terbilang($angka / 1000000) . " Juta " . terbilang($angka % 1000000);
+					} elseif ($angka < 1000000000000) {
+						$hasil = terbilang($angka / 1000000000) . " Miliar " . terbilang($angka % 1000000000);
+					}
+
+					return trim($hasil);
 				}
-
-				return trim($hasil);
 			}
 		?>
 		<br />
@@ -171,67 +173,41 @@
 			</tr>
 		</table>
 		<table class="table" style="margin-top: 2%;font-weight: bold;">
-			<tr style="font-weight: bold;">
-				<td style="width: 100%;">
-					<table class="table">
-						<tr>
-							<td width="70%" style="text-align: left; vertical-align: top;">Dibuat Oleh</td>
-							<td width="30%" style="text-align: left; vertical-align: top;">Diterima Oleh</td>
-						</tr>
-					</table>
+			<tr>
+				<td width="70%" style="text-align: left; vertical-align: top;">Dibuat Oleh</td>
+				<td width="30%" style="text-align: left; vertical-align: top;">Diterima Oleh</td>
+			</tr>
+			<tr>
+				@if($companyCode == 'GOC')
+					<td style="position: relative; text-align: left; vertical-align: middle; padding-top: 10px;">
+						<img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/pictures/logo_goc.png'))) }}" 
+							style="width: 200px;" alt="Logo GOC">
+						<img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/pictures/ttd_goc_nac.png'))) }}" 
+							style="position: absolute; top: -7%; left: 0; width: 180px;" 
+							alt="TTD GOC">
+					</td>
+				@elseif($companyCode == 'NAC')
+					<td style="position: relative; text-align: left; vertical-align: middle; padding-top: 10px;">
+						<img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/pictures/logo_nac.png'))) }}" 
+							style="width: 170px;" alt="Logo NAC">
+						<img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/pictures/ttd_goc_nac.png'))) }}" 
+							style="position: absolute; top: -5%; left: 0; width: 180px;" 
+							alt="TTD NAC">
+					</td>
+				@endif
+				<td style="text-align: left; vertical-align: top; padding: 0;">
+					&nbsp;
 				</td>
 			</tr>
 			<tr>
-				<td style="width: 100%;">
-					<table class="table">
-						<tr>
-							@if($companyCode == 'GOC')
-								<td style="position: relative; text-align: left; vertical-align: middle; height: 150px;">
-									<img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/pictures/logo_goc.png'))) }}" 
-										style="width: 200px;" alt="Logo GOC">
-									<img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/pictures/ttd_goc_nac.png'))) }}" 
-										style="position: absolute; top: -14%; left: 0; width: 180px;" 
-										alt="TTD GOC">
-								</td>
-							@elseif($companyCode == 'NAC')
-								<td style="position: relative; text-align: left; vertical-align: middle; height: 150px;">
-									<img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/pictures/logo_nac.png'))) }}" 
-										style="width: 170px;" alt="Logo NAC">
-									<img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/pictures/ttd_goc_nac.png'))) }}" 
-										style="position: absolute; top: -22%; left: 0; width: 180px;" 
-										alt="TTD NAC">
-								</td>
-							@endif
-
-							<td style="text-align: left; vertical-align: top; height: 150px;">
-								&nbsp;
-							</td>
-						</tr>
-					</table>
-				</td>
+				<td width="70%" style="text-align: left; vertical-align: top;">( Nuryani Purba )</td>
+				<td width="30%" style="text-align: left; vertical-align: top;">( {{ $value->employeeName }} )</td>
 			</tr>
 			<tr>
-				<td style="width: 100%;">
-					<table class="table">
-						<tr>
-							<td width="70%" style="text-align: left; vertical-align: top;">( Nuryani Purba )</td>
-							<td width="30%" style="text-align: left; vertical-align: top;">( {{ $value->employeeName }} )</td>
-						</tr>
-					</table>
-				</td>
-			</tr>
-			<tr>
-				<td style="width: 100%;">
-					<table class="table">
-						<tr>
-							<td width="70%" style="text-align: left; vertical-align: top;">( ASSISTEN MANAGER FINANCE & ACCOUNTING )</td>
-							<td width="30%" style="text-align: left; vertical-align: top;">( {{ $value->position }} )</td>
-						</tr>
-					</table>
-				</td>
+				<td width="70%" style="text-align: left; vertical-align: top;">( ASSISTEN MANAGER FINANCE & ACCOUNTING )</td>
+				<td width="30%" style="text-align: left; vertical-align: top;">( {{ $value->position }} )</td>
 			</tr>
 		</table>
-
 
 		@if($key != array_key_last($data))
 			<div class="page_break"></div>

@@ -206,7 +206,11 @@
                 <tr>
                     <th>
                         @if($company == 'NMDI' || $company == 'CITROEN')
-                        {{ ($level1[0] == "ALL") ? $data_company[0]->companyName : 'PT ' . $data[0]->departementGroup[0]->data[0]->companyName }}
+                        {{ 
+                            ($level1[0] == "ALL") 
+                                ? (isset($data_company[0]) ? $data_company[0]->companyName : '') 
+                                : ((isset($data[0]->departementGroup[0]->data[0]) ? 'PT ' .  $data[0]->departementGroup[0]->data[0]->companyName : ''))
+                        }}
                         @else
                         {{ $data_company[0]->companyName }}
                         @endif
@@ -215,7 +219,11 @@
                 <tr>
                     <th>
                         @if($company == 'NMDI' || $company == 'CITROEN')
-                        {{ ($level1[0] == "ALL") ? $data_company[0]->address : $data[0]->departementGroup[0]->data[0]->companyLocation }}
+                        {{ 
+                            ($level1[0] == "ALL") 
+                                ? (isset($data_company[0]) ? $data_company[0]->address : '') 
+                                : ((isset($data[0]->departementGroup[0]->data[0]) ? $data[0]->departementGroup[0]->data[0]->companyLocation : ''))
+                        }}
                         @else
                         {{ $data_company[0]->address }}
                         @endif
@@ -230,7 +238,7 @@
                 <tr></tr>
             </thead>
         </table>
-        @if($company == 'NMDI' || $company == 'CITROEN')
+        @if($company == 'CITROEN')
         @for($i = 0; $i < count($data[0]->departementGroup); $i++)
             <?php
                 $dataTable = $data[0]->departementGroup[$i];
@@ -271,6 +279,9 @@
                 $branch = null;
             ?>
             @if(!empty($dataTable->data))
+                <?php
+                    $level = $data[0]->departementGroup[$i]->data[0]->companyName;
+                ?>
                 @if($company == 'NMDI' || $company == 'CITROEN')
                     @if(empty($group_name))
                     <?php
@@ -574,7 +585,11 @@
                         <tr>
                             <th>
                                 @if($company == 'NMDI' || $company == 'CITROEN')
-                                {{ ($level1[0] == "ALL") ? $data_company[0]->companyName : 'PT ' . $data[0]->summary[0]->data[0]->companyName }}
+                                {{ 
+                                    ($level1[0] == "ALL") 
+                                        ? (isset($data_company[0]) ? $data_company[0]->companyName : '') 
+                                        : ((isset($data[0]->departementGroup[0]->data[0]) ? 'PT ' .  $data[0]->departementGroup[0]->data[0]->companyName : ''))
+                                }}
                                 @else
                                 {{ $data_company[0]->companyName }}
                                 @endif
@@ -583,7 +598,11 @@
                         <tr>
                             <th>
                                 @if($company == 'NMDI' || $company == 'CITROEN')
-                                {{ ($level1[0] == "ALL") ? $data_company[0]->address : $data[0]->summary[0]->data[0]->companyLocation }}
+                                {{ 
+                                    ($level1[0] == "ALL") 
+                                        ? (isset($data_company[0]) ? $data_company[0]->address : '') 
+                                        : ((isset($data[0]->detail[0]) ? $data[0]->detail[0]->companyLocation : ''))
+                                }}
                                 @else
                                 {{ $data_company[0]->address }}
                                 @endif
