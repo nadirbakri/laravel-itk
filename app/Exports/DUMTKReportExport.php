@@ -2,6 +2,7 @@
 
 namespace App\Exports;
 
+use Maatwebsite\Excel\Concerns\ShouldQueue;
 use Maatwebsite\Excel\Concerns\FromView;
 use Illuminate\Contracts\View\View;
 use GuzzleHttp\Client;
@@ -11,7 +12,7 @@ use Validator;
 use Session;
 use App;
 
-class DUMTKReportExport implements FromView, ShouldAutoSize
+class DUMTKReportExport implements FromView, ShouldAutoSize, ShouldQueue
 {
     public function __construct($asOfPeriod, $employeeNoFrom, $employeeNoTo, $groupAuthorizedCodeFrom, $groupAuthorizedCodeTo, $BPJSGroupFrom, $BPJSGroupTo)
     {

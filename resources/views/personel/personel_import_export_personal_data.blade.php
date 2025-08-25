@@ -208,36 +208,15 @@
                 }
             });
             $.ajax({
-                xhrFields: {
-                    responseType: 'blob',
-                },
                 url: "{{ url('personel/personal_data/export') }}",
                 type: "POST",
-                success: function (result, status, xhr) {
+                success: function (response) {
                     $("#btn-export").prop("disabled", false);
                     $("#btn-export").html(
                         '{{ __("personel_import_export_personal_data.btn-export") }}'
                     );
-                    
-                    var disposition = xhr.getResponseHeader(
-                        'content-disposition');
-                    var matches = /"([^"]*)"/.exec(disposition);
-                    var filename = (matches != null && matches[1] ? matches[1] :
-                        'audit_trail.xlsx');
-                
-                    // The actual download
-                    var blob = new Blob([result], {
-                        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-                    });
-
-                    var link = document.createElement('a');
-                    link.href = window.URL.createObjectURL(blob);
-                    link.download = filename;
-
-                    document.body.appendChild(link);
-
-                    link.click();
-                    document.body.removeChild(link);
+                    $('#notification').modal('show');
+                    $('#message-notification').html(response.status);
                 },
                 error: function (response) {
                     $("#btn-export").prop("disabled", false);

@@ -7,11 +7,12 @@ use Illuminate\Contracts\View\View;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use Maatwebsite\Excel\Concerns\ShouldQueue;
 use Validator;
 use Session;
 use App;
 
-class PersonalDataExport implements FromView, ShouldAutoSize
+class PersonalDataExport implements FromView, ShouldAutoSize, ShouldQueue
 {
     public function view(): View
     {

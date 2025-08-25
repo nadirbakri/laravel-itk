@@ -13,7 +13,7 @@ use Validator;
 use Session;
 use App;
 
-class DetailAbsenteeismReportExport implements FromView, ShouldAutoSize
+class DetailAbsenteeismReportExport implements FromView, ShouldAutoSize, ShouldQueue
 {
     public function __construct($employeeNoFrom, $employeeNoTo, $absentDateFrom, $absentDateTo, $groupAuthorizeFrom, $groupAuthorizeTo, $includeResign, $position, $ranking, $location, $dataLevel, $dataField)
     {

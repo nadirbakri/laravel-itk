@@ -12,9 +12,11 @@ use Session;
 use App;
 use DataTables;
 use Excel;
+use App\Traits\QueuesExport;
 
 class UtilitiesController extends Controller
 {
+    use QueuesExport;
     public function pageUtilitiesMain()
     {
     	return view('utilities.utilities_main');
@@ -1322,7 +1324,14 @@ class UtilitiesController extends Controller
 
     public function exportAuditTrailUtilities(Request $request)
     {
-        return Excel::download(new AuditTrailExport($request->user_id, $request->user_name, $request->log_date_from, $request->log_date_to, $request->url_log), 'Audit Trail ' . $request->table . 'Log.xlsx');
+        $this->queueExport(new AuditTrailExport(
+            $request->user_id,
+            $request->user_name,
+            $request->log_date_from,
+            $request->log_date_to,
+            $request->url_log
+        ), 'Audit Trail ' . $request->table . 'Log.xlsx');
+        return response()->json(['status' => 'Export queued']);
     }
 
     public function removeUserAccessGroupUserUtilities(Request $request)

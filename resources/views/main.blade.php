@@ -147,11 +147,18 @@
 				<div class="navbar-collapse company-link" style="display: block !important;">
 					<span>{{ Session::get('companyName') }}</span> 
 				</div>
-				<div class="navbar-collapse right-link">
-					<span class="navbar-divide-complete">|</span>
-					<div class="img-setting-link"><a href="{{ url('/utilities') }}" target="iframe_dashboard"><img src="{{ url('/pictures/setting-white.png') }}" alt="Setting"></a></div>
-					<span class="navbar-divide">|</span>
-					<div class="dropdown-profile">
+                                <div class="navbar-collapse right-link">
+                                        <span class="navbar-divide-complete">|</span>
+                                        <div class="notification-link">
+                                                <a href="#" data-toggle="modal" data-target="#modal_notification">
+                                                        <i class="fa fa-bell"></i>
+                                                        <span class="badge badge-danger">{{ count(Session::get('export_jobs', [])) }}</span>
+                                                </a>
+                                        </div>
+                                        <span class="navbar-divide">|</span>
+                                        <div class="img-setting-link"><a href="{{ url('/utilities') }}" target="iframe_dashboard"><img src="{{ url('/pictures/setting-white.png') }}" alt="Setting"></a></div>
+                                        <span class="navbar-divide">|</span>
+                                        <div class="dropdown-profile">
 						@if(Session::get('photo') == NULL)
 						<img src="{{ url('/pictures/default-profile.png') }}" alt="Profile">
 						@else
@@ -171,7 +178,7 @@
 			<iframe src="{{ url('/home') }}" name="iframe_dashboard" id="iframe_dashboard" class="container-fluid" frameborder="0"></iframe>
 		</div>
 	</div>
-	<div class="modal fade" id="modal_change_language" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="modal_change_language" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
             	<div class="modal-header" id="modal-header-change-language">
@@ -205,6 +212,33 @@
                     <button type="button" class="btn btn-danger w-50" data-dismiss="modal"><i class="fa fa-times-circle"></i> Cancel</button>
                 </div>
                 </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal_notification" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header modal-header-notification">
+                    <h5 class="modal-title">Downloads</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    @foreach(Session::get('export_jobs', []) as $job)
+                        <div class="mb-3">
+                            <p>{{ $job['filename'] }}</p>
+                            @if($job['status'] === 'queued')
+                                <div class="progress">
+                                    <div class="progress-bar" role="progressbar" style="width: {{ $job['progress'] }}%;" aria-valuenow="{{ $job['progress'] }}" aria-valuemin="0" aria-valuemax="100">{{ $job['progress'] }}%</div>
+                                </div>
+                            @else
+                                <a href="{{ url('exports/notifications/'.$job['id'].'/download') }}" class="btn btn-primary btn-sm">Download</a>
+                            @endif
+                            <button class="btn btn-danger btn-sm" onclick="removeExport('{{ $job['id'] }}')"><i class="fa fa-trash"></i></button>
+                        </div>
+                    @endforeach
+                </div>
             </div>
         </div>
     </div>
@@ -278,9 +312,18 @@
 			$('#sidebar-wrapper').toggleClass('active');
 		});
 
-	})(jQuery);
+        })(jQuery);
 
-	$(document).ready(function() {
+        function removeExport(id){
+                $.ajax({
+                        url: '{{ url('exports/notifications') }}/' + id,
+                        type: 'DELETE',
+                        headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                        success: function(){ location.reload(); }
+                });
+        }
+
+        $(document).ready(function() {
 		$('.list-group-item-action').first().toggleClass('active');
 		$('.list-group-item-action').first().find('.color-active').toggleClass('active');
 

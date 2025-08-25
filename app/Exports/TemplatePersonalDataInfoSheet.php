@@ -2,6 +2,7 @@
 
 namespace App\Exports;
 
+use Maatwebsite\Excel\Concerns\ShouldQueue;
 use Maatwebsite\Excel\Concerns\FromView;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\WithTitle;
@@ -12,7 +13,7 @@ use Validator;
 use Session;
 use App;
 
-class TemplatePersonalDataInfoSheet implements FromView, WithTitle, ShouldAutoSize
+class TemplatePersonalDataInfoSheet implements FromView, WithTitle, ShouldAutoSize, ShouldQueue
 {
     public function view(): View
     {

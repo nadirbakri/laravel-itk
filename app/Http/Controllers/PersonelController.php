@@ -24,9 +24,11 @@ use DataTables;
 use Excel;
 use PDF;
 use PhpParser\Node\NullableType;
+use App\Traits\QueuesExport;
 
 class PersonelController extends Controller
 {
+    use QueuesExport;
     public function pagePersonelMain()
     {
     	return view('personel.personel_main');
@@ -9762,7 +9764,20 @@ class PersonelController extends Controller
 
         // var_dump($request->input_type);
 
-        return Excel::download(new EmployeeListExport($request->employee_no_from, $request->employee_no_to, $request->period, isset($request->include_resign) ? (bool) $request->include_resign : false, $request->input_type, $request->group_authorize_from, $request->group_authorize_to, $request->position, $request->ranking, $request->location, $dataLevel), 'Employee List Report.xlsx');
+        $this->queueExport(new EmployeeListExport(
+            $request->employee_no_from,
+            $request->employee_no_to,
+            $request->period,
+            isset($request->include_resign) ? (bool) $request->include_resign : false,
+            $request->input_type,
+            $request->group_authorize_from,
+            $request->group_authorize_to,
+            $request->position,
+            $request->ranking,
+            $request->location,
+            $dataLevel
+        ), 'Employee List Report.xlsx');
+        return response()->json(['status' => 'Export queued']);
     }
 
     public function printEmployeeTurnOverReportPersonel(Request $request)
@@ -9775,7 +9790,19 @@ class PersonelController extends Controller
 
         // var_dump($request->period);
 
-        return Excel::download(new EmployeeTurnOverReportExport($request->employee_no_from, $request->employee_no_to, $request->period_from, $request->period_to, $request->group_authorize_from, $request->group_authorize_to, $request->position, $request->ranking, $request->location, $dataLevel), 'Employee Turn Over Report.xlsx');
+        $this->queueExport(new EmployeeTurnOverReportExport(
+            $request->employee_no_from,
+            $request->employee_no_to,
+            $request->period_from,
+            $request->period_to,
+            $request->group_authorize_from,
+            $request->group_authorize_to,
+            $request->position,
+            $request->ranking,
+            $request->location,
+            $dataLevel
+        ), 'Employee Turn Over Report.xlsx');
+        return response()->json(['status' => 'Export queued']);
     }
 
     public function printEmployeeSkillReportPersonel(Request $request)
@@ -9788,7 +9815,19 @@ class PersonelController extends Controller
 
         // var_dump($request->period);
 
-        return Excel::download(new EmployeeSkillReportExport($request->employee_no_from, $request->employee_no_to, $request->period, isset($request->include_resign) ? (bool) $request->include_resign : false, $request->group_authorize_from, $request->group_authorize_to, $request->position, $request->ranking, $request->location, $dataLevel), 'Employee Skill Report.xlsx');
+        $this->queueExport(new EmployeeSkillReportExport(
+            $request->employee_no_from,
+            $request->employee_no_to,
+            $request->period,
+            isset($request->include_resign) ? (bool) $request->include_resign : false,
+            $request->group_authorize_from,
+            $request->group_authorize_to,
+            $request->position,
+            $request->ranking,
+            $request->location,
+            $dataLevel
+        ), 'Employee Skill Report.xlsx');
+        return response()->json(['status' => 'Export queued']);
     }
 
     public function printEmployeeCardPersonel(Request $request){
@@ -10000,7 +10039,15 @@ class PersonelController extends Controller
 
     public function printEmployeeReportByStatusPersonel(Request $request)
     {
-        return Excel::download(new EmployeeReportByStatusExport($request->employee_no_from, $request->employee_no_to, $request->period_from, $request->period_to, $request->report_type, isset($request->include_resign) ? (bool) $request->include_resign : false), 'Employee Report By Status.xlsx');
+        $this->queueExport(new EmployeeReportByStatusExport(
+            $request->employee_no_from,
+            $request->employee_no_to,
+            $request->period_from,
+            $request->period_to,
+            $request->report_type,
+            isset($request->include_resign) ? (bool) $request->include_resign : false
+        ), 'Employee Report By Status.xlsx');
+        return response()->json(['status' => 'Export queued']);
     }
 
     public function checkResultPerformancePersonel(Request $request)
@@ -10436,7 +10483,16 @@ class PersonelController extends Controller
 
         $arrData2 = json_decode($request->field_name);
 
-        return Excel::download(new CustomReportEmployeeExport($arrData['employee_no_from'], $arrData['employee_no_to'], $arrData['employment_status'], isset($arrData['include_resign']) ? (bool) $arrData['include_resign'] : false, $arrData['group_authorize_from'], $arrData['group_authorize_to'], $arrData2), 'Custom Report Employee.xlsx');
+        $this->queueExport(new CustomReportEmployeeExport(
+            $arrData['employee_no_from'],
+            $arrData['employee_no_to'],
+            $arrData['employment_status'],
+            isset($arrData['include_resign']) ? (bool) $arrData['include_resign'] : false,
+            $arrData['group_authorize_from'],
+            $arrData['group_authorize_to'],
+            $arrData2
+        ), 'Custom Report Employee.xlsx');
+        return response()->json(['status' => 'Export queued']);
     }
 
     public function printEmployeeDependentsPersonel(Request $request)
@@ -10447,17 +10503,33 @@ class PersonelController extends Controller
             $dataLevel[] = $request->{'level' . ($i+1)};
         }
 
-        return Excel::download(new EmployeeDependentsExport($request->employee_no_from, $request->employee_no_to, $request->period, isset($request->include_resign) ? (bool) $request->include_resign : false, isset($request->include_medical) ? (bool) $request->include_medical : false, isset($request->include_payroll) ? (bool) $request->include_payroll : false, $request->group_authorize_from, $request->group_authorize_to, $request->position, $request->ranking, $request->location, $dataLevel), 'Employee Dependents Report.xlsx');
+        $this->queueExport(new EmployeeDependentsExport(
+            $request->employee_no_from,
+            $request->employee_no_to,
+            $request->period,
+            isset($request->include_resign) ? (bool) $request->include_resign : false,
+            isset($request->include_medical) ? (bool) $request->include_medical : false,
+            isset($request->include_payroll) ? (bool) $request->include_payroll : false,
+            $request->group_authorize_from,
+            $request->group_authorize_to,
+            $request->position,
+            $request->ranking,
+            $request->location,
+            $dataLevel
+        ), 'Employee Dependents Report.xlsx');
+        return response()->json(['status' => 'Export queued']);
     }
 
     public function templatePersonalDataPersonel()
     {
-        return Excel::download(new PersonalDataTemplateExport, 'Template Personel Data.xlsx');
+        $this->queueExport(new PersonalDataTemplateExport, 'Template Personel Data.xlsx');
+        return response()->json(['status' => 'Export queued']);
     }
 
     public function exportPersonalDataPersonel(Request $request)
     {
-        return Excel::download(new PersonalDataExport, 'Personel Data.xlsx');
+        $this->queueExport(new PersonalDataExport, 'Personel Data.xlsx');
+        return response()->json(['status' => 'Export queued']);
     }
 
     public function importPersonalDataPersonel(Request $request)
