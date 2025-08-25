@@ -2,12 +2,13 @@
 
 namespace App\Exports;
 
+use Maatwebsite\Excel\Concerns\ShouldQueue;
 use Maatwebsite\Excel\Concerns\FromView;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\WithTitle;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 
-class TemplatePayrollDataTemplateSheet implements FromView, WithTitle, ShouldAutoSize
+class TemplatePayrollDataTemplateSheet implements FromView, WithTitle, ShouldAutoSize, ShouldQueue
 {
     public function __construct($columnA, $columnB, $columnC, $columnD, $columnE, $columnF, $columnG, $columnH, $columnI, $columnJ, $columnK, $columnL)
     {

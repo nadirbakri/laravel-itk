@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PersonelController;
+use App\Http\Controllers\UtilitiesController;
+use App\Http\Controllers\ExportNotificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -367,7 +370,7 @@ Route::post('personel/custom_report_employee/print', 'PersonelController@printCu
 Route::post('personel/evaluation_report/print', 'PersonelController@printEvaluationReportPersonel');
 Route::post('personel/employee_dependents/print', 'PersonelController@printEmployeeDependentsPersonel');
 Route::post('personel/personal_data/template', 'PersonelController@templatePersonalDataPersonel');
-Route::post('personel/personal_data/export', 'PersonelController@exportPersonalDataPersonel');
+Route::post('personel/personal_data/export', [PersonelController::class, 'exportPersonalDataPersonel'])->name('personel.personal_data.export');
 Route::post('personel/personal_data/import', 'PersonelController@importPersonalDataPersonel');
 Route::get('personel/report/level/check', 'PersonelController@checkReportLevelPersonel');
 Route::post('personel/employee/photo/proses', 'PersonelController@prosesEmployeePhotoPersonel');
@@ -765,7 +768,7 @@ Route::post('utilities/user_security_maintenance/level/proses', 'UtilitiesContro
 Route::post('utilities/user_security_maintenance/company/proses', 'UtilitiesController@prosesUserSecurityMaintenanceCompanyUtilities');
 Route::post('utilities/user_security_maintenance/module/proses', 'UtilitiesController@prosesUserSecurityMaintenanceModuleUtilities');
 
-Route::post('utilities/audit_trail/export', 'UtilitiesController@exportAuditTrailUtilities');
+Route::post('utilities/audit_trail/export', [UtilitiesController::class, 'exportAuditTrailUtilities'])->name('utilities.audit_trail.export');
 
 Route::post('utilities/group_user_access/user/add', 'UtilitiesController@addUserAccessGroupUserUtilities');
 Route::get('utilities/group_user_access/user/remove', 'UtilitiesController@removeUserAccessGroupUserUtilities');
@@ -957,3 +960,7 @@ Route::get('disease_code/func/api', 'DataController@dataDiseaseCodeFunctionAPI')
 /* Route Untuk Save Token Device dan Notification Firebase */
 Route::get('save-token', 'DashboardController@saveToken');
 Route::get('send-notification', 'DashboardController@sendNotification');
+
+Route::get('exports/notifications', [ExportNotificationController::class, 'index']);
+Route::get('exports/notifications/{id}/download', [ExportNotificationController::class, 'download']);
+Route::delete('exports/notifications/{id}', [ExportNotificationController::class, 'destroy']);

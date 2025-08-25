@@ -2,6 +2,7 @@
 
 namespace App\Exports;
 
+use Maatwebsite\Excel\Concerns\ShouldQueue;
 use Maatwebsite\Excel\Concerns\FromView;
 use Illuminate\Contracts\View\View;
 use GuzzleHttp\Client;
@@ -11,7 +12,7 @@ use Validator;
 use Session;
 use App;
 
-class EmployeeDependentsExport implements FromView, ShouldAutoSize
+class EmployeeDependentsExport implements FromView, ShouldAutoSize, ShouldQueue
 {
     public function __construct($employeeNoFrom, $employeeNoTo, $period, $includeResign, $includeMedical, $includePayroll, $groupAuthorizeFrom, $groupAuthorizeTo, $position, $ranking, $location, $dataLevel)
     {

@@ -2,9 +2,10 @@
 
 namespace App\Exports;
 
+use Maatwebsite\Excel\Concerns\ShouldQueue;
 use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 
-class PersonalDataTemplateExport implements WithMultipleSheets
+class PersonalDataTemplateExport implements WithMultipleSheets, ShouldQueue
 {
     public function sheets(): array
     {

@@ -24,9 +24,11 @@ use DataTables;
 use Excel;
 use PDF;
 use PhpParser\Node\NullableType;
+use App\Traits\QueuesExport;
 
 class PayrollController extends Controller
 {
+    use QueuesExport;
     public function pagePayroll() 
     {
         return view ('payroll.py_main');
@@ -4903,12 +4905,12 @@ public function dataDetailReportFormatPY(Request $request)
 
     public function templateImportDataFromExcelPY(Request $request)
     {
-        return Excel::download(new TemplatePayrollDataTemplateSheet(
-            $request->column_a, 
-            $request->column_b, 
-            $request->column_c, 
-            $request->column_d, 
-            $request->column_e, 
+        $this->queueExport(new TemplatePayrollDataTemplateSheet(
+            $request->column_a,
+            $request->column_b,
+            $request->column_c,
+            $request->column_d,
+            $request->column_e,
             $request->column_f,
             $request->column_g,
             $request->column_h,
@@ -4917,6 +4919,7 @@ public function dataDetailReportFormatPY(Request $request)
             $request->column_k,
             $request->column_l
         ), 'Template Payroll Data.xlsx');
+        return response()->json(['status' => 'Export queued']);
     }
 
     public function prosesSptFormatPY(Request $request)
@@ -5788,7 +5791,15 @@ public function dataDetailReportFormatPY(Request $request)
     }
 
     public function printSeveranceReportPayrollExcel(Request $request){
-        return Excel::download(new SeveranceReportExcel($request->payment_date_from, $request->payment_date_to, $request->employee_no_from, $request->employee_no_to, intval($request->group_authorized_from), intval($request->group_authorized_to)), 'Severance Report.xlsx');
+        $this->queueExport(new SeveranceReportExcel(
+            $request->payment_date_from,
+            $request->payment_date_to,
+            $request->employee_no_from,
+            $request->employee_no_to,
+            intval($request->group_authorized_from),
+            intval($request->group_authorized_to)
+        ), 'Severance Report.xlsx');
+        return response()->json(['status' => 'Export queued']);
     }
 
     public function printJournalReportPayroll(Request $request){
@@ -5840,7 +5851,12 @@ public function dataDetailReportFormatPY(Request $request)
 
     public function printJournalReportPayrollExcel(Request $request){
         // var_dump($request->journal_period, $request->group_authorized_from, $request->group_authorized_to);
-        return Excel::download(new JournalReportExcel($request->journal_period, $request->group_authorized_from, $request->group_authorized_to), 'Journal Report.xlsx');
+        $this->queueExport(new JournalReportExcel(
+            $request->journal_period,
+            $request->group_authorized_from,
+            $request->group_authorized_to
+        ), 'Journal Report.xlsx');
+        return response()->json(['status' => 'Export queued']);
     }
 
     public function printPaymentSlipPayroll(Request $request){
@@ -6039,16 +6055,16 @@ public function dataDetailReportFormatPY(Request $request)
     }
 
     public function printDUMTKPayrollExcel(Request $request){
-        return Excel::download(new DUMTKReportExport(
+        $this->queueExport(new DUMTKReportExport(
             $request->as_of_period,
-            $request->employee_no_from, 
+            $request->employee_no_from,
             $request->employee_no_to,
             $request->group_authorized_code_from,
             $request->group_authorized_code_to,
             $request->bpjs_group_from,
-            $request->bpjs_group_to), 
-            'DUMTK Report Form.xlsx'
-        );
+            $request->bpjs_group_to
+        ), 'DUMTK Report Form.xlsx');
+        return response()->json(['status' => 'Export queued']);
     }
 
     public function printSalaryHistoricalReportPayroll(Request $request){
@@ -6110,27 +6126,27 @@ public function dataDetailReportFormatPY(Request $request)
     }
 
     public function printSalaryHistoricalReportPayrollExcel(Request $request){
-        return Excel::download(new SalaryHistoricalReportExport(
-            $request->employee_no_from, 
+        $this->queueExport(new SalaryHistoricalReportExport(
+            $request->employee_no_from,
             $request->employee_no_to,
             $request->group_authorized_code_from,
-            $request->group_authorized_code_to), 
-            'Salary Historical Report.xlsx'
-        );
+            $request->group_authorized_code_to
+        ), 'Salary Historical Report.xlsx');
+        return response()->json(['status' => 'Export queued']);
     }
 
     public function printCSVESPTReportFormPayrollExcel(Request $request){
-        return Excel::download(new CSVESPTReportFormExport(
-            $request->format, 
+        $this->queueExport(new CSVESPTReportFormExport(
+            $request->format,
             $request->period_month,
             $request->period_year,
             $request->rectification,
             $request->npwp_group,
             $request->print_date,
             $request->group_authorized_code_from,
-            $request->group_authorized_code_to), 
-            'CSVEsptMasa.xlsx'
-        );
+            $request->group_authorized_code_to
+        ), 'CSVEsptMasa.xlsx');
+        return response()->json(['status' => 'Export queued']);
     }
 
     public function printBonusTHRReportPayroll(Request $request){
@@ -6211,16 +6227,16 @@ public function dataDetailReportFormatPY(Request $request)
     }
 
     public function printBonusTHRReportPayrollExcel(Request $request){
-        return Excel::download(new BonusTHRReportExport(
-            $request->report, 
+        $this->queueExport(new BonusTHRReportExport(
+            $request->report,
             $request->payment_date_from,
             $request->payment_date_to,
             $request->employee_no_from,
             $request->employee_no_to,
             $request->group_authorized_code_from,
-            $request->group_authorized_code_to), 
-            'Bonus & THR Report.xlsx'
-        );
+            $request->group_authorized_code_to
+        ), 'Bonus & THR Report.xlsx');
+        return response()->json(['status' => 'Export queued']);
     }
 
 }

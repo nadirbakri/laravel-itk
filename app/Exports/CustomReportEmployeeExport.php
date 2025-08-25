@@ -10,7 +10,7 @@ use Validator;
 use Session;
 use App;
 
-class CustomReportEmployeeExport implements FromView, ShouldAutoSize
+class CustomReportEmployeeExport implements FromView, ShouldAutoSize, ShouldQueue
 {
     public function __construct($employeeNoFrom, $employeeNoTo, $employmentStatus, $includeResign, $groupAuthorizeFrom, $groupAuthorizeTo, $dataField)
     {

@@ -24,9 +24,11 @@ use App;
 use File;
 use DataTables;
 use Excel;
+use App\Traits\QueuesExport;
 
 class TimeManagementController extends Controller
 {
+    use QueuesExport;
     public function pageTimeManagement() 
     {
         return view ('time_management.tm_main');
@@ -1097,7 +1099,19 @@ class TimeManagementController extends Controller
             $dataLevel[] = $request->{'level' . ($i+1)};
         }
 
-        return Excel::download(new UnpaidLeaveReportExport($request->employee_no_from, $request->employee_no_to, $request->period, isset($request->include_resign) ? (bool) $request->include_resign : false, $request->group_authorize_from, $request->group_authorize_to, $request->position, $request->ranking, $request->location, $dataLevel), 'Unpaid Leave Report.xlsx');
+        $this->queueExport(new UnpaidLeaveReportExport(
+            $request->employee_no_from,
+            $request->employee_no_to,
+            $request->period,
+            isset($request->include_resign) ? (bool) $request->include_resign : false,
+            $request->group_authorize_from,
+            $request->group_authorize_to,
+            $request->position,
+            $request->ranking,
+            $request->location,
+            $dataLevel
+        ), 'Unpaid Leave Report.xlsx');
+        return response()->json(['status' => 'Export queued']);
     }
 
     public function printPostponeLeaveReport(Request $request)
@@ -1108,7 +1122,19 @@ class TimeManagementController extends Controller
             $dataLevel[] = $request->{'level' . ($i+1)};
         }
 
-        return Excel::download(new PostponeLeaveReportExport($request->employee_no_from, $request->employee_no_to, $request->period, isset($request->include_resign) ? (bool) $request->include_resign : false, $request->group_authorize_from, $request->group_authorize_to, $request->position, $request->ranking, $request->location, $dataLevel), 'Postpone Leave Report.xlsx');
+        $this->queueExport(new PostponeLeaveReportExport(
+            $request->employee_no_from,
+            $request->employee_no_to,
+            $request->period,
+            isset($request->include_resign) ? (bool) $request->include_resign : false,
+            $request->group_authorize_from,
+            $request->group_authorize_to,
+            $request->position,
+            $request->ranking,
+            $request->location,
+            $dataLevel
+        ), 'Postpone Leave Report.xlsx');
+        return response()->json(['status' => 'Export queued']);
     }
     
     public function printMonthlyLeaveReport(Request $request)
@@ -1119,7 +1145,20 @@ class TimeManagementController extends Controller
             $dataLevel[] = $request->{'level' . ($i+1)};
         }
 
-        return Excel::download(new MonthlyLeaveReportExport($request->employee_no_from, $request->employee_no_to, $request->period, isset($request->have_balance_only) ? (bool) $request->have_balance_only : false, isset($request->include_resign) ? (bool) $request->include_resign : false, $request->group_authorize_from, $request->group_authorize_to, $request->position, $request->ranking, $request->location, $dataLevel), 'Monthly Leave Report.xlsx');
+        $this->queueExport(new MonthlyLeaveReportExport(
+            $request->employee_no_from,
+            $request->employee_no_to,
+            $request->period,
+            isset($request->have_balance_only) ? (bool) $request->have_balance_only : false,
+            isset($request->include_resign) ? (bool) $request->include_resign : false,
+            $request->group_authorize_from,
+            $request->group_authorize_to,
+            $request->position,
+            $request->ranking,
+            $request->location,
+            $dataLevel
+        ), 'Monthly Leave Report.xlsx');
+        return response()->json(['status' => 'Export queued']);
     }
 
     public function printMonthlyAbsenteeismAnalysis(Request $request)
@@ -1130,7 +1169,19 @@ class TimeManagementController extends Controller
             $dataLevel[] = $request->{'level' . ($i+1)};
         }
 
-        return Excel::download(new MonthlyAbsenteeismAnalysisExport($request->employee_no_from, $request->employee_no_to, $request->period, isset($request->include_resign) ? (bool) $request->include_resign : false, $request->group_authorize_from, $request->group_authorize_to, $request->position, $request->ranking, $request->location, $dataLevel), 'Monthly Absenteeism Analysis.xlsx');
+        $this->queueExport(new MonthlyAbsenteeismAnalysisExport(
+            $request->employee_no_from,
+            $request->employee_no_to,
+            $request->period,
+            isset($request->include_resign) ? (bool) $request->include_resign : false,
+            $request->group_authorize_from,
+            $request->group_authorize_to,
+            $request->position,
+            $request->ranking,
+            $request->location,
+            $dataLevel
+        ), 'Monthly Absenteeism Analysis.xlsx');
+        return response()->json(['status' => 'Export queued']);
     }
 
     public function printDetailAbsenteeismReport(Request $request)
@@ -1145,7 +1196,21 @@ class TimeManagementController extends Controller
             $dataLevel[] = $arrData['level' . ($i+1)];
         }
 
-        return Excel::download(new DetailAbsenteeismReportExport($arrData['employee_no_from'],$arrData['employee_no_to'], $arrData['absent_date_from'], $arrData['absent_date_to'], $arrData['group_authorize_from'], $arrData['group_authorize_to'], isset($arrData['include_resign']) ? (bool) $arrData['include_resign'] : false, $arrData['position'], $arrData['ranking'], $arrData['location'], $dataLevel, $arrData2), 'Detail Absenteeism Report.xlsx');
+        $this->queueExport(new DetailAbsenteeismReportExport(
+            $arrData['employee_no_from'],
+            $arrData['employee_no_to'],
+            $arrData['absent_date_from'],
+            $arrData['absent_date_to'],
+            $arrData['group_authorize_from'],
+            $arrData['group_authorize_to'],
+            isset($arrData['include_resign']) ? (bool) $arrData['include_resign'] : false,
+            $arrData['position'],
+            $arrData['ranking'],
+            $arrData['location'],
+            $dataLevel,
+            $arrData2
+        ), 'Detail Absenteeism Report.xlsx');
+        return response()->json(['status' => 'Export queued']);
     }
 
     public function printDetailAbsenteeismReasonReport(Request $request)
@@ -1160,7 +1225,21 @@ class TimeManagementController extends Controller
             $dataLevel[] = $arrData['level' . ($i+1)];
         }
 
-        return Excel::download(new DetailAbsenteeismReasonReportExport($arrData['employee_no_from'],$arrData['employee_no_to'], $arrData['absent_date_from'], $arrData['absent_date_to'], $arrData['group_authorize_from'], $arrData['group_authorize_to'], isset($arrData['include_resign']) ? (bool) $arrData['include_resign'] : false, $arrData['position'], $arrData['ranking'], $arrData['location'], $dataLevel, $arrData2), 'Detail Absenteeism Reason Report.xlsx');    
+        $this->queueExport(new DetailAbsenteeismReasonReportExport(
+            $arrData['employee_no_from'],
+            $arrData['employee_no_to'],
+            $arrData['absent_date_from'],
+            $arrData['absent_date_to'],
+            $arrData['group_authorize_from'],
+            $arrData['group_authorize_to'],
+            isset($arrData['include_resign']) ? (bool) $arrData['include_resign'] : false,
+            $arrData['position'],
+            $arrData['ranking'],
+            $arrData['location'],
+            $dataLevel,
+            $arrData2
+        ), 'Detail Absenteeism Reason Report.xlsx');
+        return response()->json(['status' => 'Export queued']);
     }
 
     public function printDetailRateOvertimeReport(Request $request)
@@ -1175,7 +1254,21 @@ class TimeManagementController extends Controller
             $dataLevel[] = $arrData['level' . ($i+1)];
         }
 
-        return Excel::download(new DetailRateOvertimeReportExport($arrData['employee_no_from'],$arrData['employee_no_to'], $arrData['absent_date_from'], $arrData['absent_date_to'], $arrData['group_authorize_from'], $arrData['group_authorize_to'], isset($arrData['include_resign']) ? (bool) $arrData['include_resign'] : false, $arrData['position'], $arrData['ranking'], $arrData['location'], $dataLevel, $arrData2), 'Detail Rate Overtime Report.xlsx');
+        $this->queueExport(new DetailRateOvertimeReportExport(
+            $arrData['employee_no_from'],
+            $arrData['employee_no_to'],
+            $arrData['absent_date_from'],
+            $arrData['absent_date_to'],
+            $arrData['group_authorize_from'],
+            $arrData['group_authorize_to'],
+            isset($arrData['include_resign']) ? (bool) $arrData['include_resign'] : false,
+            $arrData['position'],
+            $arrData['ranking'],
+            $arrData['location'],
+            $dataLevel,
+            $arrData2
+        ), 'Detail Rate Overtime Report.xlsx');
+        return response()->json(['status' => 'Export queued']);
     }
 
     public function printMonthlyAbsenteeismDetail(Request $request)
@@ -1189,7 +1282,24 @@ class TimeManagementController extends Controller
             $dataLevel[] = $arrData['level' . ($i+1)];
         }
 
-        return Excel::download(new MonthlyAbsenteeismDetailExport($arrData['employee_no_from'], $arrData['employee_no_to'], $arrData['absent_month_from'], $arrData['absent_month_to'], isset($arrData['include_resign']) ? (bool) $arrData['include_resign'] : false, isset($arrData['change_header']) ? (bool) $arrData['change_header'] : false, $arrData2, $arrData['hour_out'], $arrData['hour_to'], $arrData['group_authorize_from'], $arrData['group_authorize_to'], $arrData['position'], $arrData['ranking'], $arrData['location'], $dataLevel), 'Monthly Absenteeism Analysis.xlsx');
+        $this->queueExport(new MonthlyAbsenteeismDetailExport(
+            $arrData['employee_no_from'],
+            $arrData['employee_no_to'],
+            $arrData['absent_month_from'],
+            $arrData['absent_month_to'],
+            isset($arrData['include_resign']) ? (bool) $arrData['include_resign'] : false,
+            isset($arrData['change_header']) ? (bool) $arrData['change_header'] : false,
+            $arrData2,
+            $arrData['hour_out'],
+            $arrData['hour_to'],
+            $arrData['group_authorize_from'],
+            $arrData['group_authorize_to'],
+            $arrData['position'],
+            $arrData['ranking'],
+            $arrData['location'],
+            $dataLevel
+        ), 'Monthly Absenteeism Analysis.xlsx');
+        return response()->json(['status' => 'Export queued']);
     }
 
     public function printAbsenteeismOvertimeReport(Request $request)
@@ -1200,7 +1310,21 @@ class TimeManagementController extends Controller
             $dataLevel[] = $request->{'level' . ($i+1)};
         }
 
-        return Excel::download(new AbsenteeismOvertimeReportExport($request->employee_no_from, $request->employee_no_to, $request->absent_date_from, $request->absent_date_to, $request->group_authorize_from, $request->group_authorize_to, $request->report_type, isset($request->include_resign) ? (bool) $request->include_resign : false, $request->position, $request->ranking, $request->location, $dataLevel), 'Absenteeism & Overtime Report.xlsx');
+        $this->queueExport(new AbsenteeismOvertimeReportExport(
+            $request->employee_no_from,
+            $request->employee_no_to,
+            $request->absent_date_from,
+            $request->absent_date_to,
+            $request->group_authorize_from,
+            $request->group_authorize_to,
+            $request->report_type,
+            isset($request->include_resign) ? (bool) $request->include_resign : false,
+            $request->position,
+            $request->ranking,
+            $request->location,
+            $dataLevel
+        ), 'Absenteeism & Overtime Report.xlsx');
+        return response()->json(['status' => 'Export queued']);
     }
 
     public function importUpdateAbsenteeismData(Request $request)
